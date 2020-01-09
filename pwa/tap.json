@@ -1,0 +1,15 @@
+{
+  "name": "mobile-x5-pwa",
+  "displayName": "Mobile X5 PWA",
+  "versions": {
+    "development": "1.0.0",
+    "production": "1.0.0",
+    "qa": "1.0.0",
+    "staging": "1.0.0"
+  },
+  "keg": {
+    "paths": {
+      "buildConfig": "taps/tap-events-force/pwa/configs/build.config.js"
+    }
+  }
+}

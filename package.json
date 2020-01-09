@@ -1,0 +1,23 @@
+{
+  "name": "tap-events-force",
+  "version": "1.0.0",
+  "description": "Events Force Tag for the Keg",
+  "main": "index.js",
+  "repository": "https://github.com/simpleviewinc/tap-events-force.git",
+  "author": "Lance Tipton <lancetipton04@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "clean:full": "rimraf yarn.lock && yarn clean",
+    "clean": "rimraf node_modules && yarn install",
+    "start": "yarn web:start",
+    "start:n": "yarn native:start",
+    "web:start": "cd ../ && TAP=tap-events-force/pwa yarn web",
+    "native:start": "cd ../ && TAP=tap-events-force/pwa yarn native",
+    "test": "cd ../ && TAP=tap-events-force/pwa yarn test"
+  },
+  "dependencies": {
+    "jsutils": "git+https://github.com/lancetipton/jsutils.git",
+    "keg-components": "git+https://github.com/lancetipton/keg-components.git"
+  }
+}
