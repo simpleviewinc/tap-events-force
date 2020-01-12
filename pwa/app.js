@@ -6,11 +6,12 @@ import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
 import { AppContainer } from 'SVContainers'
 import { Router } from 'SVComponents'
-import 'SVTheme' // configures default theme for re-theme
+import { checkCall, get } from 'jsutils'
+import 'SVTheme'
 
 const checkAppInit = setInit => {
   setInit(true)
-  initAppAction()
+  checkCall(initAppAction)
 }
 
 const App = props => {
@@ -21,14 +22,14 @@ const App = props => {
     !init && checkAppInit(setInit)
   })
 
-  return (
+  return init && (
     <>
-      <StatusBar barStyle={activeTheme.components.statusBar.barStyle} />
+      <StatusBar barStyle={ get(activeTheme, [ 'components', 'statusBar', 'barStyle' ]) } />
       <Router>
         <SafeAreaView>
           <Provider store={getStore()}>
             <ReThemeProvider theme={activeTheme} merge={false}>
-              <AppContainer switchTheme={switchTheme} />
+              <AppContainer switchTheme={ switchTheme } />
             </ReThemeProvider>
           </Provider>
         </SafeAreaView>
