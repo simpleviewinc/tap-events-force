@@ -9,7 +9,7 @@ const onClick = value => evt => {
   console.log(value)
 }
 
-export const MessageInput = withTheme(props => {
+export const WriteMessage = withTheme(props => {
   const { theme, styles } = props
   const [ inputVal, setVal ] = useState('')
 

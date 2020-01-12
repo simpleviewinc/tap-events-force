@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { withTheme } from 're-theme'
-import { View } from 'SVComponents'
-import { Messages } from 'SVComponents/messages'
-import { MessageInput } from 'SVComponents/message'
+import { View, Messages, WriteMessage } from 'SVComponents'
 import { get } from 'jsutils'
 
 const Chat = props => {
   const { theme } = props
-  
+
   return (
     <View stlye={ get(theme, [ 'chat', 'container' ], {}) } >
       <Messages />
-      <MessageInput />
+      <WriteMessage />
     </View>
   )
   
