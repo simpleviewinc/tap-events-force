@@ -1,13 +1,13 @@
 import React from 'react'
-import { withTheme } from 're-theme'
+import { useTheme } from 're-theme'
 import { ListItem, Divider } from 'material-bread'
 import { P, SubtitleAlt, View } from 'SVComponents'
 import { get } from 'jsutils'
 
-export const Message = withTheme(props => {
-  const { message, theme, styles, index } = props
+export const Message = props => {
+  const theme = useTheme()
+  const { message, styles, index } = props
   const isFrom = Boolean(index % 2)
-  
 
   return (
     <ListItem>
@@ -18,10 +18,21 @@ export const Message = withTheme(props => {
           styles && get(styles, [ 'container' ])
         )}
       >
-        <SubtitleAlt style={ get(theme, [ 'messages', 'message', 'title' ]) } >
+        <SubtitleAlt
+          style={ theme.join(
+            get(theme, [ 'messages', 'message', 'title' ]),
+            styles && get(styles, [ 'title' ])
+          )}
+        >
           { message.from }
         </SubtitleAlt>
-        <Divider style={ get(theme, [ 'messages', 'message', 'divider' ]) } />
+
+        <Divider
+          style={ theme.join(
+            get(theme, [ 'messages', 'message', 'divider' ]),
+            styles && get(styles, [ 'divider' ])
+          )}
+        />
 
         <P style={ theme.join(
           get(theme, [ 'messages', 'message', 'content' ]),
@@ -34,5 +45,4 @@ export const Message = withTheme(props => {
       </View>
     </ListItem>
   )
-  
-})
+}

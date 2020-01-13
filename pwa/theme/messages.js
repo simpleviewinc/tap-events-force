@@ -3,6 +3,7 @@ import { padding, margin } from 'SVTheme/layout'
 
 export const messages = {
   container: {},
+  list: {},
   wrapper: {},
   message: {
     container: {

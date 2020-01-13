@@ -1,20 +1,31 @@
-import EventEmitter from '../../util/misc/event_emitter'
-import { Values } from '../../constants'
+import { getEventEmitter, hasDomAccess } from 'SVUtils'
+import { Values } from 'SVConstants'
+import { logData, checkCall } from 'jsutils'
+
+const enableOffLine = () => {
+  return global.__PLATFORM__ !== 'web'
+    ? true
+    : hasDomAccess()
+}
+
 /**
- * Interface for a DB service
+ * Interface for a Database service
  * @interface
  */
-export default class DB {
+class Database {
 
   initialized = false
-  events = new EventEmitter()
+
+  events = getEventEmitter()
+
   eventTypes = [
-    Values.DB_INIT,
-    Values.DB_AUTH_CHANGE,
-    Values.DB_DOC_ADDED,
-    Values.DB_DOC_CHANGED,
-    Values.DB_DOC_REMOVED,
+    Values.DB.INIT,
+    Values.DB.AUTH_CHANGE,
+    Values.DB.DOC_ADDED,
+    Values.DB.DOC_CHANGED,
+    Values.DB.DOC_REMOVED,
   ]
+
   /**
    * construct db class
    * @param { boolean } debug - if in debug mode or not
@@ -26,17 +37,15 @@ export default class DB {
     this.config = config
     this.watcherUnSubs = {}
     this.fallback = fallback
-    this.enableOffline = typeof window !== 'undefined'
+    this.enableOffline =  enableOffLine()
   }
 
   /**
    * simple logging
    * @param { any } msg - what to log
-   * @param { 'log'|'warn'|'error' } type - type of log
+   * @param { 'log'|'warn'|'info'|'debug'|'error' } type - type of log
    */
-  log = (msg, type = 'log') => {
-    this.debug && console[type](msg)
-  }
+  log = (msg, type = 'log') => this.debug && logData(msg, type)
 
   /**
    * initialize db service
@@ -195,4 +204,8 @@ export default class DB {
     return this.fallback('unwatchDocs', [ collection, queries ])
   }
 
+}
+
+export {
+  Database
 }

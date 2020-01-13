@@ -17,8 +17,8 @@
     "test": "cd ../../; TAP=tap-events-force/pwa yarn test"
   },
   "dependencies": {
-    "firebase": "^7.6.2",
     "jsutils": "git+https://github.com/lancetipton/jsutils.git",
     "keg-components": "git+https://github.com/lancetipton/keg-components.git"
-  }
+  },
+  "devDependencies": {}
 }
