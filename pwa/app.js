@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, StatusBar, Platform } from 'react-native'
+import 'SVTheme'
+import { SafeAreaView, StatusBar } from 'react-native'
 import { Provider } from 'react-redux'
 import { ReThemeProvider, getDefaultTheme } from 're-theme'
 import { getStore } from 'SVStore'
@@ -7,7 +8,6 @@ import { initAppAction } from 'SVActions'
 import AppContainer from 'SVContainers/app'
 import { Router } from 'SVComponents'
 import { checkCall, get } from 'jsutils'
-import 'SVTheme'
 
 const checkAppInit = setInit => {
   setInit(true)
@@ -28,7 +28,7 @@ const App = props => {
       <Router>
         <SafeAreaView>
           <Provider store={getStore()}>
-            <ReThemeProvider theme={activeTheme} merge={false}>
+            <ReThemeProvider theme={{}} merge={true}>
               <AppContainer switchTheme={ switchTheme } />
             </ReThemeProvider>
           </Provider>

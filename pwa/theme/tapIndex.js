@@ -1,7 +1,9 @@
-import { chat } from './chat'
+import { app } from './app'
 import { messages } from './messages'
+import { write } from './write'
 
 export const theme = {
-  chat,
-  messages
+  app,
+  messages,
+  write,
 } 

@@ -1,7 +1,7 @@
 import { padding, margin } from 'SVTheme/layout'
 import { colors } from 'SVTheme/colors'
 
-export const chat = {
+export const write = {
   input: {
     container: {
       $all: {
@@ -12,6 +12,8 @@ export const chat = {
         borderTopWidth: 2,
         borderTopColor: colors.divider,
         ...padding(padding.size / 2),
+        paddingTop: padding.size,
+        paddingBottom: padding.size * 4
       },
       $web: {
         top: 'calc( 100vh - 100px)',
@@ -20,7 +22,6 @@ export const chat = {
       $native: {
         width: '100%',
         top: '93%',
-        paddingBottom: padding.size * 4
       },
     },
     wrapper: {
@@ -40,20 +41,21 @@ export const chat = {
     textField: {
       wrapper: {
         $all: {
-          height: 50,
         },
         $web: {
-          ...margin(margin.size, [ 'left', 'right' ]),
+          marginTop: 0,
         },
         $native: {
           height: 50,
         }
       },
-      field: {},
+      field: {
+        paddingTop: 0
+      },
     },
     button: {
       $all: {
-        height: 50,
+        height: 56,
       },
       $web: {
         width: 150,

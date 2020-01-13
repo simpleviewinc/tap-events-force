@@ -17,7 +17,7 @@ export const WriteMessage = withTheme(props => {
     <View 
       style={
         theme.join(
-          get(theme, [ 'chat', 'input', 'container' ]),
+          get(theme, [ 'write', 'input', 'container' ]),
           get(styles, [ 'input', 'container' ]),
         )
       }
@@ -25,7 +25,7 @@ export const WriteMessage = withTheme(props => {
       <View
         style={
           theme.join(
-            get(theme, [ 'chat', 'input', 'wrapper' ]),
+            get(theme, [ 'write', 'input', 'wrapper' ]),
             get(styles, [ 'input', 'wrapper' ])
           )
         }
@@ -33,16 +33,17 @@ export const WriteMessage = withTheme(props => {
         <TextField
           containerStyle={
             theme.join(
-              get(theme, [ 'chat', 'input', 'textField', 'wrapper' ]),
+              get(theme, [ 'write', 'input', 'textField', 'wrapper' ]),
               get(styles, [ 'textField', 'wrapper' ]),
             )
           }
           style={
             theme.join(
-              get(theme, [ 'chat', 'input', 'textField', 'field' ]),
+              get(theme, [ 'write', 'input', 'textField', 'field' ]),
               get(styles, [ 'textField', 'field' ]),
             )
           }
+          type={'outlined'}
           label={ global.__PLATFORM__ == 'web' && 'Enter Message' || '' }
           value={inputVal}
           onChangeText={ setVal }
@@ -51,7 +52,7 @@ export const WriteMessage = withTheme(props => {
       <Button
         style={
           theme.join(
-            get(theme, [ 'chat', 'input', 'button' ]),
+            get(theme, [ 'write', 'input', 'button' ]),
             get(styles, [ 'button' ]),
           )
         }
