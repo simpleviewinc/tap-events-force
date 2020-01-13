@@ -4,30 +4,63 @@ import { colors } from 'SVTheme/colors'
 export const chat = {
   input: {
     container: {
-      position: 'absolute',
-      width: '100vw',
-      top: 'calc( 100vh - 100px)',
-      backgroundColor: colors.lightGray,
-      flexDirection: 'row',
-      borderTopStyle: 'solid',
-      borderTopWidth: 2,
-      borderTopColor: colors.divider,
-      ...padding(20),
+      $all: {
+        position: 'absolute',
+        backgroundColor: colors.lightGray,
+        flexDirection: 'row',
+        borderTopStyle: 'solid',
+        borderTopWidth: 2,
+        borderTopColor: colors.divider,
+        ...padding(padding.size / 2),
+      },
+      $web: {
+        top: 'calc( 100vh - 100px)',
+        width: '100vw',
+      },
+      $native: {
+        width: '100%',
+        top: '93%',
+        paddingBottom: padding.size * 4
+      },
     },
     wrapper: {
-      width: 'calc( 100% - 165px)',
-      backgroundColor: colors.white,
-      ...margin.right,
+      $all: {
+        backgroundColor: colors.white,
+        marginRight: margin.size / 2,
+      },
+      $web: {
+        width: 'calc( 100% - 165px)',
+      },
+      $native: {
+        width: '75%',
+        height: 50,
+        borderRadius: 5
+      },
     },
     textField: {
       wrapper: {
-        ...padding.vert,
+        $all: {
+          height: 50,
+        },
+        $web: {
+          ...margin(margin.size, [ 'left', 'right' ]),
+        },
+        $native: {
+          height: 50,
+        }
       },
-      field: {}
+      field: {},
     },
     button: {
-      width: 150,
-      height: 56
+      $all: {
+        height: 50,
+      },
+      $web: {
+        width: 150,
+      },
+      $native: {
+        padding: 0
+      }
     }
   },
 }

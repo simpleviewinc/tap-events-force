@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react'
+import { ScrollView } from 'react-native'
+
 import { connect } from 'react-redux'
 import { useTheme } from 're-theme'
 import { get } from 'jsutils'
@@ -23,21 +25,23 @@ export const MessagesList = props => {
         get(styles, [ 'container' ])
       )}
     >
-      <List
-        style={theme.join(
-          get(theme, [ 'messages', 'list' ]),
-          get(styles, [ 'list' ])
-        )}
-      >
-        { messages.map((message, index) => (
-          <Message
-            key={ message.id }
-            message={ message }
-            index={ index }
-            styles={ get(styles, [ 'message' ]) }
-          />
-        )) }
-      </List>
+    <ScrollView>
+        <List
+          style={theme.join(
+            get(theme, [ 'messages', 'list' ]),
+            get(styles, [ 'list' ])
+          )}
+        >
+          { messages.map((message, index) => (
+            <Message
+              key={ message.id }
+              message={ message }
+              index={ index }
+              styles={ get(styles, [ 'message' ]) }
+            />
+          )) }
+        </List>
+      </ScrollView>
     </View>
   )
   

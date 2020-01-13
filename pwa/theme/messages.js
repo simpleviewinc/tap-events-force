@@ -2,9 +2,19 @@ import { colors } from 'SVTheme/colors'
 import { padding, margin } from 'SVTheme/layout'
 
 export const messages = {
-  container: {},
-  list: {},
-  wrapper: {},
+  container: {
+    backgroundColor: colors.lightGray,
+    paddingTop: padding.size,
+    ...padding(padding.size / 2, [ 'left', 'right' ]),
+  },
+  list: {
+    backgroundColor: colors.white,
+    padding: padding.size / 4,
+    paddingBottom: padding.size * 6,
+  },
+  wrapper: {
+    
+  },
   message: {
     container: {
       borderRadius: 5,

@@ -43,7 +43,7 @@ export const WriteMessage = withTheme(props => {
               get(styles, [ 'textField', 'field' ]),
             )
           }
-          label={'Enter Message'}
+          label={ global.__PLATFORM__ == 'web' && 'Enter Message' || '' }
           value={inputVal}
           onChangeText={ setVal }
         />
