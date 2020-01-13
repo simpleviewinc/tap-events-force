@@ -1,22 +1,35 @@
 import React, { useEffect } from 'react'
 import { ScrollView } from 'react-native'
-
 import { connect } from 'react-redux'
 import { useTheme } from 're-theme'
 import { get } from 'jsutils'
 import { Message, View } from 'SVComponents'
 import { List } from 'material-bread'
-import { FBService } from 'SVServices/firebase'
+import { initDB, getCollection } from 'SVActions'
+import { Values, ActionTypes } from 'SVConstants'
+import { sortMessages } from 'SVUtils'
 
+/**
+ * Component to List all message pulled in form the store
+ * @param {*} props
+ *
+ * @returns {React Component}
+ */
 export const MessagesList = props => {
+
   const theme = useTheme()
-  const { messages, styles } = props
+  const { settings, user, styles } = props
+  const messages = sortMessages(props.messages)
+  const dbInit = settings[ActionTypes.DB_INIT]
 
   useEffect(() => {
+    initDB()
 
-    !FBService.initialized && FBService.initialize()
+    dbInit &&
+      !Object.keys(messages).length &&
+      getCollection(Values.categories.messages, true)
 
-  }, [ messages ])
+  }, [ dbInit ])
 
   return (
     <View
@@ -32,11 +45,11 @@ export const MessagesList = props => {
             get(styles, [ 'list' ])
           )}
         >
-          { messages.map((message, index) => (
+          { Object.entries(messages).map(([ id, message ]) => (
             <Message
-              key={ message.id }
+              user={ user }
+              key={ id }
               message={ message }
-              index={ index }
               styles={ get(styles, [ 'message' ]) }
             />
           )) }
@@ -48,5 +61,8 @@ export const MessagesList = props => {
 }
 
 export const Messages = connect(({ items }) => ({
-  messages: items && items.messages || []
+  messages: items[Values.categories.messages] || {},
+  settings: items[Values.categories.settings] || {},
+  user: items[Values.categories.user] || {},
+  recipient: items[Values.categories.recipient] || {},
 }))(MessagesList)

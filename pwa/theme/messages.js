@@ -5,7 +5,7 @@ export const messages = {
   container: {
     backgroundColor: colors.lightGray,
     paddingTop: padding.size,
-    ...padding(padding.size / 2, [ 'left', 'right' ]),
+    ...padding(padding.size, [ 'left', 'right' ]),
   },
   list: {
     backgroundColor: colors.white,
@@ -16,6 +16,13 @@ export const messages = {
     
   },
   message: {
+    fromItem: {
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+    },
+    toItem: {
+      
+    },
     container: {
       borderRadius: 5,
       minWidth: 150,

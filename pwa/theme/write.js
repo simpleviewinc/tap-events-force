@@ -4,65 +4,36 @@ import { colors } from 'SVTheme/colors'
 export const write = {
   input: {
     container: {
-      $all: {
-        position: 'absolute',
-        backgroundColor: colors.lightGray,
-        flexDirection: 'row',
-        borderTopStyle: 'solid',
-        borderTopWidth: 2,
-        borderTopColor: colors.divider,
-        ...padding(padding.size / 2),
-        paddingTop: padding.size,
-        paddingBottom: padding.size * 4
-      },
-      $web: {
-        top: 'calc( 100vh - 100px)',
-        width: '100vw',
-      },
-      $native: {
-        width: '100%',
-        top: '93%',
-      },
+      position: 'absolute',
+      backgroundColor: colors.lightGray,
+      flexDirection: 'row',
+      ...padding.vert,
+      paddingTop: padding.size,
+      paddingBottom: padding.size * 4,
+      width: '100%',
+      top: '90%',
     },
     wrapper: {
-      $all: {
-        backgroundColor: colors.white,
-        marginRight: margin.size / 2,
-      },
-      $web: {
-        width: 'calc( 100% - 165px)',
-      },
-      $native: {
-        width: '75%',
-        height: 50,
-        borderRadius: 5
-      },
+      backgroundColor: colors.white,
+      marginRight: margin.size / 2,
+      flexGrow: 2,
+      borderRadius: 5,
     },
     textField: {
       wrapper: {
-        $all: {
-        },
-        $web: {
-          marginTop: 0,
-        },
-        $native: {
-          height: 50,
-        }
+        marginTop: 0,
       },
       field: {
-        paddingTop: 0
+        paddingTop: 0,
       },
     },
     button: {
-      $all: {
-        height: 56,
-      },
-      $web: {
-        width: 150,
-      },
-      $native: {
-        padding: 0
-      }
+      height: 56,
+      flexGrow: 1,
+      padding: 0,
+    },
+    buttonText: {
+      color: colors.white,
     }
   },
 }

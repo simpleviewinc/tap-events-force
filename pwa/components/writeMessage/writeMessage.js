@@ -1,16 +1,35 @@
 import React, { useState } from 'react'
-import { withTheme } from 're-theme'
+import { useTheme } from 're-theme'
+import { connect } from 'react-redux'
 import { View, Button, Text } from 'SVComponents'
-import { get } from 'jsutils'
+import { get, checkCall } from 'jsutils'
 import { TextField } from 'material-bread';
+import { Values } from 'SVConstants'
+import { buildMessage } from 'SVUtils'
+import { upsertDoc } from 'SVActions'
 
-const onClick = value => evt => {
-  console.log(`---------- Pass to an message action ----------`)
-  console.log(value)
+/**
+ * Handler for when the message submit button is pressed
+ * @param {string} value - Current value of the input field
+ * @param {*} user - Current local user
+ * @param {*} recipient - User to send the message to
+ *
+ * @returns {function} - Function to run when the submit button is clicked
+ */
+const onClick = (value, user, recipient) => evt => {
+  const message = checkCall(buildMessage, value, user, recipient)
+  upsertDoc(message)  
 }
 
-export const WriteMessage = withTheme(props => {
-  const { theme, styles } = props
+/**
+ * Component to Write a new message
+ * @param {*} props
+ *
+ * @returns {React Component}
+ */
+export const Write = props => {
+  const theme = useTheme()
+  const { styles, user, recipient } = props
   const [ inputVal, setVal ] = useState('')
 
   return (
@@ -56,12 +75,23 @@ export const WriteMessage = withTheme(props => {
             get(styles, [ 'button' ]),
           )
         }
-        onPress={ onClick(inputVal) }
+        onPress={ onClick(inputVal, user, recipient) }
       >
-        <Text style={{ color: "#ffffff" }} >
+        <Text
+          style={ theme.join(
+            get(theme, [ 'write', 'input', 'buttonText' ]),
+            get(styles, [ 'buttonText' ]),
+          )}
+        >
           Submit
         </Text>
       </Button>
     </View>
   )
-})
+}
+
+export const WriteMessage = connect(({ items }) => ({
+  settings: items[Values.categories.settings] || {},
+  user: items[Values.categories.user] || {},
+  recipient: items[Values.categories.recipient] || {},
+}))(Write)
