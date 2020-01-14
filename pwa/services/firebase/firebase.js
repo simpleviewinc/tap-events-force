@@ -26,6 +26,7 @@ const actionsMap = {
  * @returns {Object} - docs as an object, keyed by ID
  */
 const docsToObject = docs => {
+
   return docs.reduce((converted, doc) => {
     const data = doc.data()
     converted[data.id] = data

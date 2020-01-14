@@ -1,6 +1,11 @@
 import { uuid } from 'jsutils'
 import { Values } from 'SVConstants'
-import { Platform } from 'react-native'
+// import { Platform } from 'react-native'
+console.log(`---------- Need to FIX ----------`)
+const Platform = {
+  OS: 'ios',
+  
+}
 
 /**
  * Builds a user 
