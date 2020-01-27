@@ -1,23 +1,23 @@
 {
   "name": "tap-events-force",
   "version": "1.0.0",
-  "description": "Events Force Tag for the Keg",
+  "description": "Events Force Tap for the Keg",
   "main": "index.js",
   "repository": "https://github.com/simpleviewinc/tap-events-force.git",
   "author": "Lance Tipton <lancetipton04@gmail.com>",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "clean:full": "rimraf yarn.lock && yarn clean",
-    "clean": "rimraf node_modules && yarn install",
-    "start": "yarn web:start",
-    "start:n": "yarn native:start",
-    "ios": "cd ../../; TAP=tap-events-force/pwa PLATFORM=native yarn ios",
-    "web:start": "cd ../../; TAP=tap-events-force/pwa PLATFORM=web yarn web",
-    "native:start": "cd ../../; TAP=tap-events-force/pwa PLATFORM=native yarn native",
-    "test": "cd ../../; TAP=tap-events-force/pwa yarn test"
+    "cp": "/bin/bash cp.sh",
+    "android": "cd node_modules/sv-keg; yarn android",
+    "clean": "cd node_modules/sv-keg; yarn clean",
+    "ios": "cd node_modules/sv-keg; yarn ios",
+    "start": "cd node_modules/sv-keg; expo start",
+    "web": "cd node_modules/sv-keg; yarn web",
+    "build": "cd node_modules/sv-keg; yarn build:web"
   },
   "dependencies": {
+    "firebase": "^7.7.0"
   },
   "devDependencies": {}
 }

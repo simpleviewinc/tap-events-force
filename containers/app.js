@@ -1,8 +1,7 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { get } from 'jsutils'
-import { ChatContainer } from './chat'
 
 const AppContainer = props => {
 
@@ -15,7 +14,7 @@ const AppContainer = props => {
         get(props, [ 'styles', 'container' ]),
       )}
     >
-      <ChatContainer />
+      <Text>WOW</Text>
     </View>
   )
 }
