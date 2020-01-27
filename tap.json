@@ -1,6 +1,6 @@
 {
-  "name": "mobile-x5-pwa",
-  "displayName": "Mobile X5 PWA",
+  "name": "tap-events-force",
+  "displayName": "tap-events-force",
   "versions": {
     "development": "1.0.0",
     "production": "1.0.0",
@@ -22,5 +22,9 @@
       "messagingSenderId": "88126204126",
       "appId": "1:88126204126:web:4b15391a1cd00a6b517a4f"
     }
+  },
+  "expo": {
+    "name": "tap-events-force",
+    "slug": "tap-events-force"
   }
 }
