@@ -8,16 +8,20 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "cp": "/bin/bash cp.sh",
     "android": "cd node_modules/sv-keg; yarn android",
+    "build:android": "cd node_modules/sv-keg; yarn build:android",
+    "build:ios": "cd node_modules/sv-keg; yarn build:ios",
+    "build:web": "cd node_modules/sv-keg; yarn build:web",
+    "cp": "/bin/bash cp.sh",
     "clean": "cd node_modules/sv-keg; yarn clean",
     "ios": "cd node_modules/sv-keg; yarn ios",
     "start": "cd node_modules/sv-keg; expo start",
-    "web": "cd node_modules/sv-keg; yarn web",
-    "build": "cd node_modules/sv-keg; yarn build:web"
+    "setup": "yarn install; cd node_modules/sv-keg; yarn postinstall",
+    "web": "cd node_modules/sv-keg; yarn web"
   },
   "dependencies": {
-    "firebase": "^7.7.0"
+    "firebase": "^7.7.0",
+    "sv-keg": "https://github.com/simpleviewinc/sv-keg-expo.git#master"
   },
   "devDependencies": {}
 }
