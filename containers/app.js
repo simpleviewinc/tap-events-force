@@ -16,7 +16,7 @@ const AppContainer = props => {
 
   const theme = useTheme()
 
-  // loads and starts watching the collections
+  // loads and starts watching the collections. Placing here until we start working on the screens.
   useFirestoreWatch(collections)
 
   const appCollections = {

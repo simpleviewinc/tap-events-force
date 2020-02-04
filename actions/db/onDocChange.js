@@ -4,8 +4,10 @@ import { validate, isStr, isObj } from 'jsutils'
 
 /**
  * Called when a doc changes from an outside source
- * @param {string} type - ActionType to use when passing to a reducer
+ * @param {*} collectionName - the name of the collection in which the doc resides
  * @param {Object} doc - item the was changed
+ * @param {*} id - the id of the doc
+ * @param {string} type - ActionType to use when passing to a reducer
  *
  * @returns {void}
  */

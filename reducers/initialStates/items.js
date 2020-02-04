@@ -1,4 +1,3 @@
-import { uuid } from 'jsutils'
 import { Values } from 'SVConstants'
 
 export const itemsState = {
