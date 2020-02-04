@@ -220,12 +220,16 @@ class Firebase {
    */
   watchQuery = (query, key) => {
     this.watcherUnSubs[key] = query.onSnapshot(snapShot => {
-      snapShot.docChanges()
+      snapShot
+        .docChanges()
         .forEach(change => {
-          actionsMap[change.type] && onDocChange(change.doc.data(), actionsMap[change.type])
-        },
-        error => this.log(error, 'warn')
-      )
+            const id = change.doc.id
+            const docData = change.doc.data()
+            const collectionName = docData.collection || key
+            onDocChange(collectionName, docData, id, actionsMap[change.type])
+          },
+          error => this.log(error, 'warn')
+        )
     })
   }
 
