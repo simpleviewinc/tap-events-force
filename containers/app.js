@@ -6,11 +6,7 @@ import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useFirestoreWatch } from 'SVUtils/hooks'
 
-const collections = [
-  Values.categories.messages,
-  Values.categories.event,
-  Values.categories.sessions
-]
+const collections = [ Values.categories.event, Values.categories.sessions ]
 
 const AppContainer = props => {
 
@@ -21,7 +17,6 @@ const AppContainer = props => {
 
   const appCollections = {
     sessions: useSelector(store => store.items.sessions) || {},
-    messages: useSelector(store => store.items.messages) || {},
     event: useSelector(store => store.items.event) || {},
   }
 
@@ -35,8 +30,11 @@ const AppContainer = props => {
       {
         collections.map(coll => (
           <React.Fragment key={coll}>
+
             <Text>{ `Number of ${coll} keys:`}</Text>
+
             <Text>{ Object.keys(appCollections[coll]).length } </Text>
+
           </React.Fragment>
         ))
       }
