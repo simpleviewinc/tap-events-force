@@ -224,8 +224,8 @@ class Firebase {
         .docChanges()
         .forEach(change => {
             const data = change.doc.data()
-            const collection = data.collection || key
-            onDocChange({ ...data, collection }, actionsMap[change.type])
+            data.collection = data.collection || key
+            onDocChange(data, actionsMap[change.type])
           },
           error => this.log(error, 'warn')
         )
