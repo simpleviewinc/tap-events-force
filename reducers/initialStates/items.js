@@ -1,7 +1,7 @@
 import { Values } from 'SVConstants'
 
 export const itemsState = {
-  [Values.categories.event]: {},
+  [Values.categories.events]: {},
   [Values.categories.sessions]: {},
   [Values.categories.messages]: {},
 }

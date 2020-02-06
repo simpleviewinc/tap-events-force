@@ -5,7 +5,7 @@ import jsQR from 'jsqr'
 
 const videoConstraints = { width: 640, height: 480, frameRate: 15 }
 
-export const CameraCapture = (props) => {
+export const CameraCaptureLive = (props) => {
   const [ streaming, setStreaming ] = useState(false)
 
   const videoRef = useRef()
@@ -140,14 +140,6 @@ const useVideoImageCapture = (videoRef, canvasRef) => {
   const canvas = get(canvasRef, 'current')
   const video = get(videoRef, 'current')
 
-  const clearPhoto = () => {
-    const context = canvas.getContext('2d')
-    context.fillStyle = "#AAA"
-    const width = canvas.width
-    const height = canvas.height
-    context.fillRect(0, 0, width, height)
-  }
-
   useEffect(() => {
     if (!canvas || !video) return
 
@@ -167,8 +159,6 @@ const useVideoImageCapture = (videoRef, canvasRef) => {
       const imageData = context.getImageData(0, 0, width, height)
 
       setImage(imageData)
-
-      // clearPhoto()
     }
   }, [ canvas, video, captureTrigger ])
 
@@ -179,8 +169,3 @@ const useVideoImageCapture = (videoRef, canvasRef) => {
     captureImage
   ]
 }
-
-
-//// qr conversion
-
-// const 

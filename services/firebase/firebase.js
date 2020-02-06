@@ -223,10 +223,9 @@ class Firebase {
       snapShot
         .docChanges()
         .forEach(change => {
-            const id = change.doc.id
-            const docData = change.doc.data()
-            const collectionName = docData.collection || key
-            onDocChange(collectionName, docData, id, actionsMap[change.type])
+            const data = change.doc.data()
+            data.collection = data.collection || key
+            onDocChange(data, actionsMap[change.type])
           },
           error => this.log(error, 'warn')
         )

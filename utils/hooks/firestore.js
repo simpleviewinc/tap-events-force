@@ -1,43 +1,44 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { FBService } from 'SVServices'
-import { ensureArr } from 'SVUtils'
+import { useSelector } from 'react-redux'
+import { validate, isStr, isObj, eitherObj, isArr } from 'jsutils'
+import { getCollection, watchCollection } from 'SVActions'
 
 /**
- * Pulls down the data for the collections and listens for changes. Access each collection in the `items` store tree
- * @param {string | Array<string>} collections - either a single collection name, or an array of collections, to watch
- * @param {Array} dependencies - any dependencies that should cause a reload of the hook when changed
+ * Fetches the firestore collection
+ * @param {Object | String } params - either a param object or the name of the collection
+ * @param {string} params.name - the name of the collection
+ * @param {boolean} params.subscribe - (optional, true by default) if true, useCollection will setup listeners to the collection and store the results in the items store tree.
+ * @param {Array} dependencies - (optional) dependencies that should cause a reload of the hook when changed.
+ * @returns {Object} the firestore collection, coming from the items store tree.
+ * Since the fetch is asynchronous, it will initially return the initial state for this collection (@see reducers/initialStates/items)
+ * 
+ * @example
+ * const events = useCollection('events', [ someDependency ]) // this fetches events and subscribes to any changes
+ * 
+ * @example
+ * const sessions = useCollection({ name: 'sessions', subscribe: false }, []) // no subscription here. Fetches the data and inserts into store **once**
  */
-export const useFirestoreWatch = (collections, dependencies=[]) => {
-  const sources = ensureArr(collections)
+export const useCollection = (params, dependencies=[]) => {
+  const [ valid ] = validate(
+    { dependencies, params },
+    { dependencies: isArr, params: p => isStr(p) || isObj(p) }
+  )
+  if (!valid) return
 
-  useEffect(() => {
-    // watch each collection. This will initially pull down any data
-    sources.map(src => FBService.watchCollection(src))
-
-    // on unmount -- only matters if dependencies isn't an empty array
-    return () => sources.map(src => FBService.unwatchCollection(src))
-
-  }, dependencies)
-}
-
-/**
- * Fetches for the firestore collection **once**
- * @returns the result of the fetch. Since the fetch is asynchronous, it will initially return an empty object {}
- * @param {string} collection 
- * @param {Array} dependencies 
- */
-export const useCollection = (collection, dependencies=[]) => {
-  const [ result, setResult ] = useState({})
-
-  const fetch = async () => {
-    const docs = await FBService.getCollection(collection)
-    setResult(docs)
-  }
+  const { name, subscribe=true } = eitherObj(params, { name: params })
 
   useEffect(
-    () => void fetch(),
-    dependencies
+    () => {
+      subscribe 
+        ? watchCollection(name)
+        : getCollection(name) 
+
+      return () => { subscribe && FBService.unwatchCollection(name) }
+    },
+    [ ...dependencies, name ]
   )
 
-  return result
+  // return the collection results from the store
+  return useSelector(store => store.items[name])
 }
