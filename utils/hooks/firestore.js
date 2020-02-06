@@ -10,8 +10,7 @@ import { getCollection, watchCollection } from 'SVActions'
  * @param {Object || Array} optionsOrDependencies - (optional) if an object, then the config options for the fetch. If an array, then the dependencies for hook
  * @param {boolean} optionsOrDependencies.subscribe - (optional) if true, useCollection will setup listeners to the collection and store the results in the items store tree.
  * @param {Array} otherDependencies - (optional) dependencies that should cause a reload of the hook when changed. Only used if optionsOrDependencies isn't an array.
- * 
- * @returns the firestore collection, coming from the items store tree.
+ * @returns {Object} the firestore collection, coming from the items store tree.
  * Since the fetch is asynchronous, it will initially return the initial state for this collection (@see reducers/initialStates/items)
  * 
  * @example
