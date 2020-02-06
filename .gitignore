@@ -125,3 +125,4 @@ jest_html_reporters.html
 re-theme-touch.js
 *.code-workspace
 **/temp/**
+.temp
