@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { FBService } from 'SVServices'
 import { useSelector } from 'react-redux'
-import { validate, isStr, isObj, get } from 'jsutils'
+import { validate, isStr, isObj, get, isArr } from 'jsutils'
 import { getCollection, watchCollection } from 'SVActions'
 
 /**
@@ -21,8 +21,8 @@ import { getCollection, watchCollection } from 'SVActions'
  */
 export const useCollection = (params, dependencies=[]) => {
   const [ valid ] = validate(
-    { params, name: get(params, 'name') },
-    { params: isObj, name: isStr }
+    { dependencies, params, name: get(params, 'name') },
+    { dependencies: isArr, params: isObj, name: isStr }
   )
   if (!valid) return
 

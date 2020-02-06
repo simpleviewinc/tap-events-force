@@ -14,8 +14,8 @@ const AppContainer = props => {
   // loads and starts watching the collections.
   // Placing this here until we start working on the screens that will have their own containers to call these functions.
   const collections = {
-    [events]: useCollection({ name: events, subscribe: true }, []),
-    [sessions]: useCollection({ name: sessions, subscribe: true }, []),
+    [events]: useCollection({ name: events, subscribe: true }),
+    [sessions]: useCollection({ name: sessions, subscribe: true }),
   }
 
   return (
