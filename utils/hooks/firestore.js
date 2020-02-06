@@ -11,7 +11,6 @@ export const useFirestoreWatch = (collections, dependencies=[]) => {
   const sources = ensureArr(collections)
 
   useEffect(() => {
-
     // watch each collection. This will initially pull down any data
     sources.map(src => FBService.watchCollection(src))
 

@@ -5,12 +5,11 @@ import { useSelector } from 'react-redux'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useFirestoreWatch } from 'SVUtils/hooks'
-import { CameraCapture } from 'SVComponents/cameraCapture.web' 
+import { CameraCapture } from 'SVComponents/cameraCapture2.web' 
 
 const collections = [ Values.categories.event, Values.categories.sessions ]
 
 const AppContainer = props => {
-
   const theme = useTheme()
 
   // loads and starts watching the collections. Placing here until we start working on the screens.
