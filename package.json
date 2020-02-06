@@ -17,7 +17,7 @@
     "ios": "cd node_modules/sv-keg; yarn ios",
     "start": "cd node_modules/sv-keg; expo start",
     "setup": "yarn install; cd node_modules/sv-keg; yarn postinstall",
-    "web": "cd node_modules/sv-keg; yarn web"
+    "web": "yarn cp && cd node_modules/sv-keg; yarn web"
   },
   "dependencies": {
     "firebase": "^7.7.0",

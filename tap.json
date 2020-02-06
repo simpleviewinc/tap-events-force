@@ -1,15 +1,20 @@
 {
   "name": "events-force-x5",
   "displayName": "Events Force Mobile X5",
-  "versions": {
-    "development": "1.0.0",
-    "production": "1.0.0",
-    "qa": "1.0.0",
-    "staging": "1.0.0"
+  "tapResolver": {
+    "paths": {
+      "tapSrc": "./src"
+    }
   },
   "keg": {
+    "versions": {
+      "development": "1.0.0",
+      "production": "1.0.0",
+      "qa": "1.0.0",
+      "staging": "1.0.0"
+    },
     "paths": {
-      "buildConfig": "taps/tap-events-force/pwa/configs/build.config.js"
+      "buildConfig": "src/configs/build.config.js"
     }
   },
   "firebase": {

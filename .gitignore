@@ -114,6 +114,7 @@ core/scripts/js/tapList.js
 core/scripts/js/tap_List.js
 
 core/base/assets/index.js
+assets/index.js
 
 # Ignore test report
 test-report.xml
