@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { FBService } from 'SVServices'
 import { useSelector } from 'react-redux'
-import { validate, isStr } from 'jsutils'
+import { validate, isStr, isObj, get } from 'jsutils'
 import { getCollection, watchCollection } from 'SVActions'
 
 /**
@@ -19,9 +19,14 @@ import { getCollection, watchCollection } from 'SVActions'
  * @example
  * const sessions = useCollection({ name: 'sessions' }, []) // no subscription here. Fetches the data and inserts into store **once**
  */
-export const useCollection = ({ name, subscribe=false }, dependencies=[]) => {
-  const [ valid ] = validate({ name }, { name: isStr })
+export const useCollection = (params, dependencies=[]) => {
+  const [ valid ] = validate(
+    { params, name: get(params, 'name') },
+    { params: isObj, name: isStr }
+  )
   if (!valid) return
+
+  const { name, subscribe=false } = params
 
   useEffect(
     () => {
