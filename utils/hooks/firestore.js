@@ -1,32 +1,32 @@
 import { useEffect } from 'react'
 import { FBService } from 'SVServices'
 import { useSelector } from 'react-redux'
-import { validate, isStr, isObj, get, isArr } from 'jsutils'
+import { validate, isStr, isObj, eitherObj, isArr } from 'jsutils'
 import { getCollection, watchCollection } from 'SVActions'
 
 /**
  * Fetches the firestore collection
- * @param {Object} params 
+ * @param {Object | String } params - either a param object or the name of the collection
  * @param {string} params.name - the name of the collection
- * @param {boolean} params.subscribe - (optional) if true, useCollection will setup listeners to the collection and store the results in the items store tree.
+ * @param {boolean} params.subscribe - (optional, true by default) if true, useCollection will setup listeners to the collection and store the results in the items store tree.
  * @param {Array} dependencies - (optional) dependencies that should cause a reload of the hook when changed.
  * @returns {Object} the firestore collection, coming from the items store tree.
  * Since the fetch is asynchronous, it will initially return the initial state for this collection (@see reducers/initialStates/items)
  * 
  * @example
- * const events = useCollection({ name: 'events', subscribe: true }, [ someDependency ])
+ * const events = useCollection('events', [ someDependency ]) // this fetches events and subscribes to any changes
  * 
  * @example
- * const sessions = useCollection({ name: 'sessions' }, []) // no subscription here. Fetches the data and inserts into store **once**
+ * const sessions = useCollection({ name: 'sessions', subscribe: false }, []) // no subscription here. Fetches the data and inserts into store **once**
  */
 export const useCollection = (params, dependencies=[]) => {
   const [ valid ] = validate(
-    { dependencies, params, name: get(params, 'name') },
-    { dependencies: isArr, params: isObj, name: isStr }
+    { dependencies, params },
+    { dependencies: isArr, params: p => isStr(p) || isObj(p) }
   )
   if (!valid) return
 
-  const { name, subscribe=false } = params
+  const { name, subscribe=true } = eitherObj(params, { name: params })
 
   useEffect(
     () => {
