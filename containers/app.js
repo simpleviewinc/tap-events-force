@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useFirestoreWatch } from 'SVUtils/hooks'
+import { CameraCapture } from 'SVComponents/cameraCapture.web' 
 
 const collections = [ Values.categories.event, Values.categories.sessions ]
 
@@ -38,6 +39,7 @@ const AppContainer = props => {
           </React.Fragment>
         ))
       }
+      <CameraCapture />
     </View>
   )
 }
