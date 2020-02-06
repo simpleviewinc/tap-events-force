@@ -6,11 +6,9 @@ import { Values, ActionTypes } from 'SVConstants'
 /**
  * Gets all the docs for a collection
  * @param {*} collection - Collection to get the docs for
- * @param {*} watch - Should watch for changes to the collection
- *
  * @returns {void}
  */
-export const getCollection = async (collection, watch) => {
+export const getCollection = async (collection) => {
   if(!collection)
     return logData(`A collection name is required to watch a collection!`, collection, 'error')
 
