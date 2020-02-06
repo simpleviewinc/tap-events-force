@@ -4,16 +4,14 @@ import { validate, isStr, isObj } from 'jsutils'
 
 /**
  * Called when a doc changes from an outside source
- * @param {*} collectionName - the name of the collection in which the doc resides
- * @param {Object} doc - item the was changed
- * @param {*} id - the id of the doc
+ * @param {Object} doc - the doc data that was changed
  * @param {string} type - ActionType to use when passing to a reducer
  *
  * @returns {void}
  */
-export const onDocChange = (collectionName, doc, id, type=ActionTypes.UPSERT_ITEM) => {
+export const onDocChange = (doc, type=ActionTypes.UPSERT_ITEM) => {
   const [ success ] = validate(
-    { collectionName, type, doc, id },
+    { type, doc, id: doc.id, collection: doc.collection },
     { $default: isStr, doc: isObj },
   )
   if (!success) return
@@ -21,7 +19,7 @@ export const onDocChange = (collectionName, doc, id, type=ActionTypes.UPSERT_ITE
   return dispatch({
     type,
     payload: {
-      category: Values.categories[collectionName],
+      category: Values.categories[doc.collection],
       key: doc.id,
       item: doc
     },

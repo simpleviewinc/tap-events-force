@@ -4,20 +4,19 @@ import { useTheme } from 're-theme'
 import { useSelector } from 'react-redux'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
-import { useFirestoreWatch } from 'SVUtils/hooks'
+import { useFirestoreWatch, useCollection } from 'SVUtils/hooks'
 
-const collections = [ Values.categories.event, Values.categories.sessions ]
+const { events, sessions } = Values.categories
+const collections = [ events, sessions ]
 
 const AppContainer = props => {
 
   const theme = useTheme()
 
   // loads and starts watching the collections. Placing here until we start working on the screens.
-  useFirestoreWatch(collections)
-
   const appCollections = {
-    sessions: useSelector(store => store.items.sessions) || {},
-    event: useSelector(store => store.items.event) || {},
+    'events': useCollection({ name: events, subscribe: true }, []),
+    'sessions': useCollection({ name: sessions, subscribe: true }, [])
   }
 
   return (
@@ -31,7 +30,7 @@ const AppContainer = props => {
         collections.map(coll => (
           <React.Fragment key={coll}>
 
-            <Text>{ `Number of ${coll} keys:`}</Text>
+            <Text>{ `Number of ${coll}:`}</Text>
 
             <Text>{ Object.keys(appCollections[coll]).length } </Text>
 
