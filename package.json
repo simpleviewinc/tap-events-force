@@ -12,16 +12,22 @@
     "build:android": "cd node_modules/sv-keg; yarn build:android",
     "build:ios": "cd node_modules/sv-keg; yarn build:ios",
     "build:web": "cd node_modules/sv-keg; yarn build:web",
-    "cp": "/bin/bash cp.sh",
     "clean": "cd node_modules/sv-keg; yarn clean",
     "ios": "cd node_modules/sv-keg; yarn ios",
     "start": "cd node_modules/sv-keg; expo start",
+    "cp": "/bin/bash cp.sh",
     "setup": "yarn install; cd node_modules/sv-keg; yarn postinstall",
-    "web": "yarn cp && cd node_modules/sv-keg; yarn web"
+    "web": "cd node_modules/sv-keg; yarn web",
+    "web:watch": "yarn web",
+    "web:keg": "cd node_modules/sv-keg; yarn web:keg",
+    "keg": "cd node_modules/sv-keg; yarn"
   },
   "dependencies": {
     "firebase": "^7.7.0",
-    "sv-keg": "https://github.com/simpleviewinc/sv-keg-expo.git#master"
+    "npm-watch": "^0.6.0",
+    "sv-keg": "https://github.com/simpleviewinc/sv-keg-expo.git#ZEN-132-update-tap-resolver"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@babel/runtime": "^7.8.4"
+  }
 }
