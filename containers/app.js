@@ -36,8 +36,8 @@ const AppContainer = props => {
           </React.Fragment>
         ))
       }
-      {/* <CameraCaptureInput /> */}
-      <CameraCaptureLive />
+      <CameraCaptureInput />
+      {/* <CameraCaptureLive /> */}
     </View>
   )
 }

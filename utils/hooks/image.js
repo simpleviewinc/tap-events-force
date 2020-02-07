@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
 import jsQR from 'jsqr'
-import { get } from 'jsutils'
+import { BrowserQRCodeReader } from '@zxing/library'
+import { get, validate } from 'jsutils'
+
+const reader = new BrowserQRCodeReader()
 
 /**
  * Gets ImageData from an image reference
@@ -30,7 +33,7 @@ export const useImageData = (imageRef) => {
     setImageData(result)
 
   }, [ imageRef, image, width, height ])
-
+  console.log({imageData})
   return imageData
 }
 
@@ -44,13 +47,43 @@ export const useQRCode = (imageRef) => {
   const imageData = useImageData(imageRef)
   useEffect(() => {
     if (!imageData) return
-    const code = jsQR(
-      imageData.data,
-      imageData.width,
-      imageData.height
-    )
-    setCode(code)
+    decodeQR(imageData).then(setCode)
   }, [ imageData ])
-
   return code
+}
+
+/**
+ * Scans the image located at url for a QR code, and returns the scan results (initially null)
+ * @param {string} url 
+ * @returns {Array|Null} [ error, code ]
+ *  - code: scan results (see https://github.com/zxing-js/library)
+ */
+export const useQRCodeFromURL = (url) => {
+  const [ code, setCode ] = useState(null)
+  useEffect(() => {
+    if (!url) return
+    decodeQRFromURL(url).then(setCode)
+  }, [ url ])
+  return code
+}
+
+const decodeQR = async (imageData) => {
+  const code = jsQR(
+    imageData.data,
+    imageData.width,
+    imageData.height
+  )
+  return Promise.resolve(code)
+}
+
+const decodeQRFromURL = async (url) => {
+  try {
+    const code = await reader.decodeFromImage(undefined, url)
+    code.data = code.data || code.text
+    return [ null, code ]
+  }
+  catch (err) {
+    console.error('Decode failed', err)
+    return [ err, null ]
+  }
 }

@@ -1,40 +1,58 @@
 import React, { useState, useRef } from 'react'
-import { useQRCode } from 'SVUtils/hooks'
+import { useQRCodeFromURL } from 'SVUtils/hooks'
+import QRWorker from './decoder.worker.js'
+
+const worker = initWorker()
 
 export const CameraCaptureInput = (props) => {
   const [ imageURL, setImageURL ] = useState(null)
 
-  const getCapture = (event) => {
+  const captureURL = (event) => {
     const url = URL.createObjectURL(event.target.files[0])
     setImageURL(url) 
   }
 
-  const [ imageDimensions, setDimensions ] = useState({})
-  const updateDimensions = (img) => setDimensions({ width: img.width, height: img.height })
-
-  const imageRef = useRef()
-  const scanResults = useQRCode(imageRef) || ''
+  const [ err, scanResults ] = useQRCodeFromURL(imageURL) || ''
 
   return (
     <div>
       <div>
-        { scanResults && 
-          <div style={{flexDirection: 'row'}}>
-            <p>Scan Results:</p>
-            <p style={{fontWeight: 'bold'}}> { scanResults.data } </p>
-          </div>
-        }
+        <div style={{flexDirection: 'row'}}>
+          <p>Scan Results:</p>
+          <p style={{fontWeight: 'bold'}}> { (scanResults && scanResults.data) || null } </p>
+        </div>
+        <div style={{flexDirection: 'row'}}>
+          <p>Error Results:</p>
+          <p style={{fontWeight: 'bold'}}> { (err || '').toString() } </p>
+        </div>
         <input 
-          onChange={getCapture}
+          onChange={captureURL}
           type="file" 
           accept="image/*" 
           capture />
-        <img 
-          onLoad={updateDimensions}
-          style={imageDimensions}
-          ref={imageRef}
-          src={imageURL} />
+        <img src={imageURL} style={{display: 'none'}} />
       </div>
     </div>
   )
+}
+
+const scan = (imageData) => {
+  if (!imageData) return Promise.reject('Image data was undefined. Skipping scan.')
+
+  return new Promise((resolve) => {
+    worker.onmessage = (event) => resolve(event.data)
+
+    // send the image data to the worker for decoding
+    worker.postMessage(imageData)
+  })
+}
+
+const initWorker = () => {
+  if (!window.worker) {
+    console.error('This browser does not support web workers.')
+    return null
+  }
+
+  /* zbar qr/barcode decoding worker */
+  return new QRWorker()
 }

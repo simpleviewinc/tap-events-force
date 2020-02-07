@@ -3,7 +3,13 @@ import { get, isFunc } from 'jsutils'
 import { useInterval, useCamera, useVideoStream, useVideoImageData } from 'SVUtils/hooks'
 import jsQR from 'jsqr'
 
-const videoConstraints = { width: 640, height: 480, frameRate: 10 }
+const videoConstraints = { 
+  width: 640,
+  height: 480,
+  frameRate: 10,
+  facingMode: 'environment'
+}
+
 
 export const CameraCaptureLive = (props) => {
   const [ streaming, setStreaming ] = useState(false)
@@ -51,7 +57,8 @@ export const CameraCaptureLive = (props) => {
         <p>Scan Result: { scanResult }</p>
         <video 
           ref={videoRef}
-          style={videoStyle}>
+          style={videoStyle}
+        >
             Video not available.
         </video>
       </div>
@@ -79,7 +86,3 @@ const scanImage = (imageCapture, width, height) => {
   const data = get(code, 'data')
   return data
 }
-
-
-
-
