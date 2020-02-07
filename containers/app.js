@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
-import { CameraCaptureInput } from 'SVComponents/cameraCapture' 
+import { CameraCaptureInput, CameraCaptureLive } from 'SVComponents/cameraCapture' 
 import { useCollection } from 'SVUtils/hooks'
 
 const { events, sessions } = Values.categories
@@ -36,7 +36,8 @@ const AppContainer = props => {
           </React.Fragment>
         ))
       }
-      <CameraCaptureInput />
+      {/* <CameraCaptureInput /> */}
+      <CameraCaptureLive />
     </View>
   )
 }

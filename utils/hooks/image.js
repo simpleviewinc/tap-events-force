@@ -29,15 +29,13 @@ export const useImageData = (imageRef) => {
 
     setImageData(result)
 
-    // remove the canvas now that we do not need it anymore
-    canvas && canvas.parentNode && canvas.parentNode.removeChild(canvas)
   }, [ imageRef, image, width, height ])
 
   return imageData
 }
 
 /**
- * Scans the image in the imageReference for a QR code, and returns the scan results
+ * Scans the image in the imageReference for a QR code, and returns the scan results (initially null)
  * @param {Object} imageRef 
  * @returns {Object|Null} scan results (see https://github.com/cozmo/jsQR#return-value)
  */
