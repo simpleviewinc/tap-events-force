@@ -1,9 +1,13 @@
 import { app } from './app'
-import { messages } from './messages'
-import { write } from './write'
+import { appbar } from './appbar'
+import { continueStyle } from './continue'
+import { email } from './email'
+import { select } from './select'
 
 export const theme = {
   app,
-  messages,
-  write,
+  appbar,
+  continue: continueStyle,
+  email,
+  select,
 } 
