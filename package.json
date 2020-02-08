@@ -13,6 +13,7 @@
     "build:ios": "cd node_modules/sv-keg; yarn build:ios",
     "build:web": "cd node_modules/sv-keg; yarn build:web",
     "clean": "cd node_modules/sv-keg; yarn clean",
+    "clean:full": "rimraf ./yarn.lock; rimraf ./package.lock; rimraf node_modules; yarn install",
     "ios": "cd node_modules/sv-keg; yarn ios",
     "start": "cd node_modules/sv-keg; expo start",
     "cp": "/bin/bash cp.sh",
@@ -24,10 +25,9 @@
   },
   "dependencies": {
     "firebase": "^7.7.0",
-    "npm-watch": "^0.6.0",
-    "sv-keg": "https://github.com/simpleviewinc/sv-keg-expo.git#ZEN-132-update-tap-resolver"
+    "sv-keg": "git+https://github.com/simpleviewinc/sv-keg-expo.git#ZEN-132-update-tap-resolver"
   },
   "devDependencies": {
-    "@babel/runtime": "^7.8.4"
+    "rimraf": "^3.0.1"
   }
 }
