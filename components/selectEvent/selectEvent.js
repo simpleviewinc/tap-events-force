@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Picker } from 'react-native'
-import { View, P } from 'SVComponents'
+import { P } from 'SVComponents/typography'
+import { View } from 'SVComponents/native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { useCollection } from 'SVUtils/hooks'

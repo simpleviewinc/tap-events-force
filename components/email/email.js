@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { TextInput } from 'react-native'
-import { View, P, Subtitle } from 'SVComponents'
+import { P, Subtitle } from 'SVComponents/typography'
+import { View } from 'SVComponents/native'
 import { useTheme } from 're-theme'
 
 const EmailDisplay = props => {

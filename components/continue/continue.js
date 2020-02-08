@@ -1,5 +1,6 @@
 import React from 'react'
-import { View, H4 } from 'SVComponents'
+import { H4 } from 'SVComponents/typography'
+import { View } from 'SVComponents/native'
 import { useTheme } from 're-theme'
 import { Platform, TouchableOpacity, TouchableNativeFeedback } from 'react-native'
 const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity

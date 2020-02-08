@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { get } from 'jsutils'
-import { View, H3 } from 'SVComponents'
+import { H3 } from 'SVComponents/typography'
+import { View } from 'SVComponents/native'
 import { useTheme } from 're-theme'
 
 export const Appbar = props => {
