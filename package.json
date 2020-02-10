@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@zxing/library": "^0.15.2",
+    "browser-image-compression": "^1.0.6",
     "firebase": "^7.7.0",
     "jsqr": "1.2.0",
     "sv-keg": "https://github.com/simpleviewinc/sv-keg-expo.git#master"

@@ -1,8 +1,5 @@
-import React, { useState, useRef } from 'react'
-import { useQRCodeFromURL } from 'SVUtils/hooks'
-import QRWorker from './decoder.worker.js'
-
-const worker = initWorker()
+import React, { useState, useRef, useEffect } from 'react'
+import { useQRCode } from 'SVUtils/hooks'
 
 export const CameraCaptureInput = (props) => {
   const [ imageURL, setImageURL ] = useState(null)
@@ -12,7 +9,14 @@ export const CameraCaptureInput = (props) => {
     setImageURL(url) 
   }
 
-  const [ err, scanResults ] = useQRCodeFromURL(imageURL) || ''
+  const [ dims, setDims ] = useState({})
+  const onImageLoad = (img) => setDims({
+    width: img.width,
+    height: img.height
+  })
+  const imgRef = useRef()
+
+  const scanResults = useQRCode(imgRef)
 
   return (
     <div>
@@ -22,37 +26,20 @@ export const CameraCaptureInput = (props) => {
           <p style={{fontWeight: 'bold'}}> { (scanResults && scanResults.data) || null } </p>
         </div>
         <div style={{flexDirection: 'row'}}>
-          <p>Error Results:</p>
-          <p style={{fontWeight: 'bold'}}> { (err || '').toString() } </p>
         </div>
         <input 
           onChange={captureURL}
           type="file" 
-          accept="image/*" 
-          capture />
-        <img src={imageURL} style={{display: 'none'}} />
+          accept="image/jpg" 
+          capture={false}
+        />
+        <img 
+          onLoad={onImageLoad}
+          ref={imgRef} 
+          src={imageURL}
+          style={{ ...dims, display: 'none'}} />
       </div>
     </div>
   )
 }
 
-const scan = (imageData) => {
-  if (!imageData) return Promise.reject('Image data was undefined. Skipping scan.')
-
-  return new Promise((resolve) => {
-    worker.onmessage = (event) => resolve(event.data)
-
-    // send the image data to the worker for decoding
-    worker.postMessage(imageData)
-  })
-}
-
-const initWorker = () => {
-  if (!window.worker) {
-    console.error('This browser does not support web workers.')
-    return null
-  }
-
-  /* zbar qr/barcode decoding worker */
-  return new QRWorker()
-}

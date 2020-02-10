@@ -31,9 +31,8 @@ export const useImageData = (imageRef) => {
     const result = context.getImageData(0, 0, image.width, image.height)
 
     setImageData(result)
-
   }, [ imageRef, image, width, height ])
-  console.log({imageData})
+
   return imageData
 }
 

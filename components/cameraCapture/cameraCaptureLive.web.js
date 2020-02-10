@@ -58,6 +58,7 @@ export const CameraCaptureLive = (props) => {
         <video 
           ref={videoRef}
           style={videoStyle}
+          playsInLine
         >
             Video not available.
         </video>
