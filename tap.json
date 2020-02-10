@@ -14,7 +14,7 @@
       "staging": "1.0.0"
     },
     "paths": {
-      "buildConfig": "src/configs/build.config.js"
+      "buildConfig": "configs/build.config.js"
     }
   },
   "firebase": {

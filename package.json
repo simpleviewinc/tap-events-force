@@ -20,8 +20,6 @@
     "cp": "/bin/bash cp.sh",
     "setup": "yarn install; cd node_modules/sv-keg; yarn postinstall",
     "web": "cd node_modules/sv-keg; yarn web",
-    "web:watch": "yarn web",
-    "web:keg": "cd node_modules/sv-keg; yarn web:keg",
     "keg": "cd node_modules/sv-keg; yarn"
   },
   "dependencies": {
