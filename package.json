@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "firebase": "^7.7.0",
-    "sv-keg": "git+https://github.com/simpleviewinc/sv-keg-expo.git#ZEN-132-update-tap-resolver"
+    "sv-keg": "git+https://github.com/lancetipton/sv-keg-expo.git#ZEN-132-update-tap-resolver"
   },
   "devDependencies": {
     "rimraf": "^3.0.1"
