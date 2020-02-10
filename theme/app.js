@@ -5,8 +5,6 @@ export const app = {
       overflow: 'hidden',
       maxWidth: '100%',
     },
-    $all: {
-      textAlign: 'center'
-    }
+    $all: {}
   }
 }

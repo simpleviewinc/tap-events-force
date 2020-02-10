@@ -1,7 +1,8 @@
 import { firestore, firebase } from './setup'
-import { hasDomAccess } from 'SVUtils'
+import { hasDomAccess } from 'SVUtils/helpers/hasDomAccess'
 import { limbo, checkCall, isFunc, isArr, isObj, uuid } from 'jsutils'
-import { onDBInit, onDocChange } from 'SVActions'
+import { onDBInit } from 'SVActions/db/onDBInit'
+import { onDocChange } from 'SVActions/db/onDocChange'
 import { ActionTypes } from 'SVConstants'
 
 // Error code mapping helper, for better errors coming from Firebase
