@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import { FBService } from 'SVServices'
 import { useSelector } from 'react-redux'
 import { validate, isStr, isObj, eitherObj, isArr } from 'jsutils'
-import { getCollection, watchCollection } from 'SVActions'
+import { getCollection,  } from 'SVActions/db/getCollection'
+import { watchCollection } from 'SVActions/db/watchCollection'
 
 /**
  * Fetches the firestore collection
