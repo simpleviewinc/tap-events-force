@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "firebase": "^7.7.0",
-    "sv-keg": "git+https://github.com/simpleviewinc/sv-keg-expo.git"
+    "sv-keg": "https://github.com/simpleviewinc/sv-keg-expo.git#master"
   },
   "devDependencies": {
     "rimraf": "^3.0.1"
