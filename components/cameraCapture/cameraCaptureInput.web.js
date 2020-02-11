@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useQRCode } from 'SVUtils/hooks'
+import { useQRCode, useQRReader, useInterval } from 'SVUtils/hooks'
 
 export const CameraCaptureInput = (props) => {
+  const [ scanResults, setScanResults ] = useState(null)
   const [ imageURL, setImageURL ] = useState(null)
 
   const captureURL = (event) => {
@@ -17,14 +18,20 @@ export const CameraCaptureInput = (props) => {
   })
 
   const imgRef = useRef()
-  const scanResults = useQRCode(imgRef)
+  // const scanResults = useQRCode(imgRef)
+  
+  const [ makeScan, reader ] = useQRReader(imgRef.current)
+
+  useInterval(1000, () => {
+    makeScan(result => result && setScanResults(result) )
+  })
 
   return (
     <div>
       <div>
         <div style={{flexDirection: 'row'}}>
           <p>Scan Results:</p>
-          <p style={{fontWeight: 'bold'}}> { (scanResults && scanResults.data) || null } </p>
+          <p style={{fontWeight: 'bold'}}> { (scanResults  || null ) } </p>
         </div>
         <div style={{flexDirection: 'row'}}>
         </div>

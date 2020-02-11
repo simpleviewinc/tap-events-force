@@ -73,24 +73,3 @@ export const CameraCaptureLive = (props) => {
     </div>
   )
 }
-
-const useRealtimeQRScan = (streaming, captureImage, delay=650) => {
-  const [ scanResult, setScanResult ] = useState('')
-
-  useInterval(650, () => {
-    if (!streaming || !isFunc(captureImage)) return
-    captureImage()
-    const scan = scanImage(imageCapture, videoStyle.width, videoStyle.height)
-    scan && setScanResult(scan)
-  })
-
-  return scanResult
-}
-
-const scanImage = (imageCapture, width, height) => {
-  if (!imageCapture || !imageCapture.data) return
-
-  const code = jsQR(imageCapture.data, width, height)
-  const data = get(code, 'data')
-  return data
-}

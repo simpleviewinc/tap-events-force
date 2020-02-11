@@ -16,8 +16,8 @@ const AppContainer = props => {
         get(props, [ 'styles', 'container' ]),
       )}
     >
-      {/* <CameraCaptureInput /> */}
-      <CameraCaptureLive />
+      <CameraCaptureInput />
+      {/* <CameraCaptureLive /> */}
     </View>
   )
 }
