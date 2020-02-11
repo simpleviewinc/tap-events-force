@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { QRReader } from 'qr-reader'
 
 /**
- * Initializes the reader, then returns a function for scanning an image. (resultText) => { }
+ * Initializes the reader, then provides a function for scanning an image. 
  * @param { Object } videoElement - a video element (e.g. videoRef.current)
+ * @returns { Array } [ scanFunction, reader ]
+ *  - scanFunction: (resultText) => { ... }
+ *  - reader: the reader object (see: https://github.com/mpcarolin/qr-code-scanner/blob/master/app/js/vendor/qrscan.js)
  */
 export const useQRReader = (videoElement) => {
   const [ reader, setReader ] = useState(null)
@@ -20,7 +23,10 @@ export const useQRReader = (videoElement) => {
   }, [ videoElement ])
 
   return [
+    // scan function
     (cb) => reader && reader.scan(cb),
+
+    // reader, if you need more control
     reader
   ]
 }

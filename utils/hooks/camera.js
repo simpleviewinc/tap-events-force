@@ -6,11 +6,11 @@ import { get, limbo } from 'jsutils'
  * @param {Object} ref - reference to a video element
  * @param {Object} stream - a camera stream (see `useCamera` return value)
  * @param {Object} props - options
- * @param {Object} props.playOnInit - false by default. If true, plays the video immediately.
+ * @param {Object} props.playOnInit - true by default. If true, plays the video immediately.
  * @param {Object} props.onReady - a callback that runs once the video is ready to play
  * @returns {Array} [ play, pause ] - play and pause functions for the video
  */
-export const useVideoStream = (ref, stream, { playOnInit=false, onReady=null }={}) => {
+export const useVideoStream = (ref, stream, { playOnInit=true, onReady=null }={}) => {
   const video = get(ref, 'current')
 
   const play = () => video
@@ -56,7 +56,10 @@ export const useCamera = (navigator, constraints) => {
 
   const getCamera = async () => {
     const [ err, camStream ] = await requestCamera(navigator, constraints)
+
+    err && console.error(err)
     err && setErr(err)
+
     camStream && setStream(camStream)
   }
 
@@ -72,20 +75,18 @@ export const useCamera = (navigator, constraints) => {
  * Requests WebRTC camera
  * @param {Object} navigator - navigator global
  * @param {Object} props - camera access properties 
+ * @returns {Promise<Array>} [ err, cameraStream ]
  */
 export const requestCamera = async (navigator, { video=true, audio=false }={}) => {
-  if (!navigator || !navigator.mediaDevices)
-    return [ 
-      new Error('Platform does not support WebRTC. Could not access navigator.mediaDevices. Also make sure you are running either in https or localhost.'),
-      null
-    ]
+  if (!navigator || !navigator.mediaDevices) {
+    const err = 'Platform does not support WebRTC. Could not access navigator.mediaDevices. Also make sure you are running either in https or localhost.'
+    console.error(err)
+    return [ err, null ]
+  }
   
   const constraints = { video, audio }
 
-  navigator
-    .mediaDevices
-    .enumerateDevices()
-
-
-  return limbo(navigator.mediaDevices.getUserMedia(constraints))
+  return limbo(
+    navigator.mediaDevices.getUserMedia(constraints)
+  )
 }

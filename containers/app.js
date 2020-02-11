@@ -3,8 +3,8 @@ import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
-import { QRImageCapture, QRVideoCapture } from 'SVComponents/QRCapture' 
 import { useCollection } from 'SVUtils/hooks'
+import QRContainer from './qr'
 
 const AppContainer = props => {
   const theme = useTheme()
@@ -16,8 +16,7 @@ const AppContainer = props => {
         get(props, [ 'styles', 'container' ]),
       )}
     >
-      {/* <QRImageCapture /> */}
-      <QRVideoCapture />
+      <QRContainer />
     </View>
   )
 }
