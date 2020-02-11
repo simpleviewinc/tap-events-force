@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { get, isFunc } from 'jsutils'
-import { useInterval, useCamera, useVideoStream, useVideoImageData } from 'SVUtils/hooks'
+import { useInterval, useCamera, useVideoStream, useVideoImageData, useQRReader } from 'SVUtils/hooks'
 import jsQR from 'jsqr'
 
 const videoConstraints = { 
@@ -38,11 +38,18 @@ export const CameraCaptureLive = (props) => {
   }
   const [ scanResult, setScanResult ] = useState('')
 
-  useInterval(650, () => {
+  const [ makeScan, reader ] = useQRReader(videoRef.current)
+  console.log({reader, makeScan})
+
+  useInterval(1000, () => {
     if (!streaming || !isFunc(captureImage)) return
-    captureImage()
-    const scan = scanImage(imageCapture, videoStyle.width, videoStyle.height)
-    scan && setScanResult(scan)
+    // captureImage()
+    // const scan = scanImage(imageCapture, videoStyle.width, videoStyle.height)
+    // scan && setScanResult(scan)
+    makeScan(result => {
+      console.log({result})
+      result && setScanResult(result) 
+    })
   })
 
   return (
@@ -58,7 +65,7 @@ export const CameraCaptureLive = (props) => {
         <video 
           ref={videoRef}
           style={videoStyle}
-          playsInLine
+          playsInline
         >
             Video not available.
         </video>

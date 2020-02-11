@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { get, limbo } from 'jsutils'
+import { QRReader } from 'qr-reader'
 
 /**
  * Provides access to a video stream
@@ -125,5 +126,22 @@ export const useVideoImageData = (videoRef) => {
   return [ 
     imageData,
     captureImage
+  ]
+}
+
+/**
+ * Initializes the reader, then returns a function for scanning an image. (resultText) => { }
+ */
+export const useQRReader = (videoElement) => {
+  const [ reader, setReader ] = useState(null)
+  useEffect(() => {
+    if (!videoElement) return
+    QRReader.init(videoElement) 
+    setReader(QRReader)
+  }, [ videoElement ])
+
+  return [
+    (cb) => reader && reader.scan(cb),
+    reader
   ]
 }

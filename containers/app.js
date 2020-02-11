@@ -6,17 +6,8 @@ import { get }  from 'jsutils'
 import { CameraCaptureInput, CameraCaptureLive } from 'SVComponents/cameraCapture' 
 import { useCollection } from 'SVUtils/hooks'
 
-const { events, sessions } = Values.categories
-
 const AppContainer = props => {
   const theme = useTheme()
-
-  // loads and starts watching the collections.
-  // Placing this here until we start working on the screens that will have their own containers to call these functions.
-  const collections = {
-    [events]: useCollection(events),
-    [sessions]: useCollection(sessions),
-  }
 
   return (
     <View
@@ -25,21 +16,31 @@ const AppContainer = props => {
         get(props, [ 'styles', 'container' ]),
       )}
     >
-      {
-        [ events, sessions ].map(coll => (
-          <React.Fragment key={coll}>
-
-            <Text>{ `Number of ${coll}:`}</Text>
-
-            <Text>{ Object.keys(collections[coll]).length } </Text>
-
-          </React.Fragment>
-        ))
-      }
-      <CameraCaptureInput />
-      {/* <CameraCaptureLive /> */}
+      {/* <CameraCaptureInput /> */}
+      <CameraCaptureLive />
     </View>
   )
 }
+
+const { events, sessions } = Values.categories
+
+export const Test = () => {
+  // loads and starts watching the collections.
+  // Placing this here until we start working on the screens that will have their own containers to call these functions.
+  const collections = {
+    [events]: useCollection(events),
+    [sessions]: useCollection(sessions),
+  }
+
+  return <View>
+    [ events, sessions ].map(coll => (
+      <React.Fragment key={coll}>
+        <Text>{ `Number of ${coll}:`}</Text>
+        <Text>{ Object.keys(collections[coll]).length } </Text>
+      </React.Fragment>
+    ))
+  </View>
+}
+
 
 export default AppContainer

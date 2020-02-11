@@ -5,7 +5,8 @@ export const CameraCaptureInput = (props) => {
   const [ imageURL, setImageURL ] = useState(null)
 
   const captureURL = (event) => {
-    const url = URL.createObjectURL(event.target.files[0])
+    const file = event.target.files[0]
+    const url = URL.createObjectURL(file)
     setImageURL(url) 
   }
 
@@ -14,8 +15,8 @@ export const CameraCaptureInput = (props) => {
     width: img.width,
     height: img.height
   })
-  const imgRef = useRef()
 
+  const imgRef = useRef()
   const scanResults = useQRCode(imgRef)
 
   return (
@@ -30,7 +31,7 @@ export const CameraCaptureInput = (props) => {
         <input 
           onChange={captureURL}
           type="file" 
-          accept="image/jpg" 
+          accept="image/*" 
           capture={false}
         />
         <img 
