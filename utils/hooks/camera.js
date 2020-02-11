@@ -1,46 +1,45 @@
 import { useState, useEffect } from 'react'
 import { get, limbo } from 'jsutils'
-import { QRReader } from 'qr-reader'
 
 /**
- * Provides access to a video stream
- * @param {*} ref - reference to a video element
- * @param {*} stream - 
- * @param {*} param2 
+ * Sets up the video to use the camera stream and provides access to play/pause functions
+ * @param {Object} ref - reference to a video element
+ * @param {Object} stream - a camera stream (see `useCamera` return value)
+ * @param {Object} props - options
+ * @param {Object} props.playOnInit - false by default. If true, plays the video immediately.
+ * @param {Object} props.onReady - a callback that runs once the video is ready to play
+ * @returns {Array} [ play, pause ] - play and pause functions for the video
  */
-export const useVideoStream = (ref, stream, { playOnInit=false, onReady=()=>{} }={}) => {
-  const play = () => ref && ref.current && ref.current.play()
-  const pause = () => ref && ref.current && ref.current.pause()
+export const useVideoStream = (ref, stream, { playOnInit=false, onReady=null }={}) => {
+  const video = get(ref, 'current')
+
+  const play = () => video
+    ? video.play()
+    : console.warn('Cannot play: video element not yet available from video ref.')
+
+  const pause = () => video 
+    ? video.pause()
+    : console.warn('Cannot pause: video element not yet available from video ref.')
 
   // the effect assigns the stream
   useEffect(() => {
-    if (!ref.current) return
+    if (!video) return
     if (!stream) return
 
-    ref.current.srcObject = stream
+    video.srcObject = stream
     playOnInit && play()
 
   }, [ stream, ref.current ])
 
-  useVideoInitEvent(ref, onReady)
-
-  return [ play, pause ]
-}
-
-/**
- * Sets a `canplay` event listener, which is the event the fires when the video stream first becomes available.
- * Will remove the listener when the component unmounts.
- * @param {Object} videoRef - a reference to a <video /> element
- * @param {Function} onReady - the function to execute when the video stream is ready
- * @return {void}
- */
-export const useVideoInitEvent = (videoRef, onReady=()=>{}) => {
-  const video = get(videoRef, 'current')
+  // assign event listeners to the video
   useEffect(() => {
     if (!video) return
+    if (!onReady) return
     video.addEventListener('canplay', onReady)
-    return () => video.removeEventListener('canplay', onReady)
-  }) 
+    return () => video.removeEventListener('canplay', onReady) 
+  })
+
+  return [ play, pause ]
 }
 
 /**
@@ -62,7 +61,9 @@ export const useCamera = (navigator, constraints) => {
   }
 
   // attempt to get the camera once
-  useEffect(() => void getCamera(), [])
+  useEffect(() => {
+    !stream && getCamera()
+  }, [])
 
   return [ mediaErr, stream ]
 }
@@ -72,76 +73,19 @@ export const useCamera = (navigator, constraints) => {
  * @param {Object} navigator - navigator global
  * @param {Object} props - camera access properties 
  */
-export const requestCamera = async (navigator, { videoConstraints=true, useAudio=false }={}) => {
+export const requestCamera = async (navigator, { video=true, audio=false }={}) => {
   if (!navigator || !navigator.mediaDevices)
     return [ 
       new Error('Platform does not support WebRTC. Could not access navigator.mediaDevices. Also make sure you are running either in https or localhost.'),
       null
     ]
   
-  const constraints = { 
-    video: videoConstraints, 
-    audio: useAudio,
-  }
+  const constraints = { video, audio }
+
+  navigator
+    .mediaDevices
+    .enumerateDevices()
+
 
   return limbo(navigator.mediaDevices.getUserMedia(constraints))
-}
-
-
-/**
- * Gets ImageData from a video reference
- * @param {Object} videoRef - reference to the video dom object that displays the image to get the ImageData from
- * @returns {Array} [ imageData, captureImage ] 
- *  - imageData: the ImageData for the image (see https://developer.mozilla.org/en-US/docs/Web/API/ImageData)
- *  - captureImage: a function that, when called, captures the latest image and updates imageData
- */
-export const useVideoImageData = (videoRef) => {
-  const [ imageData, setImageData ] = useState(null)
-
-  const video = get(videoRef, 'current')
-
-  const captureImage = () => {
-    if (!video) return
-
-    const width = video.clientWidth
-    const height = video.clientHeight
-    
-    if (!width || !height) return
-
-    // draw the current frame of the video to the canvas, then capture that image blob, then remove the canvas photo
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    canvas.width = width
-    canvas.height = height
-
-    context.drawImage(video, 0, 0)
-
-    const result = context.getImageData(0, 0, width, height)
-    setImageData(result)
-
-    // remove the canvas now that we do not need it anymore
-    canvas && canvas.parentNode && canvas.parentNode.removeChild(canvas)
-  }
-
-  return [ 
-    imageData,
-    captureImage
-  ]
-}
-
-/**
- * Initializes the reader, then returns a function for scanning an image. (resultText) => { }
- */
-export const useQRReader = (videoElement) => {
-  const [ reader, setReader ] = useState(null)
-  useEffect(() => {
-    if (!videoElement) return
-    QRReader.init(videoElement) 
-    setReader(QRReader)
-  }, [ videoElement ])
-
-  return [
-    (cb) => reader && reader.scan(cb),
-    reader
-  ]
 }

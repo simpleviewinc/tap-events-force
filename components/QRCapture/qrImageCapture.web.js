@@ -1,7 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { useQRCode, useQRReader, useInterval } from 'SVUtils/hooks'
+import React, { useState, useRef } from 'react'
+import { useQRReader, useInterval } from 'SVUtils/hooks'
 
-export const CameraCaptureInput = (props) => {
+export const QRImageCapture = (props) => {
   const [ scanResults, setScanResults ] = useState(null)
   const [ imageURL, setImageURL ] = useState(null)
 
@@ -18,13 +18,10 @@ export const CameraCaptureInput = (props) => {
   })
 
   const imgRef = useRef()
-  // const scanResults = useQRCode(imgRef)
   
-  const [ makeScan, reader ] = useQRReader(imgRef.current)
+  const [ scan ] = useQRReader(imgRef.current)
 
-  useInterval(1000, () => {
-    makeScan(result => result && setScanResults(result) )
-  })
+  useInterval(() => void scan(result => result && setScanResults(result)), 1000)
 
   return (
     <div>
@@ -39,7 +36,7 @@ export const CameraCaptureInput = (props) => {
           onChange={captureURL}
           type="file" 
           accept="image/*" 
-          capture={false}
+          capture
         />
         <img 
           onLoad={onImageLoad}

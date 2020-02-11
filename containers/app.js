@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
-import { CameraCaptureInput, CameraCaptureLive } from 'SVComponents/cameraCapture' 
+import { QRImageCapture, QRVideoCapture } from 'SVComponents/QRCapture' 
 import { useCollection } from 'SVUtils/hooks'
 
 const AppContainer = props => {
@@ -16,8 +16,8 @@ const AppContainer = props => {
         get(props, [ 'styles', 'container' ]),
       )}
     >
-      <CameraCaptureInput />
-      {/* <CameraCaptureLive /> */}
+      {/* <QRImageCapture /> */}
+      <QRVideoCapture />
     </View>
   )
 }
