@@ -5,11 +5,11 @@ import { ReThemeProvider, getDefaultTheme, setDefaultTheme } from 're-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
-import AppContainer from 'SVContainers/app'
 import { Router } from 'SVComponents'
 import { checkCall, get } from 'jsutils'
 import { ContainerRoutes } from 'SVNavigation'
 import { keg } from 'SVConfig'
+import { getHistory } from 'SVNavigation'
 
 setDefaultTheme(theme)
 
@@ -29,7 +29,7 @@ const App = props => {
   return init && (
     <>
       <StatusBar barStyle={ get(activeTheme, [ 'components', 'statusBar', 'barStyle' ]) } />
-      <Router>
+      <Router history={getHistory()}>
         <SafeAreaView>
           <Provider store={getStore()}>
             <ReThemeProvider theme={{}} merge={true}>

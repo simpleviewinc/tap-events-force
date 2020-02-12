@@ -4,6 +4,8 @@ import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useCollection } from 'SVUtils/hooks'
+import { Button } from 'SVComponents'
+import { navigateTo } from 'SVActions'
 
 const { events, sessions } = Values.categories
 
@@ -36,6 +38,11 @@ const AppContainer = props => {
           </React.Fragment>
         ))
       }
+      <Button 
+          text={"Navigate"}
+          onPress={() => navigateTo('/test')}
+      />
+
     </View>
   )
 }
