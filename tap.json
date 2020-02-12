@@ -2,6 +2,10 @@
   "name": "events-force-x5",
   "displayName": "Events Force Mobile X5",
   "keg": {
+    "navigation": {
+      "/": "AppContainer",
+      "/test": "TestContainer"
+    },
     "tapResolver": {
       "paths": {
         "tapSrc": "./src"

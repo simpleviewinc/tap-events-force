@@ -8,6 +8,8 @@ import { initAppAction } from 'SVActions'
 import AppContainer from 'SVContainers/app'
 import { Router } from 'SVComponents'
 import { checkCall, get } from 'jsutils'
+import { ContainerRoutes } from 'SVNavigation'
+import { keg } from 'SVConfig'
 
 setDefaultTheme(theme)
 
@@ -31,7 +33,8 @@ const App = props => {
         <SafeAreaView>
           <Provider store={getStore()}>
             <ReThemeProvider theme={{}} merge={true}>
-              <AppContainer switchTheme={ switchTheme } />
+              {/* setup routes from navigation config */}
+              <ContainerRoutes navigationConfigs={keg.navigation}/>
             </ReThemeProvider>
           </Provider>
         </SafeAreaView>
