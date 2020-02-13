@@ -3,7 +3,7 @@
   "displayName": "Events Force Mobile X5",
   "keg": {
     "navigation": {
-      "/": "AppContainer",
+      "/": "RootContainer",
       "/test": "TestContainer"
     },
     "tapResolver": {

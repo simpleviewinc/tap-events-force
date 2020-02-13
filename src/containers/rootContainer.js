@@ -9,7 +9,7 @@ import { navigateTo } from 'SVActions'
 
 const { events, sessions } = Values.categories
 
-export const AppContainer = props => {
+export const RootContainer = props => {
 
   const theme = useTheme()
 

@@ -1,2 +1,2 @@
-export * from 'SVContainers/app'
 export * from 'SVContainers/testContainer'
+export * from 'SVContainers/rootContainer'
