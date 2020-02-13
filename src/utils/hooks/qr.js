@@ -3,30 +3,33 @@ import { QRReader } from 'qr-reader'
 
 /**
  * Initializes the reader, then provides a function for scanning an image. 
- * @param { Object } videoElement - a video element (e.g. videoRef.current)
+ * @param { Object } element - a video or image element (e.g. videoRef.current)
  * @returns { Array } [ scanFunction, reader ]
  *  - scanFunction: (resultText) => { ... }
  *  - reader: the reader object (see: https://github.com/mpcarolin/qr-code-scanner/blob/master/app/js/vendor/qrscan.js)
+ * @example
+ * const [ scan ] = useQRReader(imageRef.current)
+ * scan(result => {
+ *  doSomethingWithQRText(result)
+ * })
  */
-export const useQRReader = (videoElement) => {
+export const useQRReader = (element) => {
   const [ reader, setReader ] = useState(null)
   useEffect(() => {
-    if (!videoElement) return
+    if (!element) return
 
     // initialize the reader (including the web worker)
-    QRReader.init(videoElement) 
+    QRReader.init(element) 
     setReader(QRReader)
 
     // clean up by terminating the worker
     return () => QRReader.terminate()
 
-  }, [ videoElement ])
+  }, [ element ])
 
   return [
     // scan function
     (cb) => reader && reader.scan(cb),
-
-    // reader, if you need more control
     reader
   ]
 }

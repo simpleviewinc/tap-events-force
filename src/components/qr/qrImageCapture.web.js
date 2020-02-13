@@ -2,14 +2,6 @@ import React, { useState, useRef } from 'react'
 import { useQRReader, useInterval } from 'SVUtils/hooks'
 import PropTypes from 'prop-types'
 
-const QRPropTypes = {
-  style: PropTypes.object,
-  inputStyle: PropTypes.object,
-  delay: PropTypes.number,
-  onScanStart: PropTypes.func,
-  onScan: PropTypes.func,
-}
-
 /**
  * An input component that uses the camera to capture/select a photo and scan it for a qr code.
  * Use the onScan callback to do something with the result.
@@ -41,6 +33,7 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, onScanStar
   }
 
   const imgRef = useRef()
+  const inputRef = useRef()
 
   // setup the qr reader with the image element
   const [ scan ] = useQRReader(imgRef.current)
@@ -49,13 +42,21 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, onScanStar
   useInterval(() => { 
     if (!imageURL) return
 
-    scan(result => { result && onScan(result) })
+    scan(result => { 
+      result && onScan(result)
+
+      // once the scan has found a result, reset the image url and input so 
+      // that scanning stops until the user captures another image
+      setImageURL(null)
+      inputRef.current.value = ''
+    })
   }, imageURL ? delay : null)
 
   return (
     <div style={style}>
       <input 
         style={inputStyle}
+        ref={inputRef}
         onChange={captureURL}
         type="file" 
         accept="image/*" 
@@ -70,5 +71,10 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, onScanStar
   )
 }
 
-QRImageCapture.propTypes = QRPropTypes
-
+QRImageCapture.propTypes = {
+  style: PropTypes.object,
+  inputStyle: PropTypes.object,
+  delay: PropTypes.number,
+  onScanStart: PropTypes.func,
+  onScan: PropTypes.func,
+}

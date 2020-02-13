@@ -2,6 +2,7 @@ const modalWidth = 300
 
 export const modal = {
   view: {
+    zIndex: 100000,
     backgroundColor: 'white',
     borderRadius: 4,
     borderWidth: 0.5,

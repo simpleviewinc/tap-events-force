@@ -37,7 +37,6 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
 
   // acquire the camera stream, given the video constraints
   const [ err, stream ] = useCamera(navigator, { video: { frameRate, facingMode }})
-  err && console.error(err)
 
   // setup the video element to use the camera stream.
   useVideoStream(
@@ -63,7 +62,7 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
   // setup the qr reader to scan the video
   const [ makeScan ] = useQRReader(videoRef.current)
 
-  // once streaming, 
+  // once streaming, start scanning
   useInterval(() => {
     showVideo && makeScan(result => result && onScan(result))
   }, showVideo ? delay : null)

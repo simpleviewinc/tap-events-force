@@ -2,9 +2,9 @@ import React from 'react'
 import { View } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
-import QRContainer from './qr'
+import { QRContainer } from './qr'
 
-const AppContainer = props => {
+export const AppContainer = props => {
   const theme = useTheme()
 
   return (
@@ -18,5 +18,3 @@ const AppContainer = props => {
     </View>
   )
 }
-
-export default AppContainer

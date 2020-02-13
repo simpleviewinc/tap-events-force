@@ -9,15 +9,17 @@ import { Modal } from 'SVComponents/modal'
  * QRContainer
  * @param {Object} props 
  */
-const QRContainer = props => {
+export const QRContainer = props => {
   const theme = useTheme()
-  const [ qr, setQR ] = useState('')
+  const [ scanResult, setScanResult ] = useState('')
   const [ showModal, setShowModal ] = useState(false)
 
   const onScanFound = (result) => {
-    setQR(result)
+    setScanResult(result)
     result && setShowModal(true)
   }
+
+  const modalText = `"${scanResult}"`
 
   return (
     <View
@@ -30,12 +32,10 @@ const QRContainer = props => {
         visible={showModal}
         onDismiss={() => setShowModal(false)}
         title='Scanner Results'
-        text={qr}
+        text={modalText}
       />
 
       <QRScanner onScan={onScanFound} />
     </View>
   )
 }
-
-export default QRContainer

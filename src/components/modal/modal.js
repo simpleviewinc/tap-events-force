@@ -15,7 +15,7 @@ export const Modal = ({ visible=false, onDismiss, title, text }) => {
   const theme = useTheme()
   return visible
     ? (
-      <View style={ { ...theme.modal.view, ...boxShadow } }>
+      <View style={ { ...theme.modal.view, ...boxShadow  } }>
 
         <Text style={ theme.modal.title }>{ title }</Text>
 
@@ -42,7 +42,7 @@ Modal.propTypes = {
   text: PropTypes.string,
 }
 
-// use theme.shadow.popup instead once the stringify/px issue is resolved
+// TODO: use theme.shadow.popup instead of this once the unit/px issue is resolved in re-theme
 const boxShadow = {
   elevation: 15, // android
   shadowColor: '#000',
