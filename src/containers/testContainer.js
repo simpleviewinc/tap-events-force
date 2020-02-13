@@ -7,7 +7,7 @@ import {
 import { withTheme } from 're-theme'
 import { navigateBack } from 'SVActions'
 
-const TestContainer = withTheme(({theme}) => {
+export const TestContainer = withTheme(({theme}) => {
 
   return (
       <View>
@@ -19,5 +19,3 @@ const TestContainer = withTheme(({theme}) => {
       </View>
   )
 })
-
-export default TestContainer

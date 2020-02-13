@@ -9,7 +9,7 @@ import { navigateTo } from 'SVActions'
 
 const { events, sessions } = Values.categories
 
-const AppContainer = props => {
+export const AppContainer = props => {
 
   const theme = useTheme()
 
@@ -46,5 +46,3 @@ const AppContainer = props => {
     </View>
   )
 }
-
-export default AppContainer
