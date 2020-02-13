@@ -19,11 +19,12 @@ export const useQRReader = (element) => {
     if (!element) return
 
     // initialize the reader (including the web worker)
-    // QRReader.init(element) 
-    setReader(new QRReader(element))
+    const qrReader = new QRReader(element)
+
+    setReader(qrReader)
 
     // clean up by terminating the worker
-    return () => reader.terminate()
+    return () => qrReader.terminate()
 
   }, [ element ])
 
