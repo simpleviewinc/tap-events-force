@@ -114,6 +114,8 @@ core/scripts/js/tapList.js
 core/scripts/js/tap_List.js
 
 core/base/assets/index.js
+assets/index.js
+src/assets/index.js
 
 # Ignore test report
 test-report.xml
@@ -125,3 +127,4 @@ jest_html_reporters.html
 re-theme-touch.js
 *.code-workspace
 **/temp/**
+.temp

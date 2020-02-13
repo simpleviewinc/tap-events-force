@@ -41,5 +41,4 @@ export const Test = () => {
   </View>
 }
 
-
 export default AppContainer
