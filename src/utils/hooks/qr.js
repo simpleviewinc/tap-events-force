@@ -23,7 +23,7 @@ export const useQRReader = (element) => {
     setReader(new QRReader(element))
 
     // clean up by terminating the worker
-    return () => QRReader.terminate()
+    return () => reader.terminate()
 
   }, [ element ])
 
