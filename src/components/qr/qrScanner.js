@@ -1,4 +1,5 @@
-import { QRImageCapture, QRVideoCapture } from './index'
+import { QRImageCapture} from './qrImageCapture.web'
+import { QRVideoCapture } from './qrVideoCapture.web'
 import { isIOS, isStandalonePWA } from 'SVUtils'
 
 /**

@@ -1,14 +1,9 @@
 import React, { useState } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
-
-const textStyle = {
-  fontWeight: 'bold',
-  fontSize: 20,
-  marginLeft: 50
-}
+import { Modal } from 'SVComponents/modal'
 
 /**
  * QRContainer
@@ -17,16 +12,11 @@ const textStyle = {
 const QRContainer = props => {
   const theme = useTheme()
   const [ qr, setQR ] = useState('')
-  const [ scanning, setScanning ] = useState(false)
-
-  const onScanStart = () => {
-    setQR(null)
-    setScanning(true)
-  }
+  const [ showModal, setShowModal ] = useState(false)
 
   const onScanFound = (result) => {
-    setScanning(false)
     setQR(result)
+    result && setShowModal(true)
   }
 
   return (
@@ -36,16 +26,14 @@ const QRContainer = props => {
         get(props, [ 'styles', 'container' ]),
       )}
     >
-      <QRScanner 
-        onScan={onScanFound} 
-        onScanStart={onScanStart}
+      <Modal 
+        visible={showModal}
+        onDismiss={() => setShowModal(false)}
+        title='Scanner Results'
+        text={qr}
       />
-      <Text style={textStyle}>
-        { scanning
-          ? 'Scanning...'
-          : qr
-        }
-      </Text>
+
+      <QRScanner onScan={onScanFound} />
     </View>
   )
 }
