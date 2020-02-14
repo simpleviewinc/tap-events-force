@@ -5,7 +5,7 @@ import {
   Button,
 } from 'SVComponents'
 import { withTheme } from 're-theme'
-import { navigateBack } from 'SVActions'
+import { navigateBack } from 'SVActions/navigation/navigateBack'
 
 export const TestContainer = withTheme(({theme}) => {
 
