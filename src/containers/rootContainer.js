@@ -5,7 +5,7 @@ import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useCollection } from 'SVUtils/hooks'
 import { Button } from 'SVComponents'
-import { navigateTo } from 'SVActions'
+import { navigateTo } from 'SVActions/navigation/navigateTo'
 
 const { events, sessions } = Values.categories
 
