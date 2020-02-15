@@ -32,6 +32,8 @@ export const QRContainer = props => {
         get(theme, [ 'qr', 'container'])
       )}
     >
+      { showModal && <View style={ get(theme, [ 'mask', 'dimmed'])} /> }
+
       <Modal 
         visible={showModal}
         onDismiss={() => setShowModal(false)}

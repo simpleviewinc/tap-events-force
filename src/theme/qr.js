@@ -14,5 +14,5 @@ export const qr = {
   input: {
     margin: 15,
     alignSelf: 'center',
-  }
+  },
 }
