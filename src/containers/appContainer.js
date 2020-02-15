@@ -6,6 +6,7 @@ import { QRContainer } from './qrContainer'
 
 export const AppContainer = props => {
   const theme = useTheme()
+  console.log({theme})
 
   return (
     <View

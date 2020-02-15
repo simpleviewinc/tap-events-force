@@ -1,10 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useInterval, useCamera, useVideoStream, useQRReader } from 'SVUtils/hooks'
 import PropTypes from 'prop-types'
 
-const dimensions = {
-  width: 640,
-  height: 480,
+const _dimensions = {
+  height: 640,
+  width: 480,
 }
 
 const QRPropTypes = {
@@ -42,13 +42,12 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
   useVideoStream(
     videoRef,
     stream,
-    { 
-      onReady: () => {
-        setStreaming(true)
-        active && onScanStart(videoRef.current)
-      }
-    }
+    { onReady: () => setStreaming(true) }
   )
+
+  const dimensions = {
+    width: window.screen.width * 0.9
+  }
 
   const vidStyle = {
     height: showVideo
@@ -59,6 +58,8 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
     ...videoStyle,
   }
 
+  console.log({vidStyle})
+
   // setup the qr reader to scan the video
   const [ makeScan ] = useQRReader(videoRef.current)
 
@@ -67,17 +68,20 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
     showVideo && makeScan(result => result && onScan(result))
   }, showVideo ? delay : null)
 
+  // if showVideo is true, notify parent of scan starting on first render and not again unless showVideo toggles back to true
+  useEffect(() => {
+    showVideo && onScanStart(videoRef.current)
+  }, [ showVideo ])
+
   return (
-    <div style={style}>
-      <div>
-        <video 
-          ref={videoRef}
-          style={vidStyle}
-          playsInline
-        >
-            Video not available.
-        </video>
-      </div>
+    <div style={{ ...style, height: vidStyle.height } }>
+      <video 
+        ref={videoRef}
+        style={vidStyle}
+        playsInline
+      >
+          Video not available.
+      </video>
     </div>
   )
 }
