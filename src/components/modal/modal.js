@@ -15,7 +15,7 @@ export const Modal = ({ visible=false, onDismiss, title, text }) => {
   const theme = useTheme()
   return visible
     ? (
-      <View style={ { ...theme.modal.view, ...boxShadow  } }>
+      <View style={ theme.join(theme.modal.view, theme.layout.absolute.center, boxShadow) }>
 
         <Text style={ theme.modal.title }>{ title }</Text>
 

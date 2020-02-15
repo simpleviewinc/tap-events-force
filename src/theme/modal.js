@@ -8,12 +8,9 @@ export const modal = {
     borderWidth: 0.5,
     borderColor: '#d6d7da',
     padding: 30,
-    margin: 10,
     height: 200,
     width: modalWidth,
 
-    position: 'absolute',
-    alignSelf: 'center',
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-between',
