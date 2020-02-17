@@ -1,7 +1,7 @@
 import React from 'react'
 import { 
   View,
-  h2,
+  H2,
   Button,
 } from 'SVComponents'
 import { withTheme } from 're-theme'
@@ -11,7 +11,7 @@ export const TestContainer = withTheme(({theme}) => {
 
   return (
       <View>
-        <h2>Test Page</h2>
+        <H2>Test Page</H2>
         <Button 
           onPress={() => navigateBack()}
         >
