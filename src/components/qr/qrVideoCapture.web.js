@@ -58,8 +58,6 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
     ...videoStyle,
   }
 
-  console.log({vidStyle})
-
   // setup the qr reader to scan the video
   const [ makeScan ] = useQRReader(videoRef.current)
 
