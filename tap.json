@@ -2,7 +2,7 @@
   "name": "events-force-x5",
   "displayName": "Events Force Mobile X5",
   "keg": {
-    "navigation": {
+    "routes": {
       "/": "RootContainer",
       "/test": "TestContainer"
     },

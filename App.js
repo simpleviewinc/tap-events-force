@@ -34,7 +34,7 @@ const App = props => {
           <Provider store={getStore()}>
             <ReThemeProvider theme={{}} merge={true}>
               {/* setup routes from navigation config */}
-              <ContainerRoutes navigationConfigs={keg.navigation}/>
+              <ContainerRoutes navigationConfigs={keg.routes}/>
             </ReThemeProvider>
           </Provider>
         </SafeAreaView>
