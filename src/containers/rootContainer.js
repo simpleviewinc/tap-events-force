@@ -38,10 +38,9 @@ export const RootContainer = props => {
           </React.Fragment>
         ))
       }
-      <Button 
-          text={"Navigate"}
-          onPress={() => navigateTo('/test')}
-      />
+      <Button onPress={() => navigateTo('/test')}>
+        Navigate
+      </Button>
 
     </View>
   )
