@@ -5,7 +5,6 @@ export const qr = {
   container: {
     flexDirection: 'column',
     alignItems: 'center',
-    overflow: 'none',
   },
   video: {
     borderRadius: 4,

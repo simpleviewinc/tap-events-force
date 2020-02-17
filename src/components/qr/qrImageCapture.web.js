@@ -1,6 +1,5 @@
 import React, { useState, useRef } from 'react'
 import { useQRReader, useInterval } from 'SVUtils/hooks'
-// import { FilePicker } from 'keg-components'
 import PropTypes from 'prop-types'
 
 /**
