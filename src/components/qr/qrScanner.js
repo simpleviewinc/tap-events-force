@@ -1,6 +1,7 @@
 import { QRImageCapture} from './qrImageCapture.web'
 import { QRVideoCapture } from './qrVideoCapture.web'
-import { isIOSWeb, isStandalonePWA } from 'SVUtils'
+import { QRVideoCapture as QRVideoCaptureNative } from './qrVideoCapture.native'
+import { isIOSWeb, isStandalonePWA, isNative } from 'SVUtils/helpers/platform'
 
 /**
  * A QRScanner that uses the right APIs for the current platform.
@@ -8,11 +9,16 @@ import { isIOSWeb, isStandalonePWA } from 'SVUtils'
  * Uses image input capture for a standalone iOS PWA, since it currently does not yet support getUserMedia (needed for video camera) on PWAs.
  * If the device is on mobile web, or the device is not iOS, it can use the live video capture.
  * 
- * TODO: when we update this tap for native, we will have to adjust this so that it does not return these web-only components.
- * 
  * @see QRImageCapture
- * @see QRVideoCapture
+ * @see QRVideoCapture.web
+ * @see QRVideoCapture.native
  */
-export const QRScanner = (isIOSWeb() && isStandalonePWA())
-    ? QRImageCapture
-    : QRVideoCapture
+export const QRScanner = isNative()
+    ? QRVideoCaptureNative
+    : (isIOSWeb() && isStandalonePWA())
+        ? QRImageCapture
+        : QRVideoCapture
+
+
+
+

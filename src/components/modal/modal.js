@@ -28,8 +28,9 @@ export const Modal = ({ visible=false, onDismiss, title, text }) => {
 
         <Button 
           style={theme.modal.button}
-          text='Okay'
-          onPress={onDismiss} />
+          onPress={onDismiss}>
+            Okay
+          </Button>
 
       </View>
     )

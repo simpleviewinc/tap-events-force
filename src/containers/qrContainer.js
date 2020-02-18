@@ -3,7 +3,9 @@ import { View } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
+import { Button } from 'SVComponents/button' 
 import { Modal } from 'SVComponents/modal'
+import { navigateBack } from 'SVActions/navigation/navigateBack'
 
 /**
  * QRContainer
@@ -36,6 +38,10 @@ export const QRContainer = props => {
       />
 
       <QRScanner onScan={onScanFound} />
+
+      <Button onPress={navigateBack}>
+        Back
+      </Button>
     </View>
   )
 }
