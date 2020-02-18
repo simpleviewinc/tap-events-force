@@ -15,6 +15,7 @@
     "clean": "cd node_modules/sv-keg; yarn clean",
     "clean:full": "yarn clean; yarn clean:nm; yarn install",
     "clean:nm": "rimraf ./yarn.lock; rimraf ./package.lock; rimraf node_modules",
+    "clean:rn": "yarn keg clean:rn",
     "ios": "cd node_modules/sv-keg; yarn ios",
     "start": "cd node_modules/sv-keg; expo start",
     "cp": "/bin/bash cp.sh",

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Text, View, Button } from 'SVComponents'
+import { Button } from 'SVComponents/button'
+import { Text, View } from 'SVComponents/native'
 import { useTheme } from 're-theme'
 import PropTypes from 'prop-types'
 
