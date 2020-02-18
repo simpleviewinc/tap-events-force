@@ -6,7 +6,7 @@ import { get }  from 'jsutils'
 import { useCollection } from 'SVUtils/hooks/useCollection'
 import { Button } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
-
+import { AppHeader } from 'SVComponents'
 const { events, sessions } = Values.categories
 
 export const RootContainer = props => {
@@ -21,12 +21,19 @@ export const RootContainer = props => {
   }
 
   return (
+    <>
+      <AppHeader
+        shadow
+        title={"Mobile X5"}
+      />
+
     <View
       style={ theme.join(
         get(theme, [ 'app', 'container' ]),
         get(props, [ 'styles', 'container' ]),
       )}
     >
+
       {
         [ events, sessions ].map(coll => (
           <React.Fragment key={coll}>
@@ -47,5 +54,8 @@ export const RootContainer = props => {
       </Button>
 
     </View>
+
+    </>
+    
   )
 }
