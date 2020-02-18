@@ -6,7 +6,7 @@ import { get }  from 'jsutils'
 import { useCollection } from 'SVUtils/hooks/useCollection'
 import { Button } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
-import { AppHeader } from 'SVComponents'
+import { AppHeader } from 'keg-components'
 const { events, sessions } = Values.categories
 
 export const RootContainer = props => {
