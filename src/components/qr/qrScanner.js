@@ -17,8 +17,7 @@ export const QRScanner = isNative()
     ? QRVideoCaptureNative
     : (isIOSWeb() && isStandalonePWA())
         ? QRImageCapture
-        : QRImageCapture
-        // : QRVideoCapture
+        : QRVideoCapture
 
 
 

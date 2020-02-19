@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
  * @param { Function } props.onScanStart - callback of form (imgElement) => { ... } - Gets called when the user has selected an image and the scan begins
  * @param { Function } props.onScan - callback of form (qrScanText) => { ... } - Gets called when the qr reader scans the image and finds a qr code result
  */
-export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{}, scanOnMount=false }) => {
+export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{}, onScanStop=()=>{}, scanOnMount=false }) => {
   const [ imageURL, setImageURL ] = useState(null)
 
   // capture the url to the image on the user's device; create and save the object url
@@ -36,6 +36,7 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   const imgRef = useRef()
   const inputRef = useRef()
 
+  // if scanOnMount is set to true, then immediately open the file picker / camera on mount
   useEffect(() => {
     const shouldScan = scanOnMount && !!inputRef.current
     shouldScan && inputRef.current.click()
@@ -52,27 +53,29 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   const reset = () => {
     setImageURL(null)
     setStartTime(null)
+
+    // notify the parent we stop scanning until the user selects another image
+    onScanStop()
+
     inputRef.current.value = ''
   }
 
-  // scan the image until a result is found, then notify the parent of the result
+  // scan the image until a result is found or the timeout is exceeded, then notify the parent of the result
   useInterval(() => { 
     if (!imageURL) return
 
     !scanStartTime && setStartTime(new Date())
 
-    // check if the interval has exceeded the timeout
+    // check if the scanning interval has exceeded the timeout
     if (timeSince(scanStartTime) >= timeout) {
       onScanFail(`Scan exceeded timeout of ${timeout} ms without finding a qr code`)
-      reset()
-      return
+      return reset()
     }
 
     scan(result => { 
       result && onScan(result)
 
-      // the scan has found a result, so reset the image url and input so 
-      // that scanning stops until the user captures another image
+      // the scan has found a result, so reset the image url and input so that scanning stops until the user captures another image
       reset()
     })
   }, imageURL ? delay : null)

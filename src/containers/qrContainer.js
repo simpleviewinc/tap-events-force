@@ -4,7 +4,7 @@ import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
 import { Button } from 'SVComponents/button' 
-import { Modal } from 'SVComponents/modal'
+import { ConfirmModal } from 'SVComponents/modal'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { Loading } from 'keg-components'
 
@@ -21,9 +21,10 @@ export const QRContainer = props => {
 
   const onScanResult = (result) => {
     setScanResult(result)
-    setScanning(false)
     result && setShowModal(true)
   }
+
+  const onScanResultConfirmed = () => setShowModal(false)
 
   // shows a message to try again. Only used with the QRImageReader
   const showRetryModal = () => onScanResult('Could not decode the image. Please try again!')
@@ -31,14 +32,20 @@ export const QRContainer = props => {
   return (
     <View
       style={ theme.join(
-        get(theme, [ 'app', 'container' ]),
         get(props, [ 'styles', 'container' ]),
-        get(theme, [ 'qr', 'container'])
+        get(theme, [ 'qr', 'container']),
+        { width: theme.RTMeta.width }
       )}
     >
-      <Modal 
+      <Button 
+        style={theme.navigation.button}
+        onPress={navigateBack}>
+        Back
+      </Button>
+
+      <ConfirmModal 
         visible={showModal}
-        onDismiss={() => setShowModal(false)}
+        onDismiss={onScanResultConfirmed}
         title='Scanner Results'
         text={scanResult}
       />
@@ -47,17 +54,15 @@ export const QRContainer = props => {
         style={theme.qr.scannerView}
         videoStyle={theme.qr.video}
         inputStyle={theme.qr.input}
-        onScanStart={setScanning}
+        onScanStart={() => setScanning(true)}
+        onScanStop={() => setScanning(false)}
         onScanFail={showRetryModal}
         onScan={onScanResult} 
         scanOnMount={true}
       />
 
-      { !showModal && scanning && <Loading /> }
+      { !showModal && scanning && <Loading style={theme.qr.loader} /> }
 
-      <Button onPress={navigateBack}>
-        Back
-      </Button>
     </View>
   )
 }

@@ -2,7 +2,6 @@ const modalWidth = 300
 
 export const modal = {
   view: {
-    zIndex: 100000,
     backgroundColor: 'white',
     borderRadius: 4,
     borderWidth: 0.5,
@@ -14,6 +13,8 @@ export const modal = {
     alignItems: 'center',
     flexDirection: 'column',
     justifyContent: 'space-between',
+
+    overflow: 'hidden'
   },
   title: {
     fontWeight: 'bold',

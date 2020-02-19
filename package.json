@@ -25,9 +25,10 @@
   },
   "dependencies": {
     "firebase": "^7.7.0",
-    "sv-keg": "https://github.com/simpleviewinc/keg-core.git#master",
+    "keg-components": "https://github.com/mpcarolin/keg-components.git#master",
+    "modal-enhanced-react-native-web": "^0.2.0",
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master",
-    "keg-components": "https://github.com/mpcarolin/keg-components.git#master"
+    "sv-keg": "https://github.com/simpleviewinc/keg-core.git#master"
   },
   "devDependencies": {
     "rimraf": "^3.0.1"
