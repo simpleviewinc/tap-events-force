@@ -2,25 +2,24 @@ import React from 'react'
 import { 
   View,
   H2,
-  Button,
-  useHistory
+  Button
 } from 'SVComponents'
 import { withTheme } from 're-theme'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { AppHeader } from 'keg-components'
+import { isRootStack } from 'SVNavigation'
+import { isStandalonePWA } from 'SVUtils/helpers'
 
 export const TestContainer = withTheme(({theme}) => {
 
-  const history = useHistory()
-  const isRootStack = history && history.index > 0
-
   return (
     <>
+      {/* only display back button on PWA or native apps */}
       <AppHeader
         shadow
         title={"TestContainer"}
-        leftIcon={isRootStack ? null : 'arrow-left'}
-        leftAction={isRootStack ? null : () => navigateBack()}
+        leftIcon={!isRootStack() && isStandalonePWA() ? 'arrow-left' : null}
+        leftAction={!isRootStack() && isStandalonePWA() ? () => navigateBack() : null}
       />
 
       <View>
