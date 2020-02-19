@@ -8,6 +8,7 @@ export const qr = {
   },
   video: {
     borderRadius: 4,
+    margin: 100,
     overflow: 'hidden',
   },
   input: {

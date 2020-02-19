@@ -26,7 +26,6 @@ export const modal = {
   },
   button: {
     margin: 10,
-    alignSelf: 'flex-end',
   },
   textContainer: {
     justifyContent: 'center',

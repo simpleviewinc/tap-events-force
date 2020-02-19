@@ -1,11 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { useInterval, useCamera, useVideoStream, useQRReader } from 'SVUtils/hooks'
+import { useInterval } from 'SVUtils/hooks/useInterval'
+import { useCamera } from 'SVUtils/hooks/media/useCamera'
+import { useVideoStream } from 'SVUtils/hooks/media/useVideoStream'
+import { useQRReader } from 'SVUtils/hooks/useQRReader'
 import PropTypes from 'prop-types'
-
-const _dimensions = {
-  height: 640,
-  width: 480,
-}
 
 const QRPropTypes = {
   style: PropTypes.object,
