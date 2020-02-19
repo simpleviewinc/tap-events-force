@@ -20,16 +20,18 @@ const QRPropTypes = {
  * @param { Object } props 
  * @param { Object } props.style - style object for the whole component
  * @param { Object } props.videoStyle - style object for the video element
+ * @param { Boolean } props.scanOnInit - if true, will start the qr capture and scanning as soon as possible
  * @param { Boolean } props.active - if true, shows the video element and starts scanning. If false, disables it
  * @param { Number } props.delay - delay interval between scans of the stream
  * @param { Number } props.frameRate - frameRate of the video stream
  * @param { String } props.facingMode - frameRate of the video stream
  * @param { Function } props.onScanStart - callback of form (videoElement) => { ... } . Gets called when the qr reader begins scanning the video
  * @param { Function } props.onScan - callback of form (qrScanText) => { ... } . Gets called when the qr reader scans the video and finds a qr code result
+ * 
  */
-export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=1000, frameRate=20, facingMode='environment', onScanStart=()=>{}, onScan=()=>{} }) => {
+export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay=1000, frameRate=20, facingMode='environment', onScanStart=()=>{}, onScan=()=>{} }) => {
   const [ streaming, setStreaming ] = useState(false)
-  const showVideo = streaming && active
+  const showVideo = streaming && scanOnInit
 
   const videoRef = useRef()
 

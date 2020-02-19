@@ -58,7 +58,7 @@ export const QRContainer = props => {
         onScanStop={() => setScanning(false)}
         onScanFail={showRetryModal}
         onScan={onScanResult} 
-        scanOnMount={true}
+        scanOnInit
       />
 
       { !showModal && scanning && <Loading style={theme.qr.loader} /> }

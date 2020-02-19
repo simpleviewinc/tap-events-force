@@ -13,8 +13,9 @@ import PropTypes from 'prop-types'
  * @param { Number } props.delay - delay interval between scans of the stream
  * @param { Function } props.onScanStart - callback of form (imgElement) => { ... } - Gets called when the user has selected an image and the scan begins
  * @param { Function } props.onScan - callback of form (qrScanText) => { ... } - Gets called when the qr reader scans the image and finds a qr code result
+ * @param { Boolean } props.scanOnInit - if true, will start the qr capture process as soon as possible
  */
-export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{}, onScanStop=()=>{}, scanOnMount=false }) => {
+export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{}, onScanStop=()=>{}, scanOnInit=true }) => {
   const [ imageURL, setImageURL ] = useState(null)
 
   // capture the url to the image on the user's device; create and save the object url
@@ -36,12 +37,12 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   const imgRef = useRef()
   const inputRef = useRef()
 
-  // if scanOnMount is set to true, then immediately open the file picker / camera on mount
+  // if active is set to true, then immediately open the file picker / camera on mount
   useEffect(() => {
-    const shouldScan = scanOnMount && !!inputRef.current
+    const shouldScan = scanOnInit && !!inputRef.current
     shouldScan && inputRef.current.click()
     console.log({shouldScan})
-  }, [ inputRef.current, scanOnMount ])
+  }, [ inputRef.current, scanOnInit ])
 
   // setup the qr reader with the image element
   const [ scan ] = useQRReader(imgRef.current)
