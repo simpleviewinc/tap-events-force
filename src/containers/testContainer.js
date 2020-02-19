@@ -7,7 +7,7 @@ import {
 import { withTheme } from 're-theme'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { AppHeader } from 'keg-components'
-import { isRootStack } from 'SVNavigation'
+import { isRootStack } from 'SVNavigation/isRootStack'
 import { isStandalonePWA } from 'SVUtils/helpers'
 
 export const TestContainer = withTheme(({theme}) => {

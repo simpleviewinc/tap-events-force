@@ -8,7 +8,7 @@ import { Button } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { AppHeader } from 'keg-components'
-import { isRootStack } from 'SVNavigation'
+import { isRootStack } from 'SVNavigation/isRootStack'
 import { isStandalonePWA } from 'SVUtils/helpers'
 
 const { events, sessions } = Values.categories
@@ -29,10 +29,11 @@ export const RootContainer = props => {
       <AppHeader
         shadow
         title={"Mobile X5s"}
-        leftIcon={!isRootStack() ? 'arrow-left' : null}
+        leftIcon={!isRootStack() && isStandalonePWA() ? 'arrow-left' : null}
         leftAction={!isRootStack() && isStandalonePWA() ? () => navigateBack() : null}
       />
       {isStandalonePWA() ? <Text>PWA</Text> : <Text>Not PWA</Text>}
+
     <View
       style={ theme.join(
         get(theme, [ 'app', 'container' ]),
