@@ -6,6 +6,7 @@ import { QRScanner } from 'SVComponents/qr'
 import { Button } from 'SVComponents/button' 
 import { Modal } from 'SVComponents/modal'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
+import { Loading } from 'keg-components'
 
 /**
  * QRContainer
@@ -20,6 +21,7 @@ export const QRContainer = props => {
 
   const onScanResult = (result) => {
     setScanResult(result)
+    setScanning(false)
     result && setShowModal(true)
   }
 
@@ -34,8 +36,6 @@ export const QRContainer = props => {
         get(theme, [ 'qr', 'container'])
       )}
     >
-      { showModal && <View style={ get(theme, [ 'mask', 'dimmed'])} /> }
-
       <Modal 
         visible={showModal}
         onDismiss={() => setShowModal(false)}
@@ -50,9 +50,10 @@ export const QRContainer = props => {
         onScanStart={setScanning}
         onScanFail={showRetryModal}
         onScan={onScanResult} 
+        scanOnMount={true}
       />
 
-      <p>{ !showModal && scanning && "Loading..."}</p>
+      { !showModal && scanning && <Loading /> }
 
       <Button onPress={navigateBack}>
         Back

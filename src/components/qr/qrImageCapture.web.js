@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useInterval } from 'SVUtils/hooks/useInterval'
 import { useQRReader } from 'SVUtils/hooks/useQRReader'
+import { FilePicker } from 'keg-components'
 import PropTypes from 'prop-types'
 
 /**
@@ -13,12 +14,11 @@ import PropTypes from 'prop-types'
  * @param { Function } props.onScanStart - callback of form (imgElement) => { ... } - Gets called when the user has selected an image and the scan begins
  * @param { Function } props.onScan - callback of form (qrScanText) => { ... } - Gets called when the qr reader scans the image and finds a qr code result
  */
-export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{} }) => {
+export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{}, scanOnMount=false }) => {
   const [ imageURL, setImageURL ] = useState(null)
 
   // capture the url to the image on the user's device; create and save the object url
-  const captureURL = (event) => {
-    const file = event.target.files[0]
+  const captureURL = (file) => {
     const url = URL.createObjectURL(file)
     setImageURL(url) 
   }
@@ -36,6 +36,11 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   const imgRef = useRef()
   const inputRef = useRef()
 
+  useEffect(() => {
+    const shouldScan = scanOnMount && !!inputRef.current
+    shouldScan && inputRef.current.click()
+    console.log({shouldScan})
+  }, [ inputRef.current, scanOnMount ])
 
   // setup the qr reader with the image element
   const [ scan ] = useQRReader(imgRef.current)
@@ -74,13 +79,11 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
 
   return (
     <div style={style}>
-      <input 
-        title={"Scan a QR Code"}
+      <FilePicker
+        title={'Scan QR code'} 
         style={inputStyle}
+        onFilePicked={captureURL}
         ref={inputRef}
-        onChange={captureURL}
-        type="file" 
-        accept="image/*" 
         capture
       />
       <img 

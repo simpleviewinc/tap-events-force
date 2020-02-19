@@ -27,8 +27,7 @@
     "firebase": "^7.7.0",
     "sv-keg": "https://github.com/simpleviewinc/keg-core.git#master",
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master",
-    "keg-components": "https://github.com/mpcarolin/keg-components.git#better-inputs"
-
+    "keg-components": "https://github.com/mpcarolin/keg-components.git#master"
   },
   "devDependencies": {
     "rimraf": "^3.0.1"
