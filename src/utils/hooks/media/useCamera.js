@@ -1,4 +1,4 @@
-import { requestCamera } from 'SVUtils/helpers/media/requestCamera'
+import { requestCamera } from 'SVUtils/media/requestCamera'
 import { useState, useEffect } from 'react'
 
 /**
