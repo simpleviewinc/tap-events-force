@@ -5,6 +5,6 @@ export const Values = {
   categories: keyMap([
     'events',
     'sessions',
-  ])
-
+    'qr',
+  ]),
 }

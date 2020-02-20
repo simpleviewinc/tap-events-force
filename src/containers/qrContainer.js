@@ -7,6 +7,9 @@ import { Button } from 'SVComponents/button'
 import { ConfirmModal } from 'SVComponents/modal'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { Loading } from 'keg-components'
+import { useSelector } from 'react-redux'
+import { upsertScan } from 'SVActions'
+import { Values } from 'SVConstants'
 
 /**
  * QRContainer
@@ -15,12 +18,14 @@ import { Loading } from 'keg-components'
 export const QRContainer = props => {
   const theme = useTheme()
 
-  const [ scanResult, setScanResult ] = useState(null)
   const [ scanning, setScanning ] = useState(false)
   const [ showModal, setShowModal ] = useState(false)
 
+  const scanResult = useSelector(store => store.items[Values.categories.qr].scanResult)
+  console.log({scanResult, showModal})
+
   const onScanResult = (result) => {
-    setScanResult(result)
+    result && upsertScan(result)
     result && setShowModal(true)
   }
 
