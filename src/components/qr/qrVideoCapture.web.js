@@ -5,21 +5,6 @@ import { useVideoStream } from 'SVUtils/hooks/media/useVideoStream'
 import { useQRReader } from 'SVUtils/hooks/useQRReader'
 import PropTypes from 'prop-types'
 
-const dimensions = {
-  width: 640,
-  height: 480,
-}
-
-const QRPropTypes = {
-  style: PropTypes.object,
-  videoStyle: PropTypes.object,
-  active: PropTypes.bool,
-  delay: PropTypes.number,
-  frameRate: PropTypes.number,
-  facingMode: PropTypes.string,
-  onScan: PropTypes.func,
-}
-
 /**
  * A video component that uses the camera to scan for qr codes. Use the onScan callback to do something with the result.
  * @param { Object } props 
@@ -53,15 +38,6 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
     }
   )
 
-  const vidStyle = {
-    height: showVideo
-      ? videoRef.current.videoHeight / (videoRef.current.videoWidth / dimensions.width)
-      : 0,
-    width: dimensions.width,
-    display: showVideo ? 'block' : 'none',
-    ...videoStyle,
-  }
-
   // setup the qr reader to scan the video
   const [ makeScan ] = useQRReader(videoRef.current)
 
@@ -75,7 +51,7 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
       <div>
         <video 
           ref={videoRef}
-          style={vidStyle}
+          style={videoStyle}
           playsInline
         >
             Video not available.
@@ -85,4 +61,12 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=100
   )
 }
 
-QRVideoCapture.propTypes = QRPropTypes
+QRVideoCapture.propTypes = {
+  style: PropTypes.object,
+  videoStyle: PropTypes.object,
+  active: PropTypes.bool,
+  delay: PropTypes.number,
+  frameRate: PropTypes.number,
+  facingMode: PropTypes.string,
+  onScan: PropTypes.func,
+}

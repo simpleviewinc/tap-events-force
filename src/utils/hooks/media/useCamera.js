@@ -13,18 +13,17 @@ export const useCamera = (navigator, constraints) => {
   const [ mediaErr, setErr ] = useState(null)
   const [ stream, setStream ] = useState(null)
 
-  const getCamera = async () => {
-    const [ err, camStream ] = await requestCamera(navigator, constraints)
-
-    err && console.error(err)
-    err && setErr(err)
-
-    camStream && setStream(camStream)
-  }
-
   // attempt to get the camera once
   useEffect(() => {
-    !stream && getCamera()
+    if (stream) return
+
+    requestCamera(navigator, constraints)
+      .then(([err, camStream]) => {
+        err && console.error(err)
+        err && setErr(err)
+        camStream && setStream(camStream)
+      })
+
   }, [])
 
   return [ mediaErr, stream ]

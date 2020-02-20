@@ -1,7 +1,6 @@
-import { QRImageCapture} from './qrImageCapture.web'
-import { QRVideoCapture } from './qrVideoCapture.web'
-import { QRVideoCapture as QRVideoCaptureNative } from './qrVideoCapture.native'
-import { isIOSWeb, isStandalonePWA, isNative } from 'SVUtils/helpers/platform'
+import { QRImageCapture } from './qrImageCapture'
+import { QRVideoCapture } from './qrVideoCapture'
+import { isIOSWeb, isStandalonePWA } from 'SVUtils/helpers/platform'
 
 /**
  * A QRScanner that uses the right APIs for the current platform.
@@ -13,12 +12,9 @@ import { isIOSWeb, isStandalonePWA, isNative } from 'SVUtils/helpers/platform'
  * @see QRVideoCapture.web
  * @see QRVideoCapture.native
  */
-export const QRScanner = isNative()
-    ? QRVideoCaptureNative
-    : (isIOSWeb() && isStandalonePWA())
-        ? QRImageCapture
-        : QRVideoCapture
-
+export const QRScanner = (isIOSWeb() && isStandalonePWA())
+  ? QRImageCapture
+  : QRVideoCapture
 
 
 

@@ -1,4 +1,4 @@
-const modalWidth = 300
+import { modal as defaults } from './defaults'
 
 export const modal = {
   view: {
@@ -10,7 +10,7 @@ export const modal = {
     padding: 30,
     margin: 10,
     height: 200,
-    width: modalWidth,
+    width: defaults.width,
 
     position: 'absolute',
     alignSelf: 'center',
@@ -36,6 +36,6 @@ export const modal = {
 
     flex: 1,
     flexWrap: 'wrap',
-    maxWidth: modalWidth / 1.1,
+    maxWidth: defaults.width / 1.1,
   }
 }
