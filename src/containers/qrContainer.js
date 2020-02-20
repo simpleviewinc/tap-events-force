@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
@@ -21,8 +21,7 @@ export const QRContainer = props => {
   const [ scanning, setScanning ] = useState(false)
   const [ showModal, setShowModal ] = useState(false)
 
-  const scanResult = useSelector(store => store.items[Values.categories.qr].scanResult)
-  console.log({scanResult, showModal})
+  const scanResult = useSelector(({items}) => items[Values.categories.qr].scanResult)
 
   const onScanResult = (result) => {
     result && upsertScan(result)
@@ -67,6 +66,8 @@ export const QRContainer = props => {
       />
 
       { !showModal && scanning && <Loading style={theme.qr.loader} /> }
+
+      { scanResult && <Text> Decoded QR Code: </Text> }
 
     </View>
   )

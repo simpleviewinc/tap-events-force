@@ -1,3 +1,3 @@
-export * from './qrImageCapture.web'
-export * from './qrVideoCapture.web'
+export * from './qrImageCapture'
+export * from './qrVideoCapture'
 export * from './qrScanner'

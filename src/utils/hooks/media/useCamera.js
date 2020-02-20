@@ -13,15 +13,6 @@ export const useCamera = (navigator, constraints) => {
   const [ mediaErr, setErr ] = useState(null)
   const [ stream, setStream ] = useState(null)
 
-  const getCamera = async () => {
-    const [ err, camStream ] = await requestCamera(navigator, constraints)
-
-    err && console.error(err)
-    err && setErr(err)
-
-    camStream && setStream(camStream)
-  }
-
   // store a reference to the stream so that the cleanup func in useEffect has
   // access to the latest stream
   const streamRef = useRef()
@@ -29,11 +20,17 @@ export const useCamera = (navigator, constraints) => {
 
   // attempt to get the camera once
   useEffect(() => {
-    !stream && getCamera()
+    if (stream) return
+
+    requestCamera(navigator, constraints)
+      .then(([err, camStream]) => {
+        err && console.error(err)
+        err && setErr(err)
+        camStream && setStream(camStream)
+      })
 
     // when component unmounts, stop the webcam, otherwise the cam light remains on
     return () => stopWebcam(streamRef.current)
-
   }, [])
 
   return [ mediaErr, stream ]
