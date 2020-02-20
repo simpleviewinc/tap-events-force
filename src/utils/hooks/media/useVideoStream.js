@@ -8,7 +8,7 @@ import { get } from 'jsutils'
  * @param {Object} props - options
  * @param {Object} props.playOnInit - true by default. If true, plays the video immediately.
  * @param {Object} props.onReady - a callback that runs once the video is ready to play
- * @returns {Array} [ play, pause ] - play and pause functions for the video
+ * @returns {Array} [ play, pause ] functions that play/pause the video. You must pass them the current video element
  */
 export const useVideoStream = (ref, stream, { playOnInit=true, onReady=null }={}) => {
   const video = get(ref, 'current')
@@ -31,13 +31,9 @@ export const useVideoStream = (ref, stream, { playOnInit=true, onReady=null }={}
     return () => video.removeEventListener('canplay', onReady) 
   })
 
-  // memoize the play/pause functions so that they only get recreated if the video reference changes
-  const playVideo = useCallback(() => play(video), [ video ])
-  const pauseVideo = useCallback(() => pause(video), [ video ])
-
-  return [ 
-    playVideo, 
-    pauseVideo
+  return [
+    play,
+    pause
   ]
 }
 
