@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
-import { Button } from 'SVComponents/button' 
+import { Button } from 'keg-components'
 import { Modal } from 'SVComponents/modal'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button } from 'SVComponents/button'
-import { Text, View } from 'SVComponents/native'
+import { Button } from 'keg-components'
+import { Text, View } from 'keg-components'
 import { useTheme } from 're-theme'
 import PropTypes from 'prop-types'
 
