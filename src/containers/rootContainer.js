@@ -38,13 +38,18 @@ export const RootContainer = props => {
           </React.Fragment>
         ))
       }
-      <Button onPress={() => navigateTo('/test')}>
-        Navigate (test)
-      </Button>
 
-      <Button style={{marginTop: 15}} onPress={() => navigateTo('/qr')}>
-        Scan QR Code
-      </Button>
+      <View style={theme.navigation.button}>
+        <Button onPress={() => navigateTo('/test')}>
+          Navigate (test)
+        </Button>
+      </View>
+
+      <View style={theme.navigation.button}>
+        <Button style={{marginTop: 15}} onPress={() => navigateTo('/qr')}>
+          Scan QR Code
+        </Button>
+      </View>
 
     </View>
   )

@@ -41,6 +41,7 @@ export const useCamera = (navigator, constraints) => {
  * @param {Object} stream - camera stream
  */
 const stopWebcam = (stream) => {
+  if (!stream) return
   stream
     .getTracks()
     .map(track => track.stop())

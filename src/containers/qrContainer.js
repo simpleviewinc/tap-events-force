@@ -41,11 +41,12 @@ export const QRContainer = props => {
         { width: theme.RTMeta.width }
       )}
     >
-      <Button 
-        style={theme.navigation.button}
-        onPress={navigateBack}>
-        Back
-      </Button>
+      <View style={theme.navigation.button}>
+        <Button 
+          onPress={navigateBack}>
+          Back
+        </Button>
+      </View>
 
       <ConfirmModal 
         visible={showModal}
@@ -68,6 +69,7 @@ export const QRContainer = props => {
       { !showModal && scanning && <Loading style={theme.qr.loader} /> }
 
       { scanResult && <Text> Decoded QR Code: </Text> }
+      { scanResult && <Text> { scanResult } </Text> }
 
     </View>
   )
