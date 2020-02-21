@@ -17,9 +17,10 @@ import PropTypes from 'prop-types'
  * @param { String } props.facingMode - frameRate of the video stream
  * @param { Function } props.onScanStart - callback of form (videoElement) => { ... } . Gets called when the qr reader begins scanning the video
  * @param { Function } props.onScan - callback of form (qrScanText) => { ... } . Gets called when the qr reader scans the video and finds a qr code result
+ * @param { Function } props.onScanFailed - callback of form (err) => { ... }. Called if scanning failed for any reason
  * 
  */
-export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay=1000, frameRate=20, facingMode='environment', onScanStart=()=>{}, onScan=()=>{} }) => {
+export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay=1000, frameRate=20, facingMode='environment', onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{} }) => {
   const [ streaming, setStreaming ] = useState(false)
   const showVideo = streaming && scanOnInit
 
@@ -27,6 +28,7 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay
 
   // acquire the camera stream, given the video constraints
   const [ err, stream ] = useCamera(navigator, { video: { frameRate, facingMode }})
+  useEffect(() => { err && onScanFail(err) }, [ err ])
 
   // setup the video element to use the camera stream.
   useVideoStream(

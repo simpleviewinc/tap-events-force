@@ -31,7 +31,7 @@ export const QRContainer = props => {
   const onScanResultConfirmed = () => setShowModal(false)
 
   // shows a message to try again. Only used with the QRImageReader
-  const showRetryModal = () => onScanResult('Could not decode the image. Please try again!')
+  const showRetryModal = () => onScanResult('Could not decode an image. Please try again!')
 
   return (
     <View
