@@ -3,6 +3,7 @@ import { useInterval } from 'SVUtils/hooks/useInterval'
 import { useCamera } from 'SVUtils/hooks/media/useCamera'
 import { useVideoStream } from 'SVUtils/hooks/media/useVideoStream'
 import { useQRReader } from 'SVUtils/hooks/useQRReader'
+import { Text, View } from 'SVComponents'
 import PropTypes from 'prop-types'
 
 /**
@@ -37,14 +38,13 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay
     { onReady: () => setStreaming(true) }
   )
 
-  const width = window.screen.width * 0.9
+  const width = window.screen.width
+  const height = window.screen.height * 0.33
 
   // sets width to screen width, and height to 0 if showVideo is false so that it does not show an empty video
-  const vidStyle = {
+  const fullVideoStyle = {
     width,
-    height: showVideo
-      ? videoRef.current.videoHeight / (videoRef.current.videoWidth / width)
-      : 0,
+    height,
     display: showVideo ? 'block' : 'none',
     ...videoStyle,
   }
@@ -63,15 +63,16 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay
   }, [ showVideo ])
 
   return (
-    <div style={{ ...style, height: vidStyle.height } }>
+    <View style={ style }>
       <video 
         ref={videoRef}
-        style={vidStyle}
+        style={fullVideoStyle}
         playsInline
       >
           Video not available.
       </video>
-    </div>
+      { !streaming && !err && <Text>Waiting on camera...</Text>}
+    </View>
   )
 }
 

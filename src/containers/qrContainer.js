@@ -5,10 +5,10 @@ import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
 import { Button } from 'keg-components'
 import { ConfirmModal } from 'SVComponents/modal'
+import { ResultBox } from 'SVComponents/box'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
-import { Loading } from 'keg-components'
 import { useSelector } from 'react-redux'
-import { upsertScan } from 'SVActions'
+import { upsertScan, upsertScanError } from 'SVActions'
 import { Values } from 'SVConstants'
 
 /**
@@ -18,18 +18,20 @@ import { Values } from 'SVConstants'
 export const QRContainer = props => {
   const theme = useTheme()
 
-  const [ scanning, setScanning ] = useState(false)
-  const [ err, setErr ] = useState(null)
+  const [ scanning, setScanning ] = useState(true)
+  const [ errMessage, setErrMessage ] = useState(null)
 
   const scanResult = useSelector(({items}) => items[Values.categories.qr].scanResult)
 
-  const onScanResult = (result) => {
-    result && upsertScan(result)
+  const onScanResultFound = (result) => result && upsertScan(result)
+
+  const onScanFail = (err) => {
+    upsertScanError(err)
+    setScanning(false)
+    setErrMessage('Could not decode from image. Please try again!')
   }
 
-  // shows a message to try again. Only used with the QRImageReader
-  const onScanFail = (err) => setErr('Could not decode an image. Please try again!')
-  const onErrorConfirmed = () => setErr(null)
+  const onErrorConfirmed = () => setErrMessage(null)
 
   return (
     <View
@@ -47,10 +49,10 @@ export const QRContainer = props => {
 
       { /* notifies user of failed scan */ }
       <ConfirmModal 
-        visible={!!err}
+        visible={!!errMessage}
         onDismiss={onErrorConfirmed}
         title='Scan Failed'
-        text={err}
+        text={errMessage}
       />
 
       <QRScanner 
@@ -60,39 +62,19 @@ export const QRContainer = props => {
         onScanStart={() => setScanning(true)}
         onScanStop={() => setScanning(false)}
         onScanFail={onScanFail}
-        onScan={onScanResult} 
+        onScan={onScanResultFound} 
         scanOnInit
       />
 
-      {/* { scanning && <Loading style={theme.qr.loader} /> } */}
-
       <ResultBox
-        text={scanResult}
         title={'Decoded QR Code:'}
+        text={scanResult}
       />
+      
+      { scanning && <Text style={{ margin: 15, opacity: 0.7 }}>Scanning...</Text> }
 
     </View>
   )
 }
 
-const ResultBox = ({text='', title=''}) => {
-  const theme = useTheme()
-  return (
-    <View>
-      <Text style={theme.get('qr.resultTitle')}>{title}</Text>
-      <TextBox text={text} />
-    </View>
-  )
-}
 
-const TextBox = ({text}) => {
-  const theme = useTheme()
-  return (
-    <View style={theme.get('qr.resultBox')}>
-      <Text style={theme.get('qr.resultText')}>
-        { text || '' }
-      </Text>
-    </View>
-  )
-}
-  

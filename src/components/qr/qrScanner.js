@@ -15,4 +15,3 @@ import { isIOSWeb, isStandalonePWA } from 'SVUtils/platform'
 export const QRScanner = (isIOSWeb() && isStandalonePWA())
   ? QRImageCapture
   : QRVideoCapture
-  // : QRImageCapture
