@@ -9,7 +9,7 @@ import { navigateTo } from 'SVActions/navigation/navigateTo'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { AppHeader } from 'keg-components'
 import { isRootStack } from 'SVNavigation/isRootStack'
-import { isStandalonePWA } from 'SVUtils/helpers'
+import { isStandalonePWA } from 'SVUtils/platform'
 
 const { events, sessions } = Values.categories
 
