@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
-import { Button } from 'keg-components'
+import { View, Button } from 'SVComponents'
 import { Modal } from 'SVComponents/modal'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 
