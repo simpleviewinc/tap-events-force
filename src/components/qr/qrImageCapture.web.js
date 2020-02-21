@@ -41,7 +41,6 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   useEffect(() => {
     const shouldScan = scanOnInit && !!inputRef.current
     shouldScan && inputRef.current.click()
-    console.log({shouldScan})
   }, [ inputRef.current, scanOnInit ])
 
   // setup the qr reader with the image element
@@ -83,12 +82,13 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
 
   return (
     <div style={style}>
-      <FilePicker
-        title={'Scan QR code'} 
-        style={inputStyle}
+      <FilePicker 
+        accept="image/*" 
+        capture={true}
         onFilePicked={captureURL}
         ref={inputRef}
-        capture
+        style={inputStyle}
+        title={'Scan QR Code'}
       />
       <img 
         onLoad={onImageLoad}
