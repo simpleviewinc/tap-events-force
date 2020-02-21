@@ -19,19 +19,17 @@ export const QRContainer = props => {
   const theme = useTheme()
 
   const [ scanning, setScanning ] = useState(false)
-  const [ showModal, setShowModal ] = useState(false)
+  const [ err, setErr ] = useState(null)
 
   const scanResult = useSelector(({items}) => items[Values.categories.qr].scanResult)
 
   const onScanResult = (result) => {
     result && upsertScan(result)
-    result && setShowModal(true)
   }
 
-  const onScanResultConfirmed = () => setShowModal(false)
-
   // shows a message to try again. Only used with the QRImageReader
-  const showRetryModal = () => onScanResult('Could not decode an image. Please try again!')
+  const onScanFail = (err) => setErr('Could not decode an image. Please try again!')
+  const onErrorConfirmed = () => setErr(null)
 
   return (
     <View
@@ -42,17 +40,17 @@ export const QRContainer = props => {
       )}
     >
       <View style={theme.navigation.button}>
-        <Button 
-          onPress={navigateBack}>
+        <Button onPress={navigateBack}>
           Back
         </Button>
       </View>
 
+      { /* notifies user of failed scan */ }
       <ConfirmModal 
-        visible={showModal}
-        onDismiss={onScanResultConfirmed}
-        title='Scanner Results'
-        text={scanResult}
+        visible={!!err}
+        onDismiss={onErrorConfirmed}
+        title='Scan Failed'
+        text={err}
       />
 
       <QRScanner 
@@ -61,17 +59,40 @@ export const QRContainer = props => {
         inputStyle={theme.qr.input}
         onScanStart={() => setScanning(true)}
         onScanStop={() => setScanning(false)}
-        onScanFail={showRetryModal}
+        onScanFail={onScanFail}
         onScan={onScanResult} 
         scanOnInit
       />
 
-      { !showModal && scanning && <Loading style={theme.qr.loader} /> }
+      {/* { scanning && <Loading style={theme.qr.loader} /> } */}
 
-      { scanResult && <Text> Decoded QR Code: </Text> }
-      { scanResult && <Text> { scanResult } </Text> }
+      <ResultBox
+        text={scanResult}
+        title={'Decoded QR Code:'}
+      />
 
     </View>
   )
 }
 
+const ResultBox = ({text='', title=''}) => {
+  const theme = useTheme()
+  return (
+    <View>
+      <Text style={theme.get('qr.resultTitle')}>{title}</Text>
+      <TextBox text={text} />
+    </View>
+  )
+}
+
+const TextBox = ({text}) => {
+  const theme = useTheme()
+  return (
+    <View style={theme.get('qr.resultBox')}>
+      <Text style={theme.get('qr.resultText')}>
+        { text || '' }
+      </Text>
+    </View>
+  )
+}
+  

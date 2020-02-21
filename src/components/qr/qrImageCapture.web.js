@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
  * @param { Function } props.onScan - callback of form (qrScanText) => { ... } - Gets called when the qr reader scans the image and finds a qr code result
  * @param { Boolean } props.scanOnInit - if true, will start the qr capture process as soon as possible
  */
-export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{}, onScanStop=()=>{}, scanOnInit=true }) => {
+export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=3000, onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{}, onScanStop=()=>{}, scanOnInit=false }) => {
   const [ imageURL, setImageURL ] = useState(null)
 
   // capture the url to the image on the user's device; create and save the object url
