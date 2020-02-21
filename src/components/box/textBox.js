@@ -1,8 +1,8 @@
 import React from 'react'
 import { View, Text } from 'SVComponents'
 import { useTheme } from 're-theme'
-import { Clipboard, TouchableOpacity } from 'react-native'
-import { Icon } from 'keg-components'
+import { Clipboard } from 'react-native'
+import { TouchableIcon } from 'keg-components'
 
 /**
  * A Text Box for showing readonly text. Includes a copy to clipboard button.
@@ -31,18 +31,3 @@ export const TextBox = ({text=null}) => {
     </View>
   )
 }
-
-/**
- * An Icon element that can also be pressed.
- * TODO: move to keg-components
- */
-const TouchableIcon = ({ wrapStyle, onPress, ...props }) => {
-  return (
-    <TouchableOpacity style={wrapStyle} onPress={onPress}>
-      <Icon
-        { ...props }
-      />
-    </TouchableOpacity>
-  )
-}
-  
