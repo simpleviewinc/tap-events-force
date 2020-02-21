@@ -7,10 +7,10 @@ import { View, Text } from 'react-native'
  */
 export const QRVideoCapture = (props) => {
   return (
-      <View>
-          <Text>
-              Not yet implemented on native.
-          </Text>
-      </View>
+    <View>
+      <Text>
+        Not yet implemented on native.
+      </Text>
+    </View>
   )
 }

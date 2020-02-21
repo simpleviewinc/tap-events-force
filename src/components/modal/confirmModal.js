@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from 'SVComponents/button'
-import { Text, View } from 'SVComponents/native'
+import { Button, Text, View } from 'keg-components'
 import { useTheme } from 're-theme'
 import Modal from 'modal-enhanced-react-native-web'
 import PropTypes from 'prop-types'

@@ -1,6 +1,6 @@
 import { QRImageCapture } from './qrImageCapture'
 import { QRVideoCapture } from './qrVideoCapture'
-import { isIOSWeb, isStandalonePWA } from 'SVUtils/helpers/platform'
+import { isIOSWeb, isStandalonePWA } from 'SVUtils/platform'
 
 /**
  * A QRScanner that uses the right APIs for the current platform.
@@ -15,6 +15,3 @@ import { isIOSWeb, isStandalonePWA } from 'SVUtils/helpers/platform'
 export const QRScanner = (isIOSWeb() && isStandalonePWA())
   ? QRImageCapture
   : QRVideoCapture
-
-
-
