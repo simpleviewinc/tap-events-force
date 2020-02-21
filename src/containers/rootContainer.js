@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
-import { useCollection } from 'SVUtils/hooks'
+import { useCollection } from 'SVUtils/hooks/useCollection'
 import { Button } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
 
@@ -39,7 +39,11 @@ export const RootContainer = props => {
         ))
       }
       <Button onPress={() => navigateTo('/test')}>
-        Navigate
+        Navigate (test)
+      </Button>
+
+      <Button style={{marginTop: 15}} onPress={() => navigateTo('/qr')}>
+        Scan QR Code
       </Button>
 
     </View>
