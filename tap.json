@@ -1,12 +1,17 @@
 {
   "name": "events-force-x5",
   "displayName": "Events Force Mobile X5",
-  "tapResolver": {
-    "paths": {
-      "tapSrc": "./src"
-    }
-  },
   "keg": {
+    "routes": {
+      "/": "RootContainer",
+      "/test": "TestContainer",
+      "/qr": "QRContainer"
+    },
+    "tapResolver": {
+      "paths": {
+        "tapSrc": "./src"
+      }
+    },
     "versions": {
       "development": "1.0.0",
       "production": "1.0.0",
