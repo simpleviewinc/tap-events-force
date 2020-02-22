@@ -18,6 +18,7 @@ const checkAppInit = setInit => {
   checkCall(initAppAction)
 }
 
+
 const App = props => {
   const [ activeTheme, switchTheme ] = useState(getDefaultTheme())
   const [ init, setInit ] = useState(false)

@@ -37,7 +37,7 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   const imgRef = useRef()
   const inputRef = useRef()
 
-  // if active is set to true, then immediately open the file picker / camera on mount
+  // if scanOnInit is set to true, then immediately open the file picker / camera on mount
   useEffect(() => {
     const shouldScan = scanOnInit && !!inputRef.current
     shouldScan && inputRef.current.click()
@@ -64,6 +64,7 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   useInterval(() => { 
     if (!imageURL) return
 
+    // set the start time of the current scan attempt for timeout checking
     !scanStartTime && setStartTime(new Date())
 
     // check if the scanning interval has exceeded the timeout
@@ -72,10 +73,11 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
       return reset()
     }
 
+    // scan, and if a result is found, notify parent and reset
     scan(result => { 
       result && onScan(result)
 
-      // the scan has found a result, so reset the image url and input so that scanning stops until the user captures another image
+      // reset image url and input so scanning stops until user tries again
       reset()
     })
   }, imageURL ? delay : null)

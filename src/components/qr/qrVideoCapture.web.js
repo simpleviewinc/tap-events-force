@@ -38,16 +38,11 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay
     { onReady: () => setStreaming(true) }
   )
 
+  // sets width to screen width, and height to 0 if showVideo is false so that it does not show an empty video
   const width = window.screen.width
   const height = window.screen.height * 0.33
-
-  // sets width to screen width, and height to 0 if showVideo is false so that it does not show an empty video
-  const fullVideoStyle = {
-    width,
-    height,
-    display: showVideo ? 'block' : 'none',
-    ...videoStyle,
-  }
+  const display = showVideo ? 'block' : 'none'
+  const fullVideoStyle = { width, height, display, ...videoStyle }
 
   // setup the qr reader to scan the video
   const [ makeScan ] = useQRReader(videoRef.current)
