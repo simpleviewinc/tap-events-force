@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Repos that can be copied
-KG_REPOS=(keg resolver retheme jsutils)
+KG_REPOS=(keg resolver retheme jsutils components)
 
 
 keg_do_copy_cmd(){
@@ -10,13 +10,13 @@ keg_do_copy_cmd(){
   if [[ "$1" == "keg" ]]; then
     if [[ "$2" == "full" ]]; then
 
-      echo "Coping over full sv-keg repo...."
+      echo "Copying over full sv-keg repo...."
       rm -rf node_modules/sv-keg
       cp -Rf ~/zerista/repos/sv-keg node_modules/sv-keg
 
     else
 
-      echo "Coping over sv-keg development files...."
+      echo "Copying over sv-keg development files...."
       rm -rf node_modules/sv-keg/App.js
       rm -rf node_modules/sv-keg/app.json
       rm -rf node_modules/sv-keg/babel.config.js
@@ -39,13 +39,13 @@ keg_do_copy_cmd(){
 
     if [[ "$2" == "full" ]]; then
 
-      echo "Coping over full sv-tap-resolver repo...."
+      echo "Copying over full sv-tap-resolver repo...."
       rm -rf node_modules/sv-keg/node_modules/tap-resolver
       cp -Rf ~/zerista/repos/sv-tap-resolver node_modules/sv-keg/node_modules/tap-resolver
 
     else
 
-      echo "Coping over sv-tap-resolver development files...."
+      echo "Copying over sv-tap-resolver development files...."
       rm -rf node_modules/sv-keg/node_modules/tap-resolver/src
       rm -rf node_modules/sv-keg/node_modules/tap-resolver/babel.config.js
       rm -rf node_modules/sv-keg/node_modules/tap-resolver/package.json
@@ -60,7 +60,7 @@ keg_do_copy_cmd(){
   ## When developing on the sv-retheme ##
   elif [[ "$1" == "retheme" ]]; then
 
-    echo "Coping over sv-re-theme development files...."
+    echo "Copying over sv-re-theme development files...."
     rm -rf ~/zerista/repos/sv-keg/node_modules/re-theme/build
     cp -Rf ~/zerista/repos/sv-re-theme/build ~/zerista/repos/sv-keg/node_modules/re-theme/build
 
@@ -69,7 +69,7 @@ keg_do_copy_cmd(){
   # When developing on the jsutils
   elif [[ "$1" == "jsutils" ]]; then
 
-    echo "Coping over jsutils development files...."
+    echo "Copying over jsutils development files...."
     rm -rf ~/zerista/repos/sv-keg/node_modules/jsutils/cjs
     rm -rf ~/zerista/repos/sv-keg/node_modules/jsutils/esm
     cp -Rf ~/zerista/repos/jsUtils/cjs ~/zerista/repos/sv-keg/node_modules/jsutils/cjs
@@ -77,6 +77,24 @@ keg_do_copy_cmd(){
 
     echo "Done!"
 
+  # When developing on keg-components
+  elif [[ "$1" == "components" ]]; then
+    local PREV_DIR="$(pwd)"
+    local BUILD_PATH="node_modules/sv-keg/node_modules/keg-components/build"
+    local KC_PATH="$HOME/zerista/repos/keg-components"
+
+    echo "Building keg components"
+    cd "$KC_PATH"
+    yarn build
+
+    # navigate back
+    cd "$PREV_DIR" 
+
+    echo "Copying over keg component build files from $KC_PATH/build to $BUILD_PATH...."
+    rm -rf "$BUILD_PATH"
+    cp -rf "$KC_PATH/build" "$BUILD_PATH"
+
+    echo "Done!"
   fi
 
 }

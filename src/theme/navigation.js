@@ -1,6 +1,6 @@
 export const navigation = {
   button: {
     margin: 15,
-    alignSelf: 'start'
+    alignSelf: 'flex-start'
   },
 }
