@@ -8,7 +8,7 @@ import { withTheme } from 're-theme'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { AppHeader } from 'keg-components'
 import { isRootStack } from 'SVNavigation/isRootStack'
-import { isStandalonePWA } from 'SVUtils/platform'
+import { isStandalonePWA, isNative } from 'SVUtils/platform'
 
 export const TestContainer = withTheme(({theme}) => {
 
@@ -18,8 +18,8 @@ export const TestContainer = withTheme(({theme}) => {
       <AppHeader
         shadow
         title={"TestContainer"}
-        leftIcon={!isRootStack() && isStandalonePWA() ? 'arrow-left' : null}
-        leftAction={!isRootStack() && isStandalonePWA() ? () => navigateBack() : null}
+        leftIcon={!isRootStack() && (isStandalonePWA() || isNative())  ? 'arrow-left' : null}
+        leftAction={!isRootStack() && (isStandalonePWA() || isNative())  ? () => navigateBack() : null}
       />
 
       <View>

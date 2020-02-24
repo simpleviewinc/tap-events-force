@@ -9,7 +9,7 @@ import { navigateTo } from 'SVActions/navigation/navigateTo'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 import { AppHeader } from 'keg-components'
 import { isRootStack } from 'SVNavigation/isRootStack'
-import { isStandalonePWA } from 'SVUtils/platform'
+import { isStandalonePWA, isNative } from 'SVUtils/platform'
 
 const { events, sessions } = Values.categories
 
@@ -29,8 +29,8 @@ export const RootContainer = props => {
       <AppHeader
         shadow
         title={"Mobile X5s"}
-        leftIcon={!isRootStack() && isStandalonePWA() ? 'arrow-left' : null}
-        leftAction={!isRootStack() && isStandalonePWA() ? () => navigateBack() : null}
+        leftIcon={!isRootStack() && (isStandalonePWA() || isNative()) ? 'arrow-left' : null}
+        leftAction={!isRootStack() && (isStandalonePWA() || isNative())  ? () => navigateBack() : null}
       />
       {isStandalonePWA() ? <Text>PWA</Text> : <Text>Not PWA</Text>}
 
