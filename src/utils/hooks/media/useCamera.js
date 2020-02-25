@@ -1,4 +1,5 @@
 import { requestCamera } from 'SVUtils/media/requestCamera'
+import { stopWebcam } from 'SVUtils/media/stopWebcam'
 import { useState, useEffect, useRef } from 'react'
 
 /**
@@ -35,15 +36,3 @@ export const useCamera = (navigator, constraints) => {
 
   return [ mediaErr, stream ]
 }
-
-/**
- * Stops all camera tracks on the stream
- * @param {Object} stream - camera stream
- */
-const stopWebcam = (stream) => {
-  if (!stream) return
-  stream
-    .getTracks()
-    .map(track => track.stop())
-}
-

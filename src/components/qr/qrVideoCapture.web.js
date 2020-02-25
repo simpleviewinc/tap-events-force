@@ -32,11 +32,7 @@ export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay
   useEffect(() => { err && onScanFail(err) }, [ err ])
 
   // setup the video element to use the camera stream.
-  useVideoStream(
-    videoRef,
-    stream,
-    { onReady: () => setStreaming(true) }
-  )
+  useVideoStream(videoRef, stream, { onReady: () => setStreaming(true) })
 
   // sets width to screen width, and height to 0 if showVideo is false so that it does not show an empty video
   const width = window.screen.width
