@@ -1,26 +1,5 @@
 {
-  "modal": { "width": 300 },
-  "colors": {
-    "defaultType": "default",
-    "types": {
-      "default": { "palette": "gray" },
-      "primary": { "palette": "green" },
-      "secondary": { "palette": "blue" },
-      "warn": { "palette": "orange" },
-      "danger": { "palette": "red" }
-    },
-    "palette": {
-      "transparent": "rgba(255,255,255,0)",
-      "white01": "#ffffff",
-      "white02": "#fafafa",
-      "white03": "#f5f5f5",
-      "black": [ 20, "#333333", -20 ],
-      "gray": [ 20, "#999999", -20 ],
-      "blue": [ 20, "#2196F3", -20 ],
-      "green": [ 20, "#02b4a3", -20 ],
-      "orange": [ 20, "#ff5f01", -20 ],
-      "red": [ 20, "#f51f10", -20 ],
-      "purple": [ 20, "#782dad", -20 ]
-    }
+  "modal": {
+    "width": 300
   }
 }

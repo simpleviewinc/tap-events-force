@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useInterval } from 'SVUtils/hooks/useInterval'
 import { useQRReader } from 'SVUtils/hooks/useQRReader'
+import { timeSince } from 'SVUtils/time'
 import { FilePicker } from 'keg-components'
 import PropTypes from 'prop-types'
 
@@ -27,10 +28,7 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
   // use the natural dimensions of the image so that the QR code is not stretched in any odd way
   const [ dimensions, setDimensions ] = useState({})
   const onImageLoad = (img) => {
-    setDimensions({
-      width: img.width,
-      height: img.height
-    })
+    setDimensions({ width: img.width, height: img.height })
     onScanStart(img)
   }
 
@@ -39,8 +37,7 @@ export const QRImageCapture = ({ style={}, inputStyle={}, delay=1000, timeout=30
 
   // if scanOnInit is set to true, then immediately open the file picker / camera on mount
   useEffect(() => {
-    const shouldScan = scanOnInit && !!inputRef.current
-    shouldScan && inputRef.current.click()
+    scanOnInit && !!inputRef.current && inputRef.current.click()
   }, [ inputRef.current, scanOnInit ])
 
   // setup the qr reader with the image element
@@ -108,8 +105,4 @@ QRImageCapture.propTypes = {
   onScanStart: PropTypes.func,
   onScan: PropTypes.func,
 }
-
-const timeSince = (date) => date
-  ? ((new Date()) - date)
-  : 0
 
