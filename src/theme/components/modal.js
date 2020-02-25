@@ -1,4 +1,4 @@
-import { modal as defaults } from './defaults'
+import { modal as defaults } from '../defaults'
 
 export const modal = {
   view: {

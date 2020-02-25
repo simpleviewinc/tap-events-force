@@ -38,7 +38,6 @@ export const QRContainer = props => {
       style={ theme.join(
         get(props, [ 'styles', 'container' ]),
         get(theme, [ 'qr', 'container']),
-        { width: theme.RTMeta.width }
       )}
     >
       <View style={theme.navigation.button}>
@@ -76,5 +75,3 @@ export const QRContainer = props => {
     </View>
   )
 }
-
-

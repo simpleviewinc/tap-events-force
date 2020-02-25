@@ -79,8 +79,9 @@ keg_do_copy_cmd(){
 
   # When developing on keg-components
   elif [[ "$1" == "components" ]]; then
+    echo "$1 $2"
     local PREV_DIR="$(pwd)"
-    local BUILD_PATH="node_modules/sv-keg/node_modules/keg-components/build"
+    local BUILD_PATH="node_modules/keg-components/build"
     local KC_PATH="$HOME/zerista/repos/keg-components"
 
     echo "Building keg components"
