@@ -3,9 +3,12 @@ import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
-import { useCollection } from 'SVUtils/hooks/useCollection'
+import { useCollection } from 'SVHooks/useCollection'
 import { Button } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
+import * as Hooks from 'SVHooks'
+
+console.log({Hooks})
 
 const { events, sessions } = Values.categories
 

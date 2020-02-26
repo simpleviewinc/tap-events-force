@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react'
-import { useInterval } from 'SVUtils/hooks/useInterval'
-import { useCamera } from 'SVUtils/hooks/media/useCamera'
-import { useVideoStream } from 'SVUtils/hooks/media/useVideoStream'
-import { useQRReader } from 'SVUtils/hooks/useQRReader'
+import { useInterval } from 'SVHooks/useInterval'
+import { useCamera } from 'SVHooks/media/useCamera'
+import { useVideoStream } from 'SVHooks/media/useVideoStream'
+import { useQRReader } from 'SVHooks/useQRReader'
 import PropTypes from 'prop-types'
 
 /**
