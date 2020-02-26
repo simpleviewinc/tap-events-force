@@ -10,8 +10,8 @@ export const modal = {
     height: 200,
     width: defaults.width,
 
-    alignItems: 'center',
     flexDirection: 'column',
+    alignItems: 'center',
     justifyContent: 'space-between',
 
     overflow: 'hidden'
@@ -19,7 +19,7 @@ export const modal = {
   title: {
     fontWeight: 'bold',
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 15,
   },
   text: {
     fontSize: 15,

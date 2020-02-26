@@ -1,19 +1,36 @@
 import React from 'react';
-import { Text, View } from 'SVComponents'
+import { useTheme } from 're-theme'
+import { ModalContentBox } from './modalContentBox'
+import { Modal } from 'react-native'
 import PropTypes from 'prop-types'
 
 /**
- * Not yet implemented on native. confirmModal.web should be multiplatform, but the dependency
- * 'modal-enhanced-react-native-web' tries importing react-native-web and react-dom which fail.
- * Stubbing this for now.
+ * Simple popup modal in absolute positioning with a title, text, and dismiss button.
+ * @param {Object} props
+ * @param {Boolean} props.visible - if true, show the modal, else hide it
+ * @param {Function} props.onDismiss - the function to execute when the user selects the dismiss button
+ * @param {String} props.title 
+ * @param {String} props.text 
  */
 export const ConfirmModal = ({ visible=false, onDismiss, title, text }) => {
-  return visible && (
-    <View>
-      <Text>
-        Not yet implemented on native
-      </Text>    
-    </View>
+  const theme = useTheme()
+  return (
+    <Modal
+      style={ theme.join(
+        theme.modal.view,
+        theme.layout.absolute.center,
+        theme.shadow.popup 
+      )}
+      visible={visible}
+      animationType="slide"
+      onRequestClose={onDismiss}
+    >
+      <ModalContentBox 
+        title={title}
+        text={text}
+        onDismiss={onDismiss}
+      />
+    </Modal>
   )
 }
 

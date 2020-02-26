@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Text, View } from 'keg-components'
 import { useTheme } from 're-theme'
+import { ModalContentBox } from './modalContentBox'
 import Modal from 'modal-enhanced-react-native-web'
 import PropTypes from 'prop-types'
 
@@ -16,7 +16,7 @@ export const ConfirmModal = ({ visible=false, onDismiss, title, text }) => {
   const theme = useTheme()
   return (
     <Modal
-      style={ theme.join(
+      style={theme.join(
         theme.modal.view,
         theme.layout.absolute.center,
         theme.shadow.popup 
@@ -24,21 +24,11 @@ export const ConfirmModal = ({ visible=false, onDismiss, title, text }) => {
       isVisible={visible}
       onBackdropPress={onDismiss}
     >
-      <Text style={ theme.modal.title }>{ title }</Text>
-
-      <View style={ theme.modal.textContainer }>
-          <Text 
-            numberOfLines={4}
-            style={ theme.modal.text }> 
-              { text } 
-          </Text>
-      </View>
-
-      <Button 
-        style={theme.modal.button}
-        onPress={onDismiss}>
-          Okay
-      </Button>
+      <ModalContentBox 
+        title={title}
+        text={text}
+        onDismiss={onDismiss}
+      />
     </Modal>
   )
 }
