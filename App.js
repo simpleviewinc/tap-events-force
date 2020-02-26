@@ -29,7 +29,8 @@ const App = props => {
 
   return init && (
     <>
-      <StatusBar barStyle={ get(activeTheme, [ 'components', 'statusBar', 'barStyle' ]) } />
+      <SafeAreaView style={{backgroundColor:get(activeTheme, 'colors.surface.primary.colors.dark')}}/>
+      <StatusBar barStyle={'default'} />
       <Router history={getHistory()}>
         <SafeAreaView>
           <Provider store={getStore()}>
