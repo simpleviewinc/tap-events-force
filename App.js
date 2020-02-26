@@ -10,6 +10,7 @@ import { checkCall, get } from 'jsutils'
 import { ContainerRoutes } from 'SVNavigation/containerRoutes'
 import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
+import { isNative } from 'SVUtils/platform'
 
 setDefaultTheme(theme)
 
@@ -26,10 +27,10 @@ const App = props => {
   useEffect(() => {
     !init && checkAppInit(setInit)
   })
-
+  console.log({activeTheme})
   return init && (
     <>
-      <SafeAreaView style={{backgroundColor:get(activeTheme, 'colors.surface.primary.colors.dark')}}/>
+      { isNative() && <SafeAreaView style={{backgroundColor:get(activeTheme, 'colors.surface.primary.colors.dark')}}/>}
       <StatusBar barStyle={'default'} />
       <Router history={getHistory()}>
         <SafeAreaView>

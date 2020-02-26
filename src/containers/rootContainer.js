@@ -32,14 +32,14 @@ export const RootContainer = props => {
         leftIcon={!isRootStack() && (isStandalonePWA() || isNative()) ? 'arrow-left' : null}
         leftAction={!isRootStack() && (isStandalonePWA() || isNative())  ? () => navigateBack() : null}
       />
-      {isStandalonePWA() ? <Text>PWA</Text> : <Text>Not PWA</Text>}
 
     <View
       style={ theme.join(
         get(theme, [ 'app', 'container' ]),
-        get(props, [ 'styles', 'container' ]),
+        get(props, [ 'styles', 'container' ])
       )}
     >
+      {isStandalonePWA() ? <Text>PWA</Text> : <Text>Not PWA</Text>}
 
       {
         [ events, sessions ].map(coll => (
