@@ -25,7 +25,8 @@
   },
   "dependencies": {
     "firebase": "7.7.0",
-    "sv-keg": "https://github.com/simpleviewinc/keg-core.git#master",
+    "sv-keg": "https://github.com/daniel112/sv-keg-expo.git#ZEN-112-route-root",
+    "keg-components": "git+https://github.com/simpleviewinc/keg-components.git#master",
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
   },
   "devDependencies": {
