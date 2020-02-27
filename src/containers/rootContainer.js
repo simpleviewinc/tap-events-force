@@ -4,16 +4,13 @@ import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useCollection } from 'SVUtils/hooks/useCollection'
-import { Button } from 'SVComponents'
+import { Button, withAppHeader } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
-import { navigateBack } from 'SVActions/navigation/navigateBack'
-import { AppHeader } from 'keg-components'
-import { isRootStack } from 'SVNavigation/isRootStack'
-import { isStandalonePWA, isNative } from 'SVUtils/platform'
+import { isStandalonePWA } from 'SVUtils/platform'
 
 const { events, sessions } = Values.categories
 
-export const RootContainer = props => {
+export const RootContainer = withAppHeader('Mobile X5', props => {
 
   const theme = useTheme()
 
@@ -25,13 +22,6 @@ export const RootContainer = props => {
   }
 
   return (
-    <>
-      <AppHeader
-        shadow
-        title={"Mobile X5s"}
-        leftIcon={!isRootStack() && (isStandalonePWA() || isNative()) ? 'arrow-left' : null}
-        leftAction={!isRootStack() && (isStandalonePWA() || isNative())  ? () => navigateBack() : null}
-      />
 
     <View
       style={ theme.join(
@@ -61,8 +51,6 @@ export const RootContainer = props => {
       </Button>
 
     </View>
-
-    </>
     
   )
-}
+})

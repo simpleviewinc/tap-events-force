@@ -27,7 +27,7 @@ const App = props => {
   useEffect(() => {
     !init && checkAppInit(setInit)
   })
-  console.log({activeTheme})
+
   return init && (
     <>
       { isNative() && <SafeAreaView style={{backgroundColor:get(activeTheme, 'colors.surface.primary.colors.dark')}}/>}
