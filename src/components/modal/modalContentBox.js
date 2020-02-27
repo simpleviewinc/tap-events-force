@@ -9,25 +9,34 @@ import PropTypes from 'prop-types'
  * @param {Function} props.onDismiss - callback that runs when user requests modal close
  * @param {String} props.title - title of modal
  * @param {String} props.text - content text of modal
+ * @param {String} props.dismissText - content text of dismiss button
  */
-export const ModalContentBox = ({ onDismiss, title, text }) => {
+export const ModalContentBox = (props) => {
+  const {
+    onDismiss, 
+    title, 
+    text,
+    dismissText='Okay'
+  } = props
+
   const theme = useTheme()
+
   return (
     <>
-      <Text style={ theme.modal.title }>{ title }</Text>
+      <Text style={ theme.get('modal.title') }>{ title }</Text>
 
-      <View style={ theme.modal.textContainer }>
+      <View style={ theme.get('modal.textContainer') }>
         <Text 
           numberOfLines={4}
-          style={ theme.modal.text }> 
+          style={ theme.get('modal.text') }> 
             { text } 
         </Text>
       </View>
 
       <Button 
-        style={theme.modal.button}
-        onPress={onDismiss}>
-          Okay
+        style={ theme.get('modal.button') }
+        onPress={ onDismiss }>
+          { dismissText }
       </Button>
     </>
   )

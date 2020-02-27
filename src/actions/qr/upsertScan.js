@@ -5,6 +5,7 @@ import { validate, isStr } from 'jsutils'
 /**
  * Stores the QR Code scan result in the qr items store under the `scanResult` key
  * @param {String} result 
+ * 
  * @returns {void}
  */
 export const upsertScan = (result) => {

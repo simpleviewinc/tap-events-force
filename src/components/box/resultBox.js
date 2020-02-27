@@ -16,10 +16,13 @@ export const ResultBox = ({text='', title='', style, themePath}) => {
   const theme = useTheme()
   return (
     <View style={style}>
-      <Text style={theme.get('resultBox.title')}>{title}</Text>
+      <Text style={theme.get('resultBox.title')}>
+        { title }
+      </Text>
       <TextBox 
         themePath={themePath}
-        text={text} />
+        text={text} 
+      />
     </View>
   )
 }
