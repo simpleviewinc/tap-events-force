@@ -6,5 +6,7 @@ import { theme as kegComponentsTheme } from 'keg-components'
 
 export const theme = deepMerge(
   kegComponentsTheme,
-  app, modal, shadow
+  app, 
+  modal, 
+  shadow
 )
