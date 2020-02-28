@@ -34,29 +34,21 @@ export const QRImageCapture = (props) => {
   const [ imageURL, setImageURL ] = useState(null)
 
   // capture the url to the image on the user's device; create and save the object url
-  const captureURL = (file) => {
+  const captureURL = useCallback((file) => {
     const url = URL.createObjectURL(file)
     setImageURL(url) 
-  }
+  }, [ setImageURL ])
 
   const imgRef = useRef()
   const inputRef = useRef()
 
-  // if scanOnInit is set to true, then immediately open the file picker / camera on mount
-  useEffect(() => {
-    scanOnInit && !!inputRef.current && inputRef.current.click()
-  }, [ inputRef.current, scanOnInit ])
-
+  // scan the image until a qr code result is found or the timeout has elapsed
   useScanner({
     active: !!imageURL,
-    setImageURL,
-    imgRef,
-    inputRef,
-    timeout,
-    onScan,
-    onScanFail,
-    onScanStop,
-    delay,
+    timing: { delay, timeout },
+    image: imgRef.current,
+    scanFuncs: { onScanFail, onScan },
+    reset: () => reset(setImageURL, onScanStop, inputRef)
   })
 
   return (
@@ -68,6 +60,7 @@ export const QRImageCapture = (props) => {
         ref={inputRef}
         style={inputStyle}
         title={'Scan QR Code'}
+        openOnMount={scanOnInit}
       />
       <QRImage 
         imgRef={imgRef}
@@ -78,6 +71,20 @@ export const QRImageCapture = (props) => {
   )
 }
 
+QRImageCapture.propTypes = {
+  style: PropTypes.object,
+  inputStyle: PropTypes.object,
+  delay: PropTypes.number,
+  onScanStart: PropTypes.func,
+  onScan: PropTypes.func,
+  scanOnInit: PropTypes.bool
+}
+
+/**
+ * Helper component for QRImageCapture. Renders a hidden image necessary for
+ * acquiring image data to scan. Handles setting the correct dimensions.
+ * @param {*} param0 
+ */
 const QRImage = ({ imgRef, imageURL, onImageLoad }) => {
   // use the natural dimensions of the image so that the QR code is not stretched in any odd way
   const [ dimensions, setDimensions ] = useState({})
@@ -97,13 +104,25 @@ const QRImage = ({ imgRef, imageURL, onImageLoad }) => {
   )
 }
 
-const useScanner = ({ active, delay, setImageURL, imgRef, inputRef, timeout, onScanFail, onScan, onScanStop }) => {
-
-  // setup the qr reader with the image element
-  const [ scan ] = useQRReader(imgRef.current)
+/**
+ * Helper hook for QRImageCapture. Attempts to scan the image at imgRef.current until the timeout
+ * @param {Object} props 
+ * @param {Boolean} active - if the scan should run or not
+ * @param {Object} timing - timing props
+ * @param {Object} image - the image to scan
+ * @param {Object} resetProps - properties passed to reset
+ * @param {Object} scanFuncs - callbacks for scanning
+ * @returns { Void }
+ */
+const useScanner = ({active, timing, image, scanFuncs, reset }) => {
+  const { timeout, delay } = timing
+  const { onScan, onScanFail } = scanFuncs
 
   // scan start time for timeout tracking
   const [ scanStartTime, setStartTime ] = useState(null)
+
+  // setup the qr reader with the image element
+  const [ scan ] = useQRReader(image)
 
   useInterval(() => { 
     if (!active) return
@@ -112,17 +131,21 @@ const useScanner = ({ active, delay, setImageURL, imgRef, inputRef, timeout, onS
     !scanStartTime && setStartTime(new Date())
 
     // check if the scanning interval has exceeded the timeout
-    if (timeSince(scanStartTime) >= timeout) {
+    if (timeSince(scanStartTime) >= timing.timeout) {
       onScanFail(`Scan exceeded timeout of ${timeout} ms without finding a qr code`)
-      return reset(setImageURL, setStartTime, onScanStop, inputRef)
+      setStartTime(null)
+      return reset()
     }
 
     // scan, and if a result is found, notify parent and reset
     scan(result => { 
       result && onScan(result)
-
+      
       // reset image url and input so scanning stops until user tries again
-      reset(setImageURL, setStartTime, onScanStop, inputRef)
+      reset()
+
+      // reset timeout
+      setStartTime(null)
     })
   }, active ? delay : null)
 }
@@ -136,9 +159,8 @@ const useScanner = ({ active, delay, setImageURL, imgRef, inputRef, timeout, onS
  * 
  * @returns { Void }
  */
-const reset = (setImageURL, setStartTime, onScanStop, inputRef) => {
+const reset = (setImageURL, onScanStop, inputRef) => {
   checkCall(setImageURL, null)
-  checkCall(setStartTime, null)
 
   // notify the parent we stop scanning until the user selects another image
   checkCall(onScanStop)
@@ -146,11 +168,5 @@ const reset = (setImageURL, setStartTime, onScanStop, inputRef) => {
   set(inputRef, 'current.value', '')
 }
 
-QRImageCapture.propTypes = {
-  style: PropTypes.object,
-  inputStyle: PropTypes.object,
-  delay: PropTypes.number,
-  onScanStart: PropTypes.func,
-  onScan: PropTypes.func,
-}
+
 
