@@ -4,6 +4,7 @@ import { useCamera } from 'SVUtils/hooks/media/useCamera'
 import { useVideoStream } from 'SVUtils/hooks/media/useVideoStream'
 import { useQRReader } from 'SVUtils/hooks/useQRReader'
 import { Text, View } from 'SVComponents'
+import { noop } from 'SVUtils/function'
 import PropTypes from 'prop-types'
 
 /**
@@ -30,9 +31,9 @@ export const QRVideoCapture = (props) => {
     delay=1000, 
     frameRate=20, 
     facingMode='environment', 
-    onScanStart=()=>{}, 
-    onScan=()=>{}, 
-    onScanFail=()=>{} 
+    onScanStart=noop, 
+    onScan=noop, 
+    onScanFail=noop 
   } = props
 
   const [ streaming, setStreaming ] = useState(false)

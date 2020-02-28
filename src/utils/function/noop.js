@@ -4,4 +4,4 @@
  * 
  * @returns { void }
  */
-export const noOp = () => {}
+export const noop = () => {}

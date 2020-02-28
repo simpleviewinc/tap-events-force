@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useInterval } from 'SVUtils/hooks/useInterval'
 import { useQRReader } from 'SVUtils/hooks/useQRReader'
-import { noOp } from 'SVUtils/noOp'
+import { noop } from 'SVUtils/function'
 import { timeSince } from 'SVUtils/time'
 import { FilePicker } from 'keg-components'
 import { checkCall, set } from 'jsutils'
@@ -24,10 +24,10 @@ export const QRImageCapture = (props) => {
     inputStyle={}, 
     delay=1000, 
     timeout=3000, 
-    onScanStart=noOp, 
-    onScan=noOp, 
-    onScanFail=noOp, 
-    onScanStop=noOp, 
+    onScanStart=noop, 
+    onScan=noop, 
+    onScanFail=noop, 
+    onScanStop=noop, 
     scanOnInit=false 
   } = props
 
