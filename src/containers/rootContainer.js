@@ -7,10 +7,11 @@ import { useCollection } from 'SVUtils/hooks/useCollection'
 import { Button, withAppHeader } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
 import { isStandalonePWA } from 'SVUtils/platform'
+import { displayName } from 'SVConfig'
 
 const { events, sessions } = Values.categories
 
-export const RootContainer = withAppHeader('Mobile X5', props => {
+export const RootContainer = withAppHeader(displayName, props => {
 
   const theme = useTheme()
 
