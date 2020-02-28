@@ -21,7 +21,20 @@ import PropTypes from 'prop-types'
  * @param { Function } props.onScanFail - callback of form (err) => { ... }. Called if scanning failed for any reason, such as unable to access camera.
  * 
  */
-export const QRVideoCapture = ({ style={}, videoStyle={}, scanOnInit=true, delay=1000, frameRate=20, facingMode='environment', onScanStart=()=>{}, onScan=()=>{}, onScanFail=()=>{} }) => {
+export const QRVideoCapture = (props) => {
+
+  const { 
+    style={}, 
+    videoStyle={}, 
+    scanOnInit=true, 
+    delay=1000, 
+    frameRate=20, 
+    facingMode='environment', 
+    onScanStart=()=>{}, 
+    onScan=()=>{}, 
+    onScanFail=()=>{} 
+  } = props
+
   const [ streaming, setStreaming ] = useState(false)
   const showVideo = streaming && scanOnInit
 

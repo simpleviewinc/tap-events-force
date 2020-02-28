@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
@@ -23,15 +23,17 @@ export const QRContainer = props => {
 
   const scanResult = useSelector(({items}) => items[Values.categories.qr].scanResult)
 
-  const onScanResultFound = (result) => result && upsertScan(result)
-
-  const onScanFail = (err) => {
+  // qr scanner callbacks
+  const onScanResultFound = useCallback((result) => result && upsertScan(result), [])
+  const onErrorConfirmed = useCallback(() => setErrMessage(null), [])
+  const onScanStart = useCallback(() => setScanning(true))
+  const onScanStop = useCallback(() => setScanning(false))
+  const onScanFail = useCallback((err) => {
     upsertScanError(err)
     setScanning(false)
     setErrMessage('Could not decode from image. Please try again!')
-  }
+  }, [])
 
-  const onErrorConfirmed = () => setErrMessage(null)
 
   return (
     <View
@@ -40,7 +42,7 @@ export const QRContainer = props => {
         get(theme, [ 'qr', 'container']),
       )}
     >
-      <View style={theme.navigation.button}>
+      <View style={theme.get('navigation.button')}>
         <Button onPress={navigateBack}>
           Back
         </Button>
@@ -55,11 +57,11 @@ export const QRContainer = props => {
       />
 
       <QRScanner 
-        style={theme.qr.scannerView}
-        videoStyle={theme.qr.video}
-        inputStyle={theme.qr.input}
-        onScanStart={() => setScanning(true)}
-        onScanStop={() => setScanning(false)}
+        style={theme.get('qr.scannerView')}
+        videoStyle={theme.get('qr.video')}
+        inputStyle={theme.get('qr.input')}
+        onScanStart={onScanStart}
+        onScanStop={onScanStop}
         onScanFail={onScanFail}
         onScan={onScanResultFound} 
         scanOnInit
@@ -70,7 +72,11 @@ export const QRContainer = props => {
         text={scanResult}
       />
       
-      { scanning && <Text style={{ margin: 15, opacity: 0.7 }}>Scanning...</Text> }
+      { scanning && 
+          <Text style={{ margin: 15, opacity: 0.7 }}>
+            Scanning...
+          </Text> 
+      }
 
     </View>
   )

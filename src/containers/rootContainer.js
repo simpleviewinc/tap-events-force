@@ -39,13 +39,13 @@ export const RootContainer = props => {
         ))
       }
 
-      <View style={theme.navigation.button}>
+      <View style={theme.get('navigation.button')}>
         <Button onPress={() => navigateTo('/test')}>
           Navigate (test)
         </Button>
       </View>
 
-      <View style={theme.navigation.button}>
+      <View style={theme.get('navigation.button')}>
         <Button style={{marginTop: 15}} onPress={() => navigateTo('/qr')}>
           Scan QR Code
         </Button>

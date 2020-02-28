@@ -22,6 +22,7 @@ export const ResultBox = ({text='', title='', style, themePath}) => {
       <TextBox 
         themePath={themePath}
         text={text} 
+        useClipboard
       />
     </View>
   )
