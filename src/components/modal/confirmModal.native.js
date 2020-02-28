@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-native'
 import { ModalWrapper } from './confirmModal.wrapper'
+import PropTypes from 'prop-types'
 
 /**
  * Simple popup modal in absolute positioning with a title, text, and dismiss button.
@@ -13,7 +14,12 @@ export const ConfirmModal = (props) => (
   />
 )
 
-ConfirmModal.propTypes = ModalWrapper.propTypes
+ConfirmModal.propTypes = {
+  visible: PropTypes.bool,
+  onDismiss: PropTypes.func,
+  title: PropTypes.string,
+  text: PropTypes.string,
+}
 
 /**
  * The native modal implementation

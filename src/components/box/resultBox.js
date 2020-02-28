@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { useTheme } from 're-theme'
 import { TextBox } from 'keg-components'
@@ -22,7 +21,6 @@ export const ResultBox = ({text='', title='', style, themePath}) => {
       <TextBox 
         themePath={themePath}
         text={text} 
-        useClipboard
       />
     </View>
   )

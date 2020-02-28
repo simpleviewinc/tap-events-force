@@ -35,6 +35,7 @@ export const ModalWrapper = ({ visible=false, onDismiss, title, text, ModalEleme
 }
 
 ModalWrapper.propTypes = {
+  ModalElement: PropTypes.func.isRequired,
   visible: PropTypes.bool,
   onDismiss: PropTypes.func,
   title: PropTypes.string,
