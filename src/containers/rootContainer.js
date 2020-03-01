@@ -1,10 +1,9 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useCollection } from 'SVUtils/hooks/useCollection'
-import { Button } from 'SVComponents'
+import { View, Button, Icon, Text } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
 
 const { events, sessions } = Values.categories
@@ -38,13 +37,30 @@ export const RootContainer = props => {
           </React.Fragment>
         ))
       }
-      <Button onPress={() => navigateTo('/test')}>
-        Navigate (test)
-      </Button>
 
-      <Button style={{marginTop: 15}} onPress={() => navigateTo('/qr')}>
-        Scan QR Code
-      </Button>
+      <View style={theme.navigation.button}>
+        <Button
+          styles={{ main: { flexDirection: 'row'} }}
+          onPress={() => navigateTo('/test')}
+        >
+          <Icon color={ "#FFFFFF" } name='chevron-right' size={ 20 } />
+          <Text style={{ color: "#FFF", marginLeft: 10 }} >
+            Navigate (test)
+          </Text>
+        </Button>
+      </View>
+
+      <View style={theme.navigation.button}>
+        <Button
+          styles={{ main: { flexDirection: 'row', marginTop: 15 } }}
+          onPress={() => navigateTo('/qr')}
+        >
+          <Icon color={ "#FFFFFF" } name='qrcode' size={ 20 } />
+          <Text style={{ color: "#FFF", marginLeft: 10 }} >
+            Scan QR Code
+          </Text>
+        </Button>
+      </View>
 
     </View>
   )
