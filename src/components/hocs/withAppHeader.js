@@ -21,7 +21,7 @@ export const withAppHeader = (title, Component) => {
           shadow
           title={title}
           leftIcon={!isRootStack() && (isStandalonePWA() || isNative()) ? 'arrow-left' : null}
-          leftAction={!isRootStack() && (isStandalonePWA() || isNative())  ? () => navigateBack() : null}
+          onLeftClick={!isRootStack() && (isStandalonePWA() || isNative())  ? () => navigateBack() : null}
         />
 
         <Component {...props} />
