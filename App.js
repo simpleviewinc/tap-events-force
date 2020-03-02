@@ -10,6 +10,7 @@ import { checkCall, get } from 'jsutils'
 import { ContainerRoutes } from 'SVNavigation/containerRoutes'
 import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
+import { isNative } from 'SVUtils/platform'
 
 setDefaultTheme(theme)
 
@@ -29,7 +30,8 @@ const App = props => {
 
   return init && (
     <>
-      <StatusBar barStyle={ get(activeTheme, [ 'components', 'statusBar', 'barStyle' ]) } />
+      { isNative() && <SafeAreaView style={{backgroundColor:get(activeTheme, 'colors.surface.primary.colors.dark')}}/>}
+      <StatusBar barStyle={'default'} />
       <Router history={getHistory()}>
         <SafeAreaView>
           <Provider store={getStore()}>
