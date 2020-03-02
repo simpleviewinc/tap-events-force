@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useInterval } from 'SVUtils/hooks/useInterval'
 import { useQRReader } from 'SVUtils/hooks/useQRReader'
+import { View } from 'SVComponents'
 import { noop } from 'SVUtils/function'
 import { timeSince } from 'SVUtils/time'
 import { FilePicker } from 'keg-components'
@@ -55,7 +56,7 @@ export const QRImageCapture = (props) => {
   })
 
   return (
-    <div style={style}>
+    <View style={style}>
       <FilePicker 
         accept="image/*" 
         capture={true}
@@ -70,7 +71,7 @@ export const QRImageCapture = (props) => {
         imageURL={imageURL}
         onImageLoad={onScanStart}
       />
-    </div>
+    </View>
   )
 }
 
