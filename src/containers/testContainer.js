@@ -3,13 +3,15 @@ import {
   View,
   H2,
   Button,
+  withAppHeader
 } from 'SVComponents'
-import { withTheme } from 're-theme'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
 
-export const TestContainer = withTheme(({theme}) => {
+export const TestContainer = withAppHeader('TestContainer', props => {
 
   return (
+    <>
+
       <View>
         <H2>Test Page</H2>
         <Button 
@@ -18,5 +20,8 @@ export const TestContainer = withTheme(({theme}) => {
         Back
         </Button>
       </View>
+
+    </>
+
   )
 })
