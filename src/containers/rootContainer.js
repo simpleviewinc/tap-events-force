@@ -3,13 +3,15 @@ import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
-import { useCollection } from 'SVHooks/useCollection'
-import { Button } from 'SVComponents'
+import { useCollection } from 'SVUtils/hooks/useCollection'
+import { Button, withAppHeader } from 'SVComponents'
 import { navigateTo } from 'SVActions/navigation/navigateTo'
+import { isStandalonePWA } from 'SVUtils/platform'
+import { displayName } from 'SVConfig'
 
 const { events, sessions } = Values.categories
 
-export const RootContainer = props => {
+export const RootContainer = withAppHeader(displayName, props => {
 
   const theme = useTheme()
 
@@ -21,12 +23,15 @@ export const RootContainer = props => {
   }
 
   return (
+
     <View
       style={ theme.join(
         get(theme, [ 'app', 'container' ]),
-        get(props, [ 'styles', 'container' ]),
+        get(props, [ 'styles', 'container' ])
       )}
     >
+      {isStandalonePWA() ? <Text>PWA</Text> : <Text>Not PWA</Text>}
+
       {
         [ events, sessions ].map(coll => (
           <React.Fragment key={coll}>
@@ -47,5 +52,6 @@ export const RootContainer = props => {
       </Button>
 
     </View>
+    
   )
-}
+})
