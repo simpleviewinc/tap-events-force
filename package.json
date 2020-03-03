@@ -27,6 +27,7 @@
     "firebase": "7.7.0",
     "sv-keg": "https://github.com/simpleviewinc/keg-core.git#master",
     "keg-components": "git+https://github.com/simpleviewinc/keg-components.git#master",
+    "modal-enhanced-react-native-web": "0.2.0",
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
   },
   "devDependencies": {
