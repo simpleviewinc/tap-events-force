@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
-import { useInterval } from 'SVUtils/hooks/useInterval'
-import { useQRReader } from 'SVUtils/hooks/useQRReader'
+import { useInterval } from 'SVHooks/useInterval'
+import { useQRReader } from 'SVHooks/useQRReader'
 import PropTypes from 'prop-types'
 
 /**
