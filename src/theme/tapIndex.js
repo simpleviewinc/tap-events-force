@@ -2,16 +2,17 @@ import { deepMerge } from 'jsutils'
 import { app } from './app'
 import { layout } from './layout'
 import { shadow } from './shadow'
-import { theme as kegComponentsTheme } from 'keg-components'
-import * as components from './components'
 import { navigation } from './navigation'
+import { kegComponentsTheme } from 'SVTheme/kegComponentsTheme'
+import * as components from './components'
 
 export const theme = deepMerge(
-  app, 
-  ...components,
   kegComponentsTheme,
-  layout,
-  modal, 
-  navigation,
-  shadow
+  {
+    app, 
+    ...components,
+    layout,
+    navigation,
+    shadow
+  }
 )

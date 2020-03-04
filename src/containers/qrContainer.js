@@ -3,7 +3,7 @@ import { View, Text } from 'react-native'
 import { useTheme } from 're-theme'
 import { get }  from 'jsutils'
 import { QRScanner } from 'SVComponents/qr' 
-import { Button } from 'keg-components'
+import { Button } from 'SVComponents'
 import { ConfirmModal } from 'SVComponents/modal'
 import { ResultBox } from 'SVComponents/box'
 import { navigateBack } from 'SVActions/navigation/navigateBack'
@@ -17,11 +17,12 @@ import { Values } from 'SVConstants'
  */
 export const QRContainer = props => {
   const theme = useTheme()
+  console.log('theme', theme.get('absolute.center'))
 
   const [ scanning, setScanning ] = useState(true)
   const [ errMessage, setErrMessage ] = useState(null)
 
-  const scanResult = useSelector(({items}) => items[Values.categories.qr].scanResult)
+  const scanResult = useSelector(({ items }) => items[Values.categories.qr].scanResult)
 
   // qr scanner callbacks
   const onScanResultFound = useCallback((result) => result && upsertScan(result), [])

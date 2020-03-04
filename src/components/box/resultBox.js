@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTheme } from 're-theme'
-import { TextBox } from 'keg-components'
-import { View, Text } from 'SVComponents'
+import { TextBox, View, Text } from 'SVComponents'
 import PropTypes from 'prop-types'
 
 /**
