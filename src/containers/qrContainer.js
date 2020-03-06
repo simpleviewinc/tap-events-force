@@ -17,9 +17,8 @@ import { Values } from 'SVConstants'
  */
 export const QRContainer = props => {
   const theme = useTheme()
-  console.log('theme', theme.get('absolute.center'))
 
-  const [ scanning, setScanning ] = useState(true)
+  const [ scanning, setScanning ] = useState(false)
   const [ errMessage, setErrMessage ] = useState(null)
 
   const scanResult = useSelector(({ items }) => items[Values.categories.qr].scanResult)
@@ -78,7 +77,6 @@ export const QRContainer = props => {
             Scanning...
           </Text> 
       }
-
     </View>
   )
 }
