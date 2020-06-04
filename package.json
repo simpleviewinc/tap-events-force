@@ -21,7 +21,11 @@
     "cp": "/bin/bash cp.sh",
     "setup": "yarn install; cd node_modules/sv-keg; yarn postinstall",
     "web": "cd node_modules/sv-keg; yarn web",
-    "keg": "cd node_modules/sv-keg; yarn"
+    "keg": "cd node_modules/sv-keg; yarn",
+    "format:eslint": "eslint . --fix --quiet",
+    "format:prettier": "prettier --ignore-path .eslintignore --write '**/*.{js,jsx}'",
+    "format": "yarn format:prettier && yarn format:eslint",
+    "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint {{changed}} --fix"
   },
   "dependencies": {
     "firebase": "7.7.0",
@@ -29,6 +33,13 @@
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
   },
   "devDependencies": {
-    "rimraf": "^3.0.1"
+    "rimraf": "^3.0.1",
+    "babel-eslint": "10.1.0",
+    "onchange": "7.0.2",
+    "prettier": "2.0.5",
+    "eslint": "7.1.0",
+    "eslint-plugin-jest": "23.13.2",
+    "eslint-plugin-react": "7.20.0",
+    "eslint-plugin-react-native": "3.8.1"
   }
 }
