@@ -108,5 +108,14 @@ module.exports = {
     'react/prop-types': 0,
     'react/display-name': 0,
     'react/no-children-prop': 0,
+    'react/jsx-first-prop-new-line': [ 'error', 'multiline' ],
+    'react/jsx-max-props-per-line': [
+      'error',
+      {
+        maximum: 1,
+        when: 'always',
+      },
+    ],
+    'react/jsx-closing-bracket-location': [ 'error', 'line-aligned' ],
   },
 }
