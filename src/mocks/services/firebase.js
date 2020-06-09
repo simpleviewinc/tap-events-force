@@ -1,9 +1,8 @@
 class Firebase {
-
   initialized = false
 
   constructor() {}
-  
+
   initialize = () => {}
 
   log = () => {}
@@ -35,7 +34,6 @@ class Firebase {
   unwatchDoc = () => {}
 
   unwatchDocs = () => {}
-
 }
 
 export const FBService = new Firebase()

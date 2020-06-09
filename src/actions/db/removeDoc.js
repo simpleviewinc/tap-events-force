@@ -11,19 +11,23 @@ import { dispatch } from 'SVStore'
  * @returns {void}
  */
 export const removeDoc = async (docId, collection) => {
-  if(!docId || !collection)
-    return logData(`A doc id and the docs collection are requried to remove a doc!`, docId, collection, 'warn')
+  if (!docId || !collection)
+    return logData(
+      `A doc id and the docs collection are requried to remove a doc!`,
+      docId,
+      collection,
+      'warn'
+    )
 
   const [ err, _ ] = await limbo(FBService.removeDoc(docId, collection))
 
   err
-    ? logData(err, 'warn') 
+    ? logData(err, 'warn')
     : dispatch({
       type: ActionTypes.REMOVE_ITEM,
       payload: {
         category: collection,
-        key: docId
-      }
+        key: docId,
+      },
     })
-
 }

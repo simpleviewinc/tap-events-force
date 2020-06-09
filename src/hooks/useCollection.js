@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { FBService } from 'SVServices'
 import { useSelector } from 'react-redux'
 import { validate, isStr, isObj, eitherObj, isArr } from 'jsutils'
-import { getCollection,  } from 'SVActions/db/getCollection'
+import { getCollection } from 'SVActions/db/getCollection'
 import { watchCollection } from 'SVActions/db/watchCollection'
 
 /**
@@ -13,32 +13,29 @@ import { watchCollection } from 'SVActions/db/watchCollection'
  * @param {Array} dependencies - (optional) dependencies that should cause a reload of the hook when changed.
  * @returns {Object} the firestore collection, coming from the items store tree.
  * Since the fetch is asynchronous, it will initially return the initial state for this collection (@see reducers/initialStates/items)
- * 
+ *
  * @example
  * const events = useCollection('events', [ someDependency ]) // this fetches events and subscribes to any changes
- * 
+ *
  * @example
  * const sessions = useCollection({ name: 'sessions', subscribe: false }, []) // no subscription here. Fetches the data and inserts into store **once**
  */
-export const useCollection = (params, dependencies=[]) => {
-  const [ valid ] = validate(
+export const useCollection = (params, dependencies = []) => {
+  const [valid] = validate(
     { dependencies, params },
     { dependencies: isArr, params: p => isStr(p) || isObj(p) }
   )
   if (!valid) return
 
-  const { name, subscribe=true } = eitherObj(params, { name: params })
+  const { name, subscribe = true } = eitherObj(params, { name: params })
 
-  useEffect(
-    () => {
-      subscribe 
-        ? watchCollection(name)
-        : getCollection(name) 
+  useEffect(() => {
+    subscribe ? watchCollection(name) : getCollection(name)
 
-      return () => { subscribe && FBService.unwatchCollection(name) }
-    },
-    [ ...dependencies, name ]
-  )
+    return () => {
+      subscribe && FBService.unwatchCollection(name)
+    }
+  }, [ ...dependencies, name ])
 
   // return the collection results from the store
   return useSelector(store => store.items[name])

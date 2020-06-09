@@ -17,13 +17,11 @@ export const useCamera = (navigator, constraints) => {
   useEffect(() => {
     if (stream) return
 
-    requestCamera(navigator, constraints)
-      .then(([err, camStream]) => {
-        err && console.error(err)
-        err && setErr(err)
-        camStream && setStream(camStream)
-      })
-
+    requestCamera(navigator, constraints).then(([ err, camStream ]) => {
+      err && console.error(err)
+      err && setErr(err)
+      camStream && setStream(camStream)
+    })
   }, [])
 
   return [ mediaErr, stream ]

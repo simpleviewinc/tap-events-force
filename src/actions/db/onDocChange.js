@@ -9,10 +9,10 @@ import { validate, isStr, isObj, isNum } from 'jsutils'
  *
  * @returns {void}
  */
-export const onDocChange = (doc, type=ActionTypes.UPSERT_ITEM) => {
-  const [ success ] = validate(
+export const onDocChange = (doc, type = ActionTypes.UPSERT_ITEM) => {
+  const [success] = validate(
     { type, doc, id: doc.id, collection: doc.collection },
-    { $default: isStr, doc: isObj, id: isNum },
+    { $default: isStr, doc: isObj, id: isNum }
   )
   if (!success) return
 
@@ -21,7 +21,7 @@ export const onDocChange = (doc, type=ActionTypes.UPSERT_ITEM) => {
     payload: {
       category: Values.categories[doc.collection],
       key: doc.id,
-      item: doc
+      item: doc,
     },
   })
 }

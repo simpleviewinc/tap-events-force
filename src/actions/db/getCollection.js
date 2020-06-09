@@ -8,9 +8,13 @@ import { Values, ActionTypes } from 'SVConstants'
  * @param {*} collection - Collection to get the docs for
  * @returns {void}
  */
-export const getCollection = async (collection) => {
-  if(!collection)
-    return logData(`A collection name is required to watch a collection!`, collection, 'error')
+export const getCollection = async collection => {
+  if (!collection)
+    return logData(
+      `A collection name is required to watch a collection!`,
+      collection,
+      'error'
+    )
 
   const [ err, docs ] = await limbo(FBService.getCollection(collection))
 
@@ -20,8 +24,7 @@ export const getCollection = async (collection) => {
       type: ActionTypes.UPSERT_ITEMS,
       payload: {
         category: Values.categories[collection] || 'unknown',
-        items: docs
-      }
+        items: docs,
+      },
     })
-
 }

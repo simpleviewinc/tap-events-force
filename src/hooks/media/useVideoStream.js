@@ -10,7 +10,11 @@ import { get } from 'jsutils'
  * @param {Object} props.onReady - a callback that runs once the video is ready to play
  * @returns {Array} [ play, pause ] functions that play/pause the video. You must pass them the current video element
  */
-export const useVideoStream = (ref, stream, { playOnInit=true, onReady=null }={}) => {
+export const useVideoStream = (
+  ref,
+  stream,
+  { playOnInit = true, onReady = null } = {}
+) => {
   const video = get(ref, 'current')
 
   // the effect assigns the stream
@@ -20,7 +24,6 @@ export const useVideoStream = (ref, stream, { playOnInit=true, onReady=null }={}
 
     video.srcObject = stream
     playOnInit && play(video)
-
   }, [ stream, ref.current ])
 
   // assign event listeners to the video
@@ -28,27 +31,30 @@ export const useVideoStream = (ref, stream, { playOnInit=true, onReady=null }={}
     if (!video) return
     if (!onReady) return
     video.addEventListener('canplay', onReady)
-    return () => video.removeEventListener('canplay', onReady) 
+    return () => video.removeEventListener('canplay', onReady)
   })
 
-  return [
-    play,
-    pause
-  ]
+  return [ play, pause ]
 }
 
 /**
  * Helper that plays the video, if available
- * @param {Object} video 
+ * @param {Object} video
  */
-const play = (video) => video
-  ? video.play()
-  : console.warn('Cannot play: video element not yet available from video ref.')
+const play = video =>
+  video
+    ? video.play()
+    : console.warn(
+      'Cannot play: video element not yet available from video ref.'
+    )
 
 /**
  * Helper that pauses the video, if available
- * @param {Object} video 
+ * @param {Object} video
  */
-const pause = (video) => video 
-  ? video.pause()
-  : console.warn('Cannot pause: video element not yet available from video ref.')
+const pause = video =>
+  video
+    ? video.pause()
+    : console.warn(
+      'Cannot pause: video element not yet available from video ref.'
+    )
