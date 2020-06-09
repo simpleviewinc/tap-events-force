@@ -98,7 +98,7 @@ class Firebase {
   offLine = async () => {
     if (this.initialized) return
 
-    const [ error, data ] = await limbo(
+    const [error] = await limbo(
       this.firestore.enablePersistence({ synchronizeTabs: true })
     )
 
@@ -189,9 +189,7 @@ class Firebase {
     const colRef = this.firestore.collection(collection)
     doc.updated_at = this.getTimestamp()
 
-    const [ err, updated ] = await limbo(
-      colRef.doc(doc.id).set(doc, { merge: true })
-    )
+    const [err] = await limbo(colRef.doc(doc.id).set(doc, { merge: true }))
 
     return err
       ? logData(err, 'warn')
@@ -210,7 +208,7 @@ class Firebase {
    * @returns {void}
    */
   removeDoc = async (docId, collection) => {
-    const [ err, _ ] = await limbo(
+    const [err] = await limbo(
       this.firestore.collection(collection).doc(docId)
         .delete()
     )

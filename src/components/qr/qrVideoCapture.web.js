@@ -33,7 +33,7 @@ export const QRVideoCapture = ({
   const videoRef = useRef()
 
   // acquire the camera stream, given the video constraints
-  const [ err, stream ] = useCamera(navigator, {
+  const [ , stream ] = useCamera(navigator, {
     video: { frameRate, facingMode },
   })
 

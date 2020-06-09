@@ -19,7 +19,7 @@ export const removeDoc = async (docId, collection) => {
       'warn'
     )
 
-  const [ err, _ ] = await limbo(FBService.removeDoc(docId, collection))
+  const [err] = await limbo(FBService.removeDoc(docId, collection))
 
   err
     ? logData(err, 'warn')
