@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text } from 'react-native'
-import { useTheme } from 're-theme'
+import { useTheme } from '@simpleviewinc/re-theme'
 import { Values } from 'SVConstants'
 import { get }  from 'jsutils'
 import { useCollection } from 'SVHooks/useCollection'
