@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "firebase": "7.7.0",
-    "keg-core": "https://github.com/simpleviewinc/keg-core.git#develop",
+    "keg-core": "https://github.com/simpleviewinc/keg-core.git#master",
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
   },
   "devDependencies": {
