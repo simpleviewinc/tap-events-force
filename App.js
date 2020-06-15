@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { theme } from 'SVTheme'
 import { SafeAreaView, StatusBar } from 'react-native'
-import { ReThemeProvider, getDefaultTheme, setDefaultTheme } from 're-theme'
+import { ReThemeProvider, getDefaultTheme, setDefaultTheme } from '@simpleviewinc/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
@@ -35,7 +35,7 @@ const App = props => {
       <Router history={getHistory()}>
         <SafeAreaView>
           <Provider store={getStore()}>
-            <ReThemeProvider theme={{}} merge={true}>
+            <ReThemeProvider theme={ activeTheme } >
               {/* setup routes from navigation config */}
               <ContainerRoutes navigationConfigs={keg.routes}/>
             </ReThemeProvider>
