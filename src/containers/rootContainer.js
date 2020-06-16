@@ -38,7 +38,9 @@ export const RootContainer = withAppHeader(displayName, props => {
         </React.Fragment>
       )) }
 
-<Button onPress={() => navigateTo('/sessions')}>Sessions Container</Button>
+      <Button onPress={() => navigateTo('/sessions')}>
+        Sessions Container
+      </Button>
       <Button onPress={() => navigateTo('/test')}>Navigate (test)</Button>
 
       <Button
