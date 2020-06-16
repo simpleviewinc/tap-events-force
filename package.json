@@ -1,6 +1,6 @@
 {
   "name": "tap-events-force",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Events Force Tap for the Keg",
   "main": "index.js",
   "repository": "https://github.com/simpleviewinc/tap-events-force.git",
