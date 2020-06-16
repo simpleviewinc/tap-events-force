@@ -9,6 +9,7 @@ import { navigateTo } from 'SVActions/navigation/navigateTo'
 import { isStandalonePWA } from 'SVUtils/platform'
 import { displayName } from 'SVConfig'
 
+const { events, sessions } = Values.categories
 
 export const RootContainer = withAppHeader(displayName, props => {
   const theme = useTheme()
@@ -36,6 +37,8 @@ export const RootContainer = withAppHeader(displayName, props => {
           <Text>{ Object.keys(collections[coll]).length } </Text>
         </React.Fragment>
       )) }
+
+<Button onPress={() => navigateTo('/sessions')}>Sessions Container</Button>
       <Button onPress={() => navigateTo('/test')}>Navigate (test)</Button>
 
       <Button
