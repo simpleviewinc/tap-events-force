@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text } from 'SVComponents'
+import { Text, withAppHeader } from 'SVComponents'
 
-export const SessionsContainer = props => {
+export const SessionsContainer = withAppHeader('Sessions', props => {
   return <Text>{ 'Session Container placeholder' }</Text>
-}
+})
