@@ -9,6 +9,11 @@ import { FBService } from 'SVServices/firebase'
  */
 export const watchCollection = collection => {
   !collection
-    ? logData(`A collection name is required to watch a collection!`, collection, 'error')
-    : !FBService.watcherUnSubs[collection] && FBService.watchCollection(collection)
+    ? logData(
+        `A collection name is required to watch a collection!`,
+        collection,
+        'error'
+      )
+    : !FBService.watcherUnSubs[collection] &&
+      FBService.watchCollection(collection)
 }

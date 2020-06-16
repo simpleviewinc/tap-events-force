@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { Button, Text, View } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 import PropTypes from 'prop-types'
@@ -8,32 +8,33 @@ import PropTypes from 'prop-types'
  * @param {Object} props
  * @param {Boolean} props.visible - if true, show the modal, else hide it
  * @param {Function} props.onDismiss - the function to execute when the user selects the dismiss button
- * @param {String} props.title 
- * @param {String} props.text 
+ * @param {String} props.title
+ * @param {String} props.text
  */
-export const Modal = ({ visible=false, onDismiss, title, text }) => {
+export const Modal = ({ visible = false, onDismiss, title, text }) => {
   const theme = useTheme()
-  return visible
-    ? (
-      <View style={ { ...theme.modal.view, ...boxShadow  } }>
+  return visible ? (
+    <View style={{ ...theme.modal.view, ...boxShadow }}>
+      <Text style={theme.modal.title}>{ title }</Text>
 
-        <Text style={ theme.modal.title }>{ title }</Text>
-
-        <View style={ theme.modal.textContainer }>
-            <Text 
-              numberOfLines={4}
-              style={ theme.modal.text }> { text } </Text>
-        </View>
-
-        <Button 
-          style={theme.modal.button}
-          onPress={onDismiss}>
-            Okay
-          </Button>
-
+      <View style={theme.modal.textContainer}>
+        <Text
+          numberOfLines={4}
+          style={theme.modal.text}
+        >
+          { ' ' }
+          { text }{ ' ' }
+        </Text>
       </View>
-    )
-    : null
+
+      <Button
+        style={theme.modal.button}
+        onPress={onDismiss}
+      >
+        Okay
+      </Button>
+    </View>
+  ) : null
 }
 
 Modal.propTypes = {

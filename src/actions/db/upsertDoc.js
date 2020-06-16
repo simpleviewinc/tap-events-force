@@ -13,7 +13,7 @@ import { dispatch } from 'SVStore'
 export const upsertDoc = async (doc, collection) => {
   collection = collection || doc.collection
   const [ err, updated ] = await limbo(FBService.updateDoc(doc, collection))
-  
+
   err
     ? logData(err, 'warn')
     : dispatch({
@@ -21,8 +21,7 @@ export const upsertDoc = async (doc, collection) => {
       payload: {
         category: Values.categories[collection] || 'unknown',
         key: updated.id,
-        item: updated
-      }
+        item: updated,
+      },
     })
-
 }

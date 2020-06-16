@@ -37,5 +37,5 @@ export const modal = {
     flex: 1,
     flexWrap: 'wrap',
     maxWidth: defaults.width / 1.1,
-  }
+  },
 }

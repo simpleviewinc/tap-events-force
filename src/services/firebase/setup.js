@@ -8,7 +8,4 @@ const firestore = !firebase.apps.length
   ? firebase.initializeApp(fbConfig).firestore()
   : firebase.app().firestore()
 
-export {
-  firebase,
-  firestore
-}
+export { firebase, firestore }

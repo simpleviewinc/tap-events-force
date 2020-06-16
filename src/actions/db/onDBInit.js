@@ -9,12 +9,12 @@ import { ActionTypes, Values } from 'SVConstants'
  *
  * @returns {void}
  */
-export const onDBInit = (success, type=ActionTypes.DB_INIT) => {
+export const onDBInit = (success, type = ActionTypes.DB_INIT) => {
   dispatch({
     type: ActionTypes.UPSERT_ITEMS,
     payload: {
       category: Values.categories.settings,
-      items: { [type]: success }
-    }
+      items: { [type]: success },
+    },
   })
 }

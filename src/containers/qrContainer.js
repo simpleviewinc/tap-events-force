@@ -8,14 +8,14 @@ import { navigateBack } from 'SVActions/navigation/navigateBack'
 
 /**
  * QRContainer
- * @param {Object} props 
+ * @param {Object} props
  */
 export const QRContainer = props => {
   const theme = useTheme()
   const [ scanResult, setScanResult ] = useState('')
   const [ showModal, setShowModal ] = useState(false)
 
-  const onScanFound = (result) => {
+  const onScanFound = result => {
     setScanResult(result)
     result && setShowModal(true)
   }
@@ -24,12 +24,12 @@ export const QRContainer = props => {
 
   return (
     <View
-      style={ theme.join(
+      style={theme.join(
         get(theme, [ 'app', 'container' ]),
-        get(props, [ 'styles', 'container' ]),
+        get(props, [ 'styles', 'container' ])
       )}
     >
-      <Modal 
+      <Modal
         visible={showModal}
         onDismiss={() => setShowModal(false)}
         title='Scanner Results'
@@ -38,9 +38,7 @@ export const QRContainer = props => {
 
       <QRScanner onScan={onScanFound} />
 
-      <Button onPress={navigateBack}>
-        Back
-      </Button>
+      <Button onPress={navigateBack}>Back</Button>
     </View>
   )
 }

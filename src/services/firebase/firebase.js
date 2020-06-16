@@ -27,7 +27,6 @@ const actionsMap = {
  * @returns {Object} - docs as an object, keyed by ID
  */
 const docsToObject = docs => {
-
   return docs.reduce((converted, doc) => {
     const data = doc.data()
     converted[data.id] = data
@@ -41,7 +40,6 @@ const docsToObject = docs => {
  * @class
  */
 class Firebase {
-
   initialized = false
 
   /**
@@ -50,31 +48,27 @@ class Firebase {
    * @param { boolean } debug - if in debug mode or not
    * @param { Object } config - config object for db
    * @param { function } fallback - is called when method isn't overridden
-   * 
+   *
    * @returns {void}
    */
   constructor(debug = false, config = {}, fallback = () => {}) {
-
     this.debug = debug
     this.config = config
     this.watcherUnSubs = {}
     this.fallback = fallback
     this.firestore = firestore
 
-    this.enableOffline = global.__PLATFORM__ !== 'web'
-      ? true
-      : hasDomAccess()
+    this.enableOffline = global.__PLATFORM__ !== 'web' ? true : hasDomAccess()
   }
-  
+
   /**
    * @memberof Firebase
    * Initialize Firestore DB and sets up offline storage
-   * 
+   *
    * @returns {void}
    */
   initialize = () => {
-
-    if (this.initialized) return 
+    if (this.initialized) return
 
     this.initialized = true
 
@@ -90,7 +84,7 @@ class Firebase {
    * Simple logging helper
    * @param { any } msg - what to log
    * @param { 'log'|'warn'|'info'|'debug'|'error' } type - type of log
-   * 
+   *
    * @returns {void}
    */
   log = (msg, type = 'log') => this.debug && logData(msg, type)
@@ -98,25 +92,28 @@ class Firebase {
   /**
    * @memberof Firebase
    * Sets up offline persistence for firestore DB
-   * 
+   *
    * @returns {void}
    */
   offLine = async () => {
     if (this.initialized) return
 
-    const [ error, data ] = await limbo(
+    const [error] = await limbo(
       this.firestore.enablePersistence({ synchronizeTabs: true })
     )
 
     error
-      ? this.log(errCodeMap[error.code] || 'Failed to enablePersistance', 'warn')
+      ? this.log(
+          errCodeMap[error.code] || 'Failed to enablePersistance',
+          'warn'
+        )
       : this.log('Firestore localCache is enabled')
   }
 
   /**
    * @memberof Firebase
    * Gets a database accurate timestamp, ensures time is the same format as what's in the DB
-   * 
+   *
    * @returns { Timestamp }
    */
   getTimestamp = () => firebase.firestore.Timestamp.now().toMillis()
@@ -126,7 +123,7 @@ class Firebase {
    * Check if a timestamp is newer than another
    * @param { Timestamp } timeA
    * @param { Timestamp } timeB
-   * 
+   *
    * @returns { Boolean } - whether timeA is newer than timeB
    */
   isNewerTimestamp = (timeA, timeB) => {
@@ -137,7 +134,7 @@ class Firebase {
   /**
    * @memberof Firebase
    * Get current user
-   * 
+   *
    * @returns { Object } the user object
    */
   getUser = () => {
@@ -149,7 +146,7 @@ class Firebase {
    * @memberof Firebase
    * Watch a collection for changes
    * @param { String } collection - the collection to watch
-   * 
+   *
    * @returns {void}
    */
   watchCollection = collection => {
@@ -162,26 +159,40 @@ class Firebase {
    * Update a doc in firestore db
    * @param { String } collection - the collection of the doc to update
    * @param { Object } doc - The doc to be updated
-   * 
+   *
    * @returns {void}
    */
   updateDoc = async (doc, collection, docId) => {
     collection = collection || doc.collection
 
-    if(!collection)
-      return logData(`A collection name is required to upsert a doc!`, collection, doc, 'warn') || {}
+    if (!collection)
+      return (
+        logData(
+          `A collection name is required to upsert a doc!`,
+          collection,
+          doc,
+          'warn'
+        ) || {}
+      )
 
-    if(!isObj(doc))
-      return logData(`A doc object is required to upate a doc!`, collection, doc, 'warn') || {}
-    
+    if (!isObj(doc))
+      return (
+        logData(
+          `A doc object is required to upate a doc!`,
+          collection,
+          doc,
+          'warn'
+        ) || {}
+      )
+
     doc.id = doc.id || docId || uuid()
     const colRef = this.firestore.collection(collection)
     doc.updated_at = this.getTimestamp()
 
-    const [ err, updated ] = await limbo(colRef.doc(doc.id).set(doc, { merge: true }))
-    
+    const [err] = await limbo(colRef.doc(doc.id).set(doc, { merge: true }))
+
     return err
-      ? logData(err, 'warn') 
+      ? logData(err, 'warn')
       : colRef
         .doc(doc.id)
         .get()
@@ -193,22 +204,17 @@ class Firebase {
    * Removes a doc from firestore DB, based on the passed in id and collection
    * @param { String } docId - The doc id to be removed
    * @param { String } collection - the collection the doc belongs to
-   * 
+   *
    * @returns {void}
    */
   removeDoc = async (docId, collection) => {
-    const [ err, _ ] = await limbo(
-      this.firestore
-        .collection(collection)
-        .doc(docId)
+    const [err] = await limbo(
+      this.firestore.collection(collection).doc(docId)
         .delete()
     )
 
-    return err
-      ? logData(err, 'warn')
-      : this.unwatchDoc(docId, collection)
+    return err ? logData(err, 'warn') : this.unwatchDoc(docId, collection)
   }
-
 
   /**
    * @memberof Firebase
@@ -221,15 +227,14 @@ class Firebase {
    */
   watchQuery = (query, key) => {
     this.watcherUnSubs[key] = query.onSnapshot(snapShot => {
-      snapShot
-        .docChanges()
-        .forEach(change => {
-            const data = change.doc.data()
-            data.collection = data.collection || key
-            onDocChange(data, actionsMap[change.type])
-          },
-          error => this.log(error, 'warn')
-        )
+      snapShot.docChanges().forEach(
+        change => {
+          const data = change.doc.data()
+          data.collection = data.collection || key
+          onDocChange(data, actionsMap[change.type])
+        },
+        error => this.log(error, 'warn')
+      )
     })
   }
 
@@ -245,9 +250,7 @@ class Firebase {
       this.firestore.collection(collection).get()
     )
 
-    return err
-      ? this.log(error, 'warn') || {}
-      : docsToObject(snapShot.docs)
+    return err ? this.log(error, 'warn') || {} : docsToObject(snapShot.docs)
   }
 
   /**
@@ -256,7 +259,7 @@ class Firebase {
    * @param { String } collection - the collection to get the docs from
    * @param { object } queries - Extra query params to filter the returned docs
    * @param { boolean } watch - Should watch the docs for changes
-   * 
+   *
    * @returns {Object} - Group of docs from the firestore DB
    */
   getDocs = async (collection, queries, watch = true) => {
@@ -268,27 +271,28 @@ class Firebase {
       OR and IN not supported yet see:
       https://github.com/firebase/firebase-js-sdk/issues/321
     */
-    const watcherKey = queries && `${collection}-${JSON.stringify(queries)}` || collection
+    const watcherKey =
+      (queries && `${collection}-${JSON.stringify(queries)}`) || collection
     if (this.watcherUnSubs[watcherKey]) return
 
     let query = this.firestore.collection(collection)
 
-    isArr(queries) && queries.map(({ method, args }, i) => {
-      if (!method || !args) {
-        return console.warn(
-          `invalid query provided:`,
-          queries[i],
-          `at index ${i}`
-        )
-      }
-      query = query[method](...args)
-    })
+    isArr(queries) &&
+      queries.map(({ method, args }, i) => {
+        if (!method || !args) {
+          return console.warn(
+            `invalid query provided:`,
+            queries[i],
+            `at index ${i}`
+          )
+        }
+        query = query[method](...args)
+      })
 
     watch && this.watchQuery(query, collection)
 
     return query.get().then(snapShot => docsToObject(snapShot.docs))
   }
-
 
   /**
    * @memberof Firebase
@@ -299,7 +303,7 @@ class Firebase {
    */
   unwatchKey = key => {
     const unSubscriber = this.watcherUnSubs[key]
-    isFunc(unSubscriber)&& unSubscriber()
+    isFunc(unSubscriber) && unSubscriber()
     this.watcherUnSubs[key] = undefined
   }
 
@@ -307,7 +311,7 @@ class Firebase {
    * @memberof Firebase
    * Stop watching a collection for changes
    * @param { String } collection - the collection to unwatch
-   * 
+   *
    * @returns {void}
    */
   unwatchCollection = collection => {
@@ -318,7 +322,7 @@ class Firebase {
    * @memberof Firebase
    * Stop watching a doc for changes
    * @param { String } collection - the collection to unwatch
-   * 
+   *
    * @returns {void}
    */
   unwatchDoc = (docId, collection) => {
@@ -330,7 +334,7 @@ class Firebase {
    * Stop watching a group of docs for changes
    * @param {string} collection - the collection to unwatch
    * @param {Object} queries - Extra query params to filter the returned docs
-   * 
+   *
    * @returns {void}
    */
   unwatchDocs = (collection, queries = []) => {
@@ -340,7 +344,6 @@ class Firebase {
 
     this.unwatchKey(key)
   }
-
 }
 
 // Export the built service, so it acts as a singleton

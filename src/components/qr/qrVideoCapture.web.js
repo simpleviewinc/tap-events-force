@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 
 /**
  * A video component that uses the camera to scan for qr codes. Use the onScan callback to do something with the result.
- * @param { Object } props 
+ * @param { Object } props
  * @param { Object } props.style - style object for the whole component
  * @param { Object } props.videoStyle - style object for the video element
  * @param { Boolean } props.active - if true, shows the video element and starts scanning. If false, disables it
@@ -17,44 +17,54 @@ import PropTypes from 'prop-types'
  * @param { Function } props.onScanStart - callback of form (videoElement) => { ... } . Gets called when the qr reader begins scanning the video
  * @param { Function } props.onScan - callback of form (qrScanText) => { ... } . Gets called when the qr reader scans the video and finds a qr code result
  */
-export const QRVideoCapture = ({ style={}, videoStyle={}, active=true, delay=1000, frameRate=20, facingMode='environment', onScanStart=()=>{}, onScan=()=>{} }) => {
+export const QRVideoCapture = ({
+  style = {},
+  videoStyle = {},
+  active = true,
+  delay = 1000,
+  frameRate = 20,
+  facingMode = 'environment',
+  onScanStart = () => {},
+  onScan = () => {},
+}) => {
   const [ streaming, setStreaming ] = useState(false)
   const showVideo = streaming && active
 
   const videoRef = useRef()
 
   // acquire the camera stream, given the video constraints
-  const [ err, stream ] = useCamera(navigator, { video: { frameRate, facingMode }})
+  const [ , stream ] = useCamera(navigator, {
+    video: { frameRate, facingMode },
+  })
 
   // setup the video element to use the camera stream.
-  useVideoStream(
-    videoRef,
-    stream,
-    { 
-      onReady: () => {
-        setStreaming(true)
-        active && onScanStart(videoRef.current)
-      }
-    }
-  )
+  useVideoStream(videoRef, stream, {
+    onReady: () => {
+      setStreaming(true)
+      active && onScanStart(videoRef.current)
+    },
+  })
 
   // setup the qr reader to scan the video
-  const [ makeScan ] = useQRReader(videoRef.current)
+  const [makeScan] = useQRReader(videoRef.current)
 
   // once streaming, start scanning
-  useInterval(() => {
-    showVideo && makeScan(result => result && onScan(result))
-  }, showVideo ? delay : null)
+  useInterval(
+    () => {
+      showVideo && makeScan(result => result && onScan(result))
+    },
+    showVideo ? delay : null
+  )
 
   return (
     <div style={style}>
       <div>
-        <video 
+        <video
           ref={videoRef}
           style={videoStyle}
           playsInline
         >
-            Video not available.
+          Video not available.
         </video>
       </div>
     </div>

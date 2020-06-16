@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { QRReader } from 'qr-reader'
 
 /**
- * Initializes the reader, then provides a function for scanning an image. 
+ * Initializes the reader, then provides a function for scanning an image.
  * @param { Object } element - a video or image element (e.g. videoRef.current)
  * @returns { Array } [ scanFunction, reader ]
  *  - scanFunction: (resultText) => { ... }
@@ -13,7 +13,7 @@ import { QRReader } from 'qr-reader'
  *  doSomethingWithQRText(result)
  * })
  */
-export const useQRReader = (element) => {
+export const useQRReader = element => {
   const [ reader, setReader ] = useState(null)
 
   useEffect(() => {
@@ -26,12 +26,11 @@ export const useQRReader = (element) => {
 
     // clean up by terminating the worker
     return () => qrReader.terminate()
-
-  }, [ element ])
+  }, [element])
 
   return [
     // scan function
-    (cb) => reader && reader.scan(cb),
-    reader
+    cb => reader && reader.scan(cb),
+    reader,
   ]
 }
