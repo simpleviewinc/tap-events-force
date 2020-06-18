@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { theme } from 'SVTheme'
 import { SafeAreaView, StatusBar } from 'react-native'
-import { ReThemeProvider, getDefaultTheme, setDefaultTheme } from '@simpleviewinc/re-theme'
+import {
+  ReThemeProvider,
+  getDefaultTheme,
+  setDefaultTheme,
+} from '@simpleviewinc/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
@@ -19,30 +23,40 @@ const checkAppInit = setInit => {
   checkCall(initAppAction)
 }
 
-
 const App = props => {
-  const [ activeTheme, switchTheme ] = useState(getDefaultTheme())
+  const [activeTheme] = useState(getDefaultTheme())
   const [ init, setInit ] = useState(false)
 
   useEffect(() => {
     !init && checkAppInit(setInit)
   })
 
-  return init && (
-    <>
-      { isNative() && <SafeAreaView style={{backgroundColor:get(activeTheme, 'colors.surface.primary.colors.dark')}}/>}
-      <StatusBar barStyle={'default'} />
-      <Router history={getHistory()}>
-        <SafeAreaView>
-          <Provider store={getStore()}>
-            <ReThemeProvider theme={ activeTheme } >
-              {/* setup routes from navigation config */}
-              <ContainerRoutes navigationConfigs={keg.routes}/>
-            </ReThemeProvider>
-          </Provider>
-        </SafeAreaView>
-      </Router>
-    </>
+  return (
+    init && (
+      <>
+        { isNative() && (
+          <SafeAreaView
+            style={{
+              backgroundColor: get(
+                activeTheme,
+                'colors.surface.primary.colors.dark'
+              ),
+            }}
+          />
+        ) }
+        <StatusBar barStyle={'default'} />
+        <Router history={getHistory()}>
+          <SafeAreaView>
+            <Provider store={getStore()}>
+              <ReThemeProvider theme={activeTheme}>
+                { /* setup routes from navigation config */ }
+                <ContainerRoutes navigationConfigs={keg.routes} />
+              </ReThemeProvider>
+            </Provider>
+          </SafeAreaView>
+        </Router>
+      </>
+    )
   )
 }
 
