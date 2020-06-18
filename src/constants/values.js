@@ -1,13 +1,21 @@
-import { keyMap } from 'jsutils'
+import { keyMap, deepFreeze } from 'jsutils'
 
-export const Values = {
-  categories: keyMap([
-    'events',
-    'sessions',
-    'filters',
-    'activeSession',
-    'booking',
+/**
+ * Constant values
+ * @typedef Values
+ * @type {object}
+ * @property {object} CATEGORIES
+ * @property {object} BOOKING_TYPES
+ */
+/** @type {Values} */
+export const Values = deepFreeze({
+  CATEGORIES: keyMap([
+    'EVENTS',
+    'SESSIONS',
+    'FILTERS',
+    'ACTIVE_SESSION',
+    'BOOKING',
   ]),
 
-  bookingTypes: keyMap([ 'person', 'group', 'undefined' ]),
-}
+  BOOKING_TYPES: keyMap([ 'PERSON', 'GROUP', 'UNDEFINED' ]),
+})

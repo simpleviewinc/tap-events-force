@@ -2,13 +2,14 @@ import { deepFreeze } from 'jsutils'
 import { Values } from 'SVConstants'
 
 /**
+ * Session booking item
  * @typedef booking
  * @type {object}
- * @property {('person'|'group'|'undefined')} type
+ * @property {('PERSON'|'GROUP'|'UNDEFINED')} type
  * @property {Array.<import('./attendee').attendee>} users - array of users
  */
 /** @type {booking} */
 export const booking = deepFreeze({
-  type: Values.bookingTypes.undefined,
+  type: Values.BOOKING_TYPES.UNDEFINED,
   users: [],
 })

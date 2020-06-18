@@ -1,6 +1,7 @@
 import { deepFreeze } from 'jsutils'
 
 /**
+ * Session object
  * @typedef session
  * @type {object}
  * @property {number|string} id - id of session
