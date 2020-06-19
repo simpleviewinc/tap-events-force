@@ -7,6 +7,8 @@ export const ActionTypes = keyMap(
     'DB_DOC_REMOVED',
     'DB_DOC_CHANGED',
     'DB_INIT',
+    // session
+    'SET_ACTIVE_SESSION',
   ],
   true
 )
