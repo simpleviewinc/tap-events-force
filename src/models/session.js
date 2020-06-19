@@ -14,3 +14,6 @@ export const activeSession = deepFreeze({
   open: false,
   bookingState: null,
 })
+
+// TODO: session obj  && make all models
+export const session = deepFreeze({})
