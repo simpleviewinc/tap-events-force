@@ -4,8 +4,9 @@ import { deepFreeze } from 'jsutils'
  * Constant values
  * @typedef Values
  * @type {object}
- * @property {object} CATEGORIES
- * @property {object} BOOKING_TYPES
+ * @property {{EVENTS, SESSIONS, FILTERS, ACTIVE_SESSION, BOOKING}} CATEGORIES
+ * @property {{PERSON, GROUP}} BOOKING_TYPES
+ * @readonly
  */
 /** @type {Values} */
 export const Values = deepFreeze({

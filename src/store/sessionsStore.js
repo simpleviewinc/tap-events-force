@@ -23,7 +23,7 @@ export let dispatch
 /**
  * Uses the useContext hook from react to get the sessions store
  *
- * @returns {any}
+ * @returns {sessionsState}
  */
 export const useSessionsStore = () => {
   const [ store, _dispatch ] = useContext(SessionsContext)

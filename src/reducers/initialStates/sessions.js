@@ -3,11 +3,14 @@ import { activeSession, booking } from 'SVModels'
 
 const { CATEGORIES } = Values
 
+/**
+ * sessions state
+ */
 export const sessionsState = {
   [CATEGORIES.SESSIONS]: {},
   [CATEGORIES.FILTERS]: {
-    activeFilters: {},
-    selectedFilters: {},
+    activeFilters: [],
+    selectedFilters: [],
   },
   [CATEGORIES.ACTIVE_SESSION]: {
     ...activeSession,
