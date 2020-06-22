@@ -3,3 +3,4 @@
 
 # Except src:
 !/src
+!App.js

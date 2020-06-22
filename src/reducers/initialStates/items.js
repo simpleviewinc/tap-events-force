@@ -1,7 +1,5 @@
-import { Values } from 'SVConstants'
+import { sessionsState } from 'SVReducers/initialStates/sessions'
 
 export const itemsState = {
-  [Values.categories.events]: {},
-  [Values.categories.sessions]: {},
-  [Values.categories.messages]: {},
+  ...sessionsState,
 }
