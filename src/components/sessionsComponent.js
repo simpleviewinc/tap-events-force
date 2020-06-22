@@ -1,21 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View, Text } from 'react-native'
 import { useSessionsStore } from '../store/sessionsStore'
-import { setActiveSession } from 'SVActions'
-
+/**
+ * SessionComponent
+ * @param {import('SVModels/sessionAgendaProps').sessionAgendaProps} props - session agenda props defined in evf interface
+ */
 export const SessionsComponent = props => {
-  useEffect(() => {
-    setActiveSession({
-      id: 1,
-      bookingState: null,
-    })
-  }, [])
   const store = useSessionsStore()
-
-  console.log(store)
   return (
     <View>
-      <Text>{ store.activeSession }</Text>
+      <Text>Active session id: { store.activeSession.id }</Text>
     </View>
   )
 }
