@@ -4,6 +4,7 @@
   "keg": {
     "routes": {
       "/": "RootContainer",
+      "/sessions": "SessionsContainer",
       "/test": "TestContainer",
       "/qr": "QRContainer"
     },

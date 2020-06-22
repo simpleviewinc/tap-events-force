@@ -1,12 +1,17 @@
 {
-  "name": "tap-events-force",
+  "name": "@simpleviewinc/tap-events-force",
   "version": "1.0.1",
   "description": "Events Force Tap for the Keg",
   "main": "index.js",
-  "repository": "https://github.com/simpleviewinc/tap-events-force.git",
   "author": "Lance Tipton <lancetipton04@gmail.com>",
   "license": "MIT",
-  "private": true,
+  "publishConfig": { 
+    "registry": "https://npm.pkg.github.com/" 
+  },
+  "repository" : {
+    "url": "ssh://git@github.com/simpleviewinc/tap-events-force.git",
+    "type": "git"
+  },
   "scripts": {
     "android": "cd node_modules/keg-core; yarn android",
     "build:android": "cd node_modules/keg-core; yarn build:android",
