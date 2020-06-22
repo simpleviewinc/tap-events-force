@@ -3,11 +3,9 @@ import { deepFreeze } from 'jsutils'
 /**
  * Constant values
  * @typedef Values
- * @readonly
  * @type {object}
  * @property {{EVENTS, SESSIONS, FILTERS, ACTIVE_SESSION, BOOKING}} CATEGORIES
  * @property {{PERSON, GROUP}} BOOKING_TYPES
- *
  */
 /** @type {Values} */
 export const Values = deepFreeze({

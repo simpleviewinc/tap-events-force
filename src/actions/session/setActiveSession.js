@@ -18,7 +18,7 @@ export const setActiveSession = session => {
   dispatch({
     type: ActionTypes.UPSERT_ITEM,
     payload: {
-      category: CATEGORIES.activeSession,
+      category: CATEGORIES.ACTIVE_SESSION,
       item: {
         ...session,
       },
