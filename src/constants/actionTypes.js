@@ -9,6 +9,7 @@ export const ActionTypes = keyMap(
     'DB_INIT',
     // session
     'SET_ACTIVE_SESSION',
+    'MAP_SESSION_INTERFACE',
   ],
   true
 )

@@ -1,5 +1,11 @@
 import React, { createContext, useReducer, useContext } from 'react'
-import { sessionsState } from 'SVReducers/initialStates/sessions'
+import {
+  sessionsState,
+  usersState,
+  settingsState,
+  labelsState,
+  locationsState,
+} from 'SVReducers/initialStates'
 import { items as itemsReducer } from 'SVReducers/items'
 
 const SessionsContext = createContext(null)
@@ -11,7 +17,13 @@ const SessionsContext = createContext(null)
  * @returns {React.Component}
  */
 export const SessionsProvider = ({ children }) => {
-  const [ state, dispatch ] = useReducer(itemsReducer, sessionsState)
+  const [ state, dispatch ] = useReducer(itemsReducer, {
+    ...sessionsState,
+    ...usersState,
+    ...settingsState,
+    ...labelsState,
+    ...locationsState,
+  })
   return (
     <SessionsContext.Provider value={[ state, dispatch ]}>
       { children }
@@ -21,9 +33,9 @@ export const SessionsProvider = ({ children }) => {
 
 export let dispatch
 /**
- * Uses the useContext hook from react to get the sessions store
+ * Uses the useContext hook from react to get the combined sessions store
  *
- * @returns {sessionsState}
+ * @returns {object}
  */
 export const useSessionsStore = () => {
   const [ store, _dispatch ] = useContext(SessionsContext)
