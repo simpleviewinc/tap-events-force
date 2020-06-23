@@ -35,7 +35,7 @@ export let dispatch
 /**
  * Uses the useContext hook from react to get the combined sessions store
  *
- * @returns {object}
+ * @returns {sessionsState & settingsState & usersState & labelsState & locationsState}
  */
 export const useSessionsStore = () => {
   const [ store, _dispatch ] = useContext(SessionsContext)
