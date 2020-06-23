@@ -7,7 +7,7 @@ const { CATEGORIES } = Values
  * sessions state
  */
 export const sessionsState = {
-  [CATEGORIES.SESSIONS]: {},
+  [CATEGORIES.SESSIONS]: [],
   [CATEGORIES.FILTERS]: {
     activeFilters: [],
     selectedFilters: [],
