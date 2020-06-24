@@ -16,8 +16,15 @@ import { deepFreeze } from 'jsutils'
  *  LABELS: 'labels',
  *  LOCATIONS: 'locations'
  * }} CATEGORIES
- * @property {{PERSON: 'person: 'group'}} BOOKING_TYPES
- * @property {{AGENDA_SETTINGS: 'agendaSettings'}} SUB_CATEGORIES
+ * @property {{
+ *  PERSON: 'person',
+ *  GROUP: 'group'
+ * }} BOOKING_TYPES
+ * @property {{
+ *  AGENDA_SETTINGS: 'agendaSettings',
+ *  ACTIVE_FILTERS: 'activeFilters',
+ *  SELECTED_FILTERS: 'selectedFilters'
+ * }} SUB_CATEGORIES
  */
 /** @type {Values} */
 export const Values = deepFreeze({
@@ -36,6 +43,8 @@ export const Values = deepFreeze({
 
   SUB_CATEGORIES: {
     AGENDA_SETTINGS: 'agendaSettings',
+    ACTIVE_FILTERS: 'activeFilters',
+    SELECTED_FILTERS: 'selectedFilters',
   },
 
   BOOKING_TYPES: {
