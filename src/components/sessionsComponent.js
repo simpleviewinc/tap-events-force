@@ -20,10 +20,6 @@ export const SessionsComponent = props => {
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>
-      <Text>
-        Location In Agenda:{ ' ' }
-        { store.settings.agendaSettings.showLocationInAgenda.toString() }
-      </Text>
     </View>
   )
 }
