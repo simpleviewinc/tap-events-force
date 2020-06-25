@@ -2,12 +2,7 @@ import { deepFreeze } from 'jsutils'
 
 /**
  * Constant values
- * @typedef Values
- * @type {object}
- * @property {object} CATEGORIES
- * @property {object} BOOKING_TYPES
  */
-/** @type {Values} */
 export const Values = deepFreeze({
   CATEGORIES: {
     EVENTS: 'events',
@@ -15,6 +10,17 @@ export const Values = deepFreeze({
     FILTERS: 'filters',
     ACTIVE_SESSION: 'activeSession',
     BOOKING: 'booking',
+    ATTENDEES: 'attendees',
+    PRESENTERS: 'presenters',
+    SETTINGS: 'settings',
+    LABELS: 'labels',
+    LOCATIONS: 'locations',
+  },
+
+  SUB_CATEGORIES: {
+    AGENDA_SETTINGS: 'agendaSettings',
+    ACTIVE_FILTERS: 'activeFilters',
+    SELECTED_FILTERS: 'selectedFilters',
   },
 
   BOOKING_TYPES: {
