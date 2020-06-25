@@ -21,7 +21,7 @@ export const SessionsComponent = props => {
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>
       <Text>
-        { `showLocationInAgenda: ${store.settings.agendaSettings.showLocationInAgenda}` }
+        Location In Agenda: { store.settings.agendaSettings.showLocationInAgenda }
       </Text>
     </View>
   )
