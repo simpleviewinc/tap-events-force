@@ -1,16 +1,15 @@
-import { deepFreeze } from 'jsutils'
-
 /**
- * label object
- * @typedef label
- * @type {object}
- * @property {string} identifier
- * @property {string} name
- * @property {string} className
+ * Label class model
  */
-/** @type {label} */
-export const label = deepFreeze({
-  identifier: '',
-  name: '',
-  className: '',
-})
+export class Label {
+  /**
+   * @param {string=} identifier
+   * @param {string=} name
+   * @param {string=} className
+   */
+  constructor(identifier = '', name = '', className = '') {
+    this.identifier = identifier
+    this.name = name
+    this.className = className
+  }
+}

@@ -1,14 +1,13 @@
-import { deepFreeze } from 'jsutils'
-
 /**
- * Session booking item
- * @typedef booking
- * @type {object}
- * @property {('PERSON'|'GROUP')} type
- * @property {Array.<import('./attendee').attendee>} users - array of users
+ * Booking class model
  */
-/** @type {booking} */
-export const booking = deepFreeze({
-  type: null,
-  users: [],
-})
+export class Booking {
+  /**
+   * @param {('PERSON'|'GROUP'| null)} type
+   * @param {Array.<import('./attendee').Attendee>} users - array of users
+   */
+  constructor(type = null, users = []) {
+    this.type = type
+    this.users = users
+  }
+}

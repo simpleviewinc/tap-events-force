@@ -1,14 +1,13 @@
-import { deepFreeze } from 'jsutils'
-
 /**
- * location object
- * @typedef location
- * @type {object}
- * @property {string} identifier
- * @property {string} name
+ * Location class model
  */
-/** @type {location} */
-export const location = deepFreeze({
-  identifier: '',
-  name: '',
-})
+export class Location {
+  /**
+   * @param {string=} identifier
+   * @param {string=} name
+   */
+  constructor(identifier = '', name = '') {
+    this.identifier = identifier
+    this.name = name
+  }
+}

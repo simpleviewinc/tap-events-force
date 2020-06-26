@@ -1,16 +1,15 @@
-import { deepFreeze } from 'jsutils'
-
 /**
- * activeSession object
- * @typedef activeSession
- * @type {object}
- * @property {number|string} id - id of session
- * @property {boolean} open - is it opened? Used on mobile
- * @property {string} bookingState - booking state of the user
+ * ActiveSession class model
  */
-/** @type {activeSession} */
-export const activeSession = deepFreeze({
-  id: 0,
-  open: false,
-  bookingState: null,
-})
+export class ActiveSession {
+  /**
+   * @param {number|string=} id - id of session
+   * @param {boolean=} open - is it opened? Used on mobile
+   * @param {string=} bookingState - booking state of the user
+   */
+  constructor(id = 0, open = false, bookingState = null) {
+    this.id = id
+    this.open = open
+    this.bookingState = bookingState
+  }
+}

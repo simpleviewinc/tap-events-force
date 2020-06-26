@@ -1,14 +1,13 @@
-import { deepFreeze } from 'jsutils'
-
 /**
- * AgendaSettings object
- * @typedef agendaSettings
- * @type {object}
- * @property {boolean} showLocationInAgenda
- * @property {boolean} showPresentersInAgenda
+ * AgendaSettings class model
  */
-/** @type {agendaSettings} */
-export const agendaSettings = deepFreeze({
-  showLocationInAgenda: false,
-  showPresentersInAgenda: false,
-})
+export class AgendaSettings {
+  /**
+   * @param {boolean=} showLocationInAgenda
+   * @param {boolean=} showPresentersInAgenda
+   */
+  constructor(showLocationInAgenda = false, showPresentersInAgenda = false) {
+    this.showLocationInAgenda = showLocationInAgenda
+    this.showPresentersInAgenda = showPresentersInAgenda
+  }
+}

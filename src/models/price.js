@@ -1,14 +1,13 @@
-import { deepFreeze } from 'jsutils'
-
 /**
- * price object
- * @typedef price
- * @type {object}
- * @property {string} currency - ISO 4217
- * @property {number} amount
+ * Price class model
  */
-/** @type {price} */
-export const price = deepFreeze({
-  currency: '',
-  amount: 0,
-})
+export class Price {
+  /**
+   * @param {string=} currency - ISO 4217
+   * @param {number=} amount
+   */
+  constructor(currency = '', amount = 0) {
+    this.currency = currency
+    this.amount = amount
+  }
+}

@@ -5,7 +5,7 @@ import { mapSessionInterface } from 'SVActions'
 
 /**
  * SessionComponent
- * @param {import('SVModels/sessionAgendaProps').sessionAgendaProps} props - session agenda props defined in evf interface
+ * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
 export const SessionsComponent = props => {
   const store = useSessionsStore()
