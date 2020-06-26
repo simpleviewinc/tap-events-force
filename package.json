@@ -5,14 +5,15 @@
   "main": "index.js",
   "author": "Lance Tipton <lancetipton04@gmail.com>",
   "license": "MIT",
-  "publishConfig": { 
-    "registry": "https://npm.pkg.github.com/" 
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   },
-  "repository" : {
+  "repository": {
     "url": "ssh://git@github.com/simpleviewinc/tap-events-force.git",
     "type": "git"
   },
   "scripts": {
+    "test": "NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
     "android": "cd node_modules/keg-core; yarn android",
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
@@ -37,16 +38,23 @@
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
   },
   "devDependencies": {
-    "rimraf": "^3.0.1",
+    "app-root-path": "3.0.0",
     "babel-eslint": "10.1.0",
-    "onchange": "7.0.2",
-    "prettier": "2.0.5",
     "eslint": "7.1.0",
     "eslint-plugin-jest": "23.13.2",
     "eslint-plugin-react": "7.20.0",
     "eslint-plugin-react-native": "3.8.1",
     "husky": "4.2.5",
-    "lint-staged": "10.2.10"
+    "jest": "26.1.0",
+    "lint-staged": "10.2.10",
+    "onchange": "7.0.2",
+    "prettier": "2.0.5",
+    "rimraf": "^3.0.1"
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.js?(x)"
+    ]
   },
   "husky": {
     "hooks": {
