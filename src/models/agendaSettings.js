@@ -3,10 +3,14 @@
  */
 export class AgendaSettings {
   /**
-   * @param {boolean=} showLocationInAgenda
-   * @param {boolean=} showPresentersInAgenda
+   * @param {Object?} props
+   * @property {boolean=} showLocationInAgenda
+   * @property {boolean=} showPresentersInAgenda
    */
-  constructor(showLocationInAgenda = false, showPresentersInAgenda = false) {
+  constructor({
+    showLocationInAgenda = false,
+    showPresentersInAgenda = false,
+  } = {}) {
     this.showLocationInAgenda = showLocationInAgenda
     this.showPresentersInAgenda = showPresentersInAgenda
   }

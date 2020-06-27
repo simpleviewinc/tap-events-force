@@ -5,23 +5,24 @@ import { SessionCapacity } from './sessionCapacity'
  */
 export class Session {
   /**
-   * @param {string=} identifier - session id
-   * @param {string=} name - name of session
-   * @param {string=} summary - summary of the session
-   * @param {number=} dayNumber
-   * @param {string=} startDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
-   * @param {string}= endDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
-   * @param {Array<string>=} presenterIdentifiers
-   * @param {Array<string>=} labelIdentifiers
-   * @param {string=} locationIdentifier
-   * @param {string=} requiresBooking - If true then all attendees must book this session
-   * @param {string=} liveVideoUrl - Url for the live stream
-   * @param {string=} recordedVideoUrl - Url for the recorded video
-   * @param {import('SVModels/price').Price=} price - price object
-   * @param {Array<string>=} restrictToAttendeeCategories
-   * @param {SessionCapacity=} capacity - session capacity
+   * @param {object=} props
+   * @property {string=} identifier - session id
+   * @property {string=} name - name of session
+   * @property {string=} summary - summary of the session
+   * @property {number=} dayNumber
+   * @property {string=} startDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
+   * @property {string}= endDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
+   * @property {Array<string>=} presenterIdentifiers
+   * @property {Array<string>=} labelIdentifiers
+   * @property {string=} locationIdentifier
+   * @property {string=} requiresBooking - If true then all attendees must book this session
+   * @property {string=} liveVideoUrl - Url for the live stream
+   * @property {string=} recordedVideoUrl - Url for the recorded video
+   * @property {import('SVModels/price').Price=} price - price object
+   * @property {Array<string>=} restrictToAttendeeCategories
+   * @property {SessionCapacity=} capacity - session capacity
    */
-  constructor(
+  constructor({
     identifier = '',
     name = '',
     summary = '',
@@ -36,8 +37,8 @@ export class Session {
     recordedVideoUrl = '',
     price = null,
     restrictToAttendeeCategories = [],
-    capacity = new SessionCapacity()
-  ) {
+    capacity = new SessionCapacity(),
+  } = {}) {
     this.identifier = identifier
     this.name = name
     this.summary = summary

@@ -3,10 +3,11 @@
  */
 export class Booking {
   /**
-   * @param {('PERSON'|'GROUP'| null)} type
-   * @param {Array.<import('./attendee').Attendee>} users - array of users
+   * @param {Object?} props
+   * @property {('PERSON'|'GROUP'| null)} type
+   * @property {Array.<import('./attendee').Attendee>} users - array of users
    */
-  constructor(type = null, users = []) {
+  constructor({ type = null, users = [] } = {}) {
     this.type = type
     this.users = users
   }

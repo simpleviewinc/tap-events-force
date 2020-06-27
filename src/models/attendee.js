@@ -3,19 +3,20 @@
  */
 export class Attendee {
   /**
-   * @param {string=} bookedTicketIdentifier - booked ticket id
-   * @param {string=} name - attendee's name
-   * @param {string=} attendeeCategoryIdentifier - attendee category id
-   * @param {Array<number>=} bookedDays - list of days booked
-   * @param {Array<string>=} bookedSessions - list of sessions booked
+   * @param {Object?} props
+   * @property {string=} bookedTicketIdentifier - booked ticket id
+   * @property {string=} name - attendee's name
+   * @property {string=} attendeeCategoryIdentifier - attendee category id
+   * @property {Array<number>=} bookedDays - list of days booked
+   * @property {Array<string>=} bookedSessions - list of sessions booked
    */
-  constructor(
+  constructor({
     bookedTicketIdentifier = '',
     name = '',
     attendeeCategoryIdentifier = '',
     bookedDays = [],
-    bookedSessions = []
-  ) {
+    bookedSessions = [],
+  } = {}) {
     this.bookedTicketIdentifier = bookedTicketIdentifier
     this.name = name
     this.attendeeCategoryIdentifier = attendeeCategoryIdentifier

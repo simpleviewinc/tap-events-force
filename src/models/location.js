@@ -3,10 +3,11 @@
  */
 export class Location {
   /**
-   * @param {string=} identifier
-   * @param {string=} name
+   * @param {Object?} props
+   * @property {string=} identifier
+   * @property {string=} name
    */
-  constructor(identifier = '', name = '') {
+  constructor({ identifier = '', name = '' } = {}) {
     this.identifier = identifier
     this.name = name
   }

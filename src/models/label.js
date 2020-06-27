@@ -3,11 +3,12 @@
  */
 export class Label {
   /**
-   * @param {string=} identifier
-   * @param {string=} name
-   * @param {string=} className
+   * @param {object=} props
+   * @property {string=} identifier
+   * @property {string=} name
+   * @property {string=} className
    */
-  constructor(identifier = '', name = '', className = '') {
+  constructor({ identifier = '', name = '', className = '' } = {}) {
     this.identifier = identifier
     this.name = name
     this.className = className
