@@ -38,23 +38,24 @@
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/plugin-proposal-class-properties": "7.8.3",
+    "@babel/plugin-transform-runtime": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
     "app-root-path": "3.0.0",
     "babel-eslint": "10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "7.1.0",
     "eslint-plugin-jest": "23.13.2",
     "eslint-plugin-react": "7.20.0",
     "eslint-plugin-react-native": "3.8.1",
     "husky": "4.2.5",
     "jest": "26.1.0",
+    "jsutils": "git+https://github.com/lancetipton/jsutils.git#v3.2.1",
     "lint-staged": "10.2.10",
     "onchange": "7.0.2",
     "prettier": "2.0.5",
     "rimraf": "^3.0.1"
-  },
-  "jest": {
-    "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)"
-    ]
   },
   "husky": {
     "hooks": {

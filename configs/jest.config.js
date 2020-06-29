@@ -1,38 +1,18 @@
-const kegPath = require('app-root-path').path
-require('react')
-/**
- * Modules that should be transpiled before the tests are run
- */
-const transpileForTests = [
-  'keg-core',
-  '@expo(nent)?/.*',
-  '@react-native-community',
-  '@react-navigation/.*',
-  '@unimodules/.*',
-  'expo(nent)?',
-  'expo-asset',
-  'expo-constants',
-  'expo-font',
-  '@simpleviewinc/re-theme',
-  'react-clone-referenced-element',
-  'react-native',
-  'react-navigation',
-  'react-router-native',
-  'react-router',
-  'react-router-dom',
-  'sentry-expo',
-  'unimodules',
-].join('|')
+const rootPath = require('app-root-path').path
 
-const rootDir = kegPath
 
+const rootDir = rootPath
 
 module.exports = {
   rootDir,
   testMatch: [
     `${rootDir}/src/**/__tests__/**/*.js?(x)`,
   ],
+  moduleDirectories: ['node_modules', 'node_modules/keg-core/node_modules'],
   verbose: true,
-  //testPathIgnorePatterns: [`<rootDir/>node_modules/(?!(keg-core/node_modules)/)`, ],
-  //transformIgnorePatterns: [`node_modules/(?!(${transpileForTests})/)`],
+  moduleNameMapper: {
+    SVMocks: [`${rootDir}/src/mocks/index.js`, `${rootDir}/node_modules/keg-core/core/mocks/index.js`]
+  },
+  testPathIgnorePatterns: [`${rootDir}/node_modules/(?!(keg-core/node_modules)/)`, ],
+  //transformIgnorePatterns: [`node_modules/(?!(keg-core)/)`],
 }
