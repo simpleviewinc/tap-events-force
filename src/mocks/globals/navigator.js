@@ -1,3 +1,5 @@
 export const navigator = {
-  mediaDevices: jest.fn(() => {}),
+  mediaDevices: {
+    getUserMedia: jest.fn(async () => {}),
+  },
 }

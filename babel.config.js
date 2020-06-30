@@ -6,6 +6,6 @@ module.exports = {
     // for async
     '@babel/plugin-transform-runtime',
     'babel-plugin-module-resolver',
-    "@babel/plugin-proposal-class-properties"
+    '@babel/plugin-proposal-class-properties',
   ]
 }
