@@ -1,7 +1,7 @@
 import { requestCamera } from 'SVUtils/media'
 import { Globals } from 'SVMocks'
 
-describe('Dimensions', () => {
+describe('requestCamera', () => {
   it('returns error message when navigator || mediaDevices DNE', async () => {
     const spy = jest.spyOn(console, 'error')
     const [err] = await requestCamera(null)
