@@ -1,16 +1,21 @@
+import { assignDefinedProps } from 'SVUtils'
+
 /**
  * ActiveSession class model
  */
 export class ActiveSession {
+  id = 0
+  open = false
+  bookingState = null
+
   /**
-   * @param {object} props
+   *
+   * @param {object} params
    * @property {number|string=} id - id of session
    * @property {boolean=} open - is it opened? Used on mobile
    * @property {string=} bookingState - booking state of the user
    */
-  constructor({ id = 0, open = false, bookingState = null } = {}) {
-    this.id = id
-    this.open = open
-    this.bookingState = bookingState
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
   }
 }

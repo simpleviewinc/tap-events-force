@@ -1,20 +1,20 @@
+import { assignDefinedProps } from 'SVUtils'
+
 /**
  * SessionCapacity class model
  */
 export class SessionCapacity {
+  isUnlimited = false
+  remainingPlaces = null
+  isWaitingListAvailable = null
+
   /**
-   * @param {object=} props
+   * @param {object} params
    * @property {boolean=} isUnlimited
    * @property {number=} remainingPlaces - Only populated if isUnlimited = false
    * @property {boolean=} isWaitingListAvailable - Only populated if isUnlimited = false
    */
-  constructor({
-    isUnlimited = false,
-    remainingPlaces = null,
-    isWaitingListAvailable = null,
-  } = {}) {
-    this.isUnlimited = isUnlimited
-    this.remainingPlaces = remainingPlaces
-    this.isWaitingListAvailable = isWaitingListAvailable
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
   }
 }

@@ -1,9 +1,18 @@
-/**
- * Presenter class model
- */
+import { assignDefinedProps } from 'SVUtils'
+
 export class Presenter {
+  identifier = ''
+  title = ''
+  firstname = ''
+  lastname = ''
+  email = ''
+  jobtitle = ''
+  company = ''
+  photographUrl = null
+  biography = ''
+
   /**
-   * @param {object} props
+   * Presenter class model
    * @property {string} identifier - is it opened? Used on mobile
    * @property {string} title - Mr, mrs, Dr, etc max 50 characters
    * @property {string} firstname - Max 50 characters
@@ -14,25 +23,7 @@ export class Presenter {
    * @property {string?} photographUrl - Url of presenters photo
    * @property {string} biography - Max 10,000 characters
    */
-  constructor({
-    identifier = '',
-    title = '',
-    firstname = '',
-    lastname = '',
-    email = '',
-    jobtitle = '',
-    company = '',
-    photographUrl = null,
-    biography = '',
-  } = {}) {
-    this.identifier = identifier
-    this.title = title
-    this.firstname = firstname
-    this.lastname = lastname
-    this.email = email
-    this.jobtitle = jobtitle
-    this.company = company
-    this.photographUrl = photographUrl
-    this.biography = biography
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
   }
 }

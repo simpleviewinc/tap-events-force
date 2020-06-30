@@ -1,14 +1,15 @@
-/**
- * Location class model
- */
+import { assignDefinedProps } from 'SVUtils'
+
 export class Location {
+  identifier = ''
+  name = ''
+
   /**
-   * @param {Object?} props
+   * Location class model
    * @property {string=} identifier
    * @property {string=} name
    */
-  constructor({ identifier = '', name = '' } = {}) {
-    this.identifier = identifier
-    this.name = name
+  constructor(params = {}) {
+    assignDefinedProps(params)
   }
 }

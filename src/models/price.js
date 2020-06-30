@@ -1,14 +1,16 @@
+import { assignDefinedProps } from 'SVUtils'
 /**
  * Price class model
  */
 export class Price {
+  currency = ''
+  amount = 0
+
   /**
-   * @param {object} props
    * @property {string=} currency - ISO 4217
    * @property {number=} amount
    */
-  constructor({ currency = '', amount = 0 } = {}) {
-    this.currency = currency
-    this.amount = amount
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
   }
 }

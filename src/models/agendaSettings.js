@@ -1,17 +1,15 @@
-/**
- * AgendaSettings class model
- */
+import { assignDefinedProps } from 'SVUtils'
+
 export class AgendaSettings {
+  showLocationInAgenda = false
+  showPresentersInAgenda = false
+
   /**
-   * @param {Object?} props
+   * AgendaSettings class model
    * @property {boolean=} showLocationInAgenda
    * @property {boolean=} showPresentersInAgenda
    */
-  constructor({
-    showLocationInAgenda = false,
-    showPresentersInAgenda = false,
-  } = {}) {
-    this.showLocationInAgenda = showLocationInAgenda
-    this.showPresentersInAgenda = showPresentersInAgenda
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
   }
 }

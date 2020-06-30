@@ -1,11 +1,28 @@
 import { SessionCapacity } from './sessionCapacity'
+import { assignDefinedProps } from 'SVUtils'
 
-/*
+/**
  * Session class model
  */
 export class Session {
+  identifier = ''
+  name = ''
+  summary = ''
+  dayNumber = 0
+  startDateTimeLocal = ''
+  endDateTimeLocal = ''
+  presenterIdentifiers = []
+  labelIdentifiers = []
+  locationIdentifier = ''
+  requiresBooking = false
+  liveVideoUrl = ''
+  recordedVideoUrl = ''
+  price = null
+  restrictToAttendeeCategories = []
+  capacity = new SessionCapacity()
+
   /**
-   * @param {object=} props
+   * @param {object} params
    * @property {string=} identifier - session id
    * @property {string=} name - name of session
    * @property {string=} summary - summary of the session
@@ -22,37 +39,7 @@ export class Session {
    * @property {Array<string>=} restrictToAttendeeCategories
    * @property {SessionCapacity=} capacity - session capacity
    */
-  constructor({
-    identifier = '',
-    name = '',
-    summary = '',
-    dayNumber = 0,
-    startDateTimeLocal = '',
-    endDateTimeLocal = '',
-    presenterIdentifiers = [],
-    labelIdentifiers = [],
-    locationIdentifier = '',
-    requiresBooking = false,
-    liveVideoUrl = '',
-    recordedVideoUrl = '',
-    price = null,
-    restrictToAttendeeCategories = [],
-    capacity = new SessionCapacity(),
-  } = {}) {
-    this.identifier = identifier
-    this.name = name
-    this.summary = summary
-    this.dayNumber = dayNumber
-    this.startDateTimeLocal = startDateTimeLocal
-    this.endDateTimeLocal = endDateTimeLocal
-    this.presenterIdentifiers = presenterIdentifiers
-    this.labelIdentifiers = labelIdentifiers
-    this.locationIdentifier = locationIdentifier
-    this.requiresBooking = requiresBooking
-    this.liveVideoUrl = liveVideoUrl
-    this.recordedVideoUrl = recordedVideoUrl
-    this.price = price
-    this.restrictToAttendeeCategories = restrictToAttendeeCategories
-    this.capacity = capacity
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
   }
 }

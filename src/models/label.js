@@ -1,16 +1,17 @@
-/**
- * Label class model
- */
+import { assignDefinedProps } from 'SVUtils'
+
 export class Label {
+  identifier = ''
+  name = ''
+  className = ''
+
   /**
-   * @param {object=} props
-   * @property {string=} identifier
-   * @property {string=} name
-   * @property {string=} className
+   * Label class model
+   * @property {string} identifier
+   * @property {string} name
+   * @property {string} className
    */
-  constructor({ identifier = '', name = '', className = '' } = {}) {
-    this.identifier = identifier
-    this.name = name
-    this.className = className
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
   }
 }

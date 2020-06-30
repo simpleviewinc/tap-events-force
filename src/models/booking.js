@@ -1,14 +1,17 @@
+import { assignDefinedProps } from 'SVUtils'
 /**
  * Booking class model
  */
 export class Booking {
+  type = null
+  users = []
+
   /**
-   * @param {Object?} props
+   * @param {object} params
    * @property {('PERSON'|'GROUP'| null)} type
    * @property {Array.<import('./attendee').Attendee>} users - array of users
    */
-  constructor({ type = null, users = [] } = {}) {
-    this.type = type
-    this.users = users
+  constructor(params = {}) {
+    assignDefinedProps(params)
   }
 }

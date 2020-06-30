@@ -7,6 +7,9 @@ const testData = {
   settings: {
     showLocationInAgenda: true,
     showPresentersInAgenda: true,
+    someFunc: () => {
+      console.log('settings function')
+    },
   },
   presenters: [
     {
