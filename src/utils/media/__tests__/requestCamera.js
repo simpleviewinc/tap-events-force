@@ -2,8 +2,10 @@ import { requestCamera } from 'SVUtils/media'
 import { Globals } from 'SVMocks'
 
 describe('requestCamera', () => {
+  afterAll(() => jest.clearAllMocks())
+
   it('returns error message when navigator || mediaDevices DNE', async () => {
-    const spy = jest.spyOn(console, 'error')
+    const spy = jest.spyOn(console, 'error').mockImplementation()
     const [err] = await requestCamera(null)
     expect(spy).toHaveBeenCalled()
     expect(err).toBeTruthy()

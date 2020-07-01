@@ -10,7 +10,8 @@ module.exports = {
   moduleDirectories: ['node_modules', 'node_modules/keg-core/node_modules'],
   verbose: true,
   moduleNameMapper: {
-    // ex: SVMocks, SVUtils, SVActions
+    SVMocks: `${rootDir}/src/mocks/index.js`,
+    // ex: SVUtils, SVActions
     '^SV([^\/]+)$': [
       `${rootDir}/src/$1/tapIndex.js`,
       `${rootDir}/src/$1/index.js`,
