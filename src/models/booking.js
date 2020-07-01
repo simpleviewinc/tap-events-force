@@ -1,14 +1,17 @@
-import { deepFreeze } from 'jsutils'
-
+import { assignDefinedProps } from 'SVUtils'
 /**
- * Session booking item
- * @typedef booking
- * @type {object}
- * @property {('PERSON'|'GROUP')} type
- * @property {Array.<import('./attendee').attendee>} users - array of users
+ * Booking class model
  */
-/** @type {booking} */
-export const booking = deepFreeze({
-  type: null,
-  users: [],
-})
+export class Booking {
+  type = null
+  users = []
+
+  /**
+   * @param {object} params
+   * @property {('PERSON'|'GROUP'| null)} type
+   * @property {Array.<import('./attendee').Attendee>} users - array of users
+   */
+  constructor(params = {}) {
+    assignDefinedProps(params)
+  }
+}

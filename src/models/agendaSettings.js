@@ -1,14 +1,15 @@
-import { deepFreeze } from 'jsutils'
+import { assignDefinedProps } from 'SVUtils'
 
-/**
- * AgendaSettings object
- * @typedef agendaSettings
- * @type {object}
- * @property {boolean} showLocationInAgenda
- * @property {boolean} showPresentersInAgenda
- */
-/** @type {agendaSettings} */
-export const agendaSettings = deepFreeze({
-  showLocationInAgenda: false,
-  showPresentersInAgenda: false,
-})
+export class AgendaSettings {
+  showLocationInAgenda = false
+  showPresentersInAgenda = false
+
+  /**
+   * AgendaSettings class model
+   * @property {boolean=} showLocationInAgenda
+   * @property {boolean=} showPresentersInAgenda
+   */
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
+  }
+}

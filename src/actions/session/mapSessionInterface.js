@@ -15,7 +15,7 @@ const subCatMap = {
 
 /**
  * push the sessionAgendaProps items to our local state
- * @param {import('SVModels/sessionAgendaProps').sessionAgendaProps} props
+ * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props
  */
 export const mapSessionInterface = props => {
   // loop through each key and dispatch accordingly

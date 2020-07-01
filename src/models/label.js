@@ -1,16 +1,17 @@
-import { deepFreeze } from 'jsutils'
+import { assignDefinedProps } from 'SVUtils'
 
-/**
- * label object
- * @typedef label
- * @type {object}
- * @property {string} identifier
- * @property {string} name
- * @property {string} className
- */
-/** @type {label} */
-export const label = deepFreeze({
-  identifier: '',
-  name: '',
-  className: '',
-})
+export class Label {
+  identifier = ''
+  name = ''
+  className = ''
+
+  /**
+   * Label class model
+   * @property {string} identifier
+   * @property {string} name
+   * @property {string} className
+   */
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
+  }
+}

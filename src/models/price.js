@@ -1,14 +1,16 @@
-import { deepFreeze } from 'jsutils'
-
+import { assignDefinedProps } from 'SVUtils'
 /**
- * price object
- * @typedef price
- * @type {object}
- * @property {string} currency - ISO 4217
- * @property {number} amount
+ * Price class model
  */
-/** @type {price} */
-export const price = deepFreeze({
-  currency: '',
-  amount: 0,
-})
+export class Price {
+  currency = ''
+  amount = 0
+
+  /**
+   * @property {string=} currency - ISO 4217
+   * @property {number=} amount
+   */
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
+  }
+}

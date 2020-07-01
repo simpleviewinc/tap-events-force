@@ -1,5 +1,5 @@
 import { Values } from 'SVConstants'
-import { agendaSettings } from 'SVModels/tapIndex'
+import { AgendaSettings } from 'SVModels/tapIndex'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -8,8 +8,6 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
  */
 export const settingsState = {
   [CATEGORIES.SETTINGS]: {
-    [SUB_CATEGORIES.AGENDA_SETTINGS]: {
-      ...agendaSettings,
-    },
+    [SUB_CATEGORIES.AGENDA_SETTINGS]: new AgendaSettings(),
   },
 }

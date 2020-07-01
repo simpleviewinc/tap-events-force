@@ -1,16 +1,20 @@
-import { deepFreeze } from 'jsutils'
+import { assignDefinedProps } from 'SVUtils'
 
 /**
- * sessionCapacity object
- * @typedef sessionCapacity
- * @type {object}
- * @property {boolean} isUnlimited
- * @property {number?} remainingPlaces - Only populated if isUnlimited = false
- * @property {boolean?} isWaitingListAvailable - Only populated if isUnlimited = false
+ * SessionCapacity class model
  */
-/** @type {sessionCapacity} */
-export const sessionCapacity = deepFreeze({
-  isUnlimited: false,
-  remainingPlaces: null,
-  isWaitingListAvailable: null,
-})
+export class SessionCapacity {
+  isUnlimited = false
+  remainingPlaces = null
+  isWaitingListAvailable = null
+
+  /**
+   * @param {object} params
+   * @property {boolean=} isUnlimited
+   * @property {number=} remainingPlaces - Only populated if isUnlimited = false
+   * @property {boolean=} isWaitingListAvailable - Only populated if isUnlimited = false
+   */
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
+  }
+}

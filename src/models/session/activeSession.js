@@ -1,16 +1,21 @@
-import { deepFreeze } from 'jsutils'
+import { assignDefinedProps } from 'SVUtils'
 
 /**
- * activeSession object
- * @typedef activeSession
- * @type {object}
- * @property {number|string} id - id of session
- * @property {boolean} open - is it opened? Used on mobile
- * @property {string} bookingState - booking state of the user
+ * ActiveSession class model
  */
-/** @type {activeSession} */
-export const activeSession = deepFreeze({
-  id: 0,
-  open: false,
-  bookingState: null,
-})
+export class ActiveSession {
+  id = 0
+  open = false
+  bookingState = null
+
+  /**
+   *
+   * @param {object} params
+   * @property {number|string=} id - id of session
+   * @property {boolean=} open - is it opened? Used on mobile
+   * @property {string=} bookingState - booking state of the user
+   */
+  constructor(params = {}) {
+    assignDefinedProps(this, params)
+  }
+}

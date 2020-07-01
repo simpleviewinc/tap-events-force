@@ -1,14 +1,15 @@
-import { deepFreeze } from 'jsutils'
+import { assignDefinedProps } from 'SVUtils'
 
-/**
- * location object
- * @typedef location
- * @type {object}
- * @property {string} identifier
- * @property {string} name
- */
-/** @type {location} */
-export const location = deepFreeze({
-  identifier: '',
-  name: '',
-})
+export class Location {
+  identifier = ''
+  name = ''
+
+  /**
+   * Location class model
+   * @property {string=} identifier
+   * @property {string=} name
+   */
+  constructor(params = {}) {
+    assignDefinedProps(params)
+  }
+}
