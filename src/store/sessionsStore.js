@@ -5,6 +5,7 @@ import {
   settingsState,
   labelsState,
   locationsState,
+  modalsState,
 } from 'SVReducers/initialStates'
 import { items as itemsReducer } from 'SVReducers/items'
 
@@ -23,6 +24,7 @@ export const SessionsProvider = ({ children }) => {
     ...settingsState,
     ...labelsState,
     ...locationsState,
+    ...modalsState,
   })
   return (
     <SessionsContext.Provider value={[ state, dispatch ]}>
@@ -35,7 +37,7 @@ export let dispatch
 /**
  * Uses the useContext hook from react to get the combined sessions store
  *
- * @returns {sessionsState & settingsState & usersState & labelsState & locationsState}
+ * @returns {sessionsState & settingsState & usersState & labelsState & locationsState & modalsState}
  */
 export const useSessionsStore = () => {
   const [ store, _dispatch ] = useContext(SessionsContext)

@@ -4,6 +4,7 @@ import {
   settingsState,
   labelsState,
   locationsState,
+  modalsState,
 } from 'SVReducers/initialStates'
 
 export const itemsState = {
@@ -12,4 +13,5 @@ export const itemsState = {
   ...settingsState,
   ...labelsState,
   ...locationsState,
+  ...modalsState,
 }
