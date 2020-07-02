@@ -1,5 +1,5 @@
 import { requestCamera } from 'SVUtils/media'
-import { Globals } from 'SVMocks'
+import { navigator } from '../../../mocks'
 
 describe('requestCamera', () => {
   afterAll(() => jest.clearAllMocks())
@@ -10,15 +10,14 @@ describe('requestCamera', () => {
     expect(spy).toHaveBeenCalled()
     expect(err).toBeTruthy()
 
-    const navigator = {}
-    const [err2] = await requestCamera(navigator)
+    const [err2] = await requestCamera({})
     expect(spy).toHaveBeenCalled()
     expect(err2).toBeTruthy()
   })
 
   it('should call getUserMedia', async () => {
-    const [err] = await requestCamera(Globals.navigator)
-    expect(Globals.navigator.mediaDevices.getUserMedia).toHaveBeenCalled()
+    const [err] = await requestCamera(navigator)
+    expect(navigator.mediaDevices.getUserMedia).toHaveBeenCalled()
     expect(err).toBeFalsy()
   })
 })

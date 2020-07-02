@@ -1,3 +1,2 @@
-import * as Services from './services'
-import * as Globals from './globals'
-export { Services, Globals }
+export * from './services'
+export * from './globals'
