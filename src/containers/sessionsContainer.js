@@ -1,11 +1,11 @@
 import React from 'react'
 import { SessionsProvider } from '../store/sessionsStore'
-import { SessionsComponent } from 'SVComponents'
+import { Sessions } from 'SVComponents'
 
 export const SessionsContainer = props => {
   return (
     <SessionsProvider>
-      <SessionsComponent />
+      <Sessions />
     </SessionsProvider>
   )
 }
