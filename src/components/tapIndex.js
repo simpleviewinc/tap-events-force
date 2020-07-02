@@ -1,3 +1,4 @@
+export * from './labels'
 export * from './modal'
 export * from './qr'
 export * from './hocs/tapIndex'
