@@ -33,15 +33,23 @@ export const SessionsProvider = ({ children }) => {
   )
 }
 
-export let dispatch
+let sessionDispatch
+let store
+export const getStore = () => store
+export const getDispatch = () => dispatch
+export const dispatch = action => {
+  console.log({ sessionDispatch })
+  sessionDispatch(action)
+}
+
 /**
  * Uses the useContext hook from react to get the combined sessions store
  *
  * @returns {sessionsState & settingsState & usersState & labelsState & locationsState & modalsState}
  */
 export const useSessionsStore = () => {
-  const [ store, _dispatch ] = useContext(SessionsContext)
-  if (!dispatch) dispatch = _dispatch
-
+  const [ _store, _dispatch ] = useContext(SessionsContext)
+  if (!sessionDispatch) sessionDispatch = _dispatch
+  store = _store
   return store
 }
