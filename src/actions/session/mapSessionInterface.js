@@ -1,6 +1,5 @@
 // import { dispatch } from 'SVStore'
-import { ActionTypes } from 'SVConstants'
-import { Values } from 'SVConstants'
+import { ActionTypes, Values } from 'SVConstants'
 import { dispatch } from '../../store/sessionsStore'
 import { mapObj } from 'jsutils'
 
