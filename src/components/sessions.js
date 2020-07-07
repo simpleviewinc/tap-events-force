@@ -7,26 +7,6 @@ import { sortLabels } from 'SVUtils'
 import testData from '../mocks/eventsforce/testData'
 
 /**
- * TODO: Move to utils
- * @param {Array} types
- */
-const renderModals = types => {
-  console.log(types)
-  return types.map(type => {
-    switch (type) {
-    case Values.MODAL_TYPES.ERROR:
-      return ModalError
-    case Values.MODAL_TYPES.PRESENTERS:
-      return null
-    case Values.MODAL_TYPES.FILTER:
-      return ModalFilter
-    default:
-      return null
-    }
-  })
-}
-
-/**
  * SessionComponent
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
@@ -47,33 +27,6 @@ export const Sessions = props => {
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>
-      <Button
-        themePath='button.contained.primary'
-        onClick={() => addModal(Values.MODAL_TYPES.ERROR)}
-        content={'toggle modal error'}
-      />
-      <Button
-        themePath='button.contained.primary'
-        onClick={() => addModal(Values.MODAL_TYPES.FILTER)}
-        content={'toggle modal filter'}
-      />
-      <Button
-        themePath='button.contained.danger'
-        onClick={() => {
-          removeModal()
-        }}
-        content={'remove modal no index'}
-      />
-
-      <Button
-        themePath='button.contained.danger'
-        onClick={() => {
-          removeModal(5)
-        }}
-        content={'remove modal with index 5'}
-      />
-
-      { renderModals(store.modals) }
     </View>
   )
 }
