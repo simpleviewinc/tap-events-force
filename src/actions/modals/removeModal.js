@@ -11,15 +11,17 @@ const { CATEGORIES } = Values
 export const removeModal = index => {
   const { modals } = getStore()
 
-  // if index is passed in, check if its valid, otherwise return warning
   // if no index passed in, take off the last item in the array
-  const removeIndex = index
-    ? index <= modals.length - 1
+  // if index is passed in, check if its valid, otherwise return warning
+  const removeIndex =
+    index === undefined
+      ? modals.length - 1
+      : index <= modals.length - 1
         ? index
-        : null
-    : modals.length - 1
+        : undefined
 
-  if (!removeIndex) return console.warn(`${index} is not a valid index`)
+  if (removeIndex === undefined)
+    return console.warn(`${index} is not a valid index`)
 
   modals.length &&
     dispatch({
