@@ -24,12 +24,20 @@ const getDynamicAlias = () => {
     ]
 
     // ex: SVUtils, SVActions
-    map[`${namespace}${key}`] = [
-      `${rootDir}/src/${value}/tapIndex.js`,
-      `${rootDir}/src/${value}/index.js`,
-      `${rootDir}/node_modules/keg-core/core/${value}/index.js`,
-      `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`
-    ]
+    if (value === 'constants') {
+      map[`${namespace}${key}`] = [
+        `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`,
+      ]
+    }
+    else {
+      map[`${namespace}${key}`] = [
+        `${rootDir}/src/${value}/tapIndex.js`,
+        `${rootDir}/src/${value}/index.js`,
+        `${rootDir}/node_modules/keg-core/core/${value}/index.js`,
+        `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`
+      ]
+    }
+    
   })
   
   return map
