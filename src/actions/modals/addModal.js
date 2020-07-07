@@ -2,16 +2,14 @@
 import { ActionTypes } from 'SVConstants'
 import { Values } from 'SVConstants'
 import { dispatch } from '../../store/sessionsStore'
-import { isFunc } from 'jsutils'
 
 const { CATEGORIES } = Values
 
 /**
  * Adds a modal to the modals array
  * @param {'error'|'presenter'| 'filter' | null} modalType - modal model
- * @param {Function} cb
  */
-export const addModal = (modalType, cb) => {
+export const addModal = modalType => {
   if (!modalType) return
 
   dispatch({
@@ -21,6 +19,4 @@ export const addModal = (modalType, cb) => {
       item: modalType,
     },
   })
-
-  isFunc(cb) && cb(modalType)
 }

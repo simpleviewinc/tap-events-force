@@ -235,14 +235,13 @@ const renderModals = types => {
 export const Sessions = props => {
   const store = useSessionsStore()
   console.log(store)
+  console.log(store.modals)
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
     mapSessionInterface(testData)
   }, [])
-  const cb = () => {
-    console.log('callback func')
-  }
+
   return (
     <View>
       <Text>Active session id: { store.activeSession.id }</Text>
@@ -250,29 +249,30 @@ export const Sessions = props => {
       <Text>Attendees count: { store.attendees.length }</Text>
       <Button
         themePath='button.contained.primary'
-        onClick={() => addModal(Values.MODAL_TYPES.ERROR, cb)}
+        onClick={() => addModal(Values.MODAL_TYPES.ERROR)}
         content={'toggle modal error'}
       />
       <Button
         themePath='button.contained.primary'
-        onClick={() => addModal(Values.MODAL_TYPES.FILTER, cb)}
+        onClick={() => addModal(Values.MODAL_TYPES.FILTER)}
         content={'toggle modal filter'}
       />
       <Button
-        themePath='button.contained.primary'
+        themePath='button.contained.danger'
         onClick={() => {
-          removeModal(store.modals)
+          removeModal()
         }}
         content={'remove modal no index'}
       />
 
       <Button
-        themePath='button.contained.primary'
+        themePath='button.contained.danger'
         onClick={() => {
-          removeModal(store.modals, 5)
+          removeModal(5)
         }}
-        content={'remove modal with index'}
+        content={'remove modal with index 5'}
       />
+
       { renderModals(store.modals) }
     </View>
   )
