@@ -10,6 +10,6 @@ export class Location {
    * @property {string=} name
    */
   constructor(params = {}) {
-    assignDefinedProps(params)
+    assignDefinedProps(this, params)
   }
 }

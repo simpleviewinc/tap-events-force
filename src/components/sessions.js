@@ -27,6 +27,19 @@ export const Sessions = props => {
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>
+      <Button
+        themePath='button.contained.primary'
+        onClick={() =>
+          addModal(new Modal({ type: 'presenter', data: store.presenters[0] }))
+        }
+        content={'Open Modal'}
+      />
+      <Button
+        themePath='button.contained.primary'
+        onClick={() => removeModal()}
+        content={'Remove modal'}
+      />
+      { store.modals.length > 0 && renderModal(store.modals) }
     </View>
   )
 }

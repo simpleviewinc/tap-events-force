@@ -7,16 +7,16 @@ const { CATEGORIES } = Values
 
 /**
  * Adds a modal to the modals array
- * @param {'error'|'presenter'| 'filter' | null} modalType - modal model
+ * @param {import('SVModels/modal').Modal} modal
  */
-export const addModal = modalType => {
-  if (!modalType) return
+export const addModal = modal => {
+  if (!modal) return
 
   dispatch({
     type: ActionTypes.UPSERT_ITEM,
     payload: {
       category: CATEGORIES.MODALS,
-      item: modalType,
+      item: modal,
     },
   })
 }

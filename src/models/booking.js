@@ -12,6 +12,6 @@ export class Booking {
    * @property {Array.<import('./attendee').Attendee>} users - array of users
    */
   constructor(params = {}) {
-    assignDefinedProps(params)
+    assignDefinedProps(this, params)
   }
 }
