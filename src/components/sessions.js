@@ -32,7 +32,7 @@ export const Sessions = props => {
         onClick={() =>
           addModal(new Modal({ type: 'presenter', data: store.presenters[0] }))
         }
-        content={'Open Modal'}
+        content={'Open Presenter 1'}
       />
       <Button
         themePath='button.contained.primary'

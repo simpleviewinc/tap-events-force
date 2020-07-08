@@ -1,1 +1,1 @@
-export * from './presenterDetail'
+export * from './presenterDetails'

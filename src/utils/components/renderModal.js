@@ -1,6 +1,6 @@
 import { Values } from 'SVConstants'
 import React from 'react'
-import { PresenterDetailModal } from 'SVComponents'
+import { PresenterDetails } from 'SVComponents'
 /**
  * loops through the array of modals and display the component accordingly
  * @param {Array.<import('SVModels/modal').Modal>} modals - array of modal obj
@@ -11,7 +11,7 @@ export const renderModal = modals => {
   return modals.map((modal, index) => {
     switch (modal.type) {
     case Values.MODAL_TYPES.PRESENTER:
-      return <PresenterDetailModal
+      return <PresenterDetails
         key={index}
         presenter={modal.data}
       />
