@@ -74,6 +74,11 @@ const Header = ({ title, theme }) => {
   )
 }
 
+/**
+ * Content
+ * @param {object} props
+ * @param {import('SVModels/presenter').Presenter} props.presenter
+ */
 const Content = ({ presenter, theme }) => {
   return (
     <View style={{ padding: 15 }}>
@@ -87,7 +92,7 @@ const Content = ({ presenter, theme }) => {
             borderRadius: 150 / 2,
           }}
           source={{
-            uri: 'https://placegoat.com/320/320',
+            uri: presenter.photographUrl,
           }}
         />
         <View
