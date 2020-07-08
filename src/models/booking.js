@@ -8,8 +8,8 @@ export class Booking {
 
   /**
    * @param {object} params
-   * @property {('person'|'group'| null)} type
-   * @property {Array.<import('./attendee').Attendee>} users - array of users
+   * @param {('person'|'group'| null)} params.type
+   * @param {Array.<import('./attendee').Attendee>} params.users - array of users
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)

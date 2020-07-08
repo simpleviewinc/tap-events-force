@@ -6,8 +6,9 @@ export class AgendaSettings {
 
   /**
    * AgendaSettings class model
-   * @property {boolean=} showLocationInAgenda
-   * @property {boolean=} showPresentersInAgenda
+   * @param {object} params
+   * @param {boolean=} params.showLocationInAgenda
+   * @param {boolean=} params.showPresentersInAgenda
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)

@@ -6,8 +6,9 @@ export class Location {
 
   /**
    * Location class model
-   * @property {string=} identifier
-   * @property {string=} name
+   * @param {object} params
+   * @param {string=} params.identifier
+   * @param {string=} params.name
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)
