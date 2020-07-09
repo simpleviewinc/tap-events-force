@@ -12,8 +12,8 @@ import { useTheme } from '@simpleviewinc/re-theme'
 export const LabelTag = ({ label = {}, style = {} }) => {
   const theme = useTheme()
   const mainStyle = theme.join(
-    theme.get('labelTag.main'),
     theme.get('eventsForce')[label.className],
+    theme.get('labelTag.main'),
     style
   )
   return <View style={mainStyle} />

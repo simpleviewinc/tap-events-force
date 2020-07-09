@@ -7,16 +7,11 @@ export const labelList = {
     },
     $small: {
       flexDirection: 'row',
+      alignContent: 'flex-start',
       flexWrap: 'wrap',
     },
   },
   item: {
-    $xsmall: {
-      flex: 1,
-    },
-    $small: {
-      flex: 'auto',
-      margin: 8,
-    },
+    $xsmall: {},
   },
 }

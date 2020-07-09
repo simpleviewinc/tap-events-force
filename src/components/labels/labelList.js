@@ -1,12 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'SVComponents'
-import { LabelButton, LabelTag } from './'
-import { useTheme, getSizeMap } from '@simpleviewinc/re-theme'
-
-const widthOf = size => getSizeMap().hash[size]
-const getLabelComponent = theme =>
-  theme.RTMeta.width <= widthOf('$small') ? LabelTag : LabelButton
+import { LabelButton } from './'
+import { useTheme } from '@simpleviewinc/re-theme'
 
 /**
  * A list of labels
@@ -17,10 +13,15 @@ const getLabelComponent = theme =>
  * @param {Array<import('SVModels/label').Label>} props.labels - the label model instance
  */
 export const LabelList = props => {
-  const { style = {}, itemStyle = {}, labels = [], onItemPress } = props
+  const {
+    style = {},
+    itemStyle = {},
+    labels = [],
+    LabelComponent = LabelButton,
+    onItemPress,
+  } = props
 
   const theme = useTheme()
-  const LabelComponent = getLabelComponent(theme)
   const listStyles = theme.join(theme.get('labelList.main', style))
   const labelStyle = theme.join(theme.get('labelList.item'), itemStyle)
 

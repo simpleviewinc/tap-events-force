@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { useSessionsStore } from '../store/sessionsStore'
 import { mapSessionInterface } from 'SVActions'
-import { LabelList } from 'SVComponents'
+import { GridItem } from 'SVComponents'
 import testData from '../mocks/eventsforce/testData'
 
 /**
@@ -20,14 +20,7 @@ export const Sessions = props => {
 
   return (
     <View>
-      <div style={{ height: 200, display: 'flex', flexDirection: 'row' }}>
-        <LabelList
-          labels={store.labels}
-          onItemPress={console.log}
-          style={{}}
-        />
-        <p>Title</p>
-      </div>
+      <GridItem labels={store.labels} />
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>
