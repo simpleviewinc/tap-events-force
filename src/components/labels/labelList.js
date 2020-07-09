@@ -5,22 +5,22 @@ import { LabelButton, LabelTag } from './'
 import { useTheme, getSizeMap } from '@simpleviewinc/re-theme'
 
 const widthOf = size => getSizeMap().hash[size]
+const getLabelComponent = theme =>
+  theme.RTMeta.width <= widthOf('$small') ? LabelTag : LabelButton
 
 /**
+ * A list of labels
  * @param {Object} props
- * @param {import('SVModels/label').Label} props.label - the label model instance
+ * @param {Object} props.style - style for the root list
+ * @param {Object} props.itemStyle - style for individual labels
+ * @param {Function} props.onItemPress - callback fired when a label is pressed. Has form: (label) => { ... }
+ * @param {Array<import('SVModels/label').Label>} props.labels - the label model instance
  */
-export const LabelList = ({
-  style = {},
-  itemStyle = {},
-  labels = [],
-  onItemPress,
-}) => {
+export const LabelList = props => {
+  const { style = {}, itemStyle = {}, labels = [], onItemPress } = props
+
   const theme = useTheme()
-
-  const LabelComponent =
-    theme.RTMeta.width <= widthOf('$small') ? LabelTag : LabelButton
-
+  const LabelComponent = getLabelComponent(theme)
   const listStyles = theme.join(theme.get('labelList.main', style))
   const labelStyle = theme.join(theme.get('labelList.item'), itemStyle)
 
@@ -39,5 +39,8 @@ export const LabelList = ({
 }
 
 LabelList.propTypes = {
-  labels: PropTypes.array,
+  style: PropTypes.object,
+  itemStyle: PropTypes.object,
+  labels: PropTypes.arrayOf(PropTypes.object),
+  onItemPress: PropTypes.function,
 }

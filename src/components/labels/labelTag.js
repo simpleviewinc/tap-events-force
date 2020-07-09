@@ -4,8 +4,10 @@ import { View } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 
 /**
- * LabelTag
+ * LabelTag - a colored, square label without text
  * @param {Object} props
+ * @param {import('SVModels/label').Label} props.label - the label model instance
+ * @param {Object} props.style - styles for the label. Overwrites styles defined in labelTag.main
  */
 export const LabelTag = ({ label = {}, style = {} }) => {
   const theme = useTheme()
@@ -19,4 +21,5 @@ export const LabelTag = ({ label = {}, style = {} }) => {
 
 LabelTag.propTypes = {
   label: PropTypes.object,
+  style: PropTypes.object,
 }

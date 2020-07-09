@@ -28,5 +28,7 @@ export const LabelButton = ({ style = {}, label = {}, onPress }) => {
 }
 
 LabelButton.propTypes = {
+  style: PropTypes.object,
   label: PropTypes.object,
+  onPress: PropTypes.function,
 }
