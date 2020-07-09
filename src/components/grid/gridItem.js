@@ -1,10 +1,9 @@
 import React from 'react'
 import { LabelList } from 'SVComponents'
 import { LabelButton, LabelTag } from 'SVComponents'
-import { useTheme, getSizeMap } from '@simpleviewinc/re-theme'
+import { useTheme } from '@simpleviewinc/re-theme'
+import { isMobileSize } from 'SVUtils'
 
-const widthOf = size => getSizeMap().hash[size]
-const isMobileSize = theme => theme.RTMeta.width <= widthOf('$small')
 const getLabelComponent = theme =>
   isMobileSize(theme) ? LabelTag : LabelButton
 
