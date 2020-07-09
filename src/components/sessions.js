@@ -11,7 +11,7 @@ import testData from '../mocks/eventsforce/testData'
  */
 export const Sessions = props => {
   const store = useSessionsStore()
-  console.log(store)
+
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
@@ -20,10 +20,14 @@ export const Sessions = props => {
 
   return (
     <View>
-      <LabelList
-        labels={store.labels}
-        onItemPress={console.log}
-      />
+      <div style={{ height: 200, display: 'flex', flexDirection: 'row' }}>
+        <LabelList
+          labels={store.labels}
+          onItemPress={console.log}
+          style={{}}
+        />
+        <p>Title</p>
+      </div>
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>

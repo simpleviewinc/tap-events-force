@@ -1,11 +1,22 @@
 export const labelList = {
   main: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    width: '100vw',
+    $xsmall: {
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+    },
+    $small: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+    },
   },
   item: {
-    margin: 8,
+    $xsmall: {
+      flex: 1,
+    },
+    $small: {
+      flex: 'auto',
+      margin: 8,
+    },
   },
 }

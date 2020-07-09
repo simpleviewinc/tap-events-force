@@ -35,42 +35,42 @@ export default {
     {
       identifier: '1',
       name: 'Important',
-      className: 'ef-agenda-label-206',
+      className: 'ef-agenda-label-201',
     },
     {
       identifier: '2',
       name: 'Big Data',
-      className: 'ef-agenda-label-207',
+      className: 'ef-agenda-label-202',
     },
     {
       identifier: '3',
       name: 'Popular',
-      className: 'ef-agenda-label-206',
+      className: 'ef-agenda-label-203',
     },
     {
       identifier: '4',
       name: 'Analytics',
-      className: 'ef-agenda-label-207',
+      className: 'ef-agenda-label-204',
     },
     {
       identifier: '5',
       name: 'Machine Learning',
-      className: 'ef-agenda-label-206',
+      className: 'ef-agenda-label-205',
     },
     {
       identifier: '6',
       name: 'Breaks',
-      className: 'ef-agenda-label-207',
+      className: 'ef-agenda-label-206',
     },
     {
       identifier: '7',
       name: 'Recommended',
-      className: 'ef-agenda-label-206',
+      className: 'ef-agenda-label-207',
     },
     {
       identifier: '8',
       name: 'Selected',
-      className: 'ef-agenda-label-207',
+      className: 'ef-agenda-label-208',
     },
   ],
   locations: [

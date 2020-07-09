@@ -2,35 +2,40 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { View } from 'SVComponents'
 import { LabelButton, LabelTag } from './'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme, getSizeMap } from '@simpleviewinc/re-theme'
+
+const widthOf = size => getSizeMap().hash[size]
 
 /**
  * @param {Object} props
  * @param {import('SVModels/label').Label} props.label - the label model instance
  */
-export const LabelList = ({ style = {}, labels = [], onItemPress }) => {
+export const LabelList = ({
+  style = {},
+  itemStyle = {},
+  labels = [],
+  onItemPress,
+}) => {
   const theme = useTheme()
-  const LabelComponent = theme.RTMeta.width <= 480 ? LabelTag : LabelButton
+
+  const LabelComponent =
+    theme.RTMeta.width <= widthOf('$small') ? LabelTag : LabelButton
+
+  const listStyles = theme.join(theme.get('labelList.main', style))
+  const labelStyle = theme.join(theme.get('labelList.item'), itemStyle)
+
   return (
-    <View style={theme.join(theme.get('labelList.main'), style)}>
+    <View style={listStyles}>
       { labels.map(label => (
         <LabelComponent
           key={label.name}
-          style={theme.join(theme.get('labelList.item'), {
-            backgroundColor: randomBG(),
-          })}
+          style={labelStyle}
           label={label}
           onPress={onItemPress}
         />
       )) }
     </View>
   )
-}
-
-// just for testing -- remove once we figure out css colors
-const randomBG = () => {
-  const colors = [ 'blue', 'red', 'orange', 'coral', 'green', 'purple', 'tan' ]
-  return colors[Math.floor(Math.random() * colors.length)]
 }
 
 LabelList.propTypes = {

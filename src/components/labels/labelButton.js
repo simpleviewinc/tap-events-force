@@ -12,7 +12,11 @@ import { useTheme } from '@simpleviewinc/re-theme'
  */
 export const LabelButton = ({ style = {}, label = {}, onPress }) => {
   const theme = useTheme()
-  const mainStyle = theme.join(theme.get('labelButton'), { main: style })
+  const mainStyle = theme.join(
+    theme.get('labelButton'),
+    { main: theme.get('eventsForce')[label.className] },
+    { main: style }
+  )
   const clickHandler = () => onPress && onPress(label)
   return (
     <Button
