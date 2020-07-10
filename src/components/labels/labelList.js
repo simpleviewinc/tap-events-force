@@ -10,6 +10,7 @@ import { useTheme } from '@simpleviewinc/re-theme'
  * @param {Object} props.style - style for the root list
  * @param {Object} props.itemStyle - style for individual labels
  * @param {Function} props.onItemPress - callback fired when a label is pressed. Has form: (label) => { ... }
+ * @param {Component} props.LabelComponent - optional custom component that will be used for rendering the individual labels.
  * @param {Array<import('SVModels/label').Label>} props.labels - the label model instance
  */
 export const LabelList = props => {
@@ -43,5 +44,6 @@ LabelList.propTypes = {
   style: PropTypes.object,
   itemStyle: PropTypes.object,
   labels: PropTypes.arrayOf(PropTypes.object),
+  LabelComponent: PropTypes.elementType,
   onItemPress: PropTypes.function,
 }
