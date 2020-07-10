@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { View, Text } from 'react-native'
 import { useSessionsStore } from '../store/sessionsStore'
 import { mapSessionInterface } from 'SVActions'
 import { GridItem } from 'SVComponents'
+import { sortLabels } from 'SVUtils'
 import testData from '../mocks/eventsforce/testData'
 
 /**
@@ -18,9 +19,11 @@ export const Sessions = props => {
     mapSessionInterface(testData)
   }, [])
 
+  const labels = useMemo(() => sortLabels(store.labels), [store.labels])
+
   return (
     <View>
-      <GridItem labels={store.labels} />
+      <GridItem labels={labels} />
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>
