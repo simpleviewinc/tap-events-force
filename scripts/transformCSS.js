@@ -11,7 +11,7 @@ const buildThemeFile = (cssString, name) => {
   const styles = JSON.stringify(
     transform(cssString)
   )
-  return `export const ${name} = ${styles}`
+  return `/** ======== THIS IS A GENERATED FILE! ======== */\nexport const ${name} = ${styles}`
 }
 
 

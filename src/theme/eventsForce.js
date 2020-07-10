@@ -1,3 +1,4 @@
+/** ======== THIS IS A GENERATED FILE! ======== */
 export const eventsForce = {
   'ef-agenda-label-201': { backgroundColor: 'blue' },
   'ef-agenda-label-202': { backgroundColor: 'purple' },
