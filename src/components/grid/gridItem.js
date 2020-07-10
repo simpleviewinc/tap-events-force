@@ -2,7 +2,7 @@ import React from 'react'
 import { LabelList } from 'SVComponents'
 import { LabelButton, LabelTag } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { isMobileSize } from 'SVUtils'
+import { isMobileSize } from 'SVUtils/theme'
 
 const getLabelComponent = theme =>
   isMobileSize(theme) ? LabelTag : LabelButton
