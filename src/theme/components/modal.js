@@ -2,11 +2,11 @@ export const modal = {
   presenter: {
     container: {
       // TODO: palceholder minHeight until we get the real val
-      $small: {
+      $xsmall: {
         minHeight: 100,
         maxHeight: 500,
       },
-      $medium: {
+      $small: {
         maxHeight: 772,
       },
     },
@@ -18,7 +18,7 @@ export const modal = {
         height: 72,
       },
       title: {
-        $small: {
+        $xsmall: {
           alignSelf: 'center',
           color: 'white',
           paddingLeft: 46,
@@ -26,7 +26,7 @@ export const modal = {
           fontWeight: '600',
           fontSize: 19,
         },
-        $medium: {
+        $small: {
           fontSize: 22,
         },
       },
@@ -50,35 +50,35 @@ export const modal = {
         },
         image: {
           // TODO: placeholder values until we get more detail on images
-          $small: {
+          $xsmall: {
             width: 80,
             height: 80,
             overflow: 'hidden',
             borderRadius: 80 / 2,
             marginVertical: 20,
           },
-          $medium: {
+          $small: {
             width: 150,
             height: 150,
             borderRadius: 150 / 2,
           },
         },
         title: {
-          $small: {
+          $xsmall: {
             fontSize: 22,
             fontWeight: '500',
             // TODO: update placeholder color
             color: '#A0A0A0',
           },
-          $medium: {
+          $small: {
             fontSize: 25,
           },
         },
         company: {
-          $small: {
+          $xsmall: {
             fontSize: 12,
           },
-          $medium: {
+          $small: {
             fontSize: 16,
           },
         },

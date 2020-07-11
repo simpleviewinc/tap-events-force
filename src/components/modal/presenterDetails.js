@@ -52,7 +52,7 @@ const Header = ({ title, theme }) => {
       </Text>
       <View style={headerStyles.closeButton}>
         <TouchableIcon
-          onPress={() => removeModal()}
+          onPress={removeModal}
           name={'close'}
           color={'white'}
           size={22}
