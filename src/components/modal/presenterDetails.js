@@ -62,6 +62,10 @@ const Header = ({ title, theme }) => {
   )
 }
 
+const contentStyles = {
+  main: { paddingHorizontal: 30, flex: 1 },
+  row1: { flexDirection: 'row' },
+}
 /**
  * Content
  * @param {object} props
@@ -70,9 +74,9 @@ const Header = ({ title, theme }) => {
  */
 const Content = ({ presenter, theme }) => {
   return (
-    <View style={{ paddingHorizontal: 30, flex: 1 }}>
+    <View style={contentStyles.main}>
       { /* row 1 - image and titles */ }
-      <View style={{ flexDirection: 'row' }}>
+      <View style={contentStyles.row1}>
         <Image
           style={theme.content.header.image}
           source={{

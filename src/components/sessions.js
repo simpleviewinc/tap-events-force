@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useMemo, useCallback } from 'react'
 import { View, Text } from 'react-native'
 import { useSessionsStore } from '../store/sessionsStore'
 import { GridItem, Button } from 'SVComponents'
@@ -8,6 +8,20 @@ import { mapSessionInterface, addModal } from 'SVActions'
 import { Modal } from 'SVModels'
 import { renderModals } from 'SVComponents/modal'
 import { longText } from '../mocks/text'
+import { Values } from 'SVConstants'
+/**
+ *
+ * @param {*} presenter
+ * @param {*} bio
+ */
+const createModal = (presenter, bio) => {
+  console.log({ presenter })
+  if (!presenter) return null
+
+  // overwrite the presenter bio, if custom bio is passed in
+  const data = !bio ? presenter : { ...presenter, biography: bio }
+  addModal(new Modal({ type: Values.MODAL_TYPES.PRESENTER, data }))
+}
 
 /**
  * SessionComponent
@@ -32,28 +46,17 @@ export const Sessions = props => {
       <Text>Attendees count: { store.attendees.length }</Text>
       <Button
         themePath='button.contained.primary'
-        onClick={() =>
-          addModal(new Modal({ type: 'presenter', data: store.presenters[0] }))
-        }
+        onClick={useCallback(createModal, [store.presenters[0]])}
         content={'Open Presenter 1 (image + short bio)'}
       />
       <Button
         themePath='button.contained.primary'
-        onClick={() =>
-          addModal(new Modal({ type: 'presenter', data: store.presenters[1] }))
-        }
+        onClick={useCallBack(createModal, [store.presenters[1]])}
         content={'open presenter 2 (no image, no bio)'}
       />
       <Button
         themePath='button.contained.primary'
-        onClick={() =>
-          addModal(
-            new Modal({
-              type: 'presenter',
-              data: { ...store.presenters[0], biography: longText },
-            })
-          )
-        }
+        onClick={useCallBack(createModal, [ store.presenters[0], longText ])}
         content={'open presenter 3 (long bio text)'}
       />
       { store.modals.length > 0 && renderModals(store.modals) }
