@@ -32,12 +32,26 @@ export const Sessions = props => {
         onClick={() =>
           addModal(new Modal({ type: 'presenter', data: store.presenters[0] }))
         }
-        content={'Open Presenter 1'}
+        content={'Open Presenter 1 (image + short bio)'}
       />
       <Button
         themePath='button.contained.primary'
-        onClick={() => removeModal()}
-        content={'Remove modal'}
+        onClick={() =>
+          addModal(new Modal({ type: 'presenter', data: store.presenters[1] }))
+        }
+        content={'open presenter 2 (no image, no bio)'}
+      />
+      <Button
+        themePath='button.contained.primary'
+        onClick={() =>
+          addModal(
+            new Modal({
+              type: 'presenter',
+              data: { ...store.presenters[0], biography: longText },
+            })
+          )
+        }
+        content={'open presenter 3 (long bio text)'}
       />
       { store.modals.length > 0 && renderModal(store.modals) }
     </View>

@@ -64,7 +64,7 @@ export const modal = {
 
       description: {
         style: {
-          marginBottom: 51,
+          marginBottom: 50,
           borderColor: '#F0F0F0',
           borderWidth: '1px',
         },
@@ -76,7 +76,7 @@ export const modal = {
             paddingTop: 18,
           },
           $medium: {
-            maxHeight: 500,
+            maxHeight: 450,
             paddingRight: 41,
             paddingLeft: 26,
             paddingTop: 23,

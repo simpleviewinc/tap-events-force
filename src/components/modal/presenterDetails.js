@@ -79,7 +79,7 @@ const Content = ({ presenter, theme }) => {
             height: 150,
             overflow: 'hidden',
             borderRadius: 150 / 2,
-            marginBottom: 20,
+            marginVertical: 20,
           }}
           source={{
             // TODO: replace the placeholder image with the real placeholder
