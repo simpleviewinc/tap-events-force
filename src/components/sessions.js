@@ -7,7 +7,7 @@ import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface, addModal } from 'SVActions'
 import { Modal } from 'SVModels'
 import { renderModals } from 'SVComponents/modal'
-import { longText } from '../mocks/text'
+//import { longText } from '../mocks/text'
 import { Values } from 'SVConstants'
 /**
  *
@@ -49,7 +49,7 @@ export const Sessions = props => {
         onClick={useCallback(createModal, [store.presenters[0]])}
         content={'Open Presenter 1 (image + short bio)'}
       />
-      <Button
+      { /* <Button
         themePath='button.contained.primary'
         onClick={useCallBack(createModal, [store.presenters[1]])}
         content={'open presenter 2 (no image, no bio)'}
@@ -58,7 +58,7 @@ export const Sessions = props => {
         themePath='button.contained.primary'
         onClick={useCallBack(createModal, [ store.presenters[0], longText ])}
         content={'open presenter 3 (long bio text)'}
-      />
+      /> */ }
       { store.modals.length > 0 && renderModals(store.modals) }
     </View>
   )
