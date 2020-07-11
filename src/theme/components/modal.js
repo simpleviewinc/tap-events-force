@@ -91,14 +91,14 @@ export const modal = {
           borderWidth: '1px',
         },
         contentContainerStyle: {
-          $small: {
+          $xsmall: {
             maxHeight: 220,
             paddingRight: 21,
             paddingLeft: 15,
             paddingTop: 18,
             paddingBottom: 18,
           },
-          $medium: {
+          $small: {
             maxHeight: 450,
             paddingRight: 41,
             paddingLeft: 26,
