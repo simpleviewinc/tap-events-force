@@ -7,7 +7,7 @@ import { PresenterDetails } from 'SVComponents'
  *
  * @returns {Component}
  */
-export const renderModal = modals => {
+export const renderModals = modals => {
   return modals.map((modal, index) => {
     switch (modal.type) {
     case Values.MODAL_TYPES.PRESENTER:

@@ -13,22 +13,22 @@ export const PresenterDetails = props => {
   const { presenter } = props
   if (!presenter) return null
   const theme = useTheme()
-  console.log({ theme })
+  const presenterStyles = theme.get('modal.presenter') || {}
   const title = `${presenter.title} ${presenter.firstname} ${presenter.lastname}`
 
   return (
     <Modal
-      styles={{ content: theme.modal.presenter.container }}
+      styles={{ content: presenterStyles.container }}
       visible={true}
-      onBackdropTouch={() => removeModal()}
+      onBackdropTouch={removeModal}
     >
       <Header
         title={title}
-        theme={theme.modal.presenter}
+        theme={presenterStyles}
       />
       <Content
         presenter={presenter}
-        theme={theme.modal.presenter}
+        theme={presenterStyles}
       />
     </Modal>
   )
@@ -36,20 +36,21 @@ export const PresenterDetails = props => {
 
 /**
  * Title bar for modal
- * @param {object} params
- * @param {string} title
+ * @param {object} props
+ * @param {string} props.title
  * @param {object} props.theme - presenter theme from global theme
  */
 const Header = ({ title, theme }) => {
+  const headerStyles = theme.header || {}
   return (
-    <View style={theme.header.container}>
+    <View style={headerStyles.container}>
       <Text
-        style={theme.header.title}
+        style={headerStyles.title}
         numberOfLines={1}
       >
         { title }
       </Text>
-      <View style={theme.header.closeButton}>
+      <View style={headerStyles.closeButton}>
         <TouchableIcon
           onPress={() => removeModal()}
           name={'close'}

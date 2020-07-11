@@ -6,6 +6,7 @@ import { sortLabels } from 'SVUtils'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface, addModal } from 'SVActions'
 import { Modal } from 'SVModels'
+import { renderModals } from 'SVComponents/modal'
 import { longText } from '../mocks/text'
 
 /**
@@ -55,7 +56,7 @@ export const Sessions = props => {
         }
         content={'open presenter 3 (long bio text)'}
       />
-      { store.modals.length > 0 && renderModal(store.modals) }
+      { store.modals.length > 0 && renderModals(store.modals) }
     </View>
   )
 }
