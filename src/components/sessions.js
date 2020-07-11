@@ -1,10 +1,12 @@
 import React, { useEffect, useMemo } from 'react'
 import { View, Text } from 'react-native'
 import { useSessionsStore } from '../store/sessionsStore'
-import { mapSessionInterface } from 'SVActions'
-import { GridItem } from 'SVComponents'
+import { GridItem, Button } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
 import testData from '../mocks/eventsforce/testData'
+import { mapSessionInterface, addModal } from 'SVActions'
+import { Modal } from 'SVModels'
+import { longText } from '../mocks/text'
 
 /**
  * SessionComponent
