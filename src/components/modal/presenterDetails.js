@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { View, Image, Text, ScrollView } from 'react-native'
-import { H5, Modal, TouchableIcon } from 'SVComponents'
+import { Modal, TouchableIcon } from 'SVComponents'
 import { removeModal } from 'SVActions'
 
 /**
@@ -43,12 +43,12 @@ export const PresenterDetails = props => {
 const Header = ({ title, theme }) => {
   return (
     <View style={theme.header.container}>
-      <H5
+      <Text
         style={theme.header.title}
         numberOfLines={1}
       >
         { title }
-      </H5>
+      </Text>
       <View style={theme.header.closeButton}>
         <TouchableIcon
           onPress={() => removeModal()}
@@ -73,14 +73,7 @@ const Content = ({ presenter, theme }) => {
       { /* row 1 - image and titles */ }
       <View style={{ flexDirection: 'row' }}>
         <Image
-          style={{
-            // TODO: placeholder values until we get more detail
-            width: 150,
-            height: 150,
-            overflow: 'hidden',
-            borderRadius: 150 / 2,
-            marginVertical: 20,
-          }}
+          style={theme.content.header.image}
           source={{
             // TODO: replace the placeholder image with the real placeholder
             uri: presenter.photographUrl

@@ -18,10 +18,17 @@ export const modal = {
         height: 72,
       },
       title: {
-        alignSelf: 'center',
-        color: 'white',
-        paddingLeft: 46,
-        paddingRight: 30,
+        $small: {
+          alignSelf: 'center',
+          color: 'white',
+          paddingLeft: 46,
+          paddingRight: 30,
+          fontWeight: '600',
+          fontSize: 19,
+        },
+        $medium: {
+          fontSize: 22,
+        },
       },
       closeButton: {
         flexDirection: 'column',
@@ -40,6 +47,21 @@ export const modal = {
           justifyContent: 'center',
           paddingLeft: 20,
           flexShrink: 1,
+        },
+        image: {
+          // TODO: placeholder values until we get more detail on images
+          $small: {
+            width: 80,
+            height: 80,
+            overflow: 'hidden',
+            borderRadius: 80 / 2,
+            marginVertical: 20,
+          },
+          $medium: {
+            width: 150,
+            height: 150,
+            borderRadius: 150 / 2,
+          },
         },
         title: {
           $small: {
