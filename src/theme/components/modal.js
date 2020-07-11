@@ -21,6 +21,7 @@ export const modal = {
         alignSelf: 'center',
         color: 'white',
         paddingLeft: 46,
+        paddingRight: 30,
       },
       closeButton: {
         flexDirection: 'column',

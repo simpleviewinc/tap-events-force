@@ -48,7 +48,12 @@ export const PresenterDetails = props => {
 const Header = ({ title, theme }) => {
   return (
     <View style={theme.header.container}>
-      <H5 style={theme.header.title}>{ title }</H5>
+      <H5
+        style={theme.header.title}
+        numberOfLines={1}
+      >
+        { title }
+      </H5>
       <View style={theme.header.closeButton}>
         <TouchableIcon
           onPress={() => removeModal()}
@@ -88,8 +93,18 @@ const Content = ({ presenter, theme }) => {
           }}
         />
         <View style={theme.content.header.container}>
-          <Text style={theme.content.header.title}>{ presenter.jobtitle }</Text>
-          <Text style={theme.content.header.company}>{ presenter.company }</Text>
+          <Text
+            style={theme.content.header.title}
+            numberOfLines={1}
+          >
+            { presenter.jobtitle }
+          </Text>
+          <Text
+            style={theme.content.header.company}
+            numberOfLines={1}
+          >
+            { presenter.company }
+          </Text>
         </View>
       </View>
 
@@ -98,7 +113,7 @@ const Content = ({ presenter, theme }) => {
         style={theme.content.description.style}
         contentContainerStyle={theme.content.description.contentContainerStyle}
       >
-        <Text style={{ flexWrap: 'wrap' }}> { longText }</Text>
+        <Text> { longText }</Text>
       </ScrollView>
     </View>
   )
