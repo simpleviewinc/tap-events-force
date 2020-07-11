@@ -15,12 +15,19 @@ export const Values = deepFreeze({
     SETTINGS: 'settings',
     LABELS: 'labels',
     LOCATIONS: 'locations',
+    MODALS: 'modals',
   },
 
   SUB_CATEGORIES: {
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',
     SELECTED_FILTERS: 'selectedFilters',
+  },
+
+  MODAL_TYPES: {
+    ERROR: 'error',
+    PRESENTER: 'presenter',
+    FILTER: 'filter',
   },
 
   BOOKING_TYPES: {

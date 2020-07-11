@@ -202,11 +202,12 @@ const testData = {
     },
   ],
 }
+
 /**
  * SessionComponent
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
-export const SessionsComponent = props => {
+export const Sessions = props => {
   const store = useSessionsStore()
   console.log(store)
   // map the evf props onto our states

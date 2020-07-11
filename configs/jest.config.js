@@ -13,17 +13,9 @@ const namespace = aliases.nameSpace
 const getDynamicAlias = () => {
   
   let map = {}
-  
+
   // map the alias to look in the tap first, then keg-core
   mapObj(aliases.dynamic, (key, value) => {
-    // ex: SVUtils, SVActions
-    map[`${namespace}${key}`] = [
-      `${rootDir}/src/${value}/tapIndex.js`,
-      `${rootDir}/src/${value}/index.js`,
-      `${rootDir}/node_modules/keg-core/core/${value}/index.js`,
-      `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`
-    ]
-
     // ex: SVUtils/someUtil, SVActions/someAction
     map[`^${namespace}${key}[\/](.*)$`] = [
       `${rootDir}/src/${value}/$1`,
@@ -31,6 +23,21 @@ const getDynamicAlias = () => {
       `${rootDir}/node_modules/keg-core/core/base/${value}/$1`,
     ]
 
+    // ex: SVUtils, SVActions
+    if (value === 'constants') {
+      map[`${namespace}${key}`] = [
+        `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`,
+      ]
+    }
+    else {
+      map[`${namespace}${key}`] = [
+        `${rootDir}/src/${value}/tapIndex.js`,
+        `${rootDir}/src/${value}/index.js`,
+        `${rootDir}/node_modules/keg-core/core/${value}/index.js`,
+        `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`
+      ]
+    }
+    
   })
   
   return map
