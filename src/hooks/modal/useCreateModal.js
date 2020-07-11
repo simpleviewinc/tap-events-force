@@ -8,8 +8,7 @@ import { addModal } from 'SVActions/modals'
  * @param {object} data
  */
 export const useCreateModal = (type, data) => {
-  if (!type) return null
   return useCallback(() => {
-    addModal(new Modal({ type, data }))
+    type && addModal(new Modal({ type, data }))
   }, [ type, data ])
 }

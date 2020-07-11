@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { View, Image, Text, ScrollView } from 'react-native'
+import { View, Image, Text, ScrollView, StyleSheet } from 'react-native'
 import { Modal, TouchableIcon } from 'SVComponents'
 import { removeModal } from 'SVActions'
 
@@ -62,10 +62,11 @@ const Header = ({ title, theme }) => {
   )
 }
 
-const contentStyles = {
+const contentStyles = StyleSheet.create({
   main: { paddingHorizontal: 30, flex: 1 },
   row1: { flexDirection: 'row' },
-}
+})
+
 /**
  * Content
  * @param {object} props
