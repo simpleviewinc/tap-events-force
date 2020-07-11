@@ -1,3 +1,5 @@
+export * from './labels'
+export * from './grid'
 export * from './modal'
 export * from './qr'
 export * from './hocs/tapIndex'

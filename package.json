@@ -18,6 +18,7 @@
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
     "build:web": "cd node_modules/keg-core; yarn build:web",
+    "build:theme": "bash scripts/buildEventsForceTheme.sh",
     "clean": "cd node_modules/keg-core; yarn clean",
     "clean:full": "yarn clean; yarn clean:nm; yarn install",
     "clean:nm": "rimraf ./yarn.lock; rimraf ./package.lock; rimraf node_modules",
@@ -33,6 +34,7 @@
     "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix"
   },
   "dependencies": {
+    "css-to-react-native-transform": "1.9.0",
     "firebase": "7.7.0",
     "keg-core": "https://github.com/simpleviewinc/keg-core.git#master",
     "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
