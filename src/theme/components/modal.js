@@ -1,6 +1,6 @@
 export const modal = {
   presenter: {
-    container: {
+    modal: {
       // TODO: palceholder minHeight until we get the real val
       $xsmall: {
         minHeight: 100,
@@ -11,24 +11,25 @@ export const modal = {
       },
     },
     header: {
-      container: {
+      main: {
         flexDirection: 'row',
         // TODO: placeholder until we know how the passed down css/styling will work
-        backgroundColor: '#02b4a3',
+        backgroundColor: '#22B3C4',
         height: 72,
       },
       title: {
         $xsmall: {
+          fontFamily: 'Inter',
           alignSelf: 'center',
           color: 'white',
           paddingLeft: 46,
           paddingRight: 30,
-          fontWeight: '600',
-          fontSize: 19,
-        },
-        $small: {
+          fontStyle: 'normal',
+          fontWeight: '500',
           fontSize: 22,
+          lineHeight: 27,
         },
+        $small: {},
       },
       closeButton: {
         flexDirection: 'column',
@@ -40,12 +41,20 @@ export const modal = {
       },
     },
     content: {
-      header: {
+      main: {
+        flex: 1,
+        paddingHorizontal: 40,
+        paddingVertical: 25,
+      },
+      row1: {
         container: {
+          flexDirection: 'row',
+        },
+        details: {
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'center',
-          paddingLeft: 20,
+          paddingLeft: 30,
           flexShrink: 1,
         },
         image: {
@@ -55,7 +64,7 @@ export const modal = {
             height: 80,
             overflow: 'hidden',
             borderRadius: 80 / 2,
-            marginVertical: 20,
+            paddingBottom: 20,
           },
           $small: {
             width: 150,
@@ -65,45 +74,55 @@ export const modal = {
         },
         title: {
           $xsmall: {
-            fontSize: 22,
-            fontWeight: '500',
-            // TODO: update placeholder color
+            fontFamily: 'Inter',
             color: '#A0A0A0',
+            marginBottom: '5px',
+            fontWeight: '500',
+            fontSize: 18,
+            // TODO: update placeholder color
           },
           $small: {
+            lineHeight: '30px',
             fontSize: 25,
           },
         },
         company: {
           $xsmall: {
+            fontFamily: 'Inter',
+            fontWeight: '400',
+            lineHeight: '15px',
             fontSize: 12,
           },
           $small: {
+            lineHeight: '19px',
             fontSize: 16,
           },
         },
       },
-
-      description: {
-        style: {
-          marginBottom: 50,
-          borderColor: '#F0F0F0',
-          borderWidth: '1px',
+      row2: {
+        container: {
+          marginVertical: 25,
         },
-        contentContainerStyle: {
+        content: {
           $xsmall: {
             maxHeight: 220,
-            paddingRight: 21,
-            paddingLeft: 15,
-            paddingTop: 18,
-            paddingBottom: 18,
           },
           $small: {
             maxHeight: 450,
-            paddingRight: 41,
-            paddingLeft: 26,
-            paddingTop: 23,
-            paddingBottom: 23,
+          },
+        },
+        biography: {
+          $xsmall: {
+            fontFamily: 'Inter',
+            fontStyle: 'normal',
+            fontWeight: 'normal',
+            color: '#909090',
+            fontSize: 12,
+            lineHeight: 18,
+          },
+          $small: {
+            fontSize: 16,
+            lineHeight: 22,
           },
         },
       },

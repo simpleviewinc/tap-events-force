@@ -5,7 +5,7 @@ import { GridItem, Button } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
-import { renderModals } from 'SVComponents/modal'
+import { RenderModals } from 'SVComponents/modal'
 import { Values } from 'SVConstants'
 import { useCreateModal } from 'SVHooks/modal'
 
@@ -53,7 +53,7 @@ export const Sessions = props => {
         )}
         content={'open presenter 3 (long bio text)'}
       />
-      { store.modals.length > 0 && renderModals(store.modals) }
+      { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
 }

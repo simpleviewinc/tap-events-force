@@ -1,6 +1,6 @@
 import React from 'react'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { View, Image, Text, ScrollView, StyleSheet } from 'react-native'
+import { View, Image, Text, ScrollView } from 'react-native'
 import { Modal, TouchableIcon } from 'SVComponents'
 import { removeModal } from 'SVActions'
 
@@ -18,17 +18,17 @@ export const PresenterDetails = props => {
 
   return (
     <Modal
-      styles={{ content: presenterStyles.container }}
+      styles={{ content: presenterStyles.modal }}
       visible={true}
       onBackdropTouch={removeModal}
     >
       <Header
         title={title}
-        theme={presenterStyles}
+        styles={presenterStyles.header}
       />
       <Content
         presenter={presenter}
-        theme={presenterStyles}
+        styles={presenterStyles.content}
       />
     </Modal>
   )
@@ -40,17 +40,16 @@ export const PresenterDetails = props => {
  * @param {string} props.title
  * @param {object} props.theme - presenter theme from global theme
  */
-const Header = ({ title, theme }) => {
-  const headerStyles = theme.header || {}
+const Header = ({ title, styles }) => {
   return (
-    <View style={headerStyles.container}>
+    <View style={styles.main}>
       <Text
-        style={headerStyles.title}
+        style={styles.title}
         numberOfLines={1}
       >
         { title }
       </Text>
-      <View style={headerStyles.closeButton}>
+      <View style={styles.closeButton}>
         <TouchableIcon
           onPress={removeModal}
           name={'close'}
@@ -62,24 +61,19 @@ const Header = ({ title, theme }) => {
   )
 }
 
-const contentStyles = StyleSheet.create({
-  main: { paddingHorizontal: 30, flex: 1 },
-  row1: { flexDirection: 'row' },
-})
-
 /**
  * Content
  * @param {object} props
  * @param {import('SVModels/presenter').Presenter} props.presenter
  * @param {object} props.theme - presenter theme from global theme
  */
-const Content = ({ presenter, theme }) => {
+const Content = ({ presenter, styles }) => {
   return (
-    <View style={contentStyles.main}>
+    <View style={styles.main}>
       { /* row 1 - image and titles */ }
-      <View style={contentStyles.row1}>
+      <View style={styles.row1.container}>
         <Image
-          style={theme.content.header.image}
+          style={styles.row1.image}
           source={{
             // TODO: replace the placeholder image with the real placeholder
             uri: presenter.photographUrl
@@ -87,15 +81,15 @@ const Content = ({ presenter, theme }) => {
               : 'https://placegoat.com/300/300',
           }}
         />
-        <View style={theme.content.header.container}>
+        <View style={styles.row1.details}>
           <Text
-            style={theme.content.header.title}
+            style={styles.row1.title}
             numberOfLines={1}
           >
             { presenter.jobtitle }
           </Text>
           <Text
-            style={theme.content.header.company}
+            style={styles.row1.company}
             numberOfLines={1}
           >
             { presenter.company }
@@ -106,12 +100,10 @@ const Content = ({ presenter, theme }) => {
       { /* row 2 - bio */ }
       { presenter.biography ? (
         <ScrollView
-          style={theme.content.description.style}
-          contentContainerStyle={
-            theme.content.description.contentContainerStyle
-          }
+          style={styles.row2.container}
+          contentContainerStyle={styles.row2.content}
         >
-          <Text> { presenter.biography }</Text>
+          <Text style={styles.row2.biography}> { presenter.biography }</Text>
         </ScrollView>
       ) : null }
     </View>
