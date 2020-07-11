@@ -64,7 +64,6 @@ export const modal = {
 
       description: {
         style: {
-          marginTop: 20,
           marginBottom: 51,
           borderColor: '#F0F0F0',
           borderWidth: '1px',
