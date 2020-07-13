@@ -23,7 +23,10 @@ export const Sessions = props => {
 
   return (
     <View>
-      <GridItem labels={labels} />
+      <GridItem
+        labels={labels}
+        session={store.sessions[0]}
+      />
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>

@@ -1,6 +1,7 @@
 import React from 'react'
 import { LabelList } from 'SVComponents'
-import { LabelButton, LabelTag } from 'SVComponents'
+import { LabelButton, LabelTag, SessionTime } from 'SVComponents'
+import { View } from 'react-native'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { isMobileSize } from 'SVUtils/theme'
 
@@ -24,16 +25,19 @@ const getLabelsForList = (theme, labels) =>
  * A grid item for the sessions
  * @param {Object} props
  * @param {Array} props.labels - labels for grid item
+ * @param {import('SVModels/session').Session} props.session - sesion item
  */
 export const GridItem = props => {
-  const { labels = [] } = props
+  const { labels = [], session } = props
+  if (!session) return null
+
   const theme = useTheme()
   const labelComponent = getLabelComponent(theme)
   const listLabels = getLabelsForList(theme, labels)
   const labelStyles = theme.get('gridItem.label')
   const listStyles = theme.get('gridItem.labelList')
   return (
-    <div
+    <View
       style={{
         height: 110,
         display: 'flex',
@@ -41,6 +45,10 @@ export const GridItem = props => {
         border: 'solid',
       }}
     >
+      <SessionTime
+        start={session.startDateTimeLocal}
+        end={session.endDateTimeLocal}
+      />
       <LabelList
         style={listStyles}
         itemStyle={labelStyles}
@@ -49,6 +57,6 @@ export const GridItem = props => {
         onItemPress={console.log}
       />
       <p style={{ marginLeft: 15 }}>Test Grid Item Title</p>
-    </div>
+    </View>
   )
 }
