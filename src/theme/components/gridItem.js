@@ -11,7 +11,7 @@ export const gridItem = {
   labelList: {
     $xsmall: {},
     $small: {
-      width: '50%',
+      width: '100%',
     },
   },
 }

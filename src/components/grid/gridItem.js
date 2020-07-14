@@ -39,9 +39,10 @@ export const GridItem = props => {
   return (
     <View
       style={{
-        height: 110,
-        display: 'flex',
-        flexDirection: 'row',
+        height: 294,
+        maxWidth: 330,
+        // flex:1,
+        flexDirection: 'column',
         border: 'solid',
       }}
     >
@@ -56,7 +57,6 @@ export const GridItem = props => {
         labels={listLabels}
         onItemPress={console.log}
       />
-      <p style={{ marginLeft: 15 }}>Test Grid Item Title</p>
     </View>
   )
 }

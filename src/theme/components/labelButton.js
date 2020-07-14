@@ -4,4 +4,7 @@ export const labelButton = {
     height: 'fit-content',
     borderRadius: 2,
   },
+  content: {
+    fontSize: 12,
+  },
 }

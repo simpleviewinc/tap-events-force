@@ -1,9 +1,10 @@
 export const labelList = {
   main: {
     $xsmall: {
-      display: 'flex',
-      flexDirection: 'column',
+      //flex:1,
+      flexDirection: 'row',
       height: '100%',
+      width: '100%',
     },
     $small: {
       flexDirection: 'row',
