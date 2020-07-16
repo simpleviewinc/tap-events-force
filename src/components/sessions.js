@@ -19,6 +19,8 @@ export const Sessions = props => {
     mapSessionInterface(testData)
   }, [])
 
+  console.log({ store })
+
   const labels = useMemo(() => sortLabels(store.labels), [store.labels])
 
   return (

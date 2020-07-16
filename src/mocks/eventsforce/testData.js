@@ -1,10 +1,12 @@
 export default {
+  agenda: {
+    startDateTimeLocal: '2020-08-03 8:00:00',
+    endDateTimeLocal: '2020-08-05 17:00:00',
+  },
   settings: {
     showLocationInAgenda: true,
     showPresentersInAgenda: true,
-    someFunc: () => {
-      console.log('settings function')
-    },
+    activeAgendaDay: 1,
   },
   presenters: [
     {

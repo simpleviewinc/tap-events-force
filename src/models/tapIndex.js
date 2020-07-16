@@ -1,3 +1,4 @@
+export * from 'SVModels/agenda'
 export * from 'SVModels/session'
 export * from 'SVModels/attendee'
 export * from 'SVModels/presenter'
