@@ -1,8 +1,18 @@
 export default {
-  agenda: {
-    startDateTimeLocal: '2020-08-03 8:00:00',
-    endDateTimeLocal: '2020-08-05 17:00:00',
-  },
+  agendaDays: [
+    {
+      dayNumber: 1,
+      date: '2020-07-17',
+    },
+    {
+      dayNumber: 2,
+      date: '2020-07-18',
+    },
+    {
+      dayNumber: 4,
+      date: '2020-07-20',
+    },
+  ],
   settings: {
     showLocationInAgenda: true,
     showPresentersInAgenda: true,
