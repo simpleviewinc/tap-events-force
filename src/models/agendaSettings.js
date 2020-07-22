@@ -3,7 +3,7 @@ import { assignDefinedProps } from 'SVUtils'
 export class AgendaSettings {
   showLocationInAgenda = false
   showPresentersInAgenda = false
-  activeAgendaDay = 1
+  activeDayNumber = 1
 
   /**
    * AgendaSettings class model

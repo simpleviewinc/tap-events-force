@@ -10,16 +10,19 @@ const { CATEGORIES } = Values
  */
 const isPositiveNumber = num => isNum(num) && num > 0
 
-export const setDay = dayNumber => {
-  const [valid] = validate({ dayNumber }, { dayNumber: isPositiveNumber })
+export const setDay = activeDayNumber => {
+  const [valid] = validate(
+    { activeDayNumber },
+    { activeDayNumber: isPositiveNumber }
+  )
   if (!valid) return
 
   dispatch({
-    type: ActionTypes.SET_ITEM,
+    type: ActionTypes.UPSERT_ITEM,
     payload: {
-      category: CATEGORIES.ACTIVE_SESSION,
-      key: 'dayNumber',
-      item: dayNumber,
+      category: CATEGORIES.SETTINGS,
+      key: 'agendaSettings',
+      item: { activeDayNumber },
     },
   })
 }

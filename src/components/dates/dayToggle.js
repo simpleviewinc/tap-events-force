@@ -1,62 +1,40 @@
-import React, { useMemo } from 'react'
-import { View, Icon, Text } from 'SVComponents'
-import { useSessionsStore } from '../../store/sessionsStore'
+import React from 'react'
+import { View, TouchableIcon, Text } from 'SVComponents'
+import { useAgenda } from 'SVHooks'
+import { incrementDay, decrementDay } from 'SVActions'
 import { useTheme } from '@simpleviewinc/re-theme'
-// import { incrementDay, decrementDay } from 'SVActions'
 
 import moment from 'moment'
 
 /**
- * Returns the active session and its session model counterpart
- * @param {Object} store - current store
- * @returns {Object} of form { activeSession, session }
- */
-const useActiveSession = () => {
-  const store = useSessionsStore()
-  return useMemo(() => {
-    const activeSession = store.activeSession
-    const sessions = store.sessions
-    const id = activeSession.id.toString()
-    const session = sessions.find(session => session.identifier === id)
-    return { activeSession, session, sessions }
-  }, [ store.activeSession, store.sessions ])
-}
-
-/**
- * SessionComponent
+ * Simple day toggling component
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
 export const DayToggle = props => {
-  const theme = useTheme()
+  const { currentAgendaDay, currentDayNumber } = useAgenda()
 
-  const { session } = useActiveSession()
+  const theme = useTheme()
 
   return (
     <View style={theme.get('dayToggle.main')}>
-      <Icon name={'chevron-left'} />
+      <TouchableIcon
+        name={'chevron-left'}
+        onPress={decrementDay}
+      />
       <Text>
-        { ' ' }
-        Day { getDayNumber(session) } – { getCurrentDayString(session) }{ ' ' }
+        Day { currentDayNumber } – { getDayString(currentAgendaDay) }
       </Text>
-      <Icon name={'chevron-right'} />
+      <TouchableIcon
+        name={'chevron-right'}
+        onPress={incrementDay}
+      />
     </View>
   )
 }
 
 /**
- * Returns the current day number of the session
- * @param {Session} session
- * @returns {string} day number or '?' if session is undefined
+ * Formats the agenda day's date into a string of the form D MMMM YYYY
+ * @param {*} agendaDay
  */
-const getDayNumber = session => {
-  return session ? session.dayNumber.toString() : '?'
-}
-
-/**
- * Returns the current day string
- * @param {Session} session
- * @returns {string} in format like "1 August 2020"
- */
-const getCurrentDayString = session => {
-  return session ? moment(session.startDateTimeLocal).format('d MMMM YYYY') : ''
-}
+const getDayString = agendaDay =>
+  agendaDay ? moment(agendaDay.date).format('D MMMM YYYY') : 'No Sessions'

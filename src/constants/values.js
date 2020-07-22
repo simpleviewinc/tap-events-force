@@ -5,17 +5,18 @@ import { deepFreeze } from 'jsutils'
  */
 export const Values = deepFreeze({
   CATEGORIES: {
-    EVENTS: 'events',
-    SESSIONS: 'sessions',
-    FILTERS: 'filters',
     ACTIVE_SESSION: 'activeSession',
-    BOOKING: 'booking',
+    AGENDA_DAYS: 'agendaDays',
     ATTENDEES: 'attendees',
-    PRESENTERS: 'presenters',
-    SETTINGS: 'settings',
+    BOOKING: 'booking',
+    EVENTS: 'events',
+    FILTERS: 'filters',
     LABELS: 'labels',
     LOCATIONS: 'locations',
     MODALS: 'modals',
+    PRESENTERS: 'presenters',
+    SESSIONS: 'sessions',
+    SETTINGS: 'settings',
   },
 
   SUB_CATEGORIES: {

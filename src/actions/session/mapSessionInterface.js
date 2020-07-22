@@ -1,7 +1,7 @@
 // import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { dispatch } from '../../store/sessionsStore'
-import { mapObj } from 'jsutils'
+import { mapObj, snakeCase } from 'jsutils'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -21,13 +21,12 @@ export const mapSessionInterface = props => {
   props &&
     mapObj(props, (key, value) => {
       // ensure key exists in the local storage first
-      if (key === CATEGORIES[key.toUpperCase()]) {
+      if (key === CATEGORIES[snakeCase(key).toUpperCase()]) {
         let type = ActionTypes.UPSERT_ITEMS
         let payload = {
           category: key,
           items: value,
         }
-
         // certain props need to be mapped to a specific key
         if (subCatMap[key]) {
           type = ActionTypes.UPSERT_ITEM
@@ -37,6 +36,7 @@ export const mapSessionInterface = props => {
             key: subCatMap[key],
           }
         }
+
         dispatch({
           type,
           payload,
