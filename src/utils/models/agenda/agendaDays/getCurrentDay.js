@@ -5,5 +5,5 @@
  */
 export const getCurrentDay = (agendaDays = [], activeDayNumber) =>
   agendaDays.length
-    ? agendaDays.find(day => day.dayNumber === activeDayNumber)
+    ? agendaDays.find(day => day.dayNumber === activeDayNumber) || null
     : null

@@ -9,6 +9,7 @@ import { useSessionsStore } from '../../store/sessionsStore'
  * computed values like the current and latest agenda days { agendaSettings, agendaDays, currentDay, latestDay }
  */
 export const useAgenda = () => {
+  console.log({ getCurrentDay, getLatestDay, isLatestDay })
   const {
     settings: { agendaSettings = {} },
     agendaDays = [],
