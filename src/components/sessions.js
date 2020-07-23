@@ -1,9 +1,10 @@
-import React, { useEffect, useMemo } from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { useSessionsStore } from '../store/sessionsStore'
-import { mapSessionInterface } from 'SVActions'
-import { GridItem, DayToggle } from 'SVComponents'
+import { mapSessionInterface, incrementDay, decrementDay } from 'SVActions'
+import { View, Text, GridItem, DayToggle } from 'SVComponents'
 import { sortLabels, noOp } from 'SVUtils'
+import { useAgenda } from 'SVHooks'
+import { get } from 'jsutils'
 
 /**
  * SessionComponent
@@ -24,9 +25,27 @@ export const Sessions = props => {
 
   const labels = useMemo(() => sortLabels(store.labels), [store.labels])
 
+  const {
+    currentAgendaDay = {},
+    currentDayNumber,
+    isLatestDay,
+    isFirstDay,
+  } = useAgenda()
+
+  const increment = useCallback(() => incrementDay(onDayChange), [onDayChange])
+  const decrement = useCallback(() => decrementDay(onDayChange), [onDayChange])
+
   return (
     <View>
-      <DayToggle onDayChange={onDayChange} />
+      <DayToggle
+        date={get(currentAgendaDay, 'date')}
+        dayNumber={currentDayNumber}
+        disableDecrement={isFirstDay}
+        disableIncrement={isLatestDay}
+        onIncrement={increment}
+        onDecrement={decrement}
+      />
+
       <GridItem labels={labels} />
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>

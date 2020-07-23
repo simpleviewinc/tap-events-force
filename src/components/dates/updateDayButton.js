@@ -1,7 +1,6 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { TouchableIcon } from 'SVComponents'
 import { useThemeMemo } from 'SVHooks'
-import { incrementDay, decrementDay } from 'SVActions'
 import { useTheme } from '@simpleviewinc/re-theme'
 import PropTypes from 'prop-types'
 
@@ -30,16 +29,11 @@ export const UpdateDayButton = ({
 
   const iconName = `chevron-${type === 'decrement' ? 'left' : 'right'}`
 
-  const changeDay = useCallback(() => {
-    const action = type === 'decrement' ? decrementDay : incrementDay
-    action(onDayChange)
-  }, [ type, onDayChange ])
-
   return (
     <TouchableIcon
       styles={iconStyles}
       name={iconName}
-      onPress={changeDay}
+      onPress={onDayChange}
     />
   )
 }
