@@ -1,5 +1,5 @@
 import { get } from 'jsutils'
-import { getCurrentDay, getLatestDay } from 'SVUtils'
+import { getCurrentDay, getLatestDay, isLatestDay } from 'SVUtils'
 import { useSessionsStore } from '../../store/sessionsStore'
 
 /**
@@ -9,7 +9,6 @@ import { useSessionsStore } from '../../store/sessionsStore'
  * computed values like the current and latest agenda days { agendaSettings, agendaDays, currentDay, latestDay }
  */
 export const useAgenda = () => {
-  console.log({ useSessionsStore, get, getCurrentDay, getLatestDay })
   const {
     settings: { agendaSettings = {} },
     agendaDays = [],
@@ -18,6 +17,8 @@ export const useAgenda = () => {
   const currentDayNumber = get(agendaSettings, 'activeDayNumber')
   const currentAgendaDay = getCurrentDay(agendaDays, currentDayNumber)
   const latestAgendaDay = getLatestDay(agendaDays)
+  const currentDayIsLatest = isLatestDay(currentDayNumber, agendaDays)
+  const isFirstDay = currentDayNumber === 1
 
   return {
     agendaSettings,
@@ -25,5 +26,7 @@ export const useAgenda = () => {
     currentAgendaDay,
     latestAgendaDay,
     currentDayNumber,
+    isLatestDay: currentDayIsLatest,
+    isFirstDay,
   }
 }

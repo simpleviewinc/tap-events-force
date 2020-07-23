@@ -4,6 +4,7 @@ import { assignDefinedProps } from 'SVUtils'
  * SessionAgendaProps class model
  */
 export class SessionAgendaProps {
+  agendaDays = []
   settings = new AgendaSettings()
   presenters = []
   labels = []

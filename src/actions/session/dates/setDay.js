@@ -10,11 +10,12 @@ const { CATEGORIES } = Values
  */
 const isPositiveNumber = num => isNum(num) && num > 0
 
-export const setDay = activeDayNumber => {
-  const [valid] = validate(
-    { activeDayNumber },
-    { activeDayNumber: isPositiveNumber }
-  )
+/**
+ * Sets the current, actively-selected day in the agenda
+ * @param {Number} newDayNumber - number to change the day to
+ */
+export const setDay = newDayNumber => {
+  const [valid] = validate({ newDayNumber }, { newDayNumber: isPositiveNumber })
   if (!valid) return
 
   dispatch({
@@ -22,7 +23,7 @@ export const setDay = activeDayNumber => {
     payload: {
       category: CATEGORIES.SETTINGS,
       key: 'agendaSettings',
-      item: { activeDayNumber },
+      item: { activeDayNumber: newDayNumber },
     },
   })
 }

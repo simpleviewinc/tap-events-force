@@ -8,5 +8,6 @@ import { getLatestDay } from './getLatestDay'
  */
 export const isLatestDay = (currentDayNumber = 0, agendaDays = []) => {
   const latestAgendaDay = getLatestDay(agendaDays)
+  if (!latestAgendaDay) return false
   return latestAgendaDay.dayNumber === currentDayNumber
 }
