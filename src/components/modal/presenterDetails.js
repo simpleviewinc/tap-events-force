@@ -1,34 +1,45 @@
-import React from 'react'
-import { useTheme } from '@simpleviewinc/re-theme'
+import React, { useState } from 'react'
+import { useTheme, useDimensions } from '@simpleviewinc/re-theme'
 import { View, Image, Text, ScrollView } from 'react-native'
-import { Modal, TouchableIcon } from 'SVComponents'
+import { TouchableIcon, Modal } from 'SVComponents'
 import { removeModal } from 'SVActions'
 
+const modalMaxHeight = 772
+const placeholderImage = require('SVAssets/profile_placeholder.png')
 /**
  * PresenterDetailModal
  * @param {object} props
  * @param {import('SVModels/presenter').Presenter} props.presenter
  */
 export const PresenterDetails = props => {
-  const { presenter } = props
+  const { presenter, visible } = props
   if (!presenter) return null
+  // two possible cases for a non visible modal
+  // 1. modal is mounted/in store but has been animated out of view by another modal
+  // 2. modal has been removed from the store
+  const [ mount, setMount ] = useState(true)
   const theme = useTheme()
+  const viewHeight = theme.RTMeta.height
+  const maxHeight = viewHeight <= modalMaxHeight ? '90%' : modalMaxHeight
+
   const presenterStyles = theme.get('modal.presenter') || {}
   const title = `${presenter.title} ${presenter.firstname} ${presenter.lastname}`
 
   return (
     <Modal
-      styles={{ content: presenterStyles.modal }}
-      visible={true}
-      onBackdropTouch={removeModal}
+      styles={{ content: { ...presenterStyles.modal.content, maxHeight } }}
+      visible={visible && mount}
+      onAnimateOut={mount ? removeModal : null}
+      onBackdropTouch={() => setMount(false)}
     >
       <Header
         title={title}
-        styles={presenterStyles.header}
+        styles={presenterStyles.modal.header}
+        setMount={setMount}
       />
-      <Content
+      <Body
         presenter={presenter}
-        styles={presenterStyles.content}
+        styles={presenterStyles.modal.body}
       />
     </Modal>
   )
@@ -39,8 +50,9 @@ export const PresenterDetails = props => {
  * @param {object} props
  * @param {string} props.title
  * @param {object} props.theme - presenter theme from global theme
+ * @param {object} props.setMount - used to state the modals visible state for animation
  */
-const Header = ({ title, styles }) => {
+const Header = ({ title, styles, setMount }) => {
   return (
     <View style={styles.main}>
       <Text
@@ -51,7 +63,7 @@ const Header = ({ title, styles }) => {
       </Text>
       <View style={styles.closeButton}>
         <TouchableIcon
-          onPress={removeModal}
+          onPress={() => setMount(false)}
           name={'close'}
           color={'white'}
           size={22}
@@ -62,23 +74,36 @@ const Header = ({ title, styles }) => {
 }
 
 /**
- * Content
+ * Body
  * @param {object} props
  * @param {import('SVModels/presenter').Presenter} props.presenter
  * @param {object} props.theme - presenter theme from global theme
  */
-const Content = ({ presenter, styles }) => {
+const Body = ({ presenter, styles }) => {
+  // need to update content height based on screen height
+  const dim = useDimensions()
+  const bioContentStyle =
+    dim.height <= modalMaxHeight
+      ? dim.height <= 450
+          ? { maxHeight: 100 }
+          : { maxHeight: 250 }
+      : styles.row2.content
+
+  // use small image style if height is small enough
+  // otherwise use the dynamic styling from width
+  const imageStyle =
+    dim.height <= 450 ? styles.row1.smallImage : styles.row1.image
+
   return (
     <View style={styles.main}>
       { /* row 1 - image and titles */ }
       <View style={styles.row1.container}>
         <Image
-          style={styles.row1.image}
+          style={imageStyle}
           source={{
-            // TODO: replace the placeholder image with the real placeholder
             uri: presenter.photographUrl
               ? presenter.photographUrl
-              : 'https://placegoat.com/300/300',
+              : placeholderImage,
           }}
         />
         <View style={styles.row1.details}>
@@ -101,7 +126,7 @@ const Content = ({ presenter, styles }) => {
       { presenter.biography ? (
         <ScrollView
           style={styles.row2.container}
-          contentContainerStyle={styles.row2.content}
+          contentContainerStyle={bioContentStyle}
         >
           <Text style={styles.row2.biography}> { presenter.biography }</Text>
         </ScrollView>
