@@ -38,6 +38,7 @@ let store
 export const getStore = () => store
 export const getDispatch = () => dispatch
 export const dispatch = action => {
+  console.log('dispatch:', action)
   sessionDispatch(action)
 }
 

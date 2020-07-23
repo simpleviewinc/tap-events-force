@@ -1,10 +1,11 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
-import { useSessionsStore } from '../store/sessionsStore'
+import { useSessionsStore, dispatch } from '../store/sessionsStore'
 import { mapSessionInterface, incrementDay, decrementDay } from 'SVActions'
 import { View, Text, GridItem, DayToggle } from 'SVComponents'
 import { sortLabels, noOp } from 'SVUtils'
 import { useAgenda } from 'SVHooks'
 import { get } from 'jsutils'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 
 /**
  * SessionComponent
@@ -20,6 +21,10 @@ export const Sessions = props => {
     // placeholder data for now
     mapSessionInterface(sessionData)
   }, [])
+
+  useLocalStorage(store, dispatch, ['settings.agendaSettings.activeDayNumber'])
+
+  useEffect(() => {}, [store.settings.agendaSettings])
 
   store.agendaDays.length && console.log({ store })
 
@@ -42,8 +47,8 @@ export const Sessions = props => {
         dayNumber={currentDayNumber}
         disableDecrement={isFirstDay}
         disableIncrement={isLatestDay}
-        onIncrement={increment}
         onDecrement={decrement}
+        onIncrement={increment}
       />
 
       <GridItem labels={labels} />
