@@ -3,9 +3,8 @@ import { useSessionsStore, dispatch } from '../store/sessionsStore'
 import { mapSessionInterface, incrementDay, decrementDay } from 'SVActions'
 import { View, Text, GridItem, DayToggle } from 'SVComponents'
 import { sortLabels, noOp } from 'SVUtils'
-import { useAgenda } from 'SVHooks'
+import { useAgenda, useLocalStorage } from 'SVHooks'
 import { get } from 'jsutils'
-import { useLocalStorage } from '../hooks/useLocalStorage'
 
 /**
  * SessionComponent
@@ -15,18 +14,11 @@ export const Sessions = props => {
   const { onDayChange = noOp, ...sessionData } = props
 
   const store = useSessionsStore()
+  store.agendaDays.length && console.log({ store })
 
   // map the evf props onto our states
-  useEffect(() => {
-    // placeholder data for now
-    mapSessionInterface(sessionData)
-  }, [])
-
+  useEffect(() => void mapSessionInterface(sessionData), [])
   useLocalStorage(store, dispatch, ['settings.agendaSettings.activeDayNumber'])
-
-  useEffect(() => {}, [store.settings.agendaSettings])
-
-  store.agendaDays.length && console.log({ store })
 
   const labels = useMemo(() => sortLabels(store.labels), [store.labels])
 
