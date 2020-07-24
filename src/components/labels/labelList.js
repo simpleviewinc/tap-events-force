@@ -27,7 +27,7 @@ export const LabelList = props => {
   const labelStyle = theme.join(theme.get('labelList.item'), itemStyle)
 
   return (
-    <View style={{ ...listStyles, backgroundColor: 'red' }}>
+    <View style={{ ...listStyles }}>
       { labels.map(label => (
         <LabelComponent
           key={label.name}
@@ -45,5 +45,5 @@ LabelList.propTypes = {
   itemStyle: PropTypes.object,
   labels: PropTypes.arrayOf(PropTypes.object),
   LabelComponent: PropTypes.elementType,
-  onItemPress: PropTypes.function,
+  onItemPress: PropTypes.func,
 }

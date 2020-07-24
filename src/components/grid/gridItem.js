@@ -18,8 +18,7 @@ const getLabelComponent = theme =>
  * @param {Object} theme
  * @param {Array} labels
  */
-const getLabelsForList = (theme, labels) =>
-  isMobileSize(theme) ? labels.slice(0, 3) : labels
+const getLabelsForList = (theme, labels) => labels.slice(0, 3)
 
 /**
  * A grid item for the sessions
@@ -37,15 +36,7 @@ export const GridItem = props => {
   const labelStyles = theme.get('gridItem.label')
   const listStyles = theme.get('gridItem.labelList')
   return (
-    <View
-      style={{
-        height: 294,
-        maxWidth: 330,
-        // flex:1,
-        flexDirection: 'column',
-        border: 'solid',
-      }}
-    >
+    <View style={theme.get('gridItem.main')}>
       <SessionTime
         start={session.startDateTimeLocal}
         end={session.endDateTimeLocal}

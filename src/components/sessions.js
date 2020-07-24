@@ -4,6 +4,7 @@ import { useSessionsStore } from '../store/sessionsStore'
 import { mapSessionInterface } from 'SVActions'
 import { GridItem } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
+import { useTheme } from '@simpleviewinc/re-theme'
 import testData from '../mocks/eventsforce/testData'
 
 /**
@@ -12,6 +13,7 @@ import testData from '../mocks/eventsforce/testData'
  */
 export const Sessions = props => {
   const store = useSessionsStore()
+  const theme = useTheme()
 
   // map the evf props onto our states
   useEffect(() => {
@@ -22,7 +24,7 @@ export const Sessions = props => {
   const labels = useMemo(() => sortLabels(store.labels), [store.labels])
 
   return (
-    <View>
+    <View style={theme.get('sessions.main')}>
       <GridItem
         labels={labels}
         session={store.sessions[0]}

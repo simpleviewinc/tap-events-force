@@ -1,5 +1,6 @@
 export * from './gridItem'
 export * from './sessionTime'
+export * from './sessions'
 export * from './labelButton'
 export * from './labelList'
 export * from './labelTag'

@@ -1,54 +1,44 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Icon, Text } from 'SVComponents'
-import { FontAwesome5 } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons'
 import { useTheme } from '@simpleviewinc/re-theme'
+import PropTypes from 'prop-types'
 import moment from 'moment'
 
-const textStyle = { paddingLeft: 10 }
+const formatTime = (time, military = true) =>
+  moment(time).format(military ? 'HH:mm' : 'hh:mm')
+
 /**
  *
  * @param {object} props
  * @param {string} props.start - ex: 2020-08-03 13:00:00
  * @param {string} props.end - ex: 2020-08-03 13:30:00
+ * @param {string} props.military - true if time should be formatted in 24-hour time
  */
 export const SessionTime = props => {
-  const { start, end } = props
+  const { start, end, military = true } = props
   const theme = useTheme()
-  console.log(theme)
+  const clockStyle = theme.get('sessionTime.clockIcon')
+  const textStyle = theme.get('sessionTime.timeText')
   return (
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'yellow',
-        alignItems: 'center',
-      }}
-    >
+    <View style={theme.get('sessionTime.main')}>
       { /* wrap this in evfIcon so we can use custom ttf when it comes */ }
       <Icon
-        type={'sessionTime'}
-        Element={FontAwesome5}
+        style={clockStyle.main}
+        Element={Feather}
         name={'clock'}
-        size={35}
+        size={clockStyle.size}
       />
-      <Text style={textStyle}>
-        { `${moment(start).format('HH:mm')} - ${moment(end).format('HH:mm')}` }
+      <Text style={textStyle.main}>
+        { `${formatTime(start, military)} - ${formatTime(end, military)}` }
       </Text>
     </View>
   )
 }
 
-// theme
-
-// const theme = {
-//   sessionTime: {
-//     main: {
-//       flex: 1,
-//       flexDirection: 'row',
-//       backgroundColor: 'yellow',
-//       alignItems: 'center',
-//     }
-//   }
-
-// }
+SessionTime.propTypes = {
+  start: PropTypes.string,
+  end: PropTypes.string,
+  military: PropTypes.bool,
+}
