@@ -35,8 +35,53 @@ export const GridItem = props => {
   const listLabels = getLabelsForList(theme, labels)
   const labelStyles = theme.get('gridItem.label')
   const listStyles = theme.get('gridItem.labelList')
+  const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
   return (
     <View style={theme.get('gridItem.main')}>
+      <GridContent
+        labels={listLabels}
+        labelComponent={labelComponent}
+        labelStyles={labelStyles}
+        listStyles={listStyles}
+        session={session}
+      />
+    </View>
+  )
+}
+
+const GridRowContent = ({
+  labels,
+  labelComponent,
+  labelStyles,
+  listStyles,
+  session,
+}) => {
+  return (
+    <>
+      <LabelList
+        style={listStyles}
+        itemStyle={labelStyles}
+        LabelComponent={labelComponent}
+        labels={labels}
+        onItemPress={console.log}
+      />
+      <SessionTime
+        start={session.startDateTimeLocal}
+        end={session.endDateTimeLocal}
+      />
+    </>
+  )
+}
+
+const GridTileContent = ({
+  labels,
+  labelComponent,
+  labelStyles,
+  listStyles,
+  session,
+}) => {
+  return (
+    <>
       <SessionTime
         start={session.startDateTimeLocal}
         end={session.endDateTimeLocal}
@@ -45,9 +90,9 @@ export const GridItem = props => {
         style={listStyles}
         itemStyle={labelStyles}
         LabelComponent={labelComponent}
-        labels={listLabels}
+        labels={labels}
         onItemPress={console.log}
       />
-    </View>
+    </>
   )
 }

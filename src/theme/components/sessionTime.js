@@ -1,6 +1,5 @@
 export const sessionTime = {
   main: {
-    height: '14%',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
@@ -9,12 +8,25 @@ export const sessionTime = {
   },
   clockIcon: {
     size: 25,
-    main: {},
+    main: {
+      $xsmall: {
+        display: 'none',
+      },
+      $small: {
+        display: 'flex',
+        marginRight: 4,
+      },
+    },
   },
   timeText: {
     main: {
-      paddingLeft: 10,
-      marginBottom: 3,
+      $xsmall: {
+        marginBottom: 3,
+        color: '#8f908f',
+      },
+      $small: {
+        color: 'black',
+      },
     },
   },
 }

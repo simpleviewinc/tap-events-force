@@ -25,7 +25,7 @@ export const SessionTime = props => {
     <View style={theme.get('sessionTime.main')}>
       { /* wrap this in evfIcon so we can use custom ttf when it comes */ }
       <Icon
-        style={clockStyle.main}
+        styles={clockStyle.main}
         Element={Feather}
         name={'clock'}
         size={clockStyle.size}
