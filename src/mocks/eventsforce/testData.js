@@ -62,16 +62,6 @@ export default {
       name: 'Breaks',
       className: 'ef-agenda-label-206',
     },
-    {
-      identifier: '7',
-      name: 'Recommended',
-      className: 'ef-agenda-label-207',
-    },
-    {
-      identifier: '8',
-      name: 'Selected',
-      className: 'ef-agenda-label-208',
-    },
   ],
   locations: [
     {

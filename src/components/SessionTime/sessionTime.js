@@ -1,8 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Icon, Text } from 'SVComponents'
-import { Feather } from '@expo/vector-icons'
+import { Text, Icon } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
+import { EVFIcons } from '../../fonts'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 
@@ -26,10 +26,11 @@ export const SessionTime = props => {
       { /* wrap this in evfIcon so we can use custom ttf when it comes */ }
       <Icon
         styles={clockStyle.main}
-        Element={Feather}
+        Element={EVFIcons}
         name={'clock'}
         size={clockStyle.size}
       />
+      { /* <ClockIconSVG /> */ }
       <Text style={textStyle.main}>
         { `${formatTime(start, military)} - ${formatTime(end, military)}` }
       </Text>

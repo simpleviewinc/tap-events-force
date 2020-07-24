@@ -9,7 +9,11 @@ import PropTypes from 'prop-types'
  * Returns the right labels for the list
  * @param {Array} labels
  */
-const useLabelsForList = labels => useMemo(() => labels.slice(0, 3), [labels])
+const useLabelsForList = (theme, labels) =>
+  useMemo(() => (isMobileSize(theme) ? labels.slice(0, 3) : labels), [
+    labels,
+    theme,
+  ])
 
 /**
  * A grid item for the sessions
@@ -19,11 +23,11 @@ const useLabelsForList = labels => useMemo(() => labels.slice(0, 3), [labels])
  * @param {boolean} props.militaryTime - if true, use military time for dates
  */
 export const GridItem = props => {
-  const { labels = [], session, militaryTime } = props
+  const { labels = [], session, militaryTime, onLabelPress } = props
   if (!session) return null
 
   const theme = useTheme()
-  const listLabels = useLabelsForList(labels)
+  const listLabels = useLabelsForList(theme, labels)
   const labelStyles = theme.get('gridItem.label.main')
   const listStyles = theme.get('gridItem.labelList.main')
   const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
@@ -35,6 +39,7 @@ export const GridItem = props => {
         listStyles={listStyles}
         session={session}
         militaryTime={militaryTime}
+        onLabelPress={onLabelPress}
       />
     </View>
   )
