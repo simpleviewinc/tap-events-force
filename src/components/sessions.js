@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { View, Text } from 'react-native'
-import { useSessionsStore } from '../store/sessionsStore'
+import { useSessionsStore, dispatch } from '../store/sessionsStore'
 import { mapSessionInterface } from 'SVActions'
 import { GridItem, Button } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
@@ -42,7 +42,6 @@ export const Sessions = props => {
   )
 }
 
-import { dispatch } from '../store/sessionsStore'
 // solely for testing - remove later
 const toggleTime = is24HourTime => {
   dispatch({
