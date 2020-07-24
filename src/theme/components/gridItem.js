@@ -17,21 +17,25 @@ export const gridItem = {
     main: {},
   },
   label: {
-    $xsmall: {
-      margin: 0,
-    },
-    $small: {
-      marginTop: 8,
-      marginRight: 8,
+    main: {
+      $xsmall: {
+        margin: 0,
+      },
+      $small: {
+        marginTop: 8,
+        marginRight: 8,
+      },
     },
   },
   labelList: {
-    $xsmall: {
-      marginRight: 14,
-    },
-    $small: {
-      marginRight: 0,
-      width: '100%',
+    main: {
+      $xsmall: {
+        marginRight: 14,
+      },
+      $small: {
+        marginRight: 0,
+        width: '100%',
+      },
     },
   },
 }

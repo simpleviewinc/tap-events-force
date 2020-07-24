@@ -7,7 +7,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 
 const formatTime = (time, military = true) =>
-  moment(time).format(military ? 'HH:mm' : 'hh:mm')
+  moment(time).format(military ? 'H:mm' : 'h:mma')
 
 /**
  *

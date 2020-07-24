@@ -1,98 +1,46 @@
-import React from 'react'
-import { LabelList } from 'SVComponents'
-import { LabelButton, LabelTag, SessionTime } from 'SVComponents'
+import React, { useMemo } from 'react'
+import { GridRowContent, GridTileContent } from './'
 import { View } from 'react-native'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { isMobileSize } from 'SVUtils/theme'
+import PropTypes from 'prop-types'
 
 /**
- * Returns the right label component for the screen size
- * @param {Object} theme
- */
-const getLabelComponent = theme =>
-  isMobileSize(theme) ? LabelTag : LabelButton
-
-/**
- * Returns the right labels for the list. If mobile, we are showing label-tags,
- * so there should only be the first 3 labels. Otherwise show all
- * @param {Object} theme
+ * Returns the right labels for the list
  * @param {Array} labels
  */
-const getLabelsForList = (theme, labels) => labels.slice(0, 3)
+const useLabelsForList = labels => useMemo(() => labels.slice(0, 3), [labels])
 
 /**
  * A grid item for the sessions
  * @param {Object} props
  * @param {Array} props.labels - labels for grid item
  * @param {import('SVModels/session').Session} props.session - sesion item
+ * @param {boolean} props.militaryTime - if true, use military time for dates
  */
 export const GridItem = props => {
-  const { labels = [], session } = props
+  const { labels = [], session, militaryTime } = props
   if (!session) return null
 
   const theme = useTheme()
-  const labelComponent = getLabelComponent(theme)
-  const listLabels = getLabelsForList(theme, labels)
-  const labelStyles = theme.get('gridItem.label')
-  const listStyles = theme.get('gridItem.labelList')
+  const listLabels = useLabelsForList(labels)
+  const labelStyles = theme.get('gridItem.label.main')
+  const listStyles = theme.get('gridItem.labelList.main')
   const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
   return (
     <View style={theme.get('gridItem.main')}>
       <GridContent
         labels={listLabels}
-        labelComponent={labelComponent}
         labelStyles={labelStyles}
         listStyles={listStyles}
         session={session}
+        militaryTime={militaryTime}
       />
     </View>
   )
 }
 
-const GridRowContent = ({
-  labels,
-  labelComponent,
-  labelStyles,
-  listStyles,
-  session,
-}) => {
-  return (
-    <>
-      <LabelList
-        style={listStyles}
-        itemStyle={labelStyles}
-        LabelComponent={labelComponent}
-        labels={labels}
-        onItemPress={console.log}
-      />
-      <SessionTime
-        start={session.startDateTimeLocal}
-        end={session.endDateTimeLocal}
-      />
-    </>
-  )
-}
-
-const GridTileContent = ({
-  labels,
-  labelComponent,
-  labelStyles,
-  listStyles,
-  session,
-}) => {
-  return (
-    <>
-      <SessionTime
-        start={session.startDateTimeLocal}
-        end={session.endDateTimeLocal}
-      />
-      <LabelList
-        style={listStyles}
-        itemStyle={labelStyles}
-        LabelComponent={labelComponent}
-        labels={labels}
-        onItemPress={console.log}
-      />
-    </>
-  )
+GridItem.propTypes = {
+  labels: PropTypes.array,
+  session: PropTypes.object,
 }

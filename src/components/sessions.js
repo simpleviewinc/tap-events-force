@@ -5,6 +5,7 @@ import { mapSessionInterface } from 'SVActions'
 import { GridItem } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
 import { useTheme } from '@simpleviewinc/re-theme'
+import { get } from 'jsutils'
 import testData from '../mocks/eventsforce/testData'
 
 /**
@@ -22,12 +23,14 @@ export const Sessions = props => {
   }, [])
 
   const labels = useMemo(() => sortLabels(store.labels), [store.labels])
+  const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)
 
   return (
     <View style={theme.get('sessions.main')}>
       <GridItem
         labels={labels}
         session={store.sessions[0]}
+        militaryTime={is24HourTime}
       />
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>

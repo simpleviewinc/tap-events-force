@@ -89,7 +89,7 @@ export default {
       name: 'session with presenters and labels',
       summary: 'This is a session with both presenters and labels',
       dayNumber: 1,
-      startDateTimeLocal: '2020-08-03 13:00:00',
+      startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
       presenterIdentifiers: [ '1', '2' ],
       labelIdentifiers: [ '1', '2' ],
