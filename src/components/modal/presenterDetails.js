@@ -73,6 +73,10 @@ const Header = ({ title, styles, setMount }) => {
   )
 }
 
+const contentMaxHeights = {
+  h100: { maxHeight: 100 },
+  h200: { maxHeight: 200 },
+}
 /**
  * Body
  * @param {object} props
@@ -84,9 +88,9 @@ const Body = ({ presenter, styles }) => {
   const dim = useDimensions()
   const bioContentStyle =
     dim.height <= modalMaxHeight
-      ? dim.height <= 450
-          ? { maxHeight: 100 }
-          : { maxHeight: 250 }
+      ? dim.height <= 600
+          ? contentMaxHeights.h100
+          : contentMaxHeights.h200
       : styles.row2.content
 
   // use small image style if height is small enough
