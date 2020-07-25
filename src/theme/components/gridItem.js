@@ -8,13 +8,16 @@ export const gridItem = {
       alignItems: 'flex-start',
     },
     $small: {
-      padding: 10,
+      padding: 15,
+      paddingTop: 20,
       flexDirection: 'column',
       height: 294,
     },
   },
   sessionTime: {
-    main: {},
+    main: {
+      marginTop: 13,
+    },
   },
   label: {
     main: {

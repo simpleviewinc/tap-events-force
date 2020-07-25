@@ -1,5 +1,6 @@
 import React from 'react'
 import { LabelTag, LabelList, SessionTime, View } from 'SVComponents'
+import { useTheme } from '@simpleviewinc/re-theme'
 import PropTypes from 'prop-types'
 
 /**
@@ -13,6 +14,8 @@ import PropTypes from 'prop-types'
 export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
 
+  const theme = useTheme()
+
   return (
     <>
       <LabelList
@@ -23,6 +26,7 @@ export const GridRowContent = props => {
       />
       <View>
         <SessionTime
+          style={theme.get('gridItem.sessionTime.main')}
           start={session.startDateTimeLocal}
           end={session.endDateTimeLocal}
           military={militaryTime}

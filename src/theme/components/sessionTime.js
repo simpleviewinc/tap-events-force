@@ -14,14 +14,14 @@ export const sessionTime = {
       },
       $small: {
         display: 'flex',
-        marginRight: 4,
+        marginRight: 5,
       },
     },
   },
   timeText: {
     main: {
       $xsmall: {
-        marginBottom: 3,
+        marginBottom: 2,
         color: '#8f908f',
       },
       $small: {
