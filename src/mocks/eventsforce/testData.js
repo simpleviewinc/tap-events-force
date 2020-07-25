@@ -1,3 +1,5 @@
+import { longText } from '../text'
+
 export default {
   settings: {
     showLocationInAgenda: true,
@@ -29,6 +31,18 @@ export default {
       jobtitle: 'Marketing Manager',
       company: 'Scaffolding Solutions Ltd',
       biography: '',
+    },
+    {
+      identifier: '3',
+      title: 'Mrs',
+      firstname: 'Franky',
+      lastname: 'Macloudy',
+      email: 'f.macloud@test.tes',
+      jobtitle: 'Careers Advisor',
+      company: 'Infinite Wealth',
+      photographUrl:
+        'https://47ddc71556b359d028bd-d91a48d103994bcfc502e0439b859d74.ssl.cf3.rackcdn.com/ef-iij5tpq56zja/noevent/personal/679/wvBcFJAn5jU0wAzmq3g6553149064133/avatar_people_person_business_.jpg',
+      biography: longText,
     },
   ],
   labels: [
