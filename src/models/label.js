@@ -7,9 +7,10 @@ export class Label {
 
   /**
    * Label class model
-   * @property {string} identifier
-   * @property {string} name
-   * @property {string} className
+   * @param {object} params
+   * @param {string} params.identifier
+   * @param {string} params.name
+   * @param {string} params.className
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)

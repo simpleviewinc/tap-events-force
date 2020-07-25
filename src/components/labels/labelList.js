@@ -45,5 +45,5 @@ LabelList.propTypes = {
   itemStyle: PropTypes.object,
   labels: PropTypes.arrayOf(PropTypes.object),
   LabelComponent: PropTypes.elementType,
-  onItemPress: PropTypes.function,
+  onItemPress: PropTypes.func,
 }

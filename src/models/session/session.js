@@ -23,21 +23,21 @@ export class Session {
 
   /**
    * @param {object} params
-   * @property {string=} identifier - session id
-   * @property {string=} name - name of session
-   * @property {string=} summary - summary of the session
-   * @property {number=} dayNumber
-   * @property {string=} startDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
-   * @property {string}= endDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
-   * @property {Array<string>=} presenterIdentifiers
-   * @property {Array<string>=} labelIdentifiers
-   * @property {string=} locationIdentifier
-   * @property {string=} requiresBooking - If true then all attendees must book this session
-   * @property {string=} liveVideoUrl - Url for the live stream
-   * @property {string=} recordedVideoUrl - Url for the recorded video
-   * @property {import('SVModels/price').Price=} price - price object
-   * @property {Array<string>=} restrictToAttendeeCategories
-   * @property {SessionCapacity=} capacity - session capacity
+   * @param {string=} params.identifier - session id
+   * @param {string=} params.name - name of session
+   * @param {string=} params.summary - summary of the session
+   * @param {number=} params.dayNumber
+   * @param {string=} params.startDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
+   * @param {string=} params.endDateTimeLocal - In the time zone of the event E.g. "2020-08-03 14:40:00"
+   * @param {Array<string>=} params.presenterIdentifiers
+   * @param {Array<string>=} params.labelIdentifiers
+   * @param {string=} params.locationIdentifier
+   * @param {string=} params.requiresBooking - If true then all attendees must book this session
+   * @param {string=} params.liveVideoUrl - Url for the live stream
+   * @param {string=} params.recordedVideoUrl - Url for the recorded video
+   * @param {import('SVModels/price').Price=} params.price - price object
+   * @param {Array<string>=} params.restrictToAttendeeCategories
+   * @param {SessionCapacity=} params.capacity - session capacity
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)

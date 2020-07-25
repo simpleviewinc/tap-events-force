@@ -1,6 +1,7 @@
 import { deepMerge } from 'jsutils'
 import { app } from './app'
 import { eventsForce } from './eventsForce'
+import { modal } from './components'
 import { shadow } from './shadow'
 import { kegComponentsTheme } from 'SVTheme/kegComponentsTheme'
 import * as components from './components'
@@ -10,6 +11,6 @@ configureTheme()
 
 export const theme = deepMerge(
   kegComponentsTheme,
-  { eventsForce, shadow, app },
+  { eventsForce, shadow, app, modal },
   components
 )

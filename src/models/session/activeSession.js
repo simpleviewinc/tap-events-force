@@ -11,9 +11,9 @@ export class ActiveSession {
   /**
    *
    * @param {object} params
-   * @property {number|string=} id - id of session
-   * @property {boolean=} open - is it opened? Used on mobile
-   * @property {string=} bookingState - booking state of the user
+   * @param {number|string=} params.id - id of session
+   * @param {boolean=} params.open - is it opened? Used on mobile
+   * @param {string=} params.bookingState - booking state of the user
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)

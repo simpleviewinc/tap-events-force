@@ -7,8 +7,9 @@ export class Price {
   amount = 0
 
   /**
-   * @property {string=} currency - ISO 4217
-   * @property {number=} amount
+   * @param {object} params
+   * @param {string=} params.currency - ISO 4217
+   * @param {number=} params.amount
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)
