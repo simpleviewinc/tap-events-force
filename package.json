@@ -56,6 +56,7 @@
     "jest": "26.1.0",
     "jsutils": "git+https://github.com/lancetipton/jsutils.git#v3.2.1",
     "lint-staged": "10.2.10",
+    "moment": "2.27.0",
     "onchange": "7.0.2",
     "prettier": "2.0.5",
     "rimraf": "^3.0.1"

@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo } from 'react'
 import { View, Text } from 'react-native'
-import { useSessionsStore } from '../store/sessionsStore'
+import { useSessionsStore, dispatch } from '../store/sessionsStore'
 import { GridItem, Button } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
+import { useTheme } from '@simpleviewinc/re-theme'
+import { get } from 'jsutils'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
@@ -15,6 +17,8 @@ import { useCreateModal } from 'SVHooks/modal'
  */
 export const Sessions = props => {
   const store = useSessionsStore()
+  const theme = useTheme()
+
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
@@ -22,13 +26,21 @@ export const Sessions = props => {
   }, [])
 
   const labels = useMemo(() => sortLabels(store.labels), [store.labels])
+  const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)
 
   return (
-    <View>
-      <GridItem labels={labels} />
+    <View style={theme.get('sessions.main')}>
+      <GridItem
+        labels={labels}
+        session={store.sessions[0]}
+        militaryTime={is24HourTime}
+      />
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
       <Text>Attendees count: { store.attendees.length }</Text>
+      <Button onPress={() => toggleTime(is24HourTime)}>
+        Toggle 12-hour/24-hour time
+      </Button>
       <Button
         themePath='button.contained.primary'
         onClick={useCreateModal(
@@ -56,4 +68,18 @@ export const Sessions = props => {
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
+}
+
+// solely for testing - remove later
+const toggleTime = is24HourTime => {
+  dispatch({
+    type: 'UPSERT_ITEM',
+    payload: {
+      category: 'settings',
+      key: 'agendaSettings',
+      item: {
+        militaryTime: !is24HourTime,
+      },
+    },
+  })
 }
