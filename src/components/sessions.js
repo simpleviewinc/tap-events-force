@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo } from 'react'
 import { View, Text } from 'react-native'
 import { useSessionsStore, dispatch } from '../store/sessionsStore'
-import { mapSessionInterface } from 'SVActions'
 import { GridItem, Button } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { get } from 'jsutils'
 import testData from '../mocks/eventsforce/testData'
+import { mapSessionInterface } from 'SVActions'
+import { RenderModals } from 'SVComponents/modal'
+import { Values } from 'SVConstants'
+import { useCreateModal } from 'SVHooks/modal'
 
 /**
  * SessionComponent
@@ -38,6 +41,31 @@ export const Sessions = props => {
       <Button onPress={() => toggleTime(is24HourTime)}>
         Toggle 12-hour/24-hour time
       </Button>
+      <Button
+        themePath='button.contained.primary'
+        onClick={useCreateModal(
+          Values.MODAL_TYPES.PRESENTER,
+          store.presenters[0]
+        )}
+        content={'Open Presenter 1 (image + short bio)'}
+      />
+      <Button
+        themePath='button.contained.primary'
+        onClick={useCreateModal(
+          Values.MODAL_TYPES.PRESENTER,
+          store.presenters[1]
+        )}
+        content={'open presenter 2 (no image, no bio)'}
+      />
+      <Button
+        themePath='button.contained.primary'
+        onClick={useCreateModal(
+          Values.MODAL_TYPES.PRESENTER,
+          store.presenters[2]
+        )}
+        content={'open presenter 3 (long bio text)'}
+      />
+      { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
 }

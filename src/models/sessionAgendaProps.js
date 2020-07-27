@@ -12,12 +12,13 @@ export class SessionAgendaProps {
   attendees = []
 
   /**
-   * @property {AgendaSettings} settings - id of session
-   * @property {Array.<import('./presenter').presenter>} presenters - list of presenters
-   * @property {Array.<import('./label').label>} labels - list of labels
-   * @property {Array.<import('./location').location>} locations - list of locations
-   * @property {Array.<import('./session').session>} sessions - list of sessions
-   * @property {Array.<import('./attendee').attendee>} attendees - list of attendees
+   * @param {object} params
+   * @param {AgendaSettings} params.settings - id of session
+   * @param {Array.<import('./presenter').presenter>} params.presenters - list of presenters
+   * @param {Array.<import('./label').label>} params.labels - list of labels
+   * @param {Array.<import('./location').location>} params.locations - list of locations
+   * @param {Array.<import('./session').session>} params.sessions - list of sessions
+   * @param {Array.<import('./attendee').attendee>} params.attendees - list of attendees
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)

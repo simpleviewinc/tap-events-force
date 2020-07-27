@@ -10,9 +10,9 @@ export class SessionCapacity {
 
   /**
    * @param {object} params
-   * @property {boolean=} isUnlimited
-   * @property {number=} remainingPlaces - Only populated if isUnlimited = false
-   * @property {boolean=} isWaitingListAvailable - Only populated if isUnlimited = false
+   * @param {boolean=} params.isUnlimited
+   * @param {number=} params.remainingPlaces - Only populated if isUnlimited = false
+   * @param {boolean=} params.isWaitingListAvailable - Only populated if isUnlimited = false
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)
