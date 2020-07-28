@@ -1,8 +1,7 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
 import { useSessionsStore, dispatch } from '../store/sessionsStore'
-import { GridItem, Button } from 'SVComponents'
-import { sortLabels } from 'SVUtils'
+import { Button } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { get } from 'jsutils'
 import testData from '../mocks/eventsforce/testData'
@@ -10,6 +9,7 @@ import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
 import { Values } from 'SVConstants'
 import { useCreateModal } from 'SVHooks/modal'
+import { GridContainer } from 'SVContainers/gridContainer'
 
 /**
  * SessionComponent
@@ -25,15 +25,13 @@ export const Sessions = props => {
     mapSessionInterface(testData)
   }, [])
 
-  const labels = useMemo(() => sortLabels(store.labels), [store.labels])
   const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)
 
   return (
     <View style={theme.get('sessions.main')}>
-      <GridItem
-        labels={labels}
-        session={store.sessions[0]}
-        militaryTime={is24HourTime}
+      <GridContainer
+        sessions={store.sessions}
+        labels={store.labels}
       />
       <Text>Active session id: { store.activeSession.id }</Text>
       <Text>Sessions count: { store.sessions.length }</Text>
