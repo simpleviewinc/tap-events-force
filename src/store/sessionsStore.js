@@ -8,6 +8,12 @@ import {
   modalsState,
 } from 'SVReducers/initialStates'
 import { items as itemsReducer } from 'SVReducers/items'
+import { runPlugins, initializePlugins } from 'SVStore/plugins'
+
+const rootReducer = (state, action) => {
+  const { action: processedAction } = runPlugins({ action })
+  return itemsReducer(state, processedAction)
+}
 
 const SessionsContext = createContext(null)
 /**
@@ -18,7 +24,7 @@ const SessionsContext = createContext(null)
  * @returns {React.Component}
  */
 export const SessionsProvider = ({ children }) => {
-  const [ state, dispatch ] = useReducer(itemsReducer, {
+  const [ state, dispatch ] = useReducer(rootReducer, {
     ...sessionsState,
     ...usersState,
     ...settingsState,
@@ -52,3 +58,5 @@ export const useSessionsStore = () => {
   store = _store
   return store
 }
+
+initializePlugins({ dispatch })
