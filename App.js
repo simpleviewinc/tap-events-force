@@ -23,6 +23,9 @@ const checkAppInit = setInit => {
   checkCall(initAppAction)
 }
 
+/* This is only a temp solution for now. The page should already have this font */
+const interFont = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;700&display=swap');`
+
 const App = props => {
   const [activeTheme] = useState(getDefaultTheme())
   const [ init, setInit ] = useState(false)
@@ -34,7 +37,7 @@ const App = props => {
   return (
     init && (
       <>
-        { isNative() && (
+        { (isNative() && (
           <SafeAreaView
             style={{
               backgroundColor: get(
@@ -43,7 +46,7 @@ const App = props => {
               ),
             }}
           />
-        ) }
+        )) || <style>{ interFont }</style> }
         <StatusBar barStyle={'default'} />
         <Router history={getHistory()}>
           <SafeAreaView>

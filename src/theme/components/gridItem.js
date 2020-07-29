@@ -1,19 +1,44 @@
 export const gridItem = {
-  label: {
+  main: {
     $xsmall: {
-      margin: 0,
+      backgroundColor: '#fefffe',
+      height: 100,
+      maxWidth: 330,
+      flexDirection: 'row',
+      alignItems: 'flex-start',
     },
     $small: {
-      marginRight: 8,
-      marginTop: 8,
+      padding: 15,
+      paddingTop: 20,
+      flexDirection: 'column',
+      height: 294,
+    },
+  },
+  sessionTime: {
+    main: {
+      marginTop: 13,
+    },
+  },
+  label: {
+    main: {
+      $xsmall: {
+        margin: 0,
+      },
+      $small: {
+        marginTop: 8,
+        marginRight: 8,
+      },
     },
   },
   labelList: {
-    $xsmall: {
-      padding: 8,
-    },
-    $small: {
-      width: '50%',
+    main: {
+      $xsmall: {
+        marginRight: 14,
+      },
+      $small: {
+        marginRight: 0,
+        width: '100%',
+      },
     },
   },
 }

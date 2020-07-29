@@ -1,3 +1,5 @@
+import { longText } from '../text'
+
 export default {
   agendaDays: [
     {
@@ -42,6 +44,18 @@ export default {
       company: 'Scaffolding Solutions Ltd',
       biography: '',
     },
+    {
+      identifier: '3',
+      title: 'Mrs',
+      firstname: 'Franky',
+      lastname: 'Macloudy',
+      email: 'f.macloud@test.tes',
+      jobtitle: 'Careers Advisor',
+      company: 'Infinite Wealth',
+      photographUrl:
+        'https://47ddc71556b359d028bd-d91a48d103994bcfc502e0439b859d74.ssl.cf3.rackcdn.com/ef-iij5tpq56zja/noevent/personal/679/wvBcFJAn5jU0wAzmq3g6553149064133/avatar_people_person_business_.jpg',
+      biography: longText,
+    },
   ],
   labels: [
     {
@@ -74,16 +88,6 @@ export default {
       name: 'Breaks',
       className: 'ef-agenda-label-206',
     },
-    {
-      identifier: '7',
-      name: 'Recommended',
-      className: 'ef-agenda-label-207',
-    },
-    {
-      identifier: '8',
-      name: 'Selected',
-      className: 'ef-agenda-label-208',
-    },
   ],
   locations: [
     {
@@ -101,7 +105,7 @@ export default {
       name: 'session with presenters and labels',
       summary: 'This is a session with both presenters and labels',
       dayNumber: 1,
-      startDateTimeLocal: '2020-08-03 13:00:00',
+      startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
       presenterIdentifiers: [ '1', '2' ],
       labelIdentifiers: [ '1', '2' ],
