@@ -1,7 +1,12 @@
 export const gridContainer = {
   main: {
-    flex: 1,
-    justifyContent: 'center',
+    $xsmall: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    $small: {
+      paddingBottom: 41,
+    },
   },
   content: {
     header: {

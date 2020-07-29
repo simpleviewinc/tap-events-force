@@ -35,7 +35,7 @@ export const GridContainer = props => {
   return (
     <View
       style={gridStyles.main}
-      data-class='grid-container-main'
+      data-class={`grid-container-main-hr-${timeBlock}`}
     >
       {
         // only display the time header on web styles
