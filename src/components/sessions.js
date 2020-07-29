@@ -30,13 +30,17 @@ export const Sessions = props => {
 
   // map the evf props onto our states
   useEffect(() => {
-    mapSessionInterface(sessionData)
-
-    // need to call here, after useSessionsStore executes, so that session dispatch function is set
+    // Need to call here, after useSessionsStore executes, so that session dispatch function is set.
+    // Also need to configure with our custom dispatch function
     LocalStorage.configure({
       paths: ['settings.agendaSettings.activeDayNumber'],
+      dispatch,
     })
+
+    mapSessionInterface(sessionData)
   }, [])
+
+  console.log(store)
 
   const labels = useMemo(() => sortLabels(store.labels), [store.labels])
   const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)

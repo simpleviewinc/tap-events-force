@@ -18,7 +18,6 @@ export default {
   settings: {
     showLocationInAgenda: true,
     showPresentersInAgenda: true,
-    activeDayNumber: 1,
   },
   presenters: [
     {

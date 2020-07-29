@@ -39,6 +39,7 @@ export const DayToggle = props => {
   return (
     <View style={theme.get('dayToggle.main')}>
       <UpdateDayButton
+        style={theme.get('dayToggle.decrementIcon')}
         type={'decrement'}
         disabled={disableDecrement}
         onDayChange={onDecrement}
@@ -50,6 +51,7 @@ export const DayToggle = props => {
 
       <UpdateDayButton
         type={'increment'}
+        style={theme.get('dayToggle.incrementIcon')}
         disabled={disableIncrement}
         onDayChange={onIncrement}
       />

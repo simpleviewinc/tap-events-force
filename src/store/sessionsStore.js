@@ -8,10 +8,12 @@ import {
   modalsState,
 } from 'SVReducers/initialStates'
 import { items as itemsReducer } from 'SVReducers/items'
-import { runPlugins, initializePlugins } from 'SVStore/plugins'
+import { runPlugins } from 'SVStore/plugins'
 
 const rootReducer = (state, action) => {
+  console.log('sessions reducer', action)
   const { action: processedAction } = runPlugins({ action })
+  console.log('processed action', processedAction)
   return itemsReducer(state, processedAction)
 }
 
@@ -65,5 +67,3 @@ export const useSessionsStore = () => {
   if (!sessionDispatch) sessionDispatch = _dispatch
   return store
 }
-
-initializePlugins({ dispatch })

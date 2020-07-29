@@ -14,6 +14,11 @@ export const useAgenda = () => {
     agendaDays = [],
   } = useSessionsStore()
 
+  console.log(
+    'useAgenda dayNumber',
+    getCurrentDay(agendaDays, currentDayNumber)
+  )
+
   const currentDayNumber = get(agendaSettings, 'activeDayNumber')
   const currentAgendaDay = getCurrentDay(agendaDays, currentDayNumber)
   const latestAgendaDay = getLatestDay(agendaDays)

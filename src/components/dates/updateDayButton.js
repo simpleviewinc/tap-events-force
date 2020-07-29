@@ -7,12 +7,14 @@ import PropTypes from 'prop-types'
 /**
  * A touchable chevron icon that changes direction based on type
  * @param {Object} params
- * @param {string} type - one of ['decrement', 'increment'] - shows a left icon with 'decrement', and a 'right' icon with 'increment'
- * @param {boolean} disabled - true if the button should be disabled
- * @param {Function} onDayChange - callback executed when the day changes
+ * @param {string} params.type - one of ['decrement', 'increment'] - shows a left icon with 'decrement', and a 'right' icon with 'increment'
+ * @param {Object} params.style - optional styles to override defaults { main: {}, content: {} }
+ * @param {boolean} params.disabled - true if the button should be disabled
+ * @param {Function} params.onDayChange - callback executed when the day changes
  */
 export const UpdateDayButton = ({
   type = 'increment',
+  style = {},
   disabled = false,
   onDayChange,
 }) => {
@@ -21,6 +23,7 @@ export const UpdateDayButton = ({
   const dynamicStyles = {
     opacity: disabled ? 0.75 : 1,
     cursor: disabled ? 'not-allowed' : 'pointer',
+    ...style.main,
   }
 
   const iconStyles = useThemeMemo(theme, `dayToggle.icon`, dynamicStyles, [
