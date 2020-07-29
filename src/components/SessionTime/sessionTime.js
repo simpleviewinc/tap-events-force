@@ -4,10 +4,7 @@ import { Text, Icon } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { EVFIcons } from '../../fonts'
 import PropTypes from 'prop-types'
-import moment from 'moment'
-
-const formatTime = (time, military = true) =>
-  moment(time).format(military ? 'HH:mm' : 'h:mma')
+import { getTimeFromDate } from 'SVUtils/dateTime'
 
 /**
  *
@@ -36,7 +33,10 @@ export const SessionTime = props => {
       { /* <ClockIconSVG /> */ }
       <View style={textStyle.main}>
         <Text style={textStyle.content}>
-          { `${formatTime(start, military)} - ${formatTime(end, military)}` }
+          { `${getTimeFromDate(start, military)} - ${getTimeFromDate(
+            end,
+            military
+          )}` }
         </Text>
       </View>
     </View>

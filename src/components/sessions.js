@@ -9,6 +9,20 @@ import { RenderModals } from 'SVComponents/modal'
 import { Values } from 'SVConstants'
 import { useCreateModal } from 'SVHooks/modal'
 import { GridContainer } from 'SVContainers/gridContainer'
+import { getTimeFromDate } from 'SVUtils'
+import moment from 'moment'
+
+/**
+ *
+ * @param {Array} sessions
+ * @param {number} hour - any number from 1-24
+ */
+const filterSessionByTimeHr = (sessions, hour) => {
+  return sessions.filter(session => {
+    console.log(moment(session.startDateTimeLocal).hour())
+    return moment(session.startDateTimeLocal).hour() === hour
+  })
+}
 
 /**
  * SessionComponent
@@ -23,15 +37,17 @@ export const Sessions = props => {
     // placeholder data for now
     mapSessionInterface(testData)
   }, [])
-
+  console.log(store)
+  const filteredSessions = filterSessionByTimeHr(store.sessions, 9)
   return (
     <View
       data-class='sessions-main'
       style={theme.get('sessions.main')}
     >
       <GridContainer
-        sessions={store.sessions}
+        sessions={filteredSessions}
         labels={store.labels}
+        timeBlock={getTimeFromDate(9)}
       />
       <Button
         themePath='button.contained.primary'

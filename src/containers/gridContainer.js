@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { GridItem, AppHeader, Text } from 'SVComponents'
-import { sortLabels } from 'SVUtils'
+import { sortLabels, isMobileSize } from 'SVUtils'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { isMobileSize } from 'SVUtils/theme'
 
 /**
  *
@@ -27,7 +26,9 @@ const LeftHeaderText = ({ timeString, style }) => {
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  */
 export const GridContainer = props => {
-  const { sessions, labels } = props
+  const { sessions, labels, timeBlock } = props
+  if (!sessions.length) return null
+
   const theme = useTheme()
   const gridStyles = theme.get('gridContainer')
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
@@ -43,7 +44,7 @@ export const GridContainer = props => {
             styles={gridStyles.content.header}
             LeftComponent={
               <LeftHeaderText
-                timeString={'10:00'}
+                timeString={timeBlock}
                 style={gridStyles.content.header.content.left}
               />
             }
