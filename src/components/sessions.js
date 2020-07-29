@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
 import { useSessionsStore, dispatch } from '../store/sessionsStore'
 import { Button } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
@@ -36,9 +36,6 @@ export const Sessions = props => {
         sessions={store.sessions}
         labels={store.labels}
       />
-      <Text>Active session id: { store.activeSession.id }</Text>
-      <Text>Sessions count: { store.sessions.length }</Text>
-      <Text>Attendees count: { store.attendees.length }</Text>
       <Button onPress={() => toggleTime(is24HourTime)}>
         Toggle 12-hour/24-hour time
       </Button>

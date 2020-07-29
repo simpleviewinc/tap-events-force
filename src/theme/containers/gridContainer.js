@@ -40,9 +40,14 @@ export const gridContainer = {
       },
     },
     items: {
-      flex: 1,
-      flexWrap: 'wrap',
-      flexDirection: 'row',
+      $xsmall: {
+        flex: 1,
+        flexWrap: 'wrap',
+        flexDirection: 'column',
+      },
+      $small: {
+        flexDirection: 'row',
+      },
     },
   },
 }

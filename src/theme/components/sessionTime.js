@@ -20,6 +20,10 @@ export const sessionTime = {
   },
   timeText: {
     main: {
+      flexBasis: 200,
+      width: 0,
+    },
+    content: {
       $xsmall: {
         marginBottom: 2,
         color: '#8f908f',

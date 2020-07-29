@@ -189,7 +189,7 @@ export default {
       },
     },
     {
-      identifier: '5',
+      identifier: '6',
       name: 'Session on day 2 restricted to attendee category',
       summary: '',
       dayNumber: 2,

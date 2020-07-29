@@ -19,11 +19,11 @@ const formatTime = (time, military = true) =>
  */
 export const SessionTime = props => {
   const { style = {}, start, end, military = true } = props
-  console.log({ style })
   const theme = useTheme()
   const clockStyle = theme.get('sessionTime.clockIcon')
   const textStyle = theme.get('sessionTime.timeText')
   const mainStyle = theme.join(theme.get('sessionTime.main'), style)
+
   return (
     <View style={mainStyle}>
       { /* wrap this in evfIcon so we can use custom ttf when it comes */ }
@@ -34,9 +34,11 @@ export const SessionTime = props => {
         size={clockStyle.size}
       />
       { /* <ClockIconSVG /> */ }
-      <Text style={textStyle.main}>
-        { `${formatTime(start, military)} - ${formatTime(end, military)}` }
-      </Text>
+      <View style={textStyle.main}>
+        <Text style={textStyle.content}>
+          { `${formatTime(start, military)} - ${formatTime(end, military)}` }
+        </Text>
+      </View>
     </View>
   )
 }
