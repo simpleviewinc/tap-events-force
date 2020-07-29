@@ -1,6 +1,7 @@
 export const gridContainer = {
   main: {
     flex: 1,
+    justifyContent: 'center',
   },
   content: {
     header: {
@@ -8,9 +9,13 @@ export const gridContainer = {
         backgroundColor: '#4F4F4F',
         $xsmall: {
           maxHeight: 30,
+          overflow: 'hidden',
+          width: null,
+          maxWidth: '100%',
         },
         $small: {
           maxHeight: 50,
+          marginHorizontal: 3,
         },
       },
       content: {
@@ -33,6 +38,11 @@ export const gridContainer = {
         right: {},
         center: {},
       },
+    },
+    items: {
+      flex: 1,
+      flexWrap: 'wrap',
+      flexDirection: 'row',
     },
   },
 }

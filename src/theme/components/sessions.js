@@ -1,7 +1,7 @@
 export const sessions = {
   main: {
     backgroundColor: '#F3F3F3',
-    height: '100vh',
+    flex: 1,
     $xsmall: {
       padding: 20,
     },

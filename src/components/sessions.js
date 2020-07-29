@@ -28,7 +28,10 @@ export const Sessions = props => {
   const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)
 
   return (
-    <View style={theme.get('sessions.main')}>
+    <View
+      data-class='sessions-main'
+      style={theme.get('sessions.main')}
+    >
       <GridContainer
         sessions={store.sessions}
         labels={store.labels}

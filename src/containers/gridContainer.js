@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { GridItem, AppHeader, Text } from 'SVComponents'
 import { sortLabels } from 'SVUtils'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { get } from 'jsutils'
+
 /**
  *
  * @param {object} param
@@ -18,10 +18,6 @@ const LeftText = ({ timeString, style }) => {
   )
 }
 
-const VerticalDivider = () => {
-  return <View style={{ height: '100%', width: 8 }}></View>
-}
-
 /**
  *
  * @param {object} props
@@ -31,28 +27,37 @@ const VerticalDivider = () => {
  */
 export const GridContainer = props => {
   const theme = useTheme()
-  const gridStyles = theme.get('gridContainer') || {}
-  const headerStyles = get(gridStyles, [ 'content', 'header' ], {})
+  const gridStyles = theme.get('gridContainer')
   const labels = useMemo(() => sortLabels(props.labels), [props.labels])
 
   return (
-    <View style={gridStyles.main}>
+    <View
+      style={gridStyles.main}
+      data-class='grid-container-main'
+    >
       <AppHeader
-        styles={headerStyles.main}
+        styles={gridStyles.content.header}
         LeftComponent={
           <LeftText
             timeString={'10:00'}
-            style={headerStyles.content.left}
+            style={gridStyles.content.header.content.left}
           />
         }
       />
-      <View style={{ flexDirection: 'row', flex: 1 }}>
+      <View
+        data-class='grid-container-content-items'
+        style={gridStyles.content.items}
+      >
         <GridItem
           labels={labels}
           session={props.sessions[0]}
           militaryTime={true}
         />
-        <VerticalDivider />
+        <GridItem
+          labels={labels}
+          session={props.sessions[0]}
+          militaryTime={true}
+        />
         <GridItem
           labels={labels}
           session={props.sessions[0]}
