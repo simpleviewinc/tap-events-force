@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, useEffect } from 'react'
+import React, { createContext, useReducer, useContext } from 'react'
 import {
   sessionsState,
   usersState,
@@ -8,7 +8,7 @@ import {
   modalsState,
 } from 'SVReducers/initialStates'
 import { items as itemsReducer } from 'SVReducers/items'
-import { runPlugins, initializePlugins, LocalStorage } from 'SVStore/plugins'
+import { runPlugins, initializePlugins } from 'SVStore/plugins'
 
 const rootReducer = (state, action) => {
   const { action: processedAction } = runPlugins({ action })
@@ -32,6 +32,7 @@ export const SessionsProvider = ({ children }) => {
     ...locationsState,
     ...modalsState,
   })
+
   return (
     <SessionsContext.Provider value={[ state, dispatch ]}>
       { children }
@@ -44,7 +45,12 @@ let store
 export const getStore = () => store
 export const getDispatch = () => dispatch
 export const dispatch = action => {
-  sessionDispatch(action)
+  sessionDispatch
+    ? sessionDispatch(action)
+    : console.error(
+      'Session Dispatch is not set yet. Cannot dispatch action ',
+      action
+    )
 }
 
 /**
@@ -53,16 +59,10 @@ export const dispatch = action => {
  * @param {Array<string>} params.paths - item store paths to watch for synchronizing with local storage
  * @returns {sessionsState & settingsState & usersState & labelsState & locationsState & modalsState}
  */
-export const useSessionsStore = ({ paths = [] } = {}) => {
+export const useSessionsStore = () => {
   const [ _store, _dispatch ] = useContext(SessionsContext)
-  if (!sessionDispatch) sessionDispatch = _dispatch
-
-  // Need to configure and initialize LocalStorage here. Doing so any earlier would
-  // throw since sessionDispatch would not be assigned yet, and LocalStorage uses
-  // dispatch to sync with the store
-  useEffect(() => void LocalStorage.configure({ paths, dispatch }), [])
-
   store = _store
+  if (!sessionDispatch) sessionDispatch = _dispatch
   return store
 }
 
