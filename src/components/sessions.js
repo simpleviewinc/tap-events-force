@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
-import { useSessionsStore, dispatch } from '../store/sessionsStore'
+import { useSessionsStore } from '../store/sessionsStore'
 import { Button } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { get } from 'jsutils'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
@@ -25,8 +24,6 @@ export const Sessions = props => {
     mapSessionInterface(testData)
   }, [])
 
-  const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)
-
   return (
     <View
       data-class='sessions-main'
@@ -36,9 +33,6 @@ export const Sessions = props => {
         sessions={store.sessions}
         labels={store.labels}
       />
-      <Button onPress={() => toggleTime(is24HourTime)}>
-        Toggle 12-hour/24-hour time
-      </Button>
       <Button
         themePath='button.contained.primary'
         onClick={useCreateModal(
@@ -66,18 +60,4 @@ export const Sessions = props => {
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
-}
-
-// solely for testing - remove later
-const toggleTime = is24HourTime => {
-  dispatch({
-    type: 'UPSERT_ITEM',
-    payload: {
-      category: 'settings',
-      key: 'agendaSettings',
-      item: {
-        militaryTime: !is24HourTime,
-      },
-    },
-  })
 }
