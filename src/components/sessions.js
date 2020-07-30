@@ -18,10 +18,12 @@ import { get } from 'jsutils'
 
 /**
  * SessionComponent
- * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
+ * @param {Object} props
+ * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionData - session agenda props defined in evf interface
+ * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */
 export const Sessions = props => {
-  const { onDayChange = noOp, ...sessionData } = props
+  const { onDayChange = noOp, sessionData } = props
 
   const store = useSessionsStore()
   const theme = useTheme()
@@ -31,7 +33,7 @@ export const Sessions = props => {
   // map the evf props onto our states
   useEffect(() => {
     // Need to call here, after useSessionsStore executes, so that session dispatch function is set.
-    // Also need to configure with our custom dispatch function
+    // Also need to configure with our custom dispatch function, otherwise it would use the core's
     LocalStorage.configure({
       paths: ['settings.agendaSettings.activeDayNumber'],
       dispatch,

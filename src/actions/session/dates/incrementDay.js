@@ -1,6 +1,6 @@
 import { setDay } from './setDay'
 import { getStore } from '../../../store/sessionsStore'
-import { get } from 'jsutils'
+import { get, checkCall } from 'jsutils'
 import { isLatestDay } from 'SVUtils'
 
 /**
@@ -16,6 +16,6 @@ export const incrementDay = (onChange = null) => {
   if (isLatestDay(currentDayNumber, store.agendaDays)) return
 
   const next = currentDayNumber + 1
-  onChange && onChange(next)
+  checkCall(onChange, next)
   setDay(next)
 }

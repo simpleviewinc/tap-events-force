@@ -23,7 +23,6 @@ const getDayString = currentDate =>
  * @param {Function} props.onIncrement -- cb that runs when the increment-day button is pressed
  * @param {Function} props.onDecrement -- cb that runs when the decrement-day button is pressed
  */
-
 export const DayToggle = props => {
   const {
     date = null,

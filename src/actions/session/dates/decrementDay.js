@@ -1,6 +1,6 @@
 import { setDay } from './setDay'
 import { getStore } from '../../../store/sessionsStore'
-import { get } from 'jsutils'
+import { get, checkCall } from 'jsutils'
 
 /**
  * Decrements the active/selected day in the agenda in the store
@@ -14,6 +14,6 @@ export const decrementDay = (onChange = null) => {
   if (currentDay <= 1) return
 
   const nextDay = currentDay - 1
-  onChange && onChange(nextDay)
+  checkCall(onChange, nextDay)
   setDay(nextDay)
 }

@@ -11,7 +11,7 @@ export const SessionsContainer = props => {
     <SessionsProvider>
       <Sessions
         onDayChange={testDayChangeCb}
-        {...testData}
+        sessionData={testData}
       />
     </SessionsProvider>
   )

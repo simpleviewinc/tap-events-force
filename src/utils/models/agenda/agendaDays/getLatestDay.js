@@ -1,7 +1,7 @@
 /**
  * Returns the maximum element as identified by the prop extracted from propSelector
- * @param {*} arr
- * @param {*} propSelector
+ * @param {Array<Object>} arr
+ * @param {Function} propSelector
  * @example
  * const items = [ { num: 1 }, { num: 3 } ]
  * findMax(items, item => item.num) // returns { num: 3 }

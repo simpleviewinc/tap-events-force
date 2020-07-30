@@ -11,9 +11,7 @@ import { items as itemsReducer } from 'SVReducers/items'
 import { runPlugins } from 'SVStore/plugins'
 
 const rootReducer = (state, action) => {
-  console.log('sessions reducer', action)
   const { action: processedAction } = runPlugins({ action })
-  console.log('processed action', processedAction)
   return itemsReducer(state, processedAction)
 }
 
