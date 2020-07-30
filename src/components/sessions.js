@@ -30,7 +30,6 @@ export const Sessions = props => {
 
   store.agendaDays.length && console.log({ store })
 
-  // map the evf props onto our states
   useEffect(() => {
     // Need to call here, after useSessionsStore executes, so that session dispatch function is set.
     // Also need to configure with our custom dispatch function, otherwise it would use the core's
@@ -39,6 +38,7 @@ export const Sessions = props => {
       dispatch,
     })
 
+    // map the evf props onto our states
     mapSessionInterface(sessionData)
   }, [])
 
