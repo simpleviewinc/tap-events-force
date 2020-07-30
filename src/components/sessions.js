@@ -1,23 +1,19 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
-import { useSessionsStore } from '../store/sessionsStore'
-import { Button } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
-import { Values } from 'SVConstants'
-import { useCreateModal } from 'SVHooks/modal'
 import { GridContainer } from 'SVContainers/gridContainer'
 import moment from 'moment'
 import { mapObj } from 'jsutils'
-
+import { useSelector } from 'react-redux'
 /**
- *
+ * Filters the sessions for sessions that start at a given hour
  * @param {Array<import('SVModels/session').Session>} sessions
  * @param {number} hour - any number from 1-24
  */
-const filterSessionByTimeHr = (sessions, hour) => {
+const filterSessionByHour = (sessions, hour) => {
   return sessions.filter(
     session => moment(session.startDateTimeLocal).hour() === hour
   )
@@ -35,14 +31,13 @@ const filterSessionByDayNumber = (sessions, dayNumber) => {
     session => session.dayNumber === dayNumber
   )
 
-  // assume start 6 am && ends at 6 pm. verify with Ben
-  // 1. loop through possible working hours
+  // 1. loop through possible start session hours
   // 2. filter sessions for each hour and store them in kvp
   // resulting obj looks something like
   // {6:[], 7:[sessionA, sessionB, etc], 8:[sessionC, etc]}
   let sessionsFilteredByHour = {}
-  for (let i = 6; i < 18; i++) {
-    sessionsFilteredByHour[i] = filterSessionByTimeHr(filteredSessions, i)
+  for (let i = 1; i < 24; i++) {
+    sessionsFilteredByHour[i] = filterSessionByHour(filteredSessions, i)
   }
   return sessionsFilteredByHour
 }
@@ -51,7 +46,7 @@ const filterSessionByDayNumber = (sessions, dayNumber) => {
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
 export const Sessions = props => {
-  const store = useSessionsStore()
+  const store = useSelector(state => state.items)
   const theme = useTheme()
 
   // map the evf props onto our states
@@ -81,30 +76,6 @@ export const Sessions = props => {
           )
         })
       }
-      <Button
-        themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[0]
-        )}
-        content={'Open Presenter 1 (image + short bio)'}
-      />
-      <Button
-        themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[1]
-        )}
-        content={'open presenter 2 (no image, no bio)'}
-      />
-      <Button
-        themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[2]
-        )}
-        content={'open presenter 3 (long bio text)'}
-      />
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
