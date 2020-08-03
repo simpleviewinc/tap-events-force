@@ -1,5 +1,5 @@
 import { ActionTypes, Values } from 'SVConstants'
-import { dispatch } from '../../../store/sessionsStore'
+import { dispatch } from 'SVStore'
 import { validate, isNum } from 'jsutils'
 const { CATEGORIES } = Values
 

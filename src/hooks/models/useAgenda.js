@@ -1,6 +1,6 @@
-import { get } from 'jsutils'
+import { get, pickKeys } from 'jsutils'
 import { getCurrentDay, getLatestDay, isLatestDay } from 'SVUtils'
-import { useSessionsStore } from '../../store/sessionsStore'
+import { useSelector } from 'SVStore'
 
 /**
  * @function
@@ -12,12 +12,7 @@ export const useAgenda = () => {
   const {
     settings: { agendaSettings = {} },
     agendaDays = [],
-  } = useSessionsStore()
-
-  console.log(
-    'useAgenda dayNumber',
-    getCurrentDay(agendaDays, currentDayNumber)
-  )
+  } = useSelector(({ items }) => pickKeys(items, [ 'settings', 'agendaDays' ]))
 
   const currentDayNumber = get(agendaSettings, 'activeDayNumber')
   const currentAgendaDay = getCurrentDay(agendaDays, currentDayNumber)

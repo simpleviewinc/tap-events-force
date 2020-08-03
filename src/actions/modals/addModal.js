@@ -1,7 +1,6 @@
-// import { dispatch } from 'SVStore' // TODO - add back after rollup config is made
 import { ActionTypes } from 'SVConstants'
 import { Values } from 'SVConstants'
-import { dispatch } from '../../store/sessionsStore'
+import { dispatch } from 'SVStore'
 
 const { CATEGORIES } = Values
 

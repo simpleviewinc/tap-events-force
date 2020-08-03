@@ -1,5 +1,5 @@
 import { setDay } from './setDay'
-import { getStore } from '../../../store/sessionsStore'
+import { getStore } from 'SVStore'
 import { get, checkCall } from 'jsutils'
 import { isLatestDay } from 'SVUtils'
 

@@ -10,7 +10,8 @@ import {
   RenderModals,
 } from 'SVComponents'
 import { LocalStorage } from 'SVStore/plugins'
-import { useSessionsStore, dispatch } from '../store/sessionsStore'
+import { dispatch } from 'SVStore'
+import { useSelector } from 'react-redux'
 import { mapSessionInterface, incrementDay, decrementDay } from 'SVActions'
 import { sortLabels, noOp } from 'SVUtils'
 import { Values } from 'SVConstants'
@@ -25,10 +26,11 @@ import { get } from 'jsutils'
 export const Sessions = props => {
   const { onDayChange = noOp, sessionData } = props
 
-  const store = useSessionsStore()
+  const labels = useSelector(store => store.labels)
+  const agendaSettings = useSelector(store =>
+    get(store, 'settings.agendaSettings')
+  )
   const theme = useTheme()
-
-  store.agendaDays.length && console.log({ store })
 
   useEffect(() => {
     // Need to call here, after useSessionsStore executes, so that session dispatch function is set.
@@ -42,10 +44,8 @@ export const Sessions = props => {
     mapSessionInterface(sessionData)
   }, [])
 
-  console.log(store)
-
-  const labels = useMemo(() => sortLabels(store.labels), [store.labels])
-  const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)
+  const sortedLabels = useMemo(() => sortLabels(labels), [labels])
+  const is24HourTime = get(agendaSettings, 'militaryTime', false)
 
   const {
     currentAgendaDay = {},
@@ -69,7 +69,7 @@ export const Sessions = props => {
       />
 
       <GridItem
-        labels={labels}
+        labels={sortedLabels}
         session={store.sessions[0]}
         militaryTime={is24HourTime}
       />
