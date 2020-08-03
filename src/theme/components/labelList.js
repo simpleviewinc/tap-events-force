@@ -1,21 +1,22 @@
 export const labelList = {
-  main: {
-    $xsmall: {
-      flexDirection: 'column',
-      flex: 1,
-      height: '100%',
-      maxWidth: 14,
-      width: 14,
+  $web: {
+    main: {
+      $xsmall: {
+        flex: 1,
+        flexDirection: 'column',
+        height: '100%',
+        maxWidth: 14,
+      },
+      $small: {
+        flexDirection: 'row',
+        alignContent: 'flex-start',
+        flexWrap: 'wrap',
+        height: 'fit-content',
+        maxWidth: '100%',
+      },
     },
-    $small: {
-      flexDirection: 'row',
-      alignContent: 'flex-start',
-      flexWrap: 'wrap',
-      minWidth: '100%',
-      flexBasis: 1,
+    item: {
+      $xsmall: {},
     },
-  },
-  item: {
-    $xsmall: {},
   },
 }

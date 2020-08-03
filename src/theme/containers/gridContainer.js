@@ -1,7 +1,6 @@
 export const gridContainer = {
   main: {
     $xsmall: {
-      flex: 1,
       justifyContent: 'center',
     },
     $small: {
@@ -46,7 +45,6 @@ export const gridContainer = {
     },
     items: {
       $xsmall: {
-        flex: 1,
         flexWrap: 'wrap',
         flexDirection: 'column',
       },
