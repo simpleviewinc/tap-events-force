@@ -26,11 +26,18 @@ import { get } from 'jsutils'
 export const Sessions = props => {
   const { onDayChange = noOp, sessionData } = props
 
-  const labels = useSelector(store => store.labels)
-  const agendaSettings = useSelector(store =>
-    get(store, 'settings.agendaSettings')
-  )
   const theme = useTheme()
+
+  // store data
+  const labels = useSelector(({ items }) => items.labels)
+  const agendaSettings = useSelector(({ items }) =>
+    get(items, 'settings.agendaSettings')
+  )
+  const sessions = useSelector(({ items }) => items.sessions)
+  const presenters = useSelector(({ items }) => items.presenters)
+  const attendees = useSelector(({ items }) => items.attendees)
+  const activeSession = useSelector(({ items }) => items.activeSession)
+  const modals = useSelector(({ items }) => items.modals)
 
   useEffect(() => {
     // Need to call here, after useSessionsStore executes, so that session dispatch function is set.
@@ -70,40 +77,31 @@ export const Sessions = props => {
 
       <GridItem
         labels={sortedLabels}
-        session={store.sessions[0]}
+        session={sessions[0]}
         militaryTime={is24HourTime}
       />
-      <Text>Active session id: { store.activeSession.id }</Text>
-      <Text>Sessions count: { store.sessions.length }</Text>
-      <Text>Attendees count: { store.attendees.length }</Text>
+      <Text>Active session id: { activeSession.id }</Text>
+      <Text>Sessions count: { sessions.length }</Text>
+      <Text>Attendees count: { attendees.length }</Text>
       <Button onPress={() => toggleTime(is24HourTime)}>
         Toggle 12-hour/24-hour time
       </Button>
       <Button
         themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[0]
-        )}
+        onClick={useCreateModal(Values.MODAL_TYPES.PRESENTER, presenters[0])}
         content={'Open Presenter 1 (image + short bio)'}
       />
       <Button
         themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[1]
-        )}
+        onClick={useCreateModal(Values.MODAL_TYPES.PRESENTER, presenters[1])}
         content={'open presenter 2 (no image, no bio)'}
       />
       <Button
         themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[2]
-        )}
+        onClick={useCreateModal(Values.MODAL_TYPES.PRESENTER, presenters[2])}
         content={'open presenter 3 (long bio text)'}
       />
-      { store.modals.length > 0 && RenderModals(store.modals) }
+      { modals.length > 0 && RenderModals(modals) }
     </View>
   )
 }

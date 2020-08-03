@@ -1,6 +1,6 @@
 import { get, pickKeys } from 'jsutils'
 import { getCurrentDay, getLatestDay, isLatestDay } from 'SVUtils'
-import { useSelector } from 'SVStore'
+import { useSelector } from 'react-redux'
 
 /**
  * @function
