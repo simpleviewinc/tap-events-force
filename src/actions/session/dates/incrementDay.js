@@ -8,12 +8,11 @@ import { isLatestDay } from 'SVUtils'
  * @param {Function?} onChange - optional callback of form (nextDay) => {...}
  */
 export const incrementDay = (onChange = null) => {
-  const store = getStore()
-
-  const currentDayNumber = get(store, 'settings.agendaSettings.activeDayNumber')
+  const { items } = getStore().getState()
+  const currentDayNumber = get(items, 'settings.agendaSettings.activeDayNumber')
 
   // only increment the day if there are days in the agenda later than the current one
-  if (isLatestDay(currentDayNumber, store.agendaDays)) return
+  if (isLatestDay(currentDayNumber, items.agendaDays)) return
 
   const next = currentDayNumber + 1
   checkCall(onChange, next)

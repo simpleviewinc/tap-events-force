@@ -24,6 +24,7 @@ export const setDay = newDayNumber => {
       category: CATEGORIES.SETTINGS,
       key: 'agendaSettings',
       item: { activeDayNumber: newDayNumber },
+      persist: true,
     },
   })
 }

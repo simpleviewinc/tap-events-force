@@ -9,7 +9,6 @@ import {
   Button,
   RenderModals,
 } from 'SVComponents'
-import { LocalStorage } from 'SVStore/plugins'
 import { dispatch } from 'SVStore'
 import { useSelector } from 'react-redux'
 import { mapSessionInterface, incrementDay, decrementDay } from 'SVActions'
@@ -30,26 +29,16 @@ export const Sessions = props => {
 
   // store data
   const labels = useSelector(({ items }) => items.labels)
-  const agendaSettings = useSelector(({ items }) =>
-    get(items, 'settings.agendaSettings')
-  )
   const sessions = useSelector(({ items }) => items.sessions)
   const presenters = useSelector(({ items }) => items.presenters)
   const attendees = useSelector(({ items }) => items.attendees)
   const activeSession = useSelector(({ items }) => items.activeSession)
   const modals = useSelector(({ items }) => items.modals)
+  const agendaSettings = useSelector(({ items }) =>
+    get(items, 'settings.agendaSettings')
+  )
 
-  useEffect(() => {
-    // Need to call here, after useSessionsStore executes, so that session dispatch function is set.
-    // Also need to configure with our custom dispatch function, otherwise it would use the core's
-    LocalStorage.configure({
-      paths: ['settings.agendaSettings.activeDayNumber'],
-      dispatch,
-    })
-
-    // map the evf props onto our states
-    mapSessionInterface(sessionData)
-  }, [])
+  useEffect(() => void mapSessionInterface(sessionData), [])
 
   const sortedLabels = useMemo(() => sortLabels(labels), [labels])
   const is24HourTime = get(agendaSettings, 'militaryTime', false)

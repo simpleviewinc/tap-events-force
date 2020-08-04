@@ -15,12 +15,16 @@ import { ContainerRoutes } from 'SVNavigation/containerRoutes'
 import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
 import { isNative } from 'SVUtils/platform'
+import { loadFromLocalStorage } from 'SVUtils/storage'
 
 setDefaultTheme(theme)
+
+const localStorageKeys = ['settings.agendaSettings.activeDayNumber']
 
 const checkAppInit = setInit => {
   setInit(true)
   checkCall(initAppAction)
+  localStorageKeys.map(path => loadFromLocalStorage({ path }))
 }
 
 /* This is only a temp solution for now. The page should already have this font */
@@ -31,7 +35,8 @@ const App = props => {
   const [ init, setInit ] = useState(false)
 
   useEffect(() => {
-    !init && checkAppInit(setInit)
+    if (init) return
+    checkAppInit(setInit)
   })
 
   return (

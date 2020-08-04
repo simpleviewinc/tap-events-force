@@ -7,8 +7,8 @@ import { get, checkCall } from 'jsutils'
  * @param {Function?} onChange - optional callback of form (nextDay) => {...}
  */
 export const decrementDay = (onChange = null) => {
-  const store = getStore()
-  const currentDay = get(store, 'settings.agendaSettings.activeDayNumber', 0)
+  const { items } = getStore().getState()
+  const currentDay = get(items, 'settings.agendaSettings.activeDayNumber', 0)
 
   // only decrement the day if we are not on the first day of the agenda
   if (currentDay <= 1) return
