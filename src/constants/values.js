@@ -35,4 +35,13 @@ export const Values = deepFreeze({
     PERSON: 'person',
     GROUP: 'group',
   },
+
+  /**
+   * Local storage keys used to identify the values to load from local storage, if present.
+   * Should follow the form: <category>.<key>.<properties (optional)>, where category and
+   * key refer to the category and key of the items store in which the value resides.
+   *
+   * On init these will be loaded into the items store tree with the specified category and key.
+   */
+  LOCAL_STORAGE_KEYS: ['settings.agendaSettings.activeDayNumber'],
 })
