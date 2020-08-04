@@ -1,1 +1,2 @@
-export * from './filterSessionByDayNumber'
+export * from './buildHourSessionsMap'
+export * from './sortSessions'

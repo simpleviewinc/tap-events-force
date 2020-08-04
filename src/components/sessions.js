@@ -6,9 +6,10 @@ import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
 import { GridContainer } from 'SVContainers/gridContainer'
 import moment from 'moment'
-import { mapObj } from 'jsutils'
+import { mapObj, get } from 'jsutils'
 import { useSelector } from 'react-redux'
-import { filterSessionByDayNumber } from 'SVUtils'
+import { buildHourSessionsMap } from 'SVUtils'
+import { useQuery } from 'SVHooks'
 
 /**
  * SessionComponent
@@ -18,13 +19,19 @@ export const Sessions = props => {
   const store = useSelector(state => state.items)
   const theme = useTheme()
 
+  // TODO: remove 'useQuery' once day switcher is implemented
+  const query = useQuery()
+  const sessionsMap = buildHourSessionsMap(
+    store.sessions,
+    get(query, 'day') || 1
+  )
+
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
     mapSessionInterface(testData)
   }, [])
 
-  const filteredSessions = filterSessionByDayNumber(store.sessions, 2)
   return (
     <View
       data-class='sessions-main'
@@ -32,7 +39,7 @@ export const Sessions = props => {
     >
       {
         // creates a gridContainer separated by hour blocks
-        mapObj(filteredSessions, (key, sessions) => {
+        mapObj(sessionsMap, (key, sessions) => {
           return (
             <GridContainer
               key={key}
