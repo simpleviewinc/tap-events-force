@@ -5,8 +5,8 @@ import { mapObj } from 'jsutils'
 describe('buildHourSessionsMap', () => {
   it('should filter on day 1', () => {
     const map = buildHourSessionsMap(testData.sessions, 1)
-    expect(map[9].length).toEqual(1)
-    expect(map[13].length).toEqual(1)
+    expect(map['09:00'].length).toEqual(1)
+    expect(map['13:00'].length).toEqual(1)
   })
 
   it('should return the map with empty array for values', () => {

@@ -5,7 +5,6 @@ import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
 import { GridContainer } from 'SVContainers/gridContainer'
-import moment from 'moment'
 import { mapObj, get } from 'jsutils'
 import { useSelector } from 'react-redux'
 import { buildHourSessionsMap } from 'SVUtils'
@@ -23,7 +22,7 @@ export const Sessions = props => {
   const query = useQuery()
   const sessionsMap = buildHourSessionsMap(
     store.sessions,
-    get(query, 'day') || 1
+    get(query, 'day') || 2
   )
 
   // map the evf props onto our states
@@ -34,7 +33,7 @@ export const Sessions = props => {
 
   return (
     <View
-      data-class='sessions-main'
+      dataSet={Sessions.dataSet.main}
       style={theme.get('sessions.main')}
     >
       {
@@ -45,8 +44,7 @@ export const Sessions = props => {
               key={key}
               sessions={sessions}
               labels={store.labels}
-              timeBlock={moment().hour(key)
-                .format('HH:00')}
+              timeBlock={key}
             />
           )
         })
@@ -54,4 +52,8 @@ export const Sessions = props => {
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
+}
+
+Sessions.dataSet = {
+  main: { class: 'sessions-main' },
 }
