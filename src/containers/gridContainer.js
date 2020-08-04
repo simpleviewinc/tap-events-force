@@ -35,12 +35,13 @@ export const GridContainer = props => {
   return (
     <View
       style={gridStyles.main}
-      data-class={`grid-container-main-hr-${timeBlock}`}
+      dataSet={GridContainer.dataSet.main(timeBlock)}
     >
       {
         // only display the time header on web styles
         !isMobileSize(theme) && (
           <AppHeader
+            dataSet={GridContainer.dataSet.content.header}
             styles={gridStyles.content.header}
             LeftComponent={
               <LeftHeaderText
@@ -52,7 +53,7 @@ export const GridContainer = props => {
         )
       }
       <View
-        data-class='grid-container-content-items'
+        dataSet={GridContainer.dataSet.content.items}
         style={gridStyles.content.items}
       >
         { sessions &&
@@ -67,4 +68,14 @@ export const GridContainer = props => {
       </View>
     </View>
   )
+}
+
+GridContainer.dataSet = {
+  main: timeBlock => {
+    return { class: `grid-container-main-${timeBlock}` }
+  },
+  content: {
+    header: { class: 'grid-container-content-header' },
+    items: { class: 'grid-container-content-items' },
+  },
 }
