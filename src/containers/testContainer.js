@@ -22,10 +22,7 @@ export const TestContainer = withAppHeader('TestContainer', props => {
     mapSessionInterface(testData)
   }, [])
   return (
-    <View
-      data-class='sessions-main'
-      style={theme.get('sessions.main')}
-    >
+    <View style={theme.get('sessions.main')}>
       <Button
         themePath='button.contained.primary'
         onClick={useCreateModal(
