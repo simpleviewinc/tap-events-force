@@ -28,7 +28,7 @@ export const LabelList = props => {
 
   return (
     <View
-      data-class='label-list-main'
+      dataSet={LabelList.dataSet.main}
       style={listStyles}
     >
       { labels.map(label => (
@@ -49,4 +49,7 @@ LabelList.propTypes = {
   labels: PropTypes.arrayOf(PropTypes.object),
   LabelComponent: PropTypes.elementType,
   onItemPress: PropTypes.func,
+}
+LabelList.dataSet = {
+  main: { class: 'label-list-main' },
 }
