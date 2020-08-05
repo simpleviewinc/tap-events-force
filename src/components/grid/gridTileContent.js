@@ -36,13 +36,16 @@ export const GridTileContent = props => {
         onItemPress={onLabelPress}
       />
 
-      { /* TODO: placeholder text to verify item ordering */ }
-      <View style={{ flex: 1, paddingTop: 10 }}>
+      { /* TODO: remove later - placeholder text to verify item ordering */ }
+      <View style={placeholderStyle}>
         <Text>{ session.name }</Text>
       </View>
     </View>
   )
 }
+
+// TODO: remove after grid Item is implemented
+const placeholderStyle = { flex: 1, paddingTop: 10 }
 
 GridTileContent.propTypes = {
   labels: PropTypes.array,
