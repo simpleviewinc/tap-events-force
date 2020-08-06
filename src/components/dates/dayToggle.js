@@ -7,8 +7,8 @@ import { noOp } from 'SVUtils'
 import moment from 'moment'
 
 /**
- * Formats the agenda day's date into a string of the form D MMMM YYYY
- * @param {*} agendaDay
+ * Formats the date into a string of the form D MMMM YYYY
+ * @param {string} currentDate - current date string
  */
 const getDayString = currentDate =>
   currentDate ? moment(currentDate).format('D MMMM YYYY') : 'N/A'
@@ -36,19 +36,24 @@ export const DayToggle = props => {
   const theme = useTheme()
 
   return (
-    <View style={theme.get('dayToggle.main')}>
+    <View
+      dataSet={DayToggle.dataSet.main}
+      style={theme.get('dayToggle.main')}
+    >
       <UpdateDayButton
+        dataSet={DayToggle.dataSet.content.decrement}
         style={theme.get('dayToggle.decrementIcon')}
         type={'decrement'}
         disabled={disableDecrement}
         onDayChange={onDecrement}
       />
 
-      <Text>
+      <Text dataSet={DayToggle.dataSet.content.text}>
         Day { dayNumber } – { getDayString(date) }
       </Text>
 
       <UpdateDayButton
+        dataSet={DayToggle.dataSet.content.increment}
         type={'increment'}
         style={theme.get('dayToggle.incrementIcon')}
         disabled={disableIncrement}
@@ -58,3 +63,11 @@ export const DayToggle = props => {
   )
 }
 DayToggle.propTypes = {}
+DayToggle.dataSet = {
+  main: { class: 'day-toggle-main' },
+  content: {
+    decrement: { class: 'day-toggle-decrement' },
+    text: { class: 'day-toggle-text' },
+    increment: { class: 'day-toggle-increment' },
+  },
+}

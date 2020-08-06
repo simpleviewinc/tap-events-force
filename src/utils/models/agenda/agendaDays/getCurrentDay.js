@@ -1,6 +1,6 @@
 /**
  * Returns the agenda day with the matching active day number
- * @param {Array<AgendaDay>} agendaDays
+ * @param {Array.<import('SVModels/agendaDay').AgendaDay>} agendaDays
  * @param {Number} activeDayNumber
  */
 export const getCurrentDay = (agendaDays = [], activeDayNumber) =>

@@ -1,9 +1,14 @@
 import { ActionTypes, Values } from 'SVConstants'
 import { dispatch } from 'SVStore'
-import { validate, isPositive, set } from 'jsutils'
-const { CATEGORIES } = Values
+import { validate, isPositive } from 'jsutils'
+const { CATEGORIES, SUB_CATEGORIES } = Values
 
-const persistFlag = set({}, 'localStorage.persist', true)
+// plugin config that commands the localStorage plugin to persist the active day number
+const pluginConfig = {
+  localStorage: {
+    persist: `${CATEGORIES.SETTINGS}.${SUB_CATEGORIES.AGENDA_SETTINGS}.activeDayNumber`,
+  },
+}
 
 /**
  * Sets the current, actively-selected day in the agenda
@@ -17,9 +22,9 @@ export const setDay = newDayNumber => {
     type: ActionTypes.UPSERT_ITEM,
     payload: {
       category: CATEGORIES.SETTINGS,
-      key: 'agendaSettings',
+      key: SUB_CATEGORIES.AGENDA_SETTINGS,
       item: { activeDayNumber: newDayNumber },
-      plugins: persistFlag,
+      plugins: pluginConfig,
     },
   })
 }

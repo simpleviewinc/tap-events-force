@@ -34,6 +34,7 @@ export const UpdateDayButton = ({
 
   return (
     <TouchableIcon
+      dataSet={UpdateDayButton.dataSet.main}
       styles={iconStyles}
       name={iconName}
       onPress={onDayChange}
@@ -44,4 +45,8 @@ export const UpdateDayButton = ({
 UpdateDayButton.propTypes = {
   type: PropTypes.oneOf([ 'increment', 'decrement' ]),
   disabled: PropTypes.bool,
+}
+
+UpdateDayButton.dataSet = {
+  main: { class: 'update-day-button-main' },
 }
