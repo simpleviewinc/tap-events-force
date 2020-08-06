@@ -1,7 +1,9 @@
 import { ActionTypes, Values } from 'SVConstants'
 import { dispatch } from 'SVStore'
-import { validate, isPositive } from 'jsutils'
+import { validate, isPositive, set } from 'jsutils'
 const { CATEGORIES } = Values
+
+const persistFlag = set({}, 'localStorage.persist', true)
 
 /**
  * Sets the current, actively-selected day in the agenda
@@ -17,7 +19,7 @@ export const setDay = newDayNumber => {
       category: CATEGORIES.SETTINGS,
       key: 'agendaSettings',
       item: { activeDayNumber: newDayNumber },
-      persist: true,
+      plugins: persistFlag,
     },
   })
 }

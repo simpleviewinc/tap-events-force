@@ -19,7 +19,6 @@ const formatTime = (time, military = true) =>
  */
 export const SessionTime = props => {
   const { style = {}, start, end, military = true } = props
-  console.log({ style })
   const theme = useTheme()
   const clockStyle = theme.get('sessionTime.clockIcon')
   const textStyle = theme.get('sessionTime.timeText')
