@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { sortSessions } from './sortSessions'
-import { mapObj } from 'jsutils'
+import { reduceObj } from 'jsutils'
 
 /**
  * Filters the sessions given a day number
@@ -11,23 +11,21 @@ import { mapObj } from 'jsutils'
  *                   - ex: {6:[], 7:[sessionA, sessionB, etc], 8:[sessionC, etc]}
  */
 export const buildHourSessionsMap = (sessions, dayNumber, asc) => {
-  // 1. filter for sessions on the given day number
-  const filteredSessions = sessions.filter(
-    session => session.dayNumber == dayNumber
-  )
+  // Filter out the sessions not matching the day
+  // Group them by hour
+  const sessionsMapping = sessions.reduce((mapped, session) => {
+    if (session.dayNumber !== dayNumber) return mapped
 
-  // 2. start Mapping by start time HH:mm
-  const sessionsMapping = {}
-  filteredSessions.map(session => {
     const timeStr = moment(session.startDateTimeLocal).format('HH:mm')
     // create an array or append to existing list
-    sessionsMapping[timeStr] = (sessionsMapping[timeStr] || []).concat(session)
-  })
+    mapped[timeStr] = (mapped[timeStr] || []).concat(session)
 
-  // 3. sort results
-  mapObj(sessionsMapping, (key, val) => {
-    sessionsMapping[key] = sortSessions(val, asc)
-  })
+    return mapped
+  }, {})
 
-  return sessionsMapping
+  // Sort the mapped sessiosn based on their value
+  return reduceObj(sessionsMapping, (key, val, mapping) => {
+    mapping[key] = sortSessions(val, asc)
+    return mapping
+  })
 }

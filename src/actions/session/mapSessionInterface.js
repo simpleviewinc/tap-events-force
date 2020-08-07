@@ -20,18 +20,15 @@ const subCatMap = {
 const mapAgendaSessions = (sessions, agendaDays) => {
   if (!sessions || !agendaDays) return
 
-  let agendaSessions = {}
   // object will look something like:
   // {
   //   1: {9:00: [session1, session2], 10:00: []} //day 1
   //   2: {9:15: [session]}, //day 2
   // }
-  agendaDays.map(agendaDay => {
-    agendaSessions[agendaDay.dayNumber] = buildHourSessionsMap(
-      sessions,
-      agendaDay.dayNumber
-    )
-  })
+  const agendaSessions = agendaDays.reduce((map, nextDay) => {
+    map[nextDay.dayNumber] = buildHourSessionsMap(sessions, nextDay.dayNumber)
+    return map
+  }, {})
 
   dispatch({
     type: ActionTypes.UPSERT_ITEMS,

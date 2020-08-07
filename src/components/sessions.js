@@ -6,7 +6,7 @@ import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { mapObj, get } from 'jsutils'
-import { useSelector } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux'
 import { useQuery } from 'SVHooks'
 
 /**
@@ -14,11 +14,14 @@ import { useQuery } from 'SVHooks'
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
 export const Sessions = props => {
-  const store = useSelector(({ items }) => ({
-    agendaSessions: items.agendaSessions,
-    labels: items.labels,
-    modals: items.modals,
-  }))
+  const store = useSelector(
+    ({ items }) => ({
+      agendaSessions: items.agendaSessions,
+      labels: items.labels,
+      modals: items.modals,
+    }),
+    shallowEqual
+  )
 
   const theme = useTheme()
 
