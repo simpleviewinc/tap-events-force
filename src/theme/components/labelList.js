@@ -2,7 +2,6 @@ export const labelList = {
   $web: {
     main: {
       $xsmall: {
-        flex: 1,
         flexDirection: 'column',
         height: '100%',
         maxWidth: 14,
@@ -13,6 +12,7 @@ export const labelList = {
         flexWrap: 'wrap',
         height: 'fit-content',
         maxWidth: '100%',
+        flexBasis: 'auto',
       },
     },
     item: {

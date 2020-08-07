@@ -3,8 +3,7 @@ export const gridItem = {
     $xsmall: {
       flex: 1,
       backgroundColor: '#fefffe',
-      height: 90,
-      flexBasis: 200,
+      height: 200,
       marginBottom: 15,
       flexDirection: 'row',
       alignItems: 'flex-start',
