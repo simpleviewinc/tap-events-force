@@ -12,6 +12,7 @@ export const sessions = {
   dayToggle: {
     main: {
       marginBottom: 15,
+      alignSelf: 'center',
     },
   },
 }
