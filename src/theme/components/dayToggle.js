@@ -2,17 +2,16 @@ export const dayToggle = {
   main: {
     flexDirection: 'row',
     alignItems: 'center',
-    maxWidth: 300,
+    justifyContent: 'space-between',
+    width: 300,
   },
   content: {},
   decrementIcon: {
-    main: {
-      marginRight: 10,
-    },
+    main: {},
   },
   incrementIcon: {
     main: {
-      marginLeft: 12,
+      marginLeft: 3,
     },
   },
   icon: {},
