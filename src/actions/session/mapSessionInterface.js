@@ -13,21 +13,21 @@ const subCatMap = {
 }
 
 /**
- * map activeSessions using sessions and agenda day numbers
+ *  map AgendaSessions using sessions and agenda day numbers
  * @param {Array<import('SVModels/session').Session>} sessions
  * @param {Array} agendaDays
  */
-const mapActiveSessions = (sessions, agendaDays) => {
+const mapAgendaSessions = (sessions, agendaDays) => {
   if (!sessions || !agendaDays) return
 
-  let activeSessions = {}
-  // object will look somlething like:
+  let agendaSessions = {}
+  // object will look something like:
   // {
   //   1: {9:00: [session1, session2], 10:00: []} //day 1
   //   2: {9:15: [session]}, //day 2
   // }
   agendaDays.map(agendaDay => {
-    activeSessions[agendaDay.dayNumber] = buildHourSessionsMap(
+    agendaSessions[agendaDay.dayNumber] = buildHourSessionsMap(
       sessions,
       agendaDay.dayNumber
     )
@@ -36,8 +36,8 @@ const mapActiveSessions = (sessions, agendaDays) => {
   dispatch({
     type: ActionTypes.UPSERT_ITEMS,
     payload: {
-      category: CATEGORIES.ACTIVE_SESSIONS,
-      items: activeSessions,
+      category: CATEGORIES.AGENDA_SESSIONS,
+      items: agendaSessions,
     },
   })
 }
@@ -61,7 +61,7 @@ export const mapSessionInterface = props => {
         // while mapping sessions, also map for 'activeSessions'
         // activeSessions are sessions sorted by day number
         if (key === CATEGORIES.SESSIONS)
-          mapActiveSessions(value, props.agendaDays)
+          mapAgendaSessions(value, props.agendaDays)
 
         // certain props need to be mapped to a specific key
         if (subCatMap[key]) {

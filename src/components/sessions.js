@@ -14,7 +14,12 @@ import { useQuery } from 'SVHooks'
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
 export const Sessions = props => {
-  const store = useSelector(state => state.items)
+  const store = useSelector(({ items }) => ({
+    agendaSessions: items.agendaSessions,
+    labels: items.labels,
+    modals: items.modals,
+  }))
+
   const theme = useTheme()
 
   // TODO: remove 'useQuery' once day switcher is implemented
@@ -34,7 +39,7 @@ export const Sessions = props => {
       {
         // creates a gridContainer separated by hour blocks
         mapObj(
-          store.activeSessions[get(query, 'day') || 2],
+          store.agendaSessions[get(query, 'day') || 2],
           (key, sessions) => {
             return (
               <GridContainer
