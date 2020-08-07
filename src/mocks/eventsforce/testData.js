@@ -1,12 +1,23 @@
 import { longText } from '../text'
 
 export default {
+  agendaDays: [
+    {
+      dayNumber: 1,
+      date: '2020-07-17',
+    },
+    {
+      dayNumber: 2,
+      date: '2020-07-18',
+    },
+    {
+      dayNumber: 3,
+      date: '2020-07-19',
+    },
+  ],
   settings: {
     showLocationInAgenda: true,
     showPresentersInAgenda: true,
-    someFunc: () => {
-      console.log('settings function')
-    },
   },
   presenters: [
     {
