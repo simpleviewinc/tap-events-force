@@ -7,18 +7,22 @@ import PropTypes from 'prop-types'
 
 /**
  * A touchable chevron icon that changes direction based on type
- * @param {Object} params
- * @param {string} params.type - one of ['decrement', 'increment'] - shows a left icon with 'decrement', and a 'right' icon with 'increment'
- * @param {Object} params.style - optional styles to override defaults { main: {}, content: {} }
- * @param {boolean} params.disabled - true if the button should be disabled
- * @param {Function} params.onDayChange - callback executed when the day changes
+ * @param {Object} props
+ * @param {string?} [props.type='increment'] - one of ['decrement', 'increment'] - shows a left icon with 'decrement', and a 'right' icon with 'increment'
+ * @param {Object?} [props.style={}] - optional styles to override defaults { main: {}, content: {} }
+ * @param {boolean?} [props.disabled=false] - true if the button should be disabled
+ * @param {Function?} props.onDayChange - callback executed when the day changes
+ * @param {object?} props.dataSet - dataSet object that can contain a class key for identification in tests
  */
-export const UpdateDayButton = ({
-  type = 'increment',
-  style = {},
-  disabled = false,
-  onDayChange,
-}) => {
+export const UpdateDayButton = props => {
+  const {
+    type = 'increment',
+    style = {},
+    disabled = false,
+    onDayChange,
+    dataSet = UpdateDayButton.dataSet.main,
+  } = props
+
   const theme = useTheme()
 
   const dynamicStyles = {
@@ -35,7 +39,7 @@ export const UpdateDayButton = ({
 
   return (
     <TouchableIcon
-      dataSet={UpdateDayButton.dataSet.main}
+      dataSet={dataSet}
       Element={EVFIcons}
       styles={iconStyles}
       name={iconName}
