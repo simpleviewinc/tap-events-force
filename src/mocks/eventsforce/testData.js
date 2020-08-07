@@ -12,7 +12,7 @@ export default {
     },
     {
       dayNumber: 4,
-      date: '2020-9-20',
+      date: '2020-09-20',
     },
   ],
   settings: {
