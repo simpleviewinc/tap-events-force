@@ -1,14 +1,23 @@
 export const dayToggle = {
   main: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: 250,
+    alignItems: 'center',
+    maxWidth: 300,
   },
   content: {},
   decrementIcon: {
-    main: {},
+    main: {
+      marginRight: 10,
+    },
   },
   incrementIcon: {
-    main: {},
+    main: {
+      marginLeft: 12,
+    },
+  },
+  icon: {},
+  text: {
+    textDecorationLine: 'underline',
+    marginBottom: 1,
   },
 }

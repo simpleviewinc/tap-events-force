@@ -31,6 +31,7 @@ export const DayToggle = props => {
     disableIncrement = false,
     onIncrement = noOp,
     onDecrement = noOp,
+    style = {},
   } = props
 
   const theme = useTheme()
@@ -38,7 +39,7 @@ export const DayToggle = props => {
   return (
     <View
       dataSet={DayToggle.dataSet.main}
-      style={theme.get('dayToggle.main')}
+      style={theme.get('dayToggle.main', style.main)}
     >
       <UpdateDayButton
         dataSet={DayToggle.dataSet.content.decrement}
@@ -48,7 +49,7 @@ export const DayToggle = props => {
         onDayChange={onDecrement}
       />
 
-      <Text dataSet={DayToggle.dataSet.content.text}>
+      <Text style={theme.get('dayToggle.text')}>
         Day { dayNumber } – { getDayString(date) }
       </Text>
 

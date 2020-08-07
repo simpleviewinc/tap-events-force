@@ -9,4 +9,9 @@ export const sessions = {
       padding: 50,
     },
   },
+  dayToggle: {
+    main: {
+      marginBottom: 15,
+    },
+  },
 }

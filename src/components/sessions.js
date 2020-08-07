@@ -56,6 +56,7 @@ export const Sessions = props => {
   return (
     <View style={theme.get('sessions.main')}>
       <DayToggle
+        style={theme.get('sessions.dayToggle')}
         date={get(currentAgendaDay, 'date')}
         dayNumber={currentDayNumber}
         disableDecrement={isFirstDay}

@@ -2,6 +2,7 @@ import React from 'react'
 import { TouchableIcon } from 'SVComponents'
 import { useThemeMemo } from 'SVHooks'
 import { useTheme } from '@simpleviewinc/re-theme'
+import { EVFIcons } from 'SVFonts'
 import PropTypes from 'prop-types'
 
 /**
@@ -30,14 +31,16 @@ export const UpdateDayButton = ({
     disabled,
   ])
 
-  const iconName = `chevron-${type === 'decrement' ? 'left' : 'right'}`
+  const iconName = `chevron${type === 'decrement' ? 'Left' : 'Right'}`
 
   return (
     <TouchableIcon
       dataSet={UpdateDayButton.dataSet.main}
+      Element={EVFIcons}
       styles={iconStyles}
       name={iconName}
       onPress={onDayChange}
+      size={16}
     />
   )
 }
