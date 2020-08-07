@@ -27,7 +27,7 @@ const LeftHeaderText = ({ timeString, style }) => {
  */
 export const GridContainer = props => {
   const { sessions, labels, timeBlock } = props
-  if (!sessions.length) return null
+  if (!sessions || !sessions.length) return null
 
   const theme = useTheme()
   const gridStyles = theme.get('gridContainer')
@@ -35,7 +35,9 @@ export const GridContainer = props => {
   return (
     <View
       style={gridStyles.main}
-      dataSet={GridContainer.dataSet.main(timeBlock)}
+      dataSet={useMemo(() => GridContainer.dataSet.main(timeBlock), [
+        timeBlock,
+      ])}
     >
       {
         // only display the time header on web styles

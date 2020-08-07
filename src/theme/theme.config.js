@@ -4,7 +4,7 @@ import { setSizes } from '@simpleviewinc/re-theme'
 // used in theme definitions
 const sizes = {
   $xsmall: 1,
-  $small: 481,
+  $small: 480,
   $medium: 768,
   $large: 1024,
   $xlarge: 1366,
