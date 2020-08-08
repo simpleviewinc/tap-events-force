@@ -19,8 +19,8 @@ export const PresenterDetails = props => {
   // 2. modal has been removed from the store
   const [ mount, setMount ] = useState(true)
   const theme = useTheme()
-  const viewHeight = theme.RTMeta.height
-  const maxHeight = viewHeight <= modalMaxHeight ? '90%' : modalMaxHeight
+  const dim = useDimensions()
+  const maxHeight = dim.height <= modalMaxHeight ? '90%' : modalMaxHeight
 
   const presenterStyles = theme.get('modal.presenter') || {}
   const title = `${presenter.title} ${presenter.firstname} ${presenter.lastname}`
@@ -74,6 +74,7 @@ const Header = ({ title, styles, setMount }) => {
 }
 
 const contentMaxHeights = {
+  h50: { maxHeight: 50 },
   h100: { maxHeight: 100 },
   h200: { maxHeight: 200 },
 }
@@ -89,7 +90,9 @@ const Body = ({ presenter, styles }) => {
   const bioContentStyle =
     dim.height <= modalMaxHeight
       ? dim.height <= 600
-          ? contentMaxHeights.h100
+          ? dim.height <= 350
+              ? contentMaxHeights.h50
+              : contentMaxHeights.h100
           : contentMaxHeights.h200
       : styles.row2.content
 
