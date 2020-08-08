@@ -1,17 +1,21 @@
 export const gridItem = {
   main: {
     $xsmall: {
+      flex: 1,
       backgroundColor: '#fefffe',
-      height: 100,
-      maxWidth: 330,
+      height: 200,
+      marginBottom: 15,
       flexDirection: 'row',
       alignItems: 'flex-start',
     },
     $small: {
+      marginHorizontal: 3,
+      marginBottom: 6,
       padding: 15,
       paddingTop: 20,
+      flexBasis: 333,
       flexDirection: 'column',
-      height: 294,
+      minHeight: 294,
     },
   },
   sessionTime: {
@@ -34,10 +38,10 @@ export const gridItem = {
     main: {
       $xsmall: {
         marginRight: 14,
+        flex: 1,
       },
       $small: {
         marginRight: 0,
-        width: '100%',
       },
     },
   },

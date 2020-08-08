@@ -1,12 +1,23 @@
 import { longText } from '../text'
 
 export default {
+  agendaDays: [
+    {
+      dayNumber: 1,
+      date: '2020-07-17',
+    },
+    {
+      dayNumber: 2,
+      date: '2020-07-18',
+    },
+    {
+      dayNumber: 3,
+      date: '2020-07-19',
+    },
+  ],
   settings: {
     showLocationInAgenda: true,
     showPresentersInAgenda: true,
-    someFunc: () => {
-      console.log('settings function')
-    },
   },
   presenters: [
     {
@@ -149,6 +160,26 @@ export default {
       },
     },
     {
+      identifier: '3a',
+      name: 'Session on day 2 limited capacity, no waiting list',
+      summary: '',
+      dayNumber: 2,
+      startDateTimeLocal: '2020-08-04 09:15:00',
+      endDateTimeLocal: '2020-08-04 09:30:00',
+      presenterIdentifiers: [],
+      labelIdentifiers: [],
+      locationIdentifier: '2',
+      requiresBooking: false,
+      liveVideoUrl: '',
+      recordedVideoUrl: '',
+      restrictToAttendeeCategories: [],
+      capacity: {
+        isUnlimited: false,
+        remainingPlaces: 3,
+        isWaitingListAvailable: false,
+      },
+    },
+    {
       identifier: '4',
       name: 'Session on day 2 limited capacity, has waiting list',
       summary: '',
@@ -189,7 +220,7 @@ export default {
       },
     },
     {
-      identifier: '5',
+      identifier: '6',
       name: 'Session on day 2 restricted to attendee category',
       summary: '',
       dayNumber: 2,
@@ -204,6 +235,104 @@ export default {
       restrictToAttendeeCategories: ['1'],
       capacity: {
         isUnlimited: true,
+      },
+    },
+    {
+      identifier: '7',
+      name: 'Session on day 2 Demo 1',
+      summary: '',
+      dayNumber: 2,
+      startDateTimeLocal: '2020-08-04 11:00:00',
+      endDateTimeLocal: '2020-08-04 11:45:00',
+      presenterIdentifiers: [],
+      labelIdentifiers: [],
+      locationIdentifier: '2',
+      requiresBooking: false,
+      liveVideoUrl: '',
+      recordedVideoUrl: '',
+      restrictToAttendeeCategories: ['1'],
+      capacity: {
+        isUnlimited: true,
+      },
+    },
+    {
+      identifier: '8',
+      name: 'Session on day 2 Demo 2',
+      summary: '',
+      dayNumber: 2,
+      startDateTimeLocal: '2020-08-04 11:00:00',
+      endDateTimeLocal: '2020-08-04 11:30:00',
+      presenterIdentifiers: [],
+      labelIdentifiers: [],
+      locationIdentifier: '2',
+      requiresBooking: false,
+      liveVideoUrl: '',
+      recordedVideoUrl: '',
+      restrictToAttendeeCategories: ['1'],
+      capacity: {
+        isUnlimited: true,
+      },
+    },
+    {
+      identifier: '9',
+      name: 'Session on day 2 Demo 3',
+      summary: '',
+      dayNumber: 2,
+      startDateTimeLocal: '2020-08-04 15:00:00',
+      endDateTimeLocal: '2020-08-04 16:30:00',
+      presenterIdentifiers: [],
+      labelIdentifiers: [],
+      locationIdentifier: '2',
+      requiresBooking: false,
+      liveVideoUrl: '',
+      recordedVideoUrl: '',
+      restrictToAttendeeCategories: ['1'],
+      capacity: {
+        isUnlimited: true,
+      },
+    },
+    {
+      identifier: '10',
+      name: 'Test session day 3',
+      summary: 'This is a session with both presenters and labels',
+      dayNumber: 3,
+      startDateTimeLocal: '2020-08-03 09:00:00',
+      endDateTimeLocal: '2020-08-03 13:30:00',
+      presenterIdentifiers: [ '1', '2' ],
+      labelIdentifiers: [ '1', '2' ],
+      locationIdentifier: '1',
+      requiresBooking: true,
+      liveVideoUrl: 'https://us02web.zoom.us/j/1234',
+      recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
+      restrictToAttendeeCategories: [],
+      capacity: {
+        isUnlimited: true,
+      },
+      price: {
+        currency: 'USD',
+        amount: 923.0,
+      },
+    },
+    {
+      identifier: '11',
+      name: 'Zerista session day 3',
+      summary: 'This is a session with both presenters and labels',
+      dayNumber: 3,
+      startDateTimeLocal: '2020-08-03 09:00:00',
+      endDateTimeLocal: '2020-08-03 13:30:00',
+      presenterIdentifiers: [ '1', '2' ],
+      labelIdentifiers: [ '1', '2' ],
+      locationIdentifier: '1',
+      requiresBooking: true,
+      liveVideoUrl: 'https://us02web.zoom.us/j/1234',
+      recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
+      restrictToAttendeeCategories: [],
+      capacity: {
+        isUnlimited: true,
+      },
+      price: {
+        currency: 'USD',
+        amount: 923.0,
       },
     },
   ],

@@ -27,7 +27,10 @@ export const LabelList = props => {
   const labelStyle = theme.join(theme.get('labelList.item'), itemStyle)
 
   return (
-    <View style={listStyles}>
+    <View
+      dataSet={LabelList.dataSet.main}
+      style={listStyles}
+    >
       { labels.map(label => (
         <LabelComponent
           key={label.name}
@@ -46,4 +49,7 @@ LabelList.propTypes = {
   labels: PropTypes.arrayOf(PropTypes.object),
   LabelComponent: PropTypes.elementType,
   onItemPress: PropTypes.func,
+}
+LabelList.dataSet = {
+  main: { class: 'label-list-main' },
 }

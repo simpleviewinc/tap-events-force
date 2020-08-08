@@ -1,23 +1,32 @@
-import React, { useEffect, useMemo } from 'react'
-import { View, Text } from 'react-native'
-import { useSessionsStore, dispatch } from '../store/sessionsStore'
-import { GridItem, Button } from 'SVComponents'
-import { sortLabels } from 'SVUtils'
+import React, { useEffect } from 'react'
+import { View } from 'react-native'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { get } from 'jsutils'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'
-import { Values } from 'SVConstants'
-import { useCreateModal } from 'SVHooks/modal'
+import { GridContainer } from 'SVContainers/gridContainer'
+import { mapObj, get } from 'jsutils'
+import { useSelector, shallowEqual } from 'react-redux'
+import { useQuery } from 'SVHooks'
 
 /**
  * SessionComponent
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props - session agenda props defined in evf interface
  */
 export const Sessions = props => {
-  const store = useSessionsStore()
+  const store = useSelector(
+    ({ items }) => ({
+      agendaSessions: items.agendaSessions,
+      labels: items.labels,
+      modals: items.modals,
+    }),
+    shallowEqual
+  )
+
   const theme = useTheme()
+
+  // TODO: remove 'useQuery' once day switcher is implemented
+  const query = useQuery()
 
   // map the evf props onto our states
   useEffect(() => {
@@ -25,61 +34,32 @@ export const Sessions = props => {
     mapSessionInterface(testData)
   }, [])
 
-  const labels = useMemo(() => sortLabels(store.labels), [store.labels])
-  const is24HourTime = get(store, 'settings.agendaSettings.militaryTime', false)
-
   return (
-    <View style={theme.get('sessions.main')}>
-      <GridItem
-        labels={labels}
-        session={store.sessions[0]}
-        militaryTime={is24HourTime}
-      />
-      <Text>Active session id: { store.activeSession.id }</Text>
-      <Text>Sessions count: { store.sessions.length }</Text>
-      <Text>Attendees count: { store.attendees.length }</Text>
-      <Button onPress={() => toggleTime(is24HourTime)}>
-        Toggle 12-hour/24-hour time
-      </Button>
-      <Button
-        themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[0]
-        )}
-        content={'Open Presenter 1 (image + short bio)'}
-      />
-      <Button
-        themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[1]
-        )}
-        content={'open presenter 2 (no image, no bio)'}
-      />
-      <Button
-        themePath='button.contained.primary'
-        onClick={useCreateModal(
-          Values.MODAL_TYPES.PRESENTER,
-          store.presenters[2]
-        )}
-        content={'open presenter 3 (long bio text)'}
-      />
+    <View
+      dataSet={Sessions.dataSet.main}
+      style={theme.get('sessions.main')}
+    >
+      {
+        // creates a gridContainer separated by hour blocks
+        mapObj(
+          store.agendaSessions[get(query, 'day') || 2],
+          (key, sessions) => {
+            return (
+              <GridContainer
+                key={key}
+                sessions={sessions}
+                labels={store.labels}
+                timeBlock={key}
+              />
+            )
+          }
+        )
+      }
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
 }
 
-// solely for testing - remove later
-const toggleTime = is24HourTime => {
-  dispatch({
-    type: 'UPSERT_ITEM',
-    payload: {
-      category: 'settings',
-      key: 'agendaSettings',
-      item: {
-        militaryTime: !is24HourTime,
-      },
-    },
-  })
+Sessions.dataSet = {
+  main: { class: 'sessions-main' },
 }
