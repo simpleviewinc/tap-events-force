@@ -17,12 +17,13 @@
     "android": "cd node_modules/keg-core; yarn android",
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
-    "build:web": "cd node_modules/keg-core; yarn build:web",
+    "build:web": "clean:sessions:build; GENERATE_SOURCEMAP=false  cd node_modules/keg-core; yarn build:web",
     "build:theme": "bash scripts/buildEventsForceTheme.sh",
     "clean": "cd node_modules/keg-core; yarn clean",
     "clean:full": "yarn clean; yarn clean:nm; yarn install",
     "clean:nm": "rimraf ./yarn.lock; rimraf ./package.lock; rimraf node_modules",
     "clean:rn": "yarn keg clean:rn",
+    "clean:sessions:build": "rimraf ./build/*",
     "ios": "cd node_modules/keg-core; yarn ios",
     "start": "cd node_modules/keg-core; expo start",
     "setup": "yarn install; cd node_modules/keg-core; yarn postinstall",
@@ -31,7 +32,8 @@
     "format:eslint": "eslint --config ./configs/eslintrc.config.js . --fix --quiet",
     "format:prettier": "prettier --config ./configs/prettier.config.js --ignore-path .eslintignore --write '**/*.{js,jsx}'",
     "format": "yarn format:prettier && yarn format:eslint",
-    "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix"
+    "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix",
+    "roll:dev": "cd node_modules/keg-core; yarn roll:dev"
   },
   "dependencies": {
     "css-to-react-native-transform": "1.9.0",
