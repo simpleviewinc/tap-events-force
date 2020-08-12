@@ -1,6 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
-import { Text, Icon } from 'SVComponents'
+import { View, Text, Icon } from '@simpleviewinc/keg-components'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { EVFIcons } from '../../fonts'
 import PropTypes from 'prop-types'

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useTheme, useDimensions } from '@simpleviewinc/re-theme'
 import { View, Image, Text, ScrollView } from 'react-native'
-import { TouchableIcon, Modal } from 'SVComponents'
+import { TouchableIcon, Modal } from '@simpleviewinc/keg-components'
 import { removeModal } from 'SVActions'
 
 const modalMaxHeight = 772

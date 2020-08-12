@@ -1,5 +1,8 @@
 import React from 'react'
-import { LabelButton, LabelList, SessionTime, Text, View } from 'SVComponents'
+import { Text, View } from '@simpleviewinc/keg-components'
+import { LabelButton } from 'SVComponents/labels/labelButton'
+import { LabelList } from 'SVComponents/labels/labelList'
+import { SessionTime } from 'SVComponents/SessionTime/sessionTime'
 import PropTypes from 'prop-types'
 
 /**

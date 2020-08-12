@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'SVComponents'
+import { Button } from '@simpleviewinc/keg-components'
 import { useTheme } from '@simpleviewinc/re-theme'
 
 /**

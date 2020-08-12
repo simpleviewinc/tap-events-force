@@ -1,6 +1,6 @@
 import { Values } from 'SVConstants'
 import React from 'react'
-import { PresenterDetails } from 'SVComponents'
+import { PresenterDetails } from 'SVComponents/modal/presenterDetails'
 /**
  * loops through the array of modals
  * only display 1 modal at a time, by toggling the visible prop accordingly

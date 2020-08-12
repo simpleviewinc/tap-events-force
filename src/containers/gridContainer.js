@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { View } from 'react-native'
-import { GridItem, AppHeader, Text } from 'SVComponents'
+import { AppHeader, Text } from '@simpleviewinc/keg-components'
+import { GridItem } from 'SVComponents/grid/gridItem'
 import { sortLabels, isMobileSize } from 'SVUtils'
 import { useTheme } from '@simpleviewinc/re-theme'
 

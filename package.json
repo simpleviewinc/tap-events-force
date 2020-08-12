@@ -38,8 +38,7 @@
   "dependencies": {
     "css-to-react-native-transform": "1.9.0",
     "firebase": "7.7.0",
-    "keg-core": "https://github.com/simpleviewinc/keg-core.git#master",
-    "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
+    "keg-core": "https://github.com/simpleviewinc/keg-core.git#master"
   },
   "devDependencies": {
     "@babel/core": "7.10.3",
