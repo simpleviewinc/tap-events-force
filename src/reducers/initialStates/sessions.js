@@ -1,5 +1,6 @@
 import { Values } from 'SVConstants'
-import { ActiveSession, Booking } from 'SVModels'
+import { ActiveSession } from 'SVModels/session/activeSession'
+import { Booking } from 'SVModels/booking'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 

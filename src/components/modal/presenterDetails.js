@@ -5,7 +5,9 @@ import { TouchableIcon, Modal } from '@simpleviewinc/keg-components'
 import { removeModal } from 'SVActions'
 
 const modalMaxHeight = 772
-const placeholderImage = require('SVAssets/profile_placeholder.png')
+// const placeholderImage = require('SVAssets/profile_placeholder.png')
+const placeholderImage = require('../../assets/profile_placeholder.png')
+
 /**
  * PresenterDetailModal
  * @param {object} props

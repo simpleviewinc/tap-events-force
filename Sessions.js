@@ -7,7 +7,7 @@ import {
 } from '@simpleviewinc/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
-import { Sessions } from 'SVComponents/sessions'
+import { SessionsContainer } from 'SVContainers/sessionsContainer'
 
 setDefaultTheme(theme)
 
@@ -18,7 +18,7 @@ const App = props => {
   return (
     <Provider store={getStore()}>
       <ReThemeProvider theme={activeTheme}>
-        <Sessions />
+        <SessionsContainer { ...props } />
       </ReThemeProvider>
     </Provider>
   )

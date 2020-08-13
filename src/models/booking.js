@@ -1,4 +1,4 @@
-import { assignDefinedProps } from 'SVUtils'
+import { assignDefinedProps } from 'SVUtils/object/assignDefinedProps'
 /**
  * Booking class model
  */

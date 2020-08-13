@@ -5,9 +5,9 @@ import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal/renderModals'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { mapObj, get } from 'jsutils'
+import { mapObj } from 'jsutils' // -- get
 import { useSelector, shallowEqual } from 'react-redux'
-import { useQuery } from 'SVHooks'
+// import { useQuery } from 'SVHooks'
 
 /**
  * SessionComponent
@@ -25,8 +25,8 @@ export const Sessions = props => {
 
   const theme = useTheme()
 
-  // TODO: remove 'useQuery' once day switcher is implemented
-  const query = useQuery()
+  // replace this once day switcher is implemented
+  const day = 2
 
   // map the evf props onto our states
   useEffect(() => {
@@ -41,19 +41,16 @@ export const Sessions = props => {
     >
       {
         // creates a gridContainer separated by hour blocks
-        mapObj(
-          store.agendaSessions[get(query, 'day') || 2],
-          (key, sessions) => {
-            return (
-              <GridContainer
-                key={key}
-                sessions={sessions}
-                labels={store.labels}
-                timeBlock={key}
-              />
-            )
-          }
-        )
+        mapObj(store.agendaSessions[day], (key, sessions) => {
+          return (
+            <GridContainer
+              key={key}
+              sessions={sessions}
+              labels={store.labels}
+              timeBlock={key}
+            />
+          )
+        })
       }
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
