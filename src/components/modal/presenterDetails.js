@@ -3,10 +3,11 @@ import { useTheme, useDimensions } from '@simpleviewinc/re-theme'
 import { View, Image, Text, ScrollView } from 'react-native'
 import { TouchableIcon, Modal } from '@simpleviewinc/keg-components'
 import { removeModal } from 'SVActions'
+import placeholderImage from '../../assets/profile_placeholder.png'
 
 const modalMaxHeight = 772
 // const placeholderImage = require('SVAssets/profile_placeholder.png')
-const placeholderImage = require('../../assets/profile_placeholder.png')
+// const placeholderImage = require('../../assets/profile_placeholder.png')
 
 /**
  * PresenterDetailModal

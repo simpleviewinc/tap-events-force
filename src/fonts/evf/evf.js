@@ -6,14 +6,15 @@
 // So we will need to copy over the font file into the build directory
 
 // const fontFile = require('./evf.ttf')
+import fontFile from './evf.ttf'
 
 const glyphMap = {
   clock: '\u0063',
   close: '\u0064',
 }
 
-// export const EVFIcons = createIconSet(glyphMap, 'evf', fontFile)
-export const EVFIcons = glyphMap
+export const EVFIcons = createIconSet(glyphMap, 'evf', fontFile)
+// export const EVFIcons = glyphMap
 
 // This is how it's defined in the Expo docs for importing a font
 // Maybe a better option then above, and works with rollup export
