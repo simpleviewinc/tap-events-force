@@ -11,6 +11,11 @@
     "tapResolver": {
       "paths": {
         "tapSrc": "./src"
+      },
+      "aliases": {
+        "dynamic": {
+          "Icons": "icons"
+        }
       }
     },
     "versions": {

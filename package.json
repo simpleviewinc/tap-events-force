@@ -59,6 +59,7 @@
     "@ltipton/jsutils": "5.1.0",
     "lint-staged": "10.2.10",
     "moment": "2.27.0",
+    "nodemon": "2.0.4",
     "onchange": "7.0.2",
     "prettier": "2.0.5",
     "rimraf": "^3.0.1"
