@@ -11,7 +11,7 @@ import { pickKeys, mapObj, get } from 'jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 
 /**
- * Component that will hold the day toggle (center) and filter button (right)
+ * Component that will hold the day toggle and filter button
  * @param {object} props.styles - styles obj
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */

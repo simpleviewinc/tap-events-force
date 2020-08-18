@@ -9,6 +9,7 @@ import { isMobileSize } from 'SVUtils/theme'
 /**
  * Formats the date into a string of the form D MMMM YYYY
  * @param {string} currentDate - current date string
+ * @param {boolean} isMobileSize
  */
 const getDayString = (currentDate, isMobileSize) => {
   const format = isMobileSize ? 'ddd' : 'D MMMM YYYY'
@@ -37,10 +38,8 @@ export const DayToggle = props => {
 
   const theme = useTheme()
   const dayToggleStyles = theme.get('dayToggle')
-  const dayText = `Day ${dayNumber} - ${getDayString(
-    date,
-    isMobileSize(theme)
-  )}`
+  const dayText = `Day ${dayNumber} 
+    - ${getDayString(date, isMobileSize(theme))}`
   return (
     <View
       dataSet={DayToggle.dataSet.main}
