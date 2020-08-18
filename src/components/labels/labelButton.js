@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Button } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { get } from 'jsutils'
+
 /**
  * Returns the label styles based on the given label className
  * this is so we can customize the hover and active button if needed
@@ -36,10 +37,11 @@ export const LabelButton = ({ style = {}, label = {}, onPress }) => {
     // we stringify theme.eventsForce because the theme object changes, but we only care about theme.eventsForce prop
     useMemo(() => getEvfLabelStyle(theme, label), [
       JSON.stringify(get(theme, `eventsForce.${label.className}`)),
-      label,
+      label.className,
     ]),
     { style }
   )
+
   const clickHandler = () => onPress && onPress(label)
   return (
     <Button
