@@ -34,7 +34,7 @@ export const UpdateDayButton = props => {
   const iconStyles = useThemeMemo(theme, `dayToggle.icon`, dynamicStyles, [
     disabled,
   ])
-  console.log({ dynamicStyles })
+
   const iconName = `chevron${type === 'decrement' ? 'Left' : 'Right'}`
 
   return (
