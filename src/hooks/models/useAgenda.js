@@ -1,6 +1,6 @@
 import { get, pickKeys } from 'jsutils'
 import { getCurrentDay, getLatestDay, isLatestDay } from 'SVUtils'
-import { useSelector } from 'react-redux'
+import { useSelector, shallowEqual } from 'react-redux'
 
 /**
  * @function
@@ -12,7 +12,10 @@ export const useAgenda = () => {
   const {
     settings: { agendaSettings = {} },
     agendaDays = [],
-  } = useSelector(({ items }) => pickKeys(items, [ 'settings', 'agendaDays' ]))
+  } = useSelector(
+    store => pickKeys(store.items, [ 'settings', 'agendaDays' ]),
+    shallowEqual
+  )
 
   const currentDayNumber = get(agendaSettings, 'activeDayNumber')
   const currentAgendaDay = getCurrentDay(agendaDays, currentDayNumber)
