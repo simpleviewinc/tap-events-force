@@ -6,7 +6,7 @@ const mainStyle = {
     margin: 0,
     width: 'fit-content',
     height: 'fit-content',
-    borderRadius: 3,
+    borderRadius: 2,
   },
   $small: {
     marginTop: 8,

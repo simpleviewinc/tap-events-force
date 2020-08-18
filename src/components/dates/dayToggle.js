@@ -12,7 +12,7 @@ import { isMobileSize } from 'SVUtils/theme'
  * @param {boolean} isMobileSize
  */
 const getDayString = (currentDate, isMobileSize) => {
-  const format = isMobileSize ? 'ddd' : 'D MMMM YYYY'
+  const format = isMobileSize ? 'dddd' : 'D MMMM YYYY'
   return currentDate ? moment(currentDate).format(format) : 'N/A'
 }
 

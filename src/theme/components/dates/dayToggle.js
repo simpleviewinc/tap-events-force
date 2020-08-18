@@ -13,6 +13,7 @@ export const dayToggle = {
     content: {
       text: {
         $xsmall: {
+          letterSpacing: '0.1em',
           textDecorationLine: 'underline',
           fontFamily: 'Inter',
           fontStyle: 'normal',
