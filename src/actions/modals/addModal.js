@@ -1,6 +1,6 @@
+import { dispatch } from 'SVStore'
 import { ActionTypes } from 'SVConstants'
 import { Values } from 'SVConstants'
-import { dispatch } from 'SVStore'
 
 const { CATEGORIES } = Values
 

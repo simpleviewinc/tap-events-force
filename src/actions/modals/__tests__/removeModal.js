@@ -1,7 +1,6 @@
 import { setState, getStore, dispatch } from '../../../mocks'
 import { ActionTypes, Values } from 'SVConstants'
 
-// TODO: this needs to be 'SVStore' once rollup config is done
 jest.setMock('SVStore', { getStore, dispatch })
 const { removeModal } = require('SVActions/modals/removeModal')
 

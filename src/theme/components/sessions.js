@@ -1,12 +1,15 @@
 export const sessions = {
   main: {
-    backgroundColor: '#f2f3f2',
-    height: '100vh',
-    $xsmall: {
-      padding: 20,
-    },
-    $small: {
-      padding: 50,
+    $web: {
+      flex: 1,
+      backgroundColor: '#F3F3F3',
+      $xsmall: {
+        padding: 20,
+        width: '100vw',
+      },
+      $small: {
+        padding: 50,
+      },
     },
   },
   dayToggle: {

@@ -6,9 +6,10 @@ import { deepFreeze } from 'jsutils'
 export const Values = deepFreeze({
   CATEGORIES: {
     ACTIVE_SESSION: 'activeSession',
+    AGENDA_SESSIONS: 'agendaSessions',
+    BOOKING: 'booking',
     AGENDA_DAYS: 'agendaDays',
     ATTENDEES: 'attendees',
-    BOOKING: 'booking',
     EVENTS: 'events',
     FILTERS: 'filters',
     LABELS: 'labels',

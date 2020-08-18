@@ -50,6 +50,9 @@ module.exports = {
   ],
   moduleDirectories: ['node_modules', 'node_modules/keg-core/node_modules'],
   verbose: true,
+  moduleFileExtensions: [
+    "js", 'web.js', 'native.js', "json", "jsx", "node"
+  ],
   moduleNameMapper: {
     // SVStore only refers to keg store
     [`${namespace}Store`]: `${rootDir}/node_modules/keg-core/core/base/store/index.js`,
@@ -63,4 +66,7 @@ module.exports = {
   },
   testPathIgnorePatterns: [`${rootDir}/node_modules/(?!(keg-core/node_modules)/)`, ],
   transformIgnorePatterns: [`${rootDir}/node_modules/(?!(keg-core)/)`],
+  globals: {
+    __DEV__: true,
+  },
 }

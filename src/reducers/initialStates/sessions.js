@@ -12,7 +12,8 @@ export const sessionsState = {
     [SUB_CATEGORIES.ACTIVE_FILTERS]: [],
     [SUB_CATEGORIES.SELECTED_FILTERS]: [],
   },
-  [CATEGORIES.ACTIVE_SESSION]: new ActiveSession({ id: 1 }),
+  [CATEGORIES.AGENDA_SESSIONS]: {},
+  [CATEGORIES.ACTIVE_SESSION]: new ActiveSession(),
   [CATEGORIES.BOOKING]: new Booking(),
   [CATEGORIES.AGENDA_DAYS]: [],
 }

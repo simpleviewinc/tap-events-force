@@ -108,7 +108,7 @@ export const modal = {
         row2: {
           container: {
             marginVertical: 25,
-            minHeight: 100,
+            minHeight: 50,
           },
           content: {
             $xsmall: {
