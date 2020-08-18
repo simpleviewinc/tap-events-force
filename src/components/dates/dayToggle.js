@@ -3,15 +3,17 @@ import { UpdateDayButton } from './updateDayButton'
 import { View, Text } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 import { noOp } from 'SVUtils'
-
 import moment from 'moment'
+import { isMobileSize } from 'SVUtils/theme'
 
 /**
  * Formats the date into a string of the form D MMMM YYYY
  * @param {string} currentDate - current date string
  */
-const getDayString = currentDate =>
-  currentDate ? moment(currentDate).format('D MMMM YYYY') : 'N/A'
+const getDayString = (currentDate, isMobileSize) => {
+  const format = isMobileSize ? 'ddd' : 'D MMMM YYYY'
+  return currentDate ? moment(currentDate).format(format) : 'N/A'
+}
 
 /**
  * Simple day toggling component
@@ -31,32 +33,38 @@ export const DayToggle = props => {
     disableIncrement = false,
     onIncrement = noOp,
     onDecrement = noOp,
-    style = {},
   } = props
 
   const theme = useTheme()
-
+  const dayToggleStyles = theme.get('dayToggle')
+  const dayText = `Day ${dayNumber} - ${getDayString(
+    date,
+    isMobileSize(theme)
+  )}`
   return (
     <View
       dataSet={DayToggle.dataSet.main}
-      style={theme.get('dayToggle.main', style.main)}
+      style={dayToggleStyles?.main}
     >
       <UpdateDayButton
         dataSet={DayToggle.dataSet.content.decrement}
-        style={theme.get('dayToggle.decrementIcon')}
+        style={dayToggleStyles?.content?.decrementIcon}
         type={'decrement'}
         disabled={disableDecrement}
         onDayChange={onDecrement}
       />
 
-      <Text style={theme.get('dayToggle.text')}>
-        Day { dayNumber } – { getDayString(date) }
+      <Text
+        style={dayToggleStyles?.content?.text}
+        numberOfLines={1}
+      >
+        { dayText }
       </Text>
 
       <UpdateDayButton
         dataSet={DayToggle.dataSet.content.increment}
         type={'increment'}
-        style={theme.get('dayToggle.incrementIcon')}
+        style={dayToggleStyles?.content?.incrementIcon}
         disabled={disableIncrement}
         onDayChange={onIncrement}
       />

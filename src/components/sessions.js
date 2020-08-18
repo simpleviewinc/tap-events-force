@@ -11,23 +11,11 @@ import { pickKeys, mapObj, get } from 'jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 
 /**
- * SessionComponent
- * @param {Object} props
- * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionData - session agenda props defined in evf interface
+ * Component that will hold the day toggle (center) and filter button (right)
+ * @param {object} props.styles - styles obj
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */
-export const Sessions = props => {
-  const { onDayChange = noOp, sessionData } = props
-
-  useEffect(() => void mapSessionInterface(sessionData), [])
-
-  const theme = useTheme()
-
-  const { labels, agendaSessions, modals } = useSelector(
-    ({ items }) => pickKeys(items, [ 'labels', 'agendaSessions', 'modals' ]),
-    shallowEqual
-  )
-
+const SessionsHeader = ({ styles, onDayChange }) => {
   const {
     currentAgendaDay = {},
     currentDayNumber,
@@ -40,11 +28,10 @@ export const Sessions = props => {
 
   return (
     <View
-      dataSet={Sessions.dataSet.main}
-      style={theme.get('sessions.main')}
+      style={styles.content?.header?.main}
+      dataSet={Sessions.dataSet.content.header}
     >
       <DayToggle
-        style={theme.get('sessions.dayToggle')}
         date={get(currentAgendaDay, 'date')}
         dayNumber={currentDayNumber}
         disableDecrement={isFirstDay}
@@ -52,19 +39,54 @@ export const Sessions = props => {
         onDecrement={decrement}
         onIncrement={increment}
       />
+    </View>
+  )
+}
 
+/**
+ * SessionComponent
+ * @param {Object} props
+ * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionData - session agenda props defined in evf interface
+ * @param {Function} props.onDayChange - function for handling day changes in the day toggle
+ */
+export const Sessions = props => {
+  const { onDayChange = noOp, sessionData } = props
+
+  useEffect(() => void mapSessionInterface(sessionData), [])
+
+  const theme = useTheme()
+  const sessionsStyles = theme.get('sessions')
+
+  const { labels, agendaSessions, modals, settings } = useSelector(
+    ({ items }) =>
+      pickKeys(items, [ 'labels', 'agendaSessions', 'modals', 'settings' ]),
+    shallowEqual
+  )
+
+  return (
+    <View
+      dataSet={Sessions.dataSet.main}
+      style={sessionsStyles.main}
+    >
+      <SessionsHeader
+        styles={sessionsStyles}
+        onDayChange={onDayChange}
+      />
       {
         // creates a gridContainer separated by hour blocks
-        mapObj(agendaSessions[currentDayNumber || 2], (key, sessions) => {
-          return (
-            <GridContainer
-              key={key}
-              sessions={sessions}
-              labels={labels}
-              timeBlock={key}
-            />
-          )
-        })
+        mapObj(
+          agendaSessions[settings?.agendaSettings?.activeDayNumber || 1],
+          (key, sessions) => {
+            return (
+              <GridContainer
+                key={key}
+                sessions={sessions}
+                labels={labels}
+                timeBlock={key}
+              />
+            )
+          }
+        )
       }
       { modals.length > 0 && RenderModals(modals) }
     </View>
@@ -73,4 +95,7 @@ export const Sessions = props => {
 
 Sessions.dataSet = {
   main: { class: 'sessions-main' },
+  content: {
+    header: { class: 'sessions-content-header' },
+  },
 }

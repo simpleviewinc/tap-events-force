@@ -21,6 +21,7 @@ const useLabelsForList = (theme, labels) =>
  * @param {Array} props.labels - labels for grid item
  * @param {import('SVModels/session').Session} props.session - sesion item
  * @param {boolean} props.militaryTime - if true, use military time for dates
+ * @param {Func} props.onLabelPress - function called when label is pressed. Receives the pressed label passed to it
  */
 export const GridItem = props => {
   const { labels = [], session, militaryTime, onLabelPress } = props
