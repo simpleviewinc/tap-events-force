@@ -41,7 +41,6 @@ export const LabelButton = ({ style = {}, label = {}, onPress }) => {
     ]),
     { style }
   )
-
   const clickHandler = () => onPress && onPress(label)
   return (
     <Button
