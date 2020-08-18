@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
@@ -11,13 +11,15 @@ import { useTheme } from '@simpleviewinc/re-theme'
  * @returns {Object} - style obj
  */
 const getEvfLabelStyle = (theme, label) => {
-  const evfMainStyle = theme.get('eventsForce')[label.className]
+  const labelStyle = theme.get('eventsForce')[label.className]
+
   return {
-    default: { main: evfMainStyle },
-    hover: { main: evfMainStyle },
-    active: { main: { ...evfMainStyle, opacity: 0.4 } },
+    default: { main: labelStyle },
+    hover: { main: labelStyle },
+    active: { main: { ...labelStyle, opacity: 0.4 } },
   }
 }
+
 /**
  * Simple label component that can be clicked.
  * @param {Object} props
@@ -31,10 +33,13 @@ export const LabelButton = ({ style = {}, label = {}, onPress }) => {
   // merge with eventsForce color style and custom button style if exists
   const mainStyle = theme.join(
     theme.get('labelButton'),
-    getEvfLabelStyle(theme, label),
+    // we stringify theme.eventsForce because the theme object changes, but we only care about theme.eventsForce prop
+    useMemo(() => getEvfLabelStyle(theme, label), [
+      JSON.stringify(theme?.eventsForce),
+      label,
+    ]),
     { style }
   )
-
   const clickHandler = () => onPress && onPress(label)
   return (
     <Button
