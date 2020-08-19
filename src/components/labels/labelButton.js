@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
-
+import { get } from 'jsutils'
 /**
  * Returns the label styles based on the given label className
  * this is so we can customize the hover and active button if needed
@@ -11,7 +11,7 @@ import { useTheme } from '@simpleviewinc/re-theme'
  * @returns {Object} - style obj
  */
 const getEvfLabelStyle = (theme, label) => {
-  const labelStyle = theme.get('eventsForce')[label.className]
+  const labelStyle = theme.get(`eventsForce.${label.className}`)
 
   return {
     default: { main: labelStyle },
@@ -35,7 +35,7 @@ export const LabelButton = ({ style = {}, label = {}, onPress }) => {
     theme.get('labelButton'),
     // we stringify theme.eventsForce because the theme object changes, but we only care about theme.eventsForce prop
     useMemo(() => getEvfLabelStyle(theme, label), [
-      JSON.stringify(theme?.eventsForce),
+      JSON.stringify(get(theme, `eventsForce.${label.className}`)),
       label,
     ]),
     { style }
