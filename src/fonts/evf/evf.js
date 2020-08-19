@@ -1,4 +1,4 @@
-import { createIconSet } from 'react-native-vector-icons'
+import { createIconSet } from '@expo/vector-icons'
 import fontFile from './evf.ttf'
 
 const glyphMap = {

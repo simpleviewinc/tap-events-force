@@ -27,6 +27,7 @@
     "start": "cd node_modules/keg-core; expo start",
     "setup": "yarn install; cd node_modules/keg-core; yarn postinstall",
     "web": "cd node_modules/keg-core; yarn web",
+    "tap:start": "cd node_modules/keg-core; yarn tap:start",
     "keg": "cd node_modules/keg-core; yarn",
     "format:eslint": "eslint --config ./configs/eslintrc.config.js . --fix --quiet",
     "format:prettier": "prettier --config ./configs/prettier.config.js --ignore-path .eslintignore --write '**/*.{js,jsx}'",
