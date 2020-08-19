@@ -1,6 +1,6 @@
 const rootPath = require('app-root-path').path
 const {keg} = require('keg-core/app.json')
-const { mapObj } = require('jsutils')
+const { mapObj } = require('@ltipton/jsutils')
 const rootDir = rootPath
 
 const aliases = keg.tapResolver.aliases

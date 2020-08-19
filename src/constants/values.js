@@ -1,4 +1,4 @@
-import { deepFreeze } from 'jsutils'
+import { deepFreeze } from '@ltipton/jsutils'
 
 /**
  * Constant values

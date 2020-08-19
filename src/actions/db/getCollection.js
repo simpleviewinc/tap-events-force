@@ -1,4 +1,4 @@
-import { logData, limbo } from 'jsutils'
+import { logData, limbo } from '@ltipton/jsutils'
 import { FBService } from 'SVServices/firebase'
 import { dispatch } from 'SVStore'
 import { Values, ActionTypes } from 'SVConstants'

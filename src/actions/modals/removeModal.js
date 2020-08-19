@@ -1,5 +1,5 @@
 import { dispatch, getStore } from 'SVStore'
-import { isNum } from 'jsutils'
+import { isNum } from '@ltipton/jsutils'
 import { ActionTypes, Values } from 'SVConstants'
 
 const { CATEGORIES } = Values

@@ -1,4 +1,4 @@
-import { limbo } from 'jsutils'
+import { limbo } from '@ltipton/jsutils'
 
 /**
  * Requests WebRTC camera stream

@@ -5,7 +5,7 @@ import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal/renderModals'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { mapObj } from 'jsutils' // -- get
+import { mapObj } from '@ltipton/jsutils' // -- get
 import { useSelector, shallowEqual } from 'react-redux'
 // import { useQuery } from 'SVHooks'
 

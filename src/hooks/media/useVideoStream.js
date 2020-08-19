@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { get } from 'jsutils'
+import { get } from '@ltipton/jsutils'
 
 /**
  * Sets up the video to use the camera stream and provides access to play/pause functions

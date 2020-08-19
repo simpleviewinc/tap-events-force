@@ -1,6 +1,6 @@
 import { dispatch } from 'SVStore'
 import { Values, ActionTypes } from 'SVConstants'
-import { validate, isStr, isObj, isNum } from 'jsutils'
+import { validate, isStr, isObj, isNum } from '@ltipton/jsutils'
 
 /**
  * Called when a doc changes from an outside source

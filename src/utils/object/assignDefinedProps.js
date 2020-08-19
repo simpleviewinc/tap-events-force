@@ -1,4 +1,4 @@
-import { pickKeys } from 'jsutils'
+import { pickKeys } from '@ltipton/jsutils'
 
 /**
  * @param {*} model - the model object to assign props to

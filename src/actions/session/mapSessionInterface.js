@@ -1,6 +1,6 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { mapObj } from 'jsutils'
+import { mapObj } from '@ltipton/jsutils'
 import { buildHourSessionsMap } from 'SVUtils'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values

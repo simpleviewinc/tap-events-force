@@ -1,4 +1,4 @@
-import { deepMerge } from 'jsutils'
+import { deepMerge } from '@ltipton/jsutils'
 import { app } from './app'
 import { eventsForce } from './eventsForce'
 import { modal } from './components'

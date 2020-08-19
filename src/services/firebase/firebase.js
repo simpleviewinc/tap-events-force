@@ -1,6 +1,6 @@
 import { firestore, firebase } from './setup'
 import { hasDomAccess } from 'SVUtils/helpers/hasDomAccess'
-import { limbo, checkCall, isFunc, isArr, isObj, uuid } from 'jsutils'
+import { limbo, checkCall, isFunc, isArr, isObj, uuid } from '@ltipton/jsutils'
 import { onDBInit } from 'SVActions/db/onDBInit'
 import { onDocChange } from 'SVActions/db/onDocChange'
 import { ActionTypes } from 'SVConstants'

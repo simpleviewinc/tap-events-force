@@ -1,6 +1,6 @@
 const path = require('path')
 const rootDir = require('app-root-path').path
-const { get, deepMerge } = require('jsutils')
+const { get, deepMerge } = require('@ltipton/jsutils')
 const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, NODE_ENV, ENV, TAP } = process.env
 
 // Gets the base or tap to be deployed
