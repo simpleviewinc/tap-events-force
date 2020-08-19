@@ -1,10 +1,28 @@
-export const labelButton = {
-  main: {
+const contentStyle = {
+  fontSize: 12,
+}
+const mainStyle = {
+  $xsmall: {
+    margin: 0,
     width: 'fit-content',
     height: 'fit-content',
-    borderRadius: 3,
+    borderRadius: 2,
   },
-  content: {
-    fontSize: 12,
+  $small: {
+    marginTop: 8,
+    marginRight: 8,
+  },
+}
+
+const defaultStyle = {
+  main: mainStyle,
+  content: contentStyle,
+}
+
+export const labelButton = {
+  $web: {
+    default: defaultStyle,
+    hover: defaultStyle,
+    active: defaultStyle,
   },
 }
