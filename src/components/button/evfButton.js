@@ -8,16 +8,15 @@ import Svg, { Path, G } from 'react-native-svg'
  * EvfButton.web
  * @param {object} props - props to override the svg props
  * @param {Function} props.onPress
- * @param {('default'|'disabled'| null)} props.type - button type. uses 'default' if not used
+ * @param {('default'|'primary'| null)} props.type - button type. uses 'default' if not used
  * @param {string} props.text
  */
 export const EvfButton = props => {
   const { onPress, styles, type = 'default', text } = props
   const theme = useTheme()
-  const buttonStyles = theme.join(
-    theme.get(`button.evfButton.${type}`),
-    styles && styles[type]
-  )
+
+  const buttonStyles = theme.join(theme.get(`button.evfButton.${type}`), styles)
+  console.log({ buttonStyles })
 
   return (
     <TouchableOpacity
@@ -41,7 +40,7 @@ export const EvfButton = props => {
  */
 const SvgComponent = ({ styles, text }) => {
   const { main: mainStyles, content: contentStyles } = styles
-  console.log(mainStyles)
+
   return (
     <Svg
       style={contentStyles.svg?.main}
