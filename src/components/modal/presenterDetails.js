@@ -30,7 +30,7 @@ export const PresenterDetails = props => {
     <Modal
       styles={{ content: { ...presenterStyles.modal.content, maxHeight } }}
       visible={visible && mount}
-      onAnimateOut={mount ? removeModal : null}
+      onAnimateOut={mount ? null : removeModal}
       onBackdropTouch={() => setMount(false)}
     >
       <Header

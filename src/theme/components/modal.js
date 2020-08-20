@@ -1,3 +1,5 @@
+import { text } from './text'
+
 const smallImage = {
   width: 80,
   height: 80,
@@ -6,7 +8,89 @@ const smallImage = {
   paddingBottom: 20,
 }
 
+const groupBookingTextStyle = {
+  ...text,
+  fontWeight: '600',
+  fontSize: '16px',
+  lineHeight: '22px',
+}
+
 export const modal = {
+  base: {
+    main: {},
+    content: {
+      main: {},
+      header: {
+        main: {
+          flexDirection: 'row',
+          height: 72,
+          backgroundColor: '#22B3C4',
+        },
+        content: {
+          title: {
+            $xsmall: {
+              ...text,
+              alignSelf: 'center',
+              color: 'white',
+              paddingLeft: 46,
+              paddingRight: 30,
+              fontWeight: '500',
+              fontSize: 22,
+              lineHeight: 27,
+            },
+            $small: {},
+          },
+          closeButton: {
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            justifyContent: 'center',
+            flex: 1,
+            padding: 10,
+            right: '4%',
+          },
+        },
+      },
+      body: {
+        main: {
+          backgroundColor: '#FFFFFF',
+        },
+      },
+    },
+  },
+  groupBooking: {
+    content: {
+      main: {
+        $xsmall: {
+          width: '90%',
+          maxWidth: '800px',
+        },
+      },
+      body: {
+        main: {
+          flexDirection: 'column',
+          paddingLeft: 46,
+          paddingRight: 36,
+        },
+        content: {
+          topSection: {
+            main: {
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            },
+            content: {
+              instructionText: groupBookingTextStyle,
+              infoText: {
+                ...groupBookingTextStyle,
+                color: '#A0A0A0',
+              },
+            },
+          },
+          middleSection: {},
+          bottomSection: {},
+        },
+      },
+    },
+  },
   presenter: {
     main: {},
     backdrop: {},

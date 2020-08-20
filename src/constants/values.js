@@ -30,6 +30,7 @@ export const Values = deepFreeze({
     ERROR: 'error',
     PRESENTER: 'presenter',
     FILTER: 'filter',
+    GROUP_BOOKING: 'groupBooking',
   },
 
   BOOKING_TYPES: {
