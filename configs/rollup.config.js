@@ -53,6 +53,7 @@ const buildAlias = builtAlias => {
     '@simpleviewinc/keg-components': kegComponents,
     'keg-components': kegComponents,
     './kegComponents': kegComponents,
+    './keyStore': './keyStore.web.js'
   }
 }
 
