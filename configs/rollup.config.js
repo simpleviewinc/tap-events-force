@@ -57,11 +57,20 @@ const buildAlias = builtAlias => {
   }
 }
 
-coreBabelConfig.plugins[1][1].alias = buildAlias(coreBabelConfig.plugins[1][1].alias)
+const moduleResolver = coreBabelConfig
+  .plugins
+  .find(([ name ]) => name === 'module-resolver')[1]
+const setAliases = (aliases) => (moduleResolver.alias = aliases)
+
+setAliases(buildAlias(moduleResolver.alias))
 
 const cjsOutputName = 'keg-sessions.cjs.js'
 const esmOutputName = 'keg-sessions.esm.js'
 
+/**
+ * Rollup config for tap-events-force, used in keg-core
+ * @see `yarn roll:dev`
+ */
 export default {
   context: 'global',
   input: `${tapPath}/Sessions.js`,
@@ -94,7 +103,7 @@ export default {
     // Sets the alias built from the tap-resolver
     // A new component-resolver was added to tap-resolver
     // So be sure to use that branch or the build will fail
-    alias({ entries: coreBabelConfig.plugins[1][1].alias }),
+    alias({ entries: moduleResolver.alias }),
     sucrase({
       transforms: [ 'jsx', 'flow' ],
     }),
