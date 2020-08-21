@@ -5,8 +5,11 @@ import { View, Text } from 'SVComponents'
 import { EvfButton } from 'SVComponents/button'
 
 /**
- *
- * @param {*} param0
+ * Error modal
+ * @param {object} props
+ * @param {boolean} visible
+ * @param {string} title - text to show in header
+ * @param {string} message - text to show in body
  */
 export const Error = ({ visible, title, message }) => {
   const theme = useTheme()
@@ -14,10 +17,11 @@ export const Error = ({ visible, title, message }) => {
 
   return (
     <BaseModal
+      dataSet={Error.dataSet.main}
       styles={errorStyles}
       title={title}
       visible={visible}
-      BodyComponent={setDismissed => {
+      BodyComponent={({ setDismissed }) => {
         return (
           <Body
             styles={errorStyles.content.body}
@@ -31,13 +35,24 @@ export const Error = ({ visible, title, message }) => {
 }
 
 /**
- *
- * @param {*} param0
+ * Body of error modal
+ * @param {object} props
+ * @param {object} styles
+ * @param {string} message - string to display
+ * @param {Function} setDismissed - callback from BaseModal to dismiss the modal
  */
 const Body = ({ styles, message, setDismissed }) => {
   return (
-    <View style={styles.main}>
-      <Text style={styles.content?.text}>{ message }</Text>
+    <View
+      dataSet={Error.dataSet.content.body.main}
+      style={styles.main}
+    >
+      <Text
+        dataSet={Error.dataSet.content.body.content.text}
+        style={styles.content?.text}
+      >
+        { message }
+      </Text>
       <EvfButton
         type={'primary'}
         styles={styles.content?.button}
@@ -46,4 +61,16 @@ const Body = ({ styles, message, setDismissed }) => {
       />
     </View>
   )
+}
+
+Error.dataSet = {
+  main: { class: `error-modal-main` },
+  content: {
+    body: {
+      main: { class: 'error-modal-content-body-main' },
+      content: {
+        text: { class: 'error-modal-content-body-content-text' },
+      },
+    },
+  },
 }

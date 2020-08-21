@@ -104,46 +104,11 @@ export const modal = {
   },
   presenter: {
     main: {},
-    modal: {
-      content: {
+    content: {
+      main: {
         $xsmall: {
-          maxWidth: '90%',
-        },
-        $medium: {
-          maxWidth: '500px',
-        },
-        $large: {
+          width: '90%',
           maxWidth: '800px',
-        },
-      },
-      header: {
-        main: {
-          flexDirection: 'row',
-          height: 72,
-          // TODO: placeholder until we know how the passed down css/styling will work
-          backgroundColor: '#22B3C4',
-        },
-        title: {
-          $xsmall: {
-            fontFamily: 'Inter',
-            alignSelf: 'center',
-            color: 'white',
-            paddingLeft: 46,
-            paddingRight: 30,
-            fontStyle: 'normal',
-            fontWeight: '500',
-            fontSize: 22,
-            lineHeight: 27,
-          },
-          $small: {},
-        },
-        closeButton: {
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          flex: 1,
-          padding: 10,
-          right: '4%',
         },
       },
       body: {
@@ -200,30 +165,32 @@ export const modal = {
           },
         },
         row2: {
-          container: {
+          main: {
             marginVertical: 25,
             minHeight: 50,
           },
           content: {
-            $xsmall: {
-              maxHeight: 250,
+            main: {
+              $xsmall: {
+                maxHeight: 250,
+              },
+              $small: {
+                maxHeight: 450,
+              },
             },
-            $small: {
-              maxHeight: 450,
-            },
-          },
-          biography: {
-            $xsmall: {
-              fontFamily: 'Inter',
-              fontStyle: 'normal',
-              fontWeight: 'normal',
-              color: '#909090',
-              fontSize: 12,
-              lineHeight: 18,
-            },
-            $small: {
-              fontSize: 16,
-              lineHeight: 22,
+            biography: {
+              $xsmall: {
+                fontFamily: 'Inter',
+                fontStyle: 'normal',
+                fontWeight: 'normal',
+                color: '#909090',
+                fontSize: 12,
+                lineHeight: 18,
+              },
+              $small: {
+                fontSize: 16,
+                lineHeight: 22,
+              },
             },
           },
         },

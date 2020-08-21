@@ -13,8 +13,12 @@ import { removeModal } from 'SVActions'
  */
 const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
   return (
-    <View style={styles?.main}>
+    <View
+      dataSet={BaseModal.dataSet.content.header.main}
+      style={styles?.main}
+    >
       <Text
+        dataSet={BaseModal.dataSet.content.header.content.text}
         style={styles?.content?.title}
         numberOfLines={1}
       >
@@ -23,6 +27,7 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
       { hasCloseButton && (
         <View style={styles?.content?.closeButton}>
           <TouchableIcon
+            dataSet={BaseModal.dataSet.content.header.content.closeButton}
             onPress={() => setDismissed(true)}
             name={'close'}
             color={'white'}
@@ -34,11 +39,14 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
   )
 }
 
-const modalMaxHeight = 772
+export const contentDefaultMaxHeight = 772
 /**
  *
  * @param {object} props
  * @param {object} props.styles
+ * @param {boolean} props.visible
+ * @param {Component} props.BodyComponent - Component for the body. contains 'setDismissed' prop if the child wants to be able to dismiss the modal by other means other than close button || backdrop click
+ * @param {boolean} props.hasCloseButton - to display the close button on the header or not
  */
 export const BaseModal = ({
   title,
@@ -53,7 +61,8 @@ export const BaseModal = ({
   const [ dismissed, setDismissed ] = useState(false)
   const theme = useTheme()
   const dim = useDimensions()
-  const maxHeight = dim.height <= modalMaxHeight ? '90%' : modalMaxHeight
+  const maxHeight =
+    dim.height <= contentDefaultMaxHeight ? '90%' : contentDefaultMaxHeight
 
   const baseStyles = theme.join(theme.get('modal.base'), styles)
 
@@ -71,7 +80,22 @@ export const BaseModal = ({
         hasCloseButton={hasCloseButton}
       />
 
-      { BodyComponent && BodyComponent(setDismissed) }
+      { BodyComponent && <BodyComponent setDismissed={setDismissed} /> }
     </Modal>
   )
+}
+
+BaseModal.dataSet = {
+  main: { class: `base-modal-main` },
+  content: {
+    header: {
+      main: { class: 'base-modal-content-header-main' },
+      content: {
+        text: { class: 'base-modal-content-header-content-text' },
+        closeButton: {
+          class: 'base-modal-content-header-content-close-button',
+        },
+      },
+    },
+  },
 }
