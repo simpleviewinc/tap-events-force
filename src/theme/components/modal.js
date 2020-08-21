@@ -33,11 +33,10 @@ export const modal = {
               color: 'white',
               paddingLeft: 46,
               paddingRight: 30,
-              fontWeight: 'bold',
-              fontSize: 22,
+              fontWeight: 600,
+              fontSize: 18,
               lineHeight: 27,
             },
-            $small: {},
           },
           closeButton: {
             flexDirection: 'column',
@@ -234,7 +233,11 @@ export const modal = {
   error: {
     content: {
       main: {
-        minHeight: 200,
+        $xsmall: {
+          minHeight: 200,
+          width: '80%',
+          maxWidth: '600px',
+        },
       },
       header: {
         content: {
@@ -255,6 +258,7 @@ export const modal = {
           text: {
             ...text,
             fontSize: '16px',
+            paddingBottom: 10,
           },
           button: {
             main: {

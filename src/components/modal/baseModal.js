@@ -8,10 +8,10 @@ import { removeModal } from 'SVActions'
  * @param {object} props
  * @param {string} props.title
  * @param {object} props.theme - presenter theme from global theme
- * @param {object} props.setMount - used to state the modals visible state for animation
+ * @param {object} props.setDismissed - used to state the modals visible state for animation
  * @param {boolean=} props.hasCloseButton - display the close button on top right or not
  */
-const Header = ({ title, styles, setMount, hasCloseButton = true }) => {
+const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
   return (
     <View style={styles?.main}>
       <Text
@@ -23,7 +23,7 @@ const Header = ({ title, styles, setMount, hasCloseButton = true }) => {
       { hasCloseButton && (
         <View style={styles?.content?.closeButton}>
           <TouchableIcon
-            onPress={() => setMount(false)}
+            onPress={() => setDismissed(true)}
             name={'close'}
             color={'white'}
             size={22}
@@ -50,7 +50,7 @@ export const BaseModal = ({
   // two possible cases for a non visible modal
   // 1. modal is mounted/in store but has been animated out of view by another modal
   // 2. modal has been removed from the store
-  const [ mount, setMount ] = useState(true)
+  const [ dismissed, setDismissed ] = useState(false)
   const theme = useTheme()
   const dim = useDimensions()
   const maxHeight = dim.height <= modalMaxHeight ? '90%' : modalMaxHeight
@@ -60,18 +60,18 @@ export const BaseModal = ({
   return (
     <Modal
       styles={{ content: { ...baseStyles.content.main, maxHeight } }}
-      visible={visible && mount}
-      onAnimateOut={mount ? null : removeModal}
-      onBackdropTouch={() => setMount(false)}
+      visible={visible && !dismissed}
+      onAnimateOut={dismissed ? removeModal : null}
+      onBackdropTouch={() => setDismissed(true)}
     >
       <Header
         title={title}
         styles={baseStyles.content.header}
-        setMount={setMount}
+        setDismissed={setDismissed}
         hasCloseButton={hasCloseButton}
       />
 
-      { BodyComponent }
+      { BodyComponent && BodyComponent(setDismissed) }
     </Modal>
   )
 }

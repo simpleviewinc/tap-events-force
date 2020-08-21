@@ -26,12 +26,12 @@ export const GroupBooking = ({ visible, session, attendees }) => {
       hasCloseButton={false}
       title={session.name}
       visible={visible}
-      BodyComponent={
+      BodyComponent={() => (
         <Body
           styles={groupBookingStyles.content.body}
           remainingCount={remainingCount}
         />
-      }
+      )}
     />
   )
 }
