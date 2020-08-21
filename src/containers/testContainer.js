@@ -55,11 +55,39 @@ export const TestContainer = withAppHeader('Demos', props => {
         <H6 style={{ paddingVertical: 10 }}>Group Bookings</H6>
         <Button
           themePath='button.contained.secondary'
-          onClick={useCreateModal(
-            Values.MODAL_TYPES.GROUP_BOOKING,
-            store.presenters[2]
-          )}
-          content={'Group booking Demo 1'}
+          onClick={useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
+            session: store.sessions[1],
+            attendees: store.attendees,
+          })}
+          content={'Group booking Demo 1 - unlimited spots'}
+        />
+
+        <Button
+          themePath='button.contained.secondary'
+          onClick={useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
+            session: store.sessions[2],
+            attendees: store.attendees,
+          })}
+          content={'Group booking Demo 2 - limited spots'}
+        />
+
+        <Button
+          themePath='button.contained.secondary'
+          onClick={useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
+            session: store.sessions[7],
+            attendees: store.attendees,
+          })}
+          content={'Group booking Demo 3 - 1 spot left'}
+        />
+
+        <Button
+          themePath='button.contained.secondary'
+          onClick={useCreateModal(Values.MODAL_TYPES.ERROR, {
+            title: 'Session Fully Booked',
+            message:
+              'There is insufficient capacity for your selection. Please reduce the number of selected bookings',
+          })}
+          content={'Group booking Demo 4 - no spots left'}
         />
       </Section>
       { store.modals.length > 0 && RenderModals(store.modals) }

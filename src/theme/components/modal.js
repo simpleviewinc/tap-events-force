@@ -12,7 +12,6 @@ const groupBookingTextStyle = {
   ...text,
   fontWeight: '600',
   fontSize: '16px',
-  lineHeight: '22px',
 }
 
 export const modal = {
@@ -34,7 +33,7 @@ export const modal = {
               color: 'white',
               paddingLeft: 46,
               paddingRight: 30,
-              fontWeight: '500',
+              fontWeight: 'bold',
               fontSize: 22,
               lineHeight: 27,
             },
@@ -70,6 +69,7 @@ export const modal = {
           flexDirection: 'column',
           paddingLeft: 46,
           paddingRight: 36,
+          paddingTop: 17,
         },
         content: {
           topSection: {
@@ -86,14 +86,25 @@ export const modal = {
             },
           },
           middleSection: {},
-          bottomSection: {},
+          bottomSection: {
+            main: {
+              $xsmall: {
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              },
+              $small: {
+                paddingTop: 26,
+                paddingBottom: 35,
+              },
+            },
+            content: {},
+          },
         },
       },
     },
   },
   presenter: {
     main: {},
-    backdrop: {},
     modal: {
       content: {
         $xsmall: {
@@ -214,6 +225,41 @@ export const modal = {
             $small: {
               fontSize: 16,
               lineHeight: 22,
+            },
+          },
+        },
+      },
+    },
+  },
+  error: {
+    content: {
+      main: {
+        minHeight: 200,
+      },
+      header: {
+        content: {
+          title: {
+            $xsmall: {
+              letterSpacing: '0.105em',
+            },
+            $small: {},
+          },
+        },
+      },
+      body: {
+        main: {
+          paddingHorizontal: 22,
+          paddingVertical: 26,
+        },
+        content: {
+          text: {
+            ...text,
+            fontSize: '16px',
+          },
+          button: {
+            main: {
+              alignSelf: 'flex-end',
+              width: 87,
             },
           },
         },

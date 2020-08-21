@@ -4,8 +4,18 @@ import { View } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
 import Svg, { Path, G } from 'react-native-svg'
 
+// TODO:
+// Look into creating this button component with a combination of components
+
 /**
  * EvfButton.web
+ * @example
+ *   <EvfButton
+        type={'primary'}
+        styles={styles}
+        onPress={Function}
+        text={'BOOK SELECTED'}
+      />
  * @param {object} props - props to override the svg props
  * @param {Function} props.onPress
  * @param {('default'|'primary'| null)} props.type - button type. uses 'default' if not used
@@ -16,7 +26,6 @@ export const EvfButton = props => {
   const theme = useTheme()
 
   const buttonStyles = theme.join(theme.get(`button.evfButton.${type}`), styles)
-  console.log({ buttonStyles })
 
   return (
     <TouchableOpacity

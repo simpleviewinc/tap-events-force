@@ -1,6 +1,6 @@
 import { Values } from 'SVConstants'
 import React from 'react'
-import { PresenterDetails, GroupBooking } from 'SVComponents/modal'
+import { PresenterDetails, GroupBooking, Error } from 'SVComponents/modal'
 
 /**
  * loops through the array of modals
@@ -26,13 +26,24 @@ export const RenderModals = modals => {
       )
 
     case Values.MODAL_TYPES.GROUP_BOOKING:
-      return <GroupBooking
-        key={index}
-        visible={visible}
-      />
+      return (
+        <GroupBooking
+          key={index}
+          attendees={modal.data?.attendees}
+          session={modal.data?.session}
+          visible={visible}
+        />
+      )
 
     case Values.MODAL_TYPES.ERROR:
-      return null // TODO
+      return (
+        <Error
+          key={index}
+          visible={true}
+          title={modal.data?.title}
+          message={modal.data?.message}
+        />
+      )
 
     case Values.MODAL_TYPES.FILTER:
       return null // TODO
