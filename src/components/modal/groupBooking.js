@@ -10,7 +10,6 @@ import { Text, View } from 'SVComponents'
  * @param {Array.<import('SVModels/attendee').Attendee>} props.attendees
  */
 export const GroupBooking = ({ visible, session, attendees }) => {
-  console.log({ session })
   if (!session || !attendees) return
 
   const theme = useTheme()
@@ -43,7 +42,6 @@ export const GroupBooking = ({ visible, session, attendees }) => {
  * @param {object} props.remainingCount - spots left in this session
  */
 const Body = ({ styles, remainingCount }) => {
-  console.log({ styles })
   const topSectionStyles = styles?.content?.topSection || {}
   const middleSectionStyles = styles?.content?.middleSection || {}
   const bottomSectionStyles = styles?.content?.bottomSection || {}
