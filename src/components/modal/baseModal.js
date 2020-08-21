@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useTheme, useDimensions } from '@simpleviewinc/re-theme'
-import { View, Text } from 'react-native'
-import { TouchableIcon, Modal } from 'SVComponents'
+import { View, TouchableIcon, Modal, Text } from 'SVComponents'
 import { removeModal } from 'SVActions'
 /**
  * Title bar for modal
@@ -20,7 +19,8 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
       <Text
         dataSet={BaseModal.dataSet.content.header.content.text}
         style={styles?.content?.title}
-        numberOfLines={1}
+        numberOfLines={2}
+        ellipsizeMode={'tail'}
       >
         { title }
       </Text>
