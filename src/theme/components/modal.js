@@ -81,6 +81,7 @@ export const modal = {
               infoText: {
                 ...groupBookingTextStyle,
                 color: '#A0A0A0',
+                textAlign: 'end',
               },
             },
           },
@@ -90,8 +91,6 @@ export const modal = {
               $xsmall: {
                 flexDirection: 'row',
                 justifyContent: 'flex-end',
-              },
-              $small: {
                 paddingTop: 26,
                 paddingBottom: 35,
               },
