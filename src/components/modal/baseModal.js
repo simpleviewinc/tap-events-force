@@ -47,6 +47,11 @@ export const contentDefaultMaxHeight = 772
  * @param {boolean} props.visible
  * @param {Component} props.BodyComponent - Component for the body. contains 'setDismissed' prop if the child wants to be able to dismiss the modal by other means other than close button || backdrop click
  * @param {boolean} props.hasCloseButton - to display the close button on the header or not
+ * @example
+ *  <BaseModal
+ *    title={'Modal Title'}
+ *    BodyComponent={({ setDismissed }) => <Button onPress={setDismissed} /> }
+ *  />
  */
 export const BaseModal = ({
   title,
