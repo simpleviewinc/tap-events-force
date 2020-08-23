@@ -1,7 +1,6 @@
 import React from 'react'
 import { TouchableIcon } from 'SVComponents'
-import { useThemeMemo } from 'SVHooks'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useStylesCallback } from '@simpleviewinc/re-theme'
 import { EVFIcons } from 'SVFonts'
 import PropTypes from 'prop-types'
 
@@ -23,17 +22,13 @@ export const UpdateDayButton = props => {
     dataSet = UpdateDayButton.dataSet.main,
   } = props
 
-  const theme = useTheme()
-
-  const dynamicStyles = {
+  const buildStyles = () => ({
     opacity: disabled ? 0.75 : 1,
     cursor: disabled ? 'not-allowed' : 'pointer',
     ...style.main,
-  }
+  })
 
-  const iconStyles = useThemeMemo(theme, `dayToggle.icon`, dynamicStyles, [
-    disabled,
-  ])
+  const iconStyles = useStylesCallback(buildStyles)
 
   const iconName = `chevron${type === 'decrement' ? 'Left' : 'Right'}`
 
