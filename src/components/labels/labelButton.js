@@ -9,19 +9,23 @@ import { useTheme, useStylesCallback } from '@simpleviewinc/re-theme'
  * @param {Object} extra - extra styles to add
  */
 const buildStyles = (theme, extra) => {
-  const labelStyle = theme.get(`eventsForce.${extra.className}`, extra.style)
+  const labelStyle = theme.get(`eventsForce.${extra.className}`)
 
-  return theme.join(theme.get('labelButton'), {
-    default: { main: labelStyle },
-    hover: { main: labelStyle },
-    active: { main: { ...labelStyle, opacity: 0.4 } },
-  })
+  return theme.join(
+    theme.get('labelButton'),
+    {
+      default: { main: labelStyle },
+      hover: { main: labelStyle },
+      active: { main: { ...labelStyle, opacity: 0.4 } },
+    },
+    extra.style
+  )
 }
 
 /**
  * Simple label component that can be clicked.
  * @param {Object} props
- * @param {Object} props.style - custom button styles that will override those defined in the theme file's main object
+ * @param {Object} props.style - custom button styles that will override those defined in the theme file's main object. Object should define default, hover, and active themes for the different states of the button. @see `buildStyles`
  * @param {import('SVModels/label').Label} props.label - the label model instance
  * @param {Function} props.onPress - when clicked, calls onPress and passes the label object to it
  */
