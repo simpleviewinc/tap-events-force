@@ -5,6 +5,17 @@ import { EVFIcons } from 'SVFonts'
 import PropTypes from 'prop-types'
 
 /**
+ * Builds dynamic styles for  `UpdateDayButton`
+ * @param {object} theme - retheme object
+ * @param {object} extra - extra styles and props
+ */
+const buildStyles = (theme, extra) => ({
+  opacity: extra.disabled ? 0.75 : 1,
+  cursor: extra.disabled ? 'not-allowed' : 'pointer',
+  ...extra.style,
+})
+
+/**
  * A touchable chevron icon that changes direction based on type
  * @param {Object} props
  * @param {string?} [props.type='increment'] - one of ['decrement', 'increment'] - shows a left icon with 'decrement', and a 'right' icon with 'increment'
@@ -22,13 +33,10 @@ export const UpdateDayButton = props => {
     dataSet = UpdateDayButton.dataSet.main,
   } = props
 
-  const buildStyles = () => ({
-    opacity: disabled ? 0.75 : 1,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    ...styles.main,
+  const iconStyles = useStylesCallback(buildStyles, [ disabled, styles.main ], {
+    disabled,
+    style: styles.main,
   })
-
-  const iconStyles = useStylesCallback(buildStyles, [ disabled, styles.main ])
 
   const iconName = `chevron${type === 'decrement' ? 'Left' : 'Right'}`
 
@@ -43,12 +51,10 @@ export const UpdateDayButton = props => {
     />
   )
 }
-
 UpdateDayButton.propTypes = {
   type: PropTypes.oneOf([ 'increment', 'decrement' ]),
   disabled: PropTypes.bool,
 }
-
 UpdateDayButton.dataSet = {
   main: { class: 'update-day-button-main' },
 }
