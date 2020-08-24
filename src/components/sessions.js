@@ -5,9 +5,8 @@ import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal/renderModals'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { mapObj } from '@ltipton/jsutils' // -- get
+import { mapObj } from '@ltipton/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
-// import { useQuery } from 'SVHooks'
 
 /**
  * SessionComponent
@@ -24,6 +23,8 @@ export const Sessions = props => {
   )
 
   const theme = useTheme()
+
+  console.log('theme', theme)
 
   // replace this once day switcher is implemented
   const day = 2
