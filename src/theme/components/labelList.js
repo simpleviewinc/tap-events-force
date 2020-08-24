@@ -15,8 +15,5 @@ export const labelList = {
         flexBasis: 'auto',
       },
     },
-    item: {
-      $xsmall: {},
-    },
   },
 }
