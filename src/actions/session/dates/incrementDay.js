@@ -1,6 +1,6 @@
 import { setDay } from './setDay'
 import { getStore } from 'SVStore'
-import { get, checkCall } from 'jsutils'
+import { get, checkCall } from '@svkeg/jsutils'
 import { isLatestDay } from 'SVUtils'
 
 /**

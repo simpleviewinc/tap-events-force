@@ -1,4 +1,4 @@
-import { findMax } from 'jsutils'
+import { findMax } from '@svkeg/jsutils'
 
 /**
  * Returns the latest day in the list of agenda days

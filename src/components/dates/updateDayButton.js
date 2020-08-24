@@ -28,7 +28,7 @@ export const UpdateDayButton = props => {
     ...styles.main,
   })
 
-  const iconStyles = useStylesCallback(buildStyles)
+  const iconStyles = useStylesCallback(buildStyles, [ disabled, styles.main ])
 
   const iconName = `chevron${type === 'decrement' ? 'Left' : 'Right'}`
 

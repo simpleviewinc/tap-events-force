@@ -1,7 +1,7 @@
 import 'firebase/firestore'
 import firebase from 'firebase/app'
 import Config from 'SVConfig'
-import { get } from 'jsutils'
+import { get } from '@svkeg/jsutils'
 
 const fbConfig = get(Config, [ 'firebase', 'web' ])
 const firestore = !firebase.apps.length

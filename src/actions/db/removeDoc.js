@@ -1,6 +1,6 @@
 import { FBService } from 'SVServices/firebase'
 import { ActionTypes } from 'SVConstants'
-import { logData, limbo } from 'jsutils'
+import { logData, limbo } from '@svkeg/jsutils'
 import { dispatch } from 'SVStore'
 
 /**

@@ -1,4 +1,4 @@
-import { deepFreeze } from 'jsutils'
+import { deepFreeze } from '@svkeg/jsutils'
 
 /**
  * Constant values

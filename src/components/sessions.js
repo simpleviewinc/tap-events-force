@@ -7,7 +7,7 @@ import { mapSessionInterface, incrementDay, decrementDay } from 'SVActions'
 import { noOp } from 'SVUtils'
 import { RenderModals } from 'SVComponents/modal'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { pickKeys, mapObj, get } from 'jsutils'
+import { pickKeys, mapObj, get } from '@svkeg/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 
 /**

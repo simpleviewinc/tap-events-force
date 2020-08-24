@@ -1,6 +1,6 @@
 import { ActionTypes, Values } from 'SVConstants'
 import { dispatch } from 'SVStore'
-import { validate, isPositive } from 'jsutils'
+import { validate, isPositive } from '@svkeg/jsutils'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 // plugin config that commands the localStorage plugin to persist the active day number
