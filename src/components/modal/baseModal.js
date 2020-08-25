@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { useTheme, useDimensions } from '@simpleviewinc/re-theme'
 import { View, TouchableIcon, Modal, Text } from 'SVComponents'
 import { removeModal } from 'SVActions'
+import PropTypes from 'prop-types'
+
 /**
  * Title bar for modal
  * @param {object} props
@@ -103,4 +105,11 @@ BaseModal.dataSet = {
       },
     },
   },
+}
+
+BaseModal.propTypes = {
+  styles: PropTypes.object,
+  visible: PropTypes.bool,
+  BodyComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
+  hasCloseButton: PropTypes.bool,
 }

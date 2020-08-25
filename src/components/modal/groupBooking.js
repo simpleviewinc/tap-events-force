@@ -39,7 +39,7 @@ export const GroupBooking = ({ visible, session, attendees }) => {
  *
  * @param {object} props
  * @param {object} props.styles
- * @param {object} props.remainingCount - spots left in this session
+ * @param {number} props.remainingCount - spots left in this session
  */
 const Body = ({ styles, remainingCount }) => {
   const topSectionStyles = styles?.content?.topSection || {}
