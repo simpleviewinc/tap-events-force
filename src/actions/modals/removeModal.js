@@ -42,8 +42,9 @@ const logWarning = index => {
  * @param {number} index - index to remove from array
  */
 export const removeModal = index => {
-  const { modals } = getStore()
-  const modalsCp = Array.from(modals)
+  const { items } = getStore()?.getState()
+
+  const modalsCp = Array.from(items.modals)
 
   // if no index passed in, take off the last item in the array
   if (!isNum(index)) return removeTopModal(modalsCp)
