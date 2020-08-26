@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { useTheme, useDimensions } from '@simpleviewinc/re-theme'
-import { View, TouchableIcon, Modal, Text } from 'SVComponents'
+import { useTheme, useDimensions } from '@svkeg/re-theme'
+import { View, Modal, Text } from 'SVComponents'
 import { removeModal } from 'SVActions'
 import PropTypes from 'prop-types'
+import { EVFIcons } from 'SVIcons'
 
 /**
  * Title bar for modal
@@ -27,13 +28,15 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
         { title }
       </Text>
       { hasCloseButton && (
-        <View style={styles?.content?.closeButton}>
-          <TouchableIcon
-            dataSet={BaseModal.dataSet.content.header.content.closeButton}
+        <View
+          style={styles?.content?.closeButton?.main}
+          dataSet={BaseModal.dataSet.content.header.content.closeButton.main}
+        >
+          <EVFIcons.Close
+            dataSet={
+              BaseModal.dataSet.content.header.content.closeButton.content
+            }
             onPress={() => setDismissed(true)}
-            name={'close'}
-            color={'white'}
-            size={22}
           />
         </View>
       ) }
@@ -100,7 +103,12 @@ BaseModal.dataSet = {
       content: {
         text: { class: 'base-modal-content-header-content-text' },
         closeButton: {
-          class: 'base-modal-content-header-content-close-button',
+          main: {
+            class: 'base-modal-content-header-content-close-button-main',
+          },
+          content: {
+            class: 'base-modal-content-header-content-close-button-content',
+          },
         },
       },
     },

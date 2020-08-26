@@ -1,5 +1,3 @@
-import { text } from './text'
-
 const smallImage = {
   width: 80,
   height: 80,
@@ -9,7 +7,6 @@ const smallImage = {
 }
 
 const groupBookingTextStyle = {
-  ...text,
   fontWeight: '600',
   fontSize: '16px',
 }
@@ -28,7 +25,6 @@ export const modal = {
         content: {
           title: {
             $xsmall: {
-              ...text,
               alignSelf: 'center',
               color: 'white',
               paddingLeft: 46,
@@ -39,12 +35,15 @@ export const modal = {
             },
           },
           closeButton: {
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            justifyContent: 'center',
-            flex: 1,
-            padding: 10,
-            right: '4%',
+            main: {
+              flexDirection: 'column',
+              alignItems: 'flex-end',
+              justifyContent: 'center',
+              flex: 1,
+              padding: 10,
+              right: '4%',
+            },
+            content: {},
           },
         },
       },
@@ -222,7 +221,6 @@ export const modal = {
         },
         content: {
           text: {
-            ...text,
             fontSize: '16px',
             paddingBottom: 10,
           },

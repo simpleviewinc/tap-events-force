@@ -1,4 +1,3 @@
-import { text } from '../text'
 import { colors } from '../../colors'
 
 const textViewStyle = {
@@ -9,7 +8,6 @@ const textViewStyle = {
     justifyContent: 'center',
   },
   content: {
-    ...text,
     fontSize: 15,
     lineHeight: '18px',
     letterSpacing: '0.105em',

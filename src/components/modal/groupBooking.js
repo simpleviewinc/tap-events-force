@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, View } from 'SVComponents'
 
