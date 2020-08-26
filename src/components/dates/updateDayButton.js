@@ -2,24 +2,6 @@ import React from 'react'
 import { useStylesCallback } from '@svkeg/re-theme'
 import { EVFIcons } from 'SVIcons'
 import PropTypes from 'prop-types'
-import { TouchableOpacity } from 'react-native'
-
-// just a stand-in for now. There's a ticket for exporting components like this one from keg-components, where you just pass in the svg
-const TouchableChevronIcon = props => {
-  const { onPress, style, type, ...iconProps } = props
-
-  const Icon =
-    type === 'increment' ? EVFIcons.DayToggleRight : EVFIcons.DayToggleLeft
-
-  return (
-    <TouchableOpacity onPress={onPress}>
-      <Icon
-        style={style}
-        {...iconProps}
-      />
-    </TouchableOpacity>
-  )
-}
 
 /**
  * Builds dynamic styles for  `UpdateDayButton`
@@ -27,7 +9,7 @@ const TouchableChevronIcon = props => {
  * @param {object} extra - extra styles and props
  */
 const buildStyles = (theme, extra) => ({
-  opacity: extra.disabled ? 0.75 : 1,
+  opacity: extra.disabled ? 0.4 : 1,
   cursor: extra.disabled ? 'not-allowed' : 'pointer',
   ...extra.style,
 })
@@ -55,8 +37,11 @@ export const UpdateDayButton = props => {
     style: styles.main,
   })
 
+  const ChevronIcon =
+    type === 'increment' ? EVFIcons.DayToggleRight : EVFIcons.DayToggleLeft
+
   return (
-    <TouchableChevronIcon
+    <ChevronIcon
       dataSet={dataSet}
       onPress={onDayChange}
       style={iconStyles}

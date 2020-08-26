@@ -31,7 +31,7 @@
     "web": "cd node_modules/keg-core; yarn web",
     "tap:start": "cd node_modules/keg-core; yarn tap:start",
     "keg": "cd node_modules/keg-core; yarn",
-    "format:eslint": "eslint --config ./configs/eslintrc.config.js . --fix --quiet",
+    "format:eslint": "eslint --config ./configs/eslintrc.config.js . --resolve-plugins-relative-to ./ --fix --quiet",
     "format:prettier": "prettier --config ./configs/prettier.config.js --ignore-path .eslintignore --write '**/*.{js,jsx}'",
     "format": "yarn format:prettier && yarn format:eslint",
     "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix",

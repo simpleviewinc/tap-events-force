@@ -6,6 +6,6 @@
 module.exports = {
   '**/*.js?(x)': [
     'prettier --config ./configs/prettier.config.js --ignore-path .eslintignore --write',
-    'eslint --config ./configs/eslintrc.config.js --fix --quiet'
+    'eslint --config ./configs/eslintrc.config.js --resolve-plugins-relative-to ./ --fix --quiet'
   ]
 }

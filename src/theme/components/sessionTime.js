@@ -35,7 +35,6 @@ export const sessionTime = {
     content: {
       $xsmall: {
         $web: {
-          marginBottom: 2,
           color: '#8f908f',
         },
       },

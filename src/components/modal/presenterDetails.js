@@ -1,19 +1,10 @@
 import React, { useState } from 'react'
 import { useTheme, useDimensions } from '@svkeg/re-theme'
-import { TouchableOpacity, View, Image, Text, ScrollView } from 'react-native'
-import { Modal } from '@svkeg/keg-components'
+import { View, Text, Modal } from '@svkeg/keg-components'
+import { Image, ScrollView } from 'react-native'
 import { removeModal } from 'SVActions'
-import placeholderImage from '../../assets/profile_placeholder.png'
 import { EVFIcons } from 'SVIcons'
-
-// just a stand-in for now. There's a ticket for exporting components like this one from keg-components, where you just pass in the svg
-const TouchableCloseIcon = props => {
-  return (
-    <TouchableOpacity onPress={props.onPress}>
-      <EVFIcons.Close style={props.style} />
-    </TouchableOpacity>
-  )
-}
+import placeholderImage from '../../assets/profile_placeholder.png'
 
 const modalMaxHeight = 772
 
@@ -73,10 +64,7 @@ const Header = ({ title, styles, setMount }) => {
         { title }
       </Text>
       <View style={styles.closeButton}>
-        <TouchableCloseIcon
-          onPress={() => setMount(false)}
-          style={{ width: 22 }}
-        />
+        <EVFIcons.Close onPress={() => setMount(false)} />
       </View>
     </View>
   )
