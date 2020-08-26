@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native'
 import { View } from '@svkeg/keg-components'
 import { mapEntries } from '@svkeg/jsutils'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 /**
  * Returns a wrapped version of the SVG Component. If the props
@@ -21,7 +22,7 @@ import React from 'react'
  */
 const buildIconComponent = SvgElement => {
   /**
-   * Wrapped component
+   * Wrapped icon component - what consumers of EVFIcons will call
    * @param {Object} props
    * @param {Object?} props.dataSet - the dataSet to be passed to View or TouchableOpacity
    * @param {Function?} props.onPress - on press callback. If defined, it will use a TouchableOpacity
@@ -29,7 +30,7 @@ const buildIconComponent = SvgElement => {
    * @param {string?} props.color - alias for fill
    * @param {Object} ...remaining - all remaining props are passed to the SvgElement
    */
-  return props => {
+  const EVFIcon = props => {
     const { dataSet, onPress, color, fill, ...svgProps } = props
 
     const Wrapper = onPress ? TouchableOpacity : View
@@ -46,11 +47,23 @@ const buildIconComponent = SvgElement => {
       </Wrapper>
     )
   }
+
+  EVFIcon.propTypes = {
+    dataSet: PropTypes.object,
+    onPress: PropTypes.func,
+    fill: PropTypes.string,
+    color: PropTypes.string,
+    style: PropTypes.object,
+    width: PropTypes.number,
+    height: PropTypes.number,
+    ...SvgElement.propTypes,
+  }
+
+  return EVFIcon
 }
 
-const IconComponents = mapEntries(SvgComponents, (name, component) => [
+// wrap each svg component using buildIconComponent, so that we can use touchableOpacity, dataSet, propTypes, etc.
+export const EVFIcons = mapEntries(SvgComponents, (name, component) => [
   name,
   buildIconComponent(component),
 ])
-
-export const EVFIcons = { ...IconComponents }
