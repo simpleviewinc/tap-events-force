@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { Text, Icon } from 'SVComponents'
 import { useTheme } from '@simpleviewinc/re-theme'
-import { EVFIcons } from '../../fonts'
+import { EVFIcons } from 'SVFonts'
 import PropTypes from 'prop-types'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 
@@ -23,7 +23,6 @@ export const SessionTime = props => {
 
   return (
     <View style={mainStyle}>
-      { /* wrap this in evfIcon so we can use custom ttf when it comes */ }
       <Icon
         styles={clockStyle.main}
         Element={EVFIcons}

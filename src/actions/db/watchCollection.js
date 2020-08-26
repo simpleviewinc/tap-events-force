@@ -1,4 +1,4 @@
-import { logData } from 'jsutils'
+import { logData } from '@svkeg/jsutils'
 import { FBService } from 'SVServices/firebase'
 
 /**

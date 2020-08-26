@@ -1,9 +1,11 @@
-import { createIconSet } from 'react-native-vector-icons'
+import { createIconSet } from '@expo/vector-icons'
 import fontFile from './evf.ttf'
 
 const glyphMap = {
-  clock: '\u0063',
-  close: '\u0064',
+  chevronLeft: '\u0021',
+  chevronRight: '\u0022',
+  clock: '\u0023',
+  close: '\u0024',
 }
 
 export const EVFIcons = createIconSet(glyphMap, 'evf', fontFile)

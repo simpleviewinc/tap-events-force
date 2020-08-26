@@ -4,6 +4,7 @@ import { assignDefinedProps } from 'SVUtils'
  * SessionAgendaProps class model
  */
 export class SessionAgendaProps {
+  agendaDays = []
   settings = new AgendaSettings()
   presenters = []
   labels = []
@@ -15,6 +16,7 @@ export class SessionAgendaProps {
    * @param {object} params
    * @param {AgendaSettings} params.settings - id of session
    * @param {Array.<import('./presenter').presenter>} params.presenters - list of presenters
+   * @param {Array.<import('./agendaDay').agendaDay>} params.agendaDay - list of agenda days
    * @param {Array.<import('./label').label>} params.labels - list of labels
    * @param {Array.<import('./location').location>} params.locations - list of locations
    * @param {Array.<import('./session').session>} params.sessions - list of sessions
