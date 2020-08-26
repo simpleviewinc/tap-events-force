@@ -21,13 +21,14 @@ import { pickKeys, mapObj, get } from '@svkeg/jsutils'
 const FilterButton = ({ onClick, styles }) => {
   const dim = useDimensions()
   console.log(dim.width)
-  return dim.width <= 620 ? null : (
-    // <EVFIcon.Filter
-    //   style={styles.filterIcon}
-    //   // dataSet={BaseModal.dataSet.content.header.content.closeButton}
-    //   onPress={onClick}
-    //   color={styles.filterIcon.color}
-    // />
+  return dim.width <= 620 ? (
+    <EVFIcons.Filter
+      style={styles.filterIcon}
+      // dataSet={BaseModal.dataSet.content.header.content.closeButton}
+      onPress={onClick}
+      // color={styles.filterIcon.color}
+    />
+  ) : (
     <Button
       themePath='button.text.default'
       styles={styles.filterButton}

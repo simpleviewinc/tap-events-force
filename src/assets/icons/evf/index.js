@@ -41,7 +41,7 @@ const buildIconComponent = SvgElement => {
         onPress={onPress}
       >
         <SvgElement
-          fill={fill || color || 'none'}
+          fill={fill || color}
           {...svgProps}
         />
       </Wrapper>
