@@ -5,7 +5,7 @@ import {
   ReThemeProvider,
   getDefaultTheme,
   setDefaultTheme,
-} from '@simpleviewinc/re-theme'
+} from '@svkeg/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'

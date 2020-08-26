@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useTheme, useDimensions } from '@simpleviewinc/re-theme'
+import { useTheme, useDimensions } from '@svkeg/re-theme'
 import { View, Image, Text, ScrollView } from 'react-native'
 import { TouchableIcon, Modal } from 'SVComponents'
 import { removeModal } from 'SVActions'
