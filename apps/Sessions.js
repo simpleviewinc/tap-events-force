@@ -9,7 +9,7 @@ import {
 } from '@svkeg/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
-import { Sessions } from 'SVComponents/sessions'
+import { SessionsContainer } from 'SVContainers/sessionsContainer'
 import { Dimensions, Platform } from 'react-native'
 
 setRNDimensions(Dimensions)
@@ -17,12 +17,10 @@ setRNPlatform(Platform)
 setDefaultTheme(theme)
 
 /**
- * The sessions app for events force. This is the entry point of the rollup build and root component 
- * exported by the build.
+ * The sessions app for events force. This is the entry point of the 
+ * rollup build and it is the root component exported by the build.
  * 
- * You can test this through the rollup bundle by running `yarn web:export`
- * 
- * @param {*} props - session data. @see src/mocks/eventsforce/testData 
+ * @param {*} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
  */
 const SessionsApp = props => {
   const [ activeTheme ] = useState(getDefaultTheme())
@@ -30,8 +28,7 @@ const SessionsApp = props => {
   return (
     <Provider store={getStore()}>
       <ReThemeProvider theme={activeTheme}>
-        {/* <SessionsContainer { ...props } /> */}
-        <Sessions sessionData={props} />
+        <SessionsContainer { ...props } />
       </ReThemeProvider>
     </Provider>
   )

@@ -28,6 +28,7 @@ const interFont = `@import url('https://fonts.googleapis.com/css2?family=Inter:w
 
 /**
  * App for testing sessions app locally
+ * @see `tap.json` routes object for which containers are bound to which url routes
  * @param {object} props 
  */
 const MainApp = props => {
@@ -52,7 +53,6 @@ const MainApp = props => {
         <SafeAreaView>
           <Provider store={getStore()}> 
             <ReThemeProvider theme={activeTheme}>
-                { /* setup routes from navigation config */ }
               <ContainerRoutes navigationConfigs={keg.routes} />
             </ReThemeProvider>
           </Provider>
