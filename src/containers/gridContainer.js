@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import { View } from 'react-native'
-import { AppHeader, Text } from '@simpleviewinc/keg-components'
+import { AppHeader, Text } from '@svkeg/keg-components'
 import { GridItem } from 'SVComponents/grid/gridItem'
 import { sortLabels, isMobileSize } from 'SVUtils'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 
 /**
  *

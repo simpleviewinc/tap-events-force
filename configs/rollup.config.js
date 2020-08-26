@@ -19,9 +19,7 @@ const relativeTapPath = path.relative(__dirname, tapPath)
 
 const peerExternals = [ 'react', 'react-dom' ]
 const mainExternals = [
-  '@expo',
-  '@expo/vector-icons',
-  '@ltipton/jsutils',
+  '@svkeg/jsutils',
   'prop-types',
   'axios',
   'react-native',
@@ -29,7 +27,6 @@ const mainExternals = [
   'react-native-svg',
   'redux',
   'react-redux',
-  'qr-reader',
 ]
 const externals = [ ...mainExternals, ...peerExternals ]
 
@@ -38,21 +35,29 @@ const coreBabelConfig = require(path.join(corePath, 'babel.config.js'))()
 // Rollup is having issue finding the (reTheme || kegComponents ).native.js files
 // This creates custom alias to ensure then can be found
 const buildAlias = builtAlias => {
-  const svModules = path.join(corePath, 'node_modules/@simpleviewinc')
+  const svModules = path.join(corePath, 'node_modules/@svkeg')
   const reTheme = path.join(svModules, 're-theme/build/esm/reTheme.native.js')
   const kegComponents = path.join(
     svModules,
     'keg-components/build/esm/kegComponents.native.js'
   )
 
-  return {
-    ...builtAlias,
-    '@simpleviewinc/re-theme': reTheme,
+  const reThemeAliases = {
+    '@svkeg/re-theme': reTheme,
     're-theme': reTheme,
     './reTheme': reTheme,
-    '@simpleviewinc/keg-components': kegComponents,
+  }
+
+  const kegComponentAliases = {
+    '@svkeg/keg-components': kegComponents,
     'keg-components': kegComponents,
     './kegComponents': kegComponents,
+  }
+
+  return {
+    ...builtAlias,
+    ...reThemeAliases,
+    ...kegComponentAliases,
     './keyStore': './keyStore.web.js'
   }
 }
@@ -73,7 +78,7 @@ const esmOutputName = 'keg-sessions.esm.js'
  */
 export default {
   context: 'global',
-  input: `${tapPath}/Sessions.js`,
+  input: `${tapPath}/apps/Sessions.js`,
   output: [
     {
       file: `${tapPath}/build/${cjsOutputName}`,
@@ -99,6 +104,7 @@ export default {
       preferBuiltins: true,
       module: true,
       main: true,
+      dedupe: [ '@svkeg/re-theme']
     }),
     // Sets the alias built from the tap-resolver
     // A new component-resolver was added to tap-resolver
@@ -125,6 +131,7 @@ export default {
       delimiters: [ '', '' ],
 
       // environment replacements
+      'process.env.IS_BUILD': 'true',
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.RE_PLATFORM': 'web',
       'process.env.PLATFORM': 'web',
@@ -141,7 +148,11 @@ export default {
       corePath,
       peerExternals,
       externals: mainExternals, 
-      baseContents: { main: `./${esmOutputName}` },
+      baseContents: { 
+        name: '@keg-hub/tap-evf-sessions',
+        main: `./${esmOutputName}`,
+        module: `./${esmOutputName}` 
+      },
     }),
     cleanup(),
     bundleSize(),

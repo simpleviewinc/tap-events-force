@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text } from '@simpleviewinc/keg-components' // -- Icon
-import { useTheme } from '@simpleviewinc/re-theme'
+import { View, Text } from '@svkeg/keg-components' // -- Icon
+import { useTheme } from '@svkeg/re-theme'
 import PropTypes from 'prop-types'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 import { EVFIcons } from 'SVIcons'

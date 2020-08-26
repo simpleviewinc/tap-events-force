@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from '@simpleviewinc/keg-components'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { Button } from '@svkeg/keg-components'
+import { useTheme } from '@svkeg/re-theme'
 
 /**
  * Simple label component that can be clicked.

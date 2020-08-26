@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from '@simpleviewinc/keg-components'
+import { Text, View } from '@svkeg/keg-components'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/SessionTime/sessionTime'

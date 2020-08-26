@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
-import { useTheme } from '@simpleviewinc/re-theme'
-import testData from '../mocks/eventsforce/testData'
+import { useTheme } from '@svkeg/re-theme'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal/renderModals'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { mapObj } from '@ltipton/jsutils'
+import { mapObj } from '@svkeg/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 
 /**
@@ -24,15 +23,13 @@ export const Sessions = props => {
 
   const theme = useTheme()
 
-  console.log('theme', theme)
-
   // replace this once day switcher is implemented
   const day = 2
 
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
-    mapSessionInterface(testData)
+    mapSessionInterface(props)
   }, [])
 
   return (

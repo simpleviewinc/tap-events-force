@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { sortSessions } from './sortSessions'
-import { reduceObj } from '@ltipton/jsutils'
+import { reduceObj } from '@svkeg/jsutils'
 
 /**
  * Filters the sessions given a day number

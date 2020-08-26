@@ -1,5 +1,5 @@
 {
-  "name": "@simpleviewinc/tap-events-force",
+  "name": "@keg-hub/tap-events-force",
   "version": "1.0.1",
   "description": "Events Force Tap for the Keg",
   "main": "index.js",
@@ -29,13 +29,15 @@
     "start": "yarn watch 'cd node_modules/keg-core; expo start'",
     "web": "yarn watch 'cd node_modules/keg-core; yarn web'",
     "watch": "nodemon --watch node_modules/keg-core/core/base/configs --watch node_modules/keg-core/app.json --watch node_modules/keg-core/package.json --watch configs --watch package.json --watch tap.json --exec",
+    "watch:export": "nodemon -d 4 --watch ./build --watch App.js --exec",
     "keg": "cd node_modules/keg-core; yarn",
     "format:eslint": "eslint --config ./configs/eslintrc.config.js . --fix --quiet",
     "format:prettier": "prettier --config ./configs/prettier.config.js --ignore-path .eslintignore --write '**/*.{js,jsx}'",
     "format": "yarn format:prettier && yarn format:eslint",
     "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix",
     "roll:dev": "cd node_modules/keg-core; NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
-    "dev": "nodemon --watch ./src --watch ./configs --watch package.json --exec yarn roll:dev"
+    "web:export": "BUILD_TEST=true yarn watch:export 'cd node_modules/keg-core; BUILD_TEST=true yarn web'",
+    "dev": "nodemon --watch ./src --watch Sessions.js --exec yarn roll:dev"
   },
   "dependencies": {
     "css-to-react-native-transform": "1.9.0",

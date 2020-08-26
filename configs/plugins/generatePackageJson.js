@@ -1,5 +1,5 @@
 import generatePackageJson from 'rollup-plugin-generate-package-json'
-import { get, deepMerge } from '@ltipton/jsutils'
+import { get, deepMerge } from '@svkeg/jsutils'
 import path from 'path'
 
 /**

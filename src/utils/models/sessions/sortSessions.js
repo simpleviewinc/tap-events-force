@@ -1,4 +1,4 @@
-import { get, isArr } from '@ltipton/jsutils'
+import { get, isArr } from '@svkeg/jsutils'
 
 /**
  * Sort the sessions ascending or descending

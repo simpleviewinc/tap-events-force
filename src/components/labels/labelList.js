@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View } from '@simpleviewinc/keg-components'
+import { View } from '@svkeg/keg-components'
 import { LabelButton } from './labelButton'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 
 /**
  * A list of labels
