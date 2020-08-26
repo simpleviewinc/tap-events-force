@@ -14,7 +14,7 @@
       },
       "aliases": {
         "dynamic": {
-          "Icons": "icons"
+          "Icons": "assets/icons"
         }
       }
     },
