@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 import { useAgenda } from 'SVHooks'
 import { View } from 'SVComponents'
 import { DayToggle } from 'SVComponents/dates/dayToggle'

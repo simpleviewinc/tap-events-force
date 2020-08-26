@@ -1,6 +1,6 @@
 import React from 'react'
 import { LabelTag, LabelList, SessionTime } from 'SVComponents'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 import PropTypes from 'prop-types'
 
 /**

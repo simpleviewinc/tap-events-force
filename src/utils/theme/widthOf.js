@@ -1,4 +1,4 @@
-import { getSizeMap } from '@simpleviewinc/re-theme'
+import { getSizeMap } from '@svkeg/re-theme'
 
 /**
  * Returns the width associated with the size key

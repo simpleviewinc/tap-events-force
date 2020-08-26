@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'SVComponents'
-import { useTheme, useStylesCallback } from '@simpleviewinc/re-theme'
+import { useTheme, useStylesCallback } from '@svkeg/re-theme'
 
 /**
  * Builds the dynamic styles for LabelButton

@@ -1,4 +1,4 @@
-import { setSizes } from '@simpleviewinc/re-theme'
+import { setSizes } from '@svkeg/re-theme'
 
 // breakpoint screen-widths for various size keys
 // used in theme definitions

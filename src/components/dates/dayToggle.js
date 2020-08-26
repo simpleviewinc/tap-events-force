@@ -1,7 +1,7 @@
 import React from 'react'
 import { UpdateDayButton } from './updateDayButton'
 import { View, Text } from 'SVComponents'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 import { noOp } from 'SVUtils'
 import moment from 'moment'
 import { isMobileSize } from 'SVUtils/theme'
