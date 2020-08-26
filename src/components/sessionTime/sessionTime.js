@@ -4,6 +4,52 @@ import PropTypes from 'prop-types'
 import { View, Text } from '@keg-hub/keg-components'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 import { EVFIcons } from 'SVIcons'
+import { Helmet, style } from 'SVComponents/helmet'
+
+// TODO: need to handle sub style classes
+/*
+styles = {
+  main: {
+    ...style rules
+  },
+  // Current code expects a flat object
+  // But styles can come in at any level
+  // Need to check for that and handel it properly
+  content: {
+    main: {
+      ...style rules
+    },
+    content: {
+      ...style rules
+    }
+  }
+}
+
+*/
+
+const SessionHelmet = ({ dataSet, styles }) => {
+  const convertStyles = Object.keys(dataSet)
+    .reduce((styleObj, className) => {
+      styles[className] &&
+        ( styleObj[`[data-class~="${dataSet[className].class}"]`] = styles[className] )
+        
+      return styleObj
+    }, {})
+
+  return (
+    <Helmet styles={ convertStyles } >
+      <style>
+        {`
+          [data-class~="ef-sessions-date-time"] {
+            background-color: blue;
+            color: yellow !important;
+          }
+        `}
+      </style>
+    </Helmet>
+  )
+
+}
 
 /**
  * SessionTime
@@ -22,9 +68,13 @@ export const SessionTime = props => {
 
   return (
     <View style={mainStyle}>
+      <SessionHelmet
+        dataSet={ SessionTime.dataSet }
+        styles={{ ...theme.get('sessionTime'), main: mainStyle }}
+      />
       <EVFIcons.Clock style={clockStyle.main} />
       <View style={textStyle.main}>
-        <Text style={textStyle.content}>
+        <Text dataSet={SessionTime.dataSet.timeText} style={textStyle.content}>
           { `${getTimeFromDate(start, military)} - ${getTimeFromDate(
             end,
             military
@@ -40,4 +90,10 @@ SessionTime.propTypes = {
   start: PropTypes.string,
   end: PropTypes.string,
   military: PropTypes.bool,
+}
+
+SessionTime.dataSet = {
+  main: { class: 'session-time-main' },
+  clockIcon: { class: 'ef-sessions-date-time' },
+  timeText: { class: 'ef-sessions-date-time' },
 }

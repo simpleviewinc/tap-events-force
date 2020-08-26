@@ -1,0 +1,57 @@
+
+.ef-sessions-text-default {
+  color: yellow;
+}
+
+.ef-sessions-name {
+  color: green;
+}
+
+.ef-sessions-details-header {
+  background-color: blue;
+}
+
+.ef-sessions-summary {
+  background-color: orange;
+}
+
+.ef-sessions-date-time {
+  background-color: gray;
+  color: yellow !important;
+}
+
+.ef-sessions-location {
+
+}
+
+.ef-sessions-presenter {
+
+}
+
+.ef-sessions-location {
+
+}
+
+.ef-sessions-timeslot-header {
+
+}
+
+.ef-sessions-button-default {
+
+}
+
+.ef-sessions-button-primary {
+
+}
+
+.ef-sessions-ticket-type {
+
+}
+
+.ef-sessions-warning {
+
+}
+
+.ef-sessions-error {
+
+}
