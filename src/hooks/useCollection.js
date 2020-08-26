@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { FBService } from 'SVServices'
 import { useSelector } from 'react-redux'
-import { validate, isStr, isObj, eitherObj, isArr } from 'jsutils'
+import { validate, isStr, isObj, eitherObj, isArr } from '@svkeg/jsutils'
 import { getCollection } from 'SVActions/db/getCollection'
 import { watchCollection } from 'SVActions/db/watchCollection'
 

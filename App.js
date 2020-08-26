@@ -10,7 +10,7 @@ import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
 import { Router } from 'SVComponents/router'
-import { checkCall, get } from 'jsutils'
+import { get } from '@svkeg/jsutils'
 import { ContainerRoutes } from 'SVNavigation/containerRoutes'
 import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
@@ -18,9 +18,9 @@ import { isNative } from 'SVUtils/platform'
 
 setDefaultTheme(theme)
 
-const checkAppInit = setInit => {
+const checkAppInit = async setInit => {
+  await initAppAction?.()
   setInit(true)
-  checkCall(initAppAction)
 }
 
 /* This is only a temp solution for now. The page should already have this font */
@@ -28,39 +28,34 @@ const interFont = `@import url('https://fonts.googleapis.com/css2?family=Inter:w
 
 const App = props => {
   const [activeTheme] = useState(getDefaultTheme())
-  const [ init, setInit ] = useState(false)
+  const [ init, setInit ] = useState()
+  useEffect(() => void checkAppInit(setInit), [])
 
-  useEffect(() => {
-    !init && checkAppInit(setInit)
-  })
-
-  return (
-    init && (
-      <>
-        { (isNative() && (
-          <SafeAreaView
-            style={{
-              backgroundColor: get(
-                activeTheme,
-                'colors.surface.primary.colors.dark'
-              ),
-            }}
-          />
-        )) || <style>{ interFont }</style> }
-        <StatusBar barStyle={'default'} />
-        <Router history={getHistory()}>
-          <SafeAreaView>
-            <Provider store={getStore()}>
-              <ReThemeProvider theme={activeTheme}>
-                { /* setup routes from navigation config */ }
-                <ContainerRoutes navigationConfigs={keg.routes} />
-              </ReThemeProvider>
-            </Provider>
-          </SafeAreaView>
-        </Router>
-      </>
-    )
-  )
+  return init ? (
+    <>
+      { (isNative() && (
+        <SafeAreaView
+          style={{
+            backgroundColor: get(
+              activeTheme,
+              'colors.surface.primary.colors.dark'
+            ),
+          }}
+        />
+      )) || <style>{ interFont }</style> }
+      <StatusBar barStyle={'default'} />
+      <Router history={getHistory()}>
+        <SafeAreaView>
+          <Provider store={getStore()}>
+            <ReThemeProvider theme={activeTheme}>
+              { /* setup routes from navigation config */ }
+              <ContainerRoutes navigationConfigs={keg.routes} />
+            </ReThemeProvider>
+          </Provider>
+        </SafeAreaView>
+      </Router>
+    </>
+  ) : null
 }
 
 export default App
