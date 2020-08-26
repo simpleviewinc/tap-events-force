@@ -1,9 +1,9 @@
 export const sessions = {
   $web: {
     main: {
-      flex: 1,
-      backgroundColor: '#F3F3F3',
       $xsmall: {
+        flex: 1,
+        backgroundColor: '#F3F3F3',
         padding: 20,
         width: '100vw',
       },
@@ -16,7 +16,30 @@ export const sessions = {
         main: {
           width: '100%',
           marginVertical: 20,
-          alignItems: 'center',
+          backgroundColor: 'transparent',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        },
+        content: {
+          left: {},
+          center: {},
+          right: {
+            filterIcon: {
+              color: 'black',
+            },
+            filterButton: {
+              main: {
+                marginRight: 40,
+              },
+              content: {
+                fontSize: 20,
+                fontWeight: 500,
+                letterSpacing: '0.1em',
+                textDecorationLine: 'underline',
+                color: 'black',
+              },
+            },
+          },
         },
       },
     },

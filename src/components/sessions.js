@@ -12,6 +12,32 @@ import { noOp } from 'SVUtils/helpers/method/noop'
 import { pickKeys, mapObj, get } from '@svkeg/jsutils'
 
 /**
+ * FilterButton
+ * Renders either an Icon or a text button based on current screen dimension
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {Function} props.onClick
+ */
+const FilterButton = ({ onClick, styles }) => {
+  const dim = useDimensions()
+  console.log(dim.width)
+  return dim.width <= 620 ? null : (
+    // <EVFIcon.Filter
+    //   style={styles.filterIcon}
+    //   // dataSet={BaseModal.dataSet.content.header.content.closeButton}
+    //   onPress={onClick}
+    //   color={styles.filterIcon.color}
+    // />
+    <Button
+      themePath='button.text.default'
+      styles={styles.filterButton}
+      onClick={onClick}
+      content={'Filter'}
+    />
+  )
+}
+
+/**
  * Component that will hold the day toggle and filter button
  * @param {object} props.styles - styles obj
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
@@ -26,19 +52,32 @@ const SessionsHeader = ({ styles, onDayChange }) => {
 
   const increment = useCallback(() => incrementDay(onDayChange), [onDayChange])
   const decrement = useCallback(() => decrementDay(onDayChange), [onDayChange])
+  const headerStyles = styles.content?.header
 
   return (
     <View
       style={styles.content?.header?.main}
       dataSet={Sessions.dataSet.content.header}
     >
-      <DayToggle
-        date={get(currentAgendaDay, 'date')}
-        dayNumber={currentDayNumber}
-        disableDecrement={isFirstDay}
-        disableIncrement={isLatestDay}
-        onDecrement={decrement}
-        onIncrement={increment}
+      <AppHeader
+        dataSet={Sessions.dataSet.content.header}
+        styles={{ main: headerStyles.main }}
+        CenterComponent={
+          <DayToggle
+            date={get(currentAgendaDay, 'date')}
+            dayNumber={currentDayNumber}
+            disableDecrement={isFirstDay}
+            disableIncrement={isLatestDay}
+            onDecrement={decrement}
+            onIncrement={increment}
+          />
+        }
+        RightComponent={
+          <FilterButton
+            styles={headerStyles.content?.right}
+            onClick={() => console.log('press')}
+          />
+        }
       />
     </View>
   )
