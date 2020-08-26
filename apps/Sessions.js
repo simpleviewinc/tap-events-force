@@ -31,7 +31,7 @@ const SessionsApp = props => {
     <Provider store={getStore()}>
       <ReThemeProvider theme={activeTheme}>
         {/* <SessionsContainer { ...props } /> */}
-        <Sessions { ...props } />
+        <Sessions sessionData={props} />
       </ReThemeProvider>
     </Provider>
   )

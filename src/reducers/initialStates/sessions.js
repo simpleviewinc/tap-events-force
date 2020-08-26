@@ -16,4 +16,5 @@ export const sessionsState = {
   [CATEGORIES.AGENDA_SESSIONS]: {},
   [CATEGORIES.ACTIVE_SESSION]: new ActiveSession(),
   [CATEGORIES.BOOKING]: new Booking(),
+  [CATEGORIES.AGENDA_DAYS]: [],
 }

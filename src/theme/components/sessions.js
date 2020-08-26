@@ -1,6 +1,6 @@
 export const sessions = {
-  main: {
-    $web: {
+  $web: {
+    main: {
       flex: 1,
       backgroundColor: '#F3F3F3',
       $xsmall: {
@@ -9,6 +9,15 @@ export const sessions = {
       },
       $small: {
         padding: 50,
+      },
+    },
+    content: {
+      header: {
+        main: {
+          width: '100%',
+          marginVertical: 20,
+          alignItems: 'center',
+        },
       },
     },
   },
