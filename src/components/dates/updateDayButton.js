@@ -1,7 +1,6 @@
 import React from 'react'
-import { TouchableIcon } from 'SVComponents'
 import { useStylesCallback } from '@svkeg/re-theme'
-import { EVFIcons } from 'SVFonts'
+import { EVFIcons } from 'SVIcons'
 import PropTypes from 'prop-types'
 
 /**
@@ -10,7 +9,7 @@ import PropTypes from 'prop-types'
  * @param {object} extra - extra styles and props
  */
 const buildStyles = (theme, extra) => ({
-  opacity: extra.disabled ? 0.75 : 1,
+  opacity: extra.disabled ? 0.4 : 1,
   cursor: extra.disabled ? 'not-allowed' : 'pointer',
   ...extra.style,
 })
@@ -38,16 +37,15 @@ export const UpdateDayButton = props => {
     style: styles.main,
   })
 
-  const iconName = `chevron${type === 'decrement' ? 'Left' : 'Right'}`
+  const ChevronIcon =
+    type === 'increment' ? EVFIcons.DayToggleRight : EVFIcons.DayToggleLeft
 
   return (
-    <TouchableIcon
+    <ChevronIcon
       dataSet={dataSet}
-      Element={EVFIcons}
-      styles={iconStyles}
-      name={iconName}
       onPress={onDayChange}
-      size={16}
+      style={iconStyles}
+      type={type}
     />
   )
 }

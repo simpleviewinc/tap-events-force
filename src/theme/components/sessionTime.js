@@ -8,10 +8,11 @@ export const sessionTime = {
       margin: 0,
     },
     clockIcon: {
-      size: 25,
       main: {
         $xsmall: {
           display: 'none',
+          width: 19,
+          height: 20,
         },
         $small: {
           display: 'flex',
@@ -26,7 +27,6 @@ export const sessionTime = {
       },
       content: {
         $xsmall: {
-          marginBottom: 2,
           color: '#8f908f',
         },
         $small: {
