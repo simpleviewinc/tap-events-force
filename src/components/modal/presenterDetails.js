@@ -63,10 +63,7 @@ const Header = ({ title, styles, setMount }) => {
         { title }
       </Text>
       <View style={styles.closeButton}>
-        <EVFIcons.Close
-          onPress={() => setMount(false)}
-          style={{ width: 22 }}
-        />
+        <EVFIcons.Close onPress={() => setMount(false)} />
       </View>
     </View>
   )

@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
  * @param {Component} SvgElement - react-native-svg component
  * @returns {Component} wrapped - the wrapped component
  * @example
- *  const CloseIcon = buildIconComponent(null, svgCloseElement)
+ *  const CloseIcon = buildIconComponent(svgCloseElement)
  *  <CloseIcon
  *    onPress={console.log}
  *    color={'#44AAAA'}
@@ -62,7 +62,27 @@ const buildIconComponent = SvgElement => {
   return EVFIcon
 }
 
-// wrap each svg component using buildIconComponent, so that we can use touchableOpacity, dataSet, propTypes, etc.
+/**
+ * Wraps and exports each element exported from `src/assets/icons/evf/elements/index.js`
+ * @see `buildIconComponent` to see the wrapper
+ * @see `src/assets/icons/evf/elements/index.js` for the available icon elements and their names
+ * @see `src/assets/icons/evf/svg/*` for the source svg files used to create the elements
+ * @example
+ * import { EVFIcons } from 'SVIcons'
+ * ...
+ * const MyIconConsumer = props => {
+ *   return (
+ *     // 'Close' name comes from `src/assets/icons/evf/elements/close.js`
+ *     <EVFIcons.Close
+ *       dataSet={{ $class: 'close-icon' }}
+ *       onPress={console.log}
+ *       style={{ height: 20 }}
+ *       color={'#444AAA'}
+ *       width={20}
+ *     />
+ *   )
+ * }
+ */
 export const EVFIcons = mapEntries(SvgComponents, (name, component) => [
   name,
   buildIconComponent(component),
