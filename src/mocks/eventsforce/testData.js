@@ -252,7 +252,9 @@ export default {
       recordedVideoUrl: '',
       restrictToAttendeeCategories: ['1'],
       capacity: {
-        isUnlimited: true,
+        isUnlimited: false,
+        remainingPlaces: 1,
+        isWaitingListAvailable: false,
       },
     },
     {
