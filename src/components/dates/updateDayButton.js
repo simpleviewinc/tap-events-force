@@ -1,6 +1,6 @@
 import React from 'react'
 import { TouchableIcon } from 'SVComponents'
-import { useStylesCallback } from '@simpleviewinc/re-theme'
+import { useStylesCallback } from '@svkeg/re-theme'
 import { EVFIcons } from 'SVFonts'
 import PropTypes from 'prop-types'
 

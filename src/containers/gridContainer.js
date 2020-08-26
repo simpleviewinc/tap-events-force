@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { View } from 'react-native'
 import { GridItem, AppHeader, Text } from 'SVComponents'
 import { sortLabels, isMobileSize } from 'SVUtils'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 
 /**
  *

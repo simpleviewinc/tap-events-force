@@ -1,7 +1,7 @@
 import React from 'react'
 import { View } from 'react-native'
 import { Text, Icon } from 'SVComponents'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 import { EVFIcons } from 'SVFonts'
 import PropTypes from 'prop-types'
 import { getTimeFromDate } from 'SVUtils/dateTime'

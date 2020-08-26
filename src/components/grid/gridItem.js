@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { GridRowContent, GridTileContent } from './'
 import { View } from 'react-native'
-import { useTheme } from '@simpleviewinc/re-theme'
+import { useTheme } from '@svkeg/re-theme'
 import { isMobileSize } from 'SVUtils/theme'
 import PropTypes from 'prop-types'
 
