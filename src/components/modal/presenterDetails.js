@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useTheme, useDimensions } from '@svkeg/re-theme'
 import { View, Image, Text, ScrollView } from 'react-native'
-import { TouchableIcon, Modal } from 'SVComponents'
+import { Modal } from 'SVComponents'
 import { removeModal } from 'SVActions'
+import { EVFIcons } from 'SVIcons'
 
 const modalMaxHeight = 772
 const placeholderImage = require('SVAssets/profile_placeholder.png')
@@ -62,11 +63,9 @@ const Header = ({ title, styles, setMount }) => {
         { title }
       </Text>
       <View style={styles.closeButton}>
-        <TouchableIcon
+        <EVFIcons.Close
           onPress={() => setMount(false)}
-          name={'close'}
-          color={'white'}
-          size={22}
+          style={{ width: 22 }}
         />
       </View>
     </View>

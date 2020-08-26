@@ -1,8 +1,8 @@
 import React from 'react'
 import { View } from 'react-native'
-import { Text, Icon } from 'SVComponents'
+import { Text } from 'SVComponents'
 import { useTheme } from '@svkeg/re-theme'
-import { EVFIcons } from 'SVFonts'
+import { EVFIcons } from 'SVIcons'
 import PropTypes from 'prop-types'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 
@@ -23,13 +23,7 @@ export const SessionTime = props => {
 
   return (
     <View style={mainStyle}>
-      <Icon
-        styles={clockStyle.main}
-        Element={EVFIcons}
-        name={'clock'}
-        size={clockStyle.size}
-      />
-      { /* <ClockIconSVG /> */ }
+      <EVFIcons.Clock style={clockStyle.main} />
       <View style={textStyle.main}>
         <Text style={textStyle.content}>
           { `${getTimeFromDate(start, military)} - ${getTimeFromDate(
