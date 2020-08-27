@@ -1,4 +1,10 @@
-{
+const path = require('path')
+
+const pathToEntryPoint = process.env.TEST_BUILD 
+  ? path.join(__dirname, "apps/BuildTest.js") 
+  : path.join(__dirname, "apps/Main.js")
+
+module.exports = {
   "name": "events-force-x5",
   "displayName": "Events Force Mobile X5",
   "keg": {
@@ -15,6 +21,9 @@
       "aliases": {
         "dynamic": {
           "Icons": "assets/icons"
+        },
+        "web": {
+          "SVTapEntry": pathToEntryPoint         
         }
       }
     },
@@ -26,17 +35,6 @@
     },
     "paths": {
       "buildConfig": "configs/build.config.js"
-    }
-  },
-  "firebase": {
-    "web": {
-      "apiKey": "AIzaSyCMCuelRmaw7ZFOEC1sGVawidYM7sMIN6k",
-      "authDomain": "mobile-x5-pwa.firebaseapp.com",
-      "databaseURL": "https://mobile-x5-pwa.firebaseio.com",
-      "projectId": "mobile-x5-pwa",
-      "storageBucket": "mobile-x5-pwa.appspot.com",
-      "messagingSenderId": "88126204126",
-      "appId": "1:88126204126:web:4b15391a1cd00a6b517a4f"
     }
   },
   "expo": {
