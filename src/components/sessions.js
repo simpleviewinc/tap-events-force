@@ -20,18 +20,22 @@ import { pickKeys, mapObj, get } from '@svkeg/jsutils'
  */
 const FilterButton = ({ onClick, styles }) => {
   const dim = useDimensions()
-  console.log(dim.width)
-  return dim.width <= 620 ? (
+
+  const contentStyles = styles?.content
+
+  // use filter icon when below 650px width
+  return dim.width <= 650 ? (
     <EVFIcons.Filter
-      style={styles.filterIcon}
-      // dataSet={BaseModal.dataSet.content.header.content.closeButton}
+      style={contentStyles?.filterIcon}
+      dataSet={Sessions.dataSet.content.header.content.right.filterIcon}
       onPress={onClick}
-      // color={styles.filterIcon.color}
+      color={contentStyles?.filterIcon?.color}
     />
   ) : (
     <Button
       themePath='button.text.default'
-      styles={styles.filterButton}
+      dataSet={Sessions.dataSet.content.header.content.right.filterButton}
+      styles={contentStyles?.filterButton}
       onClick={onClick}
       content={'Filter'}
     />
@@ -56,31 +60,27 @@ const SessionsHeader = ({ styles, onDayChange }) => {
   const headerStyles = styles.content?.header
 
   return (
-    <View
-      style={styles.content?.header?.main}
-      dataSet={Sessions.dataSet.content.header}
-    >
-      <AppHeader
-        dataSet={Sessions.dataSet.content.header}
-        styles={{ main: headerStyles.main }}
-        CenterComponent={
-          <DayToggle
-            date={get(currentAgendaDay, 'date')}
-            dayNumber={currentDayNumber}
-            disableDecrement={isFirstDay}
-            disableIncrement={isLatestDay}
-            onDecrement={decrement}
-            onIncrement={increment}
-          />
-        }
-        RightComponent={
-          <FilterButton
-            styles={headerStyles.content?.right}
-            onClick={() => console.log('press')}
-          />
-        }
-      />
-    </View>
+    <AppHeader
+      dataSet={Sessions.dataSet.content.header.main}
+      styles={headerStyles}
+      CenterComponent={
+        <DayToggle
+          date={get(currentAgendaDay, 'date')}
+          dayNumber={currentDayNumber}
+          disableDecrement={isFirstDay}
+          disableIncrement={isLatestDay}
+          onDecrement={decrement}
+          onIncrement={increment}
+        />
+      }
+      RightComponent={
+        <FilterButton
+          dataSet={Sessions.dataSet.content.header.content.right}
+          styles={headerStyles.content?.right}
+          onClick={() => console.log('press')}
+        />
+      }
+    />
   )
 }
 
@@ -137,6 +137,18 @@ export const Sessions = props => {
 Sessions.dataSet = {
   main: { class: 'sessions-main' },
   content: {
-    header: { class: 'sessions-content-header' },
+    header: {
+      main: { class: 'sessions-content-header-main' },
+      content: {
+        right: {
+          filterIcon: {
+            class: 'sessions-content-header-content-right-filter-icon',
+          },
+          filterButton: {
+            class: 'sessions-content-header-content-right-filter-button',
+          },
+        },
+      },
+    },
   },
 }

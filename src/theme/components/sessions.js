@@ -21,22 +21,39 @@ export const sessions = {
           justifyContent: 'center',
         },
         content: {
-          left: {},
+          left: {
+            main: {
+              maxWidth: '10%',
+            },
+          },
           center: {},
           right: {
-            filterIcon: {
-              color: 'black',
-            },
-            filterButton: {
-              main: {
-                marginRight: 40,
+            main: {
+              $xsmall: {
+                maxWidth: '10%',
               },
-              content: {
-                fontSize: 20,
-                fontWeight: 500,
-                letterSpacing: '0.1em',
-                textDecorationLine: 'underline',
-                color: 'black',
+            },
+            content: {
+              filterIcon: {
+                $xsmall: {
+                  color: 'black',
+                  paddingRight: 5,
+                },
+                $small: {
+                  paddingRight: 10,
+                },
+              },
+              filterButton: {
+                main: {
+                  marginRight: 40,
+                },
+                content: {
+                  fontSize: 20,
+                  fontWeight: 500,
+                  letterSpacing: '0.1em',
+                  textDecorationLine: 'underline',
+                  color: 'black',
+                },
               },
             },
           },
