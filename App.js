@@ -16,6 +16,9 @@ const getBuiltApp = () => {
  */
 const getMainApp = () => require('./apps/Main.js').default
 
+// TODO: update webpack.config.js in keg-core with the definePlugin to set this value based on an environment variable
+const TEST_BUILD = false
+
 /**
  * Uses apps/Main.js if TEST_BUILD environment variable is false, otherwise
  * expects the build in `build/keg-sessions.esm.js` to be present and will use that
