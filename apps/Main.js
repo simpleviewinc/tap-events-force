@@ -5,7 +5,6 @@ import {
   ReThemeProvider,
   getDefaultTheme,
   setDefaultTheme,
-  styleSheetParser,
 } from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
@@ -16,33 +15,6 @@ import { ContainerRoutes } from 'SVNavigation/containerRoutes'
 import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
 import { isNative } from 'SVUtils/platform'
-
-// Test styles, to ensure the styleSheetParser is working properly
-import './src/mocks/eventsforce/testStyles.css'
-
-const formatedStyles = styleSheetParser({
-  format: 'json',
-  toDom: false,
-  classNames: [
-    '.ef-sessions-text-default',
-    '.ef-sessions-name',
-    '.ef-sessions-details-header',
-    '.ef-sessions-summary',
-    '.ef-sessions-date-time',
-    '.ef-sessions-location',
-    '.ef-sessions-presenter',
-    '.ef-sessions-location',
-    '.ef-sessions-timeslot-header',
-    '.ef-sessions-button-default',
-    '.ef-sessions-button-primary',
-    '.ef-sessions-ticket-type',
-    '.ef-sessions-warning',
-    '.ef-sessions-error',
-  ],
-})
-
-console.log(`---------- formatedStyles ----------`)
-console.log(formatedStyles)
 
 setDefaultTheme(theme)
 

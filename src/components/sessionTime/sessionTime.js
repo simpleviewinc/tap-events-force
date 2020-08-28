@@ -3,53 +3,6 @@ import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { View, Text } from '@keg-hub/keg-components'
 import { getTimeFromDate } from 'SVUtils/dateTime'
-import { EVFIcons } from 'SVIcons'
-import { Helmet, style } from 'SVComponents/helmet'
-
-// TODO: need to handle sub style classes
-/*
-styles = {
-  main: {
-    ...style rules
-  },
-  // Current code expects a flat object
-  // But styles can come in at any level
-  // Need to check for that and handel it properly
-  content: {
-    main: {
-      ...style rules
-    },
-    content: {
-      ...style rules
-    }
-  }
-}
-
-*/
-
-const SessionHelmet = ({ dataSet, styles }) => {
-  const convertStyles = Object.keys(dataSet)
-    .reduce((styleObj, className) => {
-      styles[className] &&
-        ( styleObj[`[data-class~="${dataSet[className].class}"]`] = styles[className] )
-        
-      return styleObj
-    }, {})
-
-  return (
-    <Helmet styles={ convertStyles } >
-      <style>
-        {`
-          [data-class~="ef-sessions-date-time"] {
-            background-color: blue;
-            color: yellow !important;
-          }
-        `}
-      </style>
-    </Helmet>
-  )
-
-}
 
 /**
  * SessionTime
@@ -66,15 +19,21 @@ export const SessionTime = props => {
   const clockStyle = theme.get('sessionTime.clockIcon')
   const textStyle = theme.get('sessionTime.timeText')
 
+  // TODO: This should be moved to ReTheme
+  // It should use a lookup table instead of all these get calls
+  const dataRefs = get(theme, `eventsForce.dataClasses.objRef`)
+  const dataClassRef = dataRefs[SessionTime.dataSet.timeText.class]
+  const dataClassStyles = get(
+    theme,
+    `eventsForce.dataClasses.asObj.${dataClassRef}`
+  )
+  const cssProps = useCss(textStyle.content, dataClassStyles)
+
   return (
     <View style={mainStyle}>
-      <SessionHelmet
-        dataSet={ SessionTime.dataSet }
-        styles={{ ...theme.get('sessionTime'), main: mainStyle }}
-      />
-      <EVFIcons.Clock style={clockStyle.main} />
       <View style={textStyle.main}>
-        <Text dataSet={SessionTime.dataSet.timeText} style={textStyle.content}>
+      <EVFIcons.Clock style={clockStyle.main} />
+        <Text {...cssProps}>
           { `${getTimeFromDate(start, military)} - ${getTimeFromDate(
             end,
             military

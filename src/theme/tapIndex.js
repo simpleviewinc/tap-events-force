@@ -12,7 +12,8 @@ configureTheme()
 
 export const theme = deepMerge(
   kegComponentsTheme,
-  { eventsForce, app, colors, typography },
+  { eventsForce: { labels: eventsForce } },
+  { app, modal, colors, typography },
   components,
   containers
 )
