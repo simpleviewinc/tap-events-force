@@ -9,6 +9,7 @@ const placeholderImage = require('SVAssets/profile_placeholder.png')
  * PresenterDetailModal
  * @param {object} props
  * @param {import('SVModels/presenter').Presenter} props.presenter
+ * @param {boolean} props.visible
  */
 export const PresenterDetails = props => {
   const { presenter, visible } = props
@@ -24,15 +25,12 @@ export const PresenterDetails = props => {
       styles={presenterStyles}
       title={title}
       visible={visible}
-      BodyComponent={() => {
-        return (
-          <Body
-            presenter={presenter}
-            styles={presenterStyles.content.body}
-          />
-        )
-      }}
-    />
+    >
+      <Body
+        presenter={presenter}
+        styles={presenterStyles.content.body}
+      />
+    </BaseModal>
   )
 }
 
@@ -45,7 +43,7 @@ const contentMaxHeights = {
  * Body
  * @param {object} props
  * @param {import('SVModels/presenter').Presenter} props.presenter
- * @param {object} props.theme - presenter theme from global theme
+ * @param {object} props.styles - presenter styles from global theme
  */
 const Body = ({ presenter, styles }) => {
   // need to update content height based on screen height
