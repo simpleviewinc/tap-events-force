@@ -1,3 +1,5 @@
+import { colors } from '../colors'
+
 export const gridContainer = {
   $web: {
     main: {
@@ -11,7 +13,7 @@ export const gridContainer = {
     content: {
       header: {
         main: {
-          backgroundColor: '#4F4F4F',
+          backgroundColor: colors.darkGray,
           $xsmall: {
             maxHeight: 30,
             overflow: 'hidden',

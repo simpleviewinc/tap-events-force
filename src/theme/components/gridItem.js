@@ -1,9 +1,11 @@
+import { colors } from '../colors'
+
 export const gridItem = {
   $web: {
     main: {
       $xsmall: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: colors.white,
         height: 200,
         marginBottom: 15,
         flexDirection: 'row',

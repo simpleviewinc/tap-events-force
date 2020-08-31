@@ -1,3 +1,5 @@
+import { colors } from '../colors'
+
 export const sessionTime = {
   main: {
     $web: {
@@ -35,8 +37,8 @@ export const sessionTime = {
     content: {
       $xsmall: {
         $web: {
-          color: '#8f908f',
-        },
+          color: colors.lightGray01,
+        }
       },
       $small: {
         $web: {
