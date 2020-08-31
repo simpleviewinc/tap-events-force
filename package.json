@@ -41,7 +41,6 @@
   },
   "dependencies": {
     "css-to-react-native-transform": "1.9.0",
-    "firebase": "7.7.0",
     "keg-core": "npm:@svkeg/keg-core@0.2.0"
   },
   "devDependencies": {
