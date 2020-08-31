@@ -46,6 +46,7 @@ const FilterButton = ({ onClick, styles, dataSet }) => {
 
 /**
  * Component that will hold the day toggle and filter button
+ * @param {object} props
  * @param {object} props.styles - styles obj
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */
