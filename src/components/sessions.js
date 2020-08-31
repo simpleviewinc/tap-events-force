@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import { useTheme, useDimensions } from '@svkeg/re-theme'
-import { View, AppHeader, Button } from 'SVComponents'
+import { View, ItemHeader, Button } from 'SVComponents'
 import { RenderModals } from 'SVComponents/modal/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
@@ -62,7 +62,7 @@ const SessionsHeader = ({ styles, onDayChange }) => {
   const headerStyles = styles.content?.header
 
   return (
-    <AppHeader
+    <ItemHeader
       dataSet={Sessions.dataSet.content.header}
       styles={headerStyles}
       CenterComponent={

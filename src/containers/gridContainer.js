@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { View } from 'react-native'
-import { AppHeader, Text } from '@svkeg/keg-components'
 import { GridItem } from 'SVComponents/grid/gridItem'
+import { ItemHeader, Text } from 'SVComponents'
 import { sortLabels, isMobileSize } from 'SVUtils'
 import { useTheme } from '@svkeg/re-theme'
 
@@ -43,7 +43,7 @@ export const GridContainer = props => {
       {
         // only display the time header on web styles
         !isMobileSize(theme) && (
-          <AppHeader
+          <ItemHeader
             dataSet={GridContainer.dataSet.content.header}
             styles={gridStyles.content.header}
             LeftComponent={
