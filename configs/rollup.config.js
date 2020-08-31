@@ -32,7 +32,7 @@ const externals = [ ...mainExternals, ...peerExternals ]
 
 const coreBabelConfig = require(path.join(corePath, 'babel.config.js'))()
 
-// Rollup is having issue finding the (reTheme || kegComponents ).native.js files
+// Rollup is having issue finding the (reTheme || kegComponents ) build files
 // This creates custom alias to ensure then can be found
 const buildAlias = builtAlias => {
   const svModules = path.join(corePath, 'node_modules/@svkeg')
