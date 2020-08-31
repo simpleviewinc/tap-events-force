@@ -9,6 +9,7 @@ import {
 } from '@svkeg/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
+// import { SessionsContainer } from '../src/containers/sessionsContainer'
 import { SessionsContainer } from 'SVContainers/sessionsContainer'
 import { Dimensions, Platform } from 'react-native'
 

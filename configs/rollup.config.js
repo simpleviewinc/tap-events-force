@@ -36,10 +36,10 @@ const coreBabelConfig = require(path.join(corePath, 'babel.config.js'))()
 // This creates custom alias to ensure then can be found
 const buildAlias = builtAlias => {
   const svModules = path.join(corePath, 'node_modules/@svkeg')
-  const reTheme = path.join(svModules, 're-theme/build/esm/reTheme.native.js')
+  const reTheme = path.join(svModules, 're-theme/build/esm/reTheme.js')
   const kegComponents = path.join(
     svModules,
-    'keg-components/build/esm/kegComponents.native.js'
+    'keg-components/build/esm/kegComponents.js'
   )
 
   const reThemeAliases = {
@@ -104,7 +104,8 @@ export default {
       preferBuiltins: true,
       module: true,
       main: true,
-      dedupe: [ '@svkeg/re-theme']
+      // ensures these dependencies aren't duplicated in the build
+      dedupe: [ '@svkeg/re-theme', '@svkeg/keg-components', '@svkeg/jsutils', '@svkeg/tap-resolver' ]
     }),
     // Sets the alias built from the tap-resolver
     // A new component-resolver was added to tap-resolver
