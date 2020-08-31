@@ -1,4 +1,5 @@
-import { setSizes, styleSheetParser } from '@keg-hub/re-theme'
+import { setSizes } from '@keg-hub/re-theme'
+import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
 
 // Test styles, to ensure the styleSheetParser is working properly
 import '../mocks/eventsforce/testStyles.css'
