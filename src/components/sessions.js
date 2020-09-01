@@ -115,11 +115,21 @@ const AgendaSessions = React.memo(({ labels, daySessions }) => {
  * @param {Object} props
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionData - session agenda props defined in evf interface
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
+ * @param {Function} props.onGroupBookingSubmit - callback for group booking btn submit
  */
 export const Sessions = props => {
-  const { onDayChange = noOp, sessionData } = props
+  const { onDayChange = noOp, sessionData, onGroupBookingSubmit } = props
 
-  useEffect(() => void mapSessionInterface(sessionData), [])
+  // eventListener setup
+  const kegEventListener = getEventEmitter()
+
+  useEffect(() => {
+    mapSessionInterface(sessionData)
+    kegEventListener.on('onGroupBookingPress', onGroupBookingSubmit)
+    return () => {
+      kegEventListener.off('onGroupBookingPress', onGroupBookingSubmit)
+    }
+  }, [onGroupBookingSubmit])
 
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')

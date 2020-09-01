@@ -8,7 +8,13 @@ import { Values } from 'SVConstants'
 import { useCreateModal } from 'SVHooks/modal'
 import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
+import { getEventEmitter } from 'SVUtils'
 
+const { EVENT_LISTENERS } = Values
+
+const testOnGroupBookingSubmit = data => {
+  console.log(data)
+}
 /**
  * TestContainer to be used by QA to test out individual component
  */
@@ -22,6 +28,24 @@ export const ModalDemos = () => {
   const theme = useTheme()
   const testStyles = theme.get('testContainer')
   const store = useSelector(state => state.items)
+
+  const kegEventListener = getEventEmitter()
+
+  // map the evf props onto our states
+  useEffect(() => {
+    // placeholder data for now
+    mapSessionInterface(testData)
+    kegEventListener.on(
+      EVENT_LISTENERS.GROUP_BOOKING_SUBMIT,
+      testOnGroupBookingSubmit
+    )
+    return () => {
+      kegEventListener.off(
+        EVENT_LISTENERS.GROUP_BOOKING_SUBMIT,
+        testOnGroupBookingSubmit
+      )
+    }
+  }, [testOnGroupBookingSubmit])
 
   return (
     <View style={testStyles.main}>

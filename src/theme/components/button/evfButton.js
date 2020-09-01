@@ -1,54 +1,61 @@
 import { colors } from '../../colors'
 
-const textViewStyle = {
+const boxStyle = {
   main: {
-    alignItems: 'center',
-    height: '100%',
-    width: '100%',
-    justifyContent: 'center',
-  },
-  content: {
-    fontSize: 15,
-    lineHeight: '18px',
-    letterSpacing: '0.105em',
-    fontWeight: 'bold',
-    color: colors.white,
-    paddingHorizontal: 19,
+    width: 25,
+    height: 25,
+    backgroundColor: 'white',
+    position: 'absolute',
+    overflow: 'hidden',
+    left: '-13px',
+    top: '-13px',
+    zIndex: 9999,
+    transform: [{ rotate: '45deg' }],
   },
 }
 
+const defaultButtonStyles = backgroundColor => {
+  return {
+    main: {
+      flex: 1,
+      justifyContent: 'center',
+      borderRadius: 0,
+      padding: 0,
+      backgroundColor,
+    },
+    content: {
+      $xsmall: {
+        letterSpacing: '0.105em',
+        fontWeight: 'bold',
+        color: colors.white,
+        fontSize: 13,
+        paddingHorizontal: 8,
+        lineHeight: '18px',
+      },
+      $small: {
+        fontSize: 15,
+      },
+    },
+  }
+}
 const defaultMainStyle = {
-  width: 120,
-  height: 45,
+  overflow: 'hidden',
+  flex: 1,
 }
 
 export const evfButton = {
-  $web: {
-    default: {
-      main: defaultMainStyle,
-      content: {
-        svg: {
-          main: {
-            fill: colors.default,
-          },
-          content: {
-            textView: textViewStyle,
-          },
-        },
-      },
+  default: {
+    main: defaultMainStyle,
+    content: {
+      box: boxStyle,
+      button: defaultButtonStyles(colors.default),
     },
-    primary: {
-      main: defaultMainStyle,
-      content: {
-        svg: {
-          main: {
-            fill: colors.primary,
-          },
-          content: {
-            textView: textViewStyle,
-          },
-        },
-      },
+  },
+  primary: {
+    main: defaultMainStyle,
+    content: {
+      box: boxStyle,
+      button: defaultButtonStyles(colors.primary),
     },
   },
 }
