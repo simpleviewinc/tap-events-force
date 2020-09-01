@@ -26,6 +26,14 @@ const buildStyles = (theme, customStyles) => {
   )
 }
 
+/**
+ * EvfButton
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {object} props.onClick
+ * @param {('default'|'primary')} props.type - button type. defaults to 'default'
+ * @param {string} props.text - text to display on button
+ */
 export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
   const theme = useTheme()
   const buttonStyles = theme.join(theme.get(`button.evfButton.${type}`), styles)
