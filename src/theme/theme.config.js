@@ -2,11 +2,15 @@ import { setSizes } from '@keg-hub/re-theme'
 import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
 
 // Test styles, to ensure the styleSheetParser is working properly
+// They will be removed once we get some real style sheets from Events Force
 import '../mocks/eventsforce/testStyles.css'
 
 export const evfDataClasses = styleSheetParser({
   format: 'json',
   toDom: false,
+  // Class list provided by Events Force
+  // Need to sync with them to map the Comps to the classes
+  // Which will them allow us to apply them to the correct elements
   classNames: [
     '.ef-sessions-text-default',
     '.ef-sessions-name',
