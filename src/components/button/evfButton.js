@@ -9,7 +9,6 @@ import { useTheme, useStylesCallback } from '@svkeg/re-theme'
  */
 const buildStyles = (theme, customStyles) => {
   const defaultButtonStyles = customStyles?.content?.button
-  console.log({ defaultButtonStyles })
   return theme.join(
     {
       content: {
