@@ -40,7 +40,6 @@ export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
 
   // build the main style for the button, memoized
   const mainStyle = useStylesCallback(buildStyles, [], buttonStyles)
-  console.log(mainStyle.content)
   return (
     <View style={mainStyle?.main}>
       { /* to clip the top right of the component */ }
