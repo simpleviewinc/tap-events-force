@@ -42,7 +42,7 @@ export const sessionTime = {
       },
       $small: {
         $web: {
-          color: 'black',
+          color: colors.black,
         },
       },
     },

@@ -33,7 +33,7 @@ export const gridContainer = {
             },
             content: {
               text: {
-                color: 'white',
+                color: colors.white,
                 fontFamily: 'Inter',
                 fontWeight: '600',
                 paddingLeft: 10,

@@ -37,7 +37,7 @@ export const sessions = {
             content: {
               filterIcon: {
                 $xsmall: {
-                  color: 'black',
+                  color: colors.black,
                   paddingRight: 5,
                 },
                 $small: {
@@ -53,7 +53,7 @@ export const sessions = {
                   fontWeight: 500,
                   letterSpacing: '0.1em',
                   textDecorationLine: 'underline',
-                  color: 'black',
+                  color: colors.black,
                 },
               },
             },

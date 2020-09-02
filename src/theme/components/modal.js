@@ -28,7 +28,7 @@ export const modal = {
           title: {
             $xsmall: {
               alignSelf: 'center',
-              color: 'white',
+              color: colors.white,
               paddingLeft: 46,
               paddingRight: 30,
               fontWeight: 600,
