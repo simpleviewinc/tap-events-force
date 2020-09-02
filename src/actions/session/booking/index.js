@@ -1,1 +1,1 @@
-export * from './groupBookingSubmit'
+export * from './sessionBookingRequest'

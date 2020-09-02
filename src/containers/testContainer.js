@@ -12,8 +12,8 @@ import { getEventEmitter } from 'SVUtils'
 
 const { EVENT_LISTENERS } = Values
 
-const testOnGroupBookingSubmit = data => {
-  console.log(data)
+const testonSessionBookingRequest = attendees => {
+  console.log(attendees)
 }
 /**
  * TestContainer to be used by QA to test out individual component
@@ -36,16 +36,16 @@ export const ModalDemos = () => {
     // placeholder data for now
     mapSessionInterface(testData)
     kegEventListener.on(
-      EVENT_LISTENERS.GROUP_BOOKING_SUBMIT,
-      testOnGroupBookingSubmit
+      EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+      testonSessionBookingRequest
     )
     return () => {
       kegEventListener.off(
-        EVENT_LISTENERS.GROUP_BOOKING_SUBMIT,
-        testOnGroupBookingSubmit
+        EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+        testonSessionBookingRequest
       )
     }
-  }, [testOnGroupBookingSubmit])
+  }, [testonSessionBookingRequest])
 
   return (
     <View style={testStyles.main}>

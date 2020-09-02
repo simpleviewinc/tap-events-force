@@ -3,8 +3,8 @@ import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
-import { groupBookingSubmit } from 'SVActions'
 import { checkCall } from '@keg-hub/jsutils'
+import { sessionBookingRequest } from 'SVActions'
 
 /**
  * GroupBooking Modal
@@ -120,7 +120,7 @@ const BottomSection = ({ styles, onCancelPress }) => {
         type={'primary'}
         styles={styles.content?.bookButton}
         text={'BOOK SELECTED'}
-        onClick={groupBookingSubmit}
+        onClick={sessionBookingRequest}
       />
     </View>
   )

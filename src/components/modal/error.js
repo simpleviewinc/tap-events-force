@@ -59,7 +59,7 @@ const Body = ({ styles, message, onButtonPress }) => {
       <EvfButton
         type={'primary'}
         styles={styles.content?.button}
-        onPress={onButtonPress}
+        onClick={onButtonPress}
         text={'OK'}
       />
     </View>
