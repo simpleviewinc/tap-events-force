@@ -43,8 +43,8 @@ const testOnSessionBookingRequest = (session, attendees) => {
 
 const { EVENT_LISTENERS } = Values
 
-const testOnGroupBookingSubmit = data => {
-  console.log(data)
+const testonSessionBookingRequest = attendees => {
+  console.log(attendees)
 }
 /**
  * TestContainer to be used by QA to test out individual component
