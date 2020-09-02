@@ -49,7 +49,7 @@ export const Values = deepFreeze({
     SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
   },
   EVENT_LISTENERS: {
-    GROUP_BOOKING_SUBMIT: 'groupBookingSubmit',
+    SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
   },
   /**
    * Local storage keys used to identify the values to load from local storage, if present.
