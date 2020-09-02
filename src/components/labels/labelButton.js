@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from '@svkeg/keg-components'
-import { useTheme, useStylesCallback } from '@svkeg/re-theme'
+import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
 
 /**
  * Builds the dynamic styles for LabelButton

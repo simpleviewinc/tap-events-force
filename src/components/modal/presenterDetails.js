@@ -1,7 +1,7 @@
 import React from 'react'
-import { useTheme, useDimensions } from '@svkeg/re-theme'
 import { View, Text } from '@svkeg/keg-components'
 import { Image, ScrollView } from 'react-native'
+import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { BaseModal, contentDefaultMaxHeight } from './baseModal'
 
 const placeholderImage = require('SVAssets/profile_placeholder.png')

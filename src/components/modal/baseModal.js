@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useTheme, useDimensions } from '@svkeg/re-theme'
 import { View, Modal, Text } from '@svkeg/keg-components'
+import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { removeModal } from 'SVActions'
 import PropTypes from 'prop-types'
 import { EVFIcons } from 'SVIcons'

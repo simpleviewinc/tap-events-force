@@ -1,6 +1,6 @@
 import moment from 'moment'
 import { sortSessions } from './sortSessions'
-import { reduceObj } from '@svkeg/jsutils'
+import { reduceObj } from '@keg-hub/jsutils'
 
 /**
  * Filters the sessions given a day number

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { TouchableOpacity, Text } from 'react-native'
-import { View } from '@svkeg/keg-components'
-import { useTheme } from '@svkeg/re-theme'
+import { View } from 'SVComponents'
+import { useTheme } from '@keg-hub/re-theme'
 import Svg, { Path, G } from 'react-native-svg'
 
 // TODO:

@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
-import { useTheme, useDimensions } from '@svkeg/re-theme'
+import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button } from 'SVComponents'
 import { RenderModals } from 'SVComponents/modal/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
@@ -10,7 +10,7 @@ import { useAgenda } from 'SVHooks/models/useAgenda'
 import { View } from '@svkeg/keg-components'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
-import { pickKeys, mapObj, get } from '@svkeg/jsutils'
+import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
 
 /**
  * FilterButton

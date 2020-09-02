@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import { GridItem } from 'SVComponents/grid/gridItem'
 import { ItemHeader, Text } from 'SVComponents'
 import { sortLabels, isMobileSize } from 'SVUtils'
-import { useTheme } from '@svkeg/re-theme'
+import { useTheme } from '@keg-hub/re-theme'
 
 /**
  *

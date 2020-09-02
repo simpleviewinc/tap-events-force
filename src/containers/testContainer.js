@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { View } from 'react-native'
 import { Button, Section, H6, H5, Divider } from 'SVComponents'
-import { useTheme } from '@svkeg/re-theme'
+import { useTheme } from '@keg-hub/re-theme'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modal'

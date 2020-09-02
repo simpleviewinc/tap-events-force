@@ -1,9 +1,9 @@
 import React, { useRef, useCallback } from 'react'
-import { useTheme } from '@svkeg/re-theme'
+import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text } from 'SVComponents'
-import { checkCall } from '@svkeg/jsutils'
 import { EvfButton } from 'SVComponents/button/evfButton'
+import { checkCall } from '@keg-hub/jsutils'
 
 /**
  * Error modal

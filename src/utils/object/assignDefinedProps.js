@@ -1,4 +1,4 @@
-import { pickKeys } from '@svkeg/jsutils'
+import { pickKeys } from '@keg-hub/jsutils'
 
 /**
  * @param {*} model - the model object to assign props to

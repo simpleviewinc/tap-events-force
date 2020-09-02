@@ -17,7 +17,7 @@ export const sessions = {
         main: {
           width: '100%',
           marginVertical: 20,
-          backgroundColor: 'transparent',
+          backgroundColor: colors.transparent,
           flexDirection: 'row',
           justifyContent: 'center',
         },

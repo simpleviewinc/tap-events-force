@@ -1,9 +1,9 @@
 import React from 'react'
 import moment from 'moment'
 import { UpdateDayButton } from './updateDayButton'
-import { View, Text } from '@svkeg/keg-components'
-import { useTheme } from '@svkeg/re-theme'
+import { useTheme } from '@keg-hub/re-theme'
 import { noOp } from 'SVUtils/helpers/method/noop'
+import { View, Text } from '@svkeg/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
 
 /**
