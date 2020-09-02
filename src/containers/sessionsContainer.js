@@ -20,6 +20,9 @@ export const SessionsContainer = props => {
     <Sessions
       onDayChange={onDayChange}
       sessionData={sessionData}
+      onSessionBookingRequest={data => {
+        console.log(data)
+      }}
     />
   ) : (
     <Loading />

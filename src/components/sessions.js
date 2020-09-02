@@ -11,7 +11,9 @@ import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
+import { Values } from 'SVConstants'
 
+const { EVENT_LISTENERS } = Values
 /**
  * FilterButton
  * Renders either an Icon or a text button based on current screen dimension
@@ -115,21 +117,27 @@ const AgendaSessions = React.memo(({ labels, daySessions }) => {
  * @param {Object} props
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionData - session agenda props defined in evf interface
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
- * @param {Function} props.onGroupBookingSubmit - callback for group booking btn submit
+ * @param {Function} props.onSessionBookingRequest - callback for session booking
  */
 export const Sessions = props => {
-  const { onDayChange = noOp, sessionData, onGroupBookingSubmit } = props
+  const { onDayChange = noOp, sessionData, onSessionBookingRequest } = props
 
   // eventListener setup
   const kegEventListener = getEventEmitter()
 
   useEffect(() => {
     mapSessionInterface(sessionData)
-    kegEventListener.on('onGroupBookingPress', onGroupBookingSubmit)
+    kegEventListener.on(
+      EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+      onSessionBookingRequest
+    )
     return () => {
-      kegEventListener.off('onGroupBookingPress', onGroupBookingSubmit)
+      kegEventListener.off(
+        EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+        onSessionBookingRequest
+      )
     }
-  }, [onGroupBookingSubmit])
+  }, [onSessionBookingRequest])
 
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')
