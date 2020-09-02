@@ -6,6 +6,7 @@ export class Attendee {
   attendeeCategoryIdentifier = ''
   bookedDays = []
   bookedSessions = []
+  waitingListSessions = []
 
   /**
    * Attendee class model
@@ -15,6 +16,7 @@ export class Attendee {
    * @param {string=} params.attendeeCategoryIdentifier - attendee category id
    * @param {Array<number>=} params.bookedDays - list of days booked
    * @param {Array<string>=} params.bookedSessions - list of sessions booked
+   * @param {Array<string>=} params.waitingListSessions - list of sessions on waiting list
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)
