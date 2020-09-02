@@ -63,7 +63,6 @@ export const EvfButton = ({
 
   // build the main style for the button, memoized
   const mainStyle = useStylesCallback(buildStyles, [], buttonStyles)
-  console.log(mainStyle.content)
   return (
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main} />
