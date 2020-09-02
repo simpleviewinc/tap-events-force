@@ -13,7 +13,7 @@
     "type": "git"
   },
   "scripts": {
-    "test": "yarn keg && NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
+    "test": "cd node_modules/keg-core; NODE_ENV=test jest --no-cache --config=../../configs/jest.config.js",
     "android": "cd node_modules/keg-core; yarn android",
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",

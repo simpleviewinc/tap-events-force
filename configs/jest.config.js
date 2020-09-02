@@ -63,6 +63,7 @@ module.exports = {
     ],
     [`${namespace}Mocks`]: `${rootDir}/src/mocks/index.js`,
     ...getDynamicAlias(),
+    [`@svkeg/re-theme`]: `@svkeg/re-theme/build/esm/web`,
   },
   testPathIgnorePatterns: [`${rootDir}/node_modules/(?!(keg-core/node_modules)/)`, ],
   transformIgnorePatterns: [`${rootDir}/node_modules/(?!(keg-core)/)`],
