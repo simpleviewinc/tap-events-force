@@ -1,5 +1,5 @@
 import { Values } from 'SVConstants'
-import { AgendaSettings } from 'SVModels/tapIndex'
+import { AgendaSettings } from 'SVModels/agendaSettings'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 

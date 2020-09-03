@@ -1,6 +1,8 @@
-import { Values } from 'SVConstants'
 import React from 'react'
-import { PresenterDetails, GroupBooking, Error } from 'SVComponents/modal'
+import { PresenterDetails } from 'SVComponents/modal/presenterDetails'
+import { GroupBooking } from 'SVComponents/modal/groupBooking'
+import { Error } from 'SVComponents/modal/error'
+import { Values } from 'SVConstants'
 
 /**
  * loops through the array of modals

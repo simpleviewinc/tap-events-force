@@ -1,14 +1,15 @@
 import React, { useEffect, useCallback } from 'react'
 import { useTheme } from '@svkeg/re-theme'
-import { useAgenda } from 'SVHooks'
-import { View } from 'SVComponents'
-import { DayToggle } from 'SVComponents/dates/dayToggle'
-import { mapSessionInterface, incrementDay, decrementDay } from 'SVActions'
-import { noOp } from 'SVUtils'
-import { RenderModals } from 'SVComponents/modal'
+import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
+import { incrementDay, decrementDay } from 'SVActions/session/dates'
+import { RenderModals } from 'SVComponents/modal/renderModals'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { pickKeys, mapObj, get } from '@svkeg/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
+import { useAgenda } from 'SVHooks/models/useAgenda'
+import { View } from '@svkeg/keg-components'
+import { DayToggle } from 'SVComponents/dates/dayToggle'
+import { noOp } from 'SVUtils/helpers/method/noop'
+import { pickKeys, mapObj, get } from '@svkeg/jsutils'
 
 /**
  * Component that will hold the day toggle and filter button

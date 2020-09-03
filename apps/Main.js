@@ -18,17 +18,22 @@ import { isNative } from 'SVUtils/platform'
 
 setDefaultTheme(theme)
 
-const checkAppInit = async setInit => {
-  await initAppAction?.()
+const checkAppInit = setInit => {
+  initAppAction?.()
   setInit(true)
 }
 
 /* This is only a temp solution for now. The page should already have this font */
 const interFont = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;700&display=swap');`
 
-const App = props => {
+/**
+ * App for testing sessions app locally
+ * @see `tap.json` routes object for which containers are bound to which url routes
+ * @param {object} props 
+ */
+const MainApp = props => {
   const [activeTheme] = useState(getDefaultTheme())
-  const [ init, setInit ] = useState()
+  const [ init, setInit ] = useState(false)
   useEffect(() => void checkAppInit(setInit), [])
 
   return init ? (
@@ -46,9 +51,8 @@ const App = props => {
       <StatusBar barStyle={'default'} />
       <Router history={getHistory()}>
         <SafeAreaView>
-          <Provider store={getStore()}>
+          <Provider store={getStore()}> 
             <ReThemeProvider theme={activeTheme}>
-              { /* setup routes from navigation config */ }
               <ContainerRoutes navigationConfigs={keg.routes} />
             </ReThemeProvider>
           </Provider>
@@ -58,4 +62,4 @@ const App = props => {
   ) : null
 }
 
-export default App
+export default MainApp
