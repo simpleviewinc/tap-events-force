@@ -111,6 +111,15 @@ export const modal = {
           maxWidth: '800px',
         },
       },
+      header: {
+        content: {
+          title: {
+            $small: {
+              fontSize: 22,
+            },
+          },
+        },
+      },
       body: {
         main: {
           flex: 1,

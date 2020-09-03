@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { Text, View } from '@svkeg/keg-components'
+import { Text, View } from '@keg-hub/keg-components'
 
 /**
  * GroupBooking Modal

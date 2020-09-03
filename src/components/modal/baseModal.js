@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Modal, Text } from '@svkeg/keg-components'
+import { View, Modal, Text } from '@keg-hub/keg-components'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { removeModal } from 'SVActions'
 import PropTypes from 'prop-types'

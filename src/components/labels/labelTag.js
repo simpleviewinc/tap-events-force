@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View } from '@svkeg/keg-components'
+import { View } from '@keg-hub/keg-components'
 import { useTheme } from '@keg-hub/re-theme'
 
 /**

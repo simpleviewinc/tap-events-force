@@ -1,16 +1,16 @@
 import React, { useEffect, useCallback } from 'react'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
-import { View, ItemHeader, Button } from 'SVComponents'
+import { View, ItemHeader, Button } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modal/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useAgenda } from 'SVHooks/models/useAgenda'
-import { View } from '@svkeg/keg-components'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
+import { EVFIcons } from 'SVIcons'
 
 /**
  * FilterButton
