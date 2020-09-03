@@ -107,9 +107,6 @@ export default {
       // ensures these dependencies aren't duplicated in the build
       dedupe: [ '@svkeg/re-theme', '@svkeg/keg-components', '@svkeg/jsutils', '@svkeg/tap-resolver' ]
     }),
-    // Sets the alias built from the tap-resolver
-    // A new component-resolver was added to tap-resolver
-    // So be sure to use that branch or the build will fail
     alias({ entries: moduleResolver.alias }),
     sucrase({
       transforms: [ 'jsx', 'flow' ],
@@ -141,8 +138,6 @@ export default {
       // rn and rnw are in "externals", causing the alias plugin to ignore them, so we have to manually replace
       "from 'react-native'": "from 'react-native-web'",
     }),
-    // Not sure why, but getting lots of sourcemap errors
-    // Need to investigate, maybe best to try and turn them off
     sourcemaps(),
     generatePackageJson({
       tapPath,

@@ -23,7 +23,7 @@ module.exports = {
           Icons: 'assets/icons'
         },
         web: {
-          SVTapEntry: pathToEntryPoint         
+          SVTapEntry: pathToEntryPoint
         }
       }
     },
