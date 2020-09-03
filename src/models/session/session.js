@@ -1,5 +1,5 @@
 import { SessionCapacity } from './sessionCapacity'
-import { assignDefinedProps } from 'SVUtils'
+import { assignDefinedProps } from 'SVUtils/object/assignDefinedProps'
 
 /**
  * Session class model

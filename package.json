@@ -1,5 +1,5 @@
 {
-  "name": "@simpleviewinc/tap-events-force",
+  "name": "@keg-hub/tap-events-force",
   "version": "1.0.1",
   "description": "Events Force Tap for the Keg",
   "main": "index.js",
@@ -14,31 +14,34 @@
   },
   "scripts": {
     "test": "yarn keg && NODE_ENV=test jest --no-cache --config=./configs/jest.config.js",
-    "android": "cd node_modules/keg-core; yarn android",
+    "android": "yarn watch 'cd node_modules/keg-core; yarn android'",
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
-    "build:web": "cd node_modules/keg-core; yarn build:web",
+    "build:web": "clean:sessions:build; GENERATE_SOURCEMAP=false  cd node_modules/keg-core; yarn build:web",
     "build:theme": "bash scripts/buildEventsForceTheme.sh",
     "clean": "cd node_modules/keg-core; yarn clean",
     "clean:full": "yarn clean; yarn clean:nm; yarn install",
     "clean:nm": "rimraf ./yarn.lock; rimraf ./package.lock; rimraf node_modules",
     "clean:rn": "yarn keg clean:rn",
-    "ios": "cd node_modules/keg-core; yarn ios",
-    "start": "cd node_modules/keg-core; expo start",
+    "clean:sessions:build": "rimraf ./build/*",
+    "ios": "yarn watch 'cd node_modules/keg-core; yarn ios'",
     "setup": "yarn install; cd node_modules/keg-core; yarn postinstall",
+    "start": "yarn watch 'cd node_modules/keg-core; expo start'",
+    "watch": "nodemon --watch node_modules/keg-core/core/base/configs --watch node_modules/keg-core/app.json --watch node_modules/keg-core/package.json --watch configs --watch package.json --watch tap.json --exec",
     "web": "cd node_modules/keg-core; yarn web",
+    "test:build": "yarn roll:dev && TEST_BUILD=true yarn web",
     "tap:start": "cd node_modules/keg-core; yarn tap:start",
     "keg": "cd node_modules/keg-core; yarn",
     "format:eslint": "eslint --config ./configs/eslintrc.config.js . --resolve-plugins-relative-to ./ --fix --quiet",
     "format:prettier": "prettier --config ./configs/prettier.config.js --ignore-path .eslintignore --write '**/*.{js,jsx}'",
     "format": "yarn format:prettier && yarn format:eslint",
-    "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix"
+    "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix",
+    "roll:dev": "cd node_modules/keg-core; NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
+    "dev": "nodemon --watch ./src --watch Sessions.js --exec yarn roll:dev"
   },
   "dependencies": {
     "css-to-react-native-transform": "1.9.0",
-    "firebase": "7.7.0",
-    "keg-core": "https://github.com/simpleviewinc/keg-core.git#master",
-    "qr-reader": "git+https://github.com/mpcarolin/qr-code-scanner.git#master"
+    "keg-core": "npm:@svkeg/keg-core@0.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.10.3",
@@ -58,9 +61,27 @@
     "@svkeg/jsutils": "0.0.1",
     "lint-staged": "10.2.10",
     "moment": "2.27.0",
+    "nodemon": "2.0.4",
     "onchange": "7.0.2",
     "prettier": "2.0.5",
-    "rimraf": "^3.0.1"
+    "rimraf": "^3.0.1",
+    "@rollup/plugin-alias": "^3.1.1",
+    "@rollup/plugin-babel": "^5.1.0",
+    "@rollup/plugin-commonjs": "^14.0.0",
+    "@rollup/plugin-html": "^0.2.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^8.4.0",
+    "@rollup/plugin-replace": "^2.3.3",
+    "@rollup/plugin-sucrase": "^3.1.0",
+    "@rollup/plugin-url": "^5.0.1",
+    "rollup-plugin-bundle-size": "^1.0.3",
+    "rollup-plugin-cleanup": "^3.1.1",
+    "rollup-plugin-clear": "^2.0.7",
+    "rollup-plugin-generate-package-json": "^3.2.0",
+    "rollup-plugin-jsx": "^1.0.3",
+    "rollup-plugin-nodent": "^0.2.2",
+    "rollup-plugin-sourcemaps": "^0.6.2",
+    "rollup": "^2.23.1"
   },
   "husky": {
     "hooks": {

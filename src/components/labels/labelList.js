@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View } from 'SVComponents'
-import { LabelButton } from './'
+import { View } from '@svkeg/keg-components'
+import { LabelButton } from './labelButton'
 import { useTheme } from '@svkeg/re-theme'
 
 /**

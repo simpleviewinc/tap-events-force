@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'SVComponents'
+import { Button } from '@svkeg/keg-components'
 import { useTheme, useStylesCallback } from '@svkeg/re-theme'
 
 /**

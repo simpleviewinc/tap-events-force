@@ -1,5 +1,5 @@
 import { AgendaSettings } from './agendaSettings'
-import { assignDefinedProps } from 'SVUtils'
+import { assignDefinedProps } from 'SVUtils/object/assignDefinedProps'
 /**
  * SessionAgendaProps class model
  */

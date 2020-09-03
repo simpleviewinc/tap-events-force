@@ -1,35 +1,45 @@
 export const sessionTime = {
-  $web: {
-    main: {
+  main: {
+    $web: {
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-start',
       padding: 0,
       margin: 0,
     },
-    clockIcon: {
-      main: {
-        $xsmall: {
+  },
+  clockIcon: {
+    main: {
+      $xsmall: {
+        $web: {
           display: 'none',
           width: 19,
           height: 20,
         },
-        $small: {
+      },
+      $small: {
+        $web: {
           display: 'flex',
           marginRight: 5,
         },
       },
     },
-    timeText: {
-      main: {
+  },
+  timeText: {
+    main: {
+      $web: {
         flexBasis: 200,
         width: 0,
       },
-      content: {
-        $xsmall: {
+    },
+    content: {
+      $xsmall: {
+        $web: {
           color: '#8f908f',
         },
-        $small: {
+      },
+      $small: {
+        $web: {
           color: 'black',
         },
       },

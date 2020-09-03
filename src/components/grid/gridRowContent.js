@@ -1,5 +1,7 @@
 import React from 'react'
-import { LabelTag, LabelList, SessionTime } from 'SVComponents'
+import { LabelTag } from 'SVComponents/labels/labelTag'
+import { LabelList } from 'SVComponents/labels/labelList'
+import { SessionTime } from 'SVComponents/SessionTime/sessionTime'
 import { useTheme } from '@svkeg/re-theme'
 import PropTypes from 'prop-types'
 

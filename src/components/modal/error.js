@@ -1,8 +1,8 @@
 import React from 'react'
 import { useTheme } from '@svkeg/re-theme'
 import { BaseModal } from './baseModal'
-import { View, Text } from 'SVComponents'
-import { EvfButton } from 'SVComponents/button'
+import { View, Text } from '@svkeg/keg-components'
+import { EvfButton } from 'SVComponents/button/evfButton'
 
 /**
  * Error modal
