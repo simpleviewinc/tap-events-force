@@ -8,8 +8,6 @@ import { configureTheme } from './theme.config'
 import { colors } from './colors'
 import { typography } from './typography'
 
-configureTheme()
-
 export const theme = deepMerge(
   kegComponentsTheme,
   { eventsForce: { labels: eventsForce } },

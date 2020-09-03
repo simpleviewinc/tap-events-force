@@ -1,4 +1,8 @@
-export const colors = {
+/**
+ * Holds the default colors. Can be overwritten by setColor method
+ * @object
+ */
+const colors = {
   primary: '#22B3C4',
   default: '#525859',
   black: '#000000',
@@ -11,3 +15,17 @@ export const colors = {
   darkGray: '#4F4F4F',
   transparent: 'transparent',
 }
+
+/**
+ * Updates the default colors object with the passed in updated object
+ * @function
+ * @param {Object} updated - Color object to be merged with the default colors object
+ *
+ * @return {Object} Updated colors object
+ */
+const setColors = updated => {
+  Object.assign(colors, updated)
+  return colors
+}
+
+export { colors, setColors }
