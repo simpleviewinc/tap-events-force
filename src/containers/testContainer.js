@@ -12,8 +12,9 @@ import { getEventEmitter } from 'SVUtils'
 
 const { EVENT_LISTENERS } = Values
 
-const testonSessionBookingRequest = attendees => {
+const testonSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
+  console.log(session)
 }
 /**
  * TestContainer to be used by QA to test out individual component
