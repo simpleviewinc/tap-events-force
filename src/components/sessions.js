@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button } from 'SVComponents'
 import { RenderModals } from 'SVComponents/modal/renderModals'
@@ -94,22 +94,21 @@ const SessionsHeader = ({ styles, onDayChange }) => {
  * @param {object} props.daySessions - group of sessions in the form of {'9:15': [sessionA, sessionB,..]}
  * @returns {Component}
  */
-const AgendaSessions = ({ labels, daySessions }) => {
-  return useMemo(() => {
-    if (!daySessions) return null
-    return mapObj(daySessions, (timeBlock, sessions) => {
-      return (
-        // creates a gridContainer separated by hour blocks
-        <GridContainer
-          key={timeBlock}
-          sessions={sessions}
-          labels={labels}
-          timeBlock={timeBlock}
-        />
-      )
-    })
-  }, [ daySessions, labels ])
-}
+const AgendaSessions = React.memo(({ labels, daySessions }) => {
+  if (!daySessions) return null
+
+  return mapObj(daySessions, (timeBlock, sessions) => {
+    return (
+      // creates a gridContainer separated by hour blocks
+      <GridContainer
+        key={timeBlock}
+        sessions={sessions}
+        labels={labels}
+        timeBlock={timeBlock}
+      />
+    )
+  })
+})
 
 /**
  * SessionComponent
@@ -143,7 +142,7 @@ export const Sessions = props => {
       <AgendaSessions
         labels={labels}
         daySessions={
-          agendaSessions[settings?.agendaSettings?.activeDayNumber || 1]
+          agendaSessions[settings?.agendaSettings?.activeDayNumber ?? 1]
         }
       />
       { modals.length > 0 && RenderModals(modals) }
