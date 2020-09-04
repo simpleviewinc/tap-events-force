@@ -12,7 +12,7 @@ module.exports = {
       '/': 'RootContainer',
       '/sessions': 'SessionsContainer',
       '/test': 'TestContainer',
-      '/qr': 'QRContainer'
+      '/demo': 'EFDemoContainer',
     },
     tapResolver: {
       paths: {

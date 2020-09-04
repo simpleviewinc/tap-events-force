@@ -14,15 +14,19 @@ import { withAppHeader } from 'SVComponents'
  * TestContainer to be used by QA to test out individual component
  */
 export const TestContainer = withAppHeader('Test Container', props => {
-  const store = useSelector(state => state.items)
-  const theme = useTheme()
-  const testStyles = theme.get('testContainer')
-
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
     mapSessionInterface(testData)
   }, [])
+
+  return <ModalDemos />
+})
+
+export const ModalDemos = () => {
+  const theme = useTheme()
+  const testStyles = theme.get('testContainer')
+  const store = useSelector(state => state.items)
 
   return (
     <View style={testStyles.main}>
@@ -103,4 +107,4 @@ export const TestContainer = withAppHeader('Test Container', props => {
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
-})
+}
