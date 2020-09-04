@@ -3,7 +3,11 @@ import testData from '../src/mocks/eventsforce/testData.js'
 import Sessions from '../build/keg-sessions.esm.js'
 
 const mockCallbacks = {
-  onDayChange: day => console.log('Day change', day)
+  onDayChange: day => console.log('Day change', day),
+  onSessionBookingRequest: (session, attendees) => {
+    console.log(attendees)
+    console.log(session)
+  }
 }
 
 const showModalDemo = false
