@@ -16,6 +16,7 @@ export const LabelTag = ({ label = {}, style = {} }) => {
     theme.get('labelTag.main'),
     style
   )
+  console.log({ mainStyle })
   return <View style={mainStyle} />
 }
 
