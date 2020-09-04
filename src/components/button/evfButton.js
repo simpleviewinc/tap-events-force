@@ -9,12 +9,16 @@ import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
  */
 const buildStyles = (theme, customStyles) => {
   const defaultButtonStyles = customStyles?.content?.button
+
   return theme.join(
     {
       content: {
         button: {
           default: defaultButtonStyles,
-          hover: defaultButtonStyles,
+          hover: {
+            main: { ...defaultButtonStyles.main, opacity: 0.8 },
+            content: defaultButtonStyles.content,
+          },
           active: {
             main: { ...defaultButtonStyles.main, opacity: 0.4 },
             content: defaultButtonStyles.content,
