@@ -50,7 +50,6 @@ const MainApp = props => {
         <SafeAreaView>
           <Provider store={getStore()}>
             <ReThemeHeadProvider theme={activeTheme}>
-              { /* setup routes from navigation config */ }
               <ContainerRoutes navigationConfigs={keg.routes} />
             </ReThemeHeadProvider>
           </Provider>
