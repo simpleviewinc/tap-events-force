@@ -19,7 +19,7 @@ const relativeTapPath = path.relative(__dirname, tapPath)
 
 const peerExternals = [ 'react', 'react-dom' ]
 const mainExternals = [
-  '@svkeg/jsutils',
+  '@keg-hub/jsutils',
   'prop-types',
   'axios',
   'react-native',
@@ -35,7 +35,7 @@ const coreBabelConfig = require(path.join(corePath, 'babel.config.js'))()
 // Rollup is having issue finding the (reTheme || kegComponents ) build files
 // This creates custom alias to ensure then can be found
 const buildAlias = builtAlias => {
-  const svModules = path.join(corePath, 'node_modules/@svkeg')
+  const svModules = path.join(corePath, 'node_modules/@keg-hub')
   const reTheme = path.join(svModules, 're-theme/build/esm/reTheme.js')
   const kegComponents = path.join(
     svModules,
@@ -43,13 +43,13 @@ const buildAlias = builtAlias => {
   )
 
   const reThemeAliases = {
-    '@svkeg/re-theme': reTheme,
+    '@keg-hub/re-theme': reTheme,
     're-theme': reTheme,
     './reTheme': reTheme,
   }
 
   const kegComponentAliases = {
-    '@svkeg/keg-components': kegComponents,
+    '@keg-hub/keg-components': kegComponents,
     'keg-components': kegComponents,
     './kegComponents': kegComponents,
   }
@@ -105,7 +105,7 @@ export default {
       module: true,
       main: true,
       // ensures these dependencies aren't duplicated in the build
-      dedupe: [ '@svkeg/re-theme', '@svkeg/keg-components', '@svkeg/jsutils', '@svkeg/tap-resolver' ]
+      dedupe: [ '@keg-hub/re-theme', '@keg-hub/keg-components', '@keg-hub/jsutils', '@keg-hub/tap-resolver' ]
     }),
     alias({ entries: moduleResolver.alias }),
     sucrase({

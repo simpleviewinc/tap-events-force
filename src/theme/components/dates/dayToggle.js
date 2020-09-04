@@ -1,3 +1,5 @@
+import { colors } from '../../colors'
+
 export const dayToggle = {
   $web: {
     main: {
@@ -19,7 +21,7 @@ export const dayToggle = {
           fontStyle: 'normal',
           fontWeight: '500',
           fontSize: '18px',
-          color: '#0A0A0A',
+          color: colors.black01,
           marginLeft: 10,
           marginRight: 16,
         },

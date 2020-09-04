@@ -1,4 +1,4 @@
-import { get, isArr } from '@svkeg/jsutils'
+import { get, isArr } from '@keg-hub/jsutils'
 
 /**
  * Sort the sessions ascending or descending

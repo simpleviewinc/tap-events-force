@@ -1,3 +1,5 @@
+import { colors } from '../colors'
+
 const smallImage = {
   width: 80,
   height: 80,
@@ -20,13 +22,13 @@ export const modal = {
         main: {
           flexDirection: 'row',
           height: 72,
-          backgroundColor: '#22B3C4',
+          backgroundColor: colors.primary,
         },
         content: {
           title: {
             $xsmall: {
               alignSelf: 'center',
-              color: 'white',
+              color: colors.white,
               paddingLeft: 46,
               paddingRight: 30,
               fontWeight: 600,
@@ -49,7 +51,7 @@ export const modal = {
       },
       body: {
         main: {
-          backgroundColor: '#FFFFFF',
+          backgroundColor: colors.white,
         },
       },
     },
@@ -79,7 +81,7 @@ export const modal = {
               instructionText: groupBookingTextStyle,
               infoText: {
                 ...groupBookingTextStyle,
-                color: '#A0A0A0',
+                color: colors.lightGray,
                 textAlign: 'end',
               },
             },
@@ -107,6 +109,15 @@ export const modal = {
         $xsmall: {
           width: '90%',
           maxWidth: '800px',
+        },
+      },
+      header: {
+        content: {
+          title: {
+            $small: {
+              fontSize: 22,
+            },
+          },
         },
       },
       body: {
@@ -138,11 +149,10 @@ export const modal = {
           title: {
             $xsmall: {
               fontFamily: 'Inter',
-              color: '#A0A0A0',
+              color: colors.lightGray,
               marginBottom: '5px',
               fontWeight: '500',
               fontSize: 18,
-              // TODO: update placeholder color
             },
             $small: {
               lineHeight: '30px',
@@ -181,7 +191,7 @@ export const modal = {
                 fontFamily: 'Inter',
                 fontStyle: 'normal',
                 fontWeight: 'normal',
-                color: '#909090',
+                color: colors.lightGray,
                 fontSize: 12,
                 lineHeight: 18,
               },

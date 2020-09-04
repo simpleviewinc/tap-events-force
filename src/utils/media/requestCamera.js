@@ -1,4 +1,4 @@
-import { limbo } from '@svkeg/jsutils'
+import { limbo } from '@keg-hub/jsutils'
 
 /**
  * Requests WebRTC camera stream

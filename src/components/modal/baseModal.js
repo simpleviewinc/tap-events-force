@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import { useTheme, useDimensions } from '@svkeg/re-theme'
-import { View, Modal, Text } from '@svkeg/keg-components'
+import React, { useState, useEffect } from 'react'
+import { View, Modal, Text } from '@keg-hub/keg-components'
+import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { removeModal } from 'SVActions'
 import PropTypes from 'prop-types'
 import { EVFIcons } from 'SVIcons'
@@ -9,18 +9,25 @@ import { EVFIcons } from 'SVIcons'
  * Title bar for modal
  * @param {object} props
  * @param {string} props.title
- * @param {object} props.theme - presenter theme from global theme
+ * @param {object} props.styles
+ * @param {object} props.dataSet
  * @param {object} props.setDismissed - used to state the modals visible state for animation
  * @param {boolean=} props.hasCloseButton - display the close button on top right or not
  */
-const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
+const Header = ({
+  title,
+  styles,
+  setDismissed,
+  hasCloseButton = true,
+  dataSet,
+}) => {
   return (
     <View
-      dataSet={BaseModal.dataSet.content.header.main}
+      dataSet={dataSet.header.main}
       style={styles?.main}
     >
       <Text
-        dataSet={BaseModal.dataSet.content.header.content.text}
+        dataSet={dataSet.header.content.text}
         style={styles?.content?.title}
         numberOfLines={2}
         ellipsizeMode={'tail'}
@@ -30,12 +37,10 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
       { hasCloseButton && (
         <View
           style={styles?.content?.closeButton?.main}
-          dataSet={BaseModal.dataSet.content.header.content.closeButton.main}
+          dataSet={dataSet.header.content.closeButton.main}
         >
           <EVFIcons.Close
-            dataSet={
-              BaseModal.dataSet.content.header.content.closeButton.content
-            }
+            dataSet={dataSet.header.content.closeButton.content}
             onPress={() => setDismissed(true)}
           />
         </View>
@@ -48,27 +53,46 @@ export const contentDefaultMaxHeight = 772
 /**
  *
  * @param {object} props
+ * @param {object} props.title
  * @param {object} props.styles
  * @param {boolean} props.visible
+ * @param {Component} props.children
+ * @param {React.MutableRefObject=} props.dissmissedCBRef - pass this in when you want to dismiss modal from child
+ *                                                        -  call `childRef.current(true)` to dismiss
  * @param {Component} props.BodyComponent - Component for the body. contains 'setDismissed' prop if the child wants to be able to dismiss the modal by other means other than close button || backdrop click
- * @param {boolean} props.hasCloseButton - to display the close button on the header or not
+ * @param {boolean=} props.hasCloseButton - to display the close button on the header or not
  * @example
  *  <BaseModal
- *    title={'Modal Title'}
- *    BodyComponent={({ setDismissed }) => <Button onPress={setDismissed} /> }
- *  />
+      dissmissedCBRef={dismissedCBRef}
+      styles={errorStyles}
+      title={title}
+      visible={visible}
+    >
+      <Children />
+    </BaseModal>
  */
-export const BaseModal = ({
-  title,
-  visible,
-  BodyComponent,
-  hasCloseButton,
-  styles,
-}) => {
+export const BaseModal = props => {
+  const {
+    title,
+    visible,
+    hasCloseButton,
+    styles,
+    dissmissedCBRef,
+    children,
+  } = props
   // two possible cases for a non visible modal
   // 1. modal is mounted/in store but has been animated out of view by another modal
   // 2. modal has been removed from the store
   const [ dismissed, setDismissed ] = useState(false)
+  useEffect(() => {
+    if (dissmissedCBRef) {
+      dissmissedCBRef.current = setDismissed
+      return () => {
+        dissmissedCBRef.current = undefined
+      }
+    }
+  }, [ setDismissed, dissmissedCBRef ])
+
   const theme = useTheme()
   const dim = useDimensions()
   const maxHeight =
@@ -84,13 +108,14 @@ export const BaseModal = ({
       onBackdropTouch={() => setDismissed(true)}
     >
       <Header
+        dataSet={BaseModal.dataSet.content}
         title={title}
         styles={baseStyles.content.header}
         setDismissed={setDismissed}
         hasCloseButton={hasCloseButton}
       />
 
-      { BodyComponent && <BodyComponent setDismissed={setDismissed} /> }
+      { children }
     </Modal>
   )
 }
