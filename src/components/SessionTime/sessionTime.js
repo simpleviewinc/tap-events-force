@@ -1,7 +1,7 @@
 import React from 'react'
+import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
-import { View, Text } from '@svkeg/keg-components'
-import { useTheme } from '@svkeg/re-theme'
+import { View, Text } from '@keg-hub/keg-components'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 import { EVFIcons } from 'SVIcons'
 

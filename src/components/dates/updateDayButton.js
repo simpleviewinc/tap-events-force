@@ -1,5 +1,5 @@
 import React from 'react'
-import { useStylesCallback } from '@svkeg/re-theme'
+import { useStylesCallback } from '@keg-hub/re-theme'
 import { EVFIcons } from 'SVIcons'
 import PropTypes from 'prop-types'
 

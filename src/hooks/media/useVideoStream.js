@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { get } from '@svkeg/jsutils'
+import { get } from '@keg-hub/jsutils'
 
 /**
  * Sets up the video to use the camera stream and provides access to play/pause functions

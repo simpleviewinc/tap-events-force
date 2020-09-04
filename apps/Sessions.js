@@ -6,7 +6,7 @@ import {
   setDefaultTheme,
   setRNDimensions,
   setRNPlatform
-} from '@svkeg/re-theme'
+} from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { SessionsContainer } from 'SVContainers/sessionsContainer'

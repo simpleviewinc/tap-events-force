@@ -12,7 +12,7 @@ export function Close(props) {
     >
       <Path
         d='M2 .82l-2 2 5 5-5 5 2 2 5-5 5 5 2-2-5-5 5-5-2-2-5 5-5-5z'
-        fill='#fff'
+        fill={props.fill || '#fff'}
       />
     </Svg>
   )

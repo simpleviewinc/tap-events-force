@@ -1,6 +1,6 @@
 import { buildHourSessionsMap } from '../buildHourSessionsMap'
 import testData from '../../../../mocks/eventsforce/testData'
-import { mapObj } from '@svkeg/jsutils'
+import { mapObj } from '@keg-hub/jsutils'
 
 describe('buildHourSessionsMap', () => {
   it('should filter on day 1', () => {

@@ -1,7 +1,7 @@
 import * as SvgComponents from './elements'
 import { TouchableOpacity } from 'react-native'
-import { View } from '@svkeg/keg-components'
-import { mapEntries } from '@svkeg/jsutils'
+import { View } from '@keg-hub/keg-components'
+import { mapEntries } from '@keg-hub/jsutils'
 import React from 'react'
 import PropTypes from 'prop-types'
 
@@ -41,7 +41,7 @@ const buildIconComponent = SvgElement => {
         onPress={onPress}
       >
         <SvgElement
-          fill={fill || color || 'none'}
+          fill={fill || color}
           {...svgProps}
         />
       </Wrapper>

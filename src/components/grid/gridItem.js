@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react'
 import { GridRowContent } from './gridRowContent'
 import { GridTileContent } from './gridTileContent'
-import { View } from '@svkeg/keg-components'
-import { useTheme } from '@svkeg/re-theme'
+import { View } from '@keg-hub/keg-components'
+import { useTheme } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme'
 import PropTypes from 'prop-types'
 
