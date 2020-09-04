@@ -4,7 +4,7 @@ const boxStyle = {
   main: {
     width: 25,
     height: 25,
-    backgroundColor: 'white',
+    backgroundColor: colors.white,
     position: 'absolute',
     overflow: 'hidden',
     left: '-13px',
