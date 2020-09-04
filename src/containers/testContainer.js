@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import { View } from 'react-native'
-import { Button, Section, H6, H5, Divider } from 'SVComponents'
+import { Button, Section, H6, H5, Divider, View } from 'SVComponents'
 import { useTheme } from '@keg-hub/re-theme'
 import testData from '../mocks/eventsforce/testData'
 import { mapSessionInterface } from 'SVActions'
