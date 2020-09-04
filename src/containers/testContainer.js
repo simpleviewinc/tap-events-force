@@ -30,18 +30,18 @@ export const ModalDemos = () => {
   const testStyles = theme.get('testContainer')
   const store = useSelector(state => state.items)
 
-  const kegEventListener = getEventEmitter()
+  const kegEventEmitter = getEventEmitter()
 
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
     mapSessionInterface(testData)
-    kegEventListener.on(
+    kegEventEmitter.on(
       EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
       testonSessionBookingRequest
     )
     return () => {
-      kegEventListener.off(
+      kegEventEmitter.off(
         EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
         testonSessionBookingRequest
       )

@@ -12,6 +12,7 @@ import { noOp } from 'SVUtils/helpers/method/noop'
 import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
+import { getEventEmitter } from 'SVUtils/events/event_emitter'
 
 const { EVENT_LISTENERS } = Values
 /**
@@ -122,17 +123,17 @@ const AgendaSessions = React.memo(({ labels, daySessions }) => {
 export const Sessions = props => {
   const { onDayChange = noOp, sessionData, onSessionBookingRequest } = props
 
-  // eventListener setup
-  const kegEventListener = getEventEmitter()
+  // eventEmitter setup
+  const kegEventEmitter = getEventEmitter()
 
   useEffect(() => {
     mapSessionInterface(sessionData)
-    kegEventListener.on(
+    kegEventEmitter.on(
       EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
       onSessionBookingRequest
     )
     return () => {
-      kegEventListener.off(
+      kegEventEmitter.off(
         EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
         onSessionBookingRequest
       )

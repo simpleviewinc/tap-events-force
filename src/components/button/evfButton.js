@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { View, Button } from 'SVComponents'
-import { useTheme, useStylesCallback } from '@svkeg/re-theme'
+import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
 
 /**
  * Builds the dynamic styles
