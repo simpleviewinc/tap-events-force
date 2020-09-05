@@ -4,7 +4,6 @@ export const gridItem = {
   $web: {
     main: {
       $xsmall: {
-        flex: 1,
         backgroundColor: colors.white,
         height: 200,
         marginBottom: 15,
