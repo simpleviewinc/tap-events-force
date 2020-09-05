@@ -9,11 +9,11 @@ const namespace = aliases.nameSpace
 
 // Lock down the sv repos to point to the version installed in keg-core
 const getKegRepoPaths = () => {
-  const repoRoot = `${rootPath}/node_modules/keg-core/node_modules/@svkeg`
+  const repoRoot = `${rootPath}/node_modules/keg-core/node_modules/@keg-hub`
   return {
-    [`@svkeg/re-theme`]: path.join(repoRoot, 're-theme'),
-    [`@svkeg/jsutils`]: path.join(repoRoot, 'jsutils'),
-    [`@svkeg/keg-components`]: path.join(repoRoot, 'keg-components'),
+    [`@keg-hub/re-theme`]: path.join(repoRoot, 're-theme'),
+    [`@keg-hub/jsutils`]: path.join(repoRoot, 'jsutils'),
+    [`@keg-hub/keg-components`]: path.join(repoRoot, 'keg-components'),
   }
 }
 

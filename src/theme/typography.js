@@ -1,4 +1,4 @@
-import { deepMerge } from '@svkeg/jsutils'
+import { deepMerge } from '@keg-hub/jsutils'
 import { colors } from './colors'
 
 /**
@@ -60,7 +60,6 @@ const buildTypography = (overrides = {}) => {
         fontSize: 16,
         lineHeight: 22,
       },
-
     },
     overrides
   )

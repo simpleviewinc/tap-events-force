@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
-import { useCss } from '@svkeg/re-theme'
-import { isStr } from '@svkeg/jsutils'
+import { useCss } from '@keg-hub/re-theme'
+import { isStr } from '@keg-hub/jsutils'
 
 export const useDataCss = (themeRef, style, id) => {
   const config = useMemo(() => {
