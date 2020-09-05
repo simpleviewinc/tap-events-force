@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { SessionsContainer } from './sessionsContainer'
 import { ModalDemos } from './testContainer'
-import { Button } from '@svkeg/keg-components'
+import { Button } from '@keg-hub/keg-components'
 
 const showButtonStyles = {
   main: {
