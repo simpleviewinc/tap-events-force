@@ -1,13 +1,14 @@
 import React from 'react'
-import { useTheme } from '@svkeg/re-theme'
+import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { Text, View } from '@svkeg/keg-components'
+import { Text, View } from '@keg-hub/keg-components'
 
 /**
  * GroupBooking Modal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {Array.<import('SVModels/attendee').Attendee>} props.attendees
+ * @param {boolean} props.visible
  */
 export const GroupBooking = ({ visible, session, attendees }) => {
   if (!session || !attendees) return
@@ -25,13 +26,12 @@ export const GroupBooking = ({ visible, session, attendees }) => {
       hasCloseButton={false}
       title={session.name}
       visible={visible}
-      BodyComponent={() => (
-        <Body
-          styles={groupBookingStyles.content.body}
-          remainingCount={remainingCount}
-        />
-      )}
-    />
+    >
+      <Body
+        styles={groupBookingStyles.content.body}
+        remainingCount={remainingCount}
+      />
+    </BaseModal>
   )
 }
 
@@ -62,6 +62,7 @@ const Body = ({ styles, remainingCount }) => {
  * TopSection - contains the instruction text and spots remaining
  * @param {object} props
  * @param {object} props.styles
+ * @param {number} props.remainingCount - spots left in this session
  */
 const TopSection = ({ styles, remainingCount }) => {
   // use correct syntax based on how many spot is left

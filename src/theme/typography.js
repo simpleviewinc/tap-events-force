@@ -1,3 +1,5 @@
+import { colors } from './colors'
+
 export const typography = {
   font: {
     family: {
@@ -9,7 +11,7 @@ export const typography = {
   },
   default: {
     fontStyle: 'normal',
-    color: '#000000',
+    color: colors.black,
     lineHeight: '22px',
   },
 }

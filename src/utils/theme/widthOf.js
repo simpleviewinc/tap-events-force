@@ -1,4 +1,4 @@
-import { getSizeMap } from '@svkeg/re-theme'
+import { getSizeMap } from '@keg-hub/re-theme'
 
 /**
  * Returns the width associated with the size key

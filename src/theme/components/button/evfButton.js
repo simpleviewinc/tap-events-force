@@ -12,7 +12,7 @@ const textViewStyle = {
     lineHeight: '18px',
     letterSpacing: '0.105em',
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: colors.white,
     paddingHorizontal: 19,
   },
 }

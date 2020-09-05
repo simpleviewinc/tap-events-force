@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View } from '@svkeg/keg-components'
-import { useTheme } from '@svkeg/re-theme'
+import { View } from '@keg-hub/keg-components'
+import { useTheme } from '@keg-hub/re-theme'
 
 /**
  * LabelTag - a colored, square label without text

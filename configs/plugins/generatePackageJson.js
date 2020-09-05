@@ -1,5 +1,5 @@
 import generatePackageJson from 'rollup-plugin-generate-package-json'
-import { get, deepMerge } from '@svkeg/jsutils'
+import { get, deepMerge } from '@keg-hub/jsutils'
 import path from 'path'
 
 /**
