@@ -9,7 +9,7 @@ import {
 } from '@svkeg/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
-import { EFDemoContainer } from 'SVContainers/EFDemoContainer'
+import { EFDemoContainer as SessionsContainer } from 'SVContainers/efDemoContainer'
 import { Dimensions, Platform } from 'react-native'
 
 setRNDimensions(Dimensions)
@@ -28,7 +28,7 @@ const SessionsApp = props => {
   return (
     <Provider store={getStore()}>
       <ReThemeProvider theme={activeTheme}>
-        <EFDemoContainer { ...props } />
+        <SessionsContainer { ...props } />
       </ReThemeProvider>
     </Provider>
   )
