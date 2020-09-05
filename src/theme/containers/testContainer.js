@@ -2,6 +2,7 @@ export const testContainer = {
   $web: {
     main: {
       $xsmall: {
+        zIndex: -1,
         flex: 1,
         backgroundColor: '#F3F3F3',
         padding: 20,

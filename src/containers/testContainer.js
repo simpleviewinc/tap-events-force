@@ -15,11 +15,7 @@ import { withAppHeader } from 'SVComponents'
  */
 export const TestContainer = withAppHeader('Test Container', props => {
   // map the evf props onto our states
-  useEffect(() => {
-    // placeholder data for now
-    mapSessionInterface(testData)
-  }, [])
-
+  useEffect(() => void mapSessionInterface(testData), [])
   return <ModalDemos />
 })
 
