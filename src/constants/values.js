@@ -37,7 +37,7 @@ export const Values = deepFreeze({
     PERSON: 'person',
     GROUP: 'group',
   },
-  EVENT_LISTENERS: {
+  EVENTS: {
     SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
   },
   /**

@@ -10,7 +10,8 @@ import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
 import { getEventEmitter } from 'SVUtils'
 
-const { EVENT_LISTENERS } = Values
+const kegEventEmitter = getEventEmitter()
+const { EVENTS } = Values
 
 const testonSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
@@ -30,19 +31,18 @@ export const ModalDemos = () => {
   const testStyles = theme.get('testContainer')
   const store = useSelector(state => state.items)
 
-  const kegEventEmitter = getEventEmitter()
 
   // map the evf props onto our states
   useEffect(() => {
     // placeholder data for now
     mapSessionInterface(testData)
     kegEventEmitter.on(
-      EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+      EVENTS.SESSION_BOOKING_REQUEST,
       testonSessionBookingRequest
     )
     return () => {
       kegEventEmitter.off(
-        EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+        EVENTS.SESSION_BOOKING_REQUEST,
         testonSessionBookingRequest
       )
     }

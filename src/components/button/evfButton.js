@@ -1,32 +1,19 @@
-import * as React from 'react'
+import React, {useMemo} from 'react'
 import { View, Button } from 'SVComponents'
 import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
 
 /**
  * Builds the dynamic styles
  * @param {Object} theme - theme obj
- * @param {Object} customStyles - default style combined with userStyles
+ * @param {Object} custom - contains { type, styles }
+ * @param {string} custom.type - button type defined in the evfButton theme
+ * @param {Object} custom.styles - custom styles passed in by the consumer
  */
-const buildStyles = (theme, customStyles) => {
-  const defaultButtonStyles = customStyles?.content?.button
-
+const buildStyles = (theme, custom) => {
+  // const defaultButtonStyles = customStyles?.content?.button
   return theme.join(
-    {
-      content: {
-        button: {
-          default: defaultButtonStyles,
-          hover: {
-            main: { ...defaultButtonStyles.main, opacity: 0.8 },
-            content: defaultButtonStyles.content,
-          },
-          active: {
-            main: { ...defaultButtonStyles.main, opacity: 0.4 },
-            content: defaultButtonStyles.content,
-          },
-        },
-      },
-    },
-    customStyles
+    theme.get(`button.evfButton.${custom.type}`), 
+    custom.styles
   )
 }
 
@@ -39,11 +26,11 @@ const buildStyles = (theme, customStyles) => {
  * @param {string} props.text - text to display on button
  */
 export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
-  const theme = useTheme()
-  const buttonStyles = theme.join(theme.get(`button.evfButton.${type}`), styles)
-
+  
   // build the main style for the button, memoized
-  const mainStyle = useStylesCallback(buildStyles, [], buttonStyles)
+  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
+  const mainStyle = useStylesCallback(buildStyles, [type, styles], customStyles)
+
   return (
     <View style={mainStyle?.main}>
       { /* to clip the top right of the component */ }

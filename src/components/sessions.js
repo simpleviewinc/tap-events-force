@@ -14,7 +14,7 @@ import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { getEventEmitter } from 'SVUtils/events/event_emitter'
 
-const { EVENT_LISTENERS } = Values
+const { EVENTS } = Values
 /**
  * FilterButton
  * Renders either an Icon or a text button based on current screen dimension
@@ -113,6 +113,7 @@ const AgendaSessions = React.memo(({ labels, daySessions }) => {
   })
 })
 
+const kegEventEmitter = getEventEmitter()
 /**
  * SessionComponent
  * @param {Object} props
@@ -123,18 +124,15 @@ const AgendaSessions = React.memo(({ labels, daySessions }) => {
 export const Sessions = props => {
   const { onDayChange = noOp, sessionData, onSessionBookingRequest } = props
 
-  // eventEmitter setup
-  const kegEventEmitter = getEventEmitter()
-
   useEffect(() => {
     mapSessionInterface(sessionData)
     kegEventEmitter.on(
-      EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+      EVENTS.SESSION_BOOKING_REQUEST,
       onSessionBookingRequest
     )
     return () => {
       kegEventEmitter.off(
-        EVENT_LISTENERS.SESSION_BOOKING_REQUEST,
+        EVENTS.SESSION_BOOKING_REQUEST,
         onSessionBookingRequest
       )
     }
