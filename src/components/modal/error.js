@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { View, Text } from 'SVComponents'
+import { View, Text } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { checkCall } from '@keg-hub/jsutils'
 

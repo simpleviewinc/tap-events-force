@@ -4,7 +4,6 @@ export const gridItem = {
   $web: {
     main: {
       $xsmall: {
-        flex: 1,
         backgroundColor: colors.white,
         height: 200,
         marginBottom: 15,
@@ -12,6 +11,7 @@ export const gridItem = {
         alignItems: 'flex-start',
       },
       $small: {
+        flex: 1,
         marginHorizontal: 3,
         marginBottom: 6,
         padding: 15,
@@ -24,6 +24,17 @@ export const gridItem = {
     sessionTime: {
       main: {
         marginTop: 13,
+      },
+    },
+    label: {
+      main: {
+        $xsmall: {
+          margin: 0,
+        },
+        $small: {
+          marginTop: 8,
+          marginRight: 8,
+        },
       },
     },
     labelList: {
