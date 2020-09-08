@@ -124,7 +124,7 @@ export const Sessions = props => {
   const { onDayChange = noOp, sessionData, onSessionBookingRequest } = props
 
   // set up our ev ent listener for booking request
-  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testonSessionBookingRequest)
+  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
 
   useEffect(() => {
     mapSessionInterface(sessionData)
