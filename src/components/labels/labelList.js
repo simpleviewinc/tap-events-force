@@ -24,6 +24,7 @@ export const LabelList = props => {
 
   const theme = useTheme()
   const listStyles = theme.join(theme.get('labelList.main', style))
+  const labelStyle = theme.join(theme.get('labelList.item'), itemStyle)
 
   return (
     <View
@@ -33,7 +34,7 @@ export const LabelList = props => {
       { labels.map(label => (
         <LabelComponent
           key={label.name}
-          style={itemStyle}
+          style={labelStyle}
           label={label}
           onPress={onItemPress}
         />

@@ -38,7 +38,7 @@ export const sessionTime = {
       $xsmall: {
         $web: {
           color: colors.lightGray01,
-        }
+        },
       },
       $small: {
         $web: {

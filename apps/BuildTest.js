@@ -6,6 +6,8 @@ const mockCallbacks = {
   onDayChange: day => console.log('Day change', day)
 }
 
+const showModalDemo = false
+
 /**
  * BuildTest
  * A test app that uses the rollup build of the Sessions component, with mock data
@@ -14,6 +16,7 @@ const mockCallbacks = {
 const BuildTest = props => {
   return (
     <Sessions 
+      disableDemo={showModalDemo}
       { ...testData} 
       { ...mockCallbacks }
     />

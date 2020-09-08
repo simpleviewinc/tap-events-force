@@ -6,7 +6,7 @@ import { buildHourSessionsMap } from 'SVUtils'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
- * defines which sessionAgendaProps need to be mapped differently
+ * defines which sessionAgendaProps need to be mapped to subcategories
  */
 const subCatMap = {
   settings: SUB_CATEGORIES.AGENDA_SETTINGS,
@@ -31,7 +31,7 @@ const mapAgendaSessions = (sessions, agendaDays) => {
   }, {})
 
   dispatch({
-    type: ActionTypes.UPSERT_ITEMS,
+    type: ActionTypes.SET_ITEMS,
     payload: {
       category: CATEGORIES.AGENDA_SESSIONS,
       items: agendaSessions,
@@ -47,9 +47,10 @@ export const mapSessionInterface = props => {
   // loop through each key and dispatch accordingly
   props &&
     mapObj(props, (key, value) => {
-      // ensure key exists in the local storage first
+      // ensure key exists in the items store first
       if (key === CATEGORIES[snakeCase(key).toUpperCase()]) {
-        let type = ActionTypes.UPSERT_ITEMS
+        // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
+        let type = ActionTypes.SET_ITEMS
         let payload = {
           category: key,
           items: value,
@@ -62,6 +63,9 @@ export const mapSessionInterface = props => {
 
         // certain props need to be mapped to a specific key
         if (subCatMap[key]) {
+          // subcategories are upsert-merged, rather than set, since they
+          // might need to be joined with data that was loaded from localStorage,
+          // e.g. agendaSettings.activeDayNumber
           type = ActionTypes.UPSERT_ITEM
           payload = {
             category: key,
