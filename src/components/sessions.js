@@ -126,6 +126,7 @@ const AgendaSessions = React.memo(
   }
 )
 
+const kegEventEmitter = getEventEmitter()
 /**
  * SessionComponent
  * @param {Object} props

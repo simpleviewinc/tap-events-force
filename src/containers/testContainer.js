@@ -41,7 +41,8 @@ const testOnSessionBookingRequest = (session, attendees) => {
   console.log(session)
 }
 
-const { EVENT_LISTENERS } = Values
+const kegEventEmitter = getEventEmitter()
+const { EVENTS } = Values
 
 const testonSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
@@ -132,8 +133,27 @@ export const ModalDemos = () => {
   const testStyles = theme.get('testContainer')
   const store = useSelector(state => state.items)
 
+<<<<<<< HEAD
   // set up our event listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
+=======
+
+  // map the evf props onto our states
+  useEffect(() => {
+    // placeholder data for now
+    mapSessionInterface(testData)
+    kegEventEmitter.on(
+      EVENTS.SESSION_BOOKING_REQUEST,
+      testonSessionBookingRequest
+    )
+    return () => {
+      kegEventEmitter.off(
+        EVENTS.SESSION_BOOKING_REQUEST,
+        testonSessionBookingRequest
+      )
+    }
+  }, [testonSessionBookingRequest])
+>>>>>>> update:
 
   return (
     <View style={testStyles.main}>
