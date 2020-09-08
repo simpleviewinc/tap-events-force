@@ -3,7 +3,6 @@ import { GridItem } from 'SVComponents/grid/gridItem'
 import { ItemHeader, Text, View } from '@keg-hub/keg-components'
 import { sortLabels, isMobileSize } from 'SVUtils'
 import { useTheme } from '@keg-hub/re-theme'
-import { sortLabels, isMobileSize } from 'SVUtils'
 
 /**
  *
