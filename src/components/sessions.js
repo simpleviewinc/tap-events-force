@@ -126,7 +126,6 @@ const AgendaSessions = React.memo(
   }
 )
 
-const kegEventEmitter = getEventEmitter()
 /**
  * SessionComponent
  * @param {Object} props
@@ -140,7 +139,8 @@ export const Sessions = props => {
     sessionAgendaProps,
     onSessionBookingRequest = noOp,
   } = props
-  // set up our ev ent listener for booking request
+
+  // set up our event listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
 
   useEffect(() => {
