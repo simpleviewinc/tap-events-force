@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react'
-import { View, Button } from 'SVComponents'
-import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
+import { View, Button } from '@keg-hub/keg-components'
+import { useStylesCallback } from '@keg-hub/re-theme'
 
 /**
  * Builds the dynamic styles
