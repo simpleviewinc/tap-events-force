@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react'
+import React, { useMemo } from 'react'
 import { View, Button } from '@keg-hub/keg-components'
 import { useStylesCallback } from '@keg-hub/re-theme'
 
@@ -10,11 +10,7 @@ import { useStylesCallback } from '@keg-hub/re-theme'
  * @param {Object} custom.styles - custom styles passed in by the consumer
  */
 const buildStyles = (theme, custom) => {
-  // const defaultButtonStyles = customStyles?.content?.button
-  return theme.join(
-    theme.get(`button.evfButton.${custom.type}`), 
-    custom.styles
-  )
+  return theme.join(theme.get(`button.evfButton.${custom.type}`), custom.styles)
 }
 
 /**
@@ -26,10 +22,9 @@ const buildStyles = (theme, custom) => {
  * @param {string} props.text - text to display on button
  */
 export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
-  
   // build the main style for the button, memoized
   const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
-  const mainStyle = useStylesCallback(buildStyles, [type, styles], customStyles)
+  const mainStyle = useStylesCallback(buildStyles, [ type, styles ], customStyles)
 
   return (
     <View style={mainStyle?.main}>
