@@ -5,7 +5,6 @@ import { Button } from '@keg-hub/keg-components'
 
 const showButtonStyles = {
   main: {
-    zIndex: -1,
     width: 170,
     margin: 15,
   },
@@ -17,12 +16,13 @@ const showButtonStyles = {
  */
 export const EFDemoContainer = props => {
   const [ showDemo, setShowDemo ] = useState(false)
+  const toggle = () => setShowDemo(!showDemo)
   return (
     <React.Fragment>
       { !props.disableDemo && (
         <Button
           styles={showButtonStyles}
-          onPress={() => setShowDemo(!showDemo)}
+          onPress={toggle}
           content={'Toggle Modal Demo'}
         />
       ) }

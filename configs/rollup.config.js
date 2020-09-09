@@ -6,16 +6,15 @@ import commonjs from '@rollup/plugin-commonjs'
 import cleanup from 'rollup-plugin-cleanup'
 import alias from '@rollup/plugin-alias'
 import clear from 'rollup-plugin-clear'
-import url from '@rollup/plugin-url'
 import sucrase from '@rollup/plugin-sucrase'
 import sourcemaps from 'rollup-plugin-sourcemaps'
 import bundleSize from 'rollup-plugin-bundle-size'
 import generatePackageJson from './plugins/generatePackageJson'
+import image from '@rollup/plugin-image'
 
 const path = require('path')
 const tapPath = require('app-root-path').path
 const corePath = path.join(`${tapPath}`, `node_modules/keg-core`)
-const relativeTapPath = path.relative(__dirname, tapPath)
 
 const peerExternals = [ 'react', 'react-dom' ]
 const mainExternals = [
@@ -95,10 +94,6 @@ export default {
   external: externals,
   watch: { clearScreen: false },
   plugins: [
-    // Allows loading fonts and images
-    url({
-      include: [ `${relativeTapPath}/**/*.png`, `${relativeTapPath}/**/*.ttf` ],
-    }),
     json(),
     resolve({
       preferBuiltins: true,
@@ -112,6 +107,7 @@ export default {
       transforms: [ 'jsx', 'flow' ],
     }),
     commonjs(),
+    image(),
     babel({
       include: [`${tapPath}/**`],
       babelHelpers: 'runtime',
