@@ -62,10 +62,6 @@ const Body = ({ presenter, styles }) => {
   const imageStyle =
     dim.height <= 450 ? styles.row1.smallImage : styles.row1.image
 
-  const imageSource = presenter.photographUrl
-    ? { uri: presenter.photographUrl }
-    : placeholderImage
-
   return (
     <View
       dataSet={PresenterDetails.dataSet.content.body.main}
@@ -75,7 +71,11 @@ const Body = ({ presenter, styles }) => {
       <View style={styles.row1.container}>
         <Image
           style={imageStyle}
-          source={imageSource}
+          source={{
+            uri: presenter.photographUrl
+              ? presenter.photographUrl
+              : placeholderImage,
+          }}
         />
         <View style={styles.row1.details}>
           <Text
