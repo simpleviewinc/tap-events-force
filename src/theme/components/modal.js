@@ -13,6 +13,14 @@ const defaultInstructionStyle = {
   fontSize: '16px',
 }
 
+const defaultLabelStyle = {
+  main: {
+    marginTop: 8,
+    marginRight: 8,
+  },
+  content: {},
+}
+
 export const modal = {
   base: {
     main: {},
@@ -290,9 +298,31 @@ export const modal = {
           },
           middleSection: {
             main: {
-              height: 200,
+              height: 200, // TODO: PLACEHOLDER
             },
-            content: {},
+            content: {
+              labelList: {
+                main: {
+                  $web: {
+                    flexDirection: 'row',
+                    alignContent: 'flex-start',
+                    flexWrap: 'wrap',
+                    height: 'fit-content',
+                    maxWidth: '100%',
+                    flexBasis: 'auto',
+                  },
+                },
+                content: {
+                  item: {
+                    $web: {
+                      default: defaultLabelStyle,
+                      hover: defaultLabelStyle,
+                      active: defaultLabelStyle,
+                    },
+                  },
+                },
+              },
+            },
           },
           bottomSection: {
             main: {

@@ -73,8 +73,8 @@ const MiddleSection = ({ styles, labels }) => {
   return (
     <View style={styles.main}>
       <LabelList
-        // style={listStyles}
-        // itemStyle={labelStyles}
+        style={styles.content?.labelList?.main}
+        itemStyle={styles.content?.labelList?.content?.item}
         LabelComponent={LabelButton}
         labels={labels}
         onItemPress={label => {
