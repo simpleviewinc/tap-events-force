@@ -1,45 +1,93 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { checkCall } from '@keg-hub/jsutils'
+import { LabelList } from 'SVComponents/labels/labelList'
+import { sortLabels } from 'SVUtils'
+import { LabelButton } from 'SVComponents/labels/labelButton'
 
+/**
+ *
+ * @param {object} props
+ */
 export const Filter = ({ visible, labels }) => {
   const theme = useTheme()
-  const errorStyles = theme.get('modal.error')
+  const filterStyles = theme.get('modal.filter')
   const dismissedCBRef = useRef()
+  // sort the labels alphabetically
+  const labelsMemo = useMemo(() => sortLabels(labels), [labels])
 
   return (
     <BaseModal
       dissmissedCBRef={dismissedCBRef}
-      styles={errorStyles}
+      styles={filterStyles}
       title={'Filter'}
       visible={visible}
     >
-      <Body
+      <Content
+        styles={filterStyles.content.body}
+        labels={labelsMemo}
         onButtonPress={useCallback(
           () => checkCall(dismissedCBRef.current, true),
           [dismissedCBRef?.current]
         )}
-        styles={errorStyles.content.body}
-        // message={message}
       />
     </BaseModal>
   )
 }
 
 /**
- * Body of filter modal
+ * Content of filter modal
  * @param {object} props
  * @param {object} props.styles
- * @param {string} props.message - string to display
  * @param {Function} props.onButtonPress
+ * @param {Array<import('SVModels/label').Label>} props.labels
  */
-const Body = ({ styles, message, onButtonPress }) => {
+const Content = ({ styles, onButtonPress, labels }) => {
+  return (
+    <View style={styles?.main}>
+      <TopSection styles={styles?.content?.topSection} />
+      <MiddleSection
+        labels={labels}
+        styles={styles?.content?.middleSection}
+      />
+      <BottomSection
+        styles={styles?.content?.bottomSection}
+        onButtonPress={onButtonPress}
+      />
+    </View>
+  )
+}
+
+const TopSection = ({ styles }) => {
+  return (
+    <View style={styles?.main}>
+      <Text style={styles?.content?.instructionText}>Only Show:</Text>
+    </View>
+  )
+}
+
+const MiddleSection = ({ styles, labels }) => {
   return (
     <View style={styles.main}>
-      <Text style={styles.content?.text}>{ message }</Text>
+      <LabelList
+        // style={listStyles}
+        // itemStyle={labelStyles}
+        LabelComponent={LabelButton}
+        labels={labels}
+        onItemPress={label => {
+          console.log({ label })
+        }}
+      />
+    </View>
+  )
+}
+
+const BottomSection = ({ styles, onButtonPress }) => {
+  return (
+    <View style={styles.main}>
       <EvfButton
         type={'primary'}
         styles={styles.content?.button}

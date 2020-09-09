@@ -8,7 +8,7 @@ const smallImage = {
   paddingBottom: 20,
 }
 
-const groupBookingTextStyle = {
+const defaultInstructionStyle = {
   fontWeight: '600',
   fontSize: '16px',
 }
@@ -17,7 +17,12 @@ export const modal = {
   base: {
     main: {},
     content: {
-      main: {},
+      main: {
+        $xsmall: {
+          width: '90%',
+          maxWidth: '650px',
+        },
+      },
       header: {
         main: {
           flexDirection: 'row',
@@ -49,11 +54,6 @@ export const modal = {
           },
         },
       },
-      body: {
-        main: {
-          backgroundColor: colors.white,
-        },
-      },
     },
   },
   groupBooking: {
@@ -78,9 +78,9 @@ export const modal = {
               justifyContent: 'space-between',
             },
             content: {
-              instructionText: groupBookingTextStyle,
+              instructionText: defaultInstructionStyle,
               infoText: {
-                ...groupBookingTextStyle,
+                ...defaultInstructionStyle,
                 color: colors.lightGray,
                 textAlign: 'end',
               },
@@ -253,6 +253,58 @@ export const modal = {
               alignSelf: 'flex-end',
               width: 87,
               height: 45,
+            },
+          },
+        },
+      },
+    },
+  },
+  filter: {
+    content: {
+      main: {},
+      header: {
+        content: {
+          title: {
+            $small: {
+              fontSize: 22,
+            },
+          },
+        },
+      },
+      body: {
+        main: {
+          paddingLeft: 46,
+          paddingRight: 26,
+          paddingTop: 17,
+          paddingBottom: 26,
+        },
+        content: {
+          topSection: {
+            main: {
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            },
+            content: {
+              instructionText: defaultInstructionStyle,
+            },
+          },
+          middleSection: {
+            main: {
+              height: 200,
+            },
+            content: {},
+          },
+          bottomSection: {
+            main: {
+              alignItems: 'flex-end',
+            },
+            content: {
+              button: {
+                main: {
+                  width: 87,
+                  height: 45,
+                },
+              },
             },
           },
         },

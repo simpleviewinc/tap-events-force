@@ -52,6 +52,7 @@ export const RenderModals = modals => {
       return <Filter
         key={index}
         visible={true}
+        labels={modal.data?.labels}
       />
 
     default:

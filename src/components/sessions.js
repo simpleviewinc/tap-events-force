@@ -52,9 +52,10 @@ const FilterButton = ({ onClick, styles, dataSet }) => {
  * Component that will hold the day toggle and filter button
  * @param {object} props
  * @param {object} props.styles - styles obj
+ * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */
-const SessionsHeader = ({ styles, onDayChange }) => {
+const SessionsHeader = ({ styles, onDayChange, labels }) => {
   const {
     currentAgendaDay = {},
     currentDayNumber,
@@ -84,10 +85,10 @@ const SessionsHeader = ({ styles, onDayChange }) => {
         <FilterButton
           dataSet={Sessions.dataSet.content.header.content.right}
           styles={headerStyles.content?.right}
-          onClick={useCreateModal(
-            Values.MODAL_TYPES.FILTER
-            // store.presenters[1]
-          )}
+          onClick={useCreateModal(Values.MODAL_TYPES.FILTER, {
+            labels,
+            //bookingStates
+          })}
         />
       }
     />
@@ -97,7 +98,7 @@ const SessionsHeader = ({ styles, onDayChange }) => {
 /**
  * Sets up the container for a group of sessions on a specific day
  * @param {object} props
- * @param {object} props.labels
+ * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {object} props.daySessions - group of sessions in the form of {'9:15': [sessionA, sessionB,..]}
  * @returns {Component}
  */
@@ -149,6 +150,7 @@ export const Sessions = props => {
       style={sessionsStyles.main}
     >
       <SessionsHeader
+        labels={labels}
         styles={sessionsStyles}
         onDayChange={onDayChange}
       />
