@@ -40,7 +40,6 @@
     "dev": "nodemon --watch ./src --watch Sessions.js --exec yarn build"
   },
   "dependencies": {
-    "@rollup/plugin-image": "^2.0.5",
     "css-to-react-native-transform": "1.9.0",
     "keg-core": "npm:@keg-hub/keg-core@0.2.1"
   },
@@ -54,11 +53,11 @@
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-html": "^0.2.0",
+    "@rollup/plugin-image": "^2.0.5",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^8.4.0",
     "@rollup/plugin-replace": "^2.3.3",
     "@rollup/plugin-sucrase": "^3.1.0",
-    "@rollup/plugin-url": "^5.0.1",
     "@testing-library/react-hooks": "^3.3.0",
     "app-root-path": "3.0.0",
     "babel-eslint": "10.1.0",
