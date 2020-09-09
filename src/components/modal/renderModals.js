@@ -1,6 +1,7 @@
 import React from 'react'
 import { PresenterDetails } from 'SVComponents/modal/presenterDetails'
 import { GroupBooking } from 'SVComponents/modal/groupBooking'
+import { Filter } from 'SVComponents/modal/filter'
 import { Error } from 'SVComponents/modal/error'
 import { Values } from 'SVConstants'
 
@@ -48,7 +49,10 @@ export const RenderModals = modals => {
       )
 
     case Values.MODAL_TYPES.FILTER:
-      return null // TODO
+      return <Filter
+        key={index}
+        visible={true}
+      />
 
     default:
       return null

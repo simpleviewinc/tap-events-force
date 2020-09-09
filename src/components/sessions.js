@@ -13,6 +13,7 @@ import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
+import { useCreateModal } from 'SVHooks/modal'
 
 const { EVENTS } = Values
 /**
@@ -83,7 +84,10 @@ const SessionsHeader = ({ styles, onDayChange }) => {
         <FilterButton
           dataSet={Sessions.dataSet.content.header.content.right}
           styles={headerStyles.content?.right}
-          onClick={() => console.log('press')}
+          onClick={useCreateModal(
+            Values.MODAL_TYPES.FILTER
+            // store.presenters[1]
+          )}
         />
       }
     />
