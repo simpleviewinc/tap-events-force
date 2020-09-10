@@ -11,10 +11,11 @@ const colors = {
   white: '#FFFFFF',
   white01: '#F3F3F3',
   white02: '#F0F0F0',
+  gray: '#909090',
   lightGray: '#A0A0A0',
   lightGray01: '#8f908f',
+  lightGray02: '#F0F0F0',
   darkGray: '#4F4F4F',
-  transparent: 'transparent',
 }
 
 /**

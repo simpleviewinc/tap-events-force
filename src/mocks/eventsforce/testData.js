@@ -362,5 +362,32 @@ export default {
       bookedDays: [ 1, 2 ],
       bookedSessions: [ '1', '3', '5' ],
     },
+    {
+      bookedTicketIdentifier: '4',
+      name: 'Pepe Silvia',
+      attendeeCategoryIdentifier: '1',
+      bookedDays: [],
+      bookedSessions: [],
+    },
+    {
+      bookedTicketIdentifier: '5',
+      name: 'Vic Vinegar',
+      attendeeCategoryIdentifier: '3',
+      bookedDays: [3],
+      bookedSessions: [],
+    },
+    {
+      bookedTicketIdentifier: '6',
+      name: 'Hugh Honey',
+      attendeeCategoryIdentifier: '3',
+      bookedDays: [3],
+      bookedSessions: [],
+    },
+    {
+      bookedTicketIdentifier: '7',
+      attendeeCategoryIdentifier: '1',
+      bookedDays: [ 1, 2 ],
+      bookedSessions: [ '3', '5' ],
+    },
   ],
 }

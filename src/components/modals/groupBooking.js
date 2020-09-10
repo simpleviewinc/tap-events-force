@@ -5,7 +5,7 @@ import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
 import { checkCall } from '@keg-hub/jsutils'
 import { sessionBookingRequest } from 'SVActions'
-import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
+import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 
 /**
  * GroupBooking Modal
@@ -115,23 +115,14 @@ const TopSection = ({ styles, remainingCount }) => {
 }
 
 const MiddleSection = ({ styles, attendees, onAttendeeSelected }) => {
-  const sections = [ 'Family Ticket', 'Member', 'Non-Member' ]
-  return sections.map(section => (
-    <CheckboxGroup
+  return (
+    <GroupBookingOptions
       className={`ef-modal-group-section-middle`}
-      key={section}
-      title={section}
-    >
-      { attendees.map(attendee => (
-        <CheckboxGroup.Item
-          key={attendee.bookedTicketIdentifier}
-          text={attendee.name || 'Unnamed'}
-          id={attendee.bookedTicketIdentifier}
-          onChange={onAttendeeSelected}
-        />
-      )) }
-    </CheckboxGroup>
-  ))
+      styles={styles}
+      attendees={attendees}
+      onAttendeeSelected={onAttendeeSelected}
+    />
+  )
 }
 
 /**

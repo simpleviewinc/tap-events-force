@@ -1,42 +1,59 @@
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback } from 'react'
 import { View, Text, Checkbox } from '@keg-hub/keg-components'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStylesMemo } from 'SVHooks/useStylesMemo'
 
 /**
- *
  * @param {*} props
  */
 export const GroupHeader = ({ title, style }) => {
-  const theme = useTheme()
-  const mainStyle = theme.get('checkboxGroup.main')
-  const viewStyle = useMemo(() => theme.join(mainStyle, style), [
-    mainStyle,
-    style,
-  ])
-  return (
-    <View style={viewStyle}>
-      <Text>{ title }</Text>
-    </View>
-  )
-}
-
-export const ItemCheckbox = ({ text, id, onChange, close = true }) => {
-  const handler = useCallback(() => onChange?.({ event, text, id }))
-  return <Checkbox
-    RightComponent={text}
-    onChange={handler}
-    close={close}
-  />
+  return <Text style={style}>{ title }</Text>
 }
 
 /**
  *
  * @param {*} props
+ * @param {*} props.styles
+ * @param {*} props.styles.main - the root checkbox
+ * @param {*} props.styles.content
+ * @param {*} props.styles.content.right - style of rightward text
  */
-export const CheckboxGroup = ({ title, children }) => {
+export const ItemCheckbox = ({ styles, text, id, onChange, close = true }) => {
+  const handler = useCallback(() => onChange?.({ event, text, id }))
+  const checkboxStyles = useStylesMemo('form.checkbox.close', styles)
+  // const styles = useMemo(
+  //   () => ({
+  //     main: style,
+  //     content: {
+  //       right: textStyle
+  //     }
+  //   }),
+  //   [ style, textStyle ]
+  // )
   return (
-    <View>
-      <GroupHeader title={title} />
+    <Checkbox
+      styles={checkboxStyles}
+      RightComponent={text}
+      onChange={handler}
+      close={close}
+    />
+  )
+}
+
+/**
+ *
+ * @param {*} props
+ * @param {*} props.styles
+ * @param {*} props.styles.main
+ * @param {*} props.styles.content.header
+ */
+export const CheckboxGroup = ({ title, children, styles }) => {
+  const groupStyles = useStylesMemo('checkboxGroup', styles)
+  return (
+    <View style={groupStyles?.main}>
+      <GroupHeader
+        style={groupStyles?.content?.header}
+        title={title}
+      />
       { children }
     </View>
   )
