@@ -2,6 +2,7 @@ import { Values } from 'SVConstants'
 import { getEventEmitter } from 'SVUtils'
 
 const { EVENTS } = Values
+const kegEventEmitter = getEventEmitter()
 
 /**
  * sessionBookingRequest
@@ -13,7 +14,7 @@ export const sessionBookingRequest = () => {
   // 2. return 2 things
   //     - session id (utilize activeSession state)
   //     - the attendee.EfBookedTicketIdentifier in an array
-  const valid = getEventEmitter().emit(
+  const valid = kegEventEmitter.emit(
     EVENTS.SESSION_BOOKING_REQUEST,
     'exampleSessionId',
     [ 'attendeId2', 'attendeId3' ]
