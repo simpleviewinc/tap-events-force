@@ -28,8 +28,14 @@ const buildStyles = (theme, extra) => {
  * @param {Object} props.style - custom button styles that will override those defined in the theme file's main object. Object should define default, hover, and active themes for the different states of the button. @see `buildStyles`
  * @param {import('SVModels/label').Label} props.label - the label model instance
  * @param {Function} props.onPress - when clicked, calls onPress and passes the label object to it
+ * @param {string} props.themePath - optional themepath to set the button type
  */
-export const LabelButton = ({ style, label = {}, onPress }) => {
+export const LabelButton = ({
+  style,
+  label = {},
+  onPress,
+  themePath = 'button.contained.default',
+}) => {
   const theme = useTheme()
 
   // merge with eventsForce color style and custom button style if exists
@@ -55,6 +61,7 @@ export const LabelButton = ({ style, label = {}, onPress }) => {
   const clickHandler = () => onPress && onPress(label)
   return (
     <Button
+      themePath={themePath}
       styles={mainStyle}
       content={label.name}
       onClick={clickHandler}

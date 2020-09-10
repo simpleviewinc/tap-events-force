@@ -8,7 +8,7 @@ const smallImage = {
   paddingBottom: 20,
 }
 
-const defaultInstructionStyle = {
+const defaultTextStyle = {
   fontWeight: '600',
   fontSize: '16px',
 }
@@ -86,9 +86,9 @@ export const modal = {
               justifyContent: 'space-between',
             },
             content: {
-              instructionText: defaultInstructionStyle,
+              instructionText: defaultTextStyle,
               infoText: {
-                ...defaultInstructionStyle,
+                ...defaultTextStyle,
                 color: colors.lightGray,
                 textAlign: 'end',
               },
@@ -293,7 +293,7 @@ export const modal = {
               justifyContent: 'space-between',
             },
             content: {
-              instructionText: defaultInstructionStyle,
+              leftText: defaultTextStyle,
             },
           },
           middleSection: {
@@ -310,6 +310,7 @@ export const modal = {
                     height: 'fit-content',
                     maxWidth: '100%',
                     flexBasis: 'auto',
+                    paddingBottom: 25,
                   },
                 },
                 content: {
