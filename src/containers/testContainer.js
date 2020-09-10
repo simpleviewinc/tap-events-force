@@ -12,7 +12,7 @@ import { useKegEvent } from 'SVHooks/events'
 
 const { EVENTS } = Values
 
-const testonSessionBookingRequest = (session, attendees) => {
+const testOnSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
   console.log(session)
 }
@@ -31,7 +31,7 @@ export const ModalDemos = () => {
   const store = useSelector(state => state.items)
 
   // set up our ev ent listener for booking request
-  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testonSessionBookingRequest)
+  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
 
   // map the evf props onto our states
   useEffect(() => {

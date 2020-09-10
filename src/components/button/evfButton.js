@@ -1,6 +1,14 @@
 import React, { useMemo } from 'react'
 import { View, Button } from '@keg-hub/keg-components'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStylesCallback } from '@keg-hub/re-theme'
+
+/**
+ * @param {object} theme
+ * @param {object} custom - contains {type, styles}
+ */
+const buildStyles = (theme, custom) => {
+  return theme.join(theme.get(`button.evfButton.${custom.type}`), custom.styles)
+}
 
 /**
  * EvfButton
@@ -12,15 +20,12 @@ import { useTheme } from '@keg-hub/re-theme'
  */
 export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
   // build the main style for the button, memoized
-  const theme = useTheme()
-  const mainStyle = useMemo(() => {
-    return theme.join(theme.get(`button.evfButton.${type}`), styles)
-  }, [ type, styles ])
+  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
+  const mainStyle = useStylesCallback(buildStyles, [ type, styles ], customStyles)
 
   return (
     <View style={mainStyle?.main}>
-      { /* to clip the top right of the component */ }
-      <View style={mainStyle?.content?.box?.main}></View>
+      <View style={mainStyle?.content?.topLeftCorner?.main}></View>
       <Button
         onClick={onClick}
         styles={mainStyle?.content?.button}

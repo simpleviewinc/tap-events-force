@@ -1,6 +1,6 @@
 import { colors } from '../../colors'
 
-const boxStyle = {
+const topLeftCornerStyle = {
   main: {
     width: 25,
     height: 25,
@@ -34,11 +34,11 @@ const defaultButtonStyles = {
       fontSize: 15,
     },
   },
-  }
+}
 
 /**
  * Sets up the different button states with the given color
- * @param {string} backgroundColor 
+ * @param {string} backgroundColor
  */
 const buttonStateStyles = backgroundColor => {
   return {
@@ -53,7 +53,7 @@ const buttonStateStyles = backgroundColor => {
       main: {
         ...defaultButtonStyles.main,
         backgroundColor,
-        opacity: 0.4
+        opacity: 0.4,
       },
       content: defaultButtonStyles.content,
     },
@@ -61,10 +61,10 @@ const buttonStateStyles = backgroundColor => {
       main: {
         ...defaultButtonStyles.main,
         backgroundColor,
-        opacity: 0.8
+        opacity: 0.8,
       },
       content: defaultButtonStyles.content,
-    }
+    },
   }
 }
 
@@ -77,14 +77,14 @@ export const evfButton = {
   default: {
     main: defaultMainStyle,
     content: {
-      box: boxStyle,
+      topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.default),
     },
   },
   primary: {
     main: defaultMainStyle,
     content: {
-      box: boxStyle,
+      topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.primary),
     },
   },
