@@ -135,6 +135,13 @@ export const ModalDemos = () => {
   // set up our event listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
 
+  // TODO: just for testing -- remove
+  const makeModal = useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
+    session: store.sessions[2],
+    attendees: store.attendees,
+  })
+  useEffect(() => store?.sessions?.[2] && void makeModal(), [store.sessions])
+
   return (
     <View style={testStyles.main}>
       <Section>
