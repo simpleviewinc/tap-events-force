@@ -11,7 +11,10 @@ import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
+import { Values } from 'SVConstants'
+import { useKegEvent } from 'SVHooks/events'
 
+const { EVENTS } = Values
 /**
  * FilterButton
  * Renders either an Icon or a text button based on current screen dimension
@@ -115,11 +118,17 @@ const AgendaSessions = React.memo(({ labels, daySessions }) => {
  * @param {Object} props
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionData - session agenda props defined in evf interface
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
+ * @param {Function} props.onSessionBookingRequest - callback for session booking
  */
 export const Sessions = props => {
-  const { onDayChange = noOp, sessionData } = props
+  const { onDayChange = noOp, sessionData, onSessionBookingRequest } = props
 
-  useEffect(() => void mapSessionInterface(sessionData), [])
+  // set up our ev ent listener for booking request
+  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
+
+  useEffect(() => {
+    mapSessionInterface(sessionData)
+  }, [])
 
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')

@@ -96,7 +96,21 @@ export const modal = {
                 paddingBottom: 35,
               },
             },
-            content: {},
+            content: {
+              cancelButton: {
+                main: {
+                  minHeight: 45,
+                  maxWidth: 120,
+                  marginRight: 10,
+                },
+              },
+              bookButton: {
+                main: {
+                  minHeight: 45,
+                  maxWidth: 190,
+                },
+              },
+            },
           },
         },
       },
@@ -238,6 +252,7 @@ export const modal = {
             main: {
               alignSelf: 'flex-end',
               width: 87,
+              height: 45,
             },
           },
         },

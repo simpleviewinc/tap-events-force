@@ -13,7 +13,7 @@ export class ActiveSession {
    * @param {object} params
    * @param {number|string=} params.id - id of session
    * @param {boolean=} params.open - is it opened? Used on mobile
-   * @param {string=} params.bookingState - booking state of the user
+   * @param {('person'|'group'|null)} params.bookingState - booking state of the user
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)
