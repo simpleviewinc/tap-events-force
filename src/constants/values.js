@@ -37,7 +37,9 @@ export const Values = deepFreeze({
     PERSON: 'person',
     GROUP: 'group',
   },
-
+  EVENTS: {
+    SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
+  },
   /**
    * Local storage keys used to identify the values to load from local storage, if present.
    * Should follow the form: <category>.<key>.<properties (optional)>, where category and

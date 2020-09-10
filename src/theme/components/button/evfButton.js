@@ -1,54 +1,91 @@
 import { colors } from '../../colors'
 
-const textViewStyle = {
+const topLeftCornerStyle = {
   main: {
-    alignItems: 'center',
-    height: '100%',
-    width: '100%',
+    width: 25,
+    height: 25,
+    backgroundColor: colors.white,
+    position: 'absolute',
+    overflow: 'hidden',
+    left: '-13px',
+    top: '-13px',
+    zIndex: 9999,
+    transform: [{ rotate: '45deg' }],
+  },
+}
+
+const defaultButtonStyles = {
+  main: {
+    flex: 1,
     justifyContent: 'center',
+    borderRadius: 0,
+    padding: 0,
   },
   content: {
-    fontSize: 15,
-    lineHeight: '18px',
-    letterSpacing: '0.105em',
-    fontWeight: 'bold',
-    color: colors.white,
-    paddingHorizontal: 19,
+    $xsmall: {
+      letterSpacing: '0.105em',
+      fontWeight: 'bold',
+      color: colors.white,
+      fontSize: 13,
+      paddingHorizontal: 8,
+      lineHeight: '18px',
+    },
+    $small: {
+      fontSize: 15,
+    },
   },
+}
+
+/**
+ * Sets up the different button states with the given color
+ * @param {string} backgroundColor
+ */
+const buttonStateStyles = backgroundColor => {
+  return {
+    default: {
+      main: {
+        ...defaultButtonStyles.main,
+        backgroundColor,
+      },
+      content: defaultButtonStyles.content,
+    },
+    active: {
+      main: {
+        ...defaultButtonStyles.main,
+        backgroundColor,
+        opacity: 0.4,
+      },
+      content: defaultButtonStyles.content,
+    },
+    hover: {
+      main: {
+        ...defaultButtonStyles.main,
+        backgroundColor,
+        opacity: 0.8,
+      },
+      content: defaultButtonStyles.content,
+    },
+  }
 }
 
 const defaultMainStyle = {
-  width: 120,
-  height: 45,
+  overflow: 'hidden',
+  flex: 1,
 }
 
 export const evfButton = {
-  $web: {
-    default: {
-      main: defaultMainStyle,
-      content: {
-        svg: {
-          main: {
-            fill: colors.default,
-          },
-          content: {
-            textView: textViewStyle,
-          },
-        },
-      },
+  default: {
+    main: defaultMainStyle,
+    content: {
+      topLeftCorner: topLeftCornerStyle,
+      button: buttonStateStyles(colors.default),
     },
-    primary: {
-      main: defaultMainStyle,
-      content: {
-        svg: {
-          main: {
-            fill: colors.primary,
-          },
-          content: {
-            textView: textViewStyle,
-          },
-        },
-      },
+  },
+  primary: {
+    main: defaultMainStyle,
+    content: {
+      topLeftCorner: topLeftCornerStyle,
+      button: buttonStateStyles(colors.primary),
     },
   },
 }

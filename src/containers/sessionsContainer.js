@@ -8,9 +8,11 @@ import { useSelector } from 'react-redux'
  * Container for Sessions
  * @param {Object} props
  * @param {Object} props.sessionData, structured like src/mocks/eventsforce/testData
+ * @param {Function} props.onSessionBookingRequest - callback for session booking request action.
+ *                                                  - passes back session id and an array of attendee ids
  */
 export const SessionsContainer = props => {
-  const { onDayChange, ...sessionData } = props
+  const { onDayChange, onSessionBookingRequest, ...sessionData } = props
 
   useEffect(() => void initSessions(), [])
 
@@ -20,6 +22,7 @@ export const SessionsContainer = props => {
     <Sessions
       onDayChange={onDayChange}
       sessionData={sessionData}
+      onSessionBookingRequest={onSessionBookingRequest}
     />
   ) : (
     <Loading />

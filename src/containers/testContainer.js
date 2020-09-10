@@ -8,7 +8,14 @@ import { Values } from 'SVConstants'
 import { useCreateModal } from 'SVHooks/modal'
 import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
+import { useKegEvent } from 'SVHooks/events'
 
+const { EVENTS } = Values
+
+const testOnSessionBookingRequest = (session, attendees) => {
+  console.log(attendees)
+  console.log(session)
+}
 /**
  * TestContainer to be used by QA to test out individual component
  */
@@ -22,6 +29,15 @@ export const ModalDemos = () => {
   const theme = useTheme()
   const testStyles = theme.get('testContainer')
   const store = useSelector(state => state.items)
+
+  // set up our ev ent listener for booking request
+  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
+
+  // map the evf props onto our states
+  useEffect(() => {
+    // placeholder data for now
+    mapSessionInterface(testData)
+  }, [])
 
   return (
     <View style={testStyles.main}>
