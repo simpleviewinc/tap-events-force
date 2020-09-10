@@ -5,6 +5,7 @@ import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
 import { checkCall } from '@keg-hub/jsutils'
 import { sessionBookingRequest } from 'SVActions'
+import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
 
 /**
  * GroupBooking Modal
@@ -41,6 +42,7 @@ export const GroupBooking = ({ visible, session, attendees }) => {
         )}
         styles={groupBookingStyles.content.body}
         remainingCount={remainingCount}
+        attendees={attendees}
       />
     </BaseModal>
   )
@@ -53,7 +55,7 @@ export const GroupBooking = ({ visible, session, attendees }) => {
  * @param {number} props.remainingCount - spots left in this session
  * @param {Function} props.dismissModalCb - callback function to dismiss modal
  */
-const Body = ({ styles, remainingCount, dismissModalCb }) => {
+const Body = ({ styles, attendees, remainingCount, dismissModalCb }) => {
   const topSectionStyles = styles?.content?.topSection || {}
   const middleSectionStyles = styles?.content?.middleSection || {}
   const bottomSectionStyles = styles?.content?.bottomSection || {}
@@ -67,7 +69,10 @@ const Body = ({ styles, remainingCount, dismissModalCb }) => {
         styles={topSectionStyles}
         remainingCount={remainingCount}
       />
-      <MiddleSection styles={middleSectionStyles} />
+      <MiddleSection
+        styles={middleSectionStyles}
+        attendees={attendees}
+      />
       <BottomSection
         onCancelPress={dismissModalCb}
         styles={bottomSectionStyles}
@@ -109,14 +114,24 @@ const TopSection = ({ styles, remainingCount }) => {
   )
 }
 
-const MiddleSection = ({ styles }) => {
-  // TODO
-  return (
-    <View
+const MiddleSection = ({ styles, attendees, onAttendeeSelected }) => {
+  const sections = [ 'Family Ticket', 'Member', 'Non-Member' ]
+  return sections.map(section => (
+    <CheckboxGroup
       className={`ef-modal-group-section-middle`}
-      style={styles.main}
-    ></View>
-  )
+      key={section}
+      title={section}
+    >
+      { attendees.map(attendee => (
+        <CheckboxGroup.Item
+          key={attendee.bookedTicketIdentifier}
+          text={attendee.name || 'Unnamed'}
+          id={attendee.bookedTicketIdentifier}
+          onChange={onAttendeeSelected}
+        />
+      )) }
+    </CheckboxGroup>
+  ))
 }
 
 /**
