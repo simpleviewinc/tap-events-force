@@ -17,15 +17,29 @@ const mainStyle = {
   },
 }
 
-const defaultStyle = {
-  main: mainStyle,
-  content: contentStyle,
+const styleWithOpacity = opacity => {
+  return {
+    main: {
+      ...mainStyle,
+      opacity,
+    },
+    content: contentStyle,
+  }
 }
 
 export const labelButton = {
-  $web: {
-    default: defaultStyle,
-    hover: defaultStyle,
-    active: defaultStyle,
+  selected: {
+    $web: {
+      default: styleWithOpacity(),
+      hover: styleWithOpacity(),
+      active: styleWithOpacity(),
+    },
+  },
+  unselected: {
+    $web: {
+      default: styleWithOpacity(0.4),
+      hover: styleWithOpacity(0.4),
+      active: styleWithOpacity(0.4),
+    },
   },
 }

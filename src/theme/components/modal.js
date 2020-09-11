@@ -1,5 +1,5 @@
 import { colors } from '../colors'
-
+import { filterModal } from './modals'
 const smallImage = {
   width: 80,
   height: 80,
@@ -11,14 +11,6 @@ const smallImage = {
 const defaultTextStyle = {
   fontWeight: '600',
   fontSize: '16px',
-}
-
-const defaultLabelStyle = {
-  main: {
-    marginTop: 8,
-    marginRight: 8,
-  },
-  content: {},
 }
 
 export const modal = {
@@ -267,79 +259,5 @@ export const modal = {
       },
     },
   },
-  filter: {
-    content: {
-      main: {},
-      header: {
-        content: {
-          title: {
-            $small: {
-              fontSize: 22,
-            },
-          },
-        },
-      },
-      body: {
-        main: {
-          paddingLeft: 46,
-          paddingRight: 26,
-          paddingTop: 17,
-          paddingBottom: 26,
-        },
-        content: {
-          topSection: {
-            main: {
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            },
-            content: {
-              leftText: defaultTextStyle,
-            },
-          },
-          middleSection: {
-            main: {
-              height: 200, // TODO: PLACEHOLDER
-            },
-            content: {
-              labelList: {
-                main: {
-                  $web: {
-                    flexDirection: 'row',
-                    alignContent: 'flex-start',
-                    flexWrap: 'wrap',
-                    height: 'fit-content',
-                    maxWidth: '100%',
-                    flexBasis: 'auto',
-                    paddingBottom: 25,
-                  },
-                },
-                content: {
-                  item: {
-                    $web: {
-                      default: defaultLabelStyle,
-                      hover: defaultLabelStyle,
-                      active: defaultLabelStyle,
-                    },
-                  },
-                },
-              },
-            },
-          },
-          bottomSection: {
-            main: {
-              alignItems: 'flex-end',
-            },
-            content: {
-              button: {
-                main: {
-                  width: 87,
-                  height: 45,
-                },
-              },
-            },
-          },
-        },
-      },
-    },
-  },
+  filter: filterModal,
 }

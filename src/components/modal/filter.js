@@ -4,7 +4,6 @@ import { BaseModal } from './baseModal'
 import { View, Text } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { checkCall } from '@keg-hub/jsutils'
-import { LabelList } from 'SVComponents/labels/labelList'
 import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
@@ -79,53 +78,54 @@ const TopSection = ({ styles }) => {
 }
 
 const MiddleSection = ({ styles, labels }) => {
-  console.log({ labels })
+  // const theme = useTheme()
+
+  const statesLabel = []
+  mapObj(Values.SESSION_BOOKING_STATES, (key, value) => {
+    statesLabel.push(new Label({ name: capitalize(value) }))
+  })
+
   const { filters } = useSelector(
     ({ items }) => pickKeys(items, ['filters']),
     shallowEqual
   )
   console.log({ filters })
-  const statesLabel = []
-  mapObj(Values.SESSION_BOOKING_STATES, (key, value) => {
-    statesLabel.push(new Label({ name: capitalize(value) }))
-  })
-  /**
-   * selectedFilters
-   */
-  // 1. if labelButton press
-  // 2.
+
   return (
     <View style={styles.main}>
-      <LabelList
-        style={styles.content?.labelList?.main}
-        itemStyle={styles.content?.labelList?.content?.item}
-        LabelComponent={LabelButton}
-        labels={labels}
-        onItemPress={label => {
-          console.log({ label })
-        }}
-      />
-
-      <View>
-        { /* check selectedFilters */ }
-        { /* if selectedFilter[i] === label.name 
-          set themePath to button.outline.default */ }
-        { statesLabel.map(label => (
-          <LabelButton
-            key={label.name}
-            style={labelStyle}
-            label={label}
-            onPress={label => updateSelectedFilters(label.name)}
-          />
-        )) }
+      <View style={styles.content?.labelButtons?.main}>
+        { labels.map(label => {
+          const shouldRemove = filters.selectedFilters.includes(label.name)
+            ? true
+            : false
+          return (
+            <LabelButton
+              key={label.name}
+              toggledOn={shouldRemove}
+              label={label}
+              onPress={label => updateSelectedFilters(label.name, shouldRemove)}
+            />
+          )
+        }) }
       </View>
-      { /* <LabelList
-        style={styles.content?.labelList?.main}
-        itemStyle={styles.content?.labelList?.content?.item}
-        LabelComponent={LabelButton}
-        labels={statesLabel}
-        onItemPress={label => updateSelectedFilters(label.name)}
-      /> */ }
+
+      <View style={styles.content?.stateButtons?.main}>
+        { statesLabel.map(label => {
+          const shouldRemove = filters.selectedFilters.includes(label.name)
+            ? true
+            : false
+
+          return (
+            <LabelButton
+              key={label.name}
+              style={styles.content?.stateButtons?.content?.item}
+              label={label}
+              toggledOn={shouldRemove}
+              onPress={label => updateSelectedFilters(label.name, shouldRemove)}
+            />
+          )
+        }) }
+      </View>
     </View>
   )
 }

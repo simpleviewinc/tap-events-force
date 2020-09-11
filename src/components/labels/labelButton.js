@@ -11,12 +11,22 @@ import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
 const buildStyles = (theme, extra) => {
   const labelStyle = theme.get(`eventsForce.${extra.className}`)
 
+  // updated button styles with the eventsForce styles
+  const buttonStyles = {
+    default: { main: labelStyle },
+    hover: { main: labelStyle },
+    active: { main: labelStyle },
+  }
   return theme.join(
     theme.get('labelButton'),
     {
-      default: { main: labelStyle },
-      hover: { main: labelStyle },
-      active: { main: { ...labelStyle, opacity: 0.4 } },
+      selected: {
+        ...buttonStyles,
+        active: { main: { ...labelStyle, opacity: 0.4 } },
+      },
+      unselected: {
+        ...buttonStyles,
+      },
     },
     extra.style
   )
@@ -28,13 +38,12 @@ const buildStyles = (theme, extra) => {
  * @param {Object} props.style - custom button styles that will override those defined in the theme file's main object. Object should define default, hover, and active themes for the different states of the button. @see `buildStyles`
  * @param {import('SVModels/label').Label} props.label - the label model instance
  * @param {Function} props.onPress - when clicked, calls onPress and passes the label object to it
- * @param {string} props.themePath - optional themepath to set the button type
  */
 export const LabelButton = ({
-  style,
+  style, // TODO: update to styles
   label = {},
   onPress,
-  themePath = 'button.contained.default',
+  toggledOn = true,
 }) => {
   const theme = useTheme()
 
@@ -57,12 +66,10 @@ export const LabelButton = ({
     ],
     extraStyles
   )
-
   const clickHandler = () => onPress && onPress(label)
   return (
     <Button
-      themePath={themePath}
-      styles={mainStyle}
+      styles={toggledOn ? mainStyle.selected : mainStyle.unselected}
       content={label.name}
       onClick={clickHandler}
     />
