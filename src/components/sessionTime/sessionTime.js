@@ -1,9 +1,11 @@
 import React from 'react'
 import { useTheme } from '@keg-hub/re-theme'
+import { Style } from '@keg-hub/re-theme/head'
 import PropTypes from 'prop-types'
 import { View, Text } from '@keg-hub/keg-components'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 import { EVFIcons } from 'SVIcons'
+import { useCss } from 'SVHooks/useCss'
 
 /**
  * SessionTime
@@ -14,14 +16,21 @@ import { EVFIcons } from 'SVIcons'
  * @param {string} props.military - true if time should be formatted in 24-hour time
  */
 export const SessionTime = props => {
-  const { style = {}, start, end, military = true } = props
+  const { style, start, end, military = true } = props
   const theme = useTheme()
   const mainStyle = theme.join(theme.get('sessionTime.main'), style)
   const clockStyle = theme.get('sessionTime.clockIcon')
   const textStyle = theme.get('sessionTime.timeText')
 
+  const resp = useCss('sessionTime.main', style)
+
   return (
     <View style={mainStyle}>
+      <Style>{`
+        body {
+          background-color: blue;
+        }
+      `}</Style>
       <EVFIcons.Clock style={clockStyle.main} />
       <View style={textStyle.main}>
         <Text style={textStyle.content}>

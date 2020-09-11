@@ -1,5 +1,5 @@
 export * from './useInterval'
-export * from './useDataCss'
+export * from './useCss'
 export * from './media'
 export * from './models'
 export * from './modal'

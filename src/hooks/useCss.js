@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
-import { useCss } from '@keg-hub/re-theme'
-import { isStr } from '@keg-hub/jsutils'
+import { useCss as useReCss } from '@keg-hub/re-theme'
+import { isStr, isObj } from '@keg-hub/jsutils'
 
-export const useDataCss = (themeRef, style, id) => {
+export const useCss = (themeRef, style, id) => {
   const config = useMemo(() => {
     const idRef = id
       ? id
@@ -14,10 +14,10 @@ export const useDataCss = (themeRef, style, id) => {
 
     return {
       prefix: 'ef-',
-      format: `[data-class~="{{ selector }}"]`,
+      format: `.{{ selector }}`,
       id: idRef,
     }
   }, [ id, themeRef ])
 
-  return useCss(themeRef, style, config)
+  return useReCss(themeRef, style, config)
 }
