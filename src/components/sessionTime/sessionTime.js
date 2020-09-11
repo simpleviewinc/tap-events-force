@@ -22,13 +22,13 @@ export const SessionTime = props => {
   const clockStyle = theme.get('sessionTime.clockIcon')
   const textStyle = theme.get('sessionTime.timeText')
 
-  const resp = useCss('sessionTime.main', style)
+  const resp = useCss('sessionTime', style)
 
   return (
     <View style={mainStyle}>
-      <Style>{`
+      <Style {...resp} >{`
         body {
-          background-color: blue;
+          opacity: 0.5;
         }
       `}</Style>
       <EVFIcons.Clock style={clockStyle.main} />
