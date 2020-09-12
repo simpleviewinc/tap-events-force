@@ -15,6 +15,7 @@ const colors = {
   lightGray: '#A0A0A0',
   lightGray01: '#8f908f',
   lightGray02: '#F0F0F0',
+  dimTextGray: '#D9DCDC',
   darkGray: '#4F4F4F',
 }
 

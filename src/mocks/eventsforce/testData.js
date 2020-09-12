@@ -153,7 +153,7 @@ export default {
       requiresBooking: false,
       liveVideoUrl: '',
       recordedVideoUrl: '',
-      restrictToAttendeeCategories: [],
+      restrictToAttendeeCategories: [ '1', '2' ],
       capacity: {
         isUnlimited: false,
         remainingPlaces: 3,

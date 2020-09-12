@@ -1,45 +1,14 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Text } from '@keg-hub/keg-components'
 import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
 import { useStylesMemo } from 'SVHooks/useStylesMemo'
-import { isEmpty } from '@keg-hub/jsutils'
-import { useTheme } from '@keg-hub/re-theme'
-
-const AttendeeCheckboxItem = ({
-  id,
-  name,
-  itemStyles,
-  sectionStyles,
-  onAttendeeSelected,
-}) => {
-  const theme = useTheme()
-  const isUnnamed = !name || isEmpty(name)
-  const text = isUnnamed ? 'Unnamed' : name
-  const styles = useMemo(
-    () =>
-      theme.join(
-        itemStyles,
-        isUnnamed && {
-          content: { right: sectionStyles?.content?.unnamedItem?.main },
-        }
-      ),
-    [isUnnamed]
-  )
-  console.log(styles)
-  return (
-    <CheckboxGroup.Item
-      id={id}
-      styles={styles}
-      text={text}
-      onChange={onAttendeeSelected}
-    />
-  )
-}
+import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
 
 export const GroupBookingSection = ({
   styles,
   name,
   attendees,
+  restrictedAttendeeIds,
   onAttendeeSelected,
 }) => {
   const sectionStyles = useStylesMemo('groupBookingSection', styles)
@@ -52,14 +21,15 @@ export const GroupBookingSection = ({
       styles={sectionStyles}
       title={name}
     >
-      { attendees.map(({ bookedTicketIdentifier, name }) => (
+      { attendees.map(({ bookedTicketIdentifier: attendeeId, name }) => (
         <AttendeeCheckboxItem
-          key={bookedTicketIdentifier}
-          id={bookedTicketIdentifier}
+          key={attendeeId}
+          id={attendeeId}
           name={name}
           onAttendeeSelected={onAttendeeSelected}
           sectionStyles={sectionStyles}
           itemStyles={itemStyles}
+          disabled={restrictedAttendeeIds.has(attendeeId)}
         />
       )) }
       { !attendees.length && <Text>No attendees for this category</Text> }

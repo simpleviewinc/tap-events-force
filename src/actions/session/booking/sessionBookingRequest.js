@@ -16,11 +16,18 @@ export const sessionBookingRequest = (sessionId, attendeeIds = []) => {
   //     - the attendee.EfBookedTicketIdentifier in an array
   const valid = kegEventEmitter.emit(
     EVENTS.SESSION_BOOKING_REQUEST,
-    'exampleSessionId',
-    [ 'attendeId2', 'attendeId3' ]
+    sessionId,
+    attendeeIds
   )
   if (!valid)
     console.warn(
       `Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`
+    )
+  else
+    console.log(
+      'Emitted event',
+      EVENTS.SESSION_BOOKING_REQUEST,
+      sessionId,
+      attendeeIds
     )
 }
