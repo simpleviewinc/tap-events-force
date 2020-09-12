@@ -1,8 +1,8 @@
 import React from 'react'
-import { PresenterDetails } from 'SVComponents/modal/presenterDetails'
-import { GroupBooking } from 'SVComponents/modal/groupBooking'
-import { Filter } from 'SVComponents/modal/filter'
-import { Error } from 'SVComponents/modal/error'
+import { PresenterDetails } from 'SVComponents/modals/presenterDetails'
+import { GroupBooking } from 'SVComponents/modals/groupBooking'
+import { Filter } from 'SVComponents/modals/filter'
+import { Error } from 'SVComponents/modals/error'
 import { Values } from 'SVConstants'
 
 /**

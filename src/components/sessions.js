@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button } from '@keg-hub/keg-components'
-import { RenderModals } from 'SVComponents/modal/renderModals'
+import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'

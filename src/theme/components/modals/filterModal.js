@@ -1,9 +1,5 @@
 import { colors } from '../../colors'
-
-const defaultTextStyle = {
-  fontWeight: '600',
-  fontSize: '16px',
-}
+import { defaultTextStyle } from './baseModal'
 
 const defaultLabelStyle = {
   main: {
