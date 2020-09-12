@@ -40,6 +40,7 @@ export const GroupBooking = ({ visible, session, attendees }) => {
           () => checkCall(dismissedCBRef.current, true),
           [dismissedCBRef?.current]
         )}
+        session={session}
         styles={groupBookingStyles.content.body}
         remainingCount={remainingCount}
         attendees={attendees}
@@ -53,12 +54,40 @@ export const GroupBooking = ({ visible, session, attendees }) => {
  * @param {object} props
  * @param {object} props.styles
  * @param {number} props.remainingCount - spots left in this session
+ * @param {Array<Attendee>} props.attendees - attendees
+ * @param {Session} props.session - current session
  * @param {Function} props.dismissModalCb - callback function to dismiss modal
  */
-const Body = ({ styles, attendees, remainingCount, dismissModalCb }) => {
+const Body = ({
+  styles,
+  session,
+  attendees,
+  remainingCount,
+  dismissModalCb,
+}) => {
   const topSectionStyles = styles?.content?.topSection || {}
   const middleSectionStyles = styles?.content?.middleSection || {}
   const bottomSectionStyles = styles?.content?.bottomSection || {}
+
+  // stored as a ref, b/c nothing needs to rerender if it changes, it just gets submitted to consumer of Sessions when user books
+  const attendeeIdsRef = useRef(new Set())
+
+  const onAttendeeSelected = useCallback(
+    ({ id }) =>
+      attendeeIdsRef.current.has(id)
+        ? attendeeIdsRef.current.delete(id)
+        : attendeeIdsRef.current.add(id),
+    []
+  )
+
+  const bookSession = useCallback(
+    () =>
+      sessionBookingRequest(
+        session.identifier,
+        Array.from(attendeeIdsRef.current)
+      ),
+    [ session.identifier, attendeeIdsRef ]
+  )
 
   return (
     <View
@@ -70,11 +99,14 @@ const Body = ({ styles, attendees, remainingCount, dismissModalCb }) => {
         remainingCount={remainingCount}
       />
       <MiddleSection
+        session={session}
         styles={middleSectionStyles}
         attendees={attendees}
+        onAttendeeSelected={onAttendeeSelected}
       />
       <BottomSection
         onCancelPress={dismissModalCb}
+        onSubmitPress={bookSession}
         styles={bottomSectionStyles}
       />
     </View>
@@ -114,10 +146,11 @@ const TopSection = ({ styles, remainingCount }) => {
   )
 }
 
-const MiddleSection = ({ styles, attendees, onAttendeeSelected }) => {
+const MiddleSection = ({ styles, session, attendees, onAttendeeSelected }) => {
   return (
     <GroupBookingOptions
       className={`ef-modal-group-section-middle`}
+      session={session}
       styles={styles}
       attendees={attendees}
       onAttendeeSelected={onAttendeeSelected}
@@ -130,8 +163,9 @@ const MiddleSection = ({ styles, attendees, onAttendeeSelected }) => {
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onCancelPress
+ * @param {Function} props.onSubmitPress
  */
-const BottomSection = ({ styles, onCancelPress }) => {
+const BottomSection = ({ styles, onCancelPress, onSubmitPress }) => {
   return (
     <View
       className={`ef-modal-group-section-bottom`}
@@ -147,7 +181,7 @@ const BottomSection = ({ styles, onCancelPress }) => {
         type={'primary'}
         styles={styles.content?.bookButton}
         text={'BOOK SELECTED'}
-        onClick={sessionBookingRequest}
+        onClick={onSubmitPress}
       />
     </View>
   )

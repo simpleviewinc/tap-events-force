@@ -17,24 +17,19 @@ export const GroupHeader = ({ title, style }) => {
  * @param {*} props.styles.content
  * @param {*} props.styles.content.right - style of rightward text
  */
-export const ItemCheckbox = ({ styles, text, id, onChange, close = true }) => {
+export const ItemCheckbox = props => {
+  const { styles, text, id, onChange, close = true, ...rest } = props
+
   const handler = useCallback(() => onChange?.({ event, text, id }))
   const checkboxStyles = useStylesMemo('form.checkbox.close', styles)
-  // const styles = useMemo(
-  //   () => ({
-  //     main: style,
-  //     content: {
-  //       right: textStyle
-  //     }
-  //   }),
-  //   [ style, textStyle ]
-  // )
+
   return (
     <Checkbox
       styles={checkboxStyles}
       RightComponent={text}
       onChange={handler}
       close={close}
+      {...rest}
     />
   )
 }
