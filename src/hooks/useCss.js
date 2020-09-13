@@ -13,6 +13,8 @@ export const useCss = (themeRef, style, id) => {
           : undefined
 
     return {
+      // inline: true,
+      propKey: 'className',
       format: `.{{ selector }}`,
       convention: 'css',
       id: idRef,

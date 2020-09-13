@@ -17,18 +17,14 @@ import { useCss } from 'SVHooks/useCss'
  */
 export const SessionTime = props => {
   const { style, start, end, military = true } = props
-  const theme = useTheme()
-  const mainStyle = theme.join(theme.get('sessionTime.main'), style)
-  const clockStyle = theme.get('sessionTime.clockIcon')
-  const textStyle = theme.get('sessionTime.timeText')
 
-  const resp = useCss('sessionTime', style)
+  const cssProps = useCss('sessionTime', style)
 
   return (
-    <View className='session-time-main'>
-      <EVFIcons.Clock style={clockStyle.main} />
-      <View style={textStyle.main}>
-        <Text style={textStyle.content}>
+    <View { ...cssProps.main } >
+      <EVFIcons.Clock {...cssProps.clockIcon.main} />
+      <View {...cssProps.timeText.main} >
+        <Text {...cssProps.timeText.content} >
           { `${getTimeFromDate(start, military)} - ${getTimeFromDate(
             end,
             military
