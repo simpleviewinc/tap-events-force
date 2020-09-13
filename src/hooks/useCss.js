@@ -13,8 +13,8 @@ export const useCss = (themeRef, style, id) => {
           : undefined
 
     return {
-      prefix: 'ef-',
       format: `.{{ selector }}`,
+      convention: 'css',
       id: idRef,
     }
   }, [ id, themeRef ])

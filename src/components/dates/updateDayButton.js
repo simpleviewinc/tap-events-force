@@ -21,7 +21,6 @@ const buildStyles = (theme, extra) => ({
  * @param {Object?} [props.styles={}] - optional styles to override defaults { main: {}, content: {} }
  * @param {boolean?} [props.disabled=false] - true if the button should be disabled
  * @param {Function?} props.onDayChange - callback executed when the day changes
- * @param {object?} props.dataSet - dataSet object that can contain a class key for identification in tests
  */
 export const UpdateDayButton = props => {
   const {
@@ -29,7 +28,6 @@ export const UpdateDayButton = props => {
     styles = {},
     disabled = false,
     onDayChange,
-    dataSet = UpdateDayButton.dataSet.main,
   } = props
 
   const iconStyles = useStylesCallback(buildStyles, [ disabled, styles.main ], {
@@ -42,7 +40,6 @@ export const UpdateDayButton = props => {
 
   return (
     <ChevronIcon
-      dataSet={dataSet}
       onPress={onDayChange}
       style={iconStyles}
       type={type}
@@ -53,6 +50,4 @@ UpdateDayButton.propTypes = {
   type: PropTypes.oneOf([ 'increment', 'decrement' ]),
   disabled: PropTypes.bool,
 }
-UpdateDayButton.dataSet = {
-  main: { class: 'update-day-button-main' },
-}
+

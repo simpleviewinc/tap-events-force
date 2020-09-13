@@ -41,12 +41,8 @@ export const DayToggle = props => {
   const dayText = `Day ${dayNumber} 
     - ${getDayString(date, isMobileSize(theme))}`
   return (
-    <View
-      dataSet={DayToggle.dataSet.main}
-      style={dayToggleStyles?.main}
-    >
+    <View style={dayToggleStyles?.main} >
       <UpdateDayButton
-        dataSet={DayToggle.dataSet.content.decrement}
         style={dayToggleStyles?.content?.decrementIcon}
         type={'decrement'}
         disabled={disableDecrement}
@@ -61,7 +57,6 @@ export const DayToggle = props => {
       </Text>
 
       <UpdateDayButton
-        dataSet={DayToggle.dataSet.content.increment}
         type={'increment'}
         style={dayToggleStyles?.content?.incrementIcon}
         disabled={disableIncrement}
@@ -71,11 +66,3 @@ export const DayToggle = props => {
   )
 }
 DayToggle.propTypes = {}
-DayToggle.dataSet = {
-  main: { class: 'day-toggle-main' },
-  content: {
-    decrement: { class: 'day-toggle-decrement' },
-    text: { class: 'day-toggle-text' },
-    increment: { class: 'day-toggle-increment' },
-  },
-}

@@ -22,9 +22,8 @@ const { EVENTS } = Values
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onClick
- * @param {object} props.dataSet
  */
-const FilterButton = ({ onClick, styles, dataSet }) => {
+const FilterButton = ({ onClick, styles }) => {
   const dim = useDimensions()
 
   const contentStyles = styles?.content
@@ -33,14 +32,12 @@ const FilterButton = ({ onClick, styles, dataSet }) => {
   return dim.width <= 650 ? (
     <EVFIcons.Filter
       style={contentStyles?.filterIcon}
-      dataSet={dataSet?.content?.filterIcon}
       onPress={onClick}
       color={contentStyles?.filterIcon?.color}
     />
   ) : (
     <Button
       themePath='button.text.default'
-      dataSet={dataSet?.content?.filterButton}
       styles={contentStyles?.filterButton}
       onClick={onClick}
       content={'Filter'}
@@ -72,7 +69,6 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
 
   return (
     <ItemHeader
-      dataSet={Sessions.dataSet.content.header}
       styles={headerStyles}
       CenterComponent={
         <DayToggle
@@ -86,7 +82,6 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
       }
       RightComponent={
         <FilterButton
-          dataSet={Sessions.dataSet.content.header.content.right}
           styles={headerStyles.content?.right}
           onClick={displayFilterModal}
         />
@@ -146,7 +141,6 @@ export const Sessions = props => {
 
   return (
     <View
-      dataSet={Sessions.dataSet.main}
       style={sessionsStyles.main}
     >
       <SessionsHeader
@@ -163,25 +157,4 @@ export const Sessions = props => {
       { modals.length > 0 && RenderModals(modals) }
     </View>
   )
-}
-
-Sessions.dataSet = {
-  main: { class: 'sessions-main' },
-  content: {
-    header: {
-      main: { class: 'sessions-content-header-main' },
-      content: {
-        right: {
-          content: {
-            filterIcon: {
-              class: 'sessions-content-header-content-right-filter-icon',
-            },
-            filterButton: {
-              class: 'sessions-content-header-content-right-filter-button',
-            },
-          },
-        },
-      },
-    },
-  },
 }

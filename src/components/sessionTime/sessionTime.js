@@ -25,12 +25,7 @@ export const SessionTime = props => {
   const resp = useCss('sessionTime', style)
 
   return (
-    <View style={mainStyle}>
-      <Style {...resp} >{`
-        body {
-          opacity: 0.5;
-        }
-      `}</Style>
+    <View className='session-time-main'>
       <EVFIcons.Clock style={clockStyle.main} />
       <View style={textStyle.main}>
         <Text style={textStyle.content}>

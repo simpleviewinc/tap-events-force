@@ -63,10 +63,7 @@ const Body = ({ presenter, styles }) => {
     dim.height <= 450 ? styles.row1.smallImage : styles.row1.image
 
   return (
-    <View
-      dataSet={PresenterDetails.dataSet.content.body.main}
-      style={styles.main}
-    >
+    <View style={styles.main} >
       { /* row 1 - image and titles */ }
       <View style={styles.row1.container}>
         <Image
@@ -106,12 +103,4 @@ const Body = ({ presenter, styles }) => {
       ) : null }
     </View>
   )
-}
-
-PresenterDetails.dataSet = {
-  content: {
-    body: {
-      main: { class: 'presenter-details-content-body-main' },
-    },
-  },
 }

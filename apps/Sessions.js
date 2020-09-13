@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { EFDemoContainer as SessionsContainer } from 'SVContainers/efDemoContainer'
 import { Dimensions, Platform } from 'react-native'
+import { ReThemeHeadProvider } from '@keg-hub/re-theme/head'
 
 setRNDimensions(Dimensions)
 setRNPlatform(Platform)
@@ -27,9 +28,9 @@ const SessionsApp = props => {
 
   return (
     <Provider store={getStore()}>
-      <ReThemeProvider theme={activeTheme}>
+      <ReThemeHeadProvider theme={activeTheme}>
         <SessionsContainer { ...props } />
-      </ReThemeProvider>
+      </ReThemeHeadProvider>
     </Provider>
   )
 }

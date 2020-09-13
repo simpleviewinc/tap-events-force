@@ -32,18 +32,16 @@ export const GridContainer = props => {
   const theme = useTheme()
   const gridStyles = theme.get('gridContainer')
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
+  
+  // Use this to build the class
+  // className = useMemo(() => { return `grid-container-main-${timeBlock}`, [ timeBlock ] }
+  
   return (
-    <View
-      style={gridStyles.main}
-      dataSet={useMemo(() => GridContainer.dataSet.main(timeBlock), [
-        timeBlock,
-      ])}
-    >
+    <View style={gridStyles.main} >
       {
         // only display the time header on web styles
         !isMobileSize(theme) && (
           <ItemHeader
-            dataSet={GridContainer.dataSet.content.header}
             styles={gridStyles.content.header}
             LeftComponent={
               <LeftHeaderText
@@ -54,10 +52,7 @@ export const GridContainer = props => {
           />
         )
       }
-      <View
-        dataSet={GridContainer.dataSet.content.items}
-        style={gridStyles.content.items}
-      >
+      <View style={gridStyles.content.items} >
         { sessions &&
           sessions.map(session => (
             <GridItem
@@ -72,12 +67,3 @@ export const GridContainer = props => {
   )
 }
 
-GridContainer.dataSet = {
-  main: timeBlock => {
-    return { class: `grid-container-main-${timeBlock}` }
-  },
-  content: {
-    header: { class: 'grid-container-content-header' },
-    items: { class: 'grid-container-content-items' },
-  },
-}

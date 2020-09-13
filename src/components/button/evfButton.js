@@ -34,13 +34,3 @@ export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
     </View>
   )
 }
-
-EvfButton.dataSet = {
-  main: { class: 'evf-button-main' },
-  content: {
-    textView: {
-      main: { class: 'evf-button-content-textView-main' },
-      content: { class: 'evf-button-content-textView-content' },
-    },
-  },
-}

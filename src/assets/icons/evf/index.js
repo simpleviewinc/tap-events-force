@@ -10,7 +10,7 @@ import PropTypes from 'prop-types'
  * define onPress, then it uses TouchableOpacity, otherwise it wraps
  * it with a View.
  *
- * Accepts dataSet, and either `color`, `fill`, or the `style` object can color the icon
+ * Accepts either `color`, `fill`, or the `style` object can color the icon
  * @param {Component} SvgElement - react-native-svg component
  * @returns {Component} wrapped - the wrapped component
  * @example
@@ -24,20 +24,18 @@ const buildIconComponent = SvgElement => {
   /**
    * Wrapped icon component - what consumers of EVFIcons will call
    * @param {Object} props
-   * @param {Object?} props.dataSet - the dataSet to be passed to View or TouchableOpacity
    * @param {Function?} props.onPress - on press callback. If defined, it will use a TouchableOpacity
    * @param {string?} props.fill - fill color of svg icon
    * @param {string?} props.color - alias for fill
    * @param {Object} ...remaining - all remaining props are passed to the SvgElement
    */
   const EVFIcon = props => {
-    const { dataSet, onPress, color, fill, ...svgProps } = props
+    const { onPress, color, fill, ...svgProps } = props
 
     const Wrapper = onPress ? TouchableOpacity : View
 
     return (
       <Wrapper
-        dataSet={dataSet}
         onPress={onPress}
       >
         <SvgElement
@@ -49,7 +47,6 @@ const buildIconComponent = SvgElement => {
   }
 
   EVFIcon.propTypes = {
-    dataSet: PropTypes.object,
     onPress: PropTypes.func,
     fill: PropTypes.string,
     color: PropTypes.string,
@@ -74,7 +71,6 @@ const buildIconComponent = SvgElement => {
  *   return (
  *     // 'Close' name comes from `src/assets/icons/evf/elements/close.js`
  *     <EVFIcons.Close
- *       dataSet={{ $class: 'close-icon' }}
  *       onPress={console.log}
  *       style={{ height: 20 }}
  *       color={'#444AAA'}

@@ -10,7 +10,6 @@ import { EVFIcons } from 'SVIcons'
  * @param {object} props
  * @param {string} props.title
  * @param {object} props.styles
- * @param {object} props.dataSet
  * @param {object} props.setDismissed - used to state the modals visible state for animation
  * @param {boolean=} props.hasCloseButton - display the close button on top right or not
  */
@@ -19,15 +18,10 @@ const Header = ({
   styles,
   setDismissed,
   hasCloseButton = true,
-  dataSet,
 }) => {
   return (
-    <View
-      dataSet={dataSet.header.main}
-      style={styles?.main}
-    >
+    <View style={styles?.main} >
       <Text
-        dataSet={dataSet.header.content.text}
         style={styles?.content?.title}
         numberOfLines={2}
         ellipsizeMode={'tail'}
@@ -35,14 +29,8 @@ const Header = ({
         { title }
       </Text>
       { hasCloseButton && (
-        <View
-          style={styles?.content?.closeButton?.main}
-          dataSet={dataSet.header.content.closeButton.main}
-        >
-          <EVFIcons.Close
-            dataSet={dataSet.header.content.closeButton.content}
-            onPress={() => setDismissed(true)}
-          />
+        <View style={styles?.content?.closeButton?.main} >
+          <EVFIcons.Close onPress={() => setDismissed(true)} />
         </View>
       ) }
     </View>
@@ -117,7 +105,6 @@ export const BaseModal = props => {
       onBackdropTouch={onBackdropTouch}
     >
       <Header
-        dataSet={BaseModal.dataSet.content}
         title={title}
         styles={baseStyles.content.header}
         setDismissed={setDismissed}
@@ -127,26 +114,6 @@ export const BaseModal = props => {
       { children }
     </Modal>
   )
-}
-
-BaseModal.dataSet = {
-  main: { class: `base-modal-main` },
-  content: {
-    header: {
-      main: { class: 'base-modal-content-header-main' },
-      content: {
-        text: { class: 'base-modal-content-header-content-text' },
-        closeButton: {
-          main: {
-            class: 'base-modal-content-header-content-close-button-main',
-          },
-          content: {
-            class: 'base-modal-content-header-content-close-button-content',
-          },
-        },
-      },
-    },
-  },
 }
 
 BaseModal.propTypes = {
