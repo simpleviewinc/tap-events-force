@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { View, Button } from '@keg-hub/keg-components'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStylesCallback } from '@keg-hub/re-theme'
 
 /**
  * @param {object} theme
@@ -20,10 +20,8 @@ const buildStyles = (theme, custom) => {
  */
 export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
   // build the main style for the button, memoized
-  const theme = useTheme()
-  const mainStyle = useMemo(() => {
-    return theme.join(theme.get(`button.evfButton.${type}`), styles)
-  }, [ type, styles ])
+  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
+  const mainStyle = useStylesCallback(buildStyles, [ type, styles ], customStyles)
 
   return (
     <View style={mainStyle?.main}>
