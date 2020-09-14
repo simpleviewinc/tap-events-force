@@ -51,19 +51,24 @@ export const Filter = ({ visible, labels }) => {
 const Content = ({ styles, onButtonPress, labels }) => {
   return (
     <View style={styles?.main}>
-      <TopSection styles={styles?.content?.topSection} />
+      <TopSection styles={styles?.topSection} />
       <MiddleSection
         labels={labels}
-        styles={styles?.content?.middleSection}
+        styles={styles?.middleSection}
       />
       <BottomSection
-        styles={styles?.content?.bottomSection}
+        styles={styles?.bottomSection}
         onButtonPress={onButtonPress}
       />
     </View>
   )
 }
 
+/**
+ *
+ * @param {object} props
+ * @param {object} props.styles - default from modal.filter.body.topSection
+ */
 const TopSection = ({ styles }) => {
   return (
     <View style={styles?.main}>
@@ -77,65 +82,107 @@ const TopSection = ({ styles }) => {
   )
 }
 
-const MiddleSection = ({ styles, labels }) => {
-  // const theme = useTheme()
-
-  const statesLabel = []
-  mapObj(Values.SESSION_BOOKING_STATES, (key, value) => {
-    statesLabel.push(new Label({ name: capitalize(value) }))
-  })
-
+/**
+ * LabelButtons
+ * Builds the filter items
+ * @param {object} props
+ * @param {object} props.styles - styles to be applied to LabelButton
+ * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
+ */
+const LabelButtons = ({ styles, labels }) => {
+  /**
+   * expected behavior:
+   *   - all filters are 'toggled on' by default when no filter is selected
+   *   - once a filter item is selected, the rest should be toggled off except for the selected item(s)
+   */
   const { filters } = useSelector(
     ({ items }) => pickKeys(items, ['filters']),
     shallowEqual
   )
-  console.log({ filters })
+
+  let isFilterEmpty = false
+  if (
+    filters.activeFilters.length === 0 &&
+    filters.selectedFilters.length === 0
+  )
+    isFilterEmpty = true
+
+  return labels.map(label => {
+    const isLabelOn = filters.selectedFilters.some(
+      item => item.identifier === label.identifier
+    )
+
+    return (
+      <LabelButton
+        key={label.name}
+        styles={styles}
+        label={label}
+        toggledOn={isFilterEmpty || isLabelOn}
+        onPress={label => updateSelectedFilters(label)}
+      />
+    )
+  })
+}
+
+/**
+ * Creates an array of Labels based on the passed in object
+ * @param {object} bookingStates - obj of the form
+ *                               - {
+ *                                   keyName: string,
+ *                                   keyName: string,
+ *                                 }
+ * @returns {Array.<import('SVModels/label').Label>}
+ */
+const createStateLabels = bookingStates => {
+  const labels = []
+  mapObj(bookingStates, (key, value) => {
+    labels.push(new Label({ name: capitalize(value), identifier: key }))
+  })
+  return labels
+}
+/**
+ * MiddleSection
+ * @param {object} props
+ * @param {object} props.styles - default from modal.filter.body.middleSection
+ * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
+ */
+const MiddleSection = ({ styles, labels }) => {
+  const stateLabels = useMemo(
+    () => createStateLabels(Values.SESSION_BOOKING_STATES),
+    [Values.SESSION_BOOKING_STATES]
+  )
 
   return (
-    <View style={styles.main}>
-      <View style={styles.content?.labelButtons?.main}>
-        { labels.map(label => {
-          const shouldRemove = filters.selectedFilters.includes(label.name)
-            ? true
-            : false
-          return (
-            <LabelButton
-              key={label.name}
-              toggledOn={shouldRemove}
-              label={label}
-              onPress={label => updateSelectedFilters(label.name, shouldRemove)}
-            />
-          )
-        }) }
+    <View>
+      <View style={styles.labelButtons?.main}>
+        <LabelButtons
+          styles={styles.labelButtons?.item}
+          labels={labels}
+        />
       </View>
 
-      <View style={styles.content?.stateButtons?.main}>
-        { statesLabel.map(label => {
-          const shouldRemove = filters.selectedFilters.includes(label.name)
-            ? true
-            : false
-
-          return (
-            <LabelButton
-              key={label.name}
-              styles={styles.content?.stateButtons?.content?.item}
-              label={label}
-              toggledOn={shouldRemove}
-              onPress={label => updateSelectedFilters(label.name, shouldRemove)}
-            />
-          )
-        }) }
+      <View style={styles.stateButtons?.main}>
+        <LabelButtons
+          styles={styles.stateButtons?.item}
+          labels={stateLabels}
+        />
       </View>
     </View>
   )
 }
 
+/**
+ * BottomSection
+ * @param {object} props
+ * @param {object} props.styles - default from modal.filter.body.bottomSection theme
+ * @param {Function} props.onButtonPress
+ */
 const BottomSection = ({ styles, onButtonPress }) => {
   return (
-    <View style={styles.main}>
+    <View style={styles?.main}>
       <EvfButton
         type={'primary'}
-        styles={styles.content?.button}
+        styles={styles?.button}
         onClick={onButtonPress}
         text={'APPLY'}
       />

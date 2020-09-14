@@ -28,7 +28,7 @@ const buildStyles = (theme, extra) => {
         ...buttonStyles,
       },
     },
-    extra.style
+    extra.styles
   )
 }
 

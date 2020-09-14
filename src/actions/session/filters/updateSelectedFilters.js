@@ -4,17 +4,21 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  * adds/remove the item to/from selectedFilters
- * @param {string} name
+ * @param {import('SVModels/label').Label} label
  */
-export const updateSelectedFilters = (name, shouldRemove) => {
-  console.log('clicked')
+export const updateSelectedFilters = label => {
   const { items } = getStore()?.getState()
   const selectedFilters = items?.filters?.selectedFilters || []
 
-  // remove or append to the array
+  // add the item if it doesn't exist
+  // remove the item if it does exist
+  let shouldRemove = selectedFilters.some(
+    item => item.identifier === label.identifier
+  )
+
   const updatedFilters = shouldRemove
-    ? selectedFilters.filter(val => val !== name)
-    : selectedFilters.concat(name)
+    ? selectedFilters.filter(item => item.identifier !== label.identifier)
+    : selectedFilters.concat(label)
 
   dispatch({
     type: ActionTypes.SET_ITEM,

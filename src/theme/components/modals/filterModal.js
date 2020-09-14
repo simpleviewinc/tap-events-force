@@ -1,17 +1,15 @@
 import { colors } from '../../colors'
 import { defaultTextStyle } from './baseModal'
 
-const defaultLabelStyle = {
-  main: {
-    marginTop: 8,
-    marginRight: 8,
-  },
-  content: {},
+const buttonMargin = {
+  marginTop: 8,
+  marginRight: 8,
 }
 
 const stateButtonsSelected = {
   main: {
     backgroundColor: colors.lightGray,
+    ...buttonMargin,
   },
   content: {
     color: colors.white02,
@@ -24,6 +22,7 @@ const stateButtonsUnselected = {
     borderWidth: 1,
     borderRadius: 2,
     borderColor: colors.lightGray,
+    ...buttonMargin,
   },
   content: {
     color: colors.lightGray,
@@ -36,6 +35,18 @@ const defaultUnselectedStyle = {
     opacity: 1,
   },
   content: stateButtonsUnselected.content,
+}
+
+const labelButtonSelected = {
+  default: {
+    main: buttonMargin,
+  },
+  hover: {
+    main: buttonMargin,
+  },
+  active: {
+    main: buttonMargin,
+  },
 }
 
 const stateButton = {
@@ -51,6 +62,11 @@ const stateButton = {
   },
 }
 
+const labelButton = {
+  selected: labelButtonSelected,
+  unselected: labelButtonSelected,
+}
+
 const buttonsWrapper = {
   flexDirection: 'row',
   alignContent: 'flex-start',
@@ -58,6 +74,7 @@ const buttonsWrapper = {
   height: 'fit-content',
   maxWidth: '100%',
   flexBasis: 'auto',
+  paddingBottom: 60,
 }
 
 export const filterModal = {
@@ -79,61 +96,41 @@ export const filterModal = {
         paddingTop: 17,
         paddingBottom: 26,
       },
-      content: {
-        topSection: {
+      topSection: {
+        main: {
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        },
+        content: {
+          leftText: defaultTextStyle,
+        },
+      },
+      middleSection: {
+        labelButtons: {
           main: {
-            flexDirection: 'row',
-            justifyContent: 'space-between',
+            $web: buttonsWrapper,
           },
-          content: {
-            leftText: defaultTextStyle,
+          item: {
+            $web: labelButton,
           },
         },
-        middleSection: {
+        stateButtons: {
           main: {
-            height: 200, // TODO: PLACEHOLDER
+            $web: buttonsWrapper,
           },
-          content: {
-            labelButtons: {
-              main: {
-                $web: {
-                  ...buttonsWrapper,
-                  paddingBottom: 25,
-                },
-              },
-              content: {
-                item: {
-                  $web: {
-                    default: defaultLabelStyle,
-                    hover: defaultLabelStyle,
-                    active: defaultLabelStyle,
-                  },
-                },
-              },
-            },
-            stateButtons: {
-              main: {
-                $web: buttonsWrapper,
-              },
-              content: {
-                item: {
-                  $web: stateButton,
-                },
-              },
-            },
+          item: {
+            $web: stateButton,
           },
         },
-        bottomSection: {
+      },
+      bottomSection: {
+        main: {
+          alignItems: 'flex-end',
+        },
+        button: {
           main: {
-            alignItems: 'flex-end',
-          },
-          content: {
-            button: {
-              main: {
-                width: 87,
-                height: 45,
-              },
-            },
+            width: 87,
+            height: 45,
           },
         },
       },
