@@ -354,6 +354,7 @@ export default {
       attendeeCategoryIdentifier: '2',
       bookedDays: [2],
       bookedSessions: [],
+      waitingListSessions: ['3'],
     },
     {
       bookedTicketIdentifier: '3',

@@ -16,6 +16,7 @@ export const AttendeeCheckboxItem = props => {
     itemStyles,
     sectionStyles,
     onAttendeeSelected,
+    enableCheck = true,
     disabled = false,
   } = props
 
@@ -42,6 +43,7 @@ export const AttendeeCheckboxItem = props => {
       text={text}
       onChange={onAttendeeSelected}
       disabled={disabled}
+      enableCheck={enableCheck}
     />
   )
 }

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useState, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, View } from '@keg-hub/keg-components'
@@ -69,15 +69,23 @@ const Body = ({
   const middleSectionStyles = styles?.content?.middleSection || {}
   const bottomSectionStyles = styles?.content?.bottomSection || {}
 
-  // stored as a ref, b/c nothing needs to rerender if it changes, it just gets submitted to consumer of Sessions when user books
+  // stored as a ref, b/c nothing needs to rerender if it changes. It just later gets submitted to consumer of Sessions when user books
   const attendeeIdsRef = useRef(new Set())
 
+  const [ capacity, setCapacity ] = useState(remainingCount)
+
   const onAttendeeSelected = useCallback(
-    ({ id }) =>
-      attendeeIdsRef.current.has(id)
-        ? attendeeIdsRef.current.delete(id)
-        : attendeeIdsRef.current.add(id),
-    []
+    ({ id }) => {
+      if (attendeeIdsRef.current.has(id)) {
+        const deleted = attendeeIdsRef.current.delete(id)
+        deleted && setCapacity(capacity + 1)
+      }
+      else {
+        const added = attendeeIdsRef.current.add(id)
+        added && setCapacity(capacity - 1)
+      }
+    },
+    [ attendeeIdsRef, capacity, setCapacity ]
   )
 
   const bookSession = useCallback(
@@ -96,12 +104,13 @@ const Body = ({
     >
       <TopSection
         styles={topSectionStyles}
-        remainingCount={remainingCount}
+        remainingCount={capacity}
       />
       <MiddleSection
         session={session}
         styles={middleSectionStyles}
         attendees={attendees}
+        canBookMore={capacity > 0}
         onAttendeeSelected={onAttendeeSelected}
       />
       <BottomSection
@@ -146,7 +155,13 @@ const TopSection = ({ styles, remainingCount }) => {
   )
 }
 
-const MiddleSection = ({ styles, session, attendees, onAttendeeSelected }) => {
+const MiddleSection = ({
+  styles,
+  session,
+  attendees,
+  onAttendeeSelected,
+  canBookMore,
+}) => {
   return (
     <GroupBookingOptions
       className={`ef-modal-group-section-middle`}
@@ -154,6 +169,7 @@ const MiddleSection = ({ styles, session, attendees, onAttendeeSelected }) => {
       styles={styles}
       attendees={attendees}
       onAttendeeSelected={onAttendeeSelected}
+      enableCheck={canBookMore}
     />
   )
 }
