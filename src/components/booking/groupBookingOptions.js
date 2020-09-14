@@ -83,7 +83,13 @@ const buildAttendeesSectionMap = (session, attendees = []) => {
  * @param {*} param0
  */
 export const GroupBookingOptions = props => {
-  const { styles, attendees, session, onAttendeeSelected } = props
+  const {
+    styles,
+    attendees,
+    session,
+    onAttendeeSelected,
+    enableCheck = true,
+  } = props
 
   const theme = useTheme()
   const mainStyles = theme.get('groupBookingOptions.main')
@@ -107,6 +113,7 @@ export const GroupBookingOptions = props => {
           attendees={attendeesBySection[section]}
           restrictedAttendeeIds={attendeesBySection.restrictedAttendeeIds}
           onAttendeeSelected={onAttendeeSelected}
+          enableCheck={enableCheck}
         />
       )) }
     </View>
