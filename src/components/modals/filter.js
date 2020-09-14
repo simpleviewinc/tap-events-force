@@ -1,16 +1,18 @@
-import React, { useRef, useCallback, useMemo } from 'react'
+import React, { useRef, useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
-import { checkCall } from '@keg-hub/jsutils'
 import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
 import { mapObj, capitalize, pickKeys } from '@keg-hub/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
-import { updateSelectedFilters } from 'SVActions/session/filters'
+import {
+  updateSelectedFilters,
+  applySessionFilters,
+} from 'SVActions/session/filters'
 /**
  *
  * @param {object} props
@@ -32,10 +34,7 @@ export const Filter = ({ visible, labels }) => {
       <Content
         styles={filterStyles.content.body}
         labels={labelsMemo}
-        onButtonPress={useCallback(
-          () => checkCall(dismissedCBRef.current, true),
-          [dismissedCBRef?.current]
-        )}
+        onButtonPress={applySessionFilters}
       />
     </BaseModal>
   )
