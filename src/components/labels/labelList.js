@@ -34,7 +34,7 @@ export const LabelList = props => {
       { labels.map(label => (
         <LabelComponent
           key={label.name}
-          style={labelStyle}
+          styles={labelStyle}
           label={label}
           onPress={onItemPress}
         />

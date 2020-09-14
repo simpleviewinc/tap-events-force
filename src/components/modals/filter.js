@@ -118,7 +118,7 @@ const MiddleSection = ({ styles, labels }) => {
           return (
             <LabelButton
               key={label.name}
-              style={styles.content?.stateButtons?.content?.item}
+              styles={styles.content?.stateButtons?.content?.item}
               label={label}
               toggledOn={shouldRemove}
               onPress={label => updateSelectedFilters(label.name, shouldRemove)}

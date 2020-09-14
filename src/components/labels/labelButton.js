@@ -35,12 +35,12 @@ const buildStyles = (theme, extra) => {
 /**
  * Simple label component that can be clicked.
  * @param {Object} props
- * @param {Object} props.style - custom button styles that will override those defined in the theme file's main object. Object should define default, hover, and active themes for the different states of the button. @see `buildStyles`
+ * @param {Object} props.styles - custom button styles that will override those defined in the theme file's main object. Object should define default, hover, and active themes for the different states of the button. @see `buildStyles`
  * @param {import('SVModels/label').Label} props.label - the label model instance
  * @param {Function} props.onPress - when clicked, calls onPress and passes the label object to it
  */
 export const LabelButton = ({
-  style, // TODO: update to styles
+  styles,
   label = {},
   onPress,
   toggledOn = true,
@@ -50,10 +50,10 @@ export const LabelButton = ({
   // merge with eventsForce color style and custom button style if exists
   const extraStyles = useMemo(
     () => ({
-      style,
+      styles,
       className: label.className,
     }),
-    [ style, label.className ]
+    [ styles, label.className ]
   )
 
   // build the main style for the button, memoized

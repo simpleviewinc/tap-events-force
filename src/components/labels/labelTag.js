@@ -7,14 +7,14 @@ import { useTheme } from '@keg-hub/re-theme'
  * LabelTag - a colored, square label without text
  * @param {Object} props
  * @param {import('SVModels/label').Label} props.label - the label model instance
- * @param {Object} props.style - styles for the label. Overwrites styles defined in labelTag.main
+ * @param {Object} props.styles - styles for the label. Overwrites styles defined in labelTag.main
  */
-export const LabelTag = ({ label = {}, style = {} }) => {
+export const LabelTag = ({ label = {}, styles = {} }) => {
   const theme = useTheme()
   const mainStyle = theme.join(
     theme.get('eventsForce')[label.className],
     theme.get('labelTag.main'),
-    style
+    styles
   )
   return <View style={mainStyle} />
 }
