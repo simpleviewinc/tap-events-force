@@ -4,6 +4,8 @@ import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
+import { SessionLink } from 'SVComponents/sessionLink'
+import { View } from '@keg-hub/keg-components'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -17,22 +19,29 @@ export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
 
   const theme = useTheme()
+  const gridRowContentStyles = theme.get('gridRowContent')
 
   return (
-    <>
+    <View style={gridRowContentStyles.main}>
       <LabelList
         style={listStyles}
         itemStyle={labelStyles}
         LabelComponent={LabelTag}
         labels={labels}
       />
-      <SessionTime
-        style={theme.get('gridItem.sessionTime.main')}
-        start={session.startDateTimeLocal}
-        end={session.endDateTimeLocal}
-        military={militaryTime}
-      />
-    </>
+      <View style={gridRowContentStyles.column2.main}>
+        <SessionTime
+          style={theme.get('gridItem.sessionTime.main')}
+          start={session.startDateTimeLocal}
+          end={session.endDateTimeLocal}
+          military={militaryTime}
+        />
+        <SessionLink
+          onPress={() => console.log('Open session details modal')}
+          text={session.name}
+        />
+      </View>
+    </View>
   )
 }
 
