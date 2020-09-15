@@ -41,7 +41,10 @@ export const DayToggle = props => {
   const dayText = `Day ${dayNumber} 
     - ${getDayString(date, isMobileSize(theme))}`
   return (
-    <View style={dayToggleStyles?.main} >
+    <View
+      className={'ef-sessions-date-selector'}
+      style={dayToggleStyles?.main}
+    >
       <UpdateDayButton
         style={dayToggleStyles?.content?.decrementIcon}
         type={'decrement'}

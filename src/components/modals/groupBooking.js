@@ -84,11 +84,17 @@ const TopSection = ({ styles, remainingCount }) => {
 
   return (
     <View style={styles?.main}>
-      <Text style={styles?.content?.instructionText}>
+      <Text
+        className={`ef-modal-body-header`}
+        style={styles?.content?.instructionText}
+      >
         Select sessions for your group:
       </Text>
       { remainingCount && (
-        <Text style={styles?.content?.infoText}>
+        <Text
+          className={`ef-modal-body-highlight`}
+          style={styles?.content?.infoText}
+        >
           { `${remainingCount} ${placeText} remaining` }
         </Text>
       ) }

@@ -13,14 +13,12 @@ import { EVFIcons } from 'SVIcons'
  * @param {object} props.setDismissed - used to state the modals visible state for animation
  * @param {boolean=} props.hasCloseButton - display the close button on top right or not
  */
-const Header = ({
-  title,
-  styles,
-  setDismissed,
-  hasCloseButton = true,
-}) => {
+const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
   return (
-    <View style={styles?.main} >
+    <View
+      className={`ef-modal-title`}
+      style={styles?.main}
+    >
       <Text
         style={styles?.content?.title}
         numberOfLines={2}
@@ -29,7 +27,7 @@ const Header = ({
         { title }
       </Text>
       { hasCloseButton && (
-        <View style={styles?.content?.closeButton?.main} >
+        <View style={styles?.content?.closeButton?.main}>
           <EVFIcons.Close onPress={() => setDismissed(true)} />
         </View>
       ) }

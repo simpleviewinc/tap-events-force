@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text } from '@keg-hub/keg-components'
-import { Image, ScrollView } from 'react-native'
+import { Image, View, Text } from '@keg-hub/keg-components'
+import { ScrollView } from 'react-native'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { BaseModal, contentDefaultMaxHeight } from './baseModal'
 import placeholderImage from 'SVAssets/profile_placeholder.png'
@@ -63,25 +63,24 @@ const Body = ({ presenter, styles }) => {
     dim.height <= 450 ? styles.row1.smallImage : styles.row1.image
 
   return (
-    <View style={styles.main} >
+    <View style={styles.main}>
       { /* row 1 - image and titles */ }
       <View style={styles.row1.container}>
         <Image
-          style={imageStyle}
-          source={{
-            uri: presenter.photographUrl
-              ? presenter.photographUrl
-              : placeholderImage,
-          }}
+          className={`ef-presenter-picture`}
+          styles={{ image: imageStyle }}
+          source={presenter.photographUrl || placeholderImage}
         />
         <View style={styles.row1.details}>
           <Text
+            className={'ef-modal-header'}
             style={styles.row1.title}
             numberOfLines={1}
           >
             { presenter.jobtitle }
           </Text>
           <Text
+            className={'ef-modal-sub-header'}
             style={styles.row1.company}
             numberOfLines={1}
           >
@@ -96,7 +95,10 @@ const Body = ({ presenter, styles }) => {
           style={styles.row2.main}
           contentContainerStyle={bioContentStyle}
         >
-          <Text style={styles.row2.content.biography}>
+          <Text
+            className={'ef-modal-body'}
+            style={styles.row2.content.biography}
+          >
             { presenter.biography }
           </Text>
         </ScrollView>

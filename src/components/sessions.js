@@ -30,13 +30,17 @@ const FilterButton = ({ onClick, styles }) => {
 
   // use filter icon when below 650px width
   return dim.width <= 650 ? (
-    <EVFIcons.Filter
-      style={contentStyles?.filterIcon}
-      onPress={onClick}
-      color={contentStyles?.filterIcon?.color}
-    />
+    <View className={'ef-sessions-filter-button'}>
+      <EVFIcons.Filter
+        className={'ef-sessions-filter-button'}
+        style={contentStyles?.filterIcon}
+        onPress={onClick}
+        color={contentStyles?.filterIcon?.color}
+      />
+    </View>
   ) : (
     <Button
+      className={'ef-sessions-filter-button'}
       themePath='button.text.default'
       styles={contentStyles?.filterButton}
       onClick={onClick}
@@ -141,6 +145,7 @@ export const Sessions = props => {
 
   return (
     <View
+      className={'ef-sessions-background'}
       style={sessionsStyles.main}
     >
       <SessionsHeader

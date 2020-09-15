@@ -45,10 +45,11 @@ export const Error = ({ visible, title, message }) => {
  */
 const Body = ({ styles, message, onButtonPress }) => {
   return (
-    <View style={styles.main} >
-      <Text style={styles.content?.text} >
-        { message }
-      </Text>
+    <View
+      className={`ef-modal-sub-header`}
+      style={styles.main}
+    >
+      <Text style={styles.content?.text}>{ message }</Text>
       <EvfButton
         type={'primary'}
         styles={styles.content?.button}
