@@ -1,5 +1,4 @@
 export * from './useInterval'
-export * from './useCss'
 export * from './media'
 export * from './models'
 export * from './modal'

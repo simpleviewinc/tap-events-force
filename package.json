@@ -14,10 +14,10 @@
   },
   "scripts": {
     "test": "cd node_modules/keg-core; NODE_ENV=test jest --no-cache --config=../../configs/jest.config.js",
-    "android": "cd node_modules/keg-core; yarn android",
+    "android": "yarn watch 'cd node_modules/keg-core; yarn android'",
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
-    "build:web": "cd node_modules/keg-core; yarn build:web",
+    "build:web": "clean:sessions:build; GENERATE_SOURCEMAP=false  cd node_modules/keg-core; yarn build:web",
     "build:theme": "bash scripts/buildEventsForceTheme.sh",
     "clean": "cd node_modules/keg-core; yarn clean",
     "clean:full": "yarn clean; yarn clean:nm; yarn install",
