@@ -20,6 +20,7 @@ export const SessionLink = ({ styles, onPress, text }) => {
 
   return (
     <Touchable
+      activeOpacity={onPress ? 0.2 : 1}
       onPress={onPress}
       style={sessionLinkStyles.main}
     >

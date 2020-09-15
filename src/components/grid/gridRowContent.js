@@ -36,10 +36,7 @@ export const GridRowContent = props => {
           end={session.endDateTimeLocal}
           military={militaryTime}
         />
-        <SessionLink
-          onPress={() => console.log('Open session details modal')}
-          text={session.name}
-        />
+        <SessionLink text={session.name} />
       </View>
     </View>
   )
