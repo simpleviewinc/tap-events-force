@@ -12,6 +12,7 @@ import { useSelector, shallowEqual } from 'react-redux'
 import {
   updateSelectedFilters,
   applySessionFilters,
+  clearSelectedFilters,
 } from 'SVActions/session/filters'
 /**
  *
@@ -30,6 +31,7 @@ export const Filter = ({ visible, labels }) => {
       styles={filterStyles}
       title={'Filter'}
       visible={visible}
+      onDismiss={clearSelectedFilters}
     >
       <Content
         styles={filterStyles.content.body}
