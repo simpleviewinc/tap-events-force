@@ -73,7 +73,7 @@ const TopSection = ({ styles }) => {
     <View style={styles?.main}>
       <Text
         style={styles?.content?.leftText}
-        className={'EF-modal-body-highlight'}
+        className={'ef-modal-body-highlight'}
       >
         Only Show:
       </Text>
