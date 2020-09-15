@@ -6,8 +6,8 @@ import { colors } from './colors'
  * @object
  */
 const fonts = {
-  headings: 'system',
-  default: 'system',
+  headings: 'Inter, Verdana, Geneva, sans-serif',
+  default: 'Inter, Verdana, Geneva, sans-serif',
 }
 
 /**
