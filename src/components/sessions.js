@@ -87,7 +87,6 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
           styles={headerStyles.content?.right}
           onClick={useCreateModal(Values.MODAL_TYPES.FILTER, {
             labels,
-            //bookingStates
           })}
         />
       }
