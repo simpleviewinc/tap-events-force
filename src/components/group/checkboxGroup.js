@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback } from 'react'
 import { View, Text, Checkbox } from '@keg-hub/keg-components'
 import { useStylesMemo } from 'SVHooks/useStylesMemo'
 
@@ -28,22 +28,18 @@ export const ItemCheckbox = props => {
     ...rest
   } = props
 
-  const [ checked, setChecked ] = useState(false)
-
-  const handler = useCallback(() => {
-    if (!checked) enableCheck && setChecked(true)
-    else setChecked(false)
-    onChange?.({ event, text, id })
-  })
+  const handler = useCallback(event =>
+    onChange?.({ event, text, id }, [onChange])
+  )
   const checkboxStyles = useStylesMemo('form.checkbox.close', styles)
 
   return (
     <Checkbox
-      checked={checked}
       styles={checkboxStyles}
       RightComponent={text}
       onChange={handler}
       close={close}
+      disableCheck={!enableCheck}
       {...rest}
     />
   )
