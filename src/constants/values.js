@@ -38,7 +38,7 @@ export const Values = deepFreeze({
     SELECTED: 'selected',
   },
 
-  USER_BOOKING_STATES: {
+  USER_BOOKING_TYPES: {
     PERSON: 'person',
     GROUP: 'group',
   },
