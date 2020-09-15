@@ -1,3 +1,9 @@
+/****************** IMPORTANT ******************/ /*
+ * This is a work in progress
+ * It's NOT complete or expected to be working
+ * This will be removed once it's complete
+/****************** IMPORTANT ******************/
+
 import { setColors } from './colors'
 import { get } from '@keg-hub/jsutils'
 import { setFonts } from './typography'
