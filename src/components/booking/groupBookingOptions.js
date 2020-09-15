@@ -1,21 +1,26 @@
 import React, { useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { View } from '@keg-hub/keg-components'
-import { Values } from 'SVConstants'
 import { GroupBookingSection } from './groupBookingSection'
-
-const { BOOKING_CATEGORIES } = Values
-const SECTION_NAMES = Object.values(BOOKING_CATEGORIES)
+import { useSelector, shallowEqual } from 'react-redux'
+import { pipeline, pickKeys, set } from '@keg-hub/jsutils'
 
 /**
- * Returns the section name for the attendee
- * @param {Attendee} attendee
- * @returns {string} value from `SECTION_NAMES`
+ * Returns the ticket associated with the attendee
+ * @param {*} attendee
+ * @param {*} bookedTickets
+ * @param {*} tickets
  */
-const getSectionForAttendee = attendee => {
-  const { attendeeCategoryIdentifier: categoryId } = attendee
-  const categoryIdNum = parseInt(categoryId || '0')
-  return SECTION_NAMES[categoryIdNum - 1]
+const getTicketForAttendee = (attendee, bookedTickets, tickets) => {
+  const bookedTicketForAttendee = bookedTickets.find(
+    bookedTicket => bookedTicket.identifier === attendee.bookedTicketIdentifier
+  )
+
+  if (!bookedTicketForAttendee) return null
+
+  return tickets.find(
+    ticket => ticket.identifier === bookedTicketForAttendee.ticketIdentifier
+  )
 }
 
 /**
@@ -33,25 +38,39 @@ const isAttendeeRestricted = (attendee, session) => {
 
 /**
  * Helper for `buildAttendeesSectionMap` that updates the sections object with the next attendee object
- * @param {*} sections - will be modified with nextAttendee
- * @param {Set<string>} sections.restrictedAttendeeIds - will be modified with nextAttendee
+ * @param {*} sectionData - will be modified with nextAttendee
+ * @param {Set<string>} sectionData.restrictedAttendeeIds - will be modified with nextAttendee
  * @param {Array<string>} sections[*] - categories
  * @param {*} nextAttendee - attendee object
  */
-const sortAttendeeIntoSections = (sections, nextAttendee) => {
+const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
+  const {
+    session,
+    bookedTickets,
+    tickets,
+    restrictedAttendeeIds,
+    attendeesBySection,
+  } = sectionData
+
   // add the attendee to its associated cateogry
-  const category = getSectionForAttendee(nextAttendee)
-  category
-    ? sections[category].push(nextAttendee)
-    : console.error(
-      `Could not find a valid category for attendee. \n: Attendee: ${nextAttendee} \n Expected Categories: ${BOOKING_CATEGORIES}`
-    )
+  const ticket = getTicketForAttendee(nextAttendee, bookedTickets, tickets)
+  if (!ticket) {
+    console.warn('Could not find a valid ticket for attendee. Skipping... \n', {
+      nextAttendee,
+      tickets,
+      bookedTickets,
+    })
+  }
+  else {
+    !attendeesBySection[ticket.name] && set(attendeesBySection, ticket.name, [])
+    attendeesBySection[ticket.name].push(nextAttendee)
+  }
 
   // check if the attendee is restricted from booking. If so, add it to the restricted list
-  isAttendeeRestricted(nextAttendee, sections.session) &&
-    sections.restrictedAttendeeIds.add(nextAttendee.bookedTicketIdentifier)
+  isAttendeeRestricted(nextAttendee, session) &&
+    restrictedAttendeeIds.add(nextAttendee.bookedTicketIdentifier)
 
-  return sections
+  return sectionData
 }
 
 /**
@@ -59,23 +78,23 @@ const sortAttendeeIntoSections = (sections, nextAttendee) => {
  * @param {Array<Attendee>} attendees
  * @return {Object} map with structure of `initSections`
  */
-const buildAttendeesSectionMap = (session, attendees = []) => {
-  const initSections = {
-    // session for this map
-    session,
+const useAttendeeBooking = (session, attendees, tickets, bookedTickets) => {
+  return useMemo(() => {
+    const initSectionData = {
+      // data used by reducing function
+      session,
+      tickets,
+      bookedTickets,
 
-    // booking categories mapped to attendees for those categories
-    [BOOKING_CATEGORIES.FAMILY]: [],
-    [BOOKING_CATEGORIES.MEMBER]: [],
-    [BOOKING_CATEGORIES.NON_MEMBER]: [],
+      // booking categories mapped to attendees for those categories
+      attendeesBySection: {},
 
-    // identifiers of attendees that cannot be booked for this session, and should be greyed out
-    restrictedAttendeeIds: new Set(),
-  }
+      // identifiers of attendees that cannot be booked for this session, and should be greyed out
+      restrictedAttendeeIds: new Set(),
+    }
 
-  // TODO: need to update this with different data once EVF update the interface
-  // attendeeCategoryIdentifier will not be what we use to organize them
-  return attendees.reduce(sortAttendeeIntoSections, initSections)
+    return attendees.reduce(sortAttendeeIntoSections, initSectionData)
+  }, [ session, attendees, tickets, bookedTickets ])
 }
 
 /**
@@ -83,13 +102,7 @@ const buildAttendeesSectionMap = (session, attendees = []) => {
  * @param {*} param0
  */
 export const GroupBookingOptions = props => {
-  const {
-    styles,
-    attendees,
-    session,
-    onAttendeeSelected,
-    enableCheck = true,
-  } = props
+  const { styles, session, onAttendeeSelected, canBookMore = true } = props
 
   const theme = useTheme()
   const mainStyles = theme.get('groupBookingOptions.main')
@@ -98,22 +111,39 @@ export const GroupBookingOptions = props => {
     styles,
   ])
 
-  const attendeesBySection = useMemo(
-    () => buildAttendeesSectionMap(session, attendees),
-    [attendees]
+  const { attendees, tickets, bookedTickets } = useSelector(
+    store => pickKeys(store.items, [ 'attendees', 'tickets', 'bookedTickets' ]),
+    shallowEqual
+  )
+
+  const ticketNames = useMemo(
+    () =>
+      pipeline(
+        tickets.map(ticket => ticket.name),
+        names => new Set(names),
+        Array.from
+      ),
+    [tickets]
+  )
+
+  const { attendeesBySection, restrictedAttendeeIds } = useAttendeeBooking(
+    session,
+    attendees,
+    tickets,
+    bookedTickets
   )
 
   return (
     <View style={viewStyles}>
-      { SECTION_NAMES.map(section => (
+      { ticketNames.map(section => (
         <GroupBookingSection
           style={styles?.content?.section}
           key={section}
           name={section}
           attendees={attendeesBySection[section]}
-          restrictedAttendeeIds={attendeesBySection.restrictedAttendeeIds}
+          restrictedAttendeeIds={restrictedAttendeeIds}
           onAttendeeSelected={onAttendeeSelected}
-          enableCheck={enableCheck}
+          enableCheck={canBookMore}
         />
       )) }
     </View>

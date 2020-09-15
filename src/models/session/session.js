@@ -14,7 +14,6 @@ export class Session {
   presenterIdentifiers = []
   labelIdentifiers = []
   locationIdentifier = ''
-  requiresBooking = false
   liveVideoUrl = ''
   recordedVideoUrl = ''
   price = null
@@ -32,7 +31,6 @@ export class Session {
    * @param {Array<string>=} params.presenterIdentifiers
    * @param {Array<string>=} params.labelIdentifiers
    * @param {string=} params.locationIdentifier
-   * @param {string=} params.requiresBooking - If true then all attendees must book this session
    * @param {string=} params.liveVideoUrl - Url for the live stream
    * @param {string=} params.recordedVideoUrl - Url for the recorded video
    * @param {import('SVModels/price').Price=} params.price - price object

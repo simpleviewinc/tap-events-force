@@ -3,7 +3,7 @@ import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
-import { checkCall } from '@keg-hub/jsutils'
+import { get, checkCall, exists } from '@keg-hub/jsutils'
 import { sessionBookingRequest } from 'SVActions'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 
@@ -14,17 +14,13 @@ import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
  * @param {Array.<import('SVModels/attendee').Attendee>} props.attendees
  * @param {boolean} props.visible
  */
-export const GroupBooking = ({ visible, session, attendees }) => {
-  if (!session || !attendees) return null
+export const GroupBooking = ({ visible, session }) => {
+  if (!session) return null
 
   const theme = useTheme()
 
   const groupBookingStyles = theme.get('modal.groupBooking')
-  const { capacity } = session
   const dismissedCBRef = useRef()
-
-  // get the remaining spots for the session
-  const remainingCount = capacity.isUnlimited ? null : capacity.remainingPlaces
 
   return (
     <BaseModal
@@ -42,50 +38,34 @@ export const GroupBooking = ({ visible, session, attendees }) => {
         )}
         session={session}
         styles={groupBookingStyles.content.body}
-        remainingCount={remainingCount}
-        attendees={attendees}
       />
     </BaseModal>
   )
 }
 
 /**
- *
- * @param {object} props
- * @param {object} props.styles
- * @param {number} props.remainingCount - spots left in this session
- * @param {Array<Attendee>} props.attendees - attendees
- * @param {Session} props.session - current session
- * @param {Function} props.dismissModalCb - callback function to dismiss modal
+ * Returns callbacks for working with session capacity and latest capacity
+ * @param {*} remainingCount
+ * @param {*} session
  */
-const Body = ({
-  styles,
-  session,
-  attendees,
-  remainingCount,
-  dismissModalCb,
-}) => {
-  const topSectionStyles = styles?.content?.topSection || {}
-  const middleSectionStyles = styles?.content?.middleSection || {}
-  const bottomSectionStyles = styles?.content?.bottomSection || {}
-
+const useSessionBooking = (remainingCount, session) => {
   // stored as a ref, b/c nothing needs to rerender if it changes. It just later gets submitted to consumer of Sessions when user books
   const attendeeIdsRef = useRef(new Set())
 
-  const [ capacity, setCapacity ] = useState(remainingCount)
+  const [ currentCapacity, setCapacity ] = useState(remainingCount)
 
-  const onAttendeeSelected = useCallback(
+  const updateCapacity = useCallback(
     ({ id }) => {
       if (attendeeIdsRef.current.has(id)) {
         const deleted = attendeeIdsRef.current.delete(id)
-        deleted && setCapacity(capacity + 1)
+        deleted && setCapacity(currentCapacity + 1)
       }
       else {
         const added = attendeeIdsRef.current.add(id)
-        added && setCapacity(capacity - 1)
+        added && setCapacity(currentCapacity - 1)
       }
     },
-    [ attendeeIdsRef, capacity, setCapacity ]
+    [ attendeeIdsRef, currentCapacity, setCapacity ]
   )
 
   const bookSession = useCallback(
@@ -97,6 +77,32 @@ const Body = ({
     [ session.identifier, attendeeIdsRef ]
   )
 
+  return { updateCapacity, bookSession, currentCapacity }
+}
+
+/**
+ *
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {number} props.remainingCount - spots left in this session
+ * @param {Session} props.session - current session
+ * @param {Function} props.dismissModalCb - callback function to dismiss modal
+ */
+const Body = ({ styles, session, dismissModalCb }) => {
+  const topSectionStyles = styles?.content?.topSection || {}
+  const middleSectionStyles = styles?.content?.middleSection || {}
+  const bottomSectionStyles = styles?.content?.bottomSection || {}
+
+  // get the remaining spots for the session
+  const remainingCount = get(session, 'capacity.isUnlimited')
+    ? null
+    : get(session, 'capacity.remainingPlaces')
+
+  const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
+    remainingCount,
+    session
+  )
+
   return (
     <View
       className={`ef-modal-group-body`}
@@ -104,14 +110,14 @@ const Body = ({
     >
       <TopSection
         styles={topSectionStyles}
-        remainingCount={capacity}
+        remainingCount={currentCapacity}
       />
-      <MiddleSection
+      <GroupBookingOptions
+        className={`ef-modal-group-section-middle`}
         session={session}
         styles={middleSectionStyles}
-        attendees={attendees}
-        canBookMore={capacity > 0}
-        onAttendeeSelected={onAttendeeSelected}
+        canBookMore={currentCapacity > 0}
+        onAttendeeSelected={updateCapacity}
       />
       <BottomSection
         onCancelPress={dismissModalCb}
@@ -130,7 +136,7 @@ const Body = ({
  */
 const TopSection = ({ styles, remainingCount }) => {
   // use correct syntax based on how many spot is left
-  const placeText = remainingCount && remainingCount > 1 ? 'places' : 'place'
+  const placeText = remainingCount === 1 ? 'place' : 'places'
 
   return (
     <View
@@ -143,34 +149,14 @@ const TopSection = ({ styles, remainingCount }) => {
       >
         Select sessions for your group:
       </Text>
-      { remainingCount && (
-        <Text
+      { exists(remainingCount) && (
+        <Text 
           className={`ef-modal-body-highlight`}
-          style={styles?.content?.infoText}
-        >
+          style={styles?.content?.infoText}>
           { `${remainingCount} ${placeText} remaining` }
         </Text>
       ) }
     </View>
-  )
-}
-
-const MiddleSection = ({
-  styles,
-  session,
-  attendees,
-  onAttendeeSelected,
-  canBookMore,
-}) => {
-  return (
-    <GroupBookingOptions
-      className={`ef-modal-group-section-middle`}
-      session={session}
-      styles={styles}
-      attendees={attendees}
-      onAttendeeSelected={onAttendeeSelected}
-      enableCheck={canBookMore}
-    />
   )
 }
 

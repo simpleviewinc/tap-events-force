@@ -29,10 +29,10 @@ export const RenderModals = modals => {
       )
 
     case Values.MODAL_TYPES.GROUP_BOOKING:
+      console.log(modal.data)
       return (
         <GroupBooking
           key={index}
-          attendees={modal.data?.attendees}
           session={modal.data?.session}
           visible={visible}
         />

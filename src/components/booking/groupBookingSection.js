@@ -31,6 +31,7 @@ export const GroupBookingSection = ({
           sectionStyles={sectionStyles}
           itemStyles={itemStyles}
           disabled={restrictedAttendeeIds.has(attendeeId)}
+          tooltip={'foo'}
           enableCheck={enableCheck}
         />
       )) }
