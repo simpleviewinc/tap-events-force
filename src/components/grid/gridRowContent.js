@@ -1,7 +1,7 @@
 import React from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
-import { SessionTime } from 'SVComponents/SessionTime/sessionTime'
+import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 

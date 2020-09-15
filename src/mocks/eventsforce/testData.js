@@ -259,7 +259,8 @@ export default {
     },
     {
       identifier: '8',
-      name: 'Session on day 2 Demo 2',
+      name:
+        'Session on day 2 Demo 2: super long name. Something different that is very complicated to describe',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 11:00:00',
