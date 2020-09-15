@@ -12,8 +12,17 @@ import { useTheme } from '@keg-hub/re-theme'
  */
 const LeftHeaderText = ({ timeString, style }) => {
   return (
-    <View style={style.main}>
-      <Text style={style.content.text}> { timeString } </Text>
+    <View
+      className={`ef-timeslot-header-time`}
+      style={style.main}
+    >
+      <Text
+        className={`ef-timeslot-header-time-text`}
+        style={style.content.text}
+      >
+        { ' ' }
+        { timeString }{ ' ' }
+      </Text>
     </View>
   )
 }
@@ -34,7 +43,10 @@ export const GridContainer = props => {
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
 
   return (
-    <View style={gridStyles.main}>
+    <View
+      className={`ef-grid-container`}
+      style={gridStyles.main}
+    >
       {
         // only display the time header on web styles
         !isMobileSize(theme) && (
@@ -50,7 +62,10 @@ export const GridContainer = props => {
           />
         )
       }
-      <View style={gridStyles.content.items}>
+      <View
+        className={`ef-grid-item`}
+        style={gridStyles.content.items}
+      >
         { sessions &&
           sessions.map(session => (
             <GridItem

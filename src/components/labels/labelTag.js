@@ -13,6 +13,7 @@ export const LabelTag = ({ label = {}, styles }) => {
   const theme = useTheme()
   return (
     <View
+      className={`ef-label-tag ${label.className}`}
       style={[
         theme.get(`eventsForce.labels.${label.className}`),
         theme.get('labelTag.main'),

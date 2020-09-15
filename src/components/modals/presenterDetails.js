@@ -22,6 +22,7 @@ export const PresenterDetails = props => {
 
   return (
     <BaseModal
+      className={`ef-modal-presenter`}
       styles={presenterStyles}
       title={title}
       visible={visible}
@@ -63,7 +64,10 @@ const Body = ({ presenter, styles }) => {
     dim.height <= 450 ? styles.row1.smallImage : styles.row1.image
 
   return (
-    <View style={styles.main}>
+    <View
+      className={`ef-modal-presenter-body`}
+      style={styles.main}
+    >
       { /* row 1 - image and titles */ }
       <View style={styles.row1.container}>
         <Image
@@ -71,7 +75,10 @@ const Body = ({ presenter, styles }) => {
           styles={{ image: imageStyle }}
           source={presenter.photographUrl || placeholderImage}
         />
-        <View style={styles.row1.details}>
+        <View
+          className={`ef-modal-presenter-container`}
+          style={styles.row1.details}
+        >
           <Text
             className={'ef-modal-header'}
             style={styles.row1.title}

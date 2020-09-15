@@ -70,6 +70,7 @@ export const LabelButton = ({
   const clickHandler = () => checkCall(onPress, label)
   return (
     <Button
+      className={label.className}
       styles={toggledOn ? mainStyle.selected : mainStyle.unselected}
       content={label.name}
       onClick={clickHandler}

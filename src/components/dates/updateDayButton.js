@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { EVFIcons } from 'SVIcons'
+import { View } from '@keg-hub/keg-components'
 import PropTypes from 'prop-types'
 
 /**
@@ -39,15 +40,16 @@ export const UpdateDayButton = props => {
     type === 'increment' ? EVFIcons.DayToggleRight : EVFIcons.DayToggleLeft
 
   return (
-    <ChevronIcon
-      onPress={onDayChange}
-      style={iconStyles}
-      type={type}
-    />
+    <View className={`ef-sessions-date-button-${type}`}>
+      <ChevronIcon
+        onPress={onDayChange}
+        style={iconStyles}
+        type={type}
+      />
+    </View>
   )
 }
 UpdateDayButton.propTypes = {
   type: PropTypes.oneOf([ 'increment', 'decrement' ]),
   disabled: PropTypes.bool,
 }
-

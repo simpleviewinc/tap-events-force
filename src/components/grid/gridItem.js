@@ -34,7 +34,10 @@ export const GridItem = props => {
   const listStyles = theme.get('gridItem.labelList.main')
   const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
   return (
-    <View style={theme.get('gridItem.main')} >
+    <View
+      className={`ef-grid-item-content`}
+      style={theme.get('gridItem.main')}
+    >
       <GridContent
         labels={listLabels}
         listStyles={listStyles}

@@ -27,7 +27,7 @@ export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main}></View>
       <Button
-        className={`ef-button-primary`}
+        className={`ef-button-${type}`}
         onClick={onClick}
         styles={mainStyle?.content?.button}
         content={text}

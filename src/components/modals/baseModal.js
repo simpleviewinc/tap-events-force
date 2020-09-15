@@ -20,6 +20,7 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
       style={styles?.main}
     >
       <Text
+        className={`ef-modal-title-text`}
         style={styles?.content?.title}
         numberOfLines={2}
         ellipsizeMode={'tail'}
@@ -27,7 +28,10 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
         { title }
       </Text>
       { hasCloseButton && (
-        <View style={styles?.content?.closeButton?.main}>
+        <View
+          className={`ef-button-close`}
+          style={styles?.content?.closeButton?.main}
+        >
           <EVFIcons.Close onPress={() => setDismissed(true)} />
         </View>
       ) }
@@ -60,6 +64,7 @@ export const contentDefaultMaxHeight = 772
  */
 export const BaseModal = props => {
   const {
+    className,
     title,
     visible,
     hasCloseButton,
@@ -97,6 +102,7 @@ export const BaseModal = props => {
 
   return (
     <Modal
+      className={className}
       styles={{ content: { ...baseStyles.content.main, maxHeight } }}
       visible={visible && !dismissed}
       onAnimateOut={onAnimateOut}

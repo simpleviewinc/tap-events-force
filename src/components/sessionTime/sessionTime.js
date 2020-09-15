@@ -21,10 +21,22 @@ export const SessionTime = props => {
   const textStyle = theme.get('sessionTime.timeText')
 
   return (
-    <View style={mainStyle}>
-      <EVFIcons.Clock style={clockStyle.main} />
-      <View style={textStyle.main}>
-        <Text style={textStyle.content}>
+    <View
+      className={`ef-session-time`}
+      style={mainStyle}
+    >
+      <EVFIcons.Clock
+        className={`ef-session-time-clock`}
+        style={clockStyle.main}
+      />
+      <View
+        className={`ef-session-time-container`}
+        style={textStyle.main}
+      >
+        <Text
+          className={`ef-session-time-text`}
+          style={textStyle.content}
+        >
           { `${getTimeFromDate(start, military)} - ${getTimeFromDate(
             end,
             military

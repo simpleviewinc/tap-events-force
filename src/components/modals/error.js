@@ -19,6 +19,7 @@ export const Error = ({ visible, title, message }) => {
 
   return (
     <BaseModal
+      className={`ef-modal-error`}
       dissmissedCBRef={dismissedCBRef}
       styles={errorStyles}
       title={title}
@@ -46,11 +47,17 @@ export const Error = ({ visible, title, message }) => {
 const Body = ({ styles, message, onButtonPress }) => {
   return (
     <View
-      className={`ef-modal-sub-header`}
+      className={`ef-modal-sub-header ef-modal-error-body`}
       style={styles.main}
     >
-      <Text style={styles.content?.text}>{ message }</Text>
+      <Text
+        className={`ef-modal-error-text`}
+        style={styles.content?.text}
+      >
+        { message }
+      </Text>
       <EvfButton
+        className={`ef-modal-error-button`}
         type={'primary'}
         styles={styles.content?.button}
         onClick={onButtonPress}
