@@ -1,8 +1,8 @@
-import { setSizes } from '@keg-hub/re-theme'
-import { get } from '@keg-hub/jsutils'
-import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
 import { setColors } from './colors'
+import { get } from '@keg-hub/jsutils'
 import { setFonts } from './typography'
+import { setSizes } from '@keg-hub/re-theme'
+import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
 
 // Test styles, to ensure the styleSheetParser is working properly
 // They will be removed once we get some real style sheets from Events Force
