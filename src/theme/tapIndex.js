@@ -4,7 +4,6 @@ import { eventsForce } from './eventsForce'
 import { kegComponentsTheme } from 'SVTheme/kegComponentsTheme'
 import * as components from './components'
 import * as containers from './containers'
-import { configureTheme } from './theme.config'
 import { colors } from './colors'
 import { typography } from './typography'
 
