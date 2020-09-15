@@ -27,7 +27,7 @@ export const SessionLink = ({ styles, onPress, text }) => {
       <Text
         {...numberOfLines}
         style={sessionLinkStyles.text}
-        className='EF-Session-name'
+        className='ef-session-name'
       >
         { text }
       </Text>
