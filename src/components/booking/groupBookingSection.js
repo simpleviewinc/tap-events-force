@@ -22,7 +22,7 @@ export const GroupBookingSection = ({
       styles={sectionStyles}
       title={name}
     >
-      { attendees.map(({ bookedTicketIdentifier: attendeeId, name }) => (
+      { attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => (
         <AttendeeCheckboxItem
           key={attendeeId}
           id={attendeeId}
@@ -35,7 +35,7 @@ export const GroupBookingSection = ({
           enableCheck={enableCheck}
         />
       )) }
-      { !attendees.length && <Text>No attendees for this category</Text> }
+      { !attendees?.length && <Text>No attendees for this category</Text> }
     </CheckboxGroup>
   )
 }
