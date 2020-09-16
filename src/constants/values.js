@@ -36,11 +36,13 @@ export const Values = deepFreeze({
   SESSION_BOOKING_STATES: {
     AVAILABLE: 'available',
     SELECTED: 'selected',
+    WAITING_LIST: 'waiting list',
   },
 
-  USER_BOOKING_TYPES: {
+  TICKET_TYPE: {
     PERSON: 'person',
     GROUP: 'group',
+    ITEM: 'item',
   },
   EVENTS: {
     SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
