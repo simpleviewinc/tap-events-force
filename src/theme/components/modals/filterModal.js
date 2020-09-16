@@ -6,9 +6,15 @@ const buttonMargin = {
   marginRight: 8,
 }
 
+const stateButtonsBorder = {
+  borderWidth: 1,
+  borderColor: colors.lightGray,
+}
+
 const stateButtonsSelected = {
   main: {
     backgroundColor: colors.lightGray,
+    ...stateButtonsBorder,
     ...buttonMargin,
   },
   content: {
@@ -19,9 +25,7 @@ const stateButtonsSelected = {
 const stateButtonsUnselected = {
   main: {
     backgroundColor: colors.white,
-    borderWidth: 1,
-    borderRadius: 2,
-    borderColor: colors.lightGray,
+    ...stateButtonsBorder,
     ...buttonMargin,
   },
   content: {
