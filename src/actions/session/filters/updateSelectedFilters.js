@@ -12,7 +12,7 @@ export const updateSelectedFilters = label => {
 
   // add the item if it doesn't exist
   // remove the item if it does exist
-  let shouldRemove = selectedFilters.some(
+  const shouldRemove = selectedFilters.some(
     item => item.identifier === label.identifier
   )
 

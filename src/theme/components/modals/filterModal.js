@@ -134,7 +134,7 @@ export const filterModal = {
         button: {
           main: {
             width: 87,
-            height: 45,
+            minHeight: 45,
           },
         },
       },

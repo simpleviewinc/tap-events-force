@@ -66,6 +66,9 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
   const increment = useCallback(() => incrementDay(onDayChange), [onDayChange])
   const decrement = useCallback(() => decrementDay(onDayChange), [onDayChange])
   const headerStyles = styles.content?.header
+  const displayFilterModal = useCreateModal(Values.MODAL_TYPES.FILTER, {
+    labels,
+  })
 
   return (
     <ItemHeader
@@ -85,9 +88,7 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
         <FilterButton
           dataSet={Sessions.dataSet.content.header.content.right}
           styles={headerStyles.content?.right}
-          onClick={useCreateModal(Values.MODAL_TYPES.FILTER, {
-            labels,
-          })}
+          onClick={displayFilterModal}
         />
       }
     />

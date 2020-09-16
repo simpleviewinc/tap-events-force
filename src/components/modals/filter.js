@@ -7,7 +7,7 @@ import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
-import { mapObj, capitalize, pickKeys } from '@keg-hub/jsutils'
+import { reduceObj, capitalize, pickKeys } from '@keg-hub/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 import {
   updateSelectedFilters,
@@ -34,7 +34,7 @@ export const Filter = ({ visible, labels }) => {
       onDismiss={clearSelectedFilters}
     >
       <Content
-        styles={filterStyles.content.body}
+        styles={filterStyles?.content?.body}
         labels={labelsMemo}
         onButtonPress={applySessionFilters}
       />
@@ -101,17 +101,14 @@ const LabelButtons = ({ styles, labels }) => {
     shallowEqual
   )
 
-  let isFilterEmpty = false
-  if (
-    filters.activeFilters.length === 0 &&
-    filters.selectedFilters.length === 0
-  )
-    isFilterEmpty = true
+  const selectedCount = filters.selectedFilters.length
+  const isFilterEmpty = !filters.activeFilters.length && !selectedCount
 
   return labels.map(label => {
-    const isLabelOn = filters.selectedFilters.some(
-      item => item.identifier === label.identifier
-    )
+    // Check selectedCount before doing the loop. If none are selected, we same a few cpu cycles
+    const isLabelOn =
+      selectedCount &&
+      filters.selectedFilters.some(item => item.identifier === label.identifier)
 
     return (
       <LabelButton
@@ -130,16 +127,19 @@ const LabelButtons = ({ styles, labels }) => {
  * @param {object} bookingStates - obj of the form
  *                               - {
  *                                   keyName: string,
- *                                   keyName: string,
+ *                                   ...etc
  *                                 }
  * @returns {Array.<import('SVModels/label').Label>}
  */
 const createStateLabels = bookingStates => {
-  const labels = []
-  mapObj(bookingStates, (key, value) => {
-    labels.push(new Label({ name: capitalize(value), identifier: key }))
-  })
-  return labels
+  return reduceObj(
+    bookingStates,
+    (key, value, labels) => {
+      labels.push(new Label({ name: capitalize(value), identifier: key }))
+      return labels
+    },
+    []
+  )
 }
 /**
  * MiddleSection
@@ -155,16 +155,16 @@ const MiddleSection = ({ styles, labels }) => {
 
   return (
     <View>
-      <View style={styles.labelButtons?.main}>
+      <View style={styles?.labelButtons?.main}>
         <LabelButtons
           styles={styles.labelButtons?.item}
           labels={labels}
         />
       </View>
 
-      <View style={styles.stateButtons?.main}>
+      <View style={styles?.stateButtons?.main}>
         <LabelButtons
-          styles={styles.stateButtons?.item}
+          styles={styles?.stateButtons?.item}
           labels={stateLabels}
         />
       </View>

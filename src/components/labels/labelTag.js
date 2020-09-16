@@ -9,14 +9,17 @@ import { useTheme } from '@keg-hub/re-theme'
  * @param {import('SVModels/label').Label} props.label - the label model instance
  * @param {Object} props.styles - styles for the label. Overwrites styles defined in labelTag.main
  */
-export const LabelTag = ({ label = {}, styles = {} }) => {
+export const LabelTag = ({ label = {}, styles }) => {
   const theme = useTheme()
-  const mainStyle = theme.join(
-    theme.get('eventsForce')[label.className],
-    theme.get('labelTag.main'),
-    styles
+  return (
+    <View
+      style={[
+        theme.get(`eventsForce.${label.className}`),
+        theme.get('labelTag.main'),
+        styles,
+      ]}
+    />
   )
-  return <View style={mainStyle} />
 }
 
 LabelTag.propTypes = {

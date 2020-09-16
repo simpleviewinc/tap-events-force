@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from '@keg-hub/keg-components'
 import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
+import { checkCall } from '@keg-hub/jsutils'
 
 /**
  * Builds the dynamic styles for LabelButton
@@ -66,7 +67,7 @@ export const LabelButton = ({
     ],
     extraStyles
   )
-  const clickHandler = () => onPress && onPress(label)
+  const clickHandler = () => checkCall(onPress, label)
   return (
     <Button
       styles={toggledOn ? mainStyle.selected : mainStyle.unselected}

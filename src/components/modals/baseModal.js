@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { View, Modal, Text } from '@keg-hub/keg-components'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { removeModal } from 'SVActions'
@@ -101,18 +101,20 @@ export const BaseModal = props => {
     dim.height <= contentDefaultMaxHeight ? '90%' : contentDefaultMaxHeight
 
   const baseStyles = theme.join(theme.get('modal.base'), styles)
+  const onBackdropTouch = useCallback(() => setDismissed(true), [setDismissed])
+  const onAnimateOut = useCallback(() => {
+    if (dismissed) {
+      onDismiss?.()
+      removeModal()
+    }
+  }, [ dismissed, onDismiss, removeModal ])
 
   return (
     <Modal
       styles={{ content: { ...baseStyles.content.main, maxHeight } }}
       visible={visible && !dismissed}
-      onAnimateOut={() => {
-        if (dismissed) {
-          onDismiss?.()
-          removeModal()
-        }
-      }}
-      onBackdropTouch={() => setDismissed(true)}
+      onAnimateOut={onAnimateOut}
+      onBackdropTouch={onBackdropTouch}
     >
       <Header
         dataSet={BaseModal.dataSet.content}
