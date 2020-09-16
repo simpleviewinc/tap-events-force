@@ -3,11 +3,16 @@ import { colors } from '../colors'
 export const sessionTime = {
   main: {
     $web: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      padding: 0,
-      margin: 0,
+      $xsmall: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        padding: 0,
+        margin: 0,
+      },
+      $small: {
+        flex: 1,
+      },
     },
   },
   clockIcon: {

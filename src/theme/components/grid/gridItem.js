@@ -1,4 +1,6 @@
 import { colors } from '../../colors'
+import { gridTileContent } from './gridTileContent'
+import { gridRowContent } from './gridRowContent'
 
 export const gridItem = {
   $web: {
@@ -20,6 +22,8 @@ export const gridItem = {
         minHeight: 294,
       },
     },
+    gridTileContent,
+    gridRowContent,
     sessionTime: {
       main: {
         marginTop: 13,

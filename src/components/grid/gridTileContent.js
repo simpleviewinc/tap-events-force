@@ -1,10 +1,11 @@
 import React from 'react'
-import { View } from '@keg-hub/keg-components'
+import { View, Text } from '@keg-hub/keg-components'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import PropTypes from 'prop-types'
+import { useTheme } from '@keg-hub/re-theme'
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -25,13 +26,30 @@ export const GridTileContent = props => {
     militaryTime,
   } = props
 
+  const theme = useTheme()
+  const gridTileContentStyles = theme.get('gridItem.gridTileContent')
+
+  let formattedPrice
+  if (session.price?.amount > 0)
+    // no need to extract this to jsutils..
+    formattedPrice = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: session.price?.currency,
+      minimumIntegerDigits: 2,
+      maximumFractionDigits: 0,
+      minimumFractionDigits: 0,
+    }).format(session.price?.amount)
+
   return (
-    <View className={`ef-grid-tile-content`}>
-      <SessionTime
-        start={session.startDateTimeLocal}
-        end={session.endDateTimeLocal}
-        military={militaryTime}
-      />
+    <View className={`ef-grid-tile-content`} style={gridTileContentStyles.main}>
+      <View style={gridTileContentStyles.row1}>
+        <SessionTime
+          start={session.startDateTimeLocal}
+          end={session.endDateTimeLocal}
+          military={militaryTime}
+        />
+        <Text>{ formattedPrice }</Text>
+      </View>
       <LabelList
         style={listStyles}
         itemStyle={labelStyles}
