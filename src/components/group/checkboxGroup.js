@@ -29,7 +29,7 @@ export const ItemCheckbox = props => {
   } = props
 
   const handler = useCallback(event =>
-    onChange?.({ event, text, id }, [onChange])
+    onChange?.({ event, text, id }, [ onChange, text, id ])
   )
   const checkboxStyles = useStylesMemo('form.checkbox.close', styles)
 

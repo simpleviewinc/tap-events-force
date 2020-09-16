@@ -3,7 +3,7 @@ import { useTheme } from '@keg-hub/re-theme'
 import { View } from '@keg-hub/keg-components'
 import { GroupBookingSection } from './groupBookingSection'
 import { useSelector, shallowEqual } from 'react-redux'
-import { pipeline, pickKeys, set } from '@keg-hub/jsutils'
+import { exists, pickKeys, set } from '@keg-hub/jsutils'
 
 /**
  * Returns the ticket associated with the attendee
@@ -12,9 +12,10 @@ import { pipeline, pickKeys, set } from '@keg-hub/jsutils'
  * @param {*} tickets
  */
 const getTicketForAttendee = (attendee, bookedTickets, tickets) => {
-  const bookedTicketForAttendee = bookedTickets.find(
-    bookedTicket => bookedTicket.identifier === attendee.bookedTicketIdentifier
-  )
+  console.log(bookedTickets)
+  const hasMatchingId = bookedTicket =>
+    bookedTicket.identifier === attendee.bookedTicketIdentifier
+  const bookedTicketForAttendee = bookedTickets.find(hasMatchingId)
 
   if (!bookedTicketForAttendee) return null
 
@@ -49,7 +50,7 @@ const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
     bookedTickets,
     tickets,
     restrictedAttendeeIds,
-    attendeesBySection,
+    attendeesByTicket,
   } = sectionData
 
   // add the attendee to its associated cateogry
@@ -62,8 +63,9 @@ const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
     })
   }
   else {
-    !attendeesBySection[ticket.name] && set(attendeesBySection, ticket.name, [])
-    attendeesBySection[ticket.name].push(nextAttendee)
+    !attendeesByTicket[ticket.identifier] &&
+      set(attendeesByTicket, ticket.identifier, [])
+    attendeesByTicket[ticket.identifier].push(nextAttendee)
   }
 
   // check if the attendee is restricted from booking. If so, add it to the restricted list
@@ -74,20 +76,38 @@ const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
 }
 
 /**
+ * Returns a list of all the booked tickets
+ * @param {Array<BookedTicket>} bookedTickets
+ * @return {Array<BookedTicket>} array of booked tickets and booked subtickets flattened into the same level
+ */
+const getAllBookedTickets = bookedTickets => {
+  return [
+    // root tickets
+    ...bookedTickets,
+
+    // sub tickets, flattened to the same level, and filter out any that are undefined
+    ...bookedTickets
+      .flatMap(({ bookedSubTickets }) => bookedSubTickets)
+      .filter(exists),
+  ]
+}
+
+/**
  * Builds a map of booking categories to arrays of attendees who reside in that cateogory
  * @param {Array<Attendee>} attendees
- * @return {Object} map with structure of `initSections`
+ * @return {Object} object with structure of `initSectionData`
  */
 const useAttendeeBooking = (session, attendees, tickets, bookedTickets) => {
   return useMemo(() => {
+    // booked tickets can contain sub tickets, and we need to consider those as well when sorting attendees
     const initSectionData = {
       // data used by reducing function
       session,
       tickets,
-      bookedTickets,
+      bookedTickets: getAllBookedTickets(bookedTickets),
 
       // booking categories mapped to attendees for those categories
-      attendeesBySection: {},
+      attendeesByTicket: {},
 
       // identifiers of attendees that cannot be booked for this session, and should be greyed out
       restrictedAttendeeIds: new Set(),
@@ -96,6 +116,15 @@ const useAttendeeBooking = (session, attendees, tickets, bookedTickets) => {
     return attendees.reduce(sortAttendeeIntoSections, initSectionData)
   }, [ session, attendees, tickets, bookedTickets ])
 }
+
+/**
+ * Sorts tickets by their display order
+ * @param {*} tickets
+ */
+const sortTickets = tickets =>
+  tickets.sort(
+    (ticketA, ticketB) => ticketA.displayOrder - ticketB.displayOrder
+  )
 
 /**
  *
@@ -116,31 +145,32 @@ export const GroupBookingOptions = props => {
     shallowEqual
   )
 
-  const ticketNames = useMemo(
-    () =>
-      pipeline(
-        tickets.map(ticket => ticket.name),
-        names => new Set(names),
-        Array.from
-      ),
-    [tickets]
-  )
-
-  const { attendeesBySection, restrictedAttendeeIds } = useAttendeeBooking(
+  // get two data structures for attendees: a map organizing attendees by ticket, and a set of
+  // attendee ids that are restricted from booking the session
+  const { attendeesByTicket, restrictedAttendeeIds } = useAttendeeBooking(
     session,
     attendees,
     tickets,
     bookedTickets
   )
 
+  // list of tickets sorted by display order, and filters out any that do not have attendees
+  const sortedTickets = useMemo(
+    () =>
+      sortTickets(tickets).filter(
+        ticket => attendeesByTicket[ticket.identifier]
+      ),
+    [tickets]
+  )
+
   return (
     <View style={viewStyles}>
-      { ticketNames.map(section => (
+      { sortedTickets.map(ticket => (
         <GroupBookingSection
           style={styles?.content?.section}
-          key={section}
-          name={section}
-          attendees={attendeesBySection[section]}
+          key={ticket.identifier}
+          name={ticket.name}
+          attendees={attendeesByTicket[ticket.identifier] || []}
           restrictedAttendeeIds={restrictedAttendeeIds}
           onAttendeeSelected={onAttendeeSelected}
           enableCheck={canBookMore}
