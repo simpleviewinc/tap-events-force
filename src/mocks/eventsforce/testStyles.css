@@ -6,92 +6,185 @@
 .ef-sessions-error {}
 
 .ef-sessions-details-header {
-
+  /* Pull color 2 from here - backgroundColor */
+  background-color: #525859;
 }
 
 
 /* ------- DEFINED ef-sessions CLASSES ------- */
 
 .ef-sessions-text-default {
-
+  color: darkgray;
+  font-family: Inter, Verdana, Geneva, sans-serif;
 }
 
 /* Pull headings font from here - font-family */
 .ef-sessions-name {
-
+  color: #22B3C4;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .ef-sessions-summary {
-
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
+  color: #909090;
 }
 
 .ef-sessions-date-time {
-
+  color: #0A0A0A;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .ef-sessions-location {
-
+  color: #4F4F4F;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .ef-sessions-presenter {
-
+  color: #22B3C4;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 /* Pull color 3 from here - backgroundColor */
 .ef-sessions-timeslot-header {
-
+  background-color: #4F4F4F;
+  color: #ffffff;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.15px;
+  line-height: 22px;
 }
 
 /* Pull color 1 from here - backgroundColor */
-.ef-sessions-button-default {
-
+.ef-button-default {
+  background-color: #525859;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
+  font-family: Inter, Verdana, Geneva, sans-serif;
 }
 
 /* Pull color 4 from here - backgroundColor */
-.ef-sessions-button-primary {
-
+.ef-button-primary {
+  background-color: #22B3C4;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
 }
 
-.ef-sessions-button-secondary {
-
+.ef-button-secondary {
+  background: #525859;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
+  color: #FFFFFF;
+  font-family: Inter, Verdana, Geneva, sans-serif;
 }
 
 .ef-sessions-price {
-
+  color: #000000;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .ef-sessions-date-selector {
-
+  color: #0A0A0A;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 169.52%;
+  letter-spacing: 0.1em;
+  text-decoration-line: underline;
 }
 
 .ef-sessions-filter-button {
-
+  color: #0A0A0A;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 169.52%;
+  letter-spacing: 0.1em;
+  text-decoration-line: underline;
 }
 
 .ef-modal-title {
-
+  background: #22B3C4;
+  color: #ffffff;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 22px;
+  line-height: 27px;
 }
 
 .ef-modal-header {
-
+  color: #A0A0A0;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 25px;
+  line-height: 30px;
 }
 
-.ef-modeal-sub-header {
-
+.ef-modal-sub-header {
+  color: #000000;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 19px;
 }
 
 .ef-modal-body {
-
+  color: #909090;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 16px;
+  line-height: 22px;
 }
 
 .ef-modal-body-highlight {
-
+  color: #A0A0A0;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
+  letter-spacing: 0.105em;
 }
 
 .ef-modal-body-header {
-
+  color: #000000;
+  font-family: Inter, Verdana, Geneva, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 19px;
 }
 
-.ef-session-background {
-
+.ef-sessions-background {
+  background: #F3F3F3;
 }

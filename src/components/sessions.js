@@ -7,6 +7,7 @@ import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useAgenda } from 'SVHooks/models/useAgenda'
+import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
@@ -143,10 +144,12 @@ export const Sessions = props => {
     shallowEqual
   )
 
+  const parsedStyle = useParsedStyle('ef-sessions-background')
+
   return (
     <View
       className={'ef-sessions-background'}
-      style={sessionsStyles.main}
+      style={[ sessionsStyles.main, parsedStyle ]}
     >
       <SessionsHeader
         labels={labels}

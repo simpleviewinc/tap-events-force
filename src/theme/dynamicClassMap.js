@@ -17,7 +17,34 @@ import '../mocks/eventsforce/testStyles.css'
  * Cache holder of the parsed ef-classes from the DOM stylesheets
  * @object
  */
-let __parsedEfDataClasses
+let __parsedEfClasses
+
+const efThemeClasses = [
+  '.ef-sessions-background',
+  '.ef-button-default',
+  '.ef-button-primary',
+  '.ef-sessions-date-selector',
+  '.ef-sessions-date-time',
+  '.ef-sessions-details-header',
+  '.ef-sessions-error',
+  '.ef-sessions-filter-button',
+  '.ef-sessions-location',
+  '.ef-sessions-name',
+  '.ef-sessions-presenter',
+  '.ef-sessions-price',
+  '.ef-sessions-summary',
+  '.ef-sessions-text-default',
+  '.ef-sessions-ticket-type',
+  '.ef-sessions-timeslot-header',
+  '.ef-sessions-warning',
+  '.ef-presenter-picture',
+  '.ef-modal-body',
+  '.ef-modal-body-header',
+  '.ef-modal-body-highlight',
+  '.ef-modal-header',
+  '.ef-modal-sub-header',
+  '.ef-modal-title',
+]
 
 /**
  * Checks for backgroundColor; then background, then uses the fallback if neither exists
@@ -46,24 +73,24 @@ const getBackgroundColor = (obj, classPath, fallback) => {
 const setupColors = parsed => {
   // Build the colors object
   const colors = {
-    default: get(parsed.dataClass, `ef-sessions-text-default.color`, 'inherit'),
+    default: get(parsed.classList, `ef-sessions-text-default.color`, 'inherit'),
     color1: getBackgroundColor(
-      parsed.dataClass,
+      parsed.classList,
       `ef-sessions-button-default`,
       'inherit'
     ),
     color2: getBackgroundColor(
-      parsed.dataClass,
+      parsed.classList,
       `ef-sessions-details-header`,
       'inherit'
     ),
     color3: getBackgroundColor(
-      parsed.dataClass,
+      parsed.classList,
       `ef-sessions-timeslot-header`,
       'inherit'
     ),
     color4: getBackgroundColor(
-      parsed.dataClass,
+      parsed.classList,
       `ef-sessions-button-primary`,
       'inherit'
     ),
@@ -92,7 +119,7 @@ const setupColors = parsed => {
  */
 const setupFonts = parsed => {
   const headings = get(
-    parsed.dataClass,
+    parsed.classList,
     `ef-sessions-name.fontFamily`,
     'inherit'
   )
@@ -101,13 +128,26 @@ const setupFonts = parsed => {
     {
       headings,
       default: get(
-        parsed.dataClass,
+        parsed.classList,
         `ef-sessions-text-default.fontFamily`,
         headings
       ),
     },
     true
   )
+}
+
+const classFormatter = (cssRule, rootSelector, formatted, cssToJs) => {
+  const selectorRef = rootSelector.substring(1)
+  const cssText = cssRule.cssText
+
+  formatted.classList = formatted.classList || {}
+  formatted.classList[selectorRef] = cssToJs(
+    cssText,
+    formatted.classList[selectorRef]
+  )
+
+  return formatted
 }
 
 /**
@@ -117,48 +157,27 @@ const setupFonts = parsed => {
  * @return {Object} parsed - Parsed stylesheet object
  */
 const parseCustomClasses = () => {
-  __parsedEfDataClasses =
-    __parsedEfDataClasses ||
+  __parsedEfClasses =
+    __parsedEfClasses ||
     styleSheetParser({
       format: 'json',
       toDom: false,
+      callback: classFormatter,
       // Class list provided by Events Force
       // Need to sync with them to map the Comps to the classes
       // Which will them allow us to apply them to the correct elements
-      classNames: [
-        '.ef-session-background',
-        '.ef-sessions-button-default',
-        '.ef-sessions-button-primary',
-        '.ef-sessions-date-selector',
-        '.ef-sessions-date-time',
-        '.ef-sessions-details-header',
-        '.ef-sessions-error',
-        '.ef-sessions-filter-button',
-        '.ef-sessions-location',
-        '.ef-sessions-name',
-        '.ef-sessions-presenter',
-        '.ef-sessions-price',
-        '.ef-sessions-summary',
-        '.ef-sessions-text-default',
-        '.ef-sessions-ticket-type',
-        '.ef-sessions-timeslot-header',
-        '.ef-sessions-warning',
-        '.ef-modal-body',
-        '.ef-modal-body-header',
-        '.ef-modal-body-highlight',
-        '.ef-modal-header',
-        '.ef-modeal-sub-header',
-        '.ef-modal-title ',
-      ],
+      classNames: efThemeClasses,
     })
 
-  setupColors(__parsedEfDataClasses)
-  setupFonts(__parsedEfDataClasses)
+  setupColors(__parsedEfClasses)
+  setupFonts(__parsedEfClasses)
 
-  return __parsedEfDataClasses
+  return __parsedEfClasses
 }
 
 /**
  * Automatically make call to parse the stylesheets on the dom
  */
 parseCustomClasses()
+
+export const getParsedClasses = () => parseCustomClasses()
