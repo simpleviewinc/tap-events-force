@@ -72,6 +72,11 @@ const cjsOutputName = 'keg-sessions.cjs.js'
 const esmOutputName = 'keg-sessions.esm.js'
 
 /**
+ * The path to place all output build files
+ */
+const buildDirPath = process.env.KEG_CONSUMER_BUILD_PATH || `${tapPath}/build`
+
+/**
  * Rollup config for tap-events-force, used in keg-core
  * @see `yarn roll:dev`
  */
@@ -80,13 +85,13 @@ export default {
   input: `${tapPath}/apps/Sessions.js`,
   output: [
     {
-      file: `${tapPath}/build/${cjsOutputName}`,
+      file: `${buildDirPath}/${cjsOutputName}`,
       format: 'cjs',
       exports: 'named',
       sourcemap: true,
     },
     {
-      file: `${tapPath}/build/${esmOutputName}`,
+      file: `${buildDirPath}/${esmOutputName}`,
       format: 'esm',
       sourcemap: true,
     },
