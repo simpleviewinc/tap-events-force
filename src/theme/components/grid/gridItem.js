@@ -1,4 +1,4 @@
-import { colors } from '../colors'
+import { colors } from '../../colors'
 
 export const gridItem = {
   $web: {
@@ -7,7 +7,6 @@ export const gridItem = {
         backgroundColor: colors.white,
         height: 200,
         marginBottom: 15,
-        flexDirection: 'row',
         alignItems: 'flex-start',
       },
       $small: {
@@ -24,6 +23,7 @@ export const gridItem = {
     sessionTime: {
       main: {
         marginTop: 13,
+        height: 'fit-content',
       },
     },
     label: {
