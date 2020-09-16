@@ -101,7 +101,8 @@ export default {
   sessions: [
     {
       identifier: '1',
-      name: 'session with presenters and labels',
+      name:
+        'session with presenters and labels session with presenters and labels session with presenters and labels session with presenters and labels',
       summary: 'This is a session with both presenters and labels',
       dayNumber: 1,
       startDateTimeLocal: '2020-08-03 09:00:00',
@@ -259,7 +260,8 @@ export default {
     },
     {
       identifier: '8',
-      name: 'Session on day 2 Demo 2',
+      name:
+        'Session on day 2 Demo 2: super long name. Something different that is very complicated to describe',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 11:00:00',

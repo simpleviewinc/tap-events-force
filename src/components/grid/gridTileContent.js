@@ -1,8 +1,9 @@
 import React from 'react'
-import { Text, View } from '@keg-hub/keg-components'
+import { View } from '@keg-hub/keg-components'
+import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
-import { SessionTime } from 'SVComponents/SessionTime/sessionTime'
+import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import PropTypes from 'prop-types'
 
 /**
@@ -39,16 +40,13 @@ export const GridTileContent = props => {
         onItemPress={onLabelPress}
       />
 
-      { /* TODO: remove later - placeholder text to verify item ordering */ }
-      <View style={placeholderStyle}>
-        <Text>{ session.name }</Text>
-      </View>
+      <SessionLink
+        onPress={() => console.log('Open session details modal')}
+        text={session.name}
+      />
     </View>
   )
 }
-
-// TODO: remove after grid Item is implemented
-const placeholderStyle = { flex: 1, paddingTop: 10 }
 
 GridTileContent.propTypes = {
   labels: PropTypes.array,
