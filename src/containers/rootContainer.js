@@ -4,7 +4,7 @@ import { SessionsContainer } from 'SVContainers'
 import { displayName } from 'SVConfig'
 import { parseJSON } from '@keg-hub/jsutils'
 import { H5 } from '@keg-hub/keg-components'
-import testData from '../mocks/eventsforce/testData'
+import testData from '../mocks/eventsforce/testData.json'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -19,8 +19,8 @@ const marginStyle = {
  * Currently only used in local development. Not exported by rollup (see apps/Sessions.js for that)
  */
 export const RootContainer = withAppHeader(displayName, props => {
-  const [ text, setText ] = useState('')
-  const mockData = parseJSON(text) || testData
+  const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
+  const mockData = parseJSON(text)
 
   return (
     <>
