@@ -2,13 +2,22 @@ import { colors } from '../../colors'
 
 export const groupBookingOptions = {
   main: {
-    marginTop: 16,
-    padding: 34,
-    paddingTop: 27,
-    paddingBottom: 27,
-    borderColor: colors.lightGray02,
-    borderWidth: 1,
-    overflowY: 'scroll',
-    height: 504,
+    $web: {
+      $xsmall: {
+        marginTop: 16,
+        borderColor: colors.lightGray02,
+        borderWidth: 1,
+        overflowY: 'scroll',
+        flex: 1,
+        padding: 12,
+        paddingTop: 14,
+        paddingBottom: 14,
+      },
+      $small: {
+        padding: 34,
+        paddingTop: 27,
+        paddingBottom: 27,
+      },
+    },
   },
 }

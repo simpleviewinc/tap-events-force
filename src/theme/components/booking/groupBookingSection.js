@@ -7,23 +7,26 @@ export const groupBookingSection = {
   content: {
     header: {
       $all: {
-        width: '70%',
-
-        color: colors.lightGray,
-
-        fontWeight: '600',
-        fontSize: 16,
-        lineHeight: 19,
-
-        padding: 2,
-        paddingBottom: 12,
-
-        marginBottom: 7,
-        marginLeft: 31,
-
-        borderBottomWidth: 1,
-        borderStyle: 'dotted',
-        borderColor: '#909090',
+        $xsmall: {
+          width: '70%',
+          color: colors.lightGray,
+          fontWeight: '600',
+          lineHeight: 19,
+          padding: 1,
+          paddingBottom: 6,
+          marginBottom: 4,
+          marginLeft: 27,
+          borderBottomWidth: 1,
+          borderStyle: 'dotted',
+          borderColor: '#909090',
+          fontSize: 14,
+        },
+        $small: {
+          fontSize: 16,
+          padding: 2,
+          paddingBottom: 12,
+          marginBottom: 7,
+        },
       },
       $web: {
         letterSpacing: '0.105em',
@@ -31,7 +34,12 @@ export const groupBookingSection = {
     },
     item: {
       main: {
-        marginBottom: 19,
+        $xsmall: {
+          fontSize: '0.8em',
+        },
+        $small: {
+          fontSize: 'inherit',
+        },
       },
     },
     unnamedItem: {

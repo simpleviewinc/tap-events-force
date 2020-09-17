@@ -5,22 +5,18 @@ export const checkboxGroup = {
   item: {
     content: {
       main: {
-        $xsmall: {
-          width: 20,
-          height: 20,
-        },
-        $small: {
+        // on mobile, the checkbox should be larger so it is easier to press with a finger
+        $web: {
           width: 15,
           height: 15,
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
         },
-        alignItems: 'center',
-        justifyContent: 'center',
-        display: 'flex',
       },
       area: {
         off: {
           $web: {
-            margin: '0 auto',
             boxSizing: 'border-box',
             borderWidth: 2,
             borderRadius: 4,
@@ -38,14 +34,14 @@ export const checkboxGroup = {
       },
       indicator: {
         on: {
-          position: 'unset',
-          $xsmall: {
-            width: 12,
-            // height: 12,
-          },
-          $small: {
-            width: 10,
-            // height: 10,
+          $web: {
+            position: 'unset',
+            $xsmall: {
+              width: 12,
+            },
+            $small: {
+              width: 10,
+            },
           },
         },
       },
