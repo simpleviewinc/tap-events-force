@@ -12,7 +12,6 @@ import { exists, pickKeys, set } from '@keg-hub/jsutils'
  * @param {*} tickets
  */
 const getTicketForAttendee = (attendee, bookedTickets, tickets) => {
-  console.log(bookedTickets)
   const hasMatchingId = bookedTicket =>
     bookedTicket.identifier === attendee.bookedTicketIdentifier
   const bookedTicketForAttendee = bookedTickets.find(hasMatchingId)

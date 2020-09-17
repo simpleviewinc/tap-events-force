@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { View, Text, Checkbox } from '@keg-hub/keg-components'
 import { useStylesMemo } from 'SVHooks/useStylesMemo'
+import { EVFIcons } from 'SVIcons'
 
 /**
  * @param {*} props
@@ -31,7 +32,7 @@ export const ItemCheckbox = props => {
   const handler = useCallback(event =>
     onChange?.({ event, text, id }, [ onChange, text, id ])
   )
-  const checkboxStyles = useStylesMemo('form.checkbox.close', styles)
+  const checkboxStyles = useStylesMemo('checkboxGroup.item', {})
 
   return (
     <Checkbox
@@ -40,6 +41,7 @@ export const ItemCheckbox = props => {
       onChange={handler}
       close={close}
       disableCheck={!enableCheck}
+      CheckIcon={EVFIcons.Checkmark}
       {...rest}
     />
   )
