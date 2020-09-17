@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Section, H6, H5, Divider, View } from 'SVComponents'
 import { useTheme } from '@keg-hub/re-theme'
-import testData from '../mocks/eventsforce/testData'
+import testData from '../mocks/eventsforce/testData.json'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modals'
 import { Values } from 'SVConstants'
@@ -9,20 +9,39 @@ import { useCreateModal } from 'SVHooks/modal'
 import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
 import { useKegEvent } from 'SVHooks/events'
+import { parseJSON } from '@keg-hub/jsutils'
 
 const { EVENTS } = Values
+const marginStyle = {
+  margin: 10,
+}
 
 const testOnSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
   console.log(session)
 }
+
 /**
  * TestContainer to be used by QA to test out individual component
  */
 export const TestContainer = withAppHeader('Test Container', props => {
+  const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
+  const mockData = parseJSON(text)
+
   // map the evf props onto our states
-  useEffect(() => void mapSessionInterface(testData), [])
-  return <ModalDemos />
+  useEffect(() => void mapSessionInterface(mockData), [mockData])
+  return (
+    <View>
+      <H5 style={marginStyle}>Test Data (JSON)</H5>
+      <textarea
+        style={marginStyle}
+        rows={5}
+        value={text}
+        onChange={event => setText(event.target.value)}
+      />
+      <ModalDemos />
+    </View>
+  )
 })
 
 export const ModalDemos = () => {
@@ -30,14 +49,8 @@ export const ModalDemos = () => {
   const testStyles = theme.get('testContainer')
   const store = useSelector(state => state.items)
 
-  // set up our ev ent listener for booking request
+  // set up our event listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
-
-  // map the evf props onto our states
-  useEffect(() => {
-    // placeholder data for now
-    mapSessionInterface(testData)
-  }, [])
 
   return (
     <View style={testStyles.main}>
