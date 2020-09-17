@@ -7,7 +7,7 @@ export const groupBookingOptions = {
         marginTop: 16,
         borderColor: colors.lightGray02,
         borderWidth: 1,
-        overflowY: 'scroll',
+        overflowY: 'auto',
         flex: 1,
         padding: 12,
         paddingTop: 14,

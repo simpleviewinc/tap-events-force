@@ -49,7 +49,10 @@ export const GroupBooking = ({ visible, session }) => {
  * @param {*} session
  */
 const useSessionBooking = (remainingCount, session) => {
-  // stored as a ref, b/c nothing needs to rerender if it changes. It just later gets submitted to consumer of Sessions when user books
+  // Stored as a ref, b/c nothing needs to rerender if it changes.
+  // Later, it gets submitted to the consumer of Sessions when the user submits the booking.
+  // We still want it as a ref, rather than just regular variable, because we want to persist it
+  // through the life of the mounted modal
   const attendeeIdsRef = useRef(new Set())
 
   const [ currentCapacity, setCapacity ] = useState(remainingCount)
