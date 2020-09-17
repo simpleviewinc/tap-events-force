@@ -154,7 +154,7 @@ const MiddleSection = ({ styles, labels }) => {
   )
 
   return (
-    <View>
+    <View style={styles?.main}>
       <View style={styles?.labelButtons?.main}>
         <LabelButtons
           styles={styles.labelButtons?.item}

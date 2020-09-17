@@ -72,13 +72,18 @@ const labelButton = {
 }
 
 const buttonsWrapper = {
-  flexDirection: 'row',
-  alignContent: 'flex-start',
-  flexWrap: 'wrap',
-  height: 'fit-content',
-  maxWidth: '100%',
-  flexBasis: 'auto',
-  paddingBottom: 60,
+  $xsmall: {
+    flexDirection: 'row',
+    alignContent: 'flex-start',
+    flexWrap: 'wrap',
+    height: 'fit-content',
+    maxWidth: '100%',
+    flexBasis: 'auto',
+    paddingBottom: 20,
+  },
+  $small: {
+    paddingBottom: 60,
+  },
 }
 
 export const filterModal = {
@@ -110,6 +115,9 @@ export const filterModal = {
         },
       },
       middleSection: {
+        main: {
+          flex: 1,
+        },
         labelButtons: {
           main: {
             $web: buttonsWrapper,
