@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { View, Text } from '@keg-hub/keg-components'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
@@ -30,7 +30,10 @@ export const GridTileContent = props => {
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
-  const formattedPrice = formatPrice(session?.price, enableFreeLabel)
+  const formattedPrice = useMemo(
+    () => formatPrice(session?.price, enableFreeLabel),
+    [ session?.price, enableFreeLabel ]
+  )
 
   return (
     <View className={`ef-grid-tile-content`} style={gridTileContentStyles.main}>
