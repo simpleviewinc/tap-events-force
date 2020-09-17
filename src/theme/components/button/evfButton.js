@@ -69,8 +69,11 @@ const buttonStateStyles = backgroundColor => {
 }
 
 const defaultMainStyle = {
-  overflow: 'hidden',
-  flex: 1,
+  $web: {
+    overflow: 'hidden',
+    flex: 1,
+    boxShadow: ' 0px 1px 1px rgba(0, 0, 0, 0.15)',
+  },
 }
 
 export const evfButton = {
