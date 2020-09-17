@@ -1,4 +1,6 @@
 export * from './agenda'
+export * from './attendees'
+export * from './tickets'
 export * from './sortLabels'
 export * from './sessions'
 export * from './price'

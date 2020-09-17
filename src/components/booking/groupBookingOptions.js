@@ -1,95 +1,11 @@
 import React, { useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
-import { View } from '@keg-hub/keg-components'
+import { ScrollView } from '@keg-hub/keg-components'
 import { GroupBookingSection } from './groupBookingSection'
 import { useSelector, shallowEqual } from 'react-redux'
-import { exists, pickKeys, set } from '@keg-hub/jsutils'
-
-/**
- * Returns the ticket associated with the attendee
- * @param {*} attendee
- * @param {*} bookedTickets
- * @param {*} tickets
- */
-const getTicketForAttendee = (attendee, bookedTickets, tickets) => {
-  const hasMatchingId = bookedTicket =>
-    bookedTicket.identifier === attendee.bookedTicketIdentifier
-  const bookedTicketForAttendee = bookedTickets.find(hasMatchingId)
-
-  if (!bookedTicketForAttendee) return null
-
-  return tickets.find(
-    ticket => ticket.identifier === bookedTicketForAttendee.ticketIdentifier
-  )
-}
-
-/**
- * @param {*} attendee
- * @param {*} session
- * @returns { boolean } - true if the attendee cannot be booked for this session
- */
-const isAttendeeRestricted = (attendee, session) => {
-  const { attendeeCategoryIdentifier: categoryId } = attendee
-  const restrictedCategories = session.restrictToAttendeeCategories
-  return (
-    restrictedCategories.length && !restrictedCategories.includes(categoryId)
-  )
-}
-
-/**
- * Helper for `buildAttendeesSectionMap` that updates the sections object with the next attendee object
- * @param {*} sectionData - will be modified with nextAttendee
- * @param {Set<string>} sectionData.restrictedAttendeeIds - will be modified with nextAttendee
- * @param {Array<string>} sections[*] - categories
- * @param {*} nextAttendee - attendee object
- */
-const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
-  const {
-    session,
-    bookedTickets,
-    tickets,
-    restrictedAttendeeIds,
-    attendeesByTicket,
-  } = sectionData
-
-  // add the attendee to its associated cateogry
-  const ticket = getTicketForAttendee(nextAttendee, bookedTickets, tickets)
-  if (!ticket) {
-    console.warn('Could not find a valid ticket for attendee. Skipping... \n', {
-      nextAttendee,
-      tickets,
-      bookedTickets,
-    })
-  }
-  else {
-    !attendeesByTicket[ticket.identifier] &&
-      set(attendeesByTicket, ticket.identifier, [])
-    attendeesByTicket[ticket.identifier].push(nextAttendee)
-  }
-
-  // check if the attendee is restricted from booking. If so, add it to the restricted list
-  isAttendeeRestricted(nextAttendee, session) &&
-    restrictedAttendeeIds.add(nextAttendee.bookedTicketIdentifier)
-
-  return sectionData
-}
-
-/**
- * Returns a list of all the booked tickets
- * @param {Array<BookedTicket>} bookedTickets
- * @return {Array<BookedTicket>} array of booked tickets and booked subtickets flattened into the same level
- */
-const getAllBookedTickets = bookedTickets => {
-  return [
-    // root tickets
-    ...bookedTickets,
-
-    // sub tickets, flattened to the same level, and filter out any that are undefined
-    ...bookedTickets
-      .flatMap(({ bookedSubTickets }) => bookedSubTickets)
-      .filter(exists),
-  ]
-}
+import { pickKeys } from '@keg-hub/jsutils'
+import { sortTickets, getAllBookedTickets } from 'SVUtils/models/tickets'
+import { sortAttendeeIntoSections } from 'SVUtils/models/attendees'
 
 /**
  * Builds a map of booking categories to arrays of attendees who reside in that cateogory
@@ -115,15 +31,6 @@ const useAttendeeBooking = (session, attendees, tickets, bookedTickets) => {
     return attendees.reduce(sortAttendeeIntoSections, initSectionData)
   }, [ session, attendees, tickets, bookedTickets ])
 }
-
-/**
- * Sorts tickets by their display order
- * @param {*} tickets
- */
-const sortTickets = tickets =>
-  tickets.sort(
-    (ticketA, ticketB) => ticketA.displayOrder - ticketB.displayOrder
-  )
 
 /**
  *
@@ -163,7 +70,7 @@ export const GroupBookingOptions = props => {
   )
 
   return (
-    <View style={viewStyles}>
+    <ScrollView style={viewStyles}>
       { sortedTickets.map(ticket => (
         <GroupBookingSection
           style={styles?.content?.section}
@@ -175,6 +82,6 @@ export const GroupBookingOptions = props => {
           enableCheck={canBookMore}
         />
       )) }
-    </View>
+    </ScrollView>
   )
 }
