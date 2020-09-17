@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { View, Modal, Text } from '@keg-hub/keg-components'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { removeModal } from 'SVActions'
@@ -61,6 +61,7 @@ export const contentDefaultMaxHeight = 772
  *                                                        -  call `childRef.current(true)` to dismiss
  * @param {Component} props.BodyComponent - Component for the body. contains 'setDismissed' prop if the child wants to be able to dismiss the modal by other means other than close button || backdrop click
  * @param {boolean=} props.hasCloseButton - to display the close button on the header or not
+ * @param {Function=} props.onDismiss - function to call when the modal is being dismissed
  * @example
  *  <BaseModal
       dissmissedCBRef={dismissedCBRef}
@@ -79,6 +80,7 @@ export const BaseModal = props => {
     styles,
     dissmissedCBRef,
     children,
+    onDismiss,
   } = props
   // two possible cases for a non visible modal
   // 1. modal is mounted/in store but has been animated out of view by another modal
@@ -99,13 +101,20 @@ export const BaseModal = props => {
     dim.height <= contentDefaultMaxHeight ? '90%' : contentDefaultMaxHeight
 
   const baseStyles = theme.join(theme.get('modal.base'), styles)
+  const onBackdropTouch = useCallback(() => setDismissed(true), [setDismissed])
+  const onAnimateOut = useCallback(() => {
+    if (dismissed) {
+      onDismiss?.()
+      removeModal()
+    }
+  }, [ dismissed, onDismiss, removeModal ])
 
   return (
     <Modal
       styles={{ content: { ...baseStyles.content.main, maxHeight } }}
       visible={visible && !dismissed}
-      onAnimateOut={dismissed ? removeModal : null}
-      onBackdropTouch={() => setDismissed(true)}
+      onAnimateOut={onAnimateOut}
+      onBackdropTouch={onBackdropTouch}
     >
       <Header
         dataSet={BaseModal.dataSet.content}

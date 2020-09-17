@@ -23,18 +23,17 @@ export const LabelList = props => {
   } = props
 
   const theme = useTheme()
-  const listStyles = theme.join(theme.get('labelList.main', style))
-  const labelStyle = theme.join(theme.get('labelList.item'), itemStyle)
+  const labelStyle = theme.get('labelList.item', itemStyle)
 
   return (
     <View
       dataSet={LabelList.dataSet.main}
-      style={listStyles}
+      style={[ theme.get('labelList.main'), style ]}
     >
       { labels.map(label => (
         <LabelComponent
           key={label.name}
-          style={labelStyle}
+          styles={labelStyle}
           label={label}
           onPress={onItemPress}
         />

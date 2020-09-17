@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback } from 'react'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button } from '@keg-hub/keg-components'
-import { RenderModals } from 'SVComponents/modal/renderModals'
+import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
@@ -13,6 +13,7 @@ import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
+import { useCreateModal } from 'SVHooks/modal'
 
 const { EVENTS } = Values
 /**
@@ -51,9 +52,10 @@ const FilterButton = ({ onClick, styles, dataSet }) => {
  * Component that will hold the day toggle and filter button
  * @param {object} props
  * @param {object} props.styles - styles obj
+ * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */
-const SessionsHeader = ({ styles, onDayChange }) => {
+const SessionsHeader = ({ styles, onDayChange, labels }) => {
   const {
     currentAgendaDay = {},
     currentDayNumber,
@@ -64,6 +66,9 @@ const SessionsHeader = ({ styles, onDayChange }) => {
   const increment = useCallback(() => incrementDay(onDayChange), [onDayChange])
   const decrement = useCallback(() => decrementDay(onDayChange), [onDayChange])
   const headerStyles = styles.content?.header
+  const displayFilterModal = useCreateModal(Values.MODAL_TYPES.FILTER, {
+    labels,
+  })
 
   return (
     <ItemHeader
@@ -83,7 +88,7 @@ const SessionsHeader = ({ styles, onDayChange }) => {
         <FilterButton
           dataSet={Sessions.dataSet.content.header.content.right}
           styles={headerStyles.content?.right}
-          onClick={() => console.log('press')}
+          onClick={displayFilterModal}
         />
       }
     />
@@ -93,7 +98,7 @@ const SessionsHeader = ({ styles, onDayChange }) => {
 /**
  * Sets up the container for a group of sessions on a specific day
  * @param {object} props
- * @param {object} props.labels
+ * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {object} props.daySessions - group of sessions in the form of {'9:15': [sessionA, sessionB,..]}
  * @returns {Component}
  */
@@ -145,6 +150,7 @@ export const Sessions = props => {
       style={sessionsStyles.main}
     >
       <SessionsHeader
+        labels={labels}
         styles={sessionsStyles}
         onDayChange={onDayChange}
       />

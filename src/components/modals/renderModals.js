@@ -1,7 +1,8 @@
 import React from 'react'
-import { PresenterDetails } from 'SVComponents/modal/presenterDetails'
-import { GroupBooking } from 'SVComponents/modal/groupBooking'
-import { Error } from 'SVComponents/modal/error'
+import { PresenterDetails } from 'SVComponents/modals/presenterDetails'
+import { GroupBooking } from 'SVComponents/modals/groupBooking'
+import { Filter } from 'SVComponents/modals/filter'
+import { Error } from 'SVComponents/modals/error'
 import { Values } from 'SVConstants'
 
 /**
@@ -48,7 +49,11 @@ export const RenderModals = modals => {
       )
 
     case Values.MODAL_TYPES.FILTER:
-      return null // TODO
+      return <Filter
+        key={index}
+        visible={true}
+        labels={modal.data?.labels}
+      />
 
     default:
       return null
