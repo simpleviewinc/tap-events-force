@@ -20,8 +20,7 @@ const marginStyle = {
  */
 export const RootContainer = withAppHeader(displayName, props => {
   const [ text, setText ] = useState('')
-  const json = parseJSON(text)
-  const mockData = json || testData
+  const mockData = parseJSON(text) || testData
 
   return (
     <>

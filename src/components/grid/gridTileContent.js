@@ -6,7 +6,7 @@ import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import PropTypes from 'prop-types'
 import { useTheme } from '@keg-hub/re-theme'
-
+import { formatPrice } from 'SVUtils/models/price'
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
  * @param {Object} props
@@ -28,28 +28,24 @@ export const GridTileContent = props => {
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
-
-  let formattedPrice
-  if (session.price?.amount > 0)
-    // no need to extract this to jsutils..
-    formattedPrice = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: session.price?.currency,
-      minimumIntegerDigits: 2,
-      maximumFractionDigits: 0,
-      minimumFractionDigits: 0,
-    }).format(session.price?.amount)
+  const formattedPrice = formatPrice(session?.price)
 
   return (
     <View className={`ef-grid-tile-content`} style={gridTileContentStyles.main}>
       <View style={gridTileContentStyles.row1}>
         <SessionTime
-          start={session.startDateTimeLocal}
-          end={session.endDateTimeLocal}
+          start={session?.startDateTimeLocal}
+          end={session?.endDateTimeLocal}
           military={militaryTime}
         />
-        <Text>{ formattedPrice }</Text>
+        <Text
+          className={'ef-session-price'}
+          style={gridTileContentStyles?.row1?.price}
+        >
+          { formattedPrice }
+        </Text>
       </View>
+
       <LabelList
         style={listStyles}
         itemStyle={labelStyles}
@@ -60,7 +56,7 @@ export const GridTileContent = props => {
 
       <SessionLink
         onPress={() => console.log('Open session details modal')}
-        text={session.name}
+        text={session?.name}
       />
     </View>
   )

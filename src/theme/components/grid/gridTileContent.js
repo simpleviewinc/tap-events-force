@@ -4,7 +4,15 @@ export const gridTileContent = {
     flexDirection: 'column',
   },
   row1: {
-    flex: 1,
-    flexDirection: 'row',
+    main: {
+      flex: 1,
+      flexDirection: 'row',
+    },
+    price: {
+      fontWeight: 'bold',
+      fontSize: 16,
+      lineHeight: 19,
+      marginRight: 12,
+    },
   },
 }
