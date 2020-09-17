@@ -117,6 +117,15 @@ export const filterModal = {
       middleSection: {
         main: {
           flex: 1,
+          paddingTop: 15,
+        },
+        container: {
+          $xsmall: {
+            maxHeight: 250,
+          },
+          $small: {
+            maxHeight: 550,
+          },
         },
         labelButtons: {
           main: {

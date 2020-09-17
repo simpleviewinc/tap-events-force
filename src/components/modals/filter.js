@@ -14,6 +14,8 @@ import {
   applySessionFilters,
   clearSelectedFilters,
 } from 'SVActions/session/filters'
+import { ScrollView } from 'react-native'
+
 /**
  *
  * @param {object} props
@@ -154,7 +156,10 @@ const MiddleSection = ({ styles, labels }) => {
   )
 
   return (
-    <View style={styles?.main}>
+    <ScrollView
+      style={styles?.main}
+      contentContainerStyle={styles?.container}
+    >
       <View style={styles?.labelButtons?.main}>
         <LabelButtons
           styles={styles.labelButtons?.item}
@@ -168,7 +173,7 @@ const MiddleSection = ({ styles, labels }) => {
           labels={stateLabels}
         />
       </View>
-    </View>
+    </ScrollView>
   )
 }
 
