@@ -23,9 +23,16 @@ const useLabelsForList = (theme, labels) =>
  * @param {import('SVModels/session').Session} props.session - sesion item
  * @param {boolean} props.militaryTime - if true, use military time for dates
  * @param {Func} props.onLabelPress - function called when label is pressed. Receives the pressed label passed to it
+ * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
  */
 export const GridItem = props => {
-  const { labels = [], session, militaryTime, onLabelPress } = props
+  const {
+    labels = [],
+    session,
+    militaryTime,
+    onLabelPress,
+    enableFreeLabel,
+  } = props
   if (!session) return null
 
   const theme = useTheme()
@@ -33,6 +40,7 @@ export const GridItem = props => {
   const labelStyles = theme.get('gridItem.label.main')
   const listStyles = theme.get('gridItem.labelList.main')
   const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
+
   return (
     <View
       className={`ef-grid-item-content`}
@@ -45,6 +53,7 @@ export const GridItem = props => {
         session={session}
         militaryTime={militaryTime}
         onLabelPress={onLabelPress}
+        enableFreeLabel={enableFreeLabel}
       />
     </View>
   )

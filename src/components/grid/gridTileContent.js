@@ -15,6 +15,7 @@ import { formatPrice } from 'SVUtils/models/price'
  * @param {Object} props.labelStyles - styles for individual labels
  * @param {Func} props.onLabelPress - function called when label is pressed. Receives the pressed label passed to it
  * @param {boolean} props.militaryTime - if true, use military time for dates
+ * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
  */
 export const GridTileContent = props => {
   const {
@@ -24,11 +25,12 @@ export const GridTileContent = props => {
     session,
     onLabelPress,
     militaryTime,
+    enableFreeLabel,
   } = props
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
-  const formattedPrice = formatPrice(session?.price)
+  const formattedPrice = formatPrice(session?.price, enableFreeLabel)
 
   return (
     <View className={`ef-grid-tile-content`} style={gridTileContentStyles.main}>
