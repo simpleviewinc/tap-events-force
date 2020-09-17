@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
-import { isEmpty, get, set } from '@keg-hub/jsutils'
+import { isEmpty, set } from '@keg-hub/jsutils'
 
 /**
  *
@@ -18,10 +18,16 @@ export const AttendeeCheckboxItem = props => {
 
   const isUnnamed = !name || isEmpty(name)
   const text = isUnnamed ? 'Unnamed' : name
+
+  const unnamedStyles = sectionStyles?.content?.unnamedItem?.main
+  const itemStyles = sectionStyles?.content?.item?.main
+
   const styles = useMemo(
     () =>
-      isUnnamed &&
-      set({}, 'content.right', get(sectionStyles, 'content.unnamedItem.main')),
+      set({}, 'content.right', {
+        ...itemStyles,
+        ...(isUnnamed ? unnamedStyles : {}),
+      }),
     [ isUnnamed, sectionStyles ]
   )
 

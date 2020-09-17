@@ -6,8 +6,8 @@ import { EVFIcons } from 'SVIcons'
 /**
  * @param {*} props
  */
-export const GroupHeader = ({ title, style }) => {
-  return <Text style={style}>{ title }</Text>
+export const GroupHeader = ({ title, ...rest }) => {
+  return <Text {...rest}>{ title }</Text>
 }
 
 /**
@@ -32,7 +32,7 @@ export const ItemCheckbox = props => {
   const handler = useCallback(event =>
     onChange?.({ event, text, id }, [ onChange, text, id ])
   )
-  const checkboxStyles = useStylesMemo('checkboxGroup.item', {})
+  const checkboxStyles = useStylesMemo('checkboxGroup.item', styles)
 
   return (
     <Checkbox

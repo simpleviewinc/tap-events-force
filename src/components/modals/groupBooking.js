@@ -56,16 +56,17 @@ const useSessionBooking = (remainingCount, session) => {
 
   const updateCapacity = useCallback(
     ({ id }) => {
+      const isUnlimited = session?.capacity?.isUnlimited
       if (attendeeIdsRef.current.has(id)) {
         const deleted = attendeeIdsRef.current.delete(id)
-        deleted && setCapacity(currentCapacity + 1)
+        deleted && !isUnlimited && setCapacity(currentCapacity + 1)
       }
       else {
         const added = attendeeIdsRef.current.add(id)
-        added && setCapacity(currentCapacity - 1)
+        added && !isUnlimited && setCapacity(currentCapacity - 1)
       }
     },
-    [ attendeeIdsRef, currentCapacity, setCapacity ]
+    [ attendeeIdsRef, currentCapacity, setCapacity, session ]
   )
 
   const bookSession = useCallback(
@@ -94,9 +95,10 @@ const Body = ({ styles, session, dismissModalCb }) => {
   const bottomSectionStyles = styles?.content?.bottomSection || {}
 
   // get the remaining spots for the session
-  const remainingCount = get(session, 'capacity.isUnlimited')
-    ? null
-    : get(session, 'capacity.remainingPlaces')
+  const isUnlimited = get(session, 'capacity.isUnlimited')
+  const remainingCount = !isUnlimited
+    ? get(session, 'capacity.remainingPlaces')
+    : null
 
   const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
     remainingCount,
@@ -116,7 +118,7 @@ const Body = ({ styles, session, dismissModalCb }) => {
         className={`ef-modal-group-section-middle`}
         session={session}
         styles={middleSectionStyles}
-        canBookMore={currentCapacity > 0}
+        canBookMore={isUnlimited || currentCapacity > 0}
         onAttendeeSelected={updateCapacity}
       />
       <BottomSection
@@ -132,7 +134,7 @@ const Body = ({ styles, session, dismissModalCb }) => {
  * TopSection - contains the instruction text and spots remaining
  * @param {object} props
  * @param {object} props.styles
- * @param {number} props.remainingCount - spots left in this session
+ * @param {number} props.remainingCount - spots left in this session. If null, there is no limit
  */
 const TopSection = ({ styles, remainingCount }) => {
   // use correct syntax based on how many spot is left
