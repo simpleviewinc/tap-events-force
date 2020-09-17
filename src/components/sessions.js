@@ -133,7 +133,7 @@ export const Sessions = props => {
 
   useEffect(() => {
     mapSessionInterface(sessionData)
-  }, [])
+  }, [sessionData])
 
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')
