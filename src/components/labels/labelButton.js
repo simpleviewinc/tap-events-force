@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from '@keg-hub/keg-components'
 import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
+import { checkCall } from '@keg-hub/jsutils'
 
 /**
  * Builds the dynamic styles for LabelButton
@@ -11,34 +12,49 @@ import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
 const buildStyles = (theme, extra) => {
   const labelStyle = theme.get(`eventsForce.${extra.className}`)
 
+  // updated button styles with the eventsForce styles
+  const buttonStyles = {
+    default: { main: labelStyle },
+    hover: { main: labelStyle },
+    active: { main: labelStyle },
+  }
   return theme.join(
     theme.get('labelButton'),
     {
-      default: { main: labelStyle },
-      hover: { main: labelStyle },
-      active: { main: { ...labelStyle, opacity: 0.4 } },
+      selected: {
+        ...buttonStyles,
+        active: { main: { ...labelStyle, opacity: 0.4 } },
+      },
+      unselected: {
+        ...buttonStyles,
+      },
     },
-    extra.style
+    extra.styles
   )
 }
 
 /**
  * Simple label component that can be clicked.
  * @param {Object} props
- * @param {Object} props.style - custom button styles that will override those defined in the theme file's main object. Object should define default, hover, and active themes for the different states of the button. @see `buildStyles`
+ * @param {Object} props.styles - custom button styles that will override those defined in the theme file's main object. Object should define default, hover, and active themes for the different states of the button. @see `buildStyles`
  * @param {import('SVModels/label').Label} props.label - the label model instance
  * @param {Function} props.onPress - when clicked, calls onPress and passes the label object to it
  */
-export const LabelButton = ({ style, label = {}, onPress }) => {
+export const LabelButton = ({
+  styles,
+  label = {},
+  onPress,
+  toggledOn = true,
+}) => {
   const theme = useTheme()
 
   // merge with eventsForce color style and custom button style if exists
   const extraStyles = useMemo(
     () => ({
-      style,
+      styles,
       className: label.className,
     }),
-    [ style, label.className ]
+    [ styles, label.className ]
   )
 
   // build the main style for the button, memoized
@@ -51,11 +67,10 @@ export const LabelButton = ({ style, label = {}, onPress }) => {
     ],
     extraStyles
   )
-
-  const clickHandler = () => onPress && onPress(label)
+  const clickHandler = () => checkCall(onPress, label)
   return (
     <Button
-      styles={mainStyle}
+      styles={toggledOn ? mainStyle.selected : mainStyle.unselected}
       content={label.name}
       onClick={clickHandler}
     />
