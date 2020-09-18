@@ -5,12 +5,12 @@ import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { useSelector, shallowEqual } from 'react-redux'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useAgenda } from 'SVHooks/models/useAgenda'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
-import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
+import { mapObj, get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
@@ -150,17 +150,14 @@ export const Sessions = props => {
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')
 
-  const { labels, agendaSessions, modals, settings, sessions } = useSelector(
-    ({ items }) =>
-      pickKeys(items, [
-        'labels',
-        'agendaSessions',
-        'modals',
-        'settings',
-        'sessions',
-      ]),
-    shallowEqual
-  )
+  const { labels, agendaSessions, modals, settings, sessions } = useStoreItems([
+    'labels',
+    'agendaSessions',
+    'modals',
+    'settings',
+    'sessions',
+  ])
+
   // - if no session item contains price info. don't display any price label
   // - if some session items do have price. the one's that do not, need to have 'free' label
   const enableFreeLabel = useMemo(() => {
