@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
@@ -100,23 +100,27 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
  * @param {object} props
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {object} props.daySessions - group of sessions in the form of {'9:15': [sessionA, sessionB,..]}
+ * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
  * @returns {Component}
  */
-const AgendaSessions = React.memo(({ labels, daySessions }) => {
-  if (!daySessions) return null
+const AgendaSessions = React.memo(
+  ({ labels, daySessions, enableFreeLabel }) => {
+    if (!daySessions) return null
 
-  return mapObj(daySessions, (timeBlock, sessions) => {
-    return (
-      // creates a gridContainer separated by hour blocks
-      <GridContainer
-        key={timeBlock}
-        sessions={sessions}
-        labels={labels}
-        timeBlock={timeBlock}
-      />
-    )
-  })
-})
+    return mapObj(daySessions, (timeBlock, sessions) => {
+      return (
+        // creates a gridContainer separated by hour blocks
+        <GridContainer
+          key={timeBlock}
+          sessions={sessions}
+          labels={labels}
+          timeBlock={timeBlock}
+          enableFreeLabel={enableFreeLabel}
+        />
+      )
+    })
+  }
+)
 
 /**
  * SessionComponent
@@ -133,16 +137,27 @@ export const Sessions = props => {
 
   useEffect(() => {
     mapSessionInterface(sessionData)
-  }, [])
+  }, [sessionData])
 
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')
 
-  const { labels, agendaSessions, modals, settings } = useSelector(
+  const { labels, agendaSessions, modals, settings, sessions } = useSelector(
     ({ items }) =>
-      pickKeys(items, [ 'labels', 'agendaSessions', 'modals', 'settings' ]),
+      pickKeys(items, [
+        'labels',
+        'agendaSessions',
+        'modals',
+        'settings',
+        'sessions',
+      ]),
     shallowEqual
   )
+  // - if no session item contains price info. don't display any price label
+  // - if some session items do have price. the one's that do not, need to have 'free' label
+  const enableFreeLabel = useMemo(() => {
+    return sessions.some(session => session.price?.amount > 0)
+  }, [sessions])
 
   const parsedStyle = useParsedStyle('ef-sessions-background')
 
@@ -158,6 +173,7 @@ export const Sessions = props => {
       />
       <AgendaSessions
         labels={labels}
+        enableFreeLabel={enableFreeLabel}
         daySessions={
           agendaSessions[settings?.agendaSettings?.activeDayNumber ?? 1]
         }

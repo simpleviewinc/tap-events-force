@@ -19,7 +19,7 @@ export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
 
   const theme = useTheme()
-  const gridRowContentStyles = theme.get('gridRowContent')
+  const gridRowContentStyles = theme.get('gridItem.gridRowContent')
 
   return (
     <View style={gridRowContentStyles.main}>
