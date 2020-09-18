@@ -20,6 +20,7 @@ const defaultButtonStyles = {
     justifyContent: 'center',
     borderRadius: 0,
     padding: 0,
+    boxShadow: ' 0px 1px 1px rgba(0, 0, 0, 0.15)',
   },
   content: {
     $xsmall: {
@@ -72,7 +73,6 @@ const defaultMainStyle = {
   $web: {
     overflow: 'hidden',
     flex: 1,
-    boxShadow: ' 0px 1px 1px rgba(0, 0, 0, 0.15)',
   },
 }
 

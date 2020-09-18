@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
 import { useKegEvent } from 'SVHooks/events'
 import { parseJSON } from '@keg-hub/jsutils'
+import { isNative } from 'SVUtils/platform/isNative'
 
 const { EVENTS } = Values
 const marginStyle = {
@@ -32,13 +33,17 @@ export const TestContainer = withAppHeader('Test Container', props => {
   useEffect(() => void mapSessionInterface(mockData), [mockData])
   return (
     <View>
-      <H5 style={marginStyle}>Test Data (JSON)</H5>
-      <textarea
-        style={marginStyle}
-        rows={5}
-        value={text}
-        onChange={event => setText(event.target.value)}
-      />
+      { !isNative() && (
+        <>
+          <H5 style={marginStyle}>Test Data (JSON)</H5>
+          <textarea
+            style={marginStyle}
+            rows={5}
+            value={text}
+            onChange={event => setText(event.target.value)}
+          />
+        </>
+      ) }
       <ModalDemos />
     </View>
   )

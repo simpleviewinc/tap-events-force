@@ -5,6 +5,7 @@ import { displayName } from 'SVConfig'
 import { parseJSON } from '@keg-hub/jsutils'
 import { H5 } from '@keg-hub/keg-components'
 import testData from '../mocks/eventsforce/testData.json'
+import { isNative } from 'SVUtils/platform/isNative'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -24,13 +25,17 @@ export const RootContainer = withAppHeader(displayName, props => {
 
   return (
     <>
-      <H5 style={marginStyle}>Test Data (JSON)</H5>
-      <textarea
-        style={marginStyle}
-        rows={5}
-        value={text}
-        onChange={event => setText(event.target.value)}
-      />
+      { !isNative() && (
+        <>
+          <H5 style={marginStyle}>Test Data (JSON)</H5>
+          <textarea
+            style={marginStyle}
+            rows={5}
+            value={text}
+            onChange={event => setText(event.target.value)}
+          />
+        </>
+      ) }
 
       <SessionsContainer
         {...mockData}
