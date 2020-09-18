@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
-import { View, ItemHeader, Button } from '@keg-hub/keg-components'
+import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
@@ -107,20 +107,23 @@ const AgendaSessions = React.memo(
   ({ labels, daySessions, enableFreeLabel }) => {
     if (!daySessions) return null
 
-    return mapObj(daySessions, (timeBlock, sessions) => {
-      return (
-        // creates a gridContainer separated by hour blocks
-        <GridContainer
-          key={timeBlock}
-          sessions={sessions}
-          labels={labels}
-          timeBlock={timeBlock}
-          enableFreeLabel={enableFreeLabel}
-        />
-      )
-    })
-  }
-)
+  return (
+    <ScrollView>
+      { mapObj(daySessions, (timeBlock, sessions) => {
+        return (
+          // creates a gridContainer separated by hour blocks
+          <GridContainer
+            key={timeBlock}
+            sessions={sessions}
+            labels={labels}
+            timeBlock={timeBlock}
+            enableFreeLabel={enableFreeLabel}
+          />
+        )
+      }) }
+    </ScrollView>
+  )
+})
 
 /**
  * SessionComponent
