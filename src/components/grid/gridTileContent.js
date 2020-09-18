@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { View, Text } from '@keg-hub/keg-components'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
@@ -6,7 +6,8 @@ import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import PropTypes from 'prop-types'
 import { useTheme } from '@keg-hub/re-theme'
-import { formatPrice } from 'SVUtils/models/price'
+import { useFormattedPrice } from 'SVHooks/models/price'
+
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
  * @param {Object} props
@@ -30,14 +31,13 @@ export const GridTileContent = props => {
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
-  const formattedPrice = useMemo(
-    () => formatPrice(session?.price, enableFreeLabel),
-    [ session?.price, enableFreeLabel ]
-  )
 
   return (
-    <View className={`ef-grid-tile-content`} style={gridTileContentStyles.main}>
-      <View style={gridTileContentStyles.row1}>
+    <View
+      className={`ef-grid-tile-content`}
+      style={gridTileContentStyles?.main}
+    >
+      <View style={gridTileContentStyles?.row1?.main}>
         <SessionTime
           start={session?.startDateTimeLocal}
           end={session?.endDateTimeLocal}
@@ -47,7 +47,7 @@ export const GridTileContent = props => {
           className={'ef-session-price'}
           style={gridTileContentStyles?.row1?.price}
         >
-          { formattedPrice }
+          { useFormattedPrice(session?.price, enableFreeLabel) }
         </Text>
       </View>
 

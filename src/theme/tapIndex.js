@@ -10,7 +10,7 @@ import { typography } from './typography'
 export const theme = deepMerge(
   kegComponentsTheme,
   { eventsForce: { labels: eventsForce } },
-  { app, modal, colors, typography },
+  { app, colors, typography },
   components,
   containers
 )
