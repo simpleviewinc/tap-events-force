@@ -5,16 +5,25 @@ import { View } from '@keg-hub/keg-components'
 import { useTheme } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme'
 import PropTypes from 'prop-types'
+import { isArr } from '@keg-hub/jsutils'
 
 /**
- * Returns the right labels for the list
- * @param {Array} labels
+ * Filter the labels based on the session
+ * On mobile view, we display 3 labels max
+ * @param {Array<import('SVModels/label').Label>} labels
+ * @param {import('SVModels/session').Session} session
+ * @param {object} theme
  */
-const useLabelsForList = (theme, labels) =>
-  useMemo(() => (isMobileSize(theme) ? labels.slice(0, 3) : labels), [
-    labels,
-    theme,
-  ])
+const useLabelsForList = (theme, labels, session) =>
+  useMemo(() => {
+    // filter by the session label ids
+    const filteredLabels = isArr(session.labelIdentifiers)
+      ? labels.filter(label =>
+          session.labelIdentifiers.some(id => label.identifier === id)
+        )
+      : []
+    return isMobileSize(theme) ? filteredLabels.slice(0, 3) : filteredLabels
+  }, [ labels, theme, session ])
 
 /**
  * A grid item for the sessions
@@ -36,7 +45,7 @@ export const GridItem = props => {
   if (!session) return null
 
   const theme = useTheme()
-  const listLabels = useLabelsForList(theme, labels)
+  const listLabels = useLabelsForList(theme, labels, session)
   const labelStyles = theme.get('gridItem.label.main')
   const listStyles = theme.get('gridItem.labelList.main')
   const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
