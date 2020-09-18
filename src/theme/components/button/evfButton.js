@@ -70,10 +70,8 @@ const buttonStateStyles = backgroundColor => {
 }
 
 const defaultMainStyle = {
-  $web: {
-    overflow: 'hidden',
-    flex: 1,
-  },
+  overflow: 'hidden',
+  flex: 1,
 }
 
 export const evfButton = {

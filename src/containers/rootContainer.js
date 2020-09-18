@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { withAppHeader } from 'SVComponents'
 import { SessionsContainer } from 'SVContainers'
 import { displayName } from 'SVConfig'
-import { parseJSON } from '@keg-hub/jsutils'
 import { H5 } from '@keg-hub/keg-components'
 import testData from '../mocks/eventsforce/testData.json'
 import { isNative } from 'SVUtils/platform/isNative'
@@ -21,11 +20,17 @@ const marginStyle = {
  */
 export const RootContainer = withAppHeader(displayName, props => {
   const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
-  const mockData = parseJSON(text)
 
+  let mockData
+  try {
+    mockData = JSON.parse(text)
+  }
+  catch (error) {
+    console.log('json syntax error. check your test data')
+  }
   return (
     <>
-      { !isNative() && (
+      { !isNative() && process.env.NODE_ENV === 'development' && (
         <>
           <H5 style={marginStyle}>Test Data (JSON)</H5>
           <textarea

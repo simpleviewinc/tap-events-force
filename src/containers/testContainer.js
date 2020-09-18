@@ -9,7 +9,6 @@ import { useCreateModal } from 'SVHooks/modal'
 import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
 import { useKegEvent } from 'SVHooks/events'
-import { parseJSON } from '@keg-hub/jsutils'
 import { isNative } from 'SVUtils/platform/isNative'
 
 const { EVENTS } = Values
@@ -27,13 +26,19 @@ const testOnSessionBookingRequest = (session, attendees) => {
  */
 export const TestContainer = withAppHeader('Test Container', props => {
   const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
-  const mockData = parseJSON(text)
+  let mockData
+  try {
+    mockData = JSON.parse(text)
+  }
+  catch (error) {
+    console.log('json syntax error. check your test data')
+  }
 
   // map the evf props onto our states
   useEffect(() => void mapSessionInterface(mockData), [mockData])
   return (
     <View>
-      { !isNative() && (
+      { !isNative() && process.env.NODE_ENV === 'development' && (
         <>
           <H5 style={marginStyle}>Test Data (JSON)</H5>
           <textarea
