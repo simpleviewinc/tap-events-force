@@ -70,7 +70,6 @@ const buttonStateStyles = backgroundColor => {
 
 const defaultMainStyle = {
   overflow: 'hidden',
-  padding: 1,
   flex: 1,
 }
 

@@ -17,7 +17,7 @@ import '../mocks/eventsforce/testStyles.css'
  * Cache holder of the parsed ef-classes from the DOM stylesheets
  * @object
  */
-let __parsedEfClasses
+let __parsedEfClasses = { classList: {} }
 
 const efThemeClasses = [
   '.ef-sessions-background',
@@ -156,7 +156,7 @@ const classFormatter = (cssRule, rootSelector, formatted, cssToJs) => {
  *
  * @return {Object} parsed - Parsed stylesheet object
  */
-const parseCustomClasses = () => {
+export const parseCustomClasses = () => {
   __parsedEfClasses =
     __parsedEfClasses ||
     styleSheetParser({
@@ -178,6 +178,6 @@ const parseCustomClasses = () => {
 /**
  * Automatically make call to parse the stylesheets on the dom
  */
-parseCustomClasses()
-
-export const getParsedClasses = () => parseCustomClasses()
+// Comment out for now untils Re-Theme gets updated with CssToJS changes
+// parseCustomClasses()
+export const getParsedClasses = () => __parsedEfClasses
