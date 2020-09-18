@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react'
-import { useTheme } from '@keg-hub/re-theme'
 import { ScrollView } from '@keg-hub/keg-components'
 import { GroupBookingSection } from './groupBookingSection'
-import { useSelector, shallowEqual } from 'react-redux'
-import { pickKeys } from '@keg-hub/jsutils'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
+import { useStylesMemo } from 'SVHooks/useStylesMemo'
 import { sortTickets, getAllBookedTickets } from 'SVUtils/models/tickets'
 import { sortAttendeeIntoSections } from 'SVUtils/models/attendees'
 
@@ -32,6 +31,8 @@ const useAttendeeBooking = (session, attendees, tickets, bookedTickets) => {
   }, [ session, attendees, tickets, bookedTickets ])
 }
 
+const emptyArr = []
+
 /**
  *
  * @param {*} param0
@@ -39,17 +40,13 @@ const useAttendeeBooking = (session, attendees, tickets, bookedTickets) => {
 export const GroupBookingOptions = props => {
   const { styles, session, onAttendeeSelected, canBookMore = true } = props
 
-  const theme = useTheme()
-  const mainStyles = theme.get('groupBookingOptions.main')
-  const viewStyles = useMemo(() => theme.join(mainStyles, styles?.main), [
-    mainStyles,
-    styles,
-  ])
+  const viewStyles = useStylesMemo('groupBookingOptions.main', styles?.main)
 
-  const { attendees, tickets, bookedTickets } = useSelector(
-    store => pickKeys(store.items, [ 'attendees', 'tickets', 'bookedTickets' ]),
-    shallowEqual
-  )
+  const { attendees, tickets, bookedTickets } = useStoreItems([
+    'attendees',
+    'tickets',
+    'bookedTickets',
+  ])
 
   // get two data structures for attendees: a map organizing attendees by ticket, and a set of
   // attendee ids that are restricted from booking the session
@@ -66,7 +63,7 @@ export const GroupBookingOptions = props => {
       sortTickets(tickets).filter(
         ticket => attendeesByTicket[ticket.identifier]
       ),
-    [tickets]
+    [ tickets, attendeesByTicket ]
   )
 
   return (
@@ -76,7 +73,7 @@ export const GroupBookingOptions = props => {
           style={styles?.content?.section}
           key={ticket.identifier}
           name={ticket.name}
-          attendees={attendeesByTicket[ticket.identifier] || []}
+          attendees={attendeesByTicket[ticket.identifier] || emptyArr}
           restrictedAttendeeIds={restrictedAttendeeIds}
           onAttendeeSelected={onAttendeeSelected}
           enableCheck={canBookMore}
