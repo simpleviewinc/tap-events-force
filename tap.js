@@ -1,9 +1,12 @@
 
 
+const findPath = process.env.PLATFORM === 'web'
+  ? '.'
+  : '../..'
 
 const pathToEntryPoint = process.env.TEST_BUILD 
-  ? '../../apps/BuildTest.js'
-  : '../../apps/Main.js'
+  ? `${findPath}/apps/BuildTest.js`
+  : `${findPath}/apps/Main.js`
 
 module.exports = {
   name: 'events-force-x5',
