@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { theme } from 'SVTheme'
 import { SafeAreaView, StatusBar } from 'react-native'
-import {
-  ReThemeProvider,
-  getDefaultTheme,
-  setDefaultTheme,
-} from '@keg-hub/re-theme'
+import { getDefaultTheme, setDefaultTheme, ReThemeProvider } from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
@@ -51,7 +47,7 @@ const MainApp = props => {
       <StatusBar barStyle={'default'} />
       <Router history={getHistory()}>
         <SafeAreaView>
-          <Provider store={getStore()}> 
+          <Provider store={getStore()}>
             <ReThemeProvider theme={activeTheme}>
               <ContainerRoutes navigationConfigs={keg.routes} />
             </ReThemeProvider>

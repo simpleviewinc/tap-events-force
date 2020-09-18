@@ -19,8 +19,8 @@ export const Error = ({ visible, title, message }) => {
 
   return (
     <BaseModal
+      className={`ef-modal-error`}
       dissmissedCBRef={dismissedCBRef}
-      dataSet={Error.dataSet.main}
       styles={errorStyles}
       title={title}
       visible={visible}
@@ -47,16 +47,17 @@ export const Error = ({ visible, title, message }) => {
 const Body = ({ styles, message, onButtonPress }) => {
   return (
     <View
-      dataSet={Error.dataSet.content.body.main}
+      className={`ef-modal-sub-header ef-modal-error-body`}
       style={styles.main}
     >
       <Text
-        dataSet={Error.dataSet.content.body.content.text}
+        className={`ef-modal-error-text`}
         style={styles.content?.text}
       >
         { message }
       </Text>
       <EvfButton
+        className={`ef-modal-error-button`}
         type={'primary'}
         styles={styles.content?.button}
         onClick={onButtonPress}
@@ -64,16 +65,4 @@ const Body = ({ styles, message, onButtonPress }) => {
       />
     </View>
   )
-}
-
-Error.dataSet = {
-  main: { class: `error-modal-main` },
-  content: {
-    body: {
-      main: { class: 'error-modal-content-body-main' },
-      content: {
-        text: { class: 'error-modal-content-body-content-text' },
-      },
-    },
-  },
 }

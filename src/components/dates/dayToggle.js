@@ -42,11 +42,10 @@ export const DayToggle = props => {
     - ${getDayString(date, isMobileSize(theme))}`
   return (
     <View
-      dataSet={DayToggle.dataSet.main}
+      className={'ef-sessions-date-selector'}
       style={dayToggleStyles?.main}
     >
       <UpdateDayButton
-        dataSet={DayToggle.dataSet.content.decrement}
         style={dayToggleStyles?.content?.decrementIcon}
         type={'decrement'}
         disabled={disableDecrement}
@@ -54,6 +53,7 @@ export const DayToggle = props => {
       />
 
       <Text
+        className={'ef-sessions-date-text'}
         style={dayToggleStyles?.content?.text}
         numberOfLines={1}
       >
@@ -61,7 +61,6 @@ export const DayToggle = props => {
       </Text>
 
       <UpdateDayButton
-        dataSet={DayToggle.dataSet.content.increment}
         type={'increment'}
         style={dayToggleStyles?.content?.incrementIcon}
         disabled={disableIncrement}
@@ -71,11 +70,3 @@ export const DayToggle = props => {
   )
 }
 DayToggle.propTypes = {}
-DayToggle.dataSet = {
-  main: { class: 'day-toggle-main' },
-  content: {
-    decrement: { class: 'day-toggle-decrement' },
-    text: { class: 'day-toggle-text' },
-    increment: { class: 'day-toggle-increment' },
-  },
-}

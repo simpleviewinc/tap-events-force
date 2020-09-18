@@ -27,6 +27,7 @@ export const GroupBooking = ({ visible, session, attendees }) => {
 
   return (
     <BaseModal
+      className={`ef-modal-group`}
       dissmissedCBRef={dismissedCBRef}
       styles={groupBookingStyles}
       hasCloseButton={false}
@@ -58,7 +59,10 @@ const Body = ({ styles, remainingCount, dismissModalCb }) => {
   const bottomSectionStyles = styles?.content?.bottomSection || {}
 
   return (
-    <View style={styles.main}>
+    <View
+      className={`ef-modal-group-body`}
+      style={styles.main}
+    >
       <TopSection
         styles={topSectionStyles}
         remainingCount={remainingCount}
@@ -83,12 +87,21 @@ const TopSection = ({ styles, remainingCount }) => {
   const placeText = remainingCount && remainingCount > 1 ? 'places' : 'place'
 
   return (
-    <View style={styles?.main}>
-      <Text style={styles?.content?.instructionText}>
+    <View
+      className={`ef-modal-group-section-top`}
+      style={styles?.main}
+    >
+      <Text
+        className={`ef-modal-body-header`}
+        style={styles?.content?.instructionText}
+      >
         Select sessions for your group:
       </Text>
       { remainingCount && (
-        <Text style={styles?.content?.infoText}>
+        <Text
+          className={`ef-modal-body-highlight`}
+          style={styles?.content?.infoText}
+        >
           { `${remainingCount} ${placeText} remaining` }
         </Text>
       ) }
@@ -98,7 +111,12 @@ const TopSection = ({ styles, remainingCount }) => {
 
 const MiddleSection = ({ styles }) => {
   // TODO
-  return null
+  return (
+    <View
+      className={`ef-modal-group-section-middle`}
+      style={styles.main}
+    ></View>
+  )
 }
 
 /**
@@ -109,7 +127,10 @@ const MiddleSection = ({ styles }) => {
  */
 const BottomSection = ({ styles, onCancelPress }) => {
   return (
-    <View style={styles.main}>
+    <View
+      className={`ef-modal-group-section-bottom`}
+      style={styles.main}
+    >
       <EvfButton
         type={'default'}
         styles={styles.content?.cancelButton}

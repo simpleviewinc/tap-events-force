@@ -7,6 +7,7 @@ import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useAgenda } from 'SVHooks/models/useAgenda'
+import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { pickKeys, mapObj, get } from '@keg-hub/jsutils'
@@ -22,25 +23,26 @@ const { EVENTS } = Values
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onClick
- * @param {object} props.dataSet
  */
-const FilterButton = ({ onClick, styles, dataSet }) => {
+const FilterButton = ({ onClick, styles }) => {
   const dim = useDimensions()
 
   const contentStyles = styles?.content
 
   // use filter icon when below 650px width
   return dim.width <= 650 ? (
-    <EVFIcons.Filter
-      style={contentStyles?.filterIcon}
-      dataSet={dataSet?.content?.filterIcon}
-      onPress={onClick}
-      color={contentStyles?.filterIcon?.color}
-    />
+    <View className={'ef-sessions-filter-button'}>
+      <EVFIcons.Filter
+        className={'ef-sessions-filter-button'}
+        style={contentStyles?.filterIcon}
+        onPress={onClick}
+        color={contentStyles?.filterIcon?.color}
+      />
+    </View>
   ) : (
     <Button
+      className={'ef-sessions-filter-button'}
       themePath='button.text.default'
-      dataSet={dataSet?.content?.filterButton}
       styles={contentStyles?.filterButton}
       onClick={onClick}
       content={'Filter'}
@@ -72,7 +74,6 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
 
   return (
     <ItemHeader
-      dataSet={Sessions.dataSet.content.header}
       styles={headerStyles}
       CenterComponent={
         <DayToggle
@@ -86,7 +87,6 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
       }
       RightComponent={
         <FilterButton
-          dataSet={Sessions.dataSet.content.header.content.right}
           styles={headerStyles.content?.right}
           onClick={displayFilterModal}
         />
@@ -144,10 +144,12 @@ export const Sessions = props => {
     shallowEqual
   )
 
+  const parsedStyle = useParsedStyle('ef-sessions-background')
+
   return (
     <View
-      dataSet={Sessions.dataSet.main}
-      style={sessionsStyles.main}
+      className={'ef-sessions-background'}
+      style={[ sessionsStyles.main, parsedStyle ]}
     >
       <SessionsHeader
         labels={labels}
@@ -163,25 +165,4 @@ export const Sessions = props => {
       { modals.length > 0 && RenderModals(modals) }
     </View>
   )
-}
-
-Sessions.dataSet = {
-  main: { class: 'sessions-main' },
-  content: {
-    header: {
-      main: { class: 'sessions-content-header-main' },
-      content: {
-        right: {
-          content: {
-            filterIcon: {
-              class: 'sessions-content-header-content-right-filter-icon',
-            },
-            filterButton: {
-              class: 'sessions-content-header-content-right-filter-button',
-            },
-          },
-        },
-      },
-    },
-  },
 }

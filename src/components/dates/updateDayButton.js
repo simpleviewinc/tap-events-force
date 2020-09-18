@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { EVFIcons } from 'SVIcons'
+import { View } from '@keg-hub/keg-components'
 import PropTypes from 'prop-types'
 
 /**
@@ -21,7 +22,6 @@ const buildStyles = (theme, extra) => ({
  * @param {Object?} [props.styles={}] - optional styles to override defaults { main: {}, content: {} }
  * @param {boolean?} [props.disabled=false] - true if the button should be disabled
  * @param {Function?} props.onDayChange - callback executed when the day changes
- * @param {object?} props.dataSet - dataSet object that can contain a class key for identification in tests
  */
 export const UpdateDayButton = props => {
   const {
@@ -29,7 +29,6 @@ export const UpdateDayButton = props => {
     styles = {},
     disabled = false,
     onDayChange,
-    dataSet = UpdateDayButton.dataSet.main,
   } = props
 
   const iconStyles = useStylesCallback(buildStyles, [ disabled, styles.main ], {
@@ -41,18 +40,16 @@ export const UpdateDayButton = props => {
     type === 'increment' ? EVFIcons.DayToggleRight : EVFIcons.DayToggleLeft
 
   return (
-    <ChevronIcon
-      dataSet={dataSet}
-      onPress={onDayChange}
-      style={iconStyles}
-      type={type}
-    />
+    <View className={`ef-sessions-date-button-${type}`}>
+      <ChevronIcon
+        onPress={onDayChange}
+        style={iconStyles}
+        type={type}
+      />
+    </View>
   )
 }
 UpdateDayButton.propTypes = {
   type: PropTypes.oneOf([ 'increment', 'decrement' ]),
   disabled: PropTypes.bool,
-}
-UpdateDayButton.dataSet = {
-  main: { class: 'update-day-button-main' },
 }

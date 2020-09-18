@@ -1,10 +1,21 @@
 const rootPath = require('app-root-path').path
-const {keg} = require('keg-core/app.json')
+const { keg } = require('keg-core/app.json')
 const { mapObj } = require('@keg-hub/jsutils')
-const rootDir = rootPath
+const path = require('path')
 
+const rootDir = rootPath
 const aliases = keg.tapResolver.aliases
 const namespace = aliases.nameSpace
+
+// Lock down the sv repos to point to the version installed in keg-core
+const getKegRepoPaths = () => {
+  const repoRoot = `${rootPath}/node_modules/keg-core/node_modules/@keg-hub`
+  return {
+    [`@keg-hub/re-theme`]: path.join(repoRoot, 're-theme'),
+    [`@keg-hub/jsutils`]: path.join(repoRoot, 'jsutils'),
+    [`@keg-hub/keg-components`]: path.join(repoRoot, 'keg-components'),
+  }
+}
 
 /**
  * mapping our aliases to the proper location
@@ -25,19 +36,18 @@ const getDynamicAlias = () => {
 
     // ex: SVUtils, SVActions
     if (value === 'constants') {
-      map[`${namespace}${key}`] = [
+      map[`^${namespace}${key}`] = [
         `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`,
       ]
     }
     else {
-      map[`${namespace}${key}`] = [
+      map[`^${namespace}${key}`] = [
         `${rootDir}/src/${value}/tapIndex.js`,
         `${rootDir}/src/${value}/index.js`,
         `${rootDir}/node_modules/keg-core/core/${value}/index.js`,
         `${rootDir}/node_modules/keg-core/core/base/${value}/index.js`
       ]
     }
-    
   })
   
   return map
@@ -63,6 +73,7 @@ module.exports = {
     ],
     [`${namespace}Mocks`]: `${rootDir}/src/mocks/index.js`,
     ...getDynamicAlias(),
+    ...getKegRepoPaths(),
   },
   testPathIgnorePatterns: [`${rootDir}/node_modules/(?!(keg-core/node_modules)/)`, ],
   transformIgnorePatterns: [`${rootDir}/node_modules/(?!(keg-core)/)`],
