@@ -16,11 +16,15 @@ const topLeftCornerStyle = {
 
 const defaultButtonStyles = {
   main: {
-    flex: 1,
-    justifyContent: 'center',
-    borderRadius: 0,
-    padding: 0,
-    boxShadow: ' 0px 1px 1px rgba(0, 0, 0, 0.15)',
+    $all: {
+      flex: 1,
+      justifyContent: 'center',
+      borderRadius: 0,
+      padding: 0,
+    },
+    $web: {
+      boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.15)',
+    },
   },
   content: {
     $xsmall: {
@@ -45,24 +49,33 @@ const buttonStateStyles = backgroundColor => {
   return {
     default: {
       main: {
-        ...defaultButtonStyles.main,
-        backgroundColor,
+        $all: {
+          ...defaultButtonStyles.main.$all,
+          backgroundColor,
+        },
+        $web: defaultButtonStyles.main.$web,
       },
       content: defaultButtonStyles.content,
     },
     active: {
       main: {
-        ...defaultButtonStyles.main,
-        backgroundColor,
-        opacity: 0.4,
+        $all: {
+          ...defaultButtonStyles.main.$all,
+          backgroundColor,
+          opacity: 0.4,
+        },
+        $web: defaultButtonStyles.main.$web,
       },
       content: defaultButtonStyles.content,
     },
     hover: {
       main: {
-        ...defaultButtonStyles.main,
-        backgroundColor,
-        opacity: 0.8,
+        $all: {
+          ...defaultButtonStyles.main.$all,
+          backgroundColor,
+          opacity: 0.8,
+        },
+        $web: defaultButtonStyles.main.$web,
       },
       content: defaultButtonStyles.content,
     },
