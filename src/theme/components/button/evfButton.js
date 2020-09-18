@@ -2,15 +2,21 @@ import { colors } from '../../colors'
 
 const topLeftCornerStyle = {
   main: {
-    width: 25,
-    height: 25,
-    backgroundColor: colors.white,
-    position: 'absolute',
-    overflow: 'hidden',
-    left: '-13px',
-    top: '-13px',
-    zIndex: 9999,
-    transform: [{ rotate: '45deg' }],
+    $web: {
+      left: '-13px',
+      top: '-13px',
+    },
+    $all: {
+      left: -13,
+      top: -13,
+      width: 25,
+      height: 25,
+      backgroundColor: colors.white,
+      position: 'absolute',
+      overflow: 'hidden',
+      zIndex: 9999,
+      transform: [{ rotate: '45deg' }],
+    },
   },
 }
 

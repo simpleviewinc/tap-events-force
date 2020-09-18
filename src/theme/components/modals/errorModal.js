@@ -2,19 +2,33 @@ export const errorModal = {
   main: {},
   content: {
     main: {
-      $xsmall: {
-        minHeight: 200,
-        width: '80%',
-        maxWidth: '600px',
+      $web: {
+        $xsmall: {
+          maxWidth: '600px',
+        },
+      },
+      $all: {
+        $xsmall: {
+          minHeight: 200,
+          width: '80%',
+          maxWidth: 600,
+        },
       },
     },
     header: {
       content: {
         title: {
-          $xsmall: {
-            letterSpacing: '0.105em',
+          $web: {
+            $xsmall: {
+              letterSpacing: '0.105em',
+            },
           },
-          $small: {},
+          $all: {
+            $xsmall: {
+              letterSpacing: 0.105,
+            },
+            $small: {},
+          },
         },
       },
     },
@@ -25,8 +39,13 @@ export const errorModal = {
       },
       content: {
         text: {
-          fontSize: '16px',
-          paddingBottom: 10,
+          $web: {
+            fontSize: '16px',
+          },
+          $all: {
+            fontSize: 16,
+            paddingBottom: 10,
+          },
         },
         button: {
           main: {

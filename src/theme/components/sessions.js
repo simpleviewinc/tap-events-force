@@ -81,7 +81,7 @@ export const sessions = {
                 },
                 $all: {
                   fontSize: 20,
-                  fontWeight: 500,
+                  fontWeight: '500',
                   textDecorationLine: 'underline',
                   color: colors.black,
                 },
