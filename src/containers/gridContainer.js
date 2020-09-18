@@ -12,8 +12,17 @@ import { useTheme } from '@keg-hub/re-theme'
  */
 const LeftHeaderText = ({ timeString, style }) => {
   return (
-    <View style={style.main}>
-      <Text style={style.content.text}> { timeString } </Text>
+    <View
+      className={`ef-timeslot-header-time`}
+      style={style.main}
+    >
+      <Text
+        className={`ef-timeslot-header-time-text`}
+        style={style.content.text}
+      >
+        { ' ' }
+        { timeString }{ ' ' }
+      </Text>
     </View>
   )
 }
@@ -32,18 +41,17 @@ export const GridContainer = props => {
   const theme = useTheme()
   const gridStyles = theme.get('gridContainer')
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
+
   return (
     <View
+      className={`ef-grid-container`}
       style={gridStyles.main}
-      dataSet={useMemo(() => GridContainer.dataSet.main(timeBlock), [
-        timeBlock,
-      ])}
     >
       {
         // only display the time header on web styles
         !isMobileSize(theme) && (
           <ItemHeader
-            dataSet={GridContainer.dataSet.content.header}
+            className={`ef-timeslot-header`}
             styles={gridStyles.content.header}
             LeftComponent={
               <LeftHeaderText
@@ -55,7 +63,7 @@ export const GridContainer = props => {
         )
       }
       <View
-        dataSet={GridContainer.dataSet.content.items}
+        className={`ef-grid-item`}
         style={gridStyles.content.items}
       >
         { sessions &&
@@ -70,14 +78,4 @@ export const GridContainer = props => {
       </View>
     </View>
   )
-}
-
-GridContainer.dataSet = {
-  main: timeBlock => {
-    return { class: `grid-container-main-${timeBlock}` }
-  },
-  content: {
-    header: { class: 'grid-container-content-header' },
-    items: { class: 'grid-container-content-items' },
-  },
 }

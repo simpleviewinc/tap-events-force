@@ -10,7 +10,7 @@ import { checkCall } from '@keg-hub/jsutils'
  * @param {Object} extra - extra styles to add
  */
 const buildStyles = (theme, extra) => {
-  const labelStyle = theme.get(`eventsForce.${extra.className}`)
+  const labelStyle = theme.get(`eventsForce.labels.${extra.className}`)
 
   // updated button styles with the eventsForce styles
   const buttonStyles = {
@@ -63,13 +63,14 @@ export const LabelButton = ({
     [
       label.className,
       theme.get('labelButton'),
-      theme.get(`eventsForce.${label.className}`),
+      theme.get(`eventsForce.labels.${label.className}`),
     ],
     extraStyles
   )
   const clickHandler = () => checkCall(onPress, label)
   return (
     <Button
+      className={label.className}
       styles={toggledOn ? mainStyle.selected : mainStyle.unselected}
       content={label.name}
       onClick={clickHandler}

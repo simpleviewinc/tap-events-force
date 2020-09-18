@@ -10,24 +10,17 @@ import { EVFIcons } from 'SVIcons'
  * @param {object} props
  * @param {string} props.title
  * @param {object} props.styles
- * @param {object} props.dataSet
  * @param {object} props.setDismissed - used to state the modals visible state for animation
  * @param {boolean=} props.hasCloseButton - display the close button on top right or not
  */
-const Header = ({
-  title,
-  styles,
-  setDismissed,
-  hasCloseButton = true,
-  dataSet,
-}) => {
+const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
   return (
     <View
-      dataSet={dataSet.header.main}
+      className={`ef-modal-title`}
       style={styles?.main}
     >
       <Text
-        dataSet={dataSet.header.content.text}
+        className={`ef-modal-title-text`}
         style={styles?.content?.title}
         numberOfLines={2}
         ellipsizeMode={'tail'}
@@ -36,13 +29,10 @@ const Header = ({
       </Text>
       { hasCloseButton && (
         <View
+          className={`ef-button-close`}
           style={styles?.content?.closeButton?.main}
-          dataSet={dataSet.header.content.closeButton.main}
         >
-          <EVFIcons.Close
-            dataSet={dataSet.header.content.closeButton.content}
-            onPress={() => setDismissed(true)}
-          />
+          <EVFIcons.Close onPress={() => setDismissed(true)} />
         </View>
       ) }
     </View>
@@ -74,6 +64,7 @@ export const contentDefaultMaxHeight = 772
  */
 export const BaseModal = props => {
   const {
+    className,
     title,
     visible,
     hasCloseButton,
@@ -111,13 +102,13 @@ export const BaseModal = props => {
 
   return (
     <Modal
+      className={className}
       styles={{ content: { ...baseStyles.content.main, maxHeight } }}
       visible={visible && !dismissed}
       onAnimateOut={onAnimateOut}
       onBackdropTouch={onBackdropTouch}
     >
       <Header
-        dataSet={BaseModal.dataSet.content}
         title={title}
         styles={baseStyles.content.header}
         setDismissed={setDismissed}
@@ -127,26 +118,6 @@ export const BaseModal = props => {
       { children }
     </Modal>
   )
-}
-
-BaseModal.dataSet = {
-  main: { class: `base-modal-main` },
-  content: {
-    header: {
-      main: { class: 'base-modal-content-header-main' },
-      content: {
-        text: { class: 'base-modal-content-header-content-text' },
-        closeButton: {
-          main: {
-            class: 'base-modal-content-header-content-close-button-main',
-          },
-          content: {
-            class: 'base-modal-content-header-content-close-button-content',
-          },
-        },
-      },
-    },
-  },
 }
 
 BaseModal.propTypes = {

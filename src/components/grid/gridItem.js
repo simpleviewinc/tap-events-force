@@ -35,7 +35,7 @@ export const GridItem = props => {
   const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
   return (
     <View
-      dataSet={GridItem.dataSet.main}
+      className={`ef-grid-item-content`}
       style={theme.get('gridItem.main')}
     >
       <GridContent
@@ -53,7 +53,4 @@ export const GridItem = props => {
 GridItem.propTypes = {
   labels: PropTypes.array,
   session: PropTypes.object,
-}
-GridItem.dataSet = {
-  main: { class: 'grid-item-main' },
 }

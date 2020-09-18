@@ -27,7 +27,7 @@ export const LabelList = props => {
 
   return (
     <View
-      dataSet={LabelList.dataSet.main}
+      className={`ef-label-list`}
       style={[ theme.get('labelList.main'), style ]}
     >
       { labels.map(label => (
@@ -48,7 +48,4 @@ LabelList.propTypes = {
   labels: PropTypes.arrayOf(PropTypes.object),
   LabelComponent: PropTypes.elementType,
   onItemPress: PropTypes.func,
-}
-LabelList.dataSet = {
-  main: { class: 'label-list-main' },
 }

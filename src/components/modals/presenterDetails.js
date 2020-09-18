@@ -1,6 +1,6 @@
 import React from 'react'
-import { View, Text } from '@keg-hub/keg-components'
-import { Image, ScrollView } from 'react-native'
+import { Image, View, Text } from '@keg-hub/keg-components'
+import { ScrollView } from 'react-native'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { BaseModal, contentDefaultMaxHeight } from './baseModal'
 import placeholderImage from 'SVAssets/profile_placeholder.png'
@@ -22,6 +22,7 @@ export const PresenterDetails = props => {
 
   return (
     <BaseModal
+      className={`ef-modal-presenter`}
       styles={presenterStyles}
       title={title}
       visible={visible}
@@ -64,27 +65,29 @@ const Body = ({ presenter, styles }) => {
 
   return (
     <View
-      dataSet={PresenterDetails.dataSet.content.body.main}
+      className={`ef-modal-presenter-body`}
       style={styles.main}
     >
       { /* row 1 - image and titles */ }
       <View style={styles.row1.container}>
         <Image
-          style={imageStyle}
-          source={{
-            uri: presenter.photographUrl
-              ? presenter.photographUrl
-              : placeholderImage,
-          }}
+          className={`ef-presenter-picture`}
+          styles={{ image: imageStyle }}
+          source={presenter.photographUrl || placeholderImage}
         />
-        <View style={styles.row1.details}>
+        <View
+          className={`ef-modal-presenter-container`}
+          style={styles.row1.details}
+        >
           <Text
+            className={'ef-modal-header'}
             style={styles.row1.title}
             numberOfLines={1}
           >
             { presenter.jobtitle }
           </Text>
           <Text
+            className={'ef-modal-sub-header'}
             style={styles.row1.company}
             numberOfLines={1}
           >
@@ -99,19 +102,14 @@ const Body = ({ presenter, styles }) => {
           style={styles.row2.main}
           contentContainerStyle={bioContentStyle}
         >
-          <Text style={styles.row2.content.biography}>
+          <Text
+            className={'ef-modal-body'}
+            style={styles.row2.content.biography}
+          >
             { presenter.biography }
           </Text>
         </ScrollView>
       ) : null }
     </View>
   )
-}
-
-PresenterDetails.dataSet = {
-  content: {
-    body: {
-      main: { class: 'presenter-details-content-body-main' },
-    },
-  },
 }

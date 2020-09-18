@@ -1,13 +1,25 @@
 import React, { useMemo } from 'react'
 import { View, Button } from '@keg-hub/keg-components'
 import { useStylesCallback } from '@keg-hub/re-theme'
+import { useParsedStyle } from 'SVHooks/useParsedStyle'
 
 /**
  * @param {object} theme
  * @param {object} custom - contains {type, styles}
  */
 const buildStyles = (theme, custom) => {
-  return theme.join(theme.get(`button.evfButton.${custom.type}`), custom.styles)
+  const btnStyles = theme.get(`button.evfButton.${custom.type}`)
+  const parsedState = { main: custom.parsed }
+
+  return theme.join(btnStyles, custom.styles, {
+    content: {
+      button: {
+        active: parsedState,
+        default: parsedState,
+        hover: parsedState,
+      },
+    },
+  })
 }
 
 /**
@@ -20,27 +32,24 @@ const buildStyles = (theme, custom) => {
  */
 export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
   // build the main style for the button, memoized
-  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
+  const buttonCls = `ef-button-${type}`
+  const parsedStyles = useParsedStyle(buttonCls)
+  const customStyles = useMemo(() => ({ type, styles, parsed: parsedStyles }), [
+    type,
+    styles,
+    parsedStyles,
+  ])
   const mainStyle = useStylesCallback(buildStyles, [ type, styles ], customStyles)
 
   return (
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main}></View>
       <Button
+        className={[ buttonCls, `ef-session-button-${type}` ]}
         onClick={onClick}
         styles={mainStyle?.content?.button}
         content={text}
       />
     </View>
   )
-}
-
-EvfButton.dataSet = {
-  main: { class: 'evf-button-main' },
-  content: {
-    textView: {
-      main: { class: 'evf-button-content-textView-main' },
-      content: { class: 'evf-button-content-textView-content' },
-    },
-  },
 }

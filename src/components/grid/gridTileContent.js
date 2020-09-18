@@ -26,7 +26,7 @@ export const GridTileContent = props => {
   } = props
 
   return (
-    <View>
+    <View className={`ef-grid-tile-content`}>
       <SessionTime
         start={session.startDateTimeLocal}
         end={session.endDateTimeLocal}

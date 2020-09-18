@@ -13,8 +13,9 @@ export const LabelTag = ({ label = {}, styles }) => {
   const theme = useTheme()
   return (
     <View
+      className={`ef-label-tag ${label.className}`}
       style={[
-        theme.get(`eventsForce.${label.className}`),
+        theme.get(`eventsForce.labels.${label.className}`),
         theme.get('labelTag.main'),
         styles,
       ]}
@@ -24,5 +25,5 @@ export const LabelTag = ({ label = {}, styles }) => {
 
 LabelTag.propTypes = {
   label: PropTypes.object,
-  style: PropTypes.object,
+  styles: PropTypes.object,
 }
