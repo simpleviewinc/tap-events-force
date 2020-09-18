@@ -1,8 +1,9 @@
-const path = require('path')
+
+
 
 const pathToEntryPoint = process.env.TEST_BUILD 
-  ? path.join(__dirname, 'apps/BuildTest.js') 
-  : path.join(__dirname, 'apps/Main.js')
+  ? 'apps/BuildTest.js'
+  : 'apps/Main.js'
 
 module.exports = {
   name: 'events-force-x5',
@@ -23,6 +24,9 @@ module.exports = {
           Icons: 'assets/icons'
         },
         web: {
+          SVTapEntry: pathToEntryPoint
+        },
+        native: {
           SVTapEntry: pathToEntryPoint
         }
       }

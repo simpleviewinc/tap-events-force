@@ -87,7 +87,7 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
       }
       RightComponent={
         <FilterButton
-          styles={headerStyles.content?.right}
+          styles={headerStyles?.content?.right}
           onClick={displayFilterModal}
         />
       }

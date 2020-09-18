@@ -28,12 +28,12 @@ const defaultButtonStyles = {
   },
   content: {
     $xsmall: {
-      letterSpacing: '0.105em',
+      letterSpacing: 0.105,
       fontWeight: 'bold',
       color: colors.white,
       fontSize: 13,
       paddingHorizontal: 8,
-      lineHeight: '18px',
+      lineHeight: 18,
     },
     $small: {
       fontSize: 15,

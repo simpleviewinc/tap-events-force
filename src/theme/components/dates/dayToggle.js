@@ -1,8 +1,8 @@
 import { colors } from '../../colors'
 
 export const dayToggle = {
-  $web: {
-    main: {
+  main: {
+    $all: {
       $xsmall: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -12,16 +12,39 @@ export const dayToggle = {
         width: 300,
       },
     },
-    content: {
-      text: {
+    $native: {
+      $xsmall: {
+        width: '100%',
+        justifyContent: 'flex-start',
+      },
+    },
+  },
+  content: {
+    text: {
+      $native: {
         $xsmall: {
-          letterSpacing: '0.1em',
+          marginLeft: 45,
+          marginRight: 45,
+          fontSize: 20,
+        },
+      },
+      $all: {
+        $xsmall: {
+          letterSpacing: 0.1,
           textDecorationLine: 'underline',
-          fontFamily: 'Inter',
           fontStyle: 'normal',
           fontWeight: '500',
-          fontSize: '18px',
           color: colors.black01,
+        },
+        $small: {
+          fontSize: 20,
+        },
+      },
+      $web: {
+        $xsmall: {
+          fontFamily: 'Inter',
+          fontSize: '18px',
+          letterSpacing: '0.1em',
           marginLeft: 10,
           marginRight: 16,
         },
@@ -29,11 +52,19 @@ export const dayToggle = {
           fontSize: '20px',
         },
       },
-      decrementIcon: {
-        main: {},
+    },
+    decrement: {
+      icon: {
+        $native: {
+          fontSize: 20,
+        },
       },
-      incrementIcon: {
-        main: {},
+    },
+    increment: {
+      icon: {
+        $native: {
+          fontSize: 20,
+        },
       },
     },
   },

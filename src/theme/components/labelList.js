@@ -1,6 +1,9 @@
 export const labelList = {
-  $web: {
-    main: {
+  main: {
+    $web: {
+      height: 'fit-content',
+    },
+    $all: {
       $xsmall: {
         flexDirection: 'column',
         height: '100%',
@@ -10,7 +13,8 @@ export const labelList = {
         flexDirection: 'row',
         alignContent: 'flex-start',
         flexWrap: 'wrap',
-        height: 'fit-content',
+        flexDirection: 'row',
+        alignSelf: 'flex-start',
         maxWidth: '100%',
         flexBasis: 'auto',
       },
