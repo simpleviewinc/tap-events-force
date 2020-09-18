@@ -2,8 +2,8 @@
 
 
 const pathToEntryPoint = process.env.TEST_BUILD 
-  ? 'apps/BuildTest.js'
-  : 'apps/Main.js'
+  ? '../../apps/BuildTest.js'
+  : '../../apps/Main.js'
 
 module.exports = {
   name: 'events-force-x5',
