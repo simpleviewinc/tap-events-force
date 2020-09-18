@@ -16,6 +16,10 @@ export const sessionLink = {
     $web: {
       width: 'fit-content',
     },
+    $native: {
+      flexDirection: 'row',
+      alignSelf: 'flex-start',
+    },
     $all: {
       $xsmall: {
         color: colors.black,
@@ -27,10 +31,6 @@ export const sessionLink = {
         fontSize: 16,
         lineHeight: 19,
       },
-    },
-    $native: {
-      flexDirection: 'row',
-      alignSelf: 'flex-start',
     },
   },
 }

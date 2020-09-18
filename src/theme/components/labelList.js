@@ -3,6 +3,10 @@ export const labelList = {
     $web: {
       height: 'fit-content',
     },
+    $native: {
+      flexDirection: 'row',
+      alignSelf: 'flex-start',
+    },
     $all: {
       $xsmall: {
         flexDirection: 'column',
@@ -13,8 +17,6 @@ export const labelList = {
         flexDirection: 'row',
         alignContent: 'flex-start',
         flexWrap: 'wrap',
-        flexDirection: 'row',
-        alignSelf: 'flex-start',
         maxWidth: '100%',
         flexBasis: 'auto',
       },
