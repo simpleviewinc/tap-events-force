@@ -31,7 +31,13 @@ const styleWithOpacity = opacity => {
   return {
     main: {
       ...mainStyle,
-      opacity,
+      $all: {
+        ...mainStyle.$all,
+        $xsmall: {
+          ...mainStyle.$all.$xsmall,
+          opacity,
+        },
+      },
     },
     content: contentStyle,
   }

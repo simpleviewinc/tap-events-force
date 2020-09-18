@@ -5,7 +5,7 @@
 /****************** IMPORTANT ******************/
 
 import { setColors } from './colors'
-import { get } from '@keg-hub/jsutils'
+import { get, checkCall } from '@keg-hub/jsutils'
 import { setFonts } from './typography'
 import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
 
@@ -13,7 +13,7 @@ import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
  * Cache holder of the parsed ef-classes from the DOM stylesheets
  * @object
  */
-let __parsedEfClasses = { classList: {} }
+let __parsedEfClasses
 
 const efThemeClasses = [
   '.ef-sessions-background',
@@ -138,7 +138,8 @@ const classFormatter = (cssRule, rootSelector, formatted, cssToJs) => {
   const cssText = cssRule.cssText
 
   formatted.classList = formatted.classList || {}
-  formatted.classList[selectorRef] = cssToJs(
+  formatted.classList[selectorRef] = checkCall(
+    cssToJs,
     cssText,
     formatted.classList[selectorRef]
   )
@@ -168,12 +169,12 @@ export const parseCustomClasses = () => {
   setupColors(__parsedEfClasses)
   setupFonts(__parsedEfClasses)
 
-  return __parsedEfClasses
+  return __parsedEfClasses || { classList: {} }
 }
 
 /**
  * Automatically make call to parse the stylesheets on the dom
  */
 // Comment out for now untils Re-Theme gets updated with CssToJS changes
-// parseCustomClasses()
+parseCustomClasses()
 export const getParsedClasses = () => __parsedEfClasses
