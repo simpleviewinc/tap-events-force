@@ -8,8 +8,9 @@ export const GroupBookingSection = ({
   styles,
   name,
   attendees,
-  restrictedAttendeeIds,
+  isBookable,
   onAttendeeSelected,
+  isAttendeeSelected,
   enableCheck = true,
 }) => {
   const sectionStyles = useStylesMemo('groupBookingSection', styles)
@@ -30,8 +31,9 @@ export const GroupBookingSection = ({
           onAttendeeSelected={onAttendeeSelected}
           sectionStyles={sectionStyles}
           itemStyles={itemStyles}
-          disabled={restrictedAttendeeIds.has(attendeeId)}
+          disabled={!isBookable?.(attendeeId)}
           enableCheck={enableCheck}
+          checked={isAttendeeSelected?.(attendeeId)}
         />
       )) }
       { !attendees?.length && <Text>No attendees for this category</Text> }

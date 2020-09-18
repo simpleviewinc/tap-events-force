@@ -14,6 +14,7 @@ export const AttendeeCheckboxItem = props => {
     onAttendeeSelected,
     enableCheck = true,
     disabled = false,
+    checked = false,
   } = props
 
   const isUnnamed = !name || isEmpty(name)
@@ -39,6 +40,7 @@ export const AttendeeCheckboxItem = props => {
       onChange={onAttendeeSelected}
       disabled={disabled}
       enableCheck={enableCheck}
+      checked={checked}
     />
   )
 }
