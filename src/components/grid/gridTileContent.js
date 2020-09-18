@@ -31,6 +31,7 @@ export const GridTileContent = props => {
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
+  const formattedPrice = useFormattedPrice(session?.price, enableFreeLabel)
 
   return (
     <View
@@ -47,7 +48,7 @@ export const GridTileContent = props => {
           className={'ef-session-price'}
           style={gridTileContentStyles?.row1?.price}
         >
-          { useFormattedPrice(session?.price, enableFreeLabel) }
+          { formattedPrice }
         </Text>
       </View>
 
