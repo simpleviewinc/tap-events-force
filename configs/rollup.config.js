@@ -11,6 +11,7 @@ import sourcemaps from 'rollup-plugin-sourcemaps'
 import bundleSize from 'rollup-plugin-bundle-size'
 import generatePackageJson from './plugins/generatePackageJson'
 import image from '@rollup/plugin-image'
+import postcss from 'rollup-plugin-postcss'
 
 const path = require('path')
 const tapPath = require('app-root-path').path
@@ -35,7 +36,7 @@ const coreBabelConfig = require(path.join(corePath, 'babel.config.js'))()
 // This creates custom alias to ensure then can be found
 const buildAlias = builtAlias => {
   const svModules = path.join(corePath, 'node_modules/@keg-hub')
-  const reTheme = path.join(svModules, 're-theme/build/esm/reTheme.js')
+  const reTheme = path.join(svModules, 're-theme/build/esm/web')
   const kegComponents = path.join(
     svModules,
     'keg-components/build/esm/kegComponents.js'
@@ -100,6 +101,9 @@ export default {
   watch: { clearScreen: false },
   plugins: [
     json(),
+    postcss({
+      plugins: []
+    }),
     resolve({
       preferBuiltins: true,
       module: true,
