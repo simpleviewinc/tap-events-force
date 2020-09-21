@@ -19,8 +19,8 @@ const subCatMap = {
  * @param {<import('SVModels/alert').Alert)>} alert
  */
 const checkAlert = alert => {
-  alert.title &&
-    alert.message &&
+  alert?.title &&
+    alert?.message &&
     addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
 }
 
