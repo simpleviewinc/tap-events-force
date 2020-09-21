@@ -2,7 +2,7 @@ import React from 'react'
 import { PresenterDetails } from 'SVComponents/modals/presenterDetails'
 import { GroupBooking } from 'SVComponents/modals/groupBooking'
 import { Filter } from 'SVComponents/modals/filter'
-import { Error } from 'SVComponents/modals/error'
+import { Alert } from 'SVComponents/modals/alert'
 import { Values } from 'SVConstants'
 
 /**
@@ -38,11 +38,12 @@ export const RenderModals = modals => {
         />
       )
 
-    case Values.MODAL_TYPES.ERROR:
+    case Values.MODAL_TYPES.ALERT:
       return (
-        <Error
+        <Alert
           key={index}
           visible={true}
+          type={modal.data?.type}
           title={modal.data?.title}
           message={modal.data?.message}
         />

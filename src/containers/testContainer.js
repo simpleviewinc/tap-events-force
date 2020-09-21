@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
 import { useKegEvent } from 'SVHooks/events'
 import { isNative } from 'SVUtils/platform/isNative'
+import { Alert } from 'SVModels/alert'
 
 const { EVENTS } = Values
 const marginStyle = {
@@ -130,11 +131,15 @@ export const ModalDemos = () => {
         <Button
           themePath='button.contained.secondary'
           styles={testStyles.content.button}
-          onClick={useCreateModal(Values.MODAL_TYPES.ERROR, {
-            title: 'Session Fully Booked',
-            message:
-              'There is insufficient capacity for your selection. Please reduce the number of selected bookings',
-          })}
+          onClick={useCreateModal(
+            Values.MODAL_TYPES.ALERT,
+            new Alert({
+              title: 'Session Fully Booked',
+              message:
+                'There is insufficient capacity for your selection. Please reduce the number of selected bookings',
+              type: 'error',
+            })
+          )}
           content={'Group booking Demo 4 - no spots left'}
         />
       </Section>

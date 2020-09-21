@@ -1,4 +1,4 @@
-export const errorModal = {
+export const alertModal = {
   main: {},
   content: {
     main: {
