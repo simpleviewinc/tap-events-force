@@ -175,6 +175,6 @@ export const parseCustomClasses = () => {
 /**
  * Automatically make call to parse the stylesheets on the dom
  */
-// Comment out for now untils Re-Theme gets updated with CssToJS changes
 parseCustomClasses()
-export const getParsedClasses = () => __parsedEfClasses
+
+export const getParsedClasses = () => parseCustomClasses()

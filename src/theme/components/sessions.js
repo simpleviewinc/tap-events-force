@@ -4,6 +4,8 @@ export const sessions = {
     $web: {
       width: '100vw',
       flex: 1,
+      overflowX: 'hidden',
+      maxWidth: '100%',
     },
     $native: {
       flexDirection: 'column',
