@@ -21,6 +21,8 @@ export const gridItem = {
       minHeight: 294,
     },
   },
+  gridTileContent,
+  gridRowContent,
   sessionTime: {
     main: {
       $web: {
@@ -31,11 +33,7 @@ export const gridItem = {
         flexDirection: 'row',
         alignSelf: 'flex-start',
       },
-    },
-    gridTileContent,
-    gridRowContent,
-    sessionTime: {
-      main: {
+      $all: {
         marginTop: 13,
       },
     },
