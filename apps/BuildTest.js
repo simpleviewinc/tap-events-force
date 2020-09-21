@@ -21,7 +21,7 @@ const BuildTest = props => {
   return (
     <Sessions 
       disableDemo={showModalDemo}
-      { ...testData} 
+      sessionAgendaProps={testData} 
       { ...mockCallbacks }
     />
   )

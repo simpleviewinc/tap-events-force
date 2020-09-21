@@ -128,19 +128,23 @@ const AgendaSessions = React.memo(
 /**
  * SessionComponent
  * @param {Object} props
- * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionData - session agenda props defined in evf interface
+ * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionAgendaProps - session agenda props defined in evf interface
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  * @param {Function} props.onSessionBookingRequest - callback for session booking
  */
 export const Sessions = props => {
-  const { onDayChange = noOp, sessionData, onSessionBookingRequest } = props
+  const {
+    onDayChange = noOp,
+    sessionAgendaProps,
+    onSessionBookingRequest,
+  } = props
 
   // set up our ev ent listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
 
   useEffect(() => {
-    mapSessionInterface(sessionData)
-  }, [sessionData])
+    mapSessionInterface(sessionAgendaProps)
+  }, [sessionAgendaProps])
 
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')

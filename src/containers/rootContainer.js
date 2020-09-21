@@ -40,6 +40,7 @@ const applyJson = (text, setMockData) => {
 export const RootContainer = withAppHeader(displayName, props => {
   const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
   const [ mockData, setMockData ] = useState(testData)
+
   return (
     <>
       { !isNative() && process.env.NODE_ENV === 'development' && (
@@ -61,8 +62,8 @@ export const RootContainer = withAppHeader(displayName, props => {
       ) }
 
       <SessionsContainer
-        {...mockData}
-        {...mockCallbacks}
+        sessionAgendaProps={mockData}
+        onDayChange={mockCallbacks.onDayChange}
       />
     </>
   )
