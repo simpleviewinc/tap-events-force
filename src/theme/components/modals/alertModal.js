@@ -37,22 +37,23 @@ export const alertModal = {
         paddingHorizontal: 22,
         paddingVertical: 26,
       },
-      content: {
-        text: {
-          $web: {
-            fontSize: '16px',
-          },
-          $all: {
-            fontSize: 16,
-            paddingBottom: 10,
-          },
+      textContainer: {
+        main: {
+          maxHeight: 500,
+          marginBottom: 10,
         },
-        button: {
-          main: {
-            alignSelf: 'flex-end',
-            width: 87,
-            height: 45,
-          },
+        contentContainer: {
+          padding: 10,
+        },
+      },
+      text: {
+        fontSize: '16px',
+      },
+      button: {
+        main: {
+          alignSelf: 'flex-end',
+          width: 87,
+          height: 45,
         },
       },
     },

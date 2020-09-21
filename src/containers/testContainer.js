@@ -149,7 +149,7 @@ export const ModalDemos = () => {
         <Button
           themePath='button.contained.secondary'
           styles={testStyles.content.button}
-          onClick={useCreateModal(Values.MODAL_TYPES.ERROR, {
+          onClick={useCreateModal(Values.MODAL_TYPES.ALERT, {
             title: 'Session Fully Booked',
             message:
               'There is insufficient capacity for your selection. Please reduce the number of selected bookings',

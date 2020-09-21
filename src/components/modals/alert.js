@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { View, Text } from '@keg-hub/keg-components'
+import { View, Text, ScrollView } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { checkCall } from '@keg-hub/jsutils'
 
@@ -48,19 +48,24 @@ export const Alert = ({ visible, title, message }) => {
 const Body = ({ styles, message, onButtonPress }) => {
   return (
     <View
+      style={styles?.main}
       className={`ef-modal-sub-header ef-modal-alert-body`}
-      style={styles.main}
     >
-      <Text
-        className={`ef-modal-alert-text`}
-        style={styles.content?.text}
+      <ScrollView
+        style={styles?.textContainer?.main}
+        contentContainerStyle={styles?.textContainer?.contentContainerStyle}
       >
-        { message }
-      </Text>
+        <Text
+          className={`ef-modal-alert-text`}
+          style={styles?.text}
+        >
+          { message }
+        </Text>
+      </ScrollView>
       <EvfButton
         className={`ef-modal-alert-button`}
         type={'primary'}
-        styles={styles.content?.button}
+        styles={styles?.button}
         onClick={onButtonPress}
         text={'OK'}
       />
