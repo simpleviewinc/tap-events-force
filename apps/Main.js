@@ -1,3 +1,4 @@
+import '../src/theme/theme.config'
 import React, { useState, useEffect } from 'react'
 import { theme } from 'SVTheme'
 import { SafeAreaView, StatusBar } from 'react-native'
