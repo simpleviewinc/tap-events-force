@@ -10,7 +10,8 @@ export const GroupBookingSection = ({
   attendees,
   isBookable,
   onAttendeeSelected,
-  isAttendeeSelected,
+  isAttendingBooking,
+  isAttendingWaiting,
   enableCheck = true,
 }) => {
   const sectionStyles = useStylesMemo('groupBookingSection', styles)
@@ -18,24 +19,29 @@ export const GroupBookingSection = ({
     'form.checkbox.close',
     sectionStyles?.content?.item
   )
+
   return (
     <CheckboxGroup
       styles={sectionStyles}
       title={name}
     >
-      { attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => (
-        <AttendeeCheckboxItem
-          key={attendeeId}
-          id={attendeeId}
-          name={name}
-          onAttendeeSelected={onAttendeeSelected}
-          sectionStyles={sectionStyles}
-          itemStyles={itemStyles}
-          disabled={!isBookable?.(attendeeId)}
-          enableCheck={enableCheck}
-          checked={isAttendeeSelected?.(attendeeId)}
-        />
-      )) }
+      { attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
+        const isBooking = isAttendingBooking?.(attendeeId)
+        const isWaiting = isAttendingWaiting?.(attendeeId)
+        return (
+          <AttendeeCheckboxItem
+            key={attendeeId}
+            id={attendeeId}
+            name={name}
+            onAttendeeSelected={onAttendeeSelected}
+            sectionStyles={sectionStyles}
+            itemStyles={itemStyles}
+            disabled={!isBookable?.(attendeeId)}
+            enableCheck={enableCheck}
+            checked={isBooking || isWaiting}
+          />
+        )
+      }) }
       { !attendees?.length && <Text>No attendees for this category</Text> }
     </CheckboxGroup>
   )

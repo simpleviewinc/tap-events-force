@@ -1,13 +1,13 @@
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
 import { get, checkCall, exists } from '@keg-hub/jsutils'
-import { sessionBookingRequest } from 'SVActions'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useSortedAttendees } from 'SVHooks/models/useSortedAttendees'
+import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 
 /**
  * GroupBooking Modal
@@ -46,52 +46,6 @@ export const GroupBooking = ({ visible, session }) => {
 }
 
 /**
- * Returns callbacks for working with session capacity and latest capacity
- * @param {number?} initialCapacity
- * @param {*} session
- */
-const useSessionBooking = (initialCapacity, session, initialAttendeeIds) => {
-  // current remaining capacity of session, which updates as the user selects and unselects attendees for booking
-  const [ currentCapacity, setCapacity ] = useState(initialCapacity ?? Infinity)
-
-  // A set of attendee ids for attendees to be booked to the session.
-  const attendeeIdsRef = useRef(new Set(initialAttendeeIds || undefined))
-
-  const isUnlimited = session?.capacity?.isUnlimited
-
-  // updates the currentCapacity, as well as the attendeeIdsRef set
-  const updateCapacity = useCallback(
-    ({ id }) => {
-      if (attendeeIdsRef.current.has(id)) {
-        const deleted = attendeeIdsRef.current.delete(id)
-        deleted && !isUnlimited && setCapacity(currentCapacity + 1)
-      }
-      else {
-        const added = attendeeIdsRef.current.add(id)
-        added && !isUnlimited && setCapacity(currentCapacity - 1)
-      }
-    },
-    [ attendeeIdsRef, currentCapacity, setCapacity, isUnlimited ]
-  )
-
-  // makes a request to book the session for the selected attendees (as identified by ids in `attendeeIdsRef`)
-  const bookSession = useCallback(
-    () =>
-      sessionBookingRequest(
-        session.identifier,
-        Array.from(attendeeIdsRef.current)
-      ),
-    [ session.identifier, attendeeIdsRef ]
-  )
-
-  const isAttendeeSelected = useCallback(id => attendeeIdsRef.current.has(id), [
-    attendeeIdsRef.current,
-  ])
-
-  return { updateCapacity, bookSession, isAttendeeSelected, currentCapacity }
-}
-
-/**
  *
  * @param {object} props
  * @param {object} props.styles
@@ -123,6 +77,7 @@ const Body = ({ styles, session, dismissModalCb }) => {
   ])
 
   // get the remaining spots for the session
+  const waitingListIsAvailable = get(session, 'capacity.isWaitingListAvailable')
   const isUnlimited = get(session, 'capacity.isUnlimited')
   const remainingCount = !isUnlimited
     ? get(session, 'capacity.remainingPlaces')
@@ -134,20 +89,38 @@ const Body = ({ styles, session, dismissModalCb }) => {
   // only show the capacity of the session if the number of attendees exceeds the capacity
   const initialCapacityExceedsNeed = remainingCount > bookableAttendeeCount
 
-  // if there is more capacity than bookable attendees, then we want to initially select all bookable attendees
-  const initiallyCheckedAttendeeIds =
-    initialCapacityExceedsNeed &&
+  const initialWaitIds =
+    waitingListIsAvailable &&
     attendees
-      .map(att => att.bookedTicketIdentifier)
-      .filter(id => !restrictedAttendeeIds.has(id))
+      .filter(attendee =>
+        attendee.waitingListSessions?.includes(session?.identifier)
+      )
+      .map(attendee => attendee.bookedTicketIdentifier)
+      .filter(isBookable)
+
+  // if there is more capacity than bookable attendees, and nobody is already waiting, then we want to initially select all bookable attendees.
+  // Otherwise, only pre-select attendees who have the session in their bookedSessions array
+  const initialBookedIds = attendees
+    .filter(
+      att =>
+        (initialCapacityExceedsNeed && !initialWaitIds?.length) ||
+        att.bookedSessions?.includes(session?.identifier)
+    )
+    .map(att => att.bookedTicketIdentifier)
+    .filter(id => isBookable(id) && !initialWaitIds.includes(id))
 
   const {
     updateCapacity,
     bookSession,
-    isAttendeeSelected,
+    isAttendingBooking,
+    isAttendeeWaiting,
     currentCapacity,
-  } = useSessionBooking(remainingCount, session, initiallyCheckedAttendeeIds)
+  } = useSessionBooking(remainingCount, session, {
+    initialBookedIds,
+    initialWaitIds,
+  })
 
+  // if the initial capacity exceeds the number of bookable attendees, no need to show the remaining places in the top section
   const visibleCapacityCount = initialCapacityExceedsNeed
     ? null
     : currentCapacity
@@ -167,8 +140,11 @@ const Body = ({ styles, session, dismissModalCb }) => {
         tickets={tickets}
         attendeesByTicket={attendeesByTicket}
         isBookable={isBookable}
-        isAttendeeSelected={isAttendeeSelected}
-        canBookMore={isUnlimited || currentCapacity > 0}
+        isAttendingBooking={isAttendingBooking}
+        isAttendeeWaiting={isAttendeeWaiting}
+        canBookMore={
+          isUnlimited || waitingListIsAvailable || currentCapacity > 0
+        }
         onAttendeeSelected={updateCapacity}
       />
       <BottomSection
