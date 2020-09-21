@@ -45,7 +45,7 @@ const testOnSessionBookingRequest = (session, attendees) => {
  */
 export const TestContainer = withAppHeader('Test Container', props => {
   const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
-  const [ mockData, setMockData ] = useState(JSON.parse(text))
+  const [ mockData, setMockData ] = useState(testData)
 
   // map the evf props onto our states
   useEffect(() => void mapSessionInterface(mockData), [mockData])
