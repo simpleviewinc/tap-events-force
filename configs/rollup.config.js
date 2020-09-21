@@ -11,7 +11,6 @@ import sourcemaps from 'rollup-plugin-sourcemaps'
 import bundleSize from 'rollup-plugin-bundle-size'
 import generatePackageJson from './plugins/generatePackageJson'
 import image from '@rollup/plugin-image'
-import postcss from 'rollup-plugin-postcss'
 
 const path = require('path')
 const tapPath = require('app-root-path').path
@@ -101,9 +100,6 @@ export default {
   watch: { clearScreen: false },
   plugins: [
     json(),
-    postcss({
-      plugins: []
-    }),
     resolve({
       preferBuiltins: true,
       module: true,

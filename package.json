@@ -81,7 +81,6 @@
     "rollup-plugin-generate-package-json": "^3.2.0",
     "rollup-plugin-jsx": "^1.0.3",
     "rollup-plugin-nodent": "^0.2.2",
-    "rollup-plugin-postcss": "^3.1.8",
     "rollup-plugin-sourcemaps": "^0.6.2"
   },
   "husky": {
