@@ -41,12 +41,11 @@ const testOnSessionBookingRequest = (session, attendees) => {
   console.log(session)
 }
 
-const { EVENTS } = Values
-
-const testonSessionBookingRequest = (session, attendees) => {
-  console.log(attendees)
-  console.log(session)
+const testOnSessionWaitingListRequest = (sessionId, attendeeIds) => {
+  console.log(sessionId)
+  console.log(attendeeIds)
 }
+
 /**
  * TestContainer to be used by QA to test out individual component
  */
@@ -134,6 +133,10 @@ export const ModalDemos = () => {
 
   // set up our event listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
+  useKegEvent(
+    EVENTS.SESSION_WAITING_LIST_REQUEST,
+    testOnSessionWaitingListRequest
+  )
 
   // TODO: just for testing -- remove
   const makeModal = useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
