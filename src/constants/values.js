@@ -18,6 +18,7 @@ export const Values = deepFreeze({
     PRESENTERS: 'presenters',
     SESSIONS: 'sessions',
     SETTINGS: 'settings',
+    ALERT: 'alert',
   },
 
   SUB_CATEGORIES: {

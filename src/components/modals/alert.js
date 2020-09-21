@@ -11,10 +11,9 @@ import { checkCall } from '@keg-hub/jsutils'
  * @param {boolean} props.visible
  * @param {string} props.title - text to show in header
  * @param {string} props.message - text to show in body
- * @param {'error'|null} props.type - text to show in body
+ * @param {'error'|null} props.type - alert type
  */
-export const Alert = ({ visible, title, message, type = 'error' }) => {
-  console.log({ type })
+export const Alert = ({ visible, title, message }) => {
   const theme = useTheme()
   const alertStyles = theme.get('modal.alert')
   const dismissedCBRef = useRef()
