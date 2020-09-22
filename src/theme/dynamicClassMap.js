@@ -69,27 +69,11 @@ const getBackgroundColor = (obj, classPath, fallback) => {
 const setupColors = parsed => {
   // Build the colors object
   const colors = {
-    default: get(parsed.classList, `ef-sessions-text-default.color`, 'inherit'),
-    color1: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-button-default`,
-      'inherit'
-    ),
-    color2: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-details-header`,
-      'inherit'
-    ),
-    color3: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-timeslot-header`,
-      'inherit'
-    ),
-    color4: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-button-primary`,
-      'inherit'
-    ),
+    default: get(parsed.classList, `ef-sessions-text-default.color`),
+    color1: getBackgroundColor(parsed.classList, `ef-sessions-button-default`),
+    color2: getBackgroundColor(parsed.classList, `ef-sessions-details-header`),
+    color3: getBackgroundColor(parsed.classList, `ef-sessions-timeslot-header`),
+    color4: getBackgroundColor(parsed.classList, `ef-sessions-button-primary`),
   }
 
   // Set the colors object, so when the theme gets imported, it has these available
@@ -114,11 +98,7 @@ const setupColors = parsed => {
  * @return {void}
  */
 const setupFonts = parsed => {
-  const headings = get(
-    parsed.classList,
-    `ef-sessions-name.fontFamily`,
-    'inherit'
-  )
+  const headings = get(parsed.classList, `ef-sessions-name.fontFamily`, '')
 
   setFonts(
     {
