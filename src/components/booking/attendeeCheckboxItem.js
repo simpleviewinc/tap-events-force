@@ -25,6 +25,8 @@ export const AttendeeCheckboxItem = props => {
   const isUnnamed = !name || isEmpty(name)
   const text = isUnnamed ? 'Unnamed' : name
 
+  name?.includes('Pepe') && console.log('pepe is waiting', isWaiting)
+
   const unnamedStyles = sectionStyles?.content?.unnamedItem?.main
   const itemStyles = sectionStyles?.content?.item?.main
 
@@ -43,10 +45,15 @@ export const AttendeeCheckboxItem = props => {
       styles={styles}
       text={text}
       RightComponent={
-        isWaiting && (props => <WaitingItem
-          name={name}
-          {...props}
-        />)
+        isWaiting &&
+        (props => (
+          <WaitingItem
+            name={text}
+            {...props}
+            style={props?.style}
+            textStyle={styles?.content?.right}
+          />
+        ))
       }
       type={isWaiting ? 'alternate' : 'primary'}
       onChange={onAttendeeSelected}
@@ -62,10 +69,8 @@ export const AttendeeCheckboxItem = props => {
  * @param {*} props
  */
 const WaitingItem = props => {
-  const { name, style, onPress } = props
-
+  const { name, style, textStyle, onPress } = props
   const waitingStyles = useStylesMemo('attendeeCheckboxItem.waitingItem', style)
-
   const isMobile = isMobileSize(useTheme())
 
   return (
@@ -73,7 +78,7 @@ const WaitingItem = props => {
       <View style={waitingStyles?.textWrapper}>
         <Text
           numberOfLines={1}
-          style={waitingStyles?.text}
+          style={[ waitingStyles?.text, textStyle ]}
           onPress={onPress}
         >
           { name }

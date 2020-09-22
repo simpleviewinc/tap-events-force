@@ -112,8 +112,8 @@ const Body = ({ styles, session, dismissModalCb }) => {
   const {
     updateCapacity,
     bookSession,
-    isAttendeeBooking,
-    isAttendeeWaiting,
+    attendeesBooking,
+    attendeesWaiting,
     currentCapacity,
   } = useSessionBooking(remainingCount, session, {
     initialBookedIds,
@@ -140,8 +140,8 @@ const Body = ({ styles, session, dismissModalCb }) => {
         tickets={tickets}
         attendeesByTicket={attendeesByTicket}
         isBookable={isBookable}
-        isAttendeeBooking={isAttendeeBooking}
-        isAttendeeWaiting={isAttendeeWaiting}
+        attendeesBooking={attendeesBooking}
+        attendeesWaiting={attendeesWaiting}
         canBookMore={
           isUnlimited || waitingListIsAvailable || currentCapacity > 0
         }

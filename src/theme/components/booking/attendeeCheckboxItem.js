@@ -5,6 +5,7 @@ const text = {
   $small: {
     fontSize: 'inherit',
   },
+  overflow: 'visible',
 }
 
 export const attendeeCheckboxItem = {
@@ -29,7 +30,7 @@ export const attendeeCheckboxItem = {
     waitText: {
       ...text,
       fontStyle: 'italic',
-      marginLeft: 3,
+      marginLeft: 4,
     },
     button: {
       main: {
@@ -42,7 +43,6 @@ export const attendeeCheckboxItem = {
           padding: 0,
           justifyContent: 'center',
           alignItems: 'center',
-          // marginRight: 20,
         },
       },
       content: {

@@ -1,8 +1,33 @@
-import { useRef, useState, useCallback } from 'react'
+import { useState, useCallback, useRef, useMemo } from 'react'
 import {
   sessionBookingRequest,
   sessionWaitingListRequest,
 } from 'SVActions/session/booking'
+
+const useSet = (initialData = []) => {
+  const set = useRef(new Set(initialData))
+  const [ data, setData ] = useState(initialData)
+
+  return useMemo(
+    () => ({
+      data,
+      add: element => {
+        if (set.current.has(element)) return false
+        setData([ ...data, element ])
+        return set.current.add(element)
+      },
+      has: element => set.current.has(element),
+      delete: element => {
+        if (!set.current.has(element)) return false
+        const index = data.indexOf(element)
+        // remove only the element at the index
+        setData(data.filter((_, idx) => idx !== index))
+        return set.current.delete(element)
+      },
+    }),
+    [ data, setData, set.current ]
+  )
+}
 
 /**
  * Returns callbacks for working with session capacity and latest capacity
@@ -20,59 +45,55 @@ export const useSessionBooking = (
   const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable
   const isUnlimited = session?.capacity?.isUnlimited
 
-  // A set of attendee ids for attendees to be booked to the session.
-  const attendeeIdsToBook = useRef(new Set(initialBookedIds || undefined))
-  const attendeeIdsToWait = useRef(new Set(initialWaitIds || undefined))
+  // sets of attendee ids for booking and waiting
+  const bookingList = useSet(initialBookedIds)
+  const waitingList = useSet(initialWaitIds)
 
   // updates the currentCapacity, as well as the correct ids list
   const updateCapacity = useCallback(
     ({ id }) => {
-      // const shouldUseWaitingList = waitingListIsAvailable && currentCapacity <= 0
-      // if (shouldUseWaitingList) {
-      //   attendeeIdsToWait.current.has(id)
-      //     ? attendeeIdsToWait.current.delete(id)
-      //     : attendeeIdsToWait.current.add(id)
-      // }
-      if (attendeeIdsToBook.current.has(id)) {
-        const deleted = attendeeIdsToBook.current.delete(id)
-        deleted && !isUnlimited && setCapacity(currentCapacity - 1)
+      const shouldUseWaitingList =
+        waitingListIsAvailable && currentCapacity <= 0
+      if (waitingList.has(id)) {
+        console.log('removing from waiting list', id)
+        waitingList.delete(id)
+      }
+      else if (bookingList.has(id)) {
+        console.log('removing from booking list', id)
+        const deleted = bookingList.delete(id)
+        deleted && !isUnlimited && setCapacity(currentCapacity + 1)
+      }
+      else if (shouldUseWaitingList && !waitingList.has(id)) {
+        console.log('putting on waiting list', id)
+        waitingList.add(id)
+      }
+      else if (!shouldUseWaitingList && !bookingList.has(id)) {
+        console.log('putting on book list', id)
+        const added = bookingList.add(id)
+        added && !isUnlimited && setCapacity(currentCapacity - 1)
       }
       else {
-        const added = attendeeIdsToBook.current.add(id)
-        added && !isUnlimited && setCapacity(currentCapacity + 1)
+        console.log('idk where to put', id)
       }
     },
-    [ attendeeIdsToBook, currentCapacity, setCapacity, isUnlimited ]
+    [ bookingList, waitingList, currentCapacity, setCapacity, isUnlimited ]
   )
 
   // makes a request to book the session for the selected attendees (as identified by ids in `attendeeIdsRef`)
   const bookSession = useCallback(() => {
-    sessionBookingRequest(
-      session.identifier,
-      Array.from(attendeeIdsToBook.current)
-    )
+    sessionBookingRequest(session.identifier, Array.from(bookingList.data))
     waitingListIsAvailable &&
-      sessionWaitingListRequest?.(
+      sessionWaitingListRequest(
         session.identifier,
-        Array.from(attendeeIdsToWait.current)
+        Array.from(waitingList.data)
       )
-  }, [(session.identifier, attendeeIdsToBook)])
-
-  const isAttendeeBooking = useCallback(
-    id => attendeeIdsToBook.current.has(id),
-    [attendeeIdsToBook.current]
-  )
-
-  const isAttendeeWaiting = useCallback(
-    id => attendeeIdsToWait.current.has(id),
-    [attendeeIdsToWait.current]
-  )
+  }, [ session.identifier, bookingList, waitingListIsAvailable, waitingList ])
 
   return {
     updateCapacity,
     bookSession,
-    isAttendeeBooking,
-    isAttendeeWaiting,
+    attendeesBooking: bookingList,
+    attendeesWaiting: waitingList,
     currentCapacity,
   }
 }

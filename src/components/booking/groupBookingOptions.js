@@ -18,8 +18,8 @@ export const GroupBookingOptions = props => {
     attendeesByTicket,
     restrictedAttendeeIds,
     isBookable,
-    isAttendeeBooking,
-    isAttendeeWaiting,
+    attendeesBooking,
+    attendeesWaiting,
     canBookMore = true,
   } = props
 
@@ -38,8 +38,8 @@ export const GroupBookingOptions = props => {
           attendees={attendeesByTicket[ticket.identifier] || emptyArr}
           restrictedAttendeeIds={restrictedAttendeeIds}
           onAttendeeSelected={onAttendeeSelected}
-          isAttendeeBooking={isAttendeeBooking}
-          isAttendeeWaiting={isAttendeeWaiting}
+          attendeesBooking={attendeesBooking}
+          attendeesWaiting={attendeesWaiting}
           isBookable={isBookable}
           enableCheck={canBookMore}
         />
