@@ -3,6 +3,7 @@ import { colors } from 'SVTheme/colors'
 export const groupBookingSection = {
   main: {
     marginBottom: 11,
+    width: '95%',
   },
   content: {
     header: {

@@ -1,5 +1,8 @@
 import { useRef, useState, useCallback } from 'react'
-import { sessionBookingRequest, sessionWaitingListRequest } from 'SVActions'
+import {
+  sessionBookingRequest,
+  sessionWaitingListRequest,
+} from 'SVActions/session/booking'
 
 /**
  * Returns callbacks for working with session capacity and latest capacity
@@ -31,32 +34,29 @@ export const useSessionBooking = (
       //     : attendeeIdsToWait.current.add(id)
       // }
       if (attendeeIdsToBook.current.has(id)) {
-        alert(`${id} exists`)
         const deleted = attendeeIdsToBook.current.delete(id)
-        deleted && !isUnlimited && setCapacity(currentCapacity + 1)
+        deleted && !isUnlimited && setCapacity(currentCapacity - 1)
       }
       else {
-        alert(`${id} doesn\'t exist`)
         const added = attendeeIdsToBook.current.add(id)
-        added && !isUnlimited && setCapacity(currentCapacity - 1)
+        added && !isUnlimited && setCapacity(currentCapacity + 1)
       }
     },
     [ attendeeIdsToBook, currentCapacity, setCapacity, isUnlimited ]
   )
 
   // makes a request to book the session for the selected attendees (as identified by ids in `attendeeIdsRef`)
-  const bookSession = useCallback(
-    () =>
-      sessionBookingRequest(
-        session.identifier,
-        Array.from(attendeeIdsToBook.current)
-      ),
+  const bookSession = useCallback(() => {
+    sessionBookingRequest(
+      session.identifier,
+      Array.from(attendeeIdsToBook.current)
+    )
     waitingListIsAvailable &&
       sessionWaitingListRequest?.(
         session.identifier,
         Array.from(attendeeIdsToWait.current)
-      )[(session.identifier, attendeeIdsToBook)]
-  )
+      )
+  }, [(session.identifier, attendeeIdsToBook)])
 
   const isAttendeeBooking = useCallback(
     id => attendeeIdsToBook.current.has(id),

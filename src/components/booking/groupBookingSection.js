@@ -10,8 +10,8 @@ export const GroupBookingSection = ({
   attendees,
   isBookable,
   onAttendeeSelected,
-  isAttendingBooking,
-  isAttendingWaiting,
+  isAttendeeBooking,
+  isAttendeeWaiting,
   enableCheck = true,
 }) => {
   const sectionStyles = useStylesMemo('groupBookingSection', styles)
@@ -26,14 +26,16 @@ export const GroupBookingSection = ({
       title={name}
     >
       { attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
-        const isBooking = isAttendingBooking?.(attendeeId)
-        const isWaiting = isAttendingWaiting?.(attendeeId)
+        const isBooking = isAttendeeBooking?.(attendeeId)
+        const isWaiting = isAttendeeWaiting?.(attendeeId)
+
         return (
           <AttendeeCheckboxItem
             key={attendeeId}
             id={attendeeId}
             name={name}
             onAttendeeSelected={onAttendeeSelected}
+            isWaiting={isWaiting}
             sectionStyles={sectionStyles}
             itemStyles={itemStyles}
             disabled={!isBookable?.(attendeeId)}
