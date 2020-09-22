@@ -43,23 +43,33 @@ export const groupBookingModal = {
           main: {
             $xsmall: {
               flexDirection: 'row',
-              justifyContent: 'flex-end',
+              alignSelf: 'flex-end',
               paddingTop: 26,
               paddingBottom: 35,
+              flex: 1,
+              width: 'fit-content',
             },
           },
           content: {
             cancelButton: {
               main: {
-                minHeight: 45,
-                maxWidth: 120,
-                marginRight: 10,
+                $xsmall: {
+                  minHeight: 45,
+                  marginRight: 10,
+                },
+                $small: {
+                  minWidth: 120,
+                },
               },
             },
             bookButton: {
               main: {
-                minHeight: 45,
-                maxWidth: 190,
+                $xsmall: {
+                  minHeight: 45,
+                },
+                $small: {
+                  minWidth: 190,
+                },
               },
             },
           },
