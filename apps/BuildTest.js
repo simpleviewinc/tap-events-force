@@ -1,5 +1,5 @@
 import React from 'react'
-import testData from '../src/mocks/eventsforce/testData.js'
+import testData from '../src/mocks/eventsforce/testData.json'
 import Sessions from '../build/keg-sessions.esm.js'
 
 const mockCallbacks = {
