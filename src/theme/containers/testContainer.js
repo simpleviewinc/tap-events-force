@@ -25,7 +25,7 @@ export const testContainer = {
             minHeight: 45,
             marginTop: 10,
             marginRight: 10,
-            maxWidth: 200,
+            maxWidth: 150,
           },
         },
       },

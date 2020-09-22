@@ -18,11 +18,15 @@ const buildStyles = (theme, custom) => {
   // This allows dynamically matching the Theme states even if they are changed
   const stateKeys = Object.keys(get(btnStyles, 'content.button', {}))
 
-  return theme.get(
-    btnStyles,
-    custom.styles,
+  // overwrite the max/min width when trying to display 'processing' content
+  const fitWidth = custom.isProcessing && {
+    maxWidth: 'fit-content',
+    minWidth: 'fit-content',
+  }
+
+  return theme.get(btnStyles, custom.styles, {
     main: {
-      ...maxWidth,
+      ...fitWidth,
     },
     content: {
       button: {
@@ -61,8 +65,9 @@ export const EvfButton = ({
   const parsedStyles = useParsedStyle(buttonCls)
   const customStyles = useMemo(
     () => ({ type, styles, parsed: parsedStyles, isProcessing }),
-    [ type, styles, parsedStyles ]
+    [ type, styles, parsedStyles, isProcessing ]
   )
+
   const mainStyle = useStylesCallback(
     buildStyles,
     [ type, styles, isProcessing ],

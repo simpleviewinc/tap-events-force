@@ -101,20 +101,20 @@ const EVFButtonDemos = ({ styles }) => {
           type={'primary'}
           styles={styles.button}
           onClick={() => console.log('clicked primary')}
-          text={'Button Primary'}
+          text={'Primary'}
         />
         <EvfButton
           type={'default'}
           styles={styles.button}
           onClick={() => console.log('clicked default')}
-          text={'Button Default'}
+          text={'Default'}
         />
         <EvfButton
           type={'primary'}
           isProcessing={processing}
           styles={styles.button}
           onClick={() => setProcessing(true)}
-          text={'Fetch data demo'}
+          text={'Fetch demo'}
         />
       </View>
     </Section>
