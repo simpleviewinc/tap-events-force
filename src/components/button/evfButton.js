@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react'
-import { View, Button } from '@keg-hub/keg-components'
+import { View, Button, Text } from '@keg-hub/keg-components'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
+import { EvfLoading } from 'SVComponents/loading'
 import { set, get } from '@keg-hub/jsutils'
 
 /**
  * Builds the styles for the Evf button merging the default styles with the parsed styles
  * @param {Object} theme - Global Theme object
- * @param {Object} custom - contains {type, styles, parsed}
+ * @param {Object} custom - contains {type, styles, parsed, isProcessing}
  * 
  * @returns {Object} - Merged Evf button styles
  */
@@ -20,6 +21,16 @@ const buildStyles = (theme, custom) => {
   return theme.get(
     btnStyles,
     custom.styles,
+    main: {
+      ...maxWidth,
+    },
+    content: {
+      button: {
+        active: parsedState,
+        default: parsedState,
+        hover: parsedState,
+      },
+    },
     custom.parsed && 
       // Loop over the state keys, and set the parsed styles for each
       stateKeys.reduce((parsed, state) => {
@@ -36,34 +47,60 @@ const buildStyles = (theme, custom) => {
  * @param {object} props.onClick
  * @param {('default'|'primary')} props.type - button type. defaults to 'default'
  * @param {string} props.text - text to display on button
+ * @param {boolean} props.isProcessing - to display processing content
  */
 export const EvfButton = ({
   styles,
   onClick,
   type = 'default',
   text,
-  loading,
+  isProcessing = false,
 }) => {
   // build the main style for the button, memoized
   const buttonCls = `ef-button-${type}`
   const parsedStyles = useParsedStyle(buttonCls)
-  const customStyles = useMemo(() => ({ type, styles, parsed: parsedStyles }), [
-    type,
-    styles,
-    parsedStyles,
-  ])
-  const mainStyle = useStylesCallback(buildStyles, [ type, styles ], customStyles)
+  const customStyles = useMemo(
+    () => ({ type, styles, parsed: parsedStyles, isProcessing }),
+    [ type, styles, parsedStyles ]
+  )
+  const mainStyle = useStylesCallback(
+    buildStyles,
+    [ type, styles, isProcessing ],
+    customStyles
+  )
 
   return (
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main} />
-      { /* <Loading /> */ }
       <Button
+        disabled={isProcessing}
         className={[ buttonCls, `ef-session-button-${type}` ]}
         onClick={onClick}
         styles={mainStyle?.content?.button}
-        content={text}
-      />
+      >
+        { isProcessing ? (
+          <Processing
+            styles={mainStyle?.content?.processing}
+            size={mainStyle?.content?.processing?.icon?.size || 20}
+          />
+        ) : (
+          text
+        ) }
+      </Button>
+    </View>
+  )
+}
+
+/**
+ * Processing
+ * @param {object} props
+ * @param {object} props.styles
+ */
+const Processing = ({ styles, size }) => {
+  return (
+    <View style={styles.main}>
+      <EvfLoading size={size} />
+      <Text style={styles.text}>Processing</Text>
     </View>
   )
 }

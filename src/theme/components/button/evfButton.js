@@ -20,6 +20,21 @@ const topLeftCornerStyle = {
   },
 }
 
+const defaultTextStyle = {
+  $xsmall: {
+    letterSpacing: 0.105,
+    fontWeight: 'bold',
+    color: colors.white,
+    fontSize: 13,
+    paddingHorizontal: 8,
+    lineHeight: 18,
+    alignSelf: 'center',
+  },
+  $small: {
+    fontSize: 15,
+  },
+}
+
 const defaultButtonStyles = {
   main: {
     $all: {
@@ -32,19 +47,7 @@ const defaultButtonStyles = {
       boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.15)',
     },
   },
-  content: {
-    $xsmall: {
-      letterSpacing: 0.105,
-      fontWeight: 'bold',
-      color: colors.white,
-      fontSize: 13,
-      paddingHorizontal: 8,
-      lineHeight: 18,
-    },
-    $small: {
-      fontSize: 15,
-    },
-  },
+  content: defaultTextStyle,
 }
 
 /**
@@ -85,6 +88,17 @@ const buttonStateStyles = backgroundColor => {
       },
       content: defaultButtonStyles.content,
     },
+    disabled: {
+      main: {
+        $all: {
+          ...defaultButtonStyles.main.$all,
+          backgroundColor,
+          opacity: 0.6,
+        },
+        $web: defaultButtonStyles.main.$web,
+      },
+      content: defaultButtonStyles.content,
+    },
   }
 }
 
@@ -93,12 +107,28 @@ const defaultMainStyle = {
   flex: 1,
 }
 
+const processingStyles = {
+  main: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  icon: {
+    size: 20,
+  },
+  text: {
+    ...defaultTextStyle,
+    marginHorizontal: 10,
+  },
+}
+
 export const evfButton = {
   default: {
     main: defaultMainStyle,
     content: {
       topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.default),
+      processing: processingStyles,
     },
   },
   primary: {
@@ -106,6 +136,7 @@ export const evfButton = {
     content: {
       topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.primary),
+      processing: processingStyles,
     },
   },
 }

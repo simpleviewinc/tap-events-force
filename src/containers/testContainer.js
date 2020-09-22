@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux'
 import { withAppHeader } from 'SVComponents'
 import { useKegEvent } from 'SVHooks/events'
 import { isNative } from 'SVUtils/platform/isNative'
+import { EvfButton } from 'SVComponents/button'
 
 const { EVENTS } = Values
 const marginStyle = {
@@ -72,6 +73,53 @@ export const TestContainer = withAppHeader('Test Container', props => {
     </View>
   )
 })
+
+/**
+ * EVF button demos
+ * @param {object} styles
+ */
+const EVFButtonDemos = ({ styles }) => {
+  const [ processing, setProcessing ] = useState(false)
+  useEffect(() => {
+    if (processing) {
+      setTimeout(() => {
+        setProcessing(false)
+      }, 1000)
+    }
+  }, [processing])
+
+  return (
+    <Section>
+      <H5>EVF Buttons</H5>
+      <View style={styles.main}>
+        <EvfButton
+          type={'primary'}
+          styles={styles.button}
+          isProcessing
+        />
+        <EvfButton
+          type={'primary'}
+          styles={styles.button}
+          onClick={() => console.log('clicked primary')}
+          text={'Button Primary'}
+        />
+        <EvfButton
+          type={'default'}
+          styles={styles.button}
+          onClick={() => console.log('clicked default')}
+          text={'Button Default'}
+        />
+        <EvfButton
+          type={'primary'}
+          isProcessing={processing}
+          styles={styles.button}
+          onClick={() => setProcessing(true)}
+          text={'Fetch data demo'}
+        />
+      </View>
+    </Section>
+  )
+}
 
 export const ModalDemos = () => {
   const theme = useTheme()
@@ -157,6 +205,8 @@ export const ModalDemos = () => {
           content={'Group booking Demo 4 - no spots left'}
         />
       </Section>
+
+      <EVFButtonDemos styles={testStyles.content.evfButtons} />
       { store.modals.length > 0 && RenderModals(store.modals) }
     </View>
   )
