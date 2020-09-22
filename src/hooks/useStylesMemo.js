@@ -5,11 +5,10 @@ const noOpObj = {
   content: {},
 }
 
-export const useStylesMemo = (path, ...styles) => {
+export const useStylesMemo = (...styleArgs) => {
   const theme = useTheme()
-  return useMemo(() => theme.get(path, ...styles) || noOpObj, [
+  return useMemo(() => theme.get(...styleArgs) || noOpObj, [
     theme,
-    path,
-    ...styles,
+    ...styleArgs,
   ])
 }

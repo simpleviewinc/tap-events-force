@@ -13,6 +13,7 @@ export const GroupHeader = ({ title, ...rest }) => {
 /**
  *
  * @param {*} props
+ * @param {*} props.type - either primary or alternate
  * @param {*} props.styles
  * @param {*} props.styles.main - the root checkbox
  * @param {*} props.styles.content
@@ -22,22 +23,24 @@ export const ItemCheckbox = props => {
   const {
     styles,
     text,
+    RightComponent,
     id,
     onChange,
     close = true,
     enableCheck = true,
+    type = 'primary',
     ...rest
   } = props
 
   const handler = useCallback(event =>
     onChange?.({ event, text, id }, [ onChange, text, id ])
   )
-  const checkboxStyles = useStylesMemo('checkboxGroup.item', styles)
+  const checkboxStyles = useStylesMemo(`checkboxGroup.item.${type}`, styles)
 
   return (
     <Checkbox
       styles={checkboxStyles}
-      RightComponent={text}
+      RightComponent={RightComponent || text}
       onChange={handler}
       close={close}
       disableCheck={!enableCheck}
