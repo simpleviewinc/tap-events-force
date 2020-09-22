@@ -37,7 +37,13 @@ const buildStyles = (theme, custom) => {
  * @param {('default'|'primary')} props.type - button type. defaults to 'default'
  * @param {string} props.text - text to display on button
  */
-export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
+export const EvfButton = ({
+  styles,
+  onClick,
+  type = 'default',
+  text,
+  loading,
+}) => {
   // build the main style for the button, memoized
   const buttonCls = `ef-button-${type}`
   const parsedStyles = useParsedStyle(buttonCls)
@@ -50,7 +56,8 @@ export const EvfButton = ({ styles, onClick, type = 'default', text }) => {
 
   return (
     <View style={mainStyle?.main}>
-      <View style={mainStyle?.content?.topLeftCorner?.main}></View>
+      <View style={mainStyle?.content?.topLeftCorner?.main} />
+      { /* <Loading /> */ }
       <Button
         className={[ buttonCls, `ef-session-button-${type}` ]}
         onClick={onClick}
