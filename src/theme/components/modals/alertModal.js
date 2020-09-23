@@ -39,15 +39,25 @@ export const alertModal = {
       },
       textContainer: {
         main: {
-          maxHeight: 500,
-          marginBottom: 10,
+          $xsmall: {
+            maxHeight: 250,
+            marginBottom: 10,
+          },
+          $small: {
+            maxHeight: 500,
+          },
         },
         contentContainer: {
           padding: 10,
         },
       },
       text: {
-        fontSize: '16px',
+        $xsmall: {
+          fontSize: '14px',
+        },
+        $small: {
+          fontSize: '16px',
+        },
       },
       button: {
         main: {
