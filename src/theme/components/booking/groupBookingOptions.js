@@ -4,7 +4,7 @@ export const groupBookingOptions = {
   main: {
     $web: {
       $xsmall: {
-        marginTop: 16,
+        marginTop: 12,
         borderColor: colors.lightGray02,
         borderWidth: 1,
         overflow: 'auto',

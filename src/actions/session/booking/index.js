@@ -1,2 +1,6 @@
 export * from './sessionBookingRequest'
 export * from './sessionWaitingListRequest'
+export * from './setBookingList'
+export * from './setCurrentSessionId'
+export * from './setWaitingList'
+export * from './setSessionCapacity'

@@ -173,7 +173,7 @@ export default {
       capacity: {
         isUnlimited: false,
         remainingPlaces: 3,
-        isWaitingListAvailable: false,
+        isWaitingListAvailable: true,
       },
     },
     {

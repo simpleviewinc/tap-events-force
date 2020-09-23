@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, useEffect, useState } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, View } from '@keg-hub/keg-components'
@@ -8,6 +8,12 @@ import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useSortedAttendees } from 'SVHooks/models/useSortedAttendees'
 import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
+import {
+  setWaitingList,
+  setBookingList,
+  setSessionCapacity as setCapacity,
+  setCurrentSessionId,
+} from 'SVActions/session/booking'
 
 /**
  * GroupBooking Modal
@@ -76,6 +82,7 @@ const Body = ({ styles, session, dismissModalCb }) => {
     restrictedAttendeeIds,
   ])
 
+  // TODO: extract this into a separate function
   // get the remaining spots for the session
   const waitingListIsAvailable = get(session, 'capacity.isWaitingListAvailable')
   const isUnlimited = get(session, 'capacity.isUnlimited')
@@ -83,12 +90,14 @@ const Body = ({ styles, session, dismissModalCb }) => {
     ? get(session, 'capacity.remainingPlaces')
     : Infinity
 
+  // TODO: consider these into one fn
   // number of attendees that are eligible to book this session
   const bookableAttendeeCount = sortedAttendeeCount - restrictedAttendeeIds.size
 
   // only show the capacity of the session if the number of attendees exceeds the capacity
   const initialCapacityExceedsNeed = remainingCount > bookableAttendeeCount
 
+  // TODO: memoize this work, and use `reduce` so that we can do this in one pass
   const initialWaitIds =
     waitingListIsAvailable &&
     attendees
@@ -98,28 +107,31 @@ const Body = ({ styles, session, dismissModalCb }) => {
       .map(attendee => attendee.bookedTicketIdentifier)
       .filter(isBookable)
 
+  // TODO: memoize this work, and use `reduce` so that we can do this in one pass
   // if there is more capacity than bookable attendees, and nobody is already waiting, then we want to initially select all bookable attendees.
   // Otherwise, only pre-select attendees who have the session in their bookedSessions array
   const initialBookedIds = attendees
     .filter(
-      att =>
+      attendee =>
         (initialCapacityExceedsNeed && !initialWaitIds?.length) ||
-        att.bookedSessions?.includes(session?.identifier)
+        attendee.bookedSessions?.includes(session?.identifier)
     )
-    .map(att => att.bookedTicketIdentifier)
+    .map(attendee => attendee.bookedTicketIdentifier)
     .filter(id => isBookable(id) && !initialWaitIds.includes(id))
 
-  const {
-    updateCapacity,
-    bookSession,
-    attendeesBooking,
-    attendeesWaiting,
-    currentCapacity,
-  } = useSessionBooking(remainingCount, session, {
-    initialBookedIds,
-    initialWaitIds,
-  })
+  // initialize the store state for group booking
+  const [ initialized, setInitialized ] = useState(false)
+  useEffect(() => {
+    setCapacity(remainingCount)
+    setBookingList(initialBookedIds)
+    setWaitingList(initialWaitIds)
+    setCurrentSessionId(session?.identifier)
+    setInitialized(true)
+  }, [session])
 
+  const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
+    session
+  )
   // if the initial capacity exceeds the number of bookable attendees, no need to show the remaining places in the top section
   const visibleCapacityCount = initialCapacityExceedsNeed
     ? null
@@ -134,19 +146,15 @@ const Body = ({ styles, session, dismissModalCb }) => {
         styles={topSectionStyles}
         remainingCount={visibleCapacityCount}
       />
-      <GroupBookingOptions
-        className={`ef-modal-group-section-middle`}
-        styles={middleSectionStyles}
-        tickets={tickets}
-        attendeesByTicket={attendeesByTicket}
-        isBookable={isBookable}
-        attendeesBooking={attendeesBooking}
-        attendeesWaiting={attendeesWaiting}
-        canBookMore={
-          isUnlimited || waitingListIsAvailable || currentCapacity > 0
-        }
-        onAttendeeSelected={updateCapacity}
-      />
+      { initialized && (
+        <GroupBookingOptions
+          className={`ef-modal-group-section-middle`}
+          styles={middleSectionStyles}
+          attendeesByTicket={attendeesByTicket}
+          isBookable={isBookable}
+          onAttendeeSelected={updateCapacity}
+        />
+      ) }
       <BottomSection
         onCancelPress={dismissModalCb}
         onSubmitPress={bookSession}

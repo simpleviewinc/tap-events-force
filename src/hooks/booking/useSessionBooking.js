@@ -2,9 +2,40 @@ import { useState, useCallback, useRef, useMemo } from 'react'
 import {
   sessionBookingRequest,
   sessionWaitingListRequest,
+  setWaitingList,
+  setBookingList,
+  setSessionCapacity as setCapacity,
 } from 'SVActions/session/booking'
 
-const useSet = (initialData = []) => {
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
+
+import { omitRange, uniqArr, pipeline } from '@keg-hub/jsutils'
+
+import { Values } from 'SVConstants'
+
+const { CATEGORIES, SUB_CATEGORIES } = Values
+
+/**
+ * Stores elements as react state, while also ensuring no duplicates.
+ * Returns a set-like object
+ * @param {*} initialData
+ * @return {Object} set-like object, with methods `add`, `has`, `delete`. To access the underlying
+ * data, use the `data` property (which returns an array). Calling one of the mutation functions, add or delete,
+ * **may** initiate a react state update, rerendering any components depending on `data`.
+ * No state updates are queued if you try to add an element that already exists or delete an element that doesn't.
+ *
+ * @example
+ * const initialUsers = [ { name: 'Steve' } ]
+ * const users = useSet(initialUsers)
+ * users.data // [ { name: 'Steve' } ]
+ * users.has(initialUsers[0]) // true
+ * users.delete(initialUsers[0]) // true
+ * users.data // rerenders with []
+ * users.add({ name: 'Bob' }) // true
+ * users.add({ name: 'Bob' }) // false
+ * users.data // rerenders with [{ name: 'Bob' }]
+ */
+export const useSet = (initialData = []) => {
   const set = useRef(new Set(initialData))
   const [ data, setData ] = useState(initialData)
 
@@ -29,51 +60,90 @@ const useSet = (initialData = []) => {
   )
 }
 
+const omitElement = (array, element) => {
+  const index = array?.indexOf(element) ?? -1
+  return index < 0 ? array : omitRange(array, index, 1)
+}
+
+/**
+ * Provides a set-like interface to `arr`.
+ * If it determines a mutation needs to occur, it will call `setArr` with
+ * the a new array that has the mutation applied.
+ * @param {Array} arr
+ * @param {Function} setArr
+ */
+export const useExternalSet = (arr, setArr) => {
+  return useMemo(
+    () => ({
+      data: arr,
+      add: element => {
+        if (!arr || arr.includes(element)) return false
+        pipeline([ ...arr, element ], uniqArr, setArr)
+        return true
+      },
+      delete: element => {
+        if (!arr?.includes(element)) return false
+        pipeline(omitElement(arr, element), setArr)
+        return true
+      },
+      has: element => arr?.includes(element),
+    }),
+    [ arr, setArr ]
+  )
+}
+
+export const useBookingSet = () => {
+  const groupBooking = useStoreItems(CATEGORIES.GROUP_BOOKING)
+  return useExternalSet(groupBooking.bookingList, setBookingList)
+}
+
+export const useWaitingSet = () => {
+  const groupBooking = useStoreItems(CATEGORIES.GROUP_BOOKING)
+  return useExternalSet(groupBooking.waitingList, setWaitingList)
+}
+
+export const useCurrentSession = () => {
+  const id = useStoreItems(
+    `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.CURRENT_SESSION}`
+  )
+  return useStoreItems(`${CATEGORIES.SESSIONS}.${id}`)
+}
+
 /**
  * Returns callbacks for working with session capacity and latest capacity
  * @param {number?} initialCapacity
  * @param {*} session
  */
-export const useSessionBooking = (
-  initialCapacity,
-  session,
-  { initialBookedIds, initialWaitIds }
-) => {
-  // current remaining capacity of session, which updates as the user selects and unselects attendees for booking
-  const [ currentCapacity, setCapacity ] = useState(initialCapacity ?? Infinity)
+export const useSessionBooking = session => {
+  const groupBooking = useStoreItems(CATEGORIES.GROUP_BOOKING)
+  const currentCapacity = groupBooking?.capacity
 
   const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable
   const isUnlimited = session?.capacity?.isUnlimited
 
   // sets of attendee ids for booking and waiting
-  const bookingList = useSet(initialBookedIds)
-  const waitingList = useSet(initialWaitIds)
+  const bookingList = useExternalSet(groupBooking.bookingList, setBookingList)
+  const waitingList = useExternalSet(groupBooking.waitingList, setWaitingList)
 
   // updates the currentCapacity, as well as the correct ids list
   const updateCapacity = useCallback(
     ({ id }) => {
       const shouldUseWaitingList =
         waitingListIsAvailable && currentCapacity <= 0
+
       if (waitingList.has(id)) {
-        console.log('removing from waiting list', id)
         waitingList.delete(id)
       }
       else if (bookingList.has(id)) {
-        console.log('removing from booking list', id)
-        const deleted = bookingList.delete(id)
-        deleted && !isUnlimited && setCapacity(currentCapacity + 1)
+        bookingList.delete(id) &&
+          !isUnlimited &&
+          setCapacity(currentCapacity + 1)
       }
       else if (shouldUseWaitingList && !waitingList.has(id)) {
-        console.log('putting on waiting list', id)
         waitingList.add(id)
       }
       else if (!shouldUseWaitingList && !bookingList.has(id)) {
-        console.log('putting on book list', id)
-        const added = bookingList.add(id)
-        added && !isUnlimited && setCapacity(currentCapacity - 1)
-      }
-      else {
-        console.log('idk where to put', id)
+        bookingList.add(id) && !isUnlimited && setCapacity(currentCapacity - 1)
       }
     },
     [ bookingList, waitingList, currentCapacity, setCapacity, isUnlimited ]

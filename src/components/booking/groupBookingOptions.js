@@ -3,6 +3,7 @@ import { ScrollView } from '@keg-hub/keg-components'
 import { GroupBookingSection } from './groupBookingSection'
 import { useStylesMemo } from 'SVHooks/useStylesMemo'
 import { useTicketsForBooking } from 'SVHooks/models/useTicketsForBooking'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 const emptyArr = []
 
@@ -11,21 +12,12 @@ const emptyArr = []
  * @param {*} param0
  */
 export const GroupBookingOptions = props => {
-  const {
-    styles,
-    onAttendeeSelected,
-    tickets,
-    attendeesByTicket,
-    restrictedAttendeeIds,
-    isBookable,
-    attendeesBooking,
-    attendeesWaiting,
-    canBookMore = true,
-  } = props
+  const { styles, onAttendeeSelected, attendeesByTicket, isBookable } = props
 
   const viewStyles = useStylesMemo('groupBookingOptions.main', styles?.main)
 
   // sort tickets and filter out invalid ones
+  const tickets = useStoreItems('tickets')
   const sortedTickets = useTicketsForBooking(tickets, attendeesByTicket)
 
   return (
@@ -36,12 +28,8 @@ export const GroupBookingOptions = props => {
           key={ticket.identifier}
           name={ticket.name}
           attendees={attendeesByTicket[ticket.identifier] || emptyArr}
-          restrictedAttendeeIds={restrictedAttendeeIds}
           onAttendeeSelected={onAttendeeSelected}
-          attendeesBooking={attendeesBooking}
-          attendeesWaiting={attendeesWaiting}
           isBookable={isBookable}
-          enableCheck={canBookMore}
         />
       )) }
     </ScrollView>
