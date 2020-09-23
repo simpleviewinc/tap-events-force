@@ -1,6 +1,9 @@
-import { useMemo } from 'react'
+import { useMemo, useCallback } from 'react'
 import { getAllBookedTickets } from 'SVUtils/models/tickets'
 import { sortAttendeeIntoSections } from 'SVUtils/models/attendees'
+
+import { setAttendeesByTicket } from 'SVActions/attendees/setAttendeesByTicket'
+import { setRestrictedAttendeeIds } from 'SVActions/attendees/setRestrictedAttendeeIds'
 
 /**
  * Builds a map of booking categories to arrays of attendees who reside in that cateogory
@@ -13,24 +16,49 @@ export const useSortedAttendees = (
   tickets,
   bookedTickets
 ) => {
-  return useMemo(() => {
-    // booked tickets can contain sub tickets, and we need to consider those as well when sorting attendees
-    const initSectionData = {
-      // data used by reducing function `sortAttendeeIntoSections`
-      session,
-      tickets,
-      bookedTickets: getAllBookedTickets(bookedTickets),
+  const deps = [ session, attendees, tickets, bookedTickets ]
+  const sortAttendees = useCallback(() => buildSortedAttendees(...deps), deps)
+  return useMemo(sortAttendees, deps)
+}
 
-      // booking categories mapped to attendees for those categories
-      attendeesByTicket: {},
+export const useSortedAttendeesInit = (
+  session,
+  attendees,
+  tickets,
+  bookedTickets
+) => {
+  const deps = [ session, attendees, tickets, bookedTickets ]
+  useEffect(() => {
+    const { attendeesByTicket, restrictedAttendeeIds } = buildSortedAttendees(
+      ...deps
+    )
 
-      // identifiers of attendees that cannot be booked for this session, and should be greyed out
-      restrictedAttendeeIds: new Set(),
+    setAttendeesByTicket(attendeesByTicket)
+    setRestrictedAttendeeIds(session, restrictedAttendeeIds)
+  }, deps)
+}
 
-      // count of all attendees sorted into tickets (not necessarily the same length as `attendees`)
-      sortedAttendeeCount: 0,
-    }
+export const buildSortedAttendees = (
+  session,
+  attendees,
+  tickets,
+  bookedTickets
+) => {
+  const initSectionData = {
+    // data used by reducing function `sortAttendeeIntoSections`
+    session,
+    tickets,
+    bookedTickets: getAllBookedTickets(bookedTickets),
 
-    return attendees.reduce(sortAttendeeIntoSections, initSectionData)
-  }, [ session, attendees, tickets, bookedTickets ])
+    // booking categories mapped to attendees for those categories
+    attendeesByTicket: {},
+
+    // identifiers of attendees that cannot be booked for this session, and should be greyed out
+    restrictedAttendeeIds: new Set(),
+
+    // count of all attendees sorted into tickets (not necessarily the same length as `attendees`)
+    sortedAttendeeCount: 0,
+  }
+
+  return attendees.reduce(sortAttendeeIntoSections, initSectionData)
 }

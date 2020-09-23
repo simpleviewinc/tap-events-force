@@ -60,6 +60,12 @@ export const useSet = (initialData = []) => {
   )
 }
 
+// TODO: move to jsutils
+/**
+ * Returns a new array containing all the elements of `array`, excpet for `element`
+ * @param {*} array
+ * @param {*} element
+ */
 const omitElement = (array, element) => {
   const index = array?.indexOf(element) ?? -1
   return index < 0 ? array : omitRange(array, index, 1)
