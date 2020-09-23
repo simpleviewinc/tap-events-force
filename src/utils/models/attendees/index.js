@@ -1,3 +1,5 @@
 export * from './getTicketForAttendee'
 export * from './isAttendeeRestricted'
 export * from './sortAttendeeIntoSections'
+export * from './buildRestrictedAttendeeSet'
+export * from './countAttendeesByTicket'

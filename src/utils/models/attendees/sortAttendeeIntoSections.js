@@ -50,3 +50,15 @@ export const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
 
   return sectionData
 }
+
+/**
+ * Builds a set of restricted attendees for the session
+ * @param {*} attendees
+ * @param {*} session
+ */
+export const buildRestrictedAttendeeSet = (attendees, session) => {
+  return attendees.reduce((restricted, attendee) => {
+    isAttendeeRestricted(attendee, session) && restricted.add(attendee)
+    return restricted
+  }, new Set())
+}

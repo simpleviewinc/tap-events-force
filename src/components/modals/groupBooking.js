@@ -78,6 +78,11 @@ const Body = ({ styles, session, dismissModalCb }) => {
     sortedAttendeeCount,
   } = useSortedAttendees(session, attendees, tickets, bookedTickets)
 
+  // useEffect(() => {
+  //   const sortedAttendeeData = buildSortedAttendees(session, attendees, tickets, bookedTickets)
+
+  // }, [ session, attendees, tickets ,bookedTickets ])
+
   const isBookable = useCallback(id => !restrictedAttendeeIds.has(id), [
     restrictedAttendeeIds,
   ])
