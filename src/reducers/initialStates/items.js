@@ -1,3 +1,4 @@
+import { groupBookingState } from './groupBooking'
 import { sessionsState } from './sessions'
 import { usersState } from './users'
 import { settingsState } from './settings'
@@ -6,6 +7,7 @@ import { locationsState } from './locations'
 import { modalsState } from './modals'
 
 export const itemsState = {
+  ...groupBookingState,
   ...sessionsState,
   ...usersState,
   ...settingsState,

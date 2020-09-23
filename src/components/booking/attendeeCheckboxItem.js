@@ -25,8 +25,6 @@ export const AttendeeCheckboxItem = props => {
   const isUnnamed = !name || isEmpty(name)
   const text = isUnnamed ? 'Unnamed' : name
 
-  name?.includes('Pepe') && console.log('pepe is waiting', isWaiting)
-
   const unnamedStyles = sectionStyles?.content?.unnamedItem?.main
   const itemStyles = sectionStyles?.content?.item?.main
 
@@ -49,9 +47,9 @@ export const AttendeeCheckboxItem = props => {
         (props => (
           <WaitingItem
             name={text}
-            {...props}
-            style={props?.style}
             textStyle={styles?.content?.right}
+            style={props.style}
+            onPress={props.onPress}
           />
         ))
       }
