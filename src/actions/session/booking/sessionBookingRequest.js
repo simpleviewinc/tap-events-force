@@ -7,7 +7,7 @@ const kegEventEmitter = getEventEmitter()
 /**
  * sessionBookingRequest
  */
-export const sessionBookingRequest = () => {
+export const sessionBookingRequest = (sessionId, attendeeIds = []) => {
   // TODO: incomplete until middle section is done
   // https://jira.simpleviewtools.com/browse/ZEN-278
   // 1. get selected attendee(s)

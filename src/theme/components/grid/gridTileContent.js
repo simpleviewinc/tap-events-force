@@ -27,11 +27,6 @@ export const gridTileContent = {
       main: {
         height: 50,
       },
-      content: {
-        button: {
-          main: {},
-        },
-      },
     },
   },
 }

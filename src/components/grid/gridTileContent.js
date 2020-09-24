@@ -7,8 +7,8 @@ import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import PropTypes from 'prop-types'
 import { useTheme } from '@keg-hub/re-theme'
 import { useFormattedPrice } from 'SVHooks/models/price'
-import { EvfButton } from 'SVComponents/button/evfButton'
-import { setSessionSelected } from 'SVActions/session/setSessionSelected'
+import { BookingButton } from 'SVComponents/button/bookingButton'
+
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
  * @param {Object} props
@@ -73,25 +73,6 @@ export const GridTileContent = props => {
         />
       </View>
     </View>
-  )
-}
-
-const BookingButton = ({ styles, session }) => {
-  if (!session) return null
-  let text
-  if (session.capacity?.remainingPlaces > 0) {
-    text = 'SELECT'
-  }
-  else {
-    text = 'FULLY BOOKED'
-  }
-  return (
-    <EvfButton
-      type={'primary'}
-      styles={styles}
-      onClick={() => setSessionSelected(session)}
-      text={text}
-    />
   )
 }
 
