@@ -57,7 +57,7 @@ export const GridContainer = props => {
             LeftComponent={
               <LeftHeaderText
                 timeString={timeBlock}
-                style={gridStyles.content.header.content.left}
+                style={gridStyles?.content?.header?.content?.left}
               />
             }
           />
@@ -65,7 +65,7 @@ export const GridContainer = props => {
       }
       <View
         className={`ef-grid-item`}
-        style={gridStyles.content.items}
+        style={gridStyles?.content?.items}
       >
         { sessions &&
           sessions.map(session => (

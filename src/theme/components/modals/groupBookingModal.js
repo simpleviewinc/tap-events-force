@@ -4,9 +4,16 @@ import { defaultTextStyle } from './baseModal'
 export const groupBookingModal = {
   content: {
     main: {
-      $xsmall: {
-        width: '90%',
-        maxWidth: '800px',
+      $web: {
+        $xsmall: {
+          maxWidth: '800px',
+        },
+      },
+      $all: {
+        $xsmall: {
+          width: '90%',
+          maxWidth: 800,
+        },
       },
     },
     body: {

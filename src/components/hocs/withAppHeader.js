@@ -30,7 +30,6 @@ export const withAppHeader = (title, Component) => {
               : null
           }
         />
-
         <Component {...props} />
       </>
     )

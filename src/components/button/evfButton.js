@@ -9,17 +9,16 @@ import { useParsedStyle } from 'SVHooks/useParsedStyle'
  */
 const buildStyles = (theme, custom) => {
   const btnStyles = theme.get(`button.evfButton.${custom.type}`)
-  // const parsedState = { main: custom.parsed }
-  // console.log('parsedState', parsedState)
+  const parsedState = { main: custom.parsed }
 
   return theme.get(btnStyles, custom.styles, {
-    // content: {
-    //   button: {
-    //     active: parsedState,
-    //     default: parsedState,
-    //     hover: parsedState,
-    //   },
-    // },
+    content: {
+      button: {
+        active: parsedState,
+        default: parsedState,
+        hover: parsedState,
+      },
+    },
   })
 }
 

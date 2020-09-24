@@ -1,8 +1,16 @@
-const path = require('path')
+
+/**
+ * It would be better to use the node core module `path`
+ * But this file is imported into the the app rootContainer, which is frontend
+ * So instead if finds the path to the tap root based on the Platform
+ */
+const tapRootPath = process.env.PLATFORM === 'web'
+  ? '.'
+  : '../..'
 
 const pathToEntryPoint = process.env.TEST_BUILD 
-  ? path.join(__dirname, 'apps/BuildTest.js') 
-  : path.join(__dirname, 'apps/Main.js')
+  ? `${tapRootPath}/apps/BuildTest.js`
+  : `${tapRootPath}/apps/Main.js`
 
 module.exports = {
   name: 'events-force-x5',
@@ -23,6 +31,9 @@ module.exports = {
           Icons: 'assets/icons'
         },
         web: {
+          SVTapEntry: pathToEntryPoint
+        },
+        native: {
           SVTapEntry: pathToEntryPoint
         }
       }
