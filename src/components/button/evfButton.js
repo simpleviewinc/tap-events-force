@@ -18,9 +18,9 @@ const buildStyles = (theme, custom) => {
   // This allows dynamically matching the Theme states even if they are changed
   const stateKeys = Object.keys(get(btnStyles, 'content.button', {}))
 
-  // overwrite the max/min width when trying to display 'processing' content
+  // overwrite the min width when trying to display 'processing' content
+  // for cases where the default content is smaller  than the processing content
   const fitWidth = custom.isProcessing && {
-    maxWidth: 'fit-content',
     minWidth: 'fit-content',
   }
 

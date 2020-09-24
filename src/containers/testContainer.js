@@ -114,7 +114,7 @@ const EVFButtonDemos = ({ styles }) => {
           isProcessing={processing}
           styles={styles.button}
           onClick={() => setProcessing(true)}
-          text={'Fetch demo'}
+          text={'Fetch'}
         />
       </View>
     </Section>
