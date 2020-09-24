@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { View, Text, Checkbox } from '@keg-hub/keg-components'
-import { useStylesMemo } from 'SVHooks/useStylesMemo'
+import { useStylesMemo } from '@keg-hub/re-theme'
 import { EVFIcons } from 'SVIcons'
 
 /**

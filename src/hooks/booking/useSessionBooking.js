@@ -34,21 +34,17 @@ const useUpdateSessionLists = (
       const shouldUseWaitingList =
         waitingListIsAvailable && currentCapacity <= 0
       if (waitingList.has(id)) {
-        console.log('WL deleting', id)
         waitingList.delete(id)
       }
       else if (bookingList.has(id)) {
-        console.log('BL deleting', id)
         bookingList.delete(id) &&
           !isUnlimited &&
           setCapacity(currentCapacity + 1)
       }
       else if (shouldUseWaitingList && !waitingList.has(id)) {
-        console.log('WL adding', id)
         waitingList.add(id)
       }
       else if (!shouldUseWaitingList && !bookingList.has(id)) {
-        console.log('BL adding', id)
         bookingList.add(id) && !isUnlimited && setCapacity(currentCapacity - 1)
       }
     },
