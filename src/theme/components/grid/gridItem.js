@@ -6,7 +6,7 @@ export const gridItem = {
   main: {
     $xsmall: {
       backgroundColor: colors.white,
-      height: 200,
+      height: 'fit-content',
       marginBottom: 15,
       alignItems: 'flex-start',
     },
@@ -27,7 +27,6 @@ export const gridItem = {
     main: {
       $web: {
         height: 'fit-content',
-        fontFamily: 'Inter',
       },
       $native: {
         flexDirection: 'row',
@@ -48,15 +47,14 @@ export const gridItem = {
         marginRight: 8,
       },
     },
-  },
-  labelList: {
-    main: {
-      $xsmall: {
-        marginRight: 14,
-        flex: 1,
-      },
-      $small: {
-        marginRight: 0,
+    labelList: {
+      main: {
+        $xsmall: {
+          marginRight: 14,
+        },
+        $small: {
+          marginRight: 0,
+        },
       },
     },
   },
