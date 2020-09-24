@@ -12,12 +12,13 @@ const emptyArr = []
  * @param {*} param0
  */
 export const GroupBookingOptions = props => {
-  const { styles, onAttendeeSelected, attendeesByTicket, isBookable } = props
+  const { styles, onAttendeeSelected, attendeesByTicket } = props
 
   const viewStyles = useStylesMemo('groupBookingOptions.main', styles?.main)
 
-  // sort tickets and filter out invalid ones
   const tickets = useStoreItems('tickets')
+
+  // sort tickets by display order and filter out invalid ones
   const sortedTickets = useTicketsForBooking(tickets, attendeesByTicket)
 
   return (
@@ -27,9 +28,8 @@ export const GroupBookingOptions = props => {
           style={styles?.content?.section}
           key={ticket.identifier}
           name={ticket.name}
-          attendees={attendeesByTicket[ticket.identifier] || emptyArr}
+          attendeeIds={attendeesByTicket[ticket.identifier] || emptyArr}
           onAttendeeSelected={onAttendeeSelected}
-          isBookable={isBookable}
         />
       )) }
     </ScrollView>
