@@ -136,8 +136,7 @@ export const Sessions = props => {
   const {
     onDayChange = noOp,
     sessionAgendaProps,
-    onSessionBookingRequest,
-  } = props
+    onSessionBookingRequest = noOp,
 
   // set up our ev ent listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
