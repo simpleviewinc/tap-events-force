@@ -76,6 +76,25 @@ export const GridTileContent = props => {
   )
 }
 
+const BookingButton = ({ styles, session }) => {
+  if (!session) return null
+  let text
+  if (session.capacity?.remainingPlaces > 0) {
+    text = 'SELECT'
+  }
+  else {
+    text = 'FULLY BOOKED'
+  }
+  return (
+    <EvfButton
+      type={'primary'}
+      styles={styles}
+      onClick={() => setSessionSelected(session)}
+      text={text}
+    />
+  )
+}
+
 GridTileContent.propTypes = {
   labels: PropTypes.array,
   session: PropTypes.object,
