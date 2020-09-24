@@ -28,5 +28,5 @@ export const useGroupCounts = (
       bookableAttendeeCount,
       initialCapacityExceedsNeed,
     }
-  }, Array.from(arguments))
+  }, [ attendeesByTicket, restrictedIdsForSession, remainingCount ])
 }

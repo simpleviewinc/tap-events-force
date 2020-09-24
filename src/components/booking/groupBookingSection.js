@@ -3,16 +3,16 @@ import { Text } from '@keg-hub/keg-components'
 import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
 import { useStylesMemo } from 'SVHooks/useStylesMemo'
 import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
-import {
-  useBookingSet,
-  useWaitingSet,
-  useCurrentSession,
-} from 'SVHooks/booking/useSessionBooking'
+import { useCurrentSession } from 'SVHooks/booking/useCurrentSession'
+import { useBookingSet } from 'SVHooks/booking/useBookingSet'
+import { useWaitingSet } from 'SVHooks/booking/useWaitingSet'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 
 /**
- * Gets the attendees matching the section attendee ids list
+ * Gets the list of Attendee objects for the current section,
+ * the ones that have the same ids as in the list
+ * of attendeeIdsForSection
  * @param {Array<string>} attendeeIds
  * @returns {Array<Attendee>} section attendees
  */

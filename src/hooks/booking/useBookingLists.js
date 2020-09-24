@@ -48,7 +48,7 @@ const getInitialBookedIds = (
 }
 
 /**
- * Hook to acquire the initial booking and waiting lists for the session
+ * Hook to acquire the **initial** booking and waiting lists for a session
  * @param {*} session
  * @param {*} attendees
  * @param {*} attendeeIsBookable
@@ -76,5 +76,11 @@ export const useBookingLists = (
     )
 
     return [ bookingList, waitingList ]
-  }, Array.from(arguments))
+  }, [
+    session,
+    attendees,
+    attendeeIsBookable,
+    initialCapacityExceedsNeed,
+    waitingListIsAvailable,
+  ])
 }
