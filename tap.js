@@ -1,12 +1,16 @@
 
-
-const findPath = process.env.PLATFORM === 'web'
+/**
+ * It would be better to use the node core module `path`
+ * But this file is imported into the the app rootContainer, which is frontend
+ * So instead if finds the path to the tap root based on the Platform
+ */
+const tapRootPath = process.env.PLATFORM === 'web'
   ? '.'
   : '../..'
 
 const pathToEntryPoint = process.env.TEST_BUILD 
-  ? `${findPath}/apps/BuildTest.js`
-  : `${findPath}/apps/Main.js`
+  ? `${tapRootPath}/apps/BuildTest.js`
+  : `${tapRootPath}/apps/Main.js`
 
 module.exports = {
   name: 'events-force-x5',
