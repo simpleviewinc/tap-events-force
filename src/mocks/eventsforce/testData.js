@@ -169,7 +169,7 @@ export default {
       locationIdentifier: '2',
       liveVideoUrl: '',
       recordedVideoUrl: '',
-      restrictToAttendeeCategories: [],
+      restrictToAttendeeCategories: [ '1', '2' ],
       capacity: {
         isUnlimited: false,
         remainingPlaces: 3,
