@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { Text } from '@keg-hub/keg-components'
 import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
 import { useStylesMemo } from 'SVHooks/useStylesMemo'
@@ -9,12 +9,28 @@ import {
   useCurrentSession,
 } from 'SVHooks/booking/useSessionBooking'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
+import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
+
+/**
+ * Gets the attendees matching the section attendee ids list
+ * @param {Array<string>} attendeeIds
+ * @returns {Array<Attendee>} section attendees
+ */
+const useSectionAttendees = attendeeIdsForSection => {
+  const attendees = useStoreItems('attendees')
+  return useMemo(
+    () =>
+      attendees.filter(({ bookedTicketIdentifier }) =>
+        attendeeIdsForSection?.includes(bookedTicketIdentifier)
+      ),
+    [ attendees, attendeeIdsForSection ]
+  )
+}
 
 export const GroupBookingSection = ({
   styles,
   name,
-  attendees,
-  isBookable,
+  attendeeIds,
   onAttendeeSelected,
 }) => {
   const sectionStyles = useStylesMemo('groupBookingSection', styles)
@@ -26,38 +42,47 @@ export const GroupBookingSection = ({
   const bookingList = useBookingSet()
   const waitingList = useWaitingSet()
   const session = useCurrentSession()
-  const currentCapacity = useStoreItems('groupBooking.capacity')
+  const groupBookingCapacity = useStoreItems('groupBooking.capacity')
+
+  // get the isBookable callback to check if an attendee is eligible to book the session
+  const { isBookable } = useRestrictedAttendeeIds(session?.identifier)
 
   const enableCheck =
     session?.capacity?.isUnlimited ||
     session?.capacity?.isWaitingListAvailable ||
-    currentCapacity > 0
+    groupBookingCapacity > 0
+
+  const attendeesForSection = useSectionAttendees(attendeeIds)
 
   return (
     <CheckboxGroup
       styles={sectionStyles}
       title={name}
     >
-      { attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
-        const isBooking = bookingList.has(attendeeId)
-        const isWaiting = waitingList.has(attendeeId)
+      { attendeesForSection?.map(
+        ({ bookedTicketIdentifier: attendeeId, name }) => {
+          const isBooking = bookingList.has(attendeeId)
+          const isWaiting = waitingList.has(attendeeId)
 
-        return (
-          <AttendeeCheckboxItem
-            key={attendeeId}
-            id={attendeeId}
-            name={name}
-            onAttendeeSelected={onAttendeeSelected}
-            isWaiting={isWaiting}
-            sectionStyles={sectionStyles}
-            itemStyles={itemStyles}
-            disabled={!isBookable?.(attendeeId)}
-            enableCheck={enableCheck}
-            checked={isBooking || isWaiting}
-          />
-        )
-      }) }
-      { !attendees?.length && <Text>No attendees for this category</Text> }
+          return (
+            <AttendeeCheckboxItem
+              key={attendeeId}
+              id={attendeeId}
+              name={name}
+              onAttendeeSelected={onAttendeeSelected}
+              isWaiting={isWaiting}
+              sectionStyles={sectionStyles}
+              itemStyles={itemStyles}
+              disabled={!isBookable?.(attendeeId)}
+              enableCheck={enableCheck}
+              checked={isBooking || isWaiting}
+            />
+          )
+        }
+      ) }
+      { !attendeesForSection?.length && (
+        <Text>No attendees for this category</Text>
+      ) }
     </CheckboxGroup>
   )
 }

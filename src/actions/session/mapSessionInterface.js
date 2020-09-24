@@ -4,6 +4,10 @@ import { mapObj, snakeCase } from '@keg-hub/jsutils'
 import { buildHourSessionsMap } from 'SVUtils'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
+import {
+  initSortedAttendees,
+  initRestrictedAttendees,
+} from 'SVActions/attendees/initSortedAttendees'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -57,41 +61,49 @@ const mapAgendaSessions = (sessions, agendaDays) => {
  */
 export const mapSessionInterface = props => {
   // loop through each key and dispatch accordingly
-  props &&
-    mapObj(props, (key, value) => {
-      // ensure key exists in the items store first
-      if (key === CATEGORIES[snakeCase(key).toUpperCase()]) {
-        // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
-        let type = ActionTypes.SET_ITEMS
-        let payload = {
-          category: key,
-          items: value,
-        }
+  if (!props) return
 
-        // while mapping sessions, also map for 'activeSessions'
-        // activeSessions are sessions sorted by day number
-        if (key === CATEGORIES.SESSIONS)
-          mapAgendaSessions(value, props.agendaDays)
-
-        // certain props need to be mapped to a specific key
-        if (subCatMap[key]) {
-          // subcategories are upsert-merged, rather than set, since they
-          // might need to be joined with data that was loaded from localStorage,
-          // e.g. agendaSettings.activeDayNumber
-          type = ActionTypes.UPSERT_ITEM
-          payload = {
-            category: key,
-            item: value,
-            key: subCatMap[key],
-          }
-        }
-
-        key === CATEGORIES.ALERT
-          ? checkAlert(props.alert)
-          : dispatch({
-            type,
-            payload,
-          })
+  mapObj(props, (key, value) => {
+    // ensure key exists in the items store first
+    if (key === CATEGORIES[snakeCase(key).toUpperCase()]) {
+      // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
+      let type = ActionTypes.SET_ITEMS
+      let payload = {
+        category: key,
+        items: value,
       }
-    })
+
+      // while mapping sessions, also map for 'activeSessions'
+      // activeSessions are sessions sorted by day number
+      if (key === CATEGORIES.SESSIONS)
+        mapAgendaSessions(value, props.agendaDays)
+
+
+      // certain props need to be mapped to a specific key
+      if (subCatMap[key]) {
+        // subcategories are upsert-merged, rather than set, since they
+        // might need to be joined with data that was loaded from localStorage,
+        // e.g. agendaSettings.activeDayNumber
+        type = ActionTypes.UPSERT_ITEM
+        payload = {
+          category: key,
+          item: value,
+          key: subCatMap[key],
+        }
+      }
+
+      key === CATEGORIES.ALERT
+        ? checkAlert(props.alert)
+        : dispatch({
+          type,
+          payload,
+        })
+    }
+  })
+
+  // initialized the restricted attendee list for each session
+  initRestrictedAttendees(props.sessions, props.attendees)
+
+  // initialize the attendeesByTicket lists for each ticket
+  initSortedAttendees(props.attendees, props.tickets, props.bookedTickets)
 }
