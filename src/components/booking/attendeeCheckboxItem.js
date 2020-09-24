@@ -2,12 +2,13 @@ import React, { useMemo } from 'react'
 import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
 import { Text, View, Button } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
-import { useStylesMemo } from 'SVHooks/useStylesMemo'
+import { useStylesMemo } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
 import { useTheme } from '@keg-hub/re-theme'
 
 /**
- *
+ * A wrapper around the checkbox component with styling and logic for
+ * attendees in the group booking section component
  * @param {*} param0
  */
 export const AttendeeCheckboxItem = props => {
