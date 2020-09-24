@@ -72,17 +72,24 @@ const labelButton = {
 }
 
 const buttonsWrapper = {
-  $xsmall: {
-    flexDirection: 'row',
-    alignContent: 'flex-start',
-    flexWrap: 'wrap',
+  $web: {
     height: 'fit-content',
-    maxWidth: '100%',
-    flexBasis: 'auto',
-    paddingBottom: 20,
   },
-  $small: {
-    paddingBottom: 60,
+  $native: {
+    alignSelf: 'flex-start',
+  },
+  $all: {
+    $xsmall: {
+      flexDirection: 'row',
+      alignContent: 'flex-start',
+      flexWrap: 'wrap',
+      maxWidth: '100%',
+      flexBasis: 'auto',
+      paddingBottom: 20,
+    },
+    $small: {
+      paddingBottom: 60,
+    },
   },
 }
 
@@ -128,20 +135,12 @@ export const filterModal = {
           },
         },
         labelButtons: {
-          main: {
-            $web: buttonsWrapper,
-          },
-          item: {
-            $web: labelButton,
-          },
+          main: buttonsWrapper,
+          item: labelButton,
         },
         stateButtons: {
-          main: {
-            $web: buttonsWrapper,
-          },
-          item: {
-            $web: stateButton,
-          },
+          main: buttonsWrapper,
+          item: stateButton,
         },
       },
       bottomSection: {

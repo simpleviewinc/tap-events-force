@@ -12,9 +12,16 @@ export const presenterDetailsModal = {
   main: {},
   content: {
     main: {
-      $xsmall: {
-        width: '90%',
-        maxWidth: '800px',
+      $web: {
+        $xsmall: {
+          maxWidth: '800px',
+        },
+      },
+      $all: {
+        $xsmall: {
+          width: '90%',
+          maxWidth: 800,
+        },
       },
     },
     header: {
@@ -53,28 +60,48 @@ export const presenterDetailsModal = {
           },
         },
         title: {
-          $xsmall: {
-            fontFamily: 'Inter',
-            color: colors.lightGray,
-            marginBottom: '5px',
-            fontWeight: '500',
-            fontSize: 18,
+          $web: {
+            $xsmall: {
+              fontFamily: 'Inter',
+              marginBottom: '5px',
+            },
+            $small: {
+              lineHeight: '30px',
+            },
           },
-          $small: {
-            lineHeight: '30px',
-            fontSize: 25,
+          $all: {
+            $xsmall: {
+              color: colors.lightGray,
+              marginBottom: 5,
+              fontWeight: '500',
+              fontSize: 18,
+            },
+            $small: {
+              lineHeight: 30,
+              fontSize: 25,
+            },
           },
         },
         company: {
-          $xsmall: {
-            fontFamily: 'Inter',
-            fontWeight: '400',
-            lineHeight: '15px',
-            fontSize: 12,
+          $web: {
+            $xsmall: {
+              fontFamily: 'Inter',
+              lineHeight: '15px',
+            },
+            $small: {
+              lineHeight: '19px',
+            },
           },
-          $small: {
-            lineHeight: '19px',
-            fontSize: 16,
+          $all: {
+            $xsmall: {
+              fontWeight: '400',
+              lineHeight: 15,
+              fontSize: 12,
+            },
+            $small: {
+              lineHeight: 19,
+              fontSize: 16,
+            },
           },
         },
       },

@@ -33,12 +33,16 @@ export const gridContainer = {
             },
             content: {
               text: {
-                color: colors.white,
-                fontFamily: 'Inter',
-                fontWeight: '600',
-                paddingLeft: 10,
-                fontSize: 20,
-                fontStyle: 'normal',
+                $web: {
+                  fontFamily: 'Inter',
+                },
+                $all: {
+                  color: colors.white,
+                  fontWeight: '600',
+                  paddingLeft: 10,
+                  fontSize: 20,
+                  fontStyle: 'normal',
+                },
               },
             },
           },

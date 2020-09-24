@@ -26,7 +26,7 @@
     "clean:sessions:build": "rimraf ./build/*",
     "ios": "yarn watch 'cd node_modules/keg-core; yarn ios'",
     "setup": "yarn install; cd node_modules/keg-core; yarn postinstall",
-    "start": "yarn watch 'cd node_modules/keg-core; expo start'",
+    "start": "cd node_modules/keg-core; expo start",
     "watch": "nodemon --watch node_modules/keg-core/core/base/configs --watch node_modules/keg-core/app.json --watch node_modules/keg-core/package.json --watch configs --watch package.json --watch tap.json --exec",
     "web": "cd node_modules/keg-core; yarn web",
     "test:build": "yarn build && TEST_BUILD=true yarn web",

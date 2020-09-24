@@ -9,11 +9,13 @@ import PropTypes from 'prop-types'
  * @param {object} theme - retheme object
  * @param {object} extra - extra styles and props
  */
-const buildStyles = (theme, extra) => ({
-  opacity: extra.disabled ? 0.4 : 1,
-  cursor: extra.disabled ? 'not-allowed' : 'pointer',
-  ...extra.style,
-})
+const buildStyles = (theme, extra) => {
+  return {
+    ...extra?.style?.icon,
+    opacity: extra.disabled ? 0.4 : 1,
+    cursor: extra.disabled ? 'not-allowed' : 'pointer',
+  }
+}
 
 /**
  * A touchable chevron icon that changes direction based on type
@@ -31,9 +33,9 @@ export const UpdateDayButton = props => {
     onDayChange,
   } = props
 
-  const iconStyles = useStylesCallback(buildStyles, [ disabled, styles.main ], {
+  const iconStyles = useStylesCallback(buildStyles, [ disabled, styles ], {
     disabled,
-    style: styles.main,
+    style: styles,
   })
 
   const ChevronIcon =

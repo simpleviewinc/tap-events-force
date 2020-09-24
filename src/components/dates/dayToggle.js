@@ -46,7 +46,7 @@ export const DayToggle = props => {
       style={dayToggleStyles?.main}
     >
       <UpdateDayButton
-        style={dayToggleStyles?.content?.decrementIcon}
+        styles={dayToggleStyles?.content?.decrement}
         type={'decrement'}
         disabled={disableDecrement}
         onDayChange={onDecrement}
@@ -62,7 +62,7 @@ export const DayToggle = props => {
 
       <UpdateDayButton
         type={'increment'}
-        style={dayToggleStyles?.content?.incrementIcon}
+        styles={dayToggleStyles?.content?.increment}
         disabled={disableIncrement}
         onDayChange={onIncrement}
       />

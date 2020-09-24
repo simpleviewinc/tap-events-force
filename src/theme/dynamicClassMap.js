@@ -5,7 +5,7 @@
 /****************** IMPORTANT ******************/
 
 import { setColors } from './colors'
-import { get } from '@keg-hub/jsutils'
+import { get, checkCall } from '@keg-hub/jsutils'
 import { setFonts } from './typography'
 import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
 
@@ -13,7 +13,7 @@ import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
  * Cache holder of the parsed ef-classes from the DOM stylesheets
  * @object
  */
-let __parsedEfClasses = { classList: {} }
+let __parsedEfClasses
 
 const efThemeClasses = [
   '.ef-sessions-background',
@@ -69,27 +69,11 @@ const getBackgroundColor = (obj, classPath, fallback) => {
 const setupColors = parsed => {
   // Build the colors object
   const colors = {
-    default: get(parsed.classList, `ef-sessions-text-default.color`, 'inherit'),
-    color1: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-button-default`,
-      'inherit'
-    ),
-    color2: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-details-header`,
-      'inherit'
-    ),
-    color3: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-timeslot-header`,
-      'inherit'
-    ),
-    color4: getBackgroundColor(
-      parsed.classList,
-      `ef-sessions-button-primary`,
-      'inherit'
-    ),
+    default: get(parsed.classList, `ef-sessions-text-default.color`),
+    color1: getBackgroundColor(parsed.classList, `ef-sessions-button-default`),
+    color2: getBackgroundColor(parsed.classList, `ef-sessions-details-header`),
+    color3: getBackgroundColor(parsed.classList, `ef-sessions-timeslot-header`),
+    color4: getBackgroundColor(parsed.classList, `ef-sessions-button-primary`),
   }
 
   // Set the colors object, so when the theme gets imported, it has these available
@@ -114,11 +98,7 @@ const setupColors = parsed => {
  * @return {void}
  */
 const setupFonts = parsed => {
-  const headings = get(
-    parsed.classList,
-    `ef-sessions-name.fontFamily`,
-    'inherit'
-  )
+  const headings = get(parsed.classList, `ef-sessions-name.fontFamily`, '')
 
   setFonts(
     {
@@ -138,7 +118,8 @@ const classFormatter = (cssRule, rootSelector, formatted, cssToJs) => {
   const cssText = cssRule.cssText
 
   formatted.classList = formatted.classList || {}
-  formatted.classList[selectorRef] = cssToJs(
+  formatted.classList[selectorRef] = checkCall(
+    cssToJs,
     cssText,
     formatted.classList[selectorRef]
   )
@@ -168,12 +149,12 @@ export const parseCustomClasses = () => {
   setupColors(__parsedEfClasses)
   setupFonts(__parsedEfClasses)
 
-  return __parsedEfClasses
+  return __parsedEfClasses || { classList: {} }
 }
 
 /**
  * Automatically make call to parse the stylesheets on the dom
  */
-// Comment out for now untils Re-Theme gets updated with CssToJS changes
-// parseCustomClasses()
-export const getParsedClasses = () => __parsedEfClasses
+parseCustomClasses()
+
+export const getParsedClasses = () => parseCustomClasses()

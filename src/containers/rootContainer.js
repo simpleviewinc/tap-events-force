@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { withAppHeader } from 'SVComponents'
-import { SessionsContainer } from 'SVContainers'
+import { SessionsContainer } from './sessionsContainer'
 import { displayName } from 'SVConfig'
 import { H5 } from '@keg-hub/keg-components'
 import testData from '../mocks/eventsforce/testData.json'

@@ -2,16 +2,23 @@ import { colors } from '../../colors'
 
 export const defaultTextStyle = {
   fontWeight: '600',
-  fontSize: '16px',
+  fontSize: 16,
 }
 
 export const baseModal = {
   main: {},
   content: {
     main: {
-      $xsmall: {
-        width: '90%',
-        maxWidth: '650px',
+      $web: {
+        $xsmall: {
+          maxWidth: '650px',
+        },
+      },
+      $all: {
+        $xsmall: {
+          width: '90%',
+          maxWidth: 650,
+        },
       },
     },
     header: {
@@ -27,7 +34,7 @@ export const baseModal = {
             color: colors.white,
             paddingLeft: 46,
             paddingRight: 30,
-            fontWeight: 600,
+            fontWeight: '600',
             fontSize: 18,
             lineHeight: 27,
           },
