@@ -18,6 +18,7 @@ export const Values = deepFreeze({
     PRESENTERS: 'presenters',
     SESSIONS: 'sessions',
     SETTINGS: 'settings',
+    ALERT: 'alert',
   },
 
   SUB_CATEGORIES: {
@@ -27,7 +28,7 @@ export const Values = deepFreeze({
   },
 
   MODAL_TYPES: {
-    ERROR: 'error',
+    ALERT: 'alert',
     PRESENTER: 'presenter',
     FILTER: 'filter',
     GROUP_BOOKING: 'groupBooking',

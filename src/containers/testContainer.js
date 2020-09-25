@@ -15,6 +15,25 @@ const { EVENTS } = Values
 const marginStyle = {
   margin: 10,
 }
+const buttonStyles = {
+  main: {
+    width: 200,
+    ...marginStyle,
+  },
+}
+/**
+ * for testing purposes only
+ * @todo - remove later
+ * @param {string} text
+ */
+const applyJson = (text, setMockData) => {
+  try {
+    setMockData(JSON.parse(text))
+  }
+  catch (error) {
+    console.log('json syntax error. check your test data')
+  }
+}
 
 const testOnSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
@@ -26,13 +45,7 @@ const testOnSessionBookingRequest = (session, attendees) => {
  */
 export const TestContainer = withAppHeader('Test Container', props => {
   const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
-  let mockData
-  try {
-    mockData = JSON.parse(text)
-  }
-  catch (error) {
-    console.log('json syntax error. check your test data')
-  }
+  const [ mockData, setMockData ] = useState(testData)
 
   // map the evf props onto our states
   useEffect(() => void mapSessionInterface(mockData), [mockData])
@@ -46,6 +59,12 @@ export const TestContainer = withAppHeader('Test Container', props => {
             rows={5}
             value={text}
             onChange={event => setText(event.target.value)}
+          />
+          <Button
+            themePath={'button.contained.primary'}
+            styles={buttonStyles}
+            onClick={() => applyJson(text, setMockData)}
+            content={'Apply'}
           />
         </>
       ) }
@@ -130,7 +149,7 @@ export const ModalDemos = () => {
         <Button
           themePath='button.contained.secondary'
           styles={testStyles.content.button}
-          onClick={useCreateModal(Values.MODAL_TYPES.ERROR, {
+          onClick={useCreateModal(Values.MODAL_TYPES.ALERT, {
             title: 'Session Fully Booked',
             message:
               'There is insufficient capacity for your selection. Please reduce the number of selected bookings',

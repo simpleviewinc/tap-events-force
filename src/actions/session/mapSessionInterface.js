@@ -2,6 +2,8 @@ import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { mapObj, snakeCase } from '@keg-hub/jsutils'
 import { buildHourSessionsMap } from 'SVUtils'
+import { addModal } from 'SVActions/modals'
+import { Modal } from 'SVModels/modal'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -10,6 +12,16 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
  */
 const subCatMap = {
   settings: SUB_CATEGORIES.AGENDA_SETTINGS,
+}
+
+/**
+ * If alert prop is valid, add a new modal item for alert
+ * @param {<import('SVModels/alert').Alert)>} alert
+ */
+const checkAlert = alert => {
+  alert?.title &&
+    alert?.message &&
+    addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
 }
 
 /**
@@ -74,10 +86,12 @@ export const mapSessionInterface = props => {
           }
         }
 
-        dispatch({
-          type,
-          payload,
-        })
+        key === CATEGORIES.ALERT
+          ? checkAlert(props.alert)
+          : dispatch({
+            type,
+            payload,
+          })
       }
     })
 }

@@ -1,27 +1,28 @@
 import React, { useRef, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { View, Text } from '@keg-hub/keg-components'
+import { View, Text, ScrollView } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { checkCall } from '@keg-hub/jsutils'
 
 /**
- * Error modal
+ * Alert modal
  * @param {object} props
  * @param {boolean} props.visible
  * @param {string} props.title - text to show in header
  * @param {string} props.message - text to show in body
+ * @param {'error'|null} props.type - alert type
  */
-export const Error = ({ visible, title, message }) => {
+export const Alert = ({ visible, title, message }) => {
   const theme = useTheme()
-  const errorStyles = theme.get('modal.error')
+  const alertStyles = theme.get('modal.alert')
   const dismissedCBRef = useRef()
 
   return (
     <BaseModal
-      className={`ef-modal-error`}
+      className={`ef-modal-alert`}
       dissmissedCBRef={dismissedCBRef}
-      styles={errorStyles}
+      styles={alertStyles}
       title={title}
       visible={visible}
     >
@@ -30,7 +31,7 @@ export const Error = ({ visible, title, message }) => {
           () => checkCall(dismissedCBRef.current, true),
           [dismissedCBRef?.current]
         )}
-        styles={errorStyles.content.body}
+        styles={alertStyles.content.body}
         message={message}
       />
     </BaseModal>
@@ -38,7 +39,7 @@ export const Error = ({ visible, title, message }) => {
 }
 
 /**
- * Body of error modal
+ * Body of alert modal
  * @param {object} props
  * @param {object} props.styles
  * @param {string} props.message - string to display
@@ -47,19 +48,24 @@ export const Error = ({ visible, title, message }) => {
 const Body = ({ styles, message, onButtonPress }) => {
   return (
     <View
-      className={`ef-modal-sub-header ef-modal-error-body`}
-      style={styles.main}
+      style={styles?.main}
+      className={`ef-modal-sub-header ef-modal-alert-body`}
     >
-      <Text
-        className={`ef-modal-error-text`}
-        style={styles.content?.text}
+      <ScrollView
+        style={styles?.textContainer?.main}
+        contentContainerStyle={styles?.textContainer?.contentContainerStyle}
       >
-        { message }
-      </Text>
+        <Text
+          className={`ef-modal-alert-text`}
+          style={styles?.text}
+        >
+          { message }
+        </Text>
+      </ScrollView>
       <EvfButton
-        className={`ef-modal-error-button`}
+        className={`ef-modal-alert-button`}
         type={'primary'}
-        styles={styles.content?.button}
+        styles={styles?.button}
         onClick={onButtonPress}
         text={'OK'}
       />
