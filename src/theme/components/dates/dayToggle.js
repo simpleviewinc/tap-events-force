@@ -8,9 +8,6 @@ export const dayToggle = {
         alignItems: 'center',
         justifyContent: 'space-between',
       },
-      $small: {
-        width: 300,
-      },
     },
     $native: {
       $xsmall: {
@@ -45,8 +42,7 @@ export const dayToggle = {
           fontFamily: 'Inter',
           fontSize: '18px',
           letterSpacing: '0.1em',
-          marginLeft: 10,
-          marginRight: 16,
+          mH: 16,
         },
         $small: {
           fontSize: '20px',

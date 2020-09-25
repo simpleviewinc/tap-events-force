@@ -2,24 +2,31 @@ import React, { useMemo } from 'react'
 import { View, Button } from '@keg-hub/keg-components'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
+import { set, get } from '@keg-hub/jsutils'
 
 /**
- * @param {object} theme
- * @param {object} custom - contains {type, styles}
+ * Builds the styles for the Evf button merging the default styles with the parsed styles
+ * @param {Object} theme - Global Theme object
+ * @param {Object} custom - contains {type, styles, parsed}
+ * 
+ * @returns {Object} - Merged Evf button styles
  */
 const buildStyles = (theme, custom) => {
   const btnStyles = theme.get(`button.evfButton.${custom.type}`)
-  const parsedState = { main: custom.parsed }
+  // Get the keys of the content.button, to get a list of all button states
+  // This allows dynamically matching the Theme states even if they are changed
+  const stateKeys = Object.keys(get(btnStyles, 'content.button', {}))
 
-  return theme.get(btnStyles, custom.styles, {
-    content: {
-      button: {
-        active: parsedState,
-        default: parsedState,
-        hover: parsedState,
-      },
-    },
-  })
+  return theme.get(
+    btnStyles,
+    custom.styles,
+    custom.parsed && 
+      // Loop over the state keys, and set the parsed styles for each
+      stateKeys.reduce((parsed, state) => {
+        set(parsed, `content.button.${state}.main`, custom.parsed)
+        return parsed
+      }, {})
+  )
 }
 
 /**
