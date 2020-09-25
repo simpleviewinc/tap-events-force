@@ -18,13 +18,10 @@ export const alertModal = {
     header: {
       content: {
         title: {
-          $xsmall: {
-            letterSpacing: '0.105em',
-            paddingLeft: 26,
-          },
           $all: {
             $xsmall: {
               letterSpacing: 0.105,
+              paddingLeft: 26,
             },
             $small: {},
           },
