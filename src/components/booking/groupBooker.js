@@ -11,10 +11,11 @@ import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
 
 /**
- *
+ * The root group booking component. Initializes state specific to
+ * the active group booking context for the passed-in session, and
+ * renders the group booking UI given the session and the store state
  * @param {object} props
  * @param {object} props.styles
- * @param {number} props.remainingCount - spots left in this session
  * @param {Session} props.session - current session
  * @param {Function} props.dismissModalCb - callback function to dismiss modal
  */
@@ -83,13 +84,13 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
 }
 
 /**
- * TopSection - contains the instruction text and spots remaining
+ * Top section of the group booker - contains the instruction text and spots remaining
  * @param {object} props
  * @param {object} props.styles
  * @param {number} props.remainingCount - spots left in this session. If null, there is no limit
  */
 const TopSection = ({ styles, remainingCount }) => {
-  // use correct syntax based on how many spot is left
+  // use correct wording depending on number of spots remaining
   const placeText = remainingCount === 1 ? 'place' : 'places'
 
   return (
@@ -116,7 +117,7 @@ const TopSection = ({ styles, remainingCount }) => {
 }
 
 /**
- * Bottom section of group booking modal
+ * Bottom section of group booker
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onCancelPress

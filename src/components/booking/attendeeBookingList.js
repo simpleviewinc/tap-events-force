@@ -1,10 +1,10 @@
 import React from 'react'
-import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useCurrentSession } from 'SVHooks/booking/useCurrentSession'
 import { useBookingSet } from 'SVHooks/booking/useBookingSet'
 import { useWaitingSet } from 'SVHooks/booking/useWaitingSet'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
+import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
 
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
@@ -34,6 +34,7 @@ export const AttendeeBookingList = ({
   itemStyles,
   sectionStyles,
   onAttendeeSelected,
+  setCheckedSetter,
 }) => {
   const bookingList = useBookingSet()
   const waitingList = useWaitingSet()
@@ -59,6 +60,7 @@ export const AttendeeBookingList = ({
         disabled={!isBookable?.(attendeeId)}
         enableCheck={enableCheck}
         checked={isBooking || isWaiting}
+        setCheckedSetter={setCheckedSetter}
       />
     )
   })
