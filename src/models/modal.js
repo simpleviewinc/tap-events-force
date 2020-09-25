@@ -7,7 +7,7 @@ export class Modal {
   /**
    * Location class model
    * @param {object} params
-   * @param {'error'|'presenter'|'filter'|null} params.type
+   * @param {'alert'|'presenter'|'filter'|null} params.type
    * @param {object|string|null} params.data
    */
   constructor(params = {}) {

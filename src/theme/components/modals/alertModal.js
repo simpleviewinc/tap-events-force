@@ -1,4 +1,4 @@
-export const errorModal = {
+export const alertModal = {
   main: {},
   content: {
     main: {
@@ -18,14 +18,10 @@ export const errorModal = {
     header: {
       content: {
         title: {
-          $web: {
-            $xsmall: {
-              letterSpacing: '0.105em',
-            },
-          },
           $all: {
             $xsmall: {
               letterSpacing: 0.105,
+              paddingLeft: 26,
             },
             $small: {},
           },
@@ -37,22 +33,33 @@ export const errorModal = {
         paddingHorizontal: 22,
         paddingVertical: 26,
       },
-      content: {
-        text: {
-          $web: {
-            fontSize: '16px',
+      textContainer: {
+        main: {
+          $xsmall: {
+            maxHeight: 250,
+            marginBottom: 10,
           },
-          $all: {
-            fontSize: 16,
-            paddingBottom: 10,
+          $small: {
+            maxHeight: 500,
           },
         },
-        button: {
-          main: {
-            alignSelf: 'flex-end',
-            width: 87,
-            height: 45,
-          },
+        contentContainer: {
+          padding: 10,
+        },
+      },
+      text: {
+        $xsmall: {
+          fontSize: '14px',
+        },
+        $small: {
+          fontSize: '16px',
+        },
+      },
+      button: {
+        main: {
+          alignSelf: 'flex-end',
+          width: 87,
+          height: 45,
         },
       },
     },

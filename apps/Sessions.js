@@ -23,13 +23,17 @@ setDefaultTheme(theme)
  * 
  * @param {*} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
  */
-const SessionsApp = props => {
+const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest}) => {
   const [ activeTheme ] = useState(getDefaultTheme())
 
   return (
     <Provider store={getStore()}>
       <ReThemeProvider theme={activeTheme}>
-        <SessionsContainer { ...props } />
+        <SessionsContainer 
+          sessionAgendaProps={sessionAgendaProps}
+          onDayChange={onDayChange}
+          onSessionBookingRequest={onSessionBookingRequest}
+        />
       </ReThemeProvider>
     </Provider>
   )

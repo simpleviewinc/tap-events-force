@@ -1,4 +1,4 @@
-import { errorModal } from './errorModal'
+import { alertModal } from './alertModal'
 import { filterModal } from './filterModal'
 import { groupBookingModal } from './groupBookingModal'
 import { baseModal } from './baseModal'
@@ -11,6 +11,6 @@ export const modal = {
   base: baseModal,
   groupBooking: groupBookingModal,
   presenter: presenterDetailsModal,
-  error: errorModal,
+  alert: alertModal,
   filter: filterModal,
 }
