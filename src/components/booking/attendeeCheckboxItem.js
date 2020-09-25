@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
+import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
 import { Text, View, Button } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
 import { useStylesMemo } from '@keg-hub/re-theme'
@@ -39,7 +39,7 @@ export const AttendeeCheckboxItem = props => {
   )
 
   return (
-    <CheckboxGroup.Item
+    <EvfCheckbox
       id={id}
       styles={styles}
       text={text}
@@ -66,6 +66,10 @@ export const AttendeeCheckboxItem = props => {
 /**
  * When a user is on the waiting list, we need to display a waiting visual right of the text
  * @param {*} props
+ * @param {string} props.name
+ * @param {object} props.style
+ * @param {object} props.textStyle
+ * @param {Function?} props.onPress
  */
 const WaitingItem = props => {
   const { name, style, textStyle, onPress } = props

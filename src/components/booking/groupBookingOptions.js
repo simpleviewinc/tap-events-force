@@ -8,8 +8,11 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
 const emptyArr = []
 
 /**
- *
- * @param {*} param0
+ * A list of group booking sections, in a scroll view
+ * @param {Object} props
+ * @param {Object} props.styles
+ * @param {Function?} props.onAttendeeSelected - callback when checkbox is pressed
+ * @param {Object<string, Array<string>>} props.attendeesByTicket - lists of attendee ids organized by their ticket ids
  */
 export const GroupBookingOptions = props => {
   const { styles, onAttendeeSelected, attendeesByTicket } = props

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { Text } from '@keg-hub/keg-components'
 import { AttendeeBookingList } from './attendeeBookingList'
-import { CheckboxGroup } from 'SVComponents/group/checkboxGroup'
+import { CheckGroup } from '@keg-hub/keg-components'
 import { useStylesMemo } from '@keg-hub/re-theme'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
@@ -23,6 +23,15 @@ const useSectionAttendees = attendeeIdsForSection => {
   )
 }
 
+/**
+ * A section in the group booker, containing a header and a list of checkable attendees
+ *
+ * @param {Object} props
+ * @param {Object} props.styles
+ * @param {string} props.name - header title
+ * @param {Array<string>} props.attendeeIds - ids of attendees to display in section
+ * @param {Function?} onAttendeeSelected - callback of form (id) => {...}, fired when an attendee checkbox is toggled
+ */
 export const GroupBookingSection = ({
   styles,
   name,
@@ -38,7 +47,7 @@ export const GroupBookingSection = ({
   const attendeesForSection = useSectionAttendees(attendeeIds)
 
   return (
-    <CheckboxGroup
+    <CheckGroup
       styles={sectionStyles}
       title={name}
     >
@@ -51,6 +60,6 @@ export const GroupBookingSection = ({
       { !attendeesForSection?.length && (
         <Text>No attendees for this category</Text>
       ) }
-    </CheckboxGroup>
+    </CheckGroup>
   )
 }
