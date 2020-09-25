@@ -75,7 +75,10 @@ export const sessions = {
             },
             filterButton: {
               main: {
-                marginRight: 40,
+                pos: 'absolute',
+                rt: 40,
+                pV: 8,
+                pH: 12,
               },
               content: {
                 $web: {

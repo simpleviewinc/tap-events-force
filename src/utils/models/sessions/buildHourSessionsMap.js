@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { getTimeFromDate } from '../../dateTime/getTimeFromDate'
 import { sortSessions } from './sortSessions'
 import { reduceObj } from '@keg-hub/jsutils'
 
@@ -16,7 +16,7 @@ export const buildHourSessionsMap = (sessions, dayNumber, asc) => {
   const sessionsMapping = sessions.reduce((mapped, session) => {
     if (session.dayNumber !== dayNumber) return mapped
 
-    const timeStr = moment(session.startDateTimeLocal).format('HH:mm')
+    const timeStr = getTimeFromDate(session.startDateTimeLocal)
     // create an array or append to existing list
     mapped[timeStr] = (mapped[timeStr] || []).concat(session)
 

@@ -1,9 +1,3 @@
-/****************** IMPORTANT ******************/ /*
- * This is a work in progress
- * It's NOT complete or expected to be working
- * This will be removed once it's complete
-/****************** IMPORTANT ******************/
-
 import { setColors } from './colors'
 import { get, checkCall } from '@keg-hub/jsutils'
 import { setFonts } from './typography'
@@ -15,6 +9,16 @@ import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
  */
 let __parsedEfClasses
 
+/**
+ * Default empty classList when no events-force classes can be found
+ * @object
+ */
+const defEmptyClassList = { classList: {} }
+
+/**
+ * Classes defined by events-force to pull dynamic styles from
+ * @array
+ */
 const efThemeClasses = [
   '.ef-sessions-background',
   '.ef-button-default',
@@ -113,6 +117,13 @@ const setupFonts = parsed => {
   )
 }
 
+/**
+ * Passed as the callback for found matching classes
+ * Converts the class styles into a JS object so it can be added to the theme
+ * @function
+ *
+ * @return {Object} - Stylesheet styles from a matching class as an object
+ */
 const classFormatter = (cssRule, rootSelector, formatted, cssToJs) => {
   const selectorRef = rootSelector.substring(1)
   const cssText = cssRule.cssText
@@ -146,10 +157,13 @@ export const parseCustomClasses = () => {
       classNames: efThemeClasses,
     })
 
+  if(!__parsedEfClasses || !__parsedEfClasses.classList)
+    return defEmptyClassList
+
   setupColors(__parsedEfClasses)
   setupFonts(__parsedEfClasses)
 
-  return __parsedEfClasses || { classList: {} }
+  return __parsedEfClasses
 }
 
 /**
@@ -157,4 +171,10 @@ export const parseCustomClasses = () => {
  */
 parseCustomClasses()
 
+/**
+ * Gets the cached Ef Class data or calls function to parse the Stylesheets
+ * @function
+ * 
+ * @returns {Object} __parsedEfClasses - Parsed styleSheet classes ad a JS Object
+ */
 export const getParsedClasses = () => parseCustomClasses()

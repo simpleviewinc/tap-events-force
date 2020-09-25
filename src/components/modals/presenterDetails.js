@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, View, Text, ScrollView } from '@keg-hub/keg-components'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { BaseModal, contentDefaultMaxHeight } from './baseModal'
-import placeholderImage from 'SVAssets/profile_placeholder.png'
+const placeholderImage = `https://raw.githubusercontent.com/simpleviewinc/tap-events-force/master/src/assets/profile_placeholder.png`
 
 /**
  * PresenterDetailModal
