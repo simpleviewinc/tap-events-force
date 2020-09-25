@@ -1,7 +1,7 @@
 import React from 'react'
-import moment from 'moment'
+import { format, parse } from 'date-fns'
 import { UpdateDayButton } from './updateDayButton'
-import { useTheme } from '@keg-hub/re-theme'
+import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { View, Text } from '@keg-hub/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
@@ -11,9 +11,11 @@ import { isMobileSize } from 'SVUtils/theme'
  * @param {string} currentDate - current date string
  * @param {boolean} isMobileSize
  */
-const getDayString = (currentDate, isMobileSize) => {
-  const format = isMobileSize ? 'dddd' : 'D MMMM YYYY'
-  return currentDate ? moment(currentDate).format(format) : 'N/A'
+const getDayString = (currentDate, isMobileSize, width) => {
+  const parsedDate = parse(currentDate, `yyyy-MM-dd`, new Date())
+  const dateFormat = isMobileSize ? 'd MMM' : width < 750 ? 'd MMM yyyy'  : 'd MMMM yyyy'
+
+  return currentDate ? format(parsedDate, dateFormat) : 'N/A'
 }
 
 /**
@@ -38,8 +40,10 @@ export const DayToggle = props => {
 
   const theme = useTheme()
   const dayToggleStyles = theme.get('dayToggle')
-  const dayText = `Day ${dayNumber} 
-    - ${getDayString(date, isMobileSize(theme))}`
+
+  const dims = useDimensions()
+  const dayText = `Day ${dayNumber} - ${getDayString(date, isMobileSize(theme), dims.width)}`
+
   return (
     <View
       className={'ef-sessions-date-selector'}

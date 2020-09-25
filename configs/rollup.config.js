@@ -11,10 +11,12 @@ import sourcemaps from 'rollup-plugin-sourcemaps'
 import bundleSize from 'rollup-plugin-bundle-size'
 import generatePackageJson from './plugins/generatePackageJson'
 import image from '@rollup/plugin-image'
+import { terser } from "rollup-plugin-terser"
 
 const path = require('path')
 const tapPath = require('app-root-path').path
 const corePath = path.join(`${tapPath}`, `node_modules/keg-core`)
+const isProd = process.env.NODE_ENV === 'production'
 
 const peerExternals = [ 'react', 'react-dom' ]
 const mainExternals = [
@@ -152,6 +154,7 @@ export default {
       },
     }),
     cleanup(),
+    isProd && terser(),
     bundleSize(),
   ],
 }

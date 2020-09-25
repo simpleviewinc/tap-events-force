@@ -1,4 +1,4 @@
-import moment from 'moment'
+import { format } from 'date-fns'
 
 /**
  * Formats the given date to hh:mm format
@@ -6,5 +6,6 @@ import moment from 'moment'
  * @param {boolean} military - whether to format in 24 hr or not
  * @returns {string}
  */
-export const getTimeFromDate = (date, military = true) =>
-  moment(date).format(military ? 'HH:mm' : 'h:mma')
+export const getTimeFromDate = (date, military = true) => {
+  return format(new Date(date), military ? 'HH:mm' : 'h:mma')
+}
