@@ -107,23 +107,24 @@ const AgendaSessions = React.memo(
   ({ labels, daySessions, enableFreeLabel }) => {
     if (!daySessions) return null
 
-  return (
-    <ScrollView>
-      { mapObj(daySessions, (timeBlock, sessions) => {
-        return (
-          // creates a gridContainer separated by hour blocks
-          <GridContainer
-            key={timeBlock}
-            sessions={sessions}
-            labels={labels}
-            timeBlock={timeBlock}
-            enableFreeLabel={enableFreeLabel}
-          />
-        )
-      }) }
-    </ScrollView>
-  )
-})
+    return (
+      <ScrollView>
+        { mapObj(daySessions, (timeBlock, sessions) => {
+          return (
+            // creates a gridContainer separated by hour blocks
+            <GridContainer
+              key={timeBlock}
+              sessions={sessions}
+              labels={labels}
+              timeBlock={timeBlock}
+              enableFreeLabel={enableFreeLabel}
+            />
+          )
+        }) }
+      </ScrollView>
+    )
+  }
+)
 
 /**
  * SessionComponent
@@ -137,7 +138,7 @@ export const Sessions = props => {
     onDayChange = noOp,
     sessionAgendaProps,
     onSessionBookingRequest = noOp,
-
+  } = props
   // set up our ev ent listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
 
