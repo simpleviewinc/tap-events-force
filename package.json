@@ -36,6 +36,7 @@
     "format:prettier": "prettier --config ./configs/prettier.config.js --ignore-path .eslintignore --write '**/*.{js,jsx}'",
     "format": "yarn format:prettier && yarn format:eslint",
     "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix",
+    "analyze": "cd node_modules/keg-core; ANALYZE=true NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
     "build": "cd node_modules/keg-core; NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
     "dev": "nodemon --watch ./apps --watch ./src --exec yarn build"
   },
@@ -75,6 +76,7 @@
     "prettier": "2.0.5",
     "rimraf": "^3.0.1",
     "rollup": "^2.23.1",
+    "rollup-plugin-analyzer": "^3.3.0",
     "rollup-plugin-bundle-size": "^1.0.3",
     "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-clear": "^2.0.7",
