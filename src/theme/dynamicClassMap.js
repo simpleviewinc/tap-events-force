@@ -1,4 +1,4 @@
-import { setColors } from './colors'
+import { setColors, colors as defaultColors } from './colors'
 import { get, checkCall } from '@keg-hub/jsutils'
 import { setFonts } from './typography'
 import { styleSheetParser } from '@keg-hub/re-theme/styleParser'
@@ -86,7 +86,7 @@ const setupColors = parsed => {
     // Right now we have primary default to color4's value
     // So rather then break anything, just mapping color 4 to primary
     // And mapping color1 to forth
-    primary: colors.color4,
+    primary: colors.color4 || defaultColors.primary,
     // Should be secondary, tertiary, quaternary, but that's way too difficult on a number of levels
     second: colors.color2,
     third: colors.color3,
@@ -157,7 +157,7 @@ export const parseCustomClasses = () => {
       classNames: efThemeClasses,
     })
 
-  if(!__parsedEfClasses || !__parsedEfClasses.classList)
+  if (!__parsedEfClasses || !__parsedEfClasses.classList)
     return defEmptyClassList
 
   setupColors(__parsedEfClasses)
@@ -174,7 +174,7 @@ parseCustomClasses()
 /**
  * Gets the cached Ef Class data or calls function to parse the Stylesheets
  * @function
- * 
+ *
  * @returns {Object} __parsedEfClasses - Parsed styleSheet classes ad a JS Object
  */
 export const getParsedClasses = () => parseCustomClasses()
