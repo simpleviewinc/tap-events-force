@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react'
+import React, { useRef, useMemo, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@keg-hub/keg-components'
@@ -12,8 +12,9 @@ import { useSelector, shallowEqual } from 'react-redux'
 import {
   updateSelectedFilters,
   applySessionFilters,
-  clearSelectedFilters,
+  cancelSelectedFilters,
 } from 'SVActions/session/filters'
+import { checkCall } from '@keg-hub/jsutils'
 
 /**
  *
@@ -25,6 +26,10 @@ export const Filter = ({ visible, labels }) => {
   const dismissedCBRef = useRef()
   // sort the labels alphabetically
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
+  const applyCb = useCallback(() => {
+    applySessionFilters()
+    checkCall(dismissedCBRef.current, true)
+  }, [ applySessionFilters, dismissedCBRef?.current ])
 
   return (
     <BaseModal
@@ -32,12 +37,12 @@ export const Filter = ({ visible, labels }) => {
       styles={filterStyles}
       title={'Filter'}
       visible={visible}
-      onDismiss={clearSelectedFilters}
+      onDismiss={cancelSelectedFilters}
     >
       <Content
         styles={filterStyles?.content?.body}
         labels={labelsMemo}
-        onButtonPress={applySessionFilters}
+        onButtonPress={applyCb}
       />
     </BaseModal>
   )
@@ -103,13 +108,18 @@ const LabelButtons = ({ styles, labels }) => {
   )
 
   const selectedCount = filters.selectedFilters.length
-  const isFilterEmpty = !filters.activeFilters.length && !selectedCount
+  const isFilterEmpty = !selectedCount
 
   return labels.map(label => {
-    // Check selectedCount before doing the loop. If none are selected, we same a few cpu cycles
-    const isLabelOn =
-      selectedCount &&
-      filters.selectedFilters.some(item => item.identifier === label.identifier)
+    // Check selectedCount before doing the loop. If none are selected, we save a few cpu cycles
+    const isLabelOn = useMemo(() => {
+      return (
+        selectedCount &&
+        filters.selectedFilters.some(
+          item => item.identifier === label.identifier
+        )
+      )
+    }, [ filters.selectedFilters, selectedCount, label ])
 
     return (
       <LabelButton
