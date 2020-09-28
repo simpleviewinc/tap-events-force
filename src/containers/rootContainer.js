@@ -68,6 +68,7 @@ export const RootContainer = withAppHeader(displayName, props => {
       <SessionsContainer
         sessionAgendaProps={mockData}
         onDayChange={mockCallbacks.onDayChange}
+        onSessionBookingRequest={mockCallbacks.onSessionBookingRequest}
       />
     </>
   )

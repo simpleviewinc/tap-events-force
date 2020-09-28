@@ -29,7 +29,8 @@ export const setSessionSelected = session => {
           },
         })
       )
-    : sessionBookingRequest(session.identifier, [
+    : attendeesCp.length === 1 &&
+      sessionBookingRequest(session.identifier, [
         attendeesCp[0]?.bookedTicketIdentifier,
-    ])
+      ])
 }
