@@ -27,6 +27,12 @@ export const applySessionFilters = () => {
   })
 }
 
+/**
+ *
+ * @param {Array.<import('SVModels/label').Label>} selectedFilters
+ * @param {Array.<import('SVModels/session').Session>} sessions
+ * @param {Array.<import('SVModels/agendaDay').AgendaDay>} agendaDays
+ */
 const applyLabelFilters = (selectedFilters, sessions, agendaDays) => {
   // if filters are empty then we set default data
   if (selectedFilters.length === 0) setAgendaSessions(sessions, agendaDays)
