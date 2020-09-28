@@ -9,6 +9,7 @@ export const gridRowContent = {
       flex: 1,
       flexDirection: 'column',
       paddingBottom: 10,
+      paddingLeft: 10,
     },
   },
 }
