@@ -1,9 +1,9 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { mapObj, snakeCase } from '@keg-hub/jsutils'
-import { buildHourSessionsMap } from 'SVUtils'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
+import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -71,7 +71,7 @@ export const mapSessionInterface = props => {
         // while mapping sessions, also map for 'activeSessions'
         // activeSessions are sessions sorted by day number
         if (key === CATEGORIES.SESSIONS)
-          mapAgendaSessions(value, props.agendaDays)
+          setAgendaSessions(value, props.agendaDays)
 
         // certain props need to be mapped to a specific key
         if (subCatMap[key]) {
