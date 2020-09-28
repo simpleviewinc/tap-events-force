@@ -31,14 +31,19 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
   const { restrictedAttendeeIds, isBookable } = useRestrictedAttendeeIds(
     session?.identifier
   )
+
+  // determine the remaining count of
   const { remainingCount } = parseSessionCapacity(session?.capacity)
 
+  // determine if the capacity of the session is greater than the number
+  // of attendees who can be booked
   const { initialCapacityExceedsNeed } = useGroupCounts(
     attendeesByTicket,
     restrictedAttendeeIds,
     remainingCount
   )
 
+  // gets callbacks and data related to the group booking for this session
   const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
     session
   )

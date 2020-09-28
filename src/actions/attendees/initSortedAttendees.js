@@ -1,11 +1,15 @@
 import { getAllBookedTickets } from 'SVUtils/models/tickets'
-import {
-  sortAttendeeIntoSections,
-  buildRestrictedAttendeeSet,
-} from 'SVUtils/models/attendees'
-import { setRestrictedAttendeeIds } from './setRestrictedAttendeeIds'
+import { sortAttendeeIntoSections } from 'SVUtils/models/attendees'
 import { setAttendeesByTicket } from './setAttendeesByTicket'
 
+/**
+ * Creates an object of attendees sorted by the ticket they are each booking
+ *
+ * @param {Array<Attendee>} attendees
+ * @param {Array<Ticket>} tickets
+ * @param {Array<BookedTicket>} bookedTickets
+ * @return {Object<string, Array<string>>} a map of ticket ids mapped to arrays of attendee ids
+ */
 const buildSortedAttendees = (attendees, tickets, bookedTicketObject) => {
   const bookedTickets = getAllBookedTickets(bookedTicketObject)
   const attendeeIdsByTicket = {}
@@ -13,6 +17,14 @@ const buildSortedAttendees = (attendees, tickets, bookedTicketObject) => {
   return attendees.reduce(sortAttendeeIntoSections, initSectionData)
 }
 
+/**
+ * Creates an object of attendees sorted by their associated ticket, then upserts it to the items store
+ * @param {Array<Attendee>} attendees
+ * @param {Array<Ticket>} tickets
+ * @param {Array<BookedTicket>} bookedTickets
+ *
+ * @return {void}
+ */
 export const initSortedAttendees = (attendees, tickets, bookedTickets) => {
   const { attendeeIdsByTicket } = buildSortedAttendees(
     attendees,
@@ -20,19 +32,4 @@ export const initSortedAttendees = (attendees, tickets, bookedTickets) => {
     bookedTickets
   )
   setAttendeesByTicket(attendeeIdsByTicket)
-}
-
-/**
- * Builds and sets in the store the restricted attendees array for each session
- * @param {Array<Session>} sessions
- * @param {Array<Attendee>} attendees
- */
-export const initRestrictedAttendees = (sessions, attendees) => {
-  sessions.map(session => {
-    const restrictedAttendeeIds = buildRestrictedAttendeeSet(attendees, session)
-    setRestrictedAttendeeIds(
-      session.identifier,
-      Array.from(restrictedAttendeeIds)
-    )
-  })
 }

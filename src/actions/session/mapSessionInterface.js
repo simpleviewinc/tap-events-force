@@ -4,10 +4,8 @@ import { mapObj, snakeCase } from '@keg-hub/jsutils'
 import { buildHourSessionsMap } from 'SVUtils'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
-import {
-  initSortedAttendees,
-  initRestrictedAttendees,
-} from 'SVActions/attendees/initSortedAttendees'
+import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
+import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
