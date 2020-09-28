@@ -1,3 +1,5 @@
+import { toBool } from '@keg-hub/jsutils'
+
 /**
  * @param {*} attendee
  * @param {*} session
@@ -6,7 +8,7 @@
 export const isAttendeeRestricted = (attendee, session) => {
   const { attendeeCategoryIdentifier: categoryId } = attendee
   const restrictedCategories = session.restrictToAttendeeCategories
-  return (
+  return toBool(
     restrictedCategories.length && !restrictedCategories.includes(categoryId)
   )
 }

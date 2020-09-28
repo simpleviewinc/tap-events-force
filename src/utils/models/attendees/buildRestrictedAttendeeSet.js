@@ -1,7 +1,7 @@
 import { isAttendeeRestricted } from './isAttendeeRestricted'
 
 /**
- * Builds a set of restricted attendees for the session
+ * Builds a set of restricted attendees for the session (attendees not eligible to book this session)
  * @param {Array<Attendee>} attendees
  * @param {Session} session
  * @return {Set} restricted attendee ids (attendees that can't book the session)
