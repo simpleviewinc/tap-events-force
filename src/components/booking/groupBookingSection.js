@@ -33,6 +33,7 @@ const useSectionAttendees = attendeeIdsForSection => {
  * @param {Function?} onAttendeeSelected - callback of form (id) => {...}, fired when an attendee checkbox is toggled
  */
 export const GroupBookingSection = ({
+  className,
   styles,
   name,
   attendeeIds,
@@ -48,6 +49,7 @@ export const GroupBookingSection = ({
 
   return (
     <CheckGroup
+      className={className}
       styles={sectionStyles}
       title={name}
     >

@@ -15,7 +15,7 @@ const emptyArr = []
  * @param {Object<string, Array<string>>} props.attendeesByTicket - lists of attendee ids organized by their ticket ids
  */
 export const GroupBookingOptions = props => {
-  const { styles, onAttendeeSelected, attendeesByTicket } = props
+  const { className, styles, onAttendeeSelected, attendeesByTicket } = props
 
   const viewStyles = useStylesMemo('groupBookingOptions.main', styles?.main)
 
@@ -25,7 +25,10 @@ export const GroupBookingOptions = props => {
   const sortedTickets = useTicketsForBooking(tickets, attendeesByTicket)
 
   return (
-    <ScrollView style={viewStyles}>
+    <ScrollView
+      className={className}
+      style={viewStyles}
+    >
       { sortedTickets.map(ticket => (
         <GroupBookingSection
           style={styles?.content?.section}

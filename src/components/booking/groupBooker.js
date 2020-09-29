@@ -63,7 +63,7 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
     : currentCapacity
 
   return (
-    <View 
+    <View
       className={`ef-modal-group-body`}
       style={styles.main}
     >
@@ -98,19 +98,21 @@ const TopSection = ({ styles, remainingCount }) => {
   // use correct wording depending on number of spots remaining
   const placeText = remainingCount === 1 ? 'place' : 'places'
 
+  const showCount = exists(remainingCount) && remainingCount !== Infinity
+
   return (
-    <View 
+    <View
       className={`ef-modal-group-section-top`}
       style={styles?.main}
     >
-      <Text 
+      <Text
         className={`ef-modal-body-header`}
         style={styles?.content?.instructionText}
       >
         Select sessions for your group:
       </Text>
-      { exists(remainingCount) && (
-        <Text 
+      { showCount && (
+        <Text
           className={`ef-modal-body-highlight`}
           style={styles?.content?.infoText}
         >
@@ -130,7 +132,7 @@ const TopSection = ({ styles, remainingCount }) => {
  */
 const BottomSection = ({ styles, onCancelPress, onSubmitPress }) => {
   return (
-    <View 
+    <View
       className={`ef-modal-group-section-bottom`}
       style={styles.main}
     >
