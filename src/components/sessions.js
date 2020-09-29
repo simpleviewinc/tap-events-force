@@ -138,12 +138,12 @@ export const Sessions = props => {
     onDayChange = noOp,
     sessionAgendaProps,
     onSessionBookingRequest = noOp,
+    onSessionWaitingListRequest = noOp,
   } = props
 
-  console.log({ sessionAgendaProps })
-
-  // set up our event listener for booking request
+  // set up our event listener for booking and waiting list requests
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
+  useKegEvent(EVENTS.SESSION_WAITING_LIST_REQUEST, onSessionWaitingListRequest)
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)

@@ -44,7 +44,6 @@ export const DayToggle = props => {
 
   const theme = useTheme()
   const dayToggleStyles = theme.get('dayToggle')
-  console.log({ dayToggleStyles })
 
   const dims = useDimensions()
   const dayText = `Day ${dayNumber} - ${getDayString(
