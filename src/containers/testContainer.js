@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Section, H6, H5, Divider, View } from 'SVComponents'
 import { useTheme } from '@keg-hub/re-theme'
-import testData from '../mocks/eventsforce/testData.json'
+import testData from '../mocks/eventsforce/testData.js'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modals'
 import { Values } from 'SVConstants'
@@ -50,7 +50,7 @@ const testOnSessionWaitingListRequest = (sessionId, attendeeIds) => {
  * TestContainer to be used by QA to test out individual component
  */
 export const TestContainer = withAppHeader('Test Container', props => {
-  const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
+  const [ text, setText ] = useState(JSON.stringify(testData))
   const [ mockData, setMockData ] = useState(testData)
 
   // map the evf props onto our states

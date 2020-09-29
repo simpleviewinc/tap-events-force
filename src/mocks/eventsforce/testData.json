@@ -450,9 +450,5 @@
         ]
      }
   ],
-  "alert": {
-     "message": "",
-     "title": "",
-     "type": "error"
-  }
+
 }

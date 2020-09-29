@@ -13,7 +13,11 @@ import { isMobileSize } from 'SVUtils/theme'
  */
 const getDayString = (currentDate, isMobileSize, width) => {
   const parsedDate = parse(currentDate, `yyyy-MM-dd`, new Date())
-  const dateFormat = isMobileSize ? 'd MMM' : width < 750 ? 'd MMM yyyy'  : 'd MMMM yyyy'
+  const dateFormat = isMobileSize
+    ? 'd MMM'
+    : width < 750
+      ? 'd MMM yyyy'
+      : 'd MMMM yyyy'
 
   return currentDate ? format(parsedDate, dateFormat) : 'N/A'
 }
@@ -40,9 +44,14 @@ export const DayToggle = props => {
 
   const theme = useTheme()
   const dayToggleStyles = theme.get('dayToggle')
+  console.log({ dayToggleStyles })
 
   const dims = useDimensions()
-  const dayText = `Day ${dayNumber} - ${getDayString(date, isMobileSize(theme), dims.width)}`
+  const dayText = `Day ${dayNumber} - ${getDayString(
+    date,
+    isMobileSize(theme),
+    dims.width
+  )}`
 
   return (
     <View

@@ -140,6 +140,8 @@ export const Sessions = props => {
     onSessionBookingRequest = noOp,
   } = props
 
+  console.log({ sessionAgendaProps })
+
   // set up our event listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
 

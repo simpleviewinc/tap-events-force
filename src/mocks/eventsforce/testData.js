@@ -427,4 +427,9 @@ export default {
       displayOrder: 2,
     },
   ],
+  alert: {
+    message: '',
+    title: '',
+    type: 'error',
+  },
 }
