@@ -15,6 +15,7 @@ export class Session {
   labelIdentifiers = []
   locationIdentifier = ''
   requiresBooking = false
+  allowBooking = false
   liveVideoUrl = ''
   recordedVideoUrl = ''
   price = null

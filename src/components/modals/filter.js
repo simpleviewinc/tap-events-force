@@ -7,14 +7,13 @@ import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
-import { reduceObj, capitalize, pickKeys } from '@keg-hub/jsutils'
+import { reduceObj, wordCaps, pickKeys, checkCall } from '@keg-hub/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 import {
   updateSelectedFilters,
   applySessionFilters,
   cancelSelectedFilters,
 } from 'SVActions/session/filters'
-import { checkCall } from '@keg-hub/jsutils'
 
 /**
  *
@@ -146,7 +145,7 @@ const createStateLabels = bookingStates => {
   return reduceObj(
     bookingStates,
     (key, value, labels) => {
-      labels.push(new Label({ name: capitalize(value), identifier: key }))
+      labels.push(new Label({ name: wordCaps(value), identifier: key }))
       return labels
     },
     []

@@ -38,6 +38,7 @@ export const Values = deepFreeze({
     AVAILABLE: 'available',
     SELECTED: 'selected',
     WAITING_LIST: 'waiting list',
+    ON_WAITING_LIST: 'on waiting list',
   },
 
   TICKET_TYPE: {
