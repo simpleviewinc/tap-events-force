@@ -7,13 +7,21 @@ import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
-import { reduceObj, wordCaps, pickKeys, checkCall } from '@keg-hub/jsutils'
+import {
+  reduceObj,
+  wordCaps,
+  pickKeys,
+  checkCall,
+  filterObj,
+} from '@keg-hub/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 import {
   updateSelectedFilters,
   applySessionFilters,
   cancelSelectedFilters,
 } from 'SVActions/session/filters'
+
+const { SESSION_BOOKING_STATES } = Values
 
 /**
  *
@@ -151,6 +159,13 @@ const createStateLabels = bookingStates => {
     []
   )
 }
+
+const filteredBookingStates = filterObj(
+  SESSION_BOOKING_STATES,
+  (_, val) =>
+    val != SESSION_BOOKING_STATES.FULLY_BOOKED &&
+    val != SESSION_BOOKING_STATES.READ_ONLY
+)
 /**
  * MiddleSection
  * @param {object} props
@@ -158,10 +173,9 @@ const createStateLabels = bookingStates => {
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  */
 const MiddleSection = ({ styles, labels }) => {
-  const stateLabels = useMemo(
-    () => createStateLabels(Values.SESSION_BOOKING_STATES),
-    [Values.SESSION_BOOKING_STATES]
-  )
+  const stateLabels = useMemo(() => createStateLabels(filteredBookingStates), [
+    filteredBookingStates,
+  ])
 
   return (
     <ScrollView
