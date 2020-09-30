@@ -9,7 +9,7 @@ import { set, get } from '@keg-hub/jsutils'
  * Builds the styles for the Evf button merging the default styles with the parsed styles
  * @param {Object} theme - Global Theme object
  * @param {Object} custom - contains {type, styles, parsed, isProcessing}
- * 
+ *
  * @returns {Object} - Merged Evf button styles
  */
 const buildStyles = (theme, custom) => {
@@ -24,18 +24,15 @@ const buildStyles = (theme, custom) => {
     minWidth: 'fit-content',
   }
 
-  return theme.get(btnStyles, custom.styles, {
-    main: {
-      ...fitWidth,
-    },
-    content: {
-      button: {
-        active: parsedState,
-        default: parsedState,
-        hover: parsedState,
+  return theme.get(
+    btnStyles,
+    custom.styles,
+    {
+      main: {
+        ...fitWidth,
       },
     },
-    custom.parsed && 
+    custom.parsed &&
       // Loop over the state keys, and set the parsed styles for each
       stateKeys.reduce((parsed, state) => {
         set(parsed, `content.button.${state}.main`, custom.parsed)
