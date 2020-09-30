@@ -44,7 +44,6 @@ export const GroupBookingSection = ({
     'form.checkbox.close',
     sectionStyles?.content?.item
   )
-
   const attendeesForSection = useSectionAttendees(attendeeIds)
 
   return (

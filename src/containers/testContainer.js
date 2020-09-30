@@ -138,13 +138,6 @@ export const ModalDemos = () => {
     testOnSessionWaitingListRequest
   )
 
-  // TODO: just for testing -- remove
-  const makeModal = useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
-    session: store.sessions[2],
-    attendees: store.attendees,
-  })
-  useEffect(() => store?.sessions?.[2] && void makeModal(), [store.sessions])
-
   return (
     <View style={testStyles.main}>
       <Section>
@@ -207,7 +200,7 @@ export const ModalDemos = () => {
             session: store.sessions[7],
             attendees: store.attendees,
           })}
-          content={'Group booking Demo 3 - 1 spot left'}
+          content={'Group booking Demo 3 - 1 spot left, no waiting list'}
         />
 
         <Button

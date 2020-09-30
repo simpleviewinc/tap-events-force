@@ -140,7 +140,7 @@ export default {
     },
     {
       identifier: '3',
-      name: 'Session on day 2 limited capacity, no waiting list',
+      name: 'Session on day 3 unlimited capacity',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 09:00:00',
@@ -153,13 +153,13 @@ export default {
       restrictToAttendeeCategories: [ '1', '2' ],
       capacity: {
         isUnlimited: false,
-        remainingPlaces: 2,
+        remainingPlaces: 1,
         isWaitingListAvailable: true,
       },
     },
     {
       identifier: '3a',
-      name: 'Session on day 2 limited capacity, no waiting list',
+      name: 'Session on day 2, limited capacity, no waiting list',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 09:15:00',
@@ -173,7 +173,7 @@ export default {
       capacity: {
         isUnlimited: false,
         remainingPlaces: 3,
-        isWaitingListAvailable: true,
+        isWaitingListAvailable: false,
       },
     },
     {
