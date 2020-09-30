@@ -19,7 +19,7 @@ const primaryItem = {
           boxSizing: 'border-box',
           borderWidth: 2,
           borderRadius: 4,
-          borderColor: colors.default,
+          borderColor: colors.second,
           backgroundColor: colors.white,
           boxShadow: null,
         },
@@ -52,8 +52,8 @@ const alternateItem = deepMerge(primaryItem, {
     area: {
       on: {
         $web: {
-          borderColor: colors.default,
-          backgroundColor: colors.default,
+          borderColor: colors.second,
+          backgroundColor: colors.second,
         },
       },
     },

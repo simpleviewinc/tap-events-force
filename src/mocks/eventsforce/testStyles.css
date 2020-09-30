@@ -77,7 +77,7 @@
 }
 
 /* Pull color 1 from here - backgroundColor */
-.ef-button-default {
+.ef-sessions-button-default {
   background-color: #525859;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
   color: #FFFFFF;
@@ -85,7 +85,7 @@
 }
 
 /* Pull color 4 from here - backgroundColor */
-.ef-button-primary {
+.ef-sessions-button-primary {
   background-color: #22B3C4;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.15);
   color: #FFFFFF;

@@ -3,8 +3,9 @@ import { dispatch } from 'SVStore'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
- * Tap override of app init action, which loads values from local storage, then
- * dispatches the init value
+ * Stores the id of the session associated with the active group booking modal
+ * in the group booking items store tree
+ * @param {string} sessionId - id of a session
  */
 export const setCurrentSessionId = sessionId => {
   dispatch({
