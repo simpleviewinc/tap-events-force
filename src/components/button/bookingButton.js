@@ -1,5 +1,5 @@
-import React from 'react'
-import { setSessionSelected } from 'SVActions/session/setSessionSelected'
+import React, { useCallback } from 'react'
+import { selectSession } from 'SVActions/session/selectSession'
 import { EvfButton } from 'SVComponents/button/evfButton'
 /**
  * @todo - to be completed on
@@ -20,6 +20,7 @@ export const BookingButton = ({ styles, session }) => {
   )
     return null
 
+  const selectSessionCb = useCallback(() => selectSession(session), [session])
   // we want to show the SELECT btn if:
   // - waiting list is available
   // - remainingPlaces > 0
@@ -27,7 +28,7 @@ export const BookingButton = ({ styles, session }) => {
     <EvfButton
       type={'primary'}
       styles={styles}
-      onClick={() => setSessionSelected(session)}
+      onClick={selectSessionCb}
       text={'SELECT'}
     />
   )

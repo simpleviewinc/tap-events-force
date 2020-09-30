@@ -11,7 +11,7 @@ const { MODAL_TYPES } = Values
  * based on the # of attendees available
  * @param {import('SVModels/session').Session} session
  */
-export const setSessionSelected = session => {
+export const selectSession = session => {
   if (!session) return
 
   const { items } = getStore()?.getState()
