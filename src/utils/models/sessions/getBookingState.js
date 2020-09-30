@@ -13,7 +13,7 @@ export const getBookingState = session => {
   const attendees = items?.attendees || []
 
   if (session.allowBooking) {
-    for (const attendee in attendees) {
+    for (const attendee of attendees) {
       // SELECTED - Any session where the session identifier is included in the bookedSessions array for any attendee
       if (attendee.bookedSessions?.some(id => id === session.identifier))
         return SESSION_BOOKING_STATES.SELECTED
