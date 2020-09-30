@@ -20,7 +20,7 @@ export const groupBookingSection = {
           borderBottomWidth: 1,
           borderStyle: 'dotted',
           borderColor: '#909090',
-          fontSize: 14,
+          fontSize: 12,
         },
         $small: {
           fontSize: 16,
