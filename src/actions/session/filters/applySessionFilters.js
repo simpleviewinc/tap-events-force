@@ -14,7 +14,6 @@ export const applySessionFilters = () => {
   const selectedFilters = items?.filters?.selectedFilters || []
   const sessions = items?.sessions
   const agendaDays = items?.agendaDays
-  console.log(selectedFilters, 'filters')
 
   // 1. filter by states
   let filteredSessions = applyStateFilters(selectedFilters, sessions)
@@ -67,14 +66,11 @@ const applyLabelFilters = (labels, sessions) => {
   const labelFilters = labels.filter(
     item => !bookingStateKeys.includes(item.identifier)
   )
-  console.log(labelFilters, 'labelFilter')
   if (labelFilters.length > 0) {
     // 1. reduce the filter items to just the ids
     // 2. filter the sessions array with the filter ids
-    console.log(sessions, 'after state filter')
     const labelIds = flatMap(labelFilters, item => [item.identifier])
 
-    console.log(labelIds, 'labelIds')
     return sessions.filter(
       session =>
         isArr(session.labelIdentifiers) &&

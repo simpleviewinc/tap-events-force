@@ -34,5 +34,5 @@ export const getBookingState = session => {
         : SESSION_BOOKING_STATES.FULLY_BOOKED
   }
 
-  return SESSION_BOOKING_STATES.READ_ONLY // TODO: verify with Ben on what to show as a state button
+  return SESSION_BOOKING_STATES.READ_ONLY
 }
