@@ -3,8 +3,9 @@ import { dispatch } from 'SVStore'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
- * Tap override of app init action, which loads values from local storage, then
- * dispatches the init value
+ * Sets the current capacity of the session in the active group booking modal.
+ * This can change when users select or deselect an attendee checkbox
+ * @param {*} capacity
  */
 export const setSessionCapacity = (capacity = 0) => {
   dispatch({

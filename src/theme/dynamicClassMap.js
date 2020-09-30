@@ -21,8 +21,8 @@ const defEmptyClassList = { classList: {} }
  */
 const efThemeClasses = [
   '.ef-sessions-background',
-  '.ef-button-default',
-  '.ef-button-primary',
+  '.ef-sessions-button-default',
+  '.ef-sessions-button-primary',
   '.ef-sessions-date-selector',
   '.ef-sessions-date-time',
   '.ef-sessions-details-header',
@@ -74,10 +74,10 @@ const setupColors = parsed => {
   // Build the colors object
   const colors = {
     default: get(parsed.classList, `ef-sessions-text-default.color`),
-    color1: getBackgroundColor(parsed.classList, `ef-button-default`),
+    color1: getBackgroundColor(parsed.classList, `ef-sessions-button-default`),
     color2: getBackgroundColor(parsed.classList, `ef-sessions-details-header`),
     color3: getBackgroundColor(parsed.classList, `ef-sessions-timeslot-header`),
-    color4: getBackgroundColor(parsed.classList, `ef-button-primary`),
+    color4: getBackgroundColor(parsed.classList, `ef-sessions-button-primary`),
   }
 
   // Set the colors object, so when the theme gets imported, it has these available

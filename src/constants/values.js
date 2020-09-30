@@ -58,9 +58,6 @@ export const Values = deepFreeze({
   },
   EVENTS: {
     SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
-  },
-  EVENTS: {
-    SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
     SESSION_WAITING_LIST_REQUEST: 'sessionWaitingListRequest',
   },
   TICKET_TYPES: {

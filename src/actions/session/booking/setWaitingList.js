@@ -3,8 +3,10 @@ import { dispatch } from 'SVStore'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
- * Tap override of app init action, which loads values from local storage, then
- * dispatches the init value
+ * Sets the list of ids of attendees who should be put on
+ * the waiting list for the session of the active group
+ * booking modal.
+ * @param {Array<string>} attendeeIds
  */
 export const setWaitingList = attendeeIds => {
   dispatch({
