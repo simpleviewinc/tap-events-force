@@ -4,9 +4,8 @@ import {
   useFromToAnimation,
   Loading as KegLoading,
 } from '@keg-hub/keg-components'
-import { EVFIcons } from 'SVIcons'
 import { useTheme } from '@keg-hub/re-theme'
-
+import { Loading } from 'SVIcons/evf/elements'
 /**
  * Custom Indicator component using the spinner from FontAwesome 4
  * @param {object} props
@@ -31,11 +30,10 @@ const CustomIndicator = ({ size, styles }) => {
 
   return (
     <Animated.View style={{ transform: [{ rotate: spinInterpolate }] }}>
-      <EVFIcons.Loading
+      <Loading
         className={`ef-loading-indicator`}
         color={styles.icon.color}
-        width={size}
-        height={size}
+        size={size}
       />
     </Animated.View>
   )
