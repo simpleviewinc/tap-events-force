@@ -19,9 +19,8 @@ export const GroupBookingOptions = props => {
 
   const viewStyles = useStylesMemo('groupBookingOptions.main', styles?.main)
 
-  const tickets = useStoreItems('tickets')
-
   // sort tickets by display order and filter out invalid ones
+  const tickets = useStoreItems('tickets')
   const sortedTickets = useTicketsForBooking(tickets, attendeesByTicket)
 
   return (

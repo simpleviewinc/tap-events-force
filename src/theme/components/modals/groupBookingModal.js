@@ -1,52 +1,80 @@
 import { colors } from '../../colors'
-import { defaultTextStyle } from './baseModal'
+
+const groupBookingTextStyle = {
+  fontWeight: '600',
+  $xsmall: {
+    fontSize: '0.8em',
+  },
+  $small: {
+    fontSize: '1em',
+  },
+}
 
 export const groupBookingModal = {
   content: {
     main: {
-      $web: {
-        $xsmall: {
-          maxWidth: '800px',
-        },
-      },
-      $all: {
-        $xsmall: {
+      $xsmall: {
+        $web: {
           width: '90%',
-          maxWidth: 800,
+          maxWidth: '800px',
+          flex: 1,
         },
       },
     },
     body: {
       main: {
-        flexDirection: 'column',
-        paddingLeft: 46,
-        paddingRight: 36,
-        paddingTop: 17,
+        $xsmall: {
+          flexDirection: 'column',
+          paddingLeft: 18,
+          paddingRight: 16,
+          paddingTop: 7,
+        },
+        $small: {
+          paddingLeft: 46,
+          paddingRight: 36,
+          paddingTop: 17,
+        },
+        // allows for both overflow-scrolling AND dynamic flex sizing
+        flexShrink: 'unset',
       },
       content: {
         topSection: {
           main: {
+            display: 'flex',
             flexDirection: 'row',
             justifyContent: 'space-between',
+            $xsmall: {
+              marginBottom: 15,
+            },
+            $small: {
+              marginBottom: 'inherit',
+            },
+            flex: 1,
           },
           content: {
-            instructionText: defaultTextStyle,
+            instructionText: groupBookingTextStyle,
             infoText: {
-              ...defaultTextStyle,
+              ...groupBookingTextStyle,
               color: colors.lightGray,
               textAlign: 'end',
             },
           },
         },
-        middleSection: {},
+        middleSection: {
+          main: {
+            display: 'flex',
+            flex: 9,
+          },
+        },
         bottomSection: {
           main: {
             $xsmall: {
+              display: 'flex',
+              flex: 1,
               flexDirection: 'row',
               alignSelf: 'flex-end',
               paddingTop: 26,
-              paddingBottom: 35,
-              flex: 1,
+              paddingBottom: 36,
             },
           },
           content: {
@@ -55,10 +83,11 @@ export const groupBookingModal = {
                 $xsmall: {
                   minHeight: 45,
                   marginRight: 10,
+                  maxWidth: 120,
                 },
                 $small: {
                   minWidth: 120,
-                },
+                }
               },
             },
             bookButton: {
