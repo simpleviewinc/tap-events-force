@@ -47,6 +47,7 @@ export const AttendeeBookingList = ({
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
     const isBooking = bookingList.has(attendeeId)
     const isWaiting = waitingList.has(attendeeId)
+    const isDisabled = !isBookable?.(attendeeId)
 
     return (
       <AttendeeCheckboxItem
@@ -57,7 +58,7 @@ export const AttendeeBookingList = ({
         isWaiting={isWaiting}
         sectionStyles={sectionStyles}
         itemStyles={itemStyles}
-        disabled={!isBookable?.(attendeeId)}
+        disabled={isDisabled}
         enableCheck={enableCheck}
         checked={isBooking || isWaiting}
         setCheckedSetter={setCheckedSetter}

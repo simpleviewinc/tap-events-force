@@ -40,7 +40,8 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
   const { initialCapacityExceedsNeed } = useGroupCounts(
     attendeesByTicket,
     restrictedAttendeeIds,
-    remainingCount
+    remainingCount,
+    session?.capacity.isUnlimited
   )
 
   // gets callbacks and data related to the group booking for this session

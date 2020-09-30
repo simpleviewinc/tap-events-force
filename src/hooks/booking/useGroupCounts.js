@@ -3,15 +3,17 @@ import { countAttendeesByTicket } from 'SVUtils/models/attendees/countAttendeesB
 
 /**
  * Computes some memoized counts of the attendee data structures
- * @param {*} attendeesByTicket
- * @param {*} restrictedIdsForSession
- * @param {*} remainingCount
+ * @param {Object<string, Array<string>>} attendeesByTicket -- attendees sorted by ticket
+ * @param {Array<string>} restrictedIdsForSession - ids of attendees who cannot book a session
+ * @param {number} remainingCount - remaining count of a session
+ * @param {boolean} isUnlimited - if a session is unlimited or not
  * @return {Object} counts
  */
 export const useGroupCounts = (
   attendeesByTicket,
   restrictedIdsForSession,
-  remainingCount
+  remainingCount,
+  isUnlimited
 ) => {
   return useMemo(() => {
     const sortedAttendeeCount = countAttendeesByTicket(attendeesByTicket)
@@ -21,7 +23,8 @@ export const useGroupCounts = (
       sortedAttendeeCount - restrictedIdsForSession.length
 
     // only show the capacity of the session if the number of attendees exceeds the capacity
-    const initialCapacityExceedsNeed = remainingCount > bookableAttendeeCount
+    const initialCapacityExceedsNeed =
+      isUnlimited || remainingCount > bookableAttendeeCount
 
     return {
       sortedAttendeeCount,

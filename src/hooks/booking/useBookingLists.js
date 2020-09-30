@@ -2,9 +2,9 @@ import { useMemo } from 'react'
 
 /**
  * Builds the initial list of ids of attendees on the waiting list for the session
- * @param {*} session
- * @param {*} attendees
- * @param {*} isBookable
+ * @param {Object} session
+ * @param {Array<Attendee>} attendees
+ * @param {Function} isBookable
  */
 const getInitialWaitIds = (session, attendees, isBookable) => {
   return attendees.reduce((list, attendee) => {
@@ -17,11 +17,11 @@ const getInitialWaitIds = (session, attendees, isBookable) => {
 
 /**
  * Builds the initial list of booked attendee ids for the session
- * @param {*} session
- * @param {*} attendees
- * @param {*} initialWaitIds
- * @param {*} isBookable
- * @param {*} initialCapacityExceedsNeed
+ * @param {Object} session
+ * @param {Array<string>} attendees
+ * @param {Array<string>} initialWaitIds
+ * @param {Function} isBookable
+ * @param {boolean} initialCapacityExceedsNeed
  */
 const getInitialBookedIds = (
   session,
@@ -31,9 +31,11 @@ const getInitialBookedIds = (
   initialCapacityExceedsNeed
 ) => {
   // if nobody is on the waiting list, and the capacity of session is greater than the number of attendees,
-  // include all the attendees
+  // include all the attendees that are bookable
   if (initialCapacityExceedsNeed && !initialWaitIds?.length)
-    return attendees.map(attendee => attendee.bookedTicketIdentifier)
+    return attendees
+      .filter(isBookable)
+      .map(attendee => attendee.bookedTicketIdentifier)
 
   return attendees.reduce((list, attendee) => {
     const { bookedSessions, bookedTicketIdentifier: id } = attendee
