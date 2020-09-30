@@ -8,7 +8,7 @@ import { set, get } from '@keg-hub/jsutils'
 /**
  * Builds the styles for the Evf button merging the default styles with the parsed styles
  * @param {Object} theme - Global Theme object
- * @param {Object} custom - contains {type, styles, parsed, isProcessing}
+ * @param {Object} custom - contains {type, styles, parsed}
  *
  * @returns {Object} - Merged Evf button styles
  */
@@ -18,20 +18,9 @@ const buildStyles = (theme, custom) => {
   // This allows dynamically matching the Theme states even if they are changed
   const stateKeys = Object.keys(get(btnStyles, 'content.button', {}))
 
-  // overwrite the min width when trying to display 'processing' content
-  // for cases where the default content is smaller  than the processing content
-  const fitWidth = custom.isProcessing && {
-    minWidth: 'fit-content',
-  }
-
   return theme.get(
     btnStyles,
     custom.styles,
-    {
-      main: {
-        ...fitWidth,
-      },
-    },
     custom.parsed &&
       // Loop over the state keys, and set the parsed styles for each
       stateKeys.reduce((parsed, state) => {
@@ -60,10 +49,11 @@ export const EvfButton = ({
   // build the main style for the button, memoized
   const buttonCls = `ef-button-${type}`
   const parsedStyles = useParsedStyle(buttonCls)
-  const customStyles = useMemo(
-    () => ({ type, styles, parsed: parsedStyles, isProcessing }),
-    [ type, styles, parsedStyles, isProcessing ]
-  )
+  const customStyles = useMemo(() => ({ type, styles, parsed: parsedStyles }), [
+    type,
+    styles,
+    parsedStyles,
+  ])
 
   const mainStyle = useStylesCallback(
     buildStyles,

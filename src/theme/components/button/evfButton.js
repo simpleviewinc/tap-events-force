@@ -103,8 +103,13 @@ const buttonStateStyles = backgroundColor => {
 }
 
 const defaultMainStyle = {
-  overflow: 'hidden',
-  flex: 1,
+  $all: {
+    overflow: 'hidden',
+    flex: 1,
+  },
+  $web: {
+    minWidth: 'fit-content',
+  },
 }
 
 const processingStyles = {
