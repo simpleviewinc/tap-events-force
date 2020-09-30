@@ -7,7 +7,7 @@ import { format } from 'date-fns'
  * @returns {string}
  */
 export const getTimeFromDate = (date, military = true) => {
-  let parsed = Date.parse(new Date(date.replace(/-/g, '/')))
+  let parsed = Date.parse(date)
   if (isNaN(parsed)) parsed = new Date(date.replace(/-/g, '/'))
   return format(parsed, military ? 'HH:mm' : 'h:mma')
 }
