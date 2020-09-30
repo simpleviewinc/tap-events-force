@@ -100,12 +100,13 @@ export const EvfButton = ({
  * Processing
  * @param {object} props
  * @param {object} props.styles
+ * @param {string=} props.text
  */
-const Processing = ({ styles, size }) => {
+const Processing = ({ styles, size, text = 'Processing' }) => {
   return (
     <View style={styles.main}>
       <EvfLoading size={size} />
-      <Text style={styles.text}>Processing</Text>
+      <Text style={styles.text}>{ text }</Text>
     </View>
   )
 }

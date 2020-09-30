@@ -47,7 +47,6 @@ export const groupBookingModal = {
               paddingTop: 26,
               paddingBottom: 35,
               flex: 1,
-              width: 'fit-content',
             },
           },
           content: {
