@@ -16,6 +16,22 @@ export const testContainer = {
       button: {
         main: { marginTop: 10 },
       },
+      evfButtons: {
+        main: {
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+        },
+        button: {
+          main: {
+            flex: 1,
+            flexBasis: 120,
+            maxWidth: 120,
+            minHeight: 45,
+            marginTop: 10,
+            marginRight: 10,
+          },
+        },
+      },
     },
   },
 }
