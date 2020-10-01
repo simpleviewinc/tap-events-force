@@ -1,3 +1,5 @@
+import { devLog } from 'SVUtils/logs'
+
 /**
  * Turns the price object to a formatted string
  * @param {import('SVModels/price').Price} price
@@ -23,7 +25,7 @@ export const formatPrice = (price, displayFree = false) => {
       : defaultLabel
   }
   catch (error) {
-    console.warn(error)
+    devLog.warn('error in "formatPrice"', error)
     return defaultLabel
   }
 }

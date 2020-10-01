@@ -3,6 +3,7 @@ import { getStore } from 'SVStore'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
 import { sessionBookingRequest } from 'SVActions/session/booking/sessionBookingRequest'
+import { devLog } from 'SVUtils/logs'
 
 const { MODAL_TYPES } = Values
 
@@ -12,7 +13,11 @@ const { MODAL_TYPES } = Values
  * @param {import('SVModels/session').Session} session
  */
 export const selectSession = session => {
-  if (!session) return
+  if (!session)
+    return devLog.warn(
+      'Action "selectSession" requires a valid session. Received: ',
+      session
+    )
 
   const { items } = getStore()?.getState()
   const attendeesCp = items && Array.from(items.attendees)
