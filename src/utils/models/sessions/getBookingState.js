@@ -11,7 +11,7 @@ const { SESSION_BOOKING_STATES } = Values
 export const getBookingState = session => {
   const { items } = getStore()?.getState()
   const attendees = items?.attendees || []
-  console.log(attendees)
+
   if (session.allowBooking) {
     for (const attendee of attendees) {
       // SELECTED - Any session where the session identifier is included in the bookedSessions array for any attendee
