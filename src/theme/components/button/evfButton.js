@@ -1,4 +1,5 @@
 import { colors } from '../../colors'
+import { deepMerge } from '@keg-hub/jsutils'
 
 const topLeftCornerStyle = {
   main: {
@@ -35,20 +36,23 @@ const defaultTextStyle = {
   },
 }
 
-const defaultButtonStyles = {
-  main: {
-    $all: {
-      flex: 1,
-      justifyContent: 'center',
-      borderRadius: 0,
-      padding: 0,
+const buildButtonState = stateStyles =>
+  deepMerge(
+    {
+      main: {
+        $all: {
+          flex: 1,
+          justifyContent: 'center',
+          borderRadius: 0,
+        },
+        $web: {
+          boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.15)',
+        },
+      },
+      content: defaultTextStyle,
     },
-    $web: {
-      boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.15)',
-    },
-  },
-  content: defaultTextStyle,
-}
+    stateStyles
+  )
 
 /**
  * Sets up the different button states with the given color
@@ -56,49 +60,16 @@ const defaultButtonStyles = {
  */
 const buttonStateStyles = backgroundColor => {
   return {
-    default: {
-      main: {
-        $all: {
-          ...defaultButtonStyles.main.$all,
-          backgroundColor,
-        },
-        $web: defaultButtonStyles.main.$web,
-      },
-      content: defaultButtonStyles.content,
-    },
-    active: {
-      main: {
-        $all: {
-          ...defaultButtonStyles.main.$all,
-          backgroundColor,
-          opacity: 0.4,
-        },
-        $web: defaultButtonStyles.main.$web,
-      },
-      content: defaultButtonStyles.content,
-    },
-    hover: {
-      main: {
-        $all: {
-          ...defaultButtonStyles.main.$all,
-          backgroundColor,
-          opacity: 0.8,
-        },
-        $web: defaultButtonStyles.main.$web,
-      },
-      content: defaultButtonStyles.content,
-    },
-    disabled: {
-      main: {
-        $all: {
-          ...defaultButtonStyles.main.$all,
-          backgroundColor,
-          opacity: 0.6,
-        },
-        $web: defaultButtonStyles.main.$web,
-      },
-      content: defaultButtonStyles.content,
-    },
+    default: buildButtonState({ main: { $all: { backgroundColor } } }),
+    active: buildButtonState({
+      main: { $all: { backgroundColor, opacity: 0.4 } },
+    }),
+    hover: buildButtonState({
+      main: { $all: { backgroundColor, opacity: 0.8 } },
+    }),
+    disabled: buildButtonState({
+      main: { $all: { backgroundColor, opacity: 0.6 } },
+    }),
   }
 }
 
