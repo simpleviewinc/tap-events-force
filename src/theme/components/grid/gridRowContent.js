@@ -8,6 +8,8 @@ export const gridRowContent = {
     main: {
       flex: 1,
       flexDirection: 'column',
+      pB: 10,
+      pL: 10,
     },
   },
 }

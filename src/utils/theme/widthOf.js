@@ -1,4 +1,5 @@
 import { getSizeMap } from '@keg-hub/re-theme'
+import { devLog } from 'SVUtils/logs'
 
 /**
  * Returns the width associated with the size key
@@ -6,6 +7,6 @@ import { getSizeMap } from '@keg-hub/re-theme'
  */
 export const widthOf = size => {
   const map = getSizeMap()
-  if (!map || !map.hash) return console.error('Size map hash unavailable:', map)
+  if (!map || !map.hash) return devLog.error('Size map hash unavailable:', map)
   return map.hash[size]
 }

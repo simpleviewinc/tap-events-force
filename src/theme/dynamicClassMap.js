@@ -157,7 +157,7 @@ export const parseCustomClasses = () => {
       classNames: efThemeClasses,
     })
 
-  if(!__parsedEfClasses || !__parsedEfClasses.classList)
+  if (!__parsedEfClasses || !__parsedEfClasses.classList)
     return defEmptyClassList
 
   setupColors(__parsedEfClasses)
@@ -174,7 +174,7 @@ parseCustomClasses()
 /**
  * Gets the cached Ef Class data or calls function to parse the Stylesheets
  * @function
- * 
+ *
  * @returns {Object} __parsedEfClasses - Parsed styleSheet classes ad a JS Object
  */
 export const getParsedClasses = () => parseCustomClasses()

@@ -14,7 +14,7 @@ import { sessionBookingRequest } from 'SVActions'
  * @param {boolean} props.visible
  */
 export const GroupBooking = ({ visible, session, attendees }) => {
-  if (!session || !attendees) return
+  if (!session || !attendees) return null
 
   const theme = useTheme()
 

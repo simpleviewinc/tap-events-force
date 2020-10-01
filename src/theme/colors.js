@@ -1,3 +1,4 @@
+import { mapObj } from '@keg-hub/jsutils'
 /**
  * Holds the default colors. Can be overwritten by setColor method
  * @object
@@ -24,7 +25,11 @@ const colors = {
  * @return {Object} Updated colors object
  */
 const setColors = updated => {
-  Object.assign(colors, updated)
+  // override the colors object with values from updated,
+  // unless updated values are undefined
+  mapObj(colors, (key, value) => {
+    colors[key] = updated[key] || value
+  })
   return colors
 }
 

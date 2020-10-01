@@ -7,6 +7,7 @@ import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import PropTypes from 'prop-types'
 import { useTheme } from '@keg-hub/re-theme'
 import { useFormattedPrice } from 'SVHooks/models/price'
+import { BookingButton } from 'SVComponents/button/bookingButton'
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -64,6 +65,13 @@ export const GridTileContent = props => {
         onPress={() => console.log('Open session details modal')}
         text={session?.name}
       />
+
+      <View style={gridTileContentStyles?.buttonSection?.main}>
+        <BookingButton
+          session={session}
+          styles={gridTileContentStyles?.buttonSection?.bookingButton}
+        />
+      </View>
     </View>
   )
 }
