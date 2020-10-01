@@ -321,7 +321,9 @@ export default {
       recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
       restrictToAttendeeCategories: [],
       capacity: {
-        isUnlimited: true,
+        isUnlimited: false,
+        isWaitingListAvailable: true,
+        remainingPlaces: 0,
       },
       price: {
         currency: 'USD',
