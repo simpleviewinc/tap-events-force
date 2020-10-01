@@ -8,6 +8,10 @@ import { isNative } from 'SVUtils/platform/isNative'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
+  onSessionBookingRequest: (session, attendees) => {
+    console.log(attendees)
+    console.log(session)
+  },
 }
 
 const marginStyle = {
@@ -64,6 +68,7 @@ export const RootContainer = withAppHeader(displayName, props => {
       <SessionsContainer
         sessionAgendaProps={mockData}
         onDayChange={mockCallbacks.onDayChange}
+        onSessionBookingRequest={mockCallbacks.onSessionBookingRequest}
       />
     </>
   )

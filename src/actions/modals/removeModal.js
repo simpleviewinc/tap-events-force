@@ -1,6 +1,7 @@
 import { dispatch, getStore } from 'SVStore'
 import { isNum } from '@keg-hub/jsutils'
 import { ActionTypes, Values } from 'SVConstants'
+import { devLog } from 'SVUtils/logs'
 
 const { CATEGORIES } = Values
 
@@ -33,7 +34,7 @@ const removeTopModal = modals => {
  * @param {number} index - index to remove from array
  */
 const logWarning = index => {
-  console.warn(`${index} is not a valid index`)
+  devLog.warn(`${index} is not a valid index`)
 }
 
 /**

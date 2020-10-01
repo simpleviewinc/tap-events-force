@@ -4,21 +4,27 @@ import { gridRowContent } from './gridRowContent'
 
 export const gridItem = {
   main: {
-    $xsmall: {
-      backgroundColor: colors.white,
-      height: 200,
-      marginBottom: 15,
-      alignItems: 'flex-start',
+    $all: {
+      $xsmall: {
+        backgroundColor: colors.white,
+        marginBottom: 15,
+        alignItems: 'flex-start',
+      },
+      $small: {
+        flex: 1,
+        marginHorizontal: 3,
+        marginBottom: 6,
+        padding: 15,
+        paddingTop: 20,
+        flexBasis: 333,
+        flexDirection: 'column',
+        minHeight: 294,
+      },
     },
-    $small: {
-      flex: 1,
-      marginHorizontal: 3,
-      marginBottom: 6,
-      padding: 15,
-      paddingTop: 20,
-      flexBasis: 333,
-      flexDirection: 'column',
-      minHeight: 294,
+    $web: {
+      $xsmall: {
+        height: 'fit-content',
+      },
     },
   },
   gridTileContent,
@@ -27,7 +33,6 @@ export const gridItem = {
     main: {
       $web: {
         height: 'fit-content',
-        fontFamily: 'Inter',
       },
       $native: {
         flexDirection: 'row',
@@ -48,15 +53,14 @@ export const gridItem = {
         marginRight: 8,
       },
     },
-  },
-  labelList: {
-    main: {
-      $xsmall: {
-        marginRight: 14,
-        flex: 1,
-      },
-      $small: {
-        marginRight: 0,
+    labelList: {
+      main: {
+        $xsmall: {
+          marginRight: 14,
+        },
+        $small: {
+          marginRight: 0,
+        },
       },
     },
   },
