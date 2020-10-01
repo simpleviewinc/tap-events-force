@@ -4,21 +4,27 @@ import { gridRowContent } from './gridRowContent'
 
 export const gridItem = {
   main: {
-    $xsmall: {
-      backgroundColor: colors.white,
-      height: 'fit-content',
-      marginBottom: 15,
-      alignItems: 'flex-start',
+    $all: {
+      $xsmall: {
+        backgroundColor: colors.white,
+        marginBottom: 15,
+        alignItems: 'flex-start',
+      },
+      $small: {
+        flex: 1,
+        marginHorizontal: 3,
+        marginBottom: 6,
+        padding: 15,
+        paddingTop: 20,
+        flexBasis: 333,
+        flexDirection: 'column',
+        minHeight: 294,
+      },
     },
-    $small: {
-      flex: 1,
-      marginHorizontal: 3,
-      marginBottom: 6,
-      padding: 15,
-      paddingTop: 20,
-      flexBasis: 333,
-      flexDirection: 'column',
-      minHeight: 294,
+    $web: {
+      $xsmall: {
+        height: 'fit-content',
+      },
     },
   },
   gridTileContent,
