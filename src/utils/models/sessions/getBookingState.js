@@ -11,7 +11,7 @@ const { SESSION_BOOKING_STATES } = Values
 export const getBookingState = session => {
   const { items } = getStore()?.getState()
   const attendees = items?.attendees || []
-
+  console.log(attendees)
   if (session.allowBooking) {
     for (const attendee of attendees) {
       // SELECTED - Any session where the session identifier is included in the bookedSessions array for any attendee
@@ -27,9 +27,10 @@ export const getBookingState = session => {
      * AVAILABLE - Any session where allowBooking is true and is either unlimited or has remaining places
      * WAITING_LIST - Any session where capacity is limited, has no remaining places and has a waiting list
      */
-    return session.capacity.isUnlimited || session.capacity.remainingPlaces > 0
+    return session.capacity?.isUnlimited ||
+      session.capacity?.remainingPlaces > 0
       ? SESSION_BOOKING_STATES.AVAILABLE
-      : session.capacity.isWaitingListAvailable
+      : session.capacity?.isWaitingListAvailable
         ? SESSION_BOOKING_STATES.WAITING_LIST
         : SESSION_BOOKING_STATES.FULLY_BOOKED
   }
