@@ -44,7 +44,7 @@ describe('getBookingState', () => {
     })
     it('should ALWAYS return READ_ONLY regardless of any other condition if allowBooking === false', () => {
       // this edge case should never happen in a real scenario
-      // if allowBooking = true, this would return SELECTED
+      // if allowBooking = true, this would return ON WAITING LIST
       const testSession = {
         allowBooking: false,
         identifier: '3',
@@ -56,7 +56,7 @@ describe('getBookingState', () => {
   })
 
   describe('SELECTED', () => {
-    it('should return SELECTED on sessions where session.identifier exists in any attendee.bookedSessions', () => {
+    it('should return SELECTED on sessions where session.identifier exists in any attendee.bookedSessions but NOT attendee.waitingListSessions', () => {
       const testSessions = [
         {
           allowBooking: true,
@@ -75,22 +75,21 @@ describe('getBookingState', () => {
     })
   })
 
-  // TODO: need questions answered first
-  // describe('ON_WAITING_LIST', () => {
-  //   it('should return ON_WAITING_LIST on sessions where session.identifier exists in any attendee.waitingListSessions', () => {
-  //     const testSessions = [
-  //       {
-  //         allowBooking: true,
-  //         identifier: '3',
-  //       },
-  //     ]
-  //     testSessions.map((session) => {
-  //       expect(getBookingState(session)).toEqual(
-  //         SESSION_BOOKING_STATES.ON_WAITING_LIST
-  //       )
-  //     })
-  //   })
-  // })
+  describe('ON_WAITING_LIST', () => {
+    it('should return ON_WAITING_LIST on sessions where session.identifier exists in any attendee.waitingListSessions', () => {
+      const testSessions = [
+        {
+          allowBooking: true,
+          identifier: '3',
+        },
+      ]
+      testSessions.map(session => {
+        expect(getBookingState(session)).toEqual(
+          SESSION_BOOKING_STATES.ON_WAITING_LIST
+        )
+      })
+    })
+  })
 
   describe('AVAILABLE', () => {
     it('should return AVAILABLE on sessions no attendee has booked or on waiting list AND has the capacity to do so', () => {

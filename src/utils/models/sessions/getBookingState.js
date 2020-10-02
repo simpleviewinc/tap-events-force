@@ -13,15 +13,17 @@ export const getBookingState = session => {
   const attendees = items?.attendees || []
 
   if (session.allowBooking) {
-    for (const attendee of attendees) {
-      // SELECTED - Any session where the session identifier is included in the bookedSessions array for any attendee
-      if (attendee.bookedSessions?.some(id => id === session.identifier))
-        return SESSION_BOOKING_STATES.SELECTED
-
-      // ON_WAITING_LIST - Any session where the session identifier is included in the waitingListSessions array for any attendee
-      if (attendee.waitingListSessions?.some(id => id === session.identifier))
-        return SESSION_BOOKING_STATES.ON_WAITING_LIST
-    }
+    // ON_WAITING_LIST - Any session where the session identifier is included in the waitingListSessions array for any attendee
+    // ON_WAITING_LIST takes precedence over SELECTED
+    const inAttendeeWaitingList = attendees.some(attendee =>
+      attendee.waitingListSessions?.some(id => id === session.identifier)
+    )
+    if (inAttendeeWaitingList) return SESSION_BOOKING_STATES.ON_WAITING_LIST
+    // SELECTED - Any session where the session identifier is included in the bookedSessions array for any attendee
+    const inAttendeeBookedSessions = attendees.some(attendee =>
+      attendee.bookedSessions?.some(id => id === session.identifier)
+    )
+    if (inAttendeeBookedSessions) return SESSION_BOOKING_STATES.SELECTED
 
     /**
      * AVAILABLE - Any session where allowBooking is true and is either unlimited or has remaining places
