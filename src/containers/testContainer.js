@@ -50,7 +50,7 @@ const testOnSessionWaitingListRequest = (sessionId, attendeeIds) => {
  * TestContainer to be used by QA to test out individual component
  */
 export const TestContainer = withAppHeader('Test Container', props => {
-  const [ text, setText ] = useState(JSON.stringify(testData))
+  const [ text, setText ] = useState(JSON.stringify(testData), null, 2)
   const [ mockData, setMockData ] = useState(testData)
 
   // map the evf props onto our states

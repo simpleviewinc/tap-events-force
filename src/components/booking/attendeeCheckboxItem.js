@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
 import { Text, View, Button } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
-import { useStylesMemo } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
 import { useTheme } from '@keg-hub/re-theme'
 
@@ -73,7 +73,7 @@ export const AttendeeCheckboxItem = props => {
  */
 const WaitingItem = props => {
   const { name, style, textStyle, onPress } = props
-  const waitingStyles = useStylesMemo('attendeeCheckboxItem.waitingItem', style)
+  const waitingStyles = useStyle('attendeeCheckboxItem.waitingItem', style)
   const isMobile = isMobileSize(useTheme())
 
   return (

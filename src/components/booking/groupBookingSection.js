@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { Text } from '@keg-hub/keg-components'
 import { AttendeeBookingList } from './attendeeBookingList'
 import { CheckGroup } from '@keg-hub/keg-components'
-import { useStylesMemo } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 /**
@@ -39,8 +39,8 @@ export const GroupBookingSection = ({
   attendeeIds,
   onAttendeeSelected,
 }) => {
-  const sectionStyles = useStylesMemo('groupBookingSection', styles)
-  const itemStyles = useStylesMemo(
+  const sectionStyles = useStyle('groupBookingSection', styles)
+  const itemStyles = useStyle(
     'form.checkbox.close',
     sectionStyles?.content?.item
   )
