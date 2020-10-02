@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Checkbox } from '@keg-hub/keg-components'
-import { useStylesMemo } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import { EVFIcons } from 'SVIcons'
 
 /**
@@ -34,7 +34,7 @@ export const EvfCheckbox = props => {
   const handler = useCallback(event =>
     onChange?.({ event, text, id }, [ onChange, text, id ])
   )
-  const checkboxStyles = useStylesMemo(`checkboxGroup.item.${type}`, styles)
+  const checkboxStyles = useStyle(`checkboxGroup.item.${type}`, styles)
 
   return (
     <Checkbox

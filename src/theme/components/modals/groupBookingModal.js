@@ -1,8 +1,8 @@
 import { colors } from '../../colors'
 
 const groupBookingTextStyle = {
-  fontWeight: '600',
   $xsmall: {
+    fontWeight: '600',
     fontSize: '0.8em',
   },
   $small: {
@@ -28,28 +28,29 @@ export const groupBookingModal = {
           paddingLeft: 18,
           paddingRight: 16,
           paddingTop: 7,
+
+          // allows for both overflow-scrolling AND dynamic flex sizing
+          flexShrink: 'unset',
         },
         $small: {
           paddingLeft: 46,
           paddingRight: 36,
           paddingTop: 17,
         },
-        // allows for both overflow-scrolling AND dynamic flex sizing
-        flexShrink: 'unset',
       },
       content: {
         topSection: {
           main: {
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
             $xsmall: {
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'space-between',
               marginBottom: 15,
+              flex: 1,
             },
             $small: {
               marginBottom: 'inherit',
             },
-            flex: 1,
           },
           content: {
             instructionText: groupBookingTextStyle,
@@ -87,7 +88,7 @@ export const groupBookingModal = {
                 },
                 $small: {
                   minWidth: 120,
-                }
+                },
               },
             },
             bookButton: {

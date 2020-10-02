@@ -1,7 +1,7 @@
 import React from 'react'
 import { ScrollView } from '@keg-hub/keg-components'
 import { GroupBookingSection } from './groupBookingSection'
-import { useStylesMemo } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import { useTicketsForBooking } from 'SVHooks/models/useTicketsForBooking'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
@@ -17,7 +17,7 @@ const emptyArr = []
 export const GroupBookingOptions = props => {
   const { className, styles, onAttendeeSelected, attendeesByTicket } = props
 
-  const viewStyles = useStylesMemo('groupBookingOptions.main', styles?.main)
+  const viewStyles = useStyle('groupBookingOptions.main', styles?.main)
 
   // sort tickets by display order and filter out invalid ones
   const tickets = useStoreItems('tickets')

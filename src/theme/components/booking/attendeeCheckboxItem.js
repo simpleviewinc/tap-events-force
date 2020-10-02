@@ -12,16 +12,16 @@ export const attendeeCheckboxItem = {
   main: {},
   waitingItem: {
     main: {
-      width: '100%',
-      flexDirection: 'row',
-      alignItems: 'center',
       $xsmall: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
         justifyContent: 'flex-start',
+        marginLeft: 10,
       },
       $small: {
         justifyContent: 'space-between',
       },
-      marginLeft: 10,
     },
     textWrapper: {
       flexDirection: 'row',
@@ -35,6 +35,8 @@ export const attendeeCheckboxItem = {
     button: {
       main: {
         $web: {
+          minHeight: 31,
+          backgroundColor: 'unset',
           cursor: 'default',
           borderRadius: 2,
           borderColor: 'gray',

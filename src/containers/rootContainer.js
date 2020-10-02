@@ -42,7 +42,7 @@ const applyJson = (text, setMockData) => {
  * Currently only used in local development. Not exported by rollup (see apps/Sessions.js for that)
  */
 export const RootContainer = withAppHeader(displayName, props => {
-  const [ text, setText ] = useState(JSON.stringify(testData))
+  const [ text, setText ] = useState(JSON.stringify(testData), null, 2)
   const [ mockData, setMockData ] = useState(testData)
 
   return (
