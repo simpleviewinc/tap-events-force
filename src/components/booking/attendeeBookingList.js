@@ -8,7 +8,7 @@ import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
 
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
- * @param {Object} session
+ * @param {import('SVModels/session').Session} session
  * @returns {Object} { enableCheck }
  */
 const useCheckboxState = session => {
@@ -24,7 +24,7 @@ const useCheckboxState = session => {
 /**
  * List of attendees for a group booking section
  * @param {Object} props
- * @param {Array<Attendee>} props.attendees - attendee list for current section
+ * @param {Array<import('SVModels/attendee').Attendee>} props.attendees - attendee list for current section
  * @param {Object} props.itemStyles
  * @param {Object} props.sectionStyles
  * @param {Function} props.onAttendeeSelected
@@ -34,6 +34,7 @@ export const AttendeeBookingList = ({
   itemStyles,
   sectionStyles,
   onAttendeeSelected,
+  attendeeClassName,
   setCheckedSetter,
 }) => {
   const bookingList = useBookingSet()
@@ -54,6 +55,7 @@ export const AttendeeBookingList = ({
         key={attendeeId}
         id={attendeeId}
         name={name}
+        textClassName={attendeeClassName}
         onAttendeeSelected={onAttendeeSelected}
         isWaiting={isWaiting}
         sectionStyles={sectionStyles}

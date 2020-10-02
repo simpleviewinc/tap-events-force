@@ -16,7 +16,7 @@ import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
  * renders the group booking UI given the session and the store state
  * @param {object} props
  * @param {object} props.styles
- * @param {Session} props.session - current session
+ * @param {import('SVModels/session').Session} props.session - current session
  * @param {Function} props.dismissModalCb - callback function to dismiss modal
  */
 export const GroupBooker = ({ styles, session, dismissModalCb }) => {

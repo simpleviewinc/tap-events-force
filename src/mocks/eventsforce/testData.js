@@ -140,7 +140,7 @@ export default {
     },
     {
       identifier: '3',
-      name: 'Session on day 3 unlimited capacity',
+      name: 'Session on day 2 - limited capacity',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 09:00:00',

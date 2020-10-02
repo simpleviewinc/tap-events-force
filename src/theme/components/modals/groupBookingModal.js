@@ -66,6 +66,12 @@ export const groupBookingModal = {
             display: 'flex',
             flex: 9,
           },
+          section: {
+            header: {
+              ...groupBookingTextStyle,
+              color: colors.lightGray,
+            },
+          },
         },
         bottomSection: {
           main: {

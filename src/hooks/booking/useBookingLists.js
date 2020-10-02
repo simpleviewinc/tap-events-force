@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 /**
  * Builds the initial list of ids of attendees on the waiting list for the session
  * @param {Object} session
- * @param {Array<Attendee>} attendees
+ * @param {Array<import('SVModels/attendee').Attendee>}  attendees
  * @param {Function} isBookable
  */
 const getInitialWaitIds = (session, attendees, isBookable) => {

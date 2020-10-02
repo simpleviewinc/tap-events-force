@@ -5,7 +5,7 @@ import { setAttendeesByTicket } from './setAttendeesByTicket'
 /**
  * Creates an object of attendees sorted by the ticket they are each booking
  *
- * @param {Array<Attendee>} attendees
+ * @param {Array<import('SVModels/attendee').Attendee>}  attendees
  * @param {Array<Ticket>} tickets
  * @param {Array<BookedTicket>} bookedTickets
  * @return {Object<string, Array<string>>} a map of ticket ids mapped to arrays of attendee ids
@@ -19,7 +19,7 @@ const buildSortedAttendees = (attendees, tickets, bookedTicketObject) => {
 
 /**
  * Creates an object of attendees sorted by their associated ticket, then upserts it to the items store
- * @param {Array<Attendee>} attendees
+ * @param {Array<import('SVModels/attendee').Attendee>}  attendees
  * @param {Array<Ticket>} tickets
  * @param {Array<BookedTicket>} bookedTickets
  *
