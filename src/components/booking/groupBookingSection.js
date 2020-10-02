@@ -10,7 +10,7 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
  * the ones that have the same ids as in the list
  * of attendeeIdsForSection
  * @param {Array<string>} attendeeIds
- * @returns {Array<Attendee>} section attendees
+ * @returns {Array<import('SVModels/attendee').Attendee>}  section attendees
  */
 const useSectionAttendees = attendeeIdsForSection => {
   const attendees = useStoreItems('attendees')
@@ -38,6 +38,8 @@ export const GroupBookingSection = ({
   name,
   attendeeIds,
   onAttendeeSelected,
+  headerClassName,
+  attendeeClassName,
 }) => {
   const sectionStyles = useStyle('groupBookingSection', styles)
   const itemStyles = useStyle(
@@ -49,6 +51,7 @@ export const GroupBookingSection = ({
   return (
     <CheckGroup
       className={className}
+      headerClassName={headerClassName}
       styles={sectionStyles}
       title={name}
     >
@@ -56,6 +59,7 @@ export const GroupBookingSection = ({
         attendees={attendeesForSection}
         onAttendeeSelected={onAttendeeSelected}
         itemStyles={itemStyles}
+        attendeeClassName={attendeeClassName}
         sectionStyles={sectionStyles}
       />
       { !attendeesForSection?.length && (

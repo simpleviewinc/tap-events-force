@@ -13,10 +13,10 @@ import { EVFIcons } from 'SVIcons'
  * @param {Function?} props.onChange - callback handling a click
  * @param {string | Component} props.RightComponent - text or component adjacent to checkbox
  * @param {string} props.text - if RightComponent isn't provided, EvfCheckbox displays a Text element with this string as its content, to the right of the checkbox
- * @param {*} props.styles
- * @param {*} props.styles.main - the root checkbox
- * @param {*} props.styles.content
- * @param {*} props.styles.content.right - style of rightward text
+ * @param {Object} props.styles
+ * @param {Object} props.styles.main - the root checkbox
+ * @param {Object} props.styles.content
+ * @param {Object} props.styles.content.right - style of rightward text
  */
 export const EvfCheckbox = props => {
   const {

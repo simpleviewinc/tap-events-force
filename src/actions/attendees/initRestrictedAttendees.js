@@ -4,7 +4,7 @@ import { setRestrictedAttendeeIds } from './setRestrictedAttendeeIds'
 /**
  * Builds and sets in the items store the restricted attendees array for each session
  * @param {Array<Session>} sessions
- * @param {Array<Attendee>} attendees
+ * @param {Array<import('SVModels/attendee').Attendee>}  attendees
  * @return {void}
  */
 export const initRestrictedAttendees = (sessions, attendees) => {

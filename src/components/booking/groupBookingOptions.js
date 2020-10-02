@@ -30,7 +30,9 @@ export const GroupBookingOptions = props => {
     >
       { sortedTickets.map(ticket => (
         <GroupBookingSection
-          style={styles?.content?.section}
+          headerClassName='ef-modal-body-highlight'
+          attendeeClassName='ef-modal-sub-header'
+          styles={styles?.section}
           key={ticket.identifier}
           name={ticket.name}
           attendeeIds={attendeesByTicket[ticket.identifier] || emptyArr}
