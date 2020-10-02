@@ -9,10 +9,10 @@ import {
 
 /**
  * Initializes the store items related to the group booking UI
- * @param {*} session
- * @param {*} attendees
- * @param {*} isBookable
- * @param {*} initialCapacityExceedsNeed
+ * @param {import('SVModels/session').Session} session
+ * @param {Array<import('SVModels/attendee').Attendee>} attendees
+ * @param {boolean} isBookable
+ * @param {boolean} initialCapacityExceedsNeed
  * @returns {boolean} true if the store is initialized with the data, false otherwise
  */
 export const useInitGroupBooking = (
@@ -22,7 +22,6 @@ export const useInitGroupBooking = (
   initialCapacityExceedsNeed,
   remainingCount
 ) => {
-  // can go in init hook
   const [ initialBookedIds, initialWaitIds ] = useBookingLists(
     session,
     attendees,
