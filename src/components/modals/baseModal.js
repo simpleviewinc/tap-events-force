@@ -4,6 +4,7 @@ import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { removeModal } from 'SVActions'
 import PropTypes from 'prop-types'
 import { EVFIcons } from 'SVIcons'
+import { withPortal } from 'SVComponents/hocs/tapIndex'
 
 /**
  * Title bar for modal
@@ -100,7 +101,7 @@ export const BaseModal = props => {
     }
   }, [ dismissed, onDismiss, removeModal ])
 
-  return (
+  return withPortal(
     <Modal
       className={className}
       styles={{ content: { ...baseStyles.content.main, maxHeight } }}
@@ -116,7 +117,8 @@ export const BaseModal = props => {
       />
 
       { children }
-    </Modal>
+    </Modal>,
+    document.body
   )
 }
 
