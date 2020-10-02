@@ -51,11 +51,11 @@ const getInitialBookedIds = (
 
 /**
  * Hook to acquire the **initial** booking and waiting lists for a session
- * @param {*} session
- * @param {*} attendees
- * @param {*} attendeeIsBookable
- * @param {*} initialCapacityExceedsNeed
- * @param {*} waitingListIsAvailable
+ * @param {import('SVModels/session').Session} session
+ * @param {Array<import('SVModels/attendee').Attendee>} attendees
+ * @param {Function<void, boolean>} attendeeIsBookable
+ * @param {boolean} initialCapacityExceedsNeed
+ * @param {boolean} waitingListIsAvailable
  */
 export const useBookingLists = (
   session,
