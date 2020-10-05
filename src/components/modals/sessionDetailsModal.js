@@ -5,7 +5,7 @@ import { Text, ScrollView } from '@keg-hub/keg-components'
 import { checkCall, pickKeys } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
-
+import { useSessionLocation } from 'SVHooks/models'
 /**
  *
  * @param {object} props
@@ -80,22 +80,7 @@ const Body = ({ styles, session }) => {
 }
 
 /**
- * returns the location object for a given session or undefined
- * @param {import('SVModels/session').Session} session
- * @returns {import('SVModels/location').Location=}
- */
-const useSessionLocation = session => {
-  const { locations } = useSelector(
-    ({ items }) => pickKeys(items, ['locations']),
-    shallowEqual
-  )
-  return locations.filter(
-    location => location.identifier === session.locationIdentifier
-  )[0]
-}
-
-/**
- *
+ * Formats the date string
  * @param {string} start
  * @param {string} end
  * @param {boolean} military
