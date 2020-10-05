@@ -6,7 +6,7 @@ export class BookedTicket {
   bookedSubTickets = undefined
 
   /**
-   * Attendee class model
+   * BookedTicket class model
    * @param {object} params
    * @param {string=} params.identifier
    * @param {string=} params.ticketIdentifier - id of the ticket associated with this item

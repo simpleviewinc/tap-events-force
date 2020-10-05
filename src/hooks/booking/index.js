@@ -1,5 +1,5 @@
 export * from './useSessionBooking'
-export * from './useCurrentSession'
+export * from './useBookingSession'
 export * from './useBookingSet'
 export * from './useWaitingSet'
 export * from './useBookingLists'

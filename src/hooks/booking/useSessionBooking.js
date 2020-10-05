@@ -83,7 +83,11 @@ const useBookSession = (session, bookingList, waitingList) => {
 /**
  * Returns callbacks for working with session capacity and latest capacity
  * @param {number?} initialCapacity
- * @param {*} session
+ * @param {import('SVModels/session').Session} session
+ * @return {Object} object with keys for callbacks and current capacity
+ *  - updateCapacity: callback of form: id => updateListWithId(id)
+ *  - bookSession: callback that books the session with the current booking list and waiting list
+ *  - currentCapacity - the current capacity of the session, that may have been changed by selecting/unselecting attendeese in the group booking modal
  */
 export const useSessionBooking = session => {
   const currentCapacity = useStoreItems(`${CATEGORIES.GROUP_BOOKING}.capacity`)

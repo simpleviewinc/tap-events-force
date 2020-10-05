@@ -13,7 +13,7 @@ const getSessionById = (store, id) => {
 /**
  * @returns {Session} the current, active session for the group booking
  */
-export const useCurrentSession = () => {
+export const useBookingSession = () => {
   const currentSessionId = useStoreItems(
     `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.CURRENT_SESSION}`
   )

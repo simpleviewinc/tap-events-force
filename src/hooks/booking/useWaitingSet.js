@@ -9,7 +9,7 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
  * @returns {Object} with functions matching a javascript Set.
  * Mutations dispatch actions to the store.
  * @example
- * const waitingList = useBookingSet()
+ * const waitingList = useWaitingSet()
  * waitingList.add('32') // dispatches 32 to be added to the list
  * waitingList.add('32') // does nothing, since 32 already is present
  */
