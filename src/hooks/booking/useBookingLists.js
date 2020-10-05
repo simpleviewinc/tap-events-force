@@ -33,9 +33,11 @@ const getInitialBookedIds = (
   // if nobody is on the waiting list, and the capacity of session is greater than the number of attendees,
   // include all the attendees that are bookable
   if (initialCapacityExceedsNeed && !initialWaitIds?.length)
-    return attendees
-      .filter(isBookable)
-      .map(attendee => attendee.bookedTicketIdentifier)
+    return attendees.reduce((ids, nextAttendee) => {
+      if (!isBookable(nextAttendee)) return ids
+      ids.push(nextAttendee.bookedTicketIdentifier)
+      return ids
+    }, [])
 
   return attendees.reduce((list, attendee) => {
     const { bookedSessions, bookedTicketIdentifier: id } = attendee

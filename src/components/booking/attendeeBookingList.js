@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useBookingSession } from 'SVHooks/booking/useBookingSession'
 import { useBookingSet } from 'SVHooks/booking/useBookingSet'
@@ -46,9 +46,14 @@ export const AttendeeBookingList = ({
   const { enableCheck } = useCheckboxState(session)
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
-    const isBooking = bookingList.has(attendeeId)
-    const isWaiting = waitingList.has(attendeeId)
-    const isDisabled = !isBookable?.(attendeeId)
+    const { isBooking, isWaiting, isDisabled } = useMemo(
+      () => ({
+        isBooking: bookingList.has(attendeeId),
+        isWaiting: waitingList.has(attendeeId),
+        isDisabled: !isBookable?.(attendeeId),
+      }),
+      [ attendeeId, bookingList, waitingList, isBookable ]
+    )
 
     return (
       <AttendeeCheckboxItem

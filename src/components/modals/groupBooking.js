@@ -22,7 +22,7 @@ export const GroupBooking = ({ visible, session }) => {
   return (
     <BaseModal
       className={`ef-modal-group`}
-      dissmissedCBRef={dismissedCBRef}
+      dismissedCBRef={dismissedCBRef}
       styles={groupBookingStyles}
       hasCloseButton={false}
       title={session.name}

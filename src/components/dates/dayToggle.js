@@ -1,26 +1,10 @@
 import React from 'react'
-import { format, parse } from 'date-fns'
 import { UpdateDayButton } from './updateDayButton'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { View, Text } from '@keg-hub/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
-
-/**
- * Formats the date into a string of the form D MMMM YYYY
- * @param {string} currentDate - current date string
- * @param {boolean} isMobileSize
- */
-const getDayString = (currentDate, isMobileSize, width) => {
-  const parsedDate = parse(currentDate, `yyyy-MM-dd`, new Date())
-  const dateFormat = isMobileSize
-    ? 'd MMM'
-    : width < 750
-      ? 'd MMM yyyy'
-      : 'd MMMM yyyy'
-
-  return currentDate ? format(parsedDate, dateFormat) : 'N/A'
-}
+import { useDateString } from 'SVHooks/dates/useDateString'
 
 /**
  * Simple day toggling component
@@ -46,11 +30,8 @@ export const DayToggle = props => {
   const dayToggleStyles = theme.get('dayToggle')
 
   const dims = useDimensions()
-  const dayText = `Day ${dayNumber} - ${getDayString(
-    date,
-    isMobileSize(theme),
-    dims.width
-  )}`
+  const dateStr = useDateString(date, isMobileSize(theme), dims.width < 750)
+  const dayText = `Day ${dayNumber} - ${dateStr}`
 
   return (
     <View

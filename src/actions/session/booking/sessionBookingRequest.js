@@ -1,11 +1,18 @@
 import { Values } from 'SVConstants'
-import { getEventEmitter } from 'SVUtils'
+import { getEventEmitter, validateEventResponse } from 'SVUtils'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()
 
 /**
- * sessionBookingRequest
+ * Emits the session booking request event, calling any listeners to that event
+ * and passing `sessionId` and `attendeeIds` to them.
+ *
+ * The consuming app of the sessions-component can define one of these sessionBookingRequest listeners.
+ *
+ * @param {string} sessionId - the id of the session that has attendees to book
+ * @param {Array<string>} attendeeIds - list of attendee ids to be booked to this session
+ * @return {void}
  */
 export const sessionBookingRequest = (sessionId, attendeeIds = []) => {
   const valid = kegEventEmitter.emit(
@@ -13,15 +20,9 @@ export const sessionBookingRequest = (sessionId, attendeeIds = []) => {
     sessionId,
     attendeeIds
   )
-  if (!valid)
-    console.warn(
-      `Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`
-    )
-  else
-    console.log(
-      'Emitted event',
-      EVENTS.SESSION_BOOKING_REQUEST,
-      sessionId,
-      attendeeIds
-    )
+  validateEventResponse(
+    valid,
+    [`Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`],
+    [ 'Emitted event', EVENTS.SESSION_BOOKING_REQUEST, sessionId, attendeeIds ]
+  )
 }

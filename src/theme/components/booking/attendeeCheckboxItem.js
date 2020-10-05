@@ -1,3 +1,5 @@
+import { colors } from '../../colors'
+
 const text = {
   $xsmall: {
     fontSize: '0.8em',
@@ -39,7 +41,7 @@ export const attendeeCheckboxItem = {
           backgroundColor: 'unset',
           cursor: 'default',
           borderRadius: 2,
-          borderColor: 'gray',
+          borderColor: colors.second,
           width: 100,
           height: 31,
           padding: 0,
@@ -48,6 +50,7 @@ export const attendeeCheckboxItem = {
         },
       },
       content: {
+        color: colors.second,
         fontSize: 12,
         fontWeight: 500,
       },
