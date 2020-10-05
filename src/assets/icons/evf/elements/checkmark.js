@@ -1,5 +1,4 @@
 import * as React from 'react'
-// import Svg, { Path } from 'react-native-svg'
 import { SvgIcon } from '@keg-hub/keg-components'
 
 export const Checkmark = props => {

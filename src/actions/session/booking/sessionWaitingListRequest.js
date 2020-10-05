@@ -1,5 +1,5 @@
 import { Values } from 'SVConstants'
-import { getEventEmitter } from 'SVUtils'
+import { getEventEmitter, validateEventResponse } from 'SVUtils'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()
@@ -8,7 +8,7 @@ const kegEventEmitter = getEventEmitter()
  * Fires the event for the sessionWaitingList request, ultimately calling
  * the callback passed to the root `Session` component with the session id
  * and attendeeIds to be put on the session's waiting list
- * @param {string} sessionId
+ * @param {string} sessionId - id of the session, for which this will add attendees to its waitlist
  * @param {Array<string>} attendeeIds - array of ids for attendeees, each of which will be put on the waiting list for this session
  */
 export const sessionWaitingListRequest = (sessionId, attendeeIds = []) => {
@@ -17,15 +17,14 @@ export const sessionWaitingListRequest = (sessionId, attendeeIds = []) => {
     sessionId,
     attendeeIds
   )
-  if (!valid)
-    console.warn(
-      `Callback for ${EVENTS.SESSION_WAITING_LIST_REQUEST} does not exist!`
-    )
-  else
-    console.log(
+  validateEventResponse(
+    valid,
+    [`Callback for ${EVENTS.SESSION_WAITING_LIST_REQUEST} does not exist!`],
+    [
       'Emitted event',
       EVENTS.SESSION_WAITING_LIST_REQUEST,
       sessionId,
-      attendeeIds
-    )
+      attendeeIds,
+    ]
+  )
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
-import { exists } from '@keg-hub/jsutils'
+import { exists, noOpObj } from '@keg-hub/jsutils'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
@@ -20,9 +20,9 @@ import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
  * @param {Function} props.dismissModalCb - callback function to dismiss modal
  */
 export const GroupBooker = ({ styles, session, dismissModalCb }) => {
-  const topSectionStyles = styles?.content?.topSection || {}
-  const middleSectionStyles = styles?.content?.middleSection || {}
-  const bottomSectionStyles = styles?.content?.bottomSection || {}
+  const topSectionStyles = styles?.content?.topSection || noOpObj
+  const middleSectionStyles = styles?.content?.middleSection || noOpObj
+  const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
   const { attendees, attendeesByTicket } = useStoreItems([
     'attendees',
@@ -41,7 +41,7 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
     attendeesByTicket,
     restrictedAttendeeIds,
     remainingCount,
-    session?.capacity.isUnlimited
+    session?.capacity?.isUnlimited
   )
 
   // gets callbacks and data related to the group booking for this session
