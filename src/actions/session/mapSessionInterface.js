@@ -25,6 +25,27 @@ const checkAlert = alert => {
 }
 
 /**
+ *
+ * @param {string} category - some category from the CATEGORIES constants
+ * @param {*} value - value to store at the category
+ */
+const getDispatchPayload = (category, value) => {
+  return !subCatMap[category]
+    ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
+      {
+        type: ActionTypes.SET_ITEMS,
+        payload: { category, items: value },
+      }
+    : // subcategories are upsert-merged, rather than set, since they
+      // might need to be joined with data that was loaded from localStorage,
+      // e.g. agendaSettings.activeDayNumber
+      {
+        type: ActionTypes.UPSERT_ITEM,
+        payload: { category, item: value, key: subCatMap[category] },
+      }
+}
+
+/**
  *  map AgendaSessions using sessions and agenda day numbers
  * @param {Array<import('SVModels/session').Session>} sessions
  * @param {Array} agendaDays
@@ -60,38 +81,17 @@ export const mapSessionInterface = props => {
   props &&
     mapObj(props, (key, value) => {
       // ensure key exists in the items store first
-      if (key === CATEGORIES[snakeCase(key).toUpperCase()]) {
-        // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
-        let type = ActionTypes.SET_ITEMS
-        let payload = {
-          category: key,
-          items: value,
-        }
+      if (key !== CATEGORIES[snakeCase(key).toUpperCase()]) return
 
-        // while mapping sessions, also map for 'activeSessions'
-        // activeSessions are sessions sorted by day number
-        if (key === CATEGORIES.SESSIONS)
-          setAgendaSessions(value, props.agendaDays)
+      // while mapping sessions, also map for 'activeSessions'
+      // activeSessions are sessions sorted by day number
+      if (key === CATEGORIES.SESSIONS)
+        setAgendaSessions(value, props.agendaDays)
 
-        // certain props need to be mapped to a specific key
-        if (subCatMap[key]) {
-          // subcategories are upsert-merged, rather than set, since they
-          // might need to be joined with data that was loaded from localStorage,
-          // e.g. agendaSettings.activeDayNumber
-          type = ActionTypes.UPSERT_ITEM
-          payload = {
-            category: key,
-            item: value,
-            key: subCatMap[key],
-          }
-        }
-
-        key === CATEGORIES.ALERT
-          ? checkAlert(props.alert)
-          : dispatch({
-            type,
-            payload,
-          })
-      }
+      // Check for the alert prop, and call the checkAlert when it exists
+      // Otherwise just dispatch the payload based on the key and value
+      key === CATEGORIES.ALERT
+        ? checkAlert(props.alert)
+        : dispatch(getDispatchPayload(key, value))
     })
 }
