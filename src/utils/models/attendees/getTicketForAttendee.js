@@ -1,8 +1,8 @@
 /**
  * Returns the ticket associated with the attendee
- * @param {*} attendee
- * @param {*} bookedTickets
- * @param {*} tickets
+ * @param {import('SVModels/attendee').Attendee} attendee
+ * @param {Array<import('SVModels/bookedTicket').BookedTicket>} bookedTickets
+ * @param {Array<import('SVModels/Ticket').ticket>} tickets
  */
 export const getTicketForAttendee = (attendee, bookedTickets, tickets) => {
   const hasMatchingId = bookedTicket =>

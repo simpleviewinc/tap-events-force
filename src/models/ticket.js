@@ -8,7 +8,7 @@ export class Ticket {
   price = undefined
 
   /**
-   * Attendee class model
+   * Ticket class model
    * @param {object} params
    * @param {string} params.identifier
    * @param {string} params.ticketType - one of TicketType values
