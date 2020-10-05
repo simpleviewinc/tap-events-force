@@ -73,7 +73,7 @@ const Body = ({ styles, session }) => {
         className={'ef-modal-body-highlight'}
         style={styles?.locationText}
       >
-        { locationName.name }
+        { locationName?.name || '' }
       </Text>
     </ScrollView>
   )
