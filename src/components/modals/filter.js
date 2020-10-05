@@ -97,6 +97,24 @@ const TopSection = ({ styles }) => {
 }
 
 /**
+ * Checks whether or not a particular label should be on the 'toggled on' state or not
+ * @param {number} selectedCount
+ * @param {Array.<import('SVModels/label').Label>} selectedFilters
+ * @param {import('SVModels/label').Label} label
+ *
+ * @returns {boolean}
+ */
+const useLabelOn = (selectedCount, selectedFilters, label) => {
+  // Check selectedCount before doing the loop. If none are selected, we save a few cpu cycles
+  return useMemo(() => {
+    return (
+      selectedCount &&
+      selectedFilters.some(item => item.identifier === label.identifier)
+    )
+  }, [ selectedFilters, selectedCount, label ])
+}
+
+/**
  * LabelButtons
  * Builds the filter items
  * @param {object} props
@@ -118,16 +136,7 @@ const LabelButtons = ({ styles, labels }) => {
   const isFilterEmpty = !selectedCount
 
   return labels.map(label => {
-    // Check selectedCount before doing the loop. If none are selected, we save a few cpu cycles
-    const isLabelOn = useMemo(() => {
-      return (
-        selectedCount &&
-        filters.selectedFilters.some(
-          item => item.identifier === label.identifier
-        )
-      )
-    }, [ filters.selectedFilters, selectedCount, label ])
-
+    const isLabelOn = useLabelOn(selectedCount, filters.selectedFilters, label)
     return (
       <LabelButton
         key={label.name}
