@@ -145,11 +145,32 @@ export const filterModal = {
       },
       bottomSection: {
         main: {
-          alignItems: 'flex-end',
+          flD: 'row',
+          alS: 'flex-end',
+          fl: 1,
+          flWr: 'wrap',
         },
-        button: {
+        applyButton: {
           main: {
             minHeight: 45,
+          },
+        },
+        clearButton: {
+          main: {
+            pB: 5,
+            pH: 10,
+            jtC: 'flex-end',
+          },
+          content: {
+            $web: {
+              ltrS: 0.1,
+            },
+            $all: {
+              ftSz: 18,
+              ftWt: '500',
+              txDc: 'underline',
+              color: colors.lightGray01,
+            },
           },
         },
       },

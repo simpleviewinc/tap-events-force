@@ -1,7 +1,7 @@
 import React, { useRef, useMemo, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { View, Text, ScrollView } from '@keg-hub/keg-components'
+import { View, Text, ScrollView, Button } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
@@ -19,6 +19,7 @@ import {
   updateSelectedFilters,
   applySessionFilters,
   cancelSelectedFilters,
+  clearSelectedFilters,
 } from 'SVActions/session/filters'
 
 const { SESSION_BOOKING_STATES } = Values
@@ -217,9 +218,15 @@ const MiddleSection = ({ styles, labels }) => {
 const BottomSection = ({ styles, onButtonPress }) => {
   return (
     <View style={styles?.main}>
+      <Button
+        themePath='button.text.default'
+        styles={styles?.clearButton}
+        onClick={clearSelectedFilters}
+        content={'Clear Filters'}
+      />
       <EvfButton
         type={'primary'}
-        styles={styles?.button}
+        styles={styles?.applyButton}
         onClick={onButtonPress}
         text={'APPLY'}
       />
