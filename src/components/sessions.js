@@ -3,6 +3,7 @@ import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
+import { applySessionFilters } from 'SVActions/session/filters/applySessionFilters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
@@ -147,6 +148,7 @@ export const Sessions = props => {
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)
+    applySessionFilters()
   }, [sessionAgendaProps])
 
   const theme = useTheme()

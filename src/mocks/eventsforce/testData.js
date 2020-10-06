@@ -100,6 +100,7 @@ export default {
   ],
   sessions: [
     {
+      allowBooking: false,
       identifier: '1',
       name:
         'session with presenters and labels session with presenters and labels session with presenters and labels session with presenters and labels',
@@ -122,6 +123,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '2',
       name: 'session at same time other session with presenters and labels',
       summary: '',
@@ -129,7 +131,7 @@ export default {
       startDateTimeLocal: '2020-08-03 13:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
       presenterIdentifiers: [],
-      labelIdentifiers: [],
+      labelIdentifiers: ['3'],
       locationIdentifier: '2',
       liveVideoUrl: '',
       recordedVideoUrl: '',
@@ -139,6 +141,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '3',
       name: 'Session on day 2 - limited capacity',
       summary: '',
@@ -146,7 +149,7 @@ export default {
       startDateTimeLocal: '2020-08-04 09:00:00',
       endDateTimeLocal: '2020-08-04 09:30:00',
       presenterIdentifiers: [],
-      labelIdentifiers: [],
+      labelIdentifiers: [ '3', '4' ],
       locationIdentifier: '2',
       liveVideoUrl: '',
       recordedVideoUrl: '',
@@ -158,6 +161,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '3a',
       name: 'Session on day 2, limited capacity, no waiting list',
       summary: '',
@@ -177,6 +181,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '4',
       name: 'Session on day 2 limited capacity, has waiting list',
       summary: '',
@@ -196,6 +201,7 @@ export default {
       },
     },
     {
+      allowBooking: false,
       identifier: '5',
       name: 'Session on day 2 full, has waiting list',
       summary: '',
@@ -215,6 +221,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '6',
       name: 'Session on day 2 restricted to attendee category',
       summary: '',
@@ -232,6 +239,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '7',
       name: 'Session on day 2 Demo 1',
       summary: '',
@@ -251,6 +259,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '8',
       name:
         'Session on day 2 Demo 2: super long name. Something different that is very complicated to describe',
@@ -259,7 +268,7 @@ export default {
       startDateTimeLocal: '2020-08-04 11:00:00',
       endDateTimeLocal: '2020-08-04 11:30:00',
       presenterIdentifiers: [],
-      labelIdentifiers: [],
+      labelIdentifiers: ['6'],
       locationIdentifier: '2',
       liveVideoUrl: '',
       recordedVideoUrl: '',
@@ -269,6 +278,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '9',
       name: 'Session on day 2 Demo 3',
       summary: '',
@@ -276,7 +286,7 @@ export default {
       startDateTimeLocal: '2020-08-04 15:00:00',
       endDateTimeLocal: '2020-08-04 16:30:00',
       presenterIdentifiers: [],
-      labelIdentifiers: [],
+      labelIdentifiers: [ '1', '6' ],
       locationIdentifier: '2',
       liveVideoUrl: '',
       recordedVideoUrl: '',
@@ -286,6 +296,7 @@ export default {
       },
     },
     {
+      allowBooking: true,
       identifier: '10',
       name: 'Test session day 3',
       summary: 'This is a session with both presenters and labels',
@@ -299,7 +310,9 @@ export default {
       recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
       restrictToAttendeeCategories: [],
       capacity: {
-        isUnlimited: true,
+        isUnlimited: false,
+        isWaitingListAvailable: true,
+        remainingPlaces: 0,
       },
       price: {
         currency: 'USD',
@@ -307,6 +320,7 @@ export default {
       },
     },
     {
+      allowBooking: false,
       identifier: '11',
       name: 'Zerista session day 3',
       summary: 'This is a session with both presenters and labels',
