@@ -7,5 +7,6 @@ import { parseDate } from './parseDate'
  * @returns {string}
  */
 export const getTimeFromDate = (date, military = true) => {
-  return format(parseDate(date), military ? 'HH:mm' : 'h:mma')
+  const parsedDate = parseDate(date)
+  return parsedDate ? format(parsedDate, military ? 'HH:mm' : 'h:mma') : ''
 }

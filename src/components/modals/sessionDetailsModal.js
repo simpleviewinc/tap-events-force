@@ -92,6 +92,7 @@ const formatSessionDateTime = (start, end, military) => {
       military
     )}`
 
-    return `${timeBlock} ${format(parseDate(start), 'EEEE, d LLLL y')}`
+    const parsedDate = parseDate(start)
+    return `${timeBlock} ${parsedDate && format(parsedDate, 'EEEE, d LLLL y')}`
   }, [ start, end, military ])
 }
