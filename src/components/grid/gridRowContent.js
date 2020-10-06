@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
-import { View } from '@keg-hub/keg-components'
+import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
+import { useSessionLocation } from 'SVHooks/models'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -17,19 +18,24 @@ import { View } from '@keg-hub/keg-components'
  */
 export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
-
   const theme = useTheme()
+  const [ isOpen, setIsOpen ] = useState(false)
   const gridRowContentStyles = theme.get('gridItem.gridRowContent')
+  const locationName = useSessionLocation(session)
+  const row2Styles = gridRowContentStyles.column2
 
   return (
-    <View style={gridRowContentStyles.main}>
+    <Touchable
+      style={gridRowContentStyles.main}
+      onPress={() => setIsOpen(!isOpen)}
+    >
       <LabelList
         style={listStyles}
         itemStyle={labelStyles}
         LabelComponent={LabelTag}
         labels={labels}
       />
-      <View style={gridRowContentStyles.column2.main}>
+      <View style={row2Styles.main}>
         <SessionTime
           style={theme.get('gridItem.sessionTime.main')}
           start={session.startDateTimeLocal}
@@ -37,7 +43,32 @@ export const GridRowContent = props => {
           military={militaryTime}
         />
         <SessionLink text={session.name} />
+        <Text
+          className={'ef-modal-body-highlight'}
+          style={row2Styles.locationText}
+        >
+          { locationName?.name || '' }
+        </Text>
+        <Drawer toggled={isOpen}>
+          <DrawerContent />
+        </Drawer>
       </View>
+    </Touchable>
+  )
+}
+
+/**
+ * @todo: to be completed in https://jira.simpleviewtools.com/browse/ZEN-391
+ */
+const DrawerContent = () => {
+  return (
+    <View>
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. A condimentum vitae
+        sapien pellentesque habitant. Vestibulum mattis ullamcorper velit sed
+        ullamcorper morbi tincidunt.
+      </Text>
     </View>
   )
 }

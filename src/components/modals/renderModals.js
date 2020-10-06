@@ -3,6 +3,7 @@ import { PresenterDetails } from 'SVComponents/modals/presenterDetails'
 import { GroupBooking } from 'SVComponents/modals/groupBooking'
 import { Filter } from 'SVComponents/modals/filter'
 import { Alert } from 'SVComponents/modals/alert'
+import { SessionDetailsModal } from 'SVComponents/modals/sessionDetailsModal'
 import { Values } from 'SVConstants'
 
 /**
@@ -56,6 +57,14 @@ export const RenderModals = modals => {
         labels={modal.data?.labels}
       />
 
+    case Values.MODAL_TYPES.SESSION_DETAILS:
+      return (
+        <SessionDetailsModal
+          key={index}
+          visible={true}
+          session={modal.data?.session}
+        />
+      )
     default:
       return null
     }
