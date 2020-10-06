@@ -64,16 +64,22 @@ export const Filter = ({ visible, labels }) => {
  * @param {Array<import('SVModels/label').Label>} props.labels
  */
 const Content = ({ styles, onButtonPress, labels }) => {
+  const { filters } = useSelector(
+    ({ items }) => pickKeys(items, ['filters']),
+    shallowEqual
+  )
   return (
     <View style={styles?.main}>
       <TopSection styles={styles?.topSection} />
       <MiddleSection
         labels={labels}
         styles={styles?.middleSection}
+        selectedFilters={filters?.selectedFilters}
       />
       <BottomSection
         styles={styles?.bottomSection}
         onButtonPress={onButtonPress}
+        hasSelectedFilters={filters?.selectedFilters?.length > 0}
       />
     </View>
   )
@@ -121,23 +127,19 @@ const useLabelOn = (selectedCount, selectedFilters, label) => {
  * @param {object} props
  * @param {object} props.styles - styles to be applied to LabelButton
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
+ * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const LabelButtons = ({ styles, labels }) => {
+const LabelButtons = ({ styles, labels, selectedFilters = [] }) => {
   /**
    * expected behavior:
    *   - all filters are 'toggled on' by default when no filter is selected
    *   - once a filter item is selected, the rest should be toggled off except for the selected item(s)
    */
-  const { filters } = useSelector(
-    ({ items }) => pickKeys(items, ['filters']),
-    shallowEqual
-  )
-
-  const selectedCount = filters.selectedFilters.length
+  const selectedCount = selectedFilters.length
   const isFilterEmpty = !selectedCount
 
   return labels.map(label => {
-    const isLabelOn = useLabelOn(selectedCount, filters.selectedFilters, label)
+    const isLabelOn = useLabelOn(selectedCount, selectedFilters, label)
     return (
       <LabelButton
         key={label.name}
@@ -181,8 +183,9 @@ const filteredBookingStates = filterObj(
  * @param {object} props
  * @param {object} props.styles - default from modal.filter.body.middleSection
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
+ * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const MiddleSection = ({ styles, labels }) => {
+const MiddleSection = ({ styles, labels, selectedFilters }) => {
   const stateLabels = useMemo(() => createStateLabels(filteredBookingStates), [
     filteredBookingStates,
   ])
@@ -196,6 +199,7 @@ const MiddleSection = ({ styles, labels }) => {
         <LabelButtons
           styles={styles.labelButtons?.item}
           labels={labels}
+          selectedFilters={selectedFilters}
         />
       </View>
 
@@ -203,6 +207,7 @@ const MiddleSection = ({ styles, labels }) => {
         <LabelButtons
           styles={styles?.stateButtons?.item}
           labels={stateLabels}
+          selectedFilters={selectedFilters}
         />
       </View>
     </ScrollView>
@@ -214,16 +219,19 @@ const MiddleSection = ({ styles, labels }) => {
  * @param {object} props
  * @param {object} props.styles - default from modal.filter.body.bottomSection theme
  * @param {Function} props.onButtonPress
+ * @param {boolean} props.hasSelectedFilters - whether or not the selectedFilters state is empty
  */
-const BottomSection = ({ styles, onButtonPress }) => {
+const BottomSection = ({ styles, onButtonPress, hasSelectedFilters }) => {
   return (
     <View style={styles?.main}>
-      <Button
-        themePath='button.text.default'
-        styles={styles?.clearButton}
-        onClick={clearSelectedFilters}
-        content={'Clear Filters'}
-      />
+      { hasSelectedFilters && (
+        <Button
+          themePath='button.text.default'
+          styles={styles?.clearButton}
+          onClick={clearSelectedFilters}
+          content={'Clear Filters'}
+        />
+      ) }
       <EvfButton
         type={'primary'}
         styles={styles?.applyButton}
