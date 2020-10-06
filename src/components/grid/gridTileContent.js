@@ -39,6 +39,7 @@ export const GridTileContent = props => {
     Values.MODAL_TYPES.SESSION_DETAILS,
     {
       session,
+      labels,
     }
   )
   return (

@@ -62,6 +62,7 @@ export const RenderModals = modals => {
           key={index}
           visible={true}
           session={modal.data?.session}
+          labels={modal.data?.labels}
         />
       )
     default:

@@ -12,6 +12,6 @@ export const useSessionLocation = session => {
     shallowEqual
   )
   return locations.filter(
-    location => location.identifier === session.locationIdentifier
+    location => location.identifier === session?.locationIdentifier
   )[0]
 }

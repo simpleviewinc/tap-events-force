@@ -1,19 +1,22 @@
 import React, { useRef, useCallback, useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { Text, ScrollView } from '@keg-hub/keg-components'
+import { Text, ScrollView, View } from '@keg-hub/keg-components'
 import { checkCall, pickKeys } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
-import { useSessionLocation } from 'SVHooks/models'
+import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
 import { format } from 'date-fns'
-
+import { LabelButton } from 'SVComponents/labels/labelButton'
+import { getPresenterFullName, getPresenterProfession } from 'SVUtils/models'
 /**
  * SessionDetailsModal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
+ * @param {boolean} props.visible
+ * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-export const SessionDetailsModal = ({ session, visible }) => {
+export const SessionDetailsModal = ({ session, visible, labels }) => {
   if (!session) return null
 
   const theme = useTheme()
@@ -37,6 +40,7 @@ export const SessionDetailsModal = ({ session, visible }) => {
         )}
         styles={sessionDetailsStyles?.content?.body}
         session={session}
+        labels={labels}
       />
     </BaseModal>
   )
@@ -47,12 +51,14 @@ export const SessionDetailsModal = ({ session, visible }) => {
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {object} props.styles
+ * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-const Body = ({ styles, session }) => {
+const Body = ({ styles, session, labels = [] }) => {
   const { settings } = useSelector(
     ({ items }) => pickKeys(items, ['settings']),
     shallowEqual
   )
+
   const { timeFormat } = settings?.agendaSettings?.agendaDisplayProperties
   const military = timeFormat === '24'
   const locationName = useSessionLocation(session)
@@ -69,15 +75,56 @@ const Body = ({ styles, session }) => {
           military
         ) }
       </Text>
+      <View style={styles?.labelButtons?.main}>
+        { labels.map(label => (
+          <LabelButton
+            styles={styles?.labelButtons?.button}
+            key={label.name}
+            label={label}
+          />
+        )) }
+      </View>
       <Text
         className={'ef-modal-body-highlight'}
         style={styles?.locationText}
       >
         { locationName?.name || '' }
       </Text>
+      <SessionPresenters
+        session={session}
+        styles={styles.presenters}
+      />
     </ScrollView>
   )
 }
+
+/**
+ * Displays the full details of presenter(s) for the given session
+ * @param {object} props
+ * @param {import('SVModels/session').Session} session
+ * @param {object} styles
+ */
+const SessionPresenters = React.memo(({ session, styles }) => {
+  const presenters = useSessionPresenters(session)
+  // format: "[title] [firstname] [lastname], [job title] - [company]"
+  return (
+    <View style={styles.main}>
+      { presenters.map(presenter => {
+        const fullName = getPresenterFullName(presenter)
+        const profession = getPresenterProfession(presenter)
+        return (
+          <Text
+            className={'ef-modal-sub-header'}
+            style={styles.text}
+            key={presenter.identifier}
+          >
+            { `${fullName}${profession && `, ${profession}`}` }
+          </Text>
+        )
+      }) }
+    </View>
+  )
+})
 
 /**
  * Formats the date string
