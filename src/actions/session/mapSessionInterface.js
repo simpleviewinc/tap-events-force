@@ -47,33 +47,6 @@ const getDispatchPayload = (category, value) => {
 }
 
 /**
- *  map AgendaSessions using sessions and agenda day numbers
- * @param {Array<import('SVModels/session').Session>} sessions
- * @param {Array} agendaDays
- */
-const mapAgendaSessions = (sessions, agendaDays) => {
-  if (!sessions || !agendaDays) return
-
-  // object will look something like:
-  // { ordered by timeblock
-  //   1: [{timeBlock: '9:00', sessions: [session1, session2]}] //day 1
-  //   2: [{timeBlock: '13:00', sessions: [session1]}, {timeBlock: '15:00', sessions: [session1]}], //day 2
-  // }
-  const agendaSessions = agendaDays.reduce((map, nextDay) => {
-    map[nextDay.dayNumber] = buildHourSessionsMap(sessions, nextDay.dayNumber)
-    return map
-  }, {})
-
-  dispatch({
-    type: ActionTypes.SET_ITEMS,
-    payload: {
-      category: CATEGORIES.AGENDA_SESSIONS,
-      items: agendaSessions,
-    },
-  })
-}
-
-/**
  * push the sessionAgendaProps items to our local state
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props
  */
