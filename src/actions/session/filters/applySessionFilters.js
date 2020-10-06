@@ -16,17 +16,13 @@ export const applySessionFilters = () => {
   const sessions = items?.sessions
   const agendaDays = items?.agendaDays
 
-  let filteredSessions = sessions
-  if (selectedFilters.length > 0) {
-    // filter by states
-    filteredSessions = sessionsFromStateFilters(selectedFilters, sessions)
-
-    // filter by labels
-    filteredSessions = sessionsFromLabelFilters(
-      selectedFilters,
-      filteredSessions
-    )
-  }
+  const filteredSessions =
+    selectedFilters.length > 0
+      ? sessionsFromLabelFilters(
+          selectedFilters,
+          sessionsFromStateFilters(selectedFilters, sessions)
+        )
+      : sessions
 
   // update agenda sessions store
   setAgendaSessions(filteredSessions, agendaDays)

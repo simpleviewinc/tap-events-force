@@ -25,9 +25,10 @@ const checkAlert = alert => {
 }
 
 /**
- *
+ * builds either a SET_ITEMS || UPSERT_ITEM Dispatch payload object based on a given category
  * @param {string} category - some category from the CATEGORIES constants
  * @param {*} value - value to store at the category
+ * @returns {object} - of the form { type, payload }
  */
 const getDispatchPayload = (category, value) => {
   return !subCatMap[category]
