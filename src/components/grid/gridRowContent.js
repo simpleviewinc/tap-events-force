@@ -18,7 +18,6 @@ import { useSessionLocation } from 'SVHooks/models'
  */
 export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
-
   const theme = useTheme()
   const [ isOpen, setIsOpen ] = useState(false)
   const gridRowContentStyles = theme.get('gridItem.gridRowContent')
@@ -50,10 +49,7 @@ export const GridRowContent = props => {
         >
           { locationName?.name || '' }
         </Text>
-        <Drawer
-          // styles={ drawerStyles.drawer }
-          toggled={isOpen}
-        >
+        <Drawer toggled={isOpen}>
           <DrawerContent />
         </Drawer>
       </View>
@@ -61,14 +57,19 @@ export const GridRowContent = props => {
   )
 }
 
+/**
+ * @todo: to be completed in https://jira.simpleviewtools.com/browse/ZEN-391
+ */
 const DrawerContent = () => {
   return (
-    <Text>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. A condimentum vitae
-      sapien pellentesque habitant. Vestibulum mattis ullamcorper velit sed
-      ullamcorper morbi tincidunt.
-    </Text>
+    <View>
+      <Text>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. A condimentum vitae
+        sapien pellentesque habitant. Vestibulum mattis ullamcorper velit sed
+        ullamcorper morbi tincidunt.
+      </Text>
+    </View>
   )
 }
 
