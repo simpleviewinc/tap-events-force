@@ -6,8 +6,10 @@ import { checkCall, pickKeys } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useSessionLocation } from 'SVHooks/models'
+import { format } from 'date-fns'
+
 /**
- *
+ * SessionDetailsModal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  */
@@ -40,10 +42,8 @@ export const SessionDetailsModal = ({ session, visible }) => {
   )
 }
 
-import { format } from 'date-fns'
-
 /**
- *
+ * Body
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {object} props.styles
