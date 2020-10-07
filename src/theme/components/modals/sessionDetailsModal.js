@@ -12,9 +12,14 @@ const labelButtonDefault = {
 }
 
 const defaultHeaderTextStyle = {
-  ftSz: 16,
-  ftWt: '600',
-  lnH: 19,
+  $xsmall: {
+    ftWt: '600',
+    lnH: 19,
+    ftSz: 14,
+  },
+  $small: {
+    ftSz: 16,
+  },
 }
 
 export const sessionDetailsModal = {
@@ -22,7 +27,19 @@ export const sessionDetailsModal = {
   content: {
     main: {},
     body: {
-      main: {},
+      main: {
+        flex: 1,
+      },
+      scrollView: {
+        main: {
+          mH: 43,
+          mT: 50,
+          mB: 21,
+        },
+        contentContainer: {
+          pH: 29,
+        },
+      },
       dateTimeText: defaultHeaderTextStyle,
       locationText: {
         mT: 13,
@@ -41,8 +58,38 @@ export const sessionDetailsModal = {
           mB: 18,
         },
         text: {
-          mT: 20,
+          $xsmall: {
+            mT: 10,
+            ftSz: 14,
+          },
+          $small: {
+            mT: 20,
+            ftSz: 16,
+          },
+        },
+      },
+      summaryText: {
+        $xsmall: {
+          lnH: 22,
+          mB: 29,
+          ftSz: 14,
+          color: colors.lightGray,
+        },
+        $small: {
           ftSz: 16,
+        },
+      },
+      actionButton: {
+        main: {
+          pT: 21,
+          pB: 31,
+          pR: 26,
+          alI: 'flex-end',
+        },
+        button: {
+          main: {
+            minH: 45,
+          },
         },
       },
     },

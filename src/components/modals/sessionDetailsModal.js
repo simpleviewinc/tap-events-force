@@ -9,6 +9,8 @@ import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
 import { format } from 'date-fns'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { getPresenterFullName, getPresenterProfession } from 'SVUtils/models'
+import { BookingButton } from 'SVComponents/button'
+
 /**
  * SessionDetailsModal
  * @param {object} props
@@ -64,42 +66,76 @@ const Body = ({ styles, session, labels = [] }) => {
   const locationName = useSessionLocation(session)
 
   return (
-    <ScrollView style={styles?.main}>
-      <Text
-        className={'ef-modal-body-header'}
-        style={styles?.dateTimeText}
+    <View style={styles?.main}>
+      <ScrollView
+        style={styles?.scrollView?.main}
+        contentContainerStyle={styles?.scrollView?.contentContainer}
       >
-        { formatSessionDateTime(
-          session.startDateTimeLocal,
-          session.endDateTimeLocal,
-          military
-        ) }
-      </Text>
-      <View style={styles?.labelButtons?.main}>
-        { labels.map(label => (
-          <LabelButton
-            styles={styles?.labelButtons?.button}
-            key={label.name}
-            label={label}
-          />
-        )) }
-      </View>
-      <Text
-        className={'ef-modal-body-highlight'}
-        style={styles?.locationText}
-      >
-        { locationName?.name || '' }
-      </Text>
-      <SessionPresenters
+        <Text
+          className={'ef-modal-body-header'}
+          style={styles?.dateTimeText}
+        >
+          { formatSessionDateTime(
+            session.startDateTimeLocal,
+            session.endDateTimeLocal,
+            military
+          ) }
+        </Text>
+        <View style={styles?.labelButtons?.main}>
+          { labels.map(label => (
+            <LabelButton
+              styles={styles?.labelButtons?.button}
+              key={label.name}
+              label={label}
+            />
+          )) }
+        </View>
+        <Text
+          className={'ef-modal-body-highlight'}
+          style={styles?.locationText}
+        >
+          { locationName?.name || '' }
+        </Text>
+
+        <SessionPresenters
+          session={session}
+          styles={styles.presenters}
+        />
+
+        <Text
+          className={'ef-modal-body'}
+          style={styles.summaryText}
+        >
+          { session.summary }
+        </Text>
+      </ScrollView>
+
+      <ActionButton
+        styles={styles.actionButton}
         session={session}
-        styles={styles.presenters}
       />
-    </ScrollView>
+    </View>
   )
 }
 
 /**
- * Displays the full details of presenter(s) for the given session
+ * Booking button
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {import('SVModels/session').Session} props.session
+ */
+const ActionButton = ({ styles, session }) => {
+  return (
+    <View style={styles?.main}>
+      <BookingButton
+        session={session}
+        styles={styles?.button}
+      />
+    </View>
+  )
+}
+/**
+ * Displays the full details of presenter(s) for the given session (name and profession)
  * @param {object} props
  * @param {import('SVModels/session').Session} session
  * @param {object} styles
