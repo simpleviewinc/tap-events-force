@@ -13,6 +13,7 @@ import {
   pickKeys,
   checkCall,
   filterObj,
+  noPropArr,
 } from '@keg-hub/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 import {
@@ -21,7 +22,6 @@ import {
   cancelSelectedFilters,
   clearSelectedFilters,
 } from 'SVActions/session/filters'
-import { noPropArr } from 'SVUtils/helpers/method/noop'
 
 const { SESSION_BOOKING_STATES } = Values
 
