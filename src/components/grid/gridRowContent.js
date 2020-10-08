@@ -5,8 +5,15 @@ import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
-import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
+import {
+  View,
+  Text,
+  Drawer,
+  Touchable,
+  TextToggle,
+} from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
+import { BookingButton } from 'SVComponents/button'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -22,7 +29,7 @@ export const GridRowContent = props => {
   const [ isOpen, setIsOpen ] = useState(false)
   const gridRowContentStyles = theme.get('gridItem.gridRowContent')
   const locationName = useSessionLocation(session)
-  const row2Styles = gridRowContentStyles.column2
+  const column2Styles = gridRowContentStyles.column2
 
   return (
     <Touchable
@@ -35,7 +42,7 @@ export const GridRowContent = props => {
         LabelComponent={LabelTag}
         labels={labels}
       />
-      <View style={row2Styles.main}>
+      <View style={column2Styles.main}>
         <SessionTime
           style={theme.get('gridItem.sessionTime.main')}
           start={session.startDateTimeLocal}
@@ -45,12 +52,15 @@ export const GridRowContent = props => {
         <SessionLink text={session.name} />
         <Text
           className={'ef-modal-body-highlight'}
-          style={row2Styles.locationText}
+          style={column2Styles.locationText}
         >
           { locationName?.name || '' }
         </Text>
         <Drawer toggled={isOpen}>
-          <DrawerContent />
+          <DrawerContent
+            session={session}
+            styles={column2Styles.drawerContent}
+          />
         </Drawer>
       </View>
     </Touchable>
@@ -60,15 +70,17 @@ export const GridRowContent = props => {
 /**
  * @todo: to be completed in https://jira.simpleviewtools.com/browse/ZEN-391
  */
-const DrawerContent = () => {
+const DrawerContent = ({ session, styles }) => {
   return (
-    <View>
-      <Text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. A condimentum vitae
-        sapien pellentesque habitant. Vestibulum mattis ullamcorper velit sed
-        ullamcorper morbi tincidunt.
-      </Text>
+    <View style={styles?.main}>
+      <BookingButton
+        session={session}
+        styles={styles?.bookingButton}
+      />
+      <TextToggle
+        text={session.summary}
+        styles={styles?.toggleText}
+      />
     </View>
   )
 }

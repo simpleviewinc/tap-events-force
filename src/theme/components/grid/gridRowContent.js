@@ -20,5 +20,18 @@ export const gridRowContent = {
       ftWt: '500',
       color: colors.lightGray,
     },
+    drawerContent: {
+      main: {
+        flex: 1,
+        pR: 15,
+        pT: 10,
+      },
+      bookingButton: {
+        main: {
+          mB: 10,
+        },
+      },
+      toggleText: {},
+    },
   },
 }
