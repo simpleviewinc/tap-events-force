@@ -21,6 +21,7 @@ import {
   cancelSelectedFilters,
   clearSelectedFilters,
 } from 'SVActions/session/filters'
+import { noPropArr } from 'SVUtils/helpers/method/noop'
 
 const { SESSION_BOOKING_STATES } = Values
 
@@ -79,7 +80,7 @@ const Content = ({ styles, onButtonPress, labels }) => {
       <BottomSection
         styles={styles?.bottomSection}
         onButtonPress={onButtonPress}
-        hasSelectedFilters={filters?.selectedFilters?.length > 0}
+        hasSelectedFilters={Boolean(filters?.selectedFilters?.length)}
       />
     </View>
   )
@@ -129,7 +130,7 @@ const useLabelOn = (selectedCount, selectedFilters, label) => {
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const LabelButtons = ({ styles, labels, selectedFilters = [] }) => {
+const LabelButtons = ({ styles, labels, selectedFilters = noPropArr }) => {
   /**
    * expected behavior:
    *   - all filters are 'toggled on' by default when no filter is selected
