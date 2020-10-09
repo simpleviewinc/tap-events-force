@@ -138,12 +138,14 @@ const BottomSection = ({ styles, onCancelPress, onSubmitPress }) => {
       style={styles.main}
     >
       <EvfButton
+        className='ef-cancel-session-button'
         type={'default'}
         styles={styles.content?.cancelButton}
         text={'CANCEL'}
         onClick={onCancelPress}
       />
       <EvfButton
+        className='ef-select-session-button'
         type={'primary'}
         styles={styles.content?.bookButton}
         text={'BOOK SELECTED'}

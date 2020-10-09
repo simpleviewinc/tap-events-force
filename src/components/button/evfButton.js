@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 import { View, Button, Text } from '@keg-hub/keg-components'
 import { useStylesCallback } from '@keg-hub/re-theme'
-import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { EvfLoading } from 'SVComponents/loading'
 import { set, get } from '@keg-hub/jsutils'
 
@@ -40,6 +39,7 @@ const buildStyles = (theme, custom) => {
  * @param {boolean} props.isProcessing - to display processing content
  */
 export const EvfButton = ({
+  className,
   styles,
   onClick,
   type = 'default',
@@ -47,14 +47,8 @@ export const EvfButton = ({
   isProcessing = false,
 }) => {
   // build the main style for the button, memoized
-  const buttonCls = `ef-button-${type}`
-  const parsedStyles = useParsedStyle(buttonCls)
-  const customStyles = useMemo(() => ({ type, styles, parsed: parsedStyles }), [
-    type,
-    styles,
-    parsedStyles,
-  ])
-
+  const buttonCls = `ef-action-button-${type}`
+  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
   const mainStyle = useStylesCallback(
     buildStyles,
     [ type, styles, isProcessing ],
@@ -66,7 +60,7 @@ export const EvfButton = ({
       <View style={mainStyle?.content?.topLeftCorner?.main} />
       <Button
         disabled={isProcessing}
-        className={[ buttonCls, `ef-session-button-${type}` ]}
+        className={[ buttonCls, className ]}
         onClick={onClick}
         styles={mainStyle?.content?.button}
       >

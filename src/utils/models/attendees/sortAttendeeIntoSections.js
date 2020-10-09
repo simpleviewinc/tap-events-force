@@ -3,7 +3,7 @@ import { getTicketForAttendee } from './getTicketForAttendee'
 
 /**
  * Helper for `useAttendeeBookingData` that updates the sections object with the next attendee object
- * @param {*} sectionData - will be modified with nextAttendee
+ * @param {Object} sectionData - will be modified with nextAttendee
  * @param {Array<BookedTicket>} sectionData.bookedTickets - booked ticket list
  * @param {Array<Ticket>} sectionData.tickets - ticket list
  * @param {Object<string, Array<Attendee>>} sectionData.attendeeIdsByTicket - will be modified with nextAttendee

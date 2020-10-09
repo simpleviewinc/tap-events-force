@@ -1,5 +1,6 @@
 import { Values } from 'SVConstants'
-import { getEventEmitter, validateEventResponse } from 'SVUtils'
+import { getEventEmitter } from 'SVUtils/events'
+import { validateEventResponse } from 'SVUtils/validation'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()

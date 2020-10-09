@@ -6,7 +6,7 @@ import { EVFIcons } from 'SVIcons'
 /**
  * A wrapper around keg-components checkbox that conforms
  * to the events-force styling requirements
- * @param {*} props
+ * @param {Object} props
  * @param {string} props.type - either primary or alternate (e.g. booking list vs waiting list colors)
  * @param {boolean} props.enableCheck - whether or not the checkbox can be selected
  * @param {string} props.id - an optional identifier passed to the callback to identify this checkbox
