@@ -1,5 +1,5 @@
 import { format } from 'date-fns'
-
+import { parseDate } from './parseDate'
 /**
  * Formats the given date to hh:mm format
  * @param {string|Date} date - some date ex: 2020-08-03 13:00:00. if null, it will take local date/time
@@ -7,7 +7,6 @@ import { format } from 'date-fns'
  * @returns {string}
  */
 export const getTimeFromDate = (date, military = true) => {
-  let parsed = Date.parse(date)
-  if (isNaN(parsed)) parsed = new Date(date.replace(/-/g, '/'))
-  return format(parsed, military ? 'HH:mm' : 'h:mma')
+  const parsedDate = parseDate(date)
+  return parsedDate ? format(parsedDate, military ? 'HH:mm' : 'h:mma') : ''
 }

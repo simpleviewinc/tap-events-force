@@ -1,15 +1,39 @@
-import { getStore } from 'SVStore'
+import { getStore, dispatch } from 'SVStore'
+import { ActionTypes, Values } from 'SVConstants'
+import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
+import {
+  sessionsFromLabelFilters,
+  sessionsFromStateFilters,
+} from 'SVUtils/filters'
+const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  * applyFilters
- * @todo: to be completed in ticket https://jira.simpleviewtools.com/browse/ZEN-285
  */
 export const applySessionFilters = () => {
-  // 1. sets the current selectedFilters to activeFilters
-
-  // for now just print out the currently selected filters
   const { items } = getStore()?.getState()
   const selectedFilters = items?.filters?.selectedFilters || []
-  console.log('current selected filters: ')
-  console.log(...selectedFilters)
+  const sessions = items?.sessions
+  const agendaDays = items?.agendaDays
+
+  const filteredSessions =
+    selectedFilters.length > 0
+      ? sessionsFromLabelFilters(
+          selectedFilters,
+          sessionsFromStateFilters(selectedFilters, sessions)
+        )
+      : sessions
+
+  // update agenda sessions store
+  setAgendaSessions(filteredSessions, agendaDays)
+
+  // set the current selectedFilters to activeFilters
+  dispatch({
+    type: ActionTypes.SET_ITEM,
+    payload: {
+      category: CATEGORIES.FILTERS,
+      key: SUB_CATEGORIES.ACTIVE_FILTERS,
+      item: selectedFilters,
+    },
+  })
 }

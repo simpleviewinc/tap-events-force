@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react'
+import React, { useRef, useMemo, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@keg-hub/keg-components'
@@ -7,13 +7,21 @@ import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
-import { reduceObj, capitalize, pickKeys } from '@keg-hub/jsutils'
+import {
+  reduceObj,
+  wordCaps,
+  pickKeys,
+  checkCall,
+  filterObj,
+} from '@keg-hub/jsutils'
 import { useSelector, shallowEqual } from 'react-redux'
 import {
   updateSelectedFilters,
   applySessionFilters,
-  clearSelectedFilters,
+  cancelSelectedFilters,
 } from 'SVActions/session/filters'
+
+const { SESSION_BOOKING_STATES } = Values
 
 /**
  *
@@ -25,6 +33,10 @@ export const Filter = ({ visible, labels }) => {
   const dismissedCBRef = useRef()
   // sort the labels alphabetically
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
+  const applyCb = useCallback(() => {
+    applySessionFilters()
+    checkCall(dismissedCBRef.current, true)
+  }, [ applySessionFilters, dismissedCBRef?.current ])
 
   return (
     <BaseModal
@@ -32,12 +44,12 @@ export const Filter = ({ visible, labels }) => {
       styles={filterStyles}
       title={'Filter'}
       visible={visible}
-      onDismiss={clearSelectedFilters}
+      onDismiss={cancelSelectedFilters}
     >
       <Content
         styles={filterStyles?.content?.body}
         labels={labelsMemo}
-        onButtonPress={applySessionFilters}
+        onButtonPress={applyCb}
       />
     </BaseModal>
   )
@@ -85,6 +97,24 @@ const TopSection = ({ styles }) => {
 }
 
 /**
+ * Checks whether or not a particular label should be on the 'toggled on' state or not
+ * @param {number} selectedCount
+ * @param {Array.<import('SVModels/label').Label>} selectedFilters
+ * @param {import('SVModels/label').Label} label
+ *
+ * @returns {boolean}
+ */
+const useLabelOn = (selectedCount, selectedFilters, label) => {
+  // Check selectedCount before doing the loop. If none are selected, we save a few cpu cycles
+  return useMemo(() => {
+    return (
+      selectedCount &&
+      selectedFilters.some(item => item.identifier === label.identifier)
+    )
+  }, [ selectedFilters, selectedCount, label ])
+}
+
+/**
  * LabelButtons
  * Builds the filter items
  * @param {object} props
@@ -103,14 +133,10 @@ const LabelButtons = ({ styles, labels }) => {
   )
 
   const selectedCount = filters.selectedFilters.length
-  const isFilterEmpty = !filters.activeFilters.length && !selectedCount
+  const isFilterEmpty = !selectedCount
 
   return labels.map(label => {
-    // Check selectedCount before doing the loop. If none are selected, we same a few cpu cycles
-    const isLabelOn =
-      selectedCount &&
-      filters.selectedFilters.some(item => item.identifier === label.identifier)
-
+    const isLabelOn = useLabelOn(selectedCount, filters.selectedFilters, label)
     return (
       <LabelButton
         key={label.name}
@@ -136,12 +162,19 @@ const createStateLabels = bookingStates => {
   return reduceObj(
     bookingStates,
     (key, value, labels) => {
-      labels.push(new Label({ name: capitalize(value), identifier: key }))
+      labels.push(new Label({ name: wordCaps(value), identifier: key }))
       return labels
     },
     []
   )
 }
+
+const filteredBookingStates = filterObj(
+  SESSION_BOOKING_STATES,
+  (_, val) =>
+    val != SESSION_BOOKING_STATES.FULLY_BOOKED &&
+    val != SESSION_BOOKING_STATES.READ_ONLY
+)
 /**
  * MiddleSection
  * @param {object} props
@@ -149,10 +182,9 @@ const createStateLabels = bookingStates => {
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  */
 const MiddleSection = ({ styles, labels }) => {
-  const stateLabels = useMemo(
-    () => createStateLabels(Values.SESSION_BOOKING_STATES),
-    [Values.SESSION_BOOKING_STATES]
-  )
+  const stateLabels = useMemo(() => createStateLabels(filteredBookingStates), [
+    filteredBookingStates,
+  ])
 
   return (
     <ScrollView

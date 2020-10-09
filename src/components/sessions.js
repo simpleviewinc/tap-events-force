@@ -3,6 +3,7 @@ import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
+import { applySessionFilters } from 'SVActions/session/filters/applySessionFilters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
@@ -10,7 +11,7 @@ import { useAgenda } from 'SVHooks/models/useAgenda'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
-import { mapObj, get } from '@keg-hub/jsutils'
+import { get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
@@ -99,7 +100,7 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
  * Sets up the container for a group of sessions on a specific day
  * @param {object} props
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
- * @param {object} props.daySessions - group of sessions in the form of {'9:15': [sessionA, sessionB,..]}
+ * @param {Array} props.daySessions - group of sessions by block. see buildHourSessionsMap helper
  * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
  * @returns {Component}
  */
@@ -109,14 +110,14 @@ const AgendaSessions = React.memo(
 
     return (
       <ScrollView>
-        { mapObj(daySessions, (timeBlock, sessions) => {
+        { daySessions.map(daySession => {
           return (
             // creates a gridContainer separated by hour blocks
             <GridContainer
-              key={timeBlock}
-              sessions={sessions}
+              key={daySession?.timeBlock}
+              sessions={daySession?.sessions}
               labels={labels}
-              timeBlock={timeBlock}
+              timeBlock={daySession?.timeBlock}
               enableFreeLabel={enableFreeLabel}
             />
           )
@@ -147,6 +148,7 @@ export const Sessions = props => {
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)
+    applySessionFilters()
   }, [sessionAgendaProps])
 
   const theme = useTheme()

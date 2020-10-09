@@ -43,12 +43,16 @@ export const Values = deepFreeze({
     PRESENTER: 'presenter',
     FILTER: 'filter',
     GROUP_BOOKING: 'groupBooking',
+    SESSION_DETAILS: 'sessionDetails',
   },
 
   SESSION_BOOKING_STATES: {
     AVAILABLE: 'available',
     SELECTED: 'selected',
     WAITING_LIST: 'waiting list',
+    ON_WAITING_LIST: 'on waiting list',
+    FULLY_BOOKED: 'fully booked',
+    READ_ONLY: 'read only',
   },
 
   TICKET_TYPE: {

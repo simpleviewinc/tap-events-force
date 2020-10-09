@@ -1,16 +1,16 @@
 export const labelList = {
   main: {
     $web: {
-      height: 'fit-content',
+      height: 'auto',
     },
     $native: {
       flexDirection: 'row',
       alignSelf: 'flex-start',
+      height: '100%',
     },
     $all: {
       $xsmall: {
         flexDirection: 'column',
-        height: '100%',
         maxWidth: 14,
       },
       $small: {

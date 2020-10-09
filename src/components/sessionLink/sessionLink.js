@@ -22,6 +22,7 @@ export const SessionLink = ({ onPress, text }) => {
       activeOpacity={onPress ? 0.2 : 1}
       onPress={onPress}
       style={sessionLinkStyles.main}
+      pointerEvents={onPress ? 'auto' : 'none'}
     >
       <Text
         {...numberOfLines}
