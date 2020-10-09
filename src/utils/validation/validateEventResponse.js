@@ -1,3 +1,5 @@
+import { devLog } from 'SVUtils/logs'
+
 /**
  * The keg event emitter returns a boolean value when calling `.emit(...)`, indicating
  * whether or not a callback was registered against the event and run.
@@ -13,6 +15,6 @@ export const validateEventResponse = (
   invalidMessages,
   validMessages
 ) => {
-  isValid ? console.log(...validMessages) : console.warn(...invalidMessages)
+  isValid ? devLog.log(...validMessages) : devLog.warn(...invalidMessages)
   return isValid
 }

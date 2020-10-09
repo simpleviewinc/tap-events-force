@@ -6,6 +6,8 @@ import { H5, Button } from '@keg-hub/keg-components'
 import testData from '../mocks/eventsforce/testData.js'
 import { isNative } from 'SVUtils/platform/isNative'
 
+const formattedTestData = JSON.stringify(testData, null, 2)
+
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
   onSessionBookingRequest: (session, attendees) => {
@@ -42,7 +44,7 @@ const applyJson = (text, setMockData) => {
  * Currently only used in local development. Not exported by rollup (see apps/Sessions.js for that)
  */
 export const RootContainer = withAppHeader(displayName, props => {
-  const [ text, setText ] = useState(JSON.stringify(testData), null, 2)
+  const [ text, setText ] = useState(formattedTestData)
   const [ mockData, setMockData ] = useState(testData)
 
   return (
