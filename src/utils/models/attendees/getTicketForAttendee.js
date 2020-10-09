@@ -9,9 +9,9 @@ export const getTicketForAttendee = (attendee, bookedTickets, tickets) => {
     bookedTicket.identifier === attendee.bookedTicketIdentifier
   const bookedTicketForAttendee = bookedTickets.find(hasMatchingId)
 
-  if (!bookedTicketForAttendee) return null
-
-  return tickets.find(
-    ticket => ticket.identifier === bookedTicketForAttendee.ticketIdentifier
-  )
+  return bookedTicketForAttendee
+    ? tickets.find(
+        ticket => ticket.identifier === bookedTicketForAttendee.ticketIdentifier
+      )
+    : null
 }

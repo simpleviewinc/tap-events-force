@@ -12,6 +12,8 @@ import { useKegEvent } from 'SVHooks/events'
 import { isNative } from 'SVUtils/platform/isNative'
 import { EvfButton } from 'SVComponents/button'
 
+const formattedTestData = JSON.stringify(testData, null, 2)
+
 const { EVENTS } = Values
 const marginStyle = {
   margin: 10,
@@ -50,7 +52,7 @@ const testOnSessionWaitingListRequest = (sessionId, attendeeIds) => {
  * TestContainer to be used by QA to test out individual component
  */
 export const TestContainer = withAppHeader('Test Container', props => {
-  const [ text, setText ] = useState(JSON.stringify(testData), null, 2)
+  const [ text, setText ] = useState(formattedTestData)
   const [ mockData, setMockData ] = useState(testData)
 
   // map the evf props onto our states
