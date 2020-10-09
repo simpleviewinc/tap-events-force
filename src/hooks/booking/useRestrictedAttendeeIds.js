@@ -6,7 +6,7 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
  *  - restrictedAttendeeIds: map of restricted attendee ids by session
  *  - restrictedAttendeeIdsForSession: the attendee ids for this sessionId
  *  - isBookable: a function indicating an attendee can book a given session. If it returns false, that attendee is restricted from booking.
- * @param {string} sessionId - id of session
+ * @param {string?} sessionId - id of session - only required if you want helper fn isBookable
  * @return {Object} restricted data
  */
 export const useRestrictedAttendeeIds = sessionId => {

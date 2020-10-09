@@ -206,12 +206,22 @@ export const ModalDemos = () => {
         <Button
           themePath='button.contained.secondary'
           styles={testStyles.content.button}
+          onClick={useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
+            session: store.sessions.find(x => x.identifier === '12'),
+            attendees: store.attendees,
+          })}
+          content={'Group booking Demo 4 - greater capacity than need'}
+        />
+
+        <Button
+          themePath='button.contained.secondary'
+          styles={testStyles.content.button}
           onClick={useCreateModal(Values.MODAL_TYPES.ALERT, {
             title: 'Session Fully Booked',
             message:
               'There is insufficient capacity for your selection. Please reduce the number of selected bookings',
           })}
-          content={'Group booking Demo 4 - no spots left'}
+          content={'Group booking Demo 5 - no spots left'}
         />
       </Section>
 

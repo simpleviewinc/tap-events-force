@@ -1,4 +1,7 @@
 import { useMemo } from 'react'
+import { getExistingWaitIds } from 'SVUtils/booking/getExistingWaitIds'
+import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
+import { useRestrictedAttendeeIds } from './useRestrictedAttendeeIds'
 
 /**
  * Builds the initial list of ids of attendees on the waiting list for the session
@@ -7,23 +10,19 @@ import { useMemo } from 'react'
  * @param {Function} isBookable
  */
 const getInitialWaitIds = (session, attendees, isBookable) => {
-  return attendees.reduce((list, attendee) => {
-    const { waitingListSessions, bookedTicketIdentifier: id } = attendee
-    const shouldWait =
-      isBookable(attendee) && waitingListSessions?.includes(session?.identifier)
-    return shouldWait ? [ ...list, id ] : list
-  }, [])
+  const existingIds = getExistingWaitIds(session?.identifier, attendees)
+  return existingIds.filter(isBookable)
 }
 
 /**
  * Builds the initial list of booked attendee ids for the session
- * @param {Object} session
- * @param {Array<string>} attendees
- * @param {Array<string>} initialWaitIds
- * @param {Function} isBookable
+ * @param {Object} session - session object
+ * @param {Array<string>} attendees - full list of attendees
+ * @param {Array<string>} initialWaitIds - list of ids on the initial waiting list
+ * @param {Function} isBookable - cb of form: attendeeId => true/false if bookable/waitListable to the session
  * @param {boolean} initialCapacityExceedsNeed
  */
-const getInitialBookedIds = (
+const getInitialBookingIds = (
   session,
   attendees,
   initialWaitIds,
@@ -39,39 +38,38 @@ const getInitialBookedIds = (
       return ids
     }, [])
 
-  return attendees.reduce((list, attendee) => {
-    const { bookedSessions, bookedTicketIdentifier: id } = attendee
-
-    // if the attendee is restricted against this session, or is already on the wait list,
-    // immediately return to exclude them from this list
-    if (!isBookable(attendee) || initialWaitIds?.includes(id)) return list
-
-    // otherwise, include attendee in list only if the they are already booked against this session
-    return bookedSessions?.includes(session?.identifier) ? [ ...list, id ] : list
-  }, [])
+  // otherwise just get the existing list of booked ids, removing any ones that aren't bookable
+  return getExistingBookIds(session?.identifier, attendees).filter(isBookable)
 }
 
 /**
  * Hook to acquire the **initial** booking and waiting lists for a session
- * @param {import('SVModels/session').Session} session
- * @param {Array<import('SVModels/attendee').Attendee>} attendees
- * @param {Function<void, boolean>} attendeeIsBookable
- * @param {boolean} initialCapacityExceedsNeed
- * @param {boolean} waitingListIsAvailable
+ * @param {import('SVModels/session').Session} session - session to get the booking & waiting lists for
+ * @param {Array<import('SVModels/attendee').Attendee>} attendees - full list of attendees
+ * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
+ * @param {Function?} isBookable - optional cb of form id => true/false if attendee is bookable.
+ *  If omitted, it will use the restricted attendee ids list to determine this. This param is mainly here for testing.
+ * @return {Array} destructurable array of form:
+ * [ bookingList, waitingList ]
  */
 export const useBookingLists = (
   session,
   attendees,
-  attendeeIsBookable,
-  initialCapacityExceedsNeed,
-  waitingListIsAvailable
+  initialCapacityExceedsNeed
 ) => {
+  const attendeeIsBookable =
+    useRestrictedAttendeeIds(session?.identifier)?.isBookable || (() => true)
+  const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable
+
   return useMemo(() => {
+    // get the existing ids of attendees on the session's waiting list
     const waitingList = waitingListIsAvailable
       ? getInitialWaitIds(session, attendees, attendeeIsBookable)
       : []
 
-    const bookingList = getInitialBookedIds(
+    // builds the initial booking list ids. This could be more than the existing list,
+    // because certain conditions pre-select all the attendees
+    const bookingList = getInitialBookingIds(
       session,
       attendees,
       waitingList,
