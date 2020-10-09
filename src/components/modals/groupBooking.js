@@ -29,7 +29,7 @@ export const GroupBooking = ({ visible, session }) => {
       visible={visible}
     >
       <GroupBooker
-        dismissModalCb={useCallback(
+        onCancelPress={useCallback(
           () => checkCall(dismissedCBRef.current, true),
           [dismissedCBRef?.current]
         )}

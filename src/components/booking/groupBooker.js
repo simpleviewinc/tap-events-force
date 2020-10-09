@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
-import { exists, noOpObj } from '@keg-hub/jsutils'
+import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
@@ -14,12 +14,15 @@ import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
  * The root group booking component. Initializes state specific to
  * the active group booking context for the passed-in session, and
  * renders the group booking UI given the session and the store state
- * @param {object} props
- * @param {object} props.styles
+ * @param {Object} props
+ * @param {Object?} props.styles
  * @param {import('SVModels/session').Session} props.session - current session
- * @param {Function} props.dismissModalCb - callback function to dismiss modal
+ * @param {Function?} props.onCancelPress - callback function when cancel button is pressed
  */
-export const GroupBooker = ({ styles, session, dismissModalCb }) => {
+export const GroupBooker = ({ styles, session, onCancelPress }) => {
+  const [valid] = validate({ session }, { session: isObj })
+  if (!valid) return null
+
   const topSectionStyles = styles?.content?.topSection || noOpObj
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
@@ -28,7 +31,8 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
     'attendees',
     'attendeesByTicket',
   ])
-  const { restrictedAttendeeIds, isBookable } = useRestrictedAttendeeIds(
+
+  const { restrictedIdsForSession } = useRestrictedAttendeeIds(
     session?.identifier
   )
 
@@ -39,7 +43,7 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
   // of attendees who can be booked
   const { initialCapacityExceedsNeed } = useGroupCounts(
     attendeesByTicket,
-    restrictedAttendeeIds,
+    restrictedIdsForSession,
     remainingCount,
     session?.capacity?.isUnlimited
   )
@@ -53,7 +57,6 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
   const initialized = useInitGroupBooking(
     session,
     attendees,
-    isBookable,
     initialCapacityExceedsNeed,
     remainingCount
   )
@@ -81,7 +84,7 @@ export const GroupBooker = ({ styles, session, dismissModalCb }) => {
         />
       ) }
       <BottomSection
-        onCancelPress={dismissModalCb}
+        onCancelPress={onCancelPress}
         onSubmitPress={bookSession}
         styles={bottomSectionStyles}
       />

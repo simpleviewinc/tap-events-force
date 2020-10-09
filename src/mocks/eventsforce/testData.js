@@ -341,6 +341,30 @@ export default {
         amount: 923.0,
       },
     },
+    {
+      allowBooking: false,
+      identifier: '12',
+      name: 'Zerista session day 3',
+      summary: 'This is a session with both presenters and labels',
+      dayNumber: 3,
+      startDateTimeLocal: '2020-08-03 09:00:00',
+      endDateTimeLocal: '2020-08-03 13:30:00',
+      presenterIdentifiers: [ '1', '2' ],
+      labelIdentifiers: [ '1', '2' ],
+      locationIdentifier: '1',
+      liveVideoUrl: 'https://us02web.zoom.us/j/1234',
+      recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
+      restrictToAttendeeCategories: [],
+      capacity: {
+        isUnlimited: false,
+        remainingPlaces: 100,
+        isWaitingListAvailable: false,
+      },
+      price: {
+        currency: 'USD',
+        amount: 923.0,
+      },
+    },
   ],
   attendees: [
     {
