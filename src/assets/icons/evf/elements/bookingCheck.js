@@ -5,7 +5,7 @@ import { SvgIcon } from '@keg-hub/keg-components'
  * CheckMark
  * @param {object} props
  */
-export const CheckMark = props => {
+export const BookingCheck = props => {
   return (
     <SvgIcon
       viewBox='0 0 512 512'

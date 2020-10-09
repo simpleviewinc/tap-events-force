@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
-import { getBookingState } from 'SVUtils/getBookingState'
+import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
 
 /**
  * Custom hook to load the styles for a button based on the current booking state
@@ -14,6 +14,9 @@ export const useBookingStateStyles = (session, styles) => {
   return useMemo(() => {
     const bookingState = getBookingState(session)
 
-    return theme.get(`bookingState.${bookingState}`, styles)
+    return {
+      state: bookingState,
+      styles: theme.get(`button.bookingState.${bookingState}`, styles),
+    }
   }, [ session, styles, theme ])
 }
