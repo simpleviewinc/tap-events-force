@@ -3,8 +3,7 @@ import { deepMerge, reduceObj } from '@keg-hub/jsutils'
 import { evfButton } from './evfButton'
 
 const { SESSION_BOOKING_STATES } = Values
-const button = evfButton?.primary?.content?.button
-const defStyles = { ...button?.default }
+const buttonStyles = { ...evfButton?.primary?.content?.button }
 
 const stateStyles = {
   [SESSION_BOOKING_STATES.AVAILABLE]: {},
@@ -17,7 +16,7 @@ const stateStyles = {
 
 export const bookingState = {
   ...reduceObj(SESSION_BOOKING_STATES, (key, value, styles) => {
-    styles[value] = deepMerge(defStyles, stateStyles[value])
+    styles[value] = deepMerge(buttonStyles, stateStyles[value])
     return styles
   }),
 }

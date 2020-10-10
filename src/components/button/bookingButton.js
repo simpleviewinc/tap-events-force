@@ -1,21 +1,22 @@
 import React, { useCallback } from 'react'
+import { get } from '@keg-hub/jsutils'
 import { selectSession } from 'SVActions/session/selectSession'
 import { EVFIcons } from 'SVIcons'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { Text, View } from 'SVComponents'
 import { useBookingStateStyles } from 'SVHooks/useBookingStateStyles'
+import { useThemeState } from 'SVHooks/useThemeState'
 import { Values } from 'SVConstants'
-const {
-  SESSION_BOOKING_STATES: {
-    AVAILABLE,
-    SELECTED,
-    WAITING_LIST,
-    ON_WAITING_LIST,
-    FULLY_BOOKED,
-    READ_ONLY,
-  },
-} = Values
+
 const { CheckMark } = EVFIcons
+const {
+  AVAILABLE,
+  SELECTED,
+  WAITING_LIST,
+  ON_WAITING_LIST,
+  FULLY_BOOKED,
+  READ_ONLY,
+} = Values.SESSION_BOOKING_STATES
 
 const getButtonChildren = (session, state, styles) => {
   switch (state) {
@@ -53,30 +54,43 @@ const getButtonChildren = (session, state, styles) => {
   }
 }
 
+const renderChildren = (session, states) => {
+  return props => {
+    const { styles } = props
+
+    const { state, styles: bookingStyles } = useBookingStateStyles(
+      session,
+      get(styles, `content.button`)
+    )
+    console.log(bookingStyles)
+    const buttonChildren = getButtonChildren(session, state, styles)
+
+    return buttonChildren
+  }
+}
+
 /**
  * Booking button for each session component
  * @param {object} props
  * @param {object} props.styles
  * @param {import('SVModels/session').Session} props.session
  */
-export const BookingButton = ({ styles, session }) => {
+export const BookingButton = props => {
+  const { styles, session } = props
+
   if (!session) return null
 
-  const { state, styles: bookingStyles } = useBookingStateStyles(
-    session,
-    styles
-  )
-
-  const buttonChildren = getButtonChildren(session, state, bookingStyles)
-
   const selectSessionCb = useCallback(() => selectSession(session), [session])
+  const { ref, ...states } = useThemeState()
 
   return (
     <EvfButton
       type={'primary'}
-      styles={bookingStyles}
+      styles={styles}
       onClick={selectSessionCb}
-      text={buttonChildren}
-    />
+      buttonRef={ref}
+    >
+      { renderChildren(session, states) }
+    </EvfButton>
   )
 }

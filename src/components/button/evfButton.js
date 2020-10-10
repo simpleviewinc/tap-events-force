@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
-import { View, Button, Text } from '@keg-hub/keg-components'
-import { useStylesCallback, useTheme } from '@keg-hub/re-theme'
+import { View, Button, Text, renderFromType } from '@keg-hub/keg-components'
+import { useStylesCallback } from '@keg-hub/re-theme'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { EvfLoading } from 'SVComponents/loading'
 import { set, get } from '@keg-hub/jsutils'
@@ -39,14 +39,20 @@ const buildStyles = (theme, custom) => {
  * @param {string} props.text - text to display on button
  * @param {boolean} props.isProcessing - to display processing content
  */
-export const EvfButton = ({
-  className,
-  styles,
-  onClick,
-  type = 'default',
-  text,
-  isProcessing = false,
-}) => {
+export const EvfButton = props => {
+  const {
+    buttonRef,
+    children,
+    className,
+    styles,
+    onClick,
+    type = 'default',
+    text,
+    isProcessing = false,
+  } = props
+
+  // ref = ref || buttonRef
+
   // build the main style for the button, memoized
   const theme = useTheme()
   const buttonCls = `ef-action-button-${type}`
@@ -73,6 +79,7 @@ export const EvfButton = ({
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main} />
       <Button
+        buttonRef={buttonRef}
         disabled={isProcessing}
         className={[ buttonCls, className ]}
         onClick={onClick}
@@ -84,7 +91,7 @@ export const EvfButton = ({
             size={mainStyle?.content?.processing?.icon?.size || 20}
           />
         ) : (
-          text
+          renderFromType(text || children, { ...props, styles: mainStyle })
         ) }
       </Button>
     </View>
