@@ -44,15 +44,16 @@ export const AttendeeBookingList = ({
   // get the isBookable callback to check if an attendee is eligible to book the session
   const { isBookable } = useRestrictedAttendeeIds(session?.identifier)
   const { enableCheck } = useCheckboxState(session)
+  const bookerIsLoading = useStoreItems('groupBooking.loading')
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
     const { isBooking, isWaiting, isDisabled } = useMemo(
       () => ({
         isBooking: bookingList.has(attendeeId),
         isWaiting: waitingList.has(attendeeId),
-        isDisabled: !isBookable?.(attendeeId),
+        isDisabled: bookerIsLoading || !isBookable?.(attendeeId),
       }),
-      [ attendeeId, bookingList, waitingList, isBookable ]
+      [ attendeeId, bookingList, waitingList, isBookable, bookerIsLoading ]
     )
 
     return (

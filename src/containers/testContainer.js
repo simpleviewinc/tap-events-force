@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { Button, Section, H6, H5, Divider, View } from 'SVComponents'
 import { useTheme } from '@keg-hub/re-theme'
 import testData from '../mocks/eventsforce/testData.js'
@@ -55,8 +55,21 @@ export const TestContainer = withAppHeader('Test Container', props => {
   const [ text, setText ] = useState(formattedTestData)
   const [ mockData, setMockData ] = useState(testData)
 
+  const bookingRequestCb = useCallback((...args) => {
+    testOnSessionBookingRequest(...args)
+
+    // simulate receiving new props.attendees from consumer when booking request is called
+    setTimeout(() => {
+      setMockData({
+        ...mockData,
+        attendees: [...mockData.attendees],
+      })
+    }, 1000)
+  })
+
   // map the evf props onto our states
   useEffect(() => void mapSessionInterface(mockData), [mockData])
+
   return (
     <View>
       { !isNative() && process.env.NODE_ENV === 'development' && (
@@ -76,7 +89,7 @@ export const TestContainer = withAppHeader('Test Container', props => {
           />
         </>
       ) }
-      <ModalDemos />
+      <ModalDemos bookingRequest={bookingRequestCb} />
     </View>
   )
 })
@@ -128,13 +141,13 @@ const EVFButtonDemos = ({ styles }) => {
   )
 }
 
-export const ModalDemos = () => {
+export const ModalDemos = ({ bookingRequest }) => {
   const theme = useTheme()
   const testStyles = theme.get('testContainer')
   const store = useSelector(state => state.items)
 
   // set up our event listener for booking request
-  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
+  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, bookingRequest)
   useKegEvent(
     EVENTS.SESSION_WAITING_LIST_REQUEST,
     testOnSessionWaitingListRequest

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
 import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
@@ -9,6 +9,34 @@ import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
+import { setGroupBookingLoading } from 'SVActions/session/booking/setGroupBookingLoading'
+
+const useButtonSubmit = (cb, onComplete) => {
+  const submit = useCallback(
+    (...args) => {
+      if (!cb) return onComplete?.()
+      cb?.(...args)
+      setGroupBookingLoading(true)
+    },
+    [ cb, setGroupBookingLoading ]
+  )
+
+  const { attendees, groupBookingLoading } = useStoreItems([
+    'attendees',
+    'groupBooking.loading',
+  ])
+
+  useEffect(() => {
+    // if we are here, the list of attendees has changed,
+    // indicating the api call completed and the consumer
+    // updated the attendees to reflect the updated booking.
+    // So we should stop showing the loading spinner
+    setGroupBookingLoading(false)
+    onComplete?.()
+  }, [ attendees, alert ])
+
+  return [ submit, groupBookingLoading ]
+}
 
 /**
  * The root group booking component. Initializes state specific to
@@ -17,7 +45,7 @@ import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
  * @param {Object} props
  * @param {Object?} props.styles
  * @param {import('SVModels/session').Session} props.session - current session
- * @param {Function?} props.onCancelPress - callback function when cancel button is pressed
+ * @param {Function?} props.onCancelPress - callback function fired when group booker is closed
  */
 export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const [valid] = validate({ session }, { session: isObj })
@@ -48,11 +76,6 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
     session?.capacity?.isUnlimited
   )
 
-  // gets callbacks and data related to the group booking for this session
-  const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
-    session
-  )
-
   // initialize the store data for the group booking
   const initialized = useInitGroupBooking(
     session,
@@ -61,10 +84,20 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
     remainingCount
   )
 
+  // gets callbacks and data related to the group booking for this session
+  const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
+    session
+  )
+
   // if the initial capacity exceeds the number of bookable attendees, no need to show the remaining places in the top section
   const visibleCapacityCount = initialCapacityExceedsNeed
     ? null
     : currentCapacity
+
+  const [ onBookingSubmit, isSubmitLoading ] = useButtonSubmit(
+    bookSession,
+    onCancelPress
+  )
 
   return (
     <View
@@ -81,11 +114,13 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
           styles={middleSectionStyles}
           attendeesByTicket={attendeesByTicket}
           onAttendeeSelected={updateCapacity}
+          disabled={isSubmitLoading}
         />
       ) }
       <BottomSection
         onCancelPress={onCancelPress}
-        onSubmitPress={bookSession}
+        onSubmitPress={onBookingSubmit}
+        isLoading={isSubmitLoading}
         styles={bottomSectionStyles}
       />
     </View>
@@ -131,10 +166,16 @@ const TopSection = ({ styles, remainingCount }) => {
  * Bottom section of group booker
  * @param {object} props
  * @param {object} props.styles
+ * @param {boolean} props.isLoading - if the submit button should show loading spinner
  * @param {Function} props.onCancelPress
  * @param {Function} props.onSubmitPress
  */
-const BottomSection = ({ styles, onCancelPress, onSubmitPress }) => {
+const BottomSection = ({
+  styles,
+  onCancelPress,
+  onSubmitPress,
+  isLoading = false,
+}) => {
   return (
     <View
       className={`ef-modal-group-section-bottom`}
@@ -149,6 +190,7 @@ const BottomSection = ({ styles, onCancelPress, onSubmitPress }) => {
       />
       <EvfButton
         className='ef-select-session-button'
+        isProcessing={isLoading}
         type={'primary'}
         styles={styles.content?.bookButton}
         text={'BOOK SELECTED'}
