@@ -44,9 +44,11 @@ const getButtonChildren = (session, state, styles) => {
   }
   case FULLY_BOOKED: {
   }
+  // No button
   case READ_ONLY: {
-    return 'SELECT'
+    return ''
   }
+  // Should be Select text
   case AVAILABLE:
   default: {
     return 'SELECT'
