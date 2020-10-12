@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { View, Button, Text } from '@keg-hub/keg-components'
-import { useStylesCallback } from '@keg-hub/re-theme'
+import { useStylesCallback, useTheme } from '@keg-hub/re-theme'
+import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { EvfLoading } from 'SVComponents/loading'
 import { set, get } from '@keg-hub/jsutils'
 
@@ -47,8 +48,21 @@ export const EvfButton = ({
   isProcessing = false,
 }) => {
   // build the main style for the button, memoized
+  const theme = useTheme()
   const buttonCls = `ef-action-button-${type}`
-  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
+
+  const parsedActionStyles = useParsedStyle(buttonCls)
+  const customParsedStyles = useParsedStyle(className)
+
+  const customStyles = useMemo(
+    () => ({
+      type,
+      styles,
+      parsed: theme.join(parsedActionStyles, customParsedStyles),
+    }),
+    [ type, styles, parsedActionStyles, customParsedStyles ]
+  )
+
   const mainStyle = useStylesCallback(
     buildStyles,
     [ type, styles, isProcessing ],
