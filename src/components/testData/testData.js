@@ -6,10 +6,6 @@ const convertJson = json => {
   return JSON.stringify(json, null, 2)
 }
 
-const aceRef = node => {
-  if (!node || !node.editor) return
-}
-
 const Editor = ({ aceRef, onChange, value }) => {
   return (
     <ReactAce
@@ -17,7 +13,7 @@ const Editor = ({ aceRef, onChange, value }) => {
       theme='monokai'
       onChange={onChange}
       setValue={value}
-      style={{ height: '500px', width: '100vw', fontSize: '16px' }}
+      style={{ height: '75vh', width: '100vw', fontSize: '16px' }}
       ref={aceRef}
     />
   )
@@ -60,7 +56,6 @@ export const TestData = ({ data, onSave }) => {
         <Editor
           value={text}
           onChange={onChange}
-          aceRef={aceRef}
         />
         <Button
           themePath={'button.contained.primary'}
