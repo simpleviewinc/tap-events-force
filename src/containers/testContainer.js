@@ -11,30 +11,9 @@ import { withAppHeader } from 'SVComponents'
 import { useKegEvent } from 'SVHooks/events'
 import { isNative } from 'SVUtils/platform/isNative'
 import { EvfButton } from 'SVComponents/button'
+import { TestData } from 'SVComponents/testData'
 
 const { EVENTS } = Values
-const marginStyle = {
-  margin: 10,
-}
-const buttonStyles = {
-  main: {
-    width: 200,
-    ...marginStyle,
-  },
-}
-/**
- * for testing purposes only
- * @todo - remove later
- * @param {string} text
- */
-const applyJson = (text, setMockData) => {
-  try {
-    setMockData(JSON.parse(text))
-  }
-  catch (error) {
-    console.log('json syntax error. check your test data')
-  }
-}
 
 const testOnSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
@@ -45,29 +24,18 @@ const testOnSessionBookingRequest = (session, attendees) => {
  * TestContainer to be used by QA to test out individual component
  */
 export const TestContainer = withAppHeader('Test Container', props => {
-  const [ text, setText ] = useState(JSON.stringify(testData, null, 2))
   const [ mockData, setMockData ] = useState(testData)
 
   // map the evf props onto our states
   useEffect(() => void mapSessionInterface(mockData), [mockData])
+
   return (
     <View>
       { !isNative() && process.env.NODE_ENV === 'development' && (
-        <>
-          <H5 style={marginStyle}>Test Data (JSON)</H5>
-          <textarea
-            style={marginStyle}
-            rows={5}
-            value={text}
-            onChange={event => setText(event.target.value)}
-          />
-          <Button
-            themePath={'button.contained.primary'}
-            styles={buttonStyles}
-            onClick={() => applyJson(text, setMockData)}
-            content={'Apply'}
-          />
-        </>
+        <TestData
+          data={mockData}
+          onSave={setMockData}
+        />
       ) }
       <ModalDemos />
     </View>
