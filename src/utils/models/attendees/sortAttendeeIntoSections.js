@@ -1,5 +1,6 @@
 import { set } from '@keg-hub/jsutils'
 import { getTicketForAttendee } from './getTicketForAttendee'
+import { devLog } from 'SVUtils/logs'
 
 /**
  * Helper for `useAttendeeBookingData` that updates the sections object with the next attendee object
@@ -19,7 +20,7 @@ export const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
     tickets
   )
   if (!attendeeTicket) {
-    console.warn('Could not find a valid ticket for attendee. Skipping... \n', {
+    devLog.warn('Could not find a valid ticket for attendee. Skipping... \n', {
       nextAttendee,
       tickets,
       bookedTickets,
