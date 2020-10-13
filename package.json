@@ -74,6 +74,7 @@
     "nodemon": "2.0.4",
     "onchange": "7.0.2",
     "prettier": "2.0.5",
+    "react-ace-editor": "https://github.com/lancetipton/react-ace-editor.git",
     "rimraf": "^3.0.1",
     "rollup": "^2.23.1",
     "rollup-plugin-analyzer": "^3.3.0",
