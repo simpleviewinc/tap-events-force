@@ -41,7 +41,6 @@ const buildStyles = (theme, custom) => {
  */
 export const EvfButton = props => {
   const {
-    buttonRef,
     children,
     className,
     styles,
@@ -79,7 +78,6 @@ export const EvfButton = props => {
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main} />
       <Button
-        buttonRef={buttonRef}
         disabled={isProcessing}
         className={[ buttonCls, className ]}
         onClick={onClick}
@@ -91,7 +89,7 @@ export const EvfButton = props => {
             size={mainStyle?.content?.processing?.icon?.size || 20}
           />
         ) : (
-          renderFromType(text || children, { ...props, styles: mainStyle })
+          renderFromType(children || text, { ...props, styles: mainStyle })
         ) }
       </Button>
     </View>

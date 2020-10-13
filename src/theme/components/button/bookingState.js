@@ -6,7 +6,7 @@ const { SESSION_BOOKING_STATES } = Values
 const buttonStyles = { ...evfButton?.primary?.content?.button }
 
 const stateStyles = {
-  [SESSION_BOOKING_STATES.AVAILABLE]: {},
+  [SESSION_BOOKING_STATES.SELECT]: {},
   [SESSION_BOOKING_STATES.SELECTED]: {},
   [SESSION_BOOKING_STATES.WAITING_LIST]: {},
   [SESSION_BOOKING_STATES.ON_WAITING_LIST]: {},

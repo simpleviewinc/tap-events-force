@@ -1,98 +1,69 @@
-import React, { useCallback } from 'react'
-import { get } from '@keg-hub/jsutils'
+import React, { useCallback, useMemo } from 'react'
+import { checkCall } from '@keg-hub/jsutils'
 import { selectSession } from 'SVActions/session/selectSession'
-import { EVFIcons } from 'SVIcons'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { Text, View } from 'SVComponents'
-import { useBookingStateStyles } from 'SVHooks/useBookingStateStyles'
-import { useThemeState } from 'SVHooks/useThemeState'
-import { Values } from 'SVConstants'
+import { bookingStateFactory } from 'SVUtils/models/sessions/bookingStateFactory'
+import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
 
-const { CheckMark } = EVFIcons
-const {
-  AVAILABLE,
-  SELECTED,
-  WAITING_LIST,
-  ON_WAITING_LIST,
-  FULLY_BOOKED,
-  READ_ONLY,
-} = Values.SESSION_BOOKING_STATES
-
-const getButtonChildren = (session, state, styles) => {
-  switch (state) {
-  case SELECTED: {
-    return (
-      <View style={{ flexDirection: 'row' }}>
-        <Text style={styles?.content}>SELECTED</Text>
-        <CheckMark style={styles?.content} />
-      </View>
-    )
-  }
-  case ON_WAITING_LIST: {
-    return (
-      <>
-        <Text style={styles?.content}>ON WAITING LIST</Text>
-      </>
-    )
-  }
-  case WAITING_LIST: {
-    return (
-      <>
-        <Text style={styles?.content}>WAITING LIST</Text>
-      </>
-    )
-  }
-  case FULLY_BOOKED: {
-  }
-  // No button
-  case READ_ONLY: {
-    return ''
-  }
-  // Should be Select text
-  case AVAILABLE:
-  default: {
-    return 'SELECT'
-  }
-  }
+/**
+ * Gets the booking button children based on the passed in state
+ * @param {import('SVModels/session/bookingState').BookingState} model
+ * @param {Object} styles - Booking button child theme styles
+ */
+const RenderBookingState = ({ model, styles }) => {
+  return (
+    <View
+      className={`evf-booking-button-content`}
+      style={styles.wrapper}
+    >
+      <Text style={styles?.content}>{ model.text }</Text>
+    </View>
+  )
 }
 
-const renderChildren = (session, states) => {
-  return props => {
-    const { styles } = props
-
-    const { state, styles: bookingStyles } = useBookingStateStyles(
-      session,
-      get(styles, `content.button`)
+/**
+ * Custom hook to get the children and styles of the booking button
+ * <br/>Base on the session and it's current state
+ * @param {Object} props
+ * @param {Object} props.styles
+ * @param {import('SVModels/session').Session} props.session
+ */
+const useBookingState = session => {
+  const state = getBookingState(session)
+  return useMemo(() => {
+    return (
+      checkCall(bookingStateFactory[state], session, 'single', false) || null
     )
-    console.log(bookingStyles)
-    const buttonChildren = getButtonChildren(session, state, styles)
-
-    return buttonChildren
-  }
+  }, [ state, session ])
 }
 
 /**
  * Booking button for each session component
- * @param {object} props
- * @param {object} props.styles
+ * @param {Object} props
+ * @param {Object} props.styles
  * @param {import('SVModels/session').Session} props.session
  */
 export const BookingButton = props => {
+  if (!props.session) return null
+
   const { styles, session } = props
-
-  if (!session) return null
-
   const selectSessionCb = useCallback(() => selectSession(session), [session])
-  const { ref, ...states } = useThemeState()
+  const stateModel = useBookingState(session)
 
   return (
-    <EvfButton
-      type={'primary'}
-      styles={styles}
-      onClick={selectSessionCb}
-      buttonRef={ref}
-    >
-      { renderChildren(session, states) }
-    </EvfButton>
+    (stateModel?.text && (
+      <EvfButton
+        type={'primary'}
+        styles={styles}
+        onClick={selectSessionCb}
+      >
+        <RenderBookingState
+          model={stateModel}
+          styles={styles}
+        />
+      </EvfButton>
+    )) ||
+    null
   )
 }

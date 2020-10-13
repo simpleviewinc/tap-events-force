@@ -48,12 +48,20 @@ export const Values = deepFreeze({
   },
 
   SESSION_BOOKING_STATES: {
-    AVAILABLE: 'available',
+    SELECT: 'select',
     SELECTED: 'selected',
     WAITING_LIST: 'waiting list',
     ON_WAITING_LIST: 'on waiting list',
     FULLY_BOOKED: 'fully booked',
     READ_ONLY: 'read only',
+  },
+  BOOKING_STATES_WITH_ICON: {
+    selected: true,
+    'on waiting list': true,
+  },
+  BOOKING_STATES_WITH_ALT_TEXT: {
+    'read only': '',
+    'fully booked': 'WAITING_LIST',
   },
 
   TICKET_TYPE: {
