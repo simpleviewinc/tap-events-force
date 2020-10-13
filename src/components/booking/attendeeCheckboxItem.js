@@ -13,7 +13,8 @@ import { useTheme } from '@keg-hub/re-theme'
  * @param {Object} props
  * @param {string} props.id - id of attendee
  * @param {string} props.name - name of attendee
- * @param {string?} props.className - optional class name for text
+ * @param {string?} props.textClassName - optional class name for text
+ * @param {Function?} props.onAttendeeSelected - callback called when an attendee is selected. Has form: attendeeId => { ... }
  * @param {Object} props.sectionStyles - styles from the section containing this checkbox
  * @param {boolean} props.isWaiting - if true, attendee is on waiting list, so we should show waiting-list ui
  * @param {boolean} props.enableCheck - if true, attendee can be set to "checked"

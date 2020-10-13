@@ -82,7 +82,6 @@ const useBookSession = (session, bookingList, waitingList) => {
 
 /**
  * Returns callbacks for working with session capacity and latest capacity
- * @param {number?} initialCapacity
  * @param {import('SVModels/session').Session} session
  * @return {Object} object with keys for callbacks and current capacity
  *  - updateCapacity: callback of form: id => updateListWithId(id)

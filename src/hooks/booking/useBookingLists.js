@@ -5,9 +5,10 @@ import { useRestrictedAttendeeIds } from './useRestrictedAttendeeIds'
 
 /**
  * Builds the initial list of ids of attendees on the waiting list for the session
- * @param {Object} session
- * @param {Array<import('SVModels/attendee').Attendee>}  attendees
- * @param {Function} isBookable
+ * @param {Object} session - session to find attendees on the waiting list for
+ * @param {Array<import('SVModels/attendee').Attendee>} attendees - all attendees
+ * @param {Function} isBookable - cb of form: attendeeId => true/false if bookable/waitListable to the session
+ * @return {Array<string>} initial waiting ids ids
  */
 const getInitialWaitIds = (session, attendees, isBookable) => {
   const existingIds = getExistingWaitIds(session?.identifier, attendees)
@@ -20,7 +21,8 @@ const getInitialWaitIds = (session, attendees, isBookable) => {
  * @param {Array<string>} attendees - full list of attendees
  * @param {Array<string>} initialWaitIds - list of ids on the initial waiting list
  * @param {Function} isBookable - cb of form: attendeeId => true/false if bookable/waitListable to the session
- * @param {boolean} initialCapacityExceedsNeed
+ * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
+ * @return {Array<string>} initial booking ids
  */
 const getInitialBookingIds = (
   session,
@@ -47,8 +49,6 @@ const getInitialBookingIds = (
  * @param {import('SVModels/session').Session} session - session to get the booking & waiting lists for
  * @param {Array<import('SVModels/attendee').Attendee>} attendees - full list of attendees
  * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
- * @param {Function?} isBookable - optional cb of form id => true/false if attendee is bookable.
- *  If omitted, it will use the restricted attendee ids list to determine this. This param is mainly here for testing.
  * @return {Array} destructurable array of form:
  * [ bookingList, waitingList ]
  */
