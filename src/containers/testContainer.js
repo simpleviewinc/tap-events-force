@@ -140,6 +140,12 @@ export const ModalDemos = () => {
     testOnSessionWaitingListRequest
   )
 
+  const cb = useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
+    session: store.sessions[2],
+    attendees: store.attendees,
+  })
+  useEffect(() => void cb(), [store.sessions[2]])
+
   return (
     <View style={testStyles.main}>
       <Section>

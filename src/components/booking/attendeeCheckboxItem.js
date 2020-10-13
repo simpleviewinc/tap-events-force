@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
-import { Text, View, Button } from '@keg-hub/keg-components'
+import { Text, View } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
 import { useStyle } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
@@ -76,6 +76,18 @@ export const AttendeeCheckboxItem = props => {
 }
 
 /**
+ * Simple box indicating attendee is on the waiting list
+ * @param {*} param0
+ */
+const WaitingBox = ({ text = 'On waiting list', styles }) => {
+  return (
+    <View style={styles?.main}>
+      <Text style={styles?.content}>{ text }</Text>
+    </View>
+  )
+}
+
+/**
  * When a user is on the waiting list, we need to display a waiting visual right of the text
  * @param {Object} props
  * @param {string} props.name
@@ -102,14 +114,7 @@ const WaitingItem = props => {
         </Text>
         { isMobile && <Text style={waitingStyles?.waitText}>(waiting)</Text> }
       </View>
-      { !isMobile && (
-        <Button
-          styles={waitingStyles?.button}
-          themePath='button.outline.default'
-        >
-          On waiting list
-        </Button>
-      ) }
+      { !isMobile && <WaitingBox styles={waitingStyles?.waitBox} /> }
     </View>
   )
 }
