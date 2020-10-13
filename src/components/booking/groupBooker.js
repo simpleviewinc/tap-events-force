@@ -9,6 +9,7 @@ import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
+import PropTypes from 'prop-types'
 
 /**
  * The root group booking component. Initializes state specific to
@@ -90,6 +91,11 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
       />
     </View>
   )
+}
+GroupBooker.propTypes = {
+  styles: PropTypes.object,
+  session: PropTypes.object,
+  onCancelPress: PropTypes.func,
 }
 
 /**
