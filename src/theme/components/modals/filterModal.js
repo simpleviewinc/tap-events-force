@@ -93,25 +93,22 @@ const buttonsWrapper = {
   },
 }
 
-const clearButtonDefault = (transparent = false) => ({
+const clearButtonDefault = {
   main: {
-    pB: 5,
-    pH: 15,
     jtC: 'flex-end',
-    bgC: transparent ? colors.transparent : undefined,
   },
   content: {
     $web: {
       ltrS: 0.1,
     },
     $all: {
-      ftSz: 18,
+      ftSz: 16,
       ftWt: '500',
       txDc: 'underline',
       color: colors.lightGray01,
     },
   },
-})
+}
 export const filterModal = {
   content: {
     main: {},
@@ -172,13 +169,10 @@ export const filterModal = {
         applyButton: {
           main: {
             minHeight: 45,
+            mL: 15
           },
         },
-        clearButton: {
-          default: clearButtonDefault(),
-          active: clearButtonDefault(true),
-          hover: clearButtonDefault(true),
-        },
+        clearButton: clearButtonDefault,
       },
     },
   },
