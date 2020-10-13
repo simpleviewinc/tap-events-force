@@ -78,7 +78,9 @@ export const AttendeeCheckboxItem = props => {
 
 /**
  * Simple box indicating attendee is on the waiting list
- * @param {*} param0
+ * @param {Object} props
+ * @param {string} props.text - text to show in waiting box
+ * @param {Object} props.styles - theme styles (main and content)
  */
 const WaitingBox = ({ text = 'On waiting list', styles }) => {
   return (
