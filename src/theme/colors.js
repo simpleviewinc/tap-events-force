@@ -18,6 +18,8 @@ const colors = {
   lightGray02: '#F0F0F0',
   dimTextGray: '#D9DCDC',
   darkGray: '#4F4F4F',
+  darkGray02: '#727272',
+  transparent: 'transparent',
 }
 
 /**

@@ -32,12 +32,24 @@ export const sessionDetailsModal = {
       },
       scrollView: {
         main: {
-          mH: 43,
-          mT: 50,
-          mB: 21,
+          $xsmall: {
+            mH: 25,
+            mT: 40,
+            mB: 10,
+          },
+          $small: {
+            mH: 43,
+            mT: 50,
+            mB: 21,
+          }
         },
         contentContainer: {
-          pH: 29,
+          $xsmall: {
+            pH: 19,
+          },
+          $small: {
+            pH: 29,
+          }
         },
       },
       dateTimeText: defaultHeaderTextStyle,

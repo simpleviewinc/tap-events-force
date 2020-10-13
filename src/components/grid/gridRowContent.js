@@ -80,6 +80,7 @@ const DrawerContent = ({ session, styles }) => {
       <TextToggle
         text={session.summary}
         styles={styles?.toggleText}
+        numOfLines={50}
       />
     </View>
   )
