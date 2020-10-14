@@ -2,7 +2,7 @@ import * as React from 'react'
 import { SvgIcon } from '@keg-hub/keg-components'
 
 /**
- * CheckMark
+ * BookingCheck
  * @param {object} props
  */
 export const BookingCheck = props => {

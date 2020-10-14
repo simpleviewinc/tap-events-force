@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Text } from '@keg-hub/keg-components'
 
 /**
- * CheckMark
+ * Digit
  * @param {object} props
  */
 export const Digit = props => {

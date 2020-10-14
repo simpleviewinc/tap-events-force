@@ -4,7 +4,7 @@ import { reduceObj, exists } from '@keg-hub/jsutils'
 import { BookingState } from 'SVModels/session/bookingState'
 import { bookingState as bookingStateStyles } from 'SVTheme/components/button/bookingState'
 
-const { CheckMark, Digit } = EVFIcons
+const { BookingCheck, Digit } = EVFIcons
 const {
   SESSION_BOOKING_STATES,
   BOOKING_STATES_WITH_ICON,
@@ -35,7 +35,7 @@ export const bookingStateFactory = reduceObj(
         styles: bookingStateStyles[value],
         // Set the Icon type based on the the booking type
         ...(BOOKING_STATES_WITH_ICON[value] && {
-          icon: bookingType === 'single' ? CheckMark : Digit,
+          icon: bookingType === 'single' ? BookingCheck : Digit,
         }),
       })
     }

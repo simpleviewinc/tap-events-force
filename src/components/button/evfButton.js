@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { View, Button, Text, renderFromType } from '@keg-hub/keg-components'
-import { useStylesCallback } from '@keg-hub/re-theme'
+import { useStylesCallback, useTheme } from '@keg-hub/re-theme'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { EvfLoading } from 'SVComponents/loading'
 import { set, get } from '@keg-hub/jsutils'
@@ -49,8 +49,6 @@ export const EvfButton = props => {
     text,
     isProcessing = false,
   } = props
-
-  // ref = ref || buttonRef
 
   // build the main style for the button, memoized
   const theme = useTheme()
