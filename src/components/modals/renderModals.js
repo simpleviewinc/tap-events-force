@@ -33,7 +33,6 @@ export const RenderModals = modals => {
       return (
         <GroupBooking
           key={index}
-          attendees={modal.data?.attendees}
           session={modal.data?.session}
           visible={visible}
         />

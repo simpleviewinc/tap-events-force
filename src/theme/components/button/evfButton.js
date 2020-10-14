@@ -103,7 +103,7 @@ export const evfButton = {
     main: defaultMainStyle,
     content: {
       topLeftCorner: topLeftCornerStyle,
-      button: buttonStateStyles(colors.default),
+      button: buttonStateStyles(colors.second),
       processing: processingStyles,
     },
   },

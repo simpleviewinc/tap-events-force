@@ -40,7 +40,7 @@ export const Filter = ({ visible, labels }) => {
 
   return (
     <BaseModal
-      dissmissedCBRef={dismissedCBRef}
+      dismissedCBRef={dismissedCBRef}
       styles={filterStyles}
       title={'Filter'}
       visible={visible}

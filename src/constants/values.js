@@ -7,6 +7,8 @@ export const Values = deepFreeze({
   CATEGORIES: {
     ACTIVE_SESSION: 'activeSession',
     AGENDA_SESSIONS: 'agendaSessions',
+    ATTENDEES_BY_TICKET: 'attendeesByTicket',
+    RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
     BOOKING: 'booking',
     AGENDA_DAYS: 'agendaDays',
     ATTENDEES: 'attendees',
@@ -19,12 +21,21 @@ export const Values = deepFreeze({
     SESSIONS: 'sessions',
     SETTINGS: 'settings',
     ALERT: 'alert',
+    BOOKED_TICKETS: 'bookedTickets',
+    TICKETS: 'tickets',
+    GROUP_BOOKING: 'groupBooking',
   },
 
   SUB_CATEGORIES: {
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',
     SELECTED_FILTERS: 'selectedFilters',
+
+    // group booking
+    BOOKING_LIST: 'bookingList',
+    WAITING_LIST: 'waitingList',
+    SESSION_CAPACITY: 'capacity',
+    CURRENT_SESSION: 'currentSession',
   },
 
   MODAL_TYPES: {
@@ -51,6 +62,12 @@ export const Values = deepFreeze({
   },
   EVENTS: {
     SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
+    SESSION_WAITING_LIST_REQUEST: 'sessionWaitingListRequest',
+  },
+  TICKET_TYPES: {
+    GROUP: 'group',
+    PERSON: 'person',
+    ITEM: 'item',
   },
   /**
    * Local storage keys used to identify the values to load from local storage, if present.

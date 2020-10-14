@@ -6,12 +6,12 @@ import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { applySessionFilters } from 'SVActions/session/filters/applySessionFilters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { useSelector, shallowEqual } from 'react-redux'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useAgenda } from 'SVHooks/models/useAgenda'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
-import { pickKeys, get } from '@keg-hub/jsutils'
+import { get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
@@ -139,9 +139,12 @@ export const Sessions = props => {
     onDayChange = noOp,
     sessionAgendaProps,
     onSessionBookingRequest = noOp,
+    onSessionWaitingListRequest = noOp,
   } = props
-  // set up our ev ent listener for booking request
+
+  // set up our event listener for booking and waiting list requests
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
+  useKegEvent(EVENTS.SESSION_WAITING_LIST_REQUEST, onSessionWaitingListRequest)
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)
@@ -151,17 +154,14 @@ export const Sessions = props => {
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')
 
-  const { labels, agendaSessions, modals, settings, sessions } = useSelector(
-    ({ items }) =>
-      pickKeys(items, [
-        'labels',
-        'agendaSessions',
-        'modals',
-        'settings',
-        'sessions',
-      ]),
-    shallowEqual
-  )
+  const { labels, agendaSessions, modals, settings, sessions } = useStoreItems([
+    'labels',
+    'agendaSessions',
+    'modals',
+    'settings',
+    'sessions',
+  ])
+
   // - if no session item contains price info. don't display any price label
   // - if some session items do have price. the one's that do not, need to have 'free' label
   const enableFreeLabel = useMemo(() => {

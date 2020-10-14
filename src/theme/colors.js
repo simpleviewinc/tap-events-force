@@ -1,20 +1,23 @@
 import { mapObj } from '@keg-hub/jsutils'
+
 /**
- * Holds the default colors. Can be overwritten by setColor method
+ * Holds the default colors. Can be overwritten by setColor method, for example in dynamicClassMap
  * @object
  */
 const colors = {
   primary: '#22B3C4',
-  default: '#525859',
+  second: '#525859',
   black: '#000000',
   black01: '#0A0A0A',
   white: '#FFFFFF',
   white01: '#F3F3F3',
   white02: '#F0F0F0',
+  gray: '#909090',
   lightGray: '#A0A0A0',
   lightGray01: '#8f908f',
+  lightGray02: '#F0F0F0',
+  dimTextGray: '#D9DCDC',
   darkGray: '#4F4F4F',
-  transparent: 'transparent',
 }
 
 /**

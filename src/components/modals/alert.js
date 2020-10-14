@@ -21,7 +21,7 @@ export const Alert = ({ visible, title, message }) => {
   return (
     <BaseModal
       className={`ef-modal-alert`}
-      dissmissedCBRef={dismissedCBRef}
+      dismissedCBRef={dismissedCBRef}
       styles={alertStyles}
       title={title}
       visible={visible}

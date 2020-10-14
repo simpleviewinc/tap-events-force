@@ -1,6 +1,6 @@
-import { get, pickKeys } from '@keg-hub/jsutils'
+import { get } from '@keg-hub/jsutils'
 import { getCurrentDay, getLatestDay, isLatestDay } from 'SVUtils'
-import { useSelector, shallowEqual } from 'react-redux'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 /**
  * @function
@@ -12,10 +12,7 @@ export const useAgenda = () => {
   const {
     settings: { agendaSettings = {} },
     agendaDays = [],
-  } = useSelector(
-    store => pickKeys(store.items, [ 'settings', 'agendaDays' ]),
-    shallowEqual
-  )
+  } = useStoreItems([ 'settings', 'agendaDays' ])
 
   const currentDayNumber = get(agendaSettings, 'activeDayNumber')
   const currentAgendaDay = getCurrentDay(agendaDays, currentDayNumber)

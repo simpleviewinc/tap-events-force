@@ -3,6 +3,8 @@ import { ActionTypes, Values } from 'SVConstants'
 import { mapObj, snakeCase } from '@keg-hub/jsutils'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
+import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
+import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
@@ -51,21 +53,27 @@ const getDispatchPayload = (category, value) => {
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props
  */
 export const mapSessionInterface = props => {
+  if (!props) return
+
   // loop through each key and dispatch accordingly
-  props &&
-    mapObj(props, (key, value) => {
-      // ensure key exists in the items store first
-      if (key !== CATEGORIES[snakeCase(key).toUpperCase()]) return
+  mapObj(props, (key, value) => {
+    // ensure key exists in the items store first
+    if (key !== CATEGORIES[snakeCase(key).toUpperCase()]) return
 
-      // while mapping sessions, also map for 'activeSessions'
-      // activeSessions are sessions sorted by day number
-      if (key === CATEGORIES.SESSIONS)
-        setAgendaSessions(value, props.agendaDays)
+    // while mapping sessions, also map for 'activeSessions'
+    // activeSessions are sessions sorted by day number
+    if (key === CATEGORIES.SESSIONS) setAgendaSessions(value, props.agendaDays)
 
-      // Check for the alert prop, and call the checkAlert when it exists
-      // Otherwise just dispatch the payload based on the key and value
-      key === CATEGORIES.ALERT
-        ? checkAlert(props.alert)
-        : dispatch(getDispatchPayload(key, value))
-    })
+    // Check for the alert prop, and call the checkAlert when it exists
+    // Otherwise just dispatch the payload based on the key and value
+    key === CATEGORIES.ALERT
+      ? checkAlert(props.alert)
+      : dispatch(getDispatchPayload(key, value))
+  })
+
+  // initialized the restricted attendee list for each session
+  initRestrictedAttendees(props.sessions, props.attendees)
+
+  // initialize the attendeesByTicket lists for each ticket
+  initSortedAttendees(props.attendees, props.tickets, props.bookedTickets)
 }

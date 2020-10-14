@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Section, H6, H5, Divider, View } from 'SVComponents'
 import { useTheme } from '@keg-hub/re-theme'
-import testData from '../mocks/eventsforce/testData.json'
+import testData from '../mocks/eventsforce/testData.js'
 import { mapSessionInterface } from 'SVActions'
 import { RenderModals } from 'SVComponents/modals'
 import { Values } from 'SVConstants'
@@ -18,6 +18,11 @@ const { EVENTS } = Values
 const testOnSessionBookingRequest = (session, attendees) => {
   console.log(attendees)
   console.log(session)
+}
+
+const testOnSessionWaitingListRequest = (sessionId, attendeeIds) => {
+  console.log(sessionId)
+  console.log(attendeeIds)
 }
 
 /**
@@ -96,6 +101,10 @@ export const ModalDemos = () => {
 
   // set up our event listener for booking request
   useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, testOnSessionBookingRequest)
+  useKegEvent(
+    EVENTS.SESSION_WAITING_LIST_REQUEST,
+    testOnSessionWaitingListRequest
+  )
 
   return (
     <View style={testStyles.main}>
@@ -159,7 +168,17 @@ export const ModalDemos = () => {
             session: store.sessions[7],
             attendees: store.attendees,
           })}
-          content={'Group booking Demo 3 - 1 spot left'}
+          content={'Group booking Demo 3 - 1 spot left, no waiting list'}
+        />
+
+        <Button
+          themePath='button.contained.secondary'
+          styles={testStyles.content.button}
+          onClick={useCreateModal(Values.MODAL_TYPES.GROUP_BOOKING, {
+            session: store.sessions.find(x => x.identifier === '12'),
+            attendees: store.attendees,
+          })}
+          content={'Group booking Demo 4 - greater capacity than need'}
         />
 
         <Button
@@ -170,7 +189,7 @@ export const ModalDemos = () => {
             message:
               'There is insufficient capacity for your selection. Please reduce the number of selected bookings',
           })}
-          content={'Group booking Demo 4 - no spots left'}
+          content={'Group booking Demo 5 - no spots left'}
         />
       </Section>
 

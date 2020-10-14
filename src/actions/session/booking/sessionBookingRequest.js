@@ -1,26 +1,29 @@
 import { Values } from 'SVConstants'
-import { getEventEmitter } from 'SVUtils'
+import { getEventEmitter } from 'SVUtils/events'
+import { validateEventResponse } from 'SVUtils/validation'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()
 
 /**
- * sessionBookingRequest
+ * Emits the session booking request event, calling any listeners to that event
+ * and passing `sessionId` and `attendeeIds` to them.
+ *
+ * The consuming app of the sessions-component can define one of these sessionBookingRequest listeners.
+ *
+ * @param {string} sessionId - the id of the session that has attendees to book
+ * @param {Array<string>} attendeeIds - list of attendee ids to be booked to this session
+ * @return {void}
  */
 export const sessionBookingRequest = (sessionId, attendeeIds = []) => {
-  // TODO: incomplete until middle section is done
-  // https://jira.simpleviewtools.com/browse/ZEN-278
-  // 1. get selected attendee(s)
-  // 2. return 2 things
-  //     - session id (utilize activeSession state)
-  //     - the attendee.EfBookedTicketIdentifier in an array
   const valid = kegEventEmitter.emit(
     EVENTS.SESSION_BOOKING_REQUEST,
-    'exampleSessionId',
-    [ 'attendeId2', 'attendeId3' ]
+    sessionId,
+    attendeeIds
   )
-  if (!valid)
-    console.warn(
-      `Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`
-    )
+  validateEventResponse(
+    valid,
+    [`Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`],
+    [ 'Emitted event', EVENTS.SESSION_BOOKING_REQUEST, sessionId, attendeeIds ]
+  )
 }

@@ -35,9 +35,7 @@ const buildIconComponent = SvgElement => {
     const Wrapper = onPress ? TouchableOpacity : View
 
     return (
-      <Wrapper
-        onPress={onPress}
-      >
+      <Wrapper onPress={onPress}>
         <SvgElement
           fill={fill || color}
           {...svgProps}
@@ -63,7 +61,6 @@ const buildIconComponent = SvgElement => {
  * Wraps and exports each element exported from `src/assets/icons/evf/elements/index.js`
  * @see `buildIconComponent` to see the wrapper
  * @see `src/assets/icons/evf/elements/index.js` for the available icon elements and their names
- * @see `src/assets/icons/evf/svg/*` for the source svg files used to create the elements
  * @example
  * import { EVFIcons } from 'SVIcons'
  * ...

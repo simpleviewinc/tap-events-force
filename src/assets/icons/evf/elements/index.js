@@ -1,4 +1,5 @@
 // all components are converted from their respective .svg files using: https://react-svgr.com/playground/
+export * from './checkmark'
 export * from './clock'
 export * from './close'
 export * from './dayToggleLeft'

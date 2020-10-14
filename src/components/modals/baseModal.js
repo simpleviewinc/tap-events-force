@@ -48,14 +48,14 @@ export const contentDefaultMaxHeight = 772
  * @param {object} props.styles
  * @param {boolean} props.visible
  * @param {Component} props.children
- * @param {React.MutableRefObject=} props.dissmissedCBRef - pass this in when you want to dismiss modal from child
+ * @param {React.MutableRefObject=} props.dismissedCBRef - pass this in when you want to dismiss modal from child
  *                                                        -  call `childRef.current(true)` to dismiss
  * @param {Component} props.BodyComponent - Component for the body. contains 'setDismissed' prop if the child wants to be able to dismiss the modal by other means other than close button || backdrop click
  * @param {boolean=} props.hasCloseButton - to display the close button on the header or not
  * @param {Function=} props.onDismiss - function to call when the modal is being dismissed
  * @example
  *  <BaseModal
-      dissmissedCBRef={dismissedCBRef}
+      dismissedCBRef={dismissedCBRef}
       styles={errorStyles}
       title={title}
       visible={visible}
@@ -70,7 +70,7 @@ export const BaseModal = props => {
     visible,
     hasCloseButton,
     styles,
-    dissmissedCBRef,
+    dismissedCBRef,
     children,
     onDismiss,
   } = props
@@ -79,13 +79,13 @@ export const BaseModal = props => {
   // 2. modal has been removed from the store
   const [ dismissed, setDismissed ] = useState(false)
   useEffect(() => {
-    if (dissmissedCBRef) {
-      dissmissedCBRef.current = setDismissed
+    if (dismissedCBRef) {
+      dismissedCBRef.current = setDismissed
       return () => {
-        dissmissedCBRef.current = undefined
+        dismissedCBRef.current = undefined
       }
     }
-  }, [ setDismissed, dissmissedCBRef ])
+  }, [ setDismissed, dismissedCBRef ])
 
   const theme = useTheme()
   const dim = useDimensions()
