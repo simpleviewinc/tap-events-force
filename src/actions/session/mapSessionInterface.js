@@ -3,12 +3,9 @@ import { ActionTypes, Values } from 'SVConstants'
 import { mapObj, snakeCase } from '@keg-hub/jsutils'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
-<<<<<<< HEAD
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
-=======
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
->>>>>>> Zen 285 apply filter (#61)
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
