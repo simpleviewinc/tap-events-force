@@ -19,6 +19,7 @@ export const sortAttendeeIntoSections = (sectionData, nextAttendee) => {
     bookedTickets,
     tickets
   )
+
   if (!attendeeTicket) {
     devLog.warn('Could not find a valid ticket for attendee. Skipping... \n', {
       nextAttendee,

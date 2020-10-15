@@ -12,7 +12,8 @@ export const getAllBookedTickets = bookedTickets => {
 
     // sub tickets, flattened to the same level, and filter out any that are undefined
     ...bookedTickets.reduce((allBookedTickets, { bookedSubTickets }) => {
-      exists(bookedSubTickets) && allBookedTickets.push(bookedSubTickets)
+      exists(bookedSubTickets) &&
+        bookedSubTickets.map(ticket => allBookedTickets.push(ticket))
       return allBookedTickets
     }, []),
   ]
