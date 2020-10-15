@@ -31,17 +31,6 @@ export const gridRowContent = {
           mB: 10,
         },
       },
-      toggleText: {
-        main: {
-
-        },
-        text: {
-          ftSz: 14,
-          ftWt: '400',
-          lnH: 22,
-          color: colors.darkGray02
-        }
-      },
     },
   },
 }

@@ -5,12 +5,11 @@ import { Text, ScrollView, View } from '@keg-hub/keg-components'
 import { checkCall, pickKeys } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
-import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
+import { useSessionLocation } from 'SVHooks/models'
 import { format } from 'date-fns'
 import { LabelButton } from 'SVComponents/labels/labelButton'
-import { getPresenterFullName, getPresenterProfession } from 'SVUtils/models'
 import { BookingButton } from 'SVComponents/button'
-
+import {SessionPresenters} from 'SVComponents/sessionDetails'
 /**
  * SessionDetailsModal
  * @param {object} props
@@ -99,7 +98,6 @@ const Body = ({ styles, session, labels = [] }) => {
 
         <SessionPresenters
           session={session}
-          styles={styles.presenters}
         />
 
         <Text
@@ -134,33 +132,6 @@ const ActionButton = ({ styles, session }) => {
     </View>
   )
 }
-/**
- * Displays the full details of presenter(s) for the given session (name and profession)
- * @param {object} props
- * @param {import('SVModels/session').Session} session
- * @param {object} styles
- */
-const SessionPresenters = React.memo(({ session, styles }) => {
-  const presenters = useSessionPresenters(session)
-  // format: "[title] [firstname] [lastname], [job title] - [company]"
-  return (
-    <View style={styles.main}>
-      { presenters.map(presenter => {
-        const fullName = getPresenterFullName(presenter)
-        const profession = getPresenterProfession(presenter)
-        return (
-          <Text
-            className={'ef-modal-sub-header'}
-            style={styles.text}
-            key={presenter.identifier}
-          >
-            { `${fullName}${profession && `, ${profession}`}` }
-          </Text>
-        )
-      }) }
-    </View>
-  )
-})
 
 /**
  * Formats the date string

@@ -65,21 +65,6 @@ export const sessionDetailsModal = {
         },
         button: labelButtonDefault,
       },
-      presenters: {
-        main: {
-          mB: 18,
-        },
-        text: {
-          $xsmall: {
-            mT: 10,
-            ftSz: 14,
-          },
-          $small: {
-            mT: 20,
-            ftSz: 16,
-          },
-        },
-      },
       summaryText: {
         $xsmall: {
           lnH: 22,
