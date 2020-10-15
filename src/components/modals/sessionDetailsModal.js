@@ -98,6 +98,7 @@ const Body = ({ styles, session, labels = [] }) => {
 
         <SessionPresenters
           session={session}
+          textClassName={'ef-modal-sub-header'}
         />
 
         <Text

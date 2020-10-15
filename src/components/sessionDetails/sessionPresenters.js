@@ -26,7 +26,7 @@ export const SessionPresenters = React.memo(({ session, styles, textClassName })
         const profession = getPresenterProfession(presenter)
         return (
           <Text
-            className={textClassName || 'ef-session-presenter'}//{'ef-modal-sub-header'}
+            className={textClassName || 'ef-session-presenter'}
             style={sessionPresentersStyles.text}
             key={presenter.identifier}
           >
