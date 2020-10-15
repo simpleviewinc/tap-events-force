@@ -55,6 +55,15 @@ export default {
         'https://47ddc71556b359d028bd-d91a48d103994bcfc502e0439b859d74.ssl.cf3.rackcdn.com/ef-iij5tpq56zja/noevent/personal/679/wvBcFJAn5jU0wAzmq3g6553149064133/avatar_people_person_business_.jpg',
       biography: longText,
     },
+    {
+      identifier: '4',
+      firstname: 'Bobby',
+      lastname: 'Flay',
+      email: 'b_flay@gmail.com',
+      jobtitle: 'Janitor',
+      company: 'Simpleview',
+      biography: longText,
+    },
   ],
   labels: [
     {
@@ -189,7 +198,7 @@ export default {
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 10:00:00',
       endDateTimeLocal: '2020-08-04 10:30:00',
-      presenterIdentifiers: [],
+      presenterIdentifiers: ['4'],
       labelIdentifiers: [],
       locationIdentifier: '2',
       liveVideoUrl: '',
