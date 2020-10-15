@@ -14,6 +14,11 @@ import { set, get } from '@keg-hub/jsutils'
  */
 const buildStyles = (theme, custom) => {
   const btnStyles = theme.get(`button.evfButton.${custom.type}`)
+
+  console.log(theme.get(`button.evfButton.primary`))
+  console.log(`---------- btnStyles ----------`)
+  console.log(btnStyles)
+
   // Get the keys of the content.button, to get a list of all button states
   // This allows dynamically matching the Theme states even if they are changed
   const stateKeys = Object.keys(get(btnStyles, 'content.button', {}))

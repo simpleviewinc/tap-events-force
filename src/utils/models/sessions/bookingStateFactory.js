@@ -2,7 +2,6 @@ import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { reduceObj, exists } from '@keg-hub/jsutils'
 import { BookingState } from 'SVModels/session/bookingState'
-import { bookingState as bookingStateStyles } from 'SVTheme/components/button/bookingState'
 
 const { BookingCheck, Digit } = EVFIcons
 const {
@@ -19,7 +18,7 @@ export const bookingStateFactory = reduceObj(
   // Loop the booking states, and create an object with the state as the key, and a function as the value
   SESSION_BOOKING_STATES,
   (key, value, mapped) => {
-    mapped[value] = (session, bookingType, disabled) => {
+    mapped[value] = (session, bookingType, theme, disabled) => {
       // Check if the state has alternate text, and use that instead of the default
       // Covers edge cases for read-only and fully booked
       const text = exists(BOOKING_STATES_WITH_ALT_TEXT[value])
@@ -32,7 +31,7 @@ export const bookingStateFactory = reduceObj(
         state: value,
         text: text || false,
         sessionId: session.identifier,
-        styles: bookingStateStyles[value],
+        styles: theme?.button?.evfButton[value],
         // Set the Icon type based on the the booking type
         ...(BOOKING_STATES_WITH_ICON[value] && {
           icon: bookingType === 'single' ? BookingCheck : Digit,

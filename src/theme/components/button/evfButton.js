@@ -1,5 +1,8 @@
 import { colors } from '../../colors'
-import { deepMerge } from '@keg-hub/jsutils'
+import { deepMerge, reduceObj } from '@keg-hub/jsutils'
+import { Values } from 'SVConstants/values'
+
+const { SESSION_BOOKING_STATES } = Values
 
 const topLeftCornerStyle = {
   main: {
@@ -98,7 +101,7 @@ const processingStyles = {
   },
 }
 
-export const evfButton = {
+const buttonStyles = {
   default: {
     main: defaultMainStyle,
     content: {
@@ -115,4 +118,15 @@ export const evfButton = {
       processing: processingStyles,
     },
   },
+}
+
+export const evfButton = {
+  ...buttonStyles,
+  ...reduceObj(SESSION_BOOKING_STATES, (key, value, styles) => {
+    styles[value] = deepMerge(buttonStyles.primary, {
+      main: { $all: { height: 50 } },
+    })
+
+    return styles
+  }),
 }
