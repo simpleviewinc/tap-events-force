@@ -1,25 +1,51 @@
-import React, { useCallback, useMemo } from 'react'
-import { checkCall } from '@keg-hub/jsutils'
-import { selectSession } from 'SVActions/session/selectSession'
-import { EvfButton } from 'SVComponents/button/evfButton'
 import { Text, View } from 'SVComponents'
-import { bookingStateFactory } from 'SVUtils/models/sessions/bookingStateFactory'
+import { checkCall } from '@keg-hub/jsutils'
+import React, { useCallback, useMemo } from 'react'
+import { EvfButton } from 'SVComponents/button/evfButton'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
+import { selectSession } from 'SVActions/session/selectSession'
+import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
+import { useBookingLists } from 'SVHooks/booking/useBookingLists'
 import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
-import { useTheme } from '@keg-hub/re-theme'
+import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
+import { bookingStateFactory } from 'SVUtils/models/sessions/bookingStateFactory'
+import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
+
 /**
  * Gets the booking button children based on the passed in state
  * @param {import('SVModels/session/bookingState').BookingState} model
  * @param {Object} styles - Booking button child theme styles
  */
-const RenderBookingState = ({ model, styles, ...props }) => {
-  // const { styles:modelStyles } = model
+const RenderBookingState = props => {
+  const { model, style, ...attrs } = props
+  const { displayAmount, icon: Icon, text } = model
+  const iconProps =
+    Icon && Icon.name
+      ? Icon.name !== 'Digit'
+          ? { style }
+          : {
+              digit: displayAmount,
+              styles: {
+                main: {
+                  ...style,
+                  backgroundColor: style.color || style.backgroundColor,
+                },
+                text: { color: `#22B3C4`, fontWeight: 'bold' },
+              },
+            }
+      : null
 
   return (
-    <View
-      className={`evf-booking-button-content`}
-      style={styles.wrapper}
-    >
-      <Text style={styles?.content}>{ model.text }</Text>
+    <View style={{ flexDirection: 'row' }}>
+      { text && (
+        <Text
+          {...attrs}
+          style={style}
+        >
+          { text }
+        </Text>
+      ) }
+      { iconProps && <Icon {...iconProps} /> }
     </View>
   )
 }
@@ -33,13 +59,52 @@ const RenderBookingState = ({ model, styles, ...props }) => {
  */
 const useBookingState = session => {
   const state = getBookingState(session)
-  const theme = useTheme()
+  const { remainingCount } = parseSessionCapacity(session?.capacity)
+  const { restrictedIdsForSession } = useRestrictedAttendeeIds(
+    session?.identifier
+  )
+  const { attendees, attendeesByTicket } = useStoreItems([
+    'attendees',
+    'attendeesByTicket',
+  ])
+
+  // Update to pull booking type based on attendees
+  const bookingType = attendees.length > 1 ? 'group' : 'single'
+  const [ bookingList, waitingList ] = useBookingLists(session, attendees, false)
+
+  const {
+    sortedAttendeeCount,
+    bookableAttendeeCount,
+    initialCapacityExceedsNeed,
+  } = useGroupCounts(
+    attendeesByTicket,
+    restrictedIdsForSession,
+    remainingCount,
+    session?.capacity?.isUnlimited
+  )
+
   return useMemo(() => {
     return (
-      checkCall(bookingStateFactory[state], session, 'single', theme, false) ||
-      null
+      checkCall(bookingStateFactory[state], {
+        session,
+        bookingType,
+        bookingList,
+        waitingList,
+        sortedAttendeeCount,
+        bookableAttendeeCount,
+        initialCapacityExceedsNeed,
+      }) || null
     )
-  }, [ state, session, theme ])
+  }, [
+    state,
+    session,
+    waitingList,
+    bookingList,
+    bookingType,
+    sortedAttendeeCount,
+    bookableAttendeeCount,
+    initialCapacityExceedsNeed,
+  ])
 }
 
 /**
@@ -59,8 +124,8 @@ export const BookingButton = props => {
     (stateModel?.text && (
       <EvfButton
         type={stateModel.state}
-        styles={stateModel.styles}
         onClick={selectSessionCb}
+        disabled={stateModel.disabled}
       >
         { props => <RenderBookingState
           {...props}

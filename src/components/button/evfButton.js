@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { View, Button, Text, renderFromType } from '@keg-hub/keg-components'
+import { View, Button, Text } from '@keg-hub/keg-components'
 import { useStylesCallback, useTheme } from '@keg-hub/re-theme'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { EvfLoading } from 'SVComponents/loading'
@@ -14,10 +14,6 @@ import { set, get } from '@keg-hub/jsutils'
  */
 const buildStyles = (theme, custom) => {
   const btnStyles = theme.get(`button.evfButton.${custom.type}`)
-
-  console.log(theme.get(`button.evfButton.primary`))
-  console.log(`---------- btnStyles ----------`)
-  console.log(btnStyles)
 
   // Get the keys of the content.button, to get a list of all button states
   // This allows dynamically matching the Theme states even if they are changed
@@ -48,6 +44,7 @@ export const EvfButton = props => {
   const {
     children,
     className,
+    disabled,
     styles,
     onClick,
     type = 'default',
@@ -81,7 +78,7 @@ export const EvfButton = props => {
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main} />
       <Button
-        disabled={isProcessing}
+        disabled={disabled || isProcessing}
         className={[ buttonCls, className ]}
         onClick={onClick}
         styles={mainStyle?.content?.button}
@@ -92,7 +89,7 @@ export const EvfButton = props => {
             size={mainStyle?.content?.processing?.icon?.size || 20}
           />
         ) : (
-          renderFromType(children || text, { ...props, styles: mainStyle })
+          children || text
         ) }
       </Button>
     </View>

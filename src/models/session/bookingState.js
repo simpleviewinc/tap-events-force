@@ -8,8 +8,8 @@ export class BookingState {
   state = null
   icon = null
   text = false
-  styles = {}
   disabled = false
+  displayAmount = null
 
   /**
    * @param {object} params

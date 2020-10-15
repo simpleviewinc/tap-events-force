@@ -1,12 +1,18 @@
 import * as React from 'react'
-import { Text } from '@keg-hub/keg-components'
+import { Text, View } from '@keg-hub/keg-components'
 
 /**
  * Digit
  * @param {object} props
  */
 export const Digit = props => {
-  const { digit = 0 } = props
+  if (!props.digit) return null
 
-  return <Text>{ digit }</Text>
+  const { digit, styles } = props
+
+  return (
+    <View style={[{ borderRadius: '50%' }, styles.main ]}>
+      <Text style={styles.text}>{ digit }</Text>
+    </View>
+  )
 }
