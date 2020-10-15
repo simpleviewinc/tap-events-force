@@ -1,4 +1,4 @@
-import { exists } from '@keg-hub/jsutils'
+import { exists, flatMap } from '@keg-hub/jsutils'
 
 /**
  * Returns a list of all the booked tickets
@@ -11,8 +11,9 @@ export const getAllBookedTickets = bookedTickets => {
     ...bookedTickets,
 
     // sub tickets, flattened to the same level, and filter out any that are undefined
-    ...bookedTickets
-      .flatMap(({ bookedSubTickets }) => bookedSubTickets)
-      .filter(exists),
+    ...flatMap(
+      bookedTickets,
+      ({ bookedSubTickets }) => bookedSubTickets
+    ).filter(exists),
   ]
 }
