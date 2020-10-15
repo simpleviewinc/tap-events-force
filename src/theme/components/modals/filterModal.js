@@ -123,9 +123,6 @@ export const filterModal = {
     },
     body: {
       main: {
-        paddingLeft: 46,
-        paddingRight: 26,
-        paddingTop: 17,
         paddingBottom: 26,
       },
       topSection: {
@@ -169,7 +166,7 @@ export const filterModal = {
         applyButton: {
           main: {
             minHeight: 45,
-            mL: 15
+            mL: 15,
           },
         },
         clearButton: clearButtonDefault,

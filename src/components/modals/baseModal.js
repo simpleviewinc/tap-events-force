@@ -115,8 +115,7 @@ export const BaseModal = props => {
         setDismissed={setDismissed}
         hasCloseButton={hasCloseButton}
       />
-
-      { children }
+      <View style={baseStyles.content.bodyWrapper}>{ children }</View>
     </Modal>,
     document.body
   )

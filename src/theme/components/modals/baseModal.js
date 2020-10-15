@@ -21,6 +21,17 @@ export const baseModal = {
         },
       },
     },
+    bodyWrapper: {
+      $xsmall: {
+        flex: 1,
+        paddingHorizontal: 18,
+        paddingVertical: 12,
+      },
+      $small: {
+        paddingHorizontal: 40,
+        paddingVertical: 25,
+      },
+    },
     header: {
       main: {
         flexDirection: 'row',
@@ -32,11 +43,16 @@ export const baseModal = {
           $xsmall: {
             alignSelf: 'center',
             color: colors.white,
-            paddingLeft: 46,
-            paddingRight: 30,
+            paddingLeft: 18,
+            paddingRight: 16,
+            fontSize: 17,
             fontWeight: '600',
-            fontSize: 18,
             lineHeight: 27,
+          },
+          $small: {
+            fontSize: 18,
+            paddingLeft: 40,
+            paddingRight: 30,
           },
         },
         closeButton: {
