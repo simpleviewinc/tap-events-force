@@ -14,6 +14,7 @@ import {
  * @param {import('SVModels/session').Session} session - current session to be considered for group booking
  * @param {Array<import('SVModels/attendee').Attendee>} attendees - list of attendees
  * @param {boolean} initialCapacityExceedsNeed - if true, then the session has greater capacity than the number of bookable attendees
+ * @param {number} remainingCount - remaining count of the session capacity
  * @returns {boolean} true if the store is initialized with the data, false otherwise
  */
 export const useInitGroupBooking = (

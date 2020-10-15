@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
-import { useBookingSession } from 'SVHooks/booking/useBookingSession'
+import { useGroupBookingSession } from 'SVHooks/booking/useGroupBookingSession'
 import { useBookingSet } from 'SVHooks/booking/useBookingSet'
 import { useWaitingSet } from 'SVHooks/booking/useWaitingSet'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
@@ -39,7 +39,7 @@ export const AttendeeBookingList = ({
 }) => {
   const bookingList = useBookingSet()
   const waitingList = useWaitingSet()
-  const session = useBookingSession()
+  const session = useGroupBookingSession()
 
   // get the isBookable callback to check if an attendee is eligible to book the session
   const { isBookable } = useRestrictedAttendeeIds(session?.identifier)

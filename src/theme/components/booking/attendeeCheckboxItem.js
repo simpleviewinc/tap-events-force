@@ -34,13 +34,15 @@ export const attendeeCheckboxItem = {
       fontStyle: 'italic',
       marginLeft: 4,
     },
-    button: {
+    waitBox: {
       main: {
         $web: {
           minHeight: 31,
           backgroundColor: 'unset',
           cursor: 'default',
           borderRadius: 2,
+          borderWidth: 1,
+          borderStyle: 'solid',
           borderColor: colors.second,
           width: 100,
           height: 31,

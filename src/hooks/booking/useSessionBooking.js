@@ -69,7 +69,6 @@ const useUpdateSessionLists = (
  */
 const useBookSession = (session, bookingList, waitingList) => {
   const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable
-
   // makes a request to book the session for the selected attendees (as identified by ids in `attendeeIdsRef`)
   return useCallback(() => {
     sessionBookingRequest(session.identifier, Array.from(bookingList.data))
@@ -96,9 +95,7 @@ const containSameElements = (arrA, arrB) => {
 
 /**
  * Returns callbacks for working with session capacity and latest capacity
- * @param {number?} initialCapacity
  * @param {import('SVModels/session').Session} session
- * @param {Array<import('SVModels/attendee').Attendee>} session
  * @return {Object} object with keys for callbacks and current capacity
  *  - updateCapacity: callback of form: id => updateListWithId(id)
  *  - bookSession: callback that books the session with the current booking list and waiting list
@@ -139,8 +136,7 @@ export const useSessionBooking = session => {
     updateCapacity,
     currentCapacity,
 
-    // if user has modified booking or waiting list, then we need to call the book session cb.
-    // otherwise, do nothing
+    // if user hasn't modified booking or waiting list, then we shouldn't call the book session cb.
     bookSession: userHasModifiedBooking ? bookSessionCb : null,
   }
 }

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
-import { Text, View, Button } from '@keg-hub/keg-components'
+import { Text, View } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
 import { useStyle } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
@@ -13,7 +13,8 @@ import { useTheme } from '@keg-hub/re-theme'
  * @param {Object} props
  * @param {string} props.id - id of attendee
  * @param {string} props.name - name of attendee
- * @param {string?} props.className - optional class name for text
+ * @param {string?} props.textClassName - optional class name for text
+ * @param {Function?} props.onAttendeeSelected - callback called when an attendee is selected. Has form: attendeeId => { ... }
  * @param {Object} props.sectionStyles - styles from the section containing this checkbox
  * @param {boolean} props.isWaiting - if true, attendee is on waiting list, so we should show waiting-list ui
  * @param {boolean} props.enableCheck - if true, attendee can be set to "checked"
@@ -76,6 +77,20 @@ export const AttendeeCheckboxItem = props => {
 }
 
 /**
+ * Simple box indicating attendee is on the waiting list
+ * @param {Object} props
+ * @param {string} props.text - text to show in waiting box
+ * @param {Object} props.styles - theme styles (main and content)
+ */
+const WaitingBox = ({ text = 'On waiting list', styles }) => {
+  return (
+    <View style={styles?.main}>
+      <Text style={styles?.content}>{ text }</Text>
+    </View>
+  )
+}
+
+/**
  * When a user is on the waiting list, we need to display a waiting visual right of the text
  * @param {Object} props
  * @param {string} props.name
@@ -102,14 +117,7 @@ const WaitingItem = props => {
         </Text>
         { isMobile && <Text style={waitingStyles?.waitText}>(waiting)</Text> }
       </View>
-      { !isMobile && (
-        <Button
-          styles={waitingStyles?.button}
-          themePath='button.outline.default'
-        >
-          On waiting list
-        </Button>
-      ) }
+      { !isMobile && <WaitingBox styles={waitingStyles?.waitBox} /> }
     </View>
   )
 }

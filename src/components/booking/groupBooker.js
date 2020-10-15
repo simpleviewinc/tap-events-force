@@ -10,6 +10,7 @@ import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeI
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
 import { setGroupBookingLoading } from 'SVActions/session/booking/setGroupBookingLoading'
+import PropTypes from 'prop-types'
 
 const useButtonSubmit = (cb, onComplete) => {
   const submit = useCallback(
@@ -33,7 +34,7 @@ const useButtonSubmit = (cb, onComplete) => {
     // So we should stop showing the loading spinner
     setGroupBookingLoading(false)
     onComplete?.()
-  }, [ attendees, alert ])
+  }, [attendees])
 
   return [ submit, groupBookingLoading ]
 }
@@ -125,6 +126,11 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
       />
     </View>
   )
+}
+GroupBooker.propTypes = {
+  styles: PropTypes.object,
+  session: PropTypes.object,
+  onCancelPress: PropTypes.func,
 }
 
 /**

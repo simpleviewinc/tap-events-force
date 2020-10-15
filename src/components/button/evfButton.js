@@ -58,7 +58,7 @@ export const EvfButton = ({
     () => ({
       type,
       styles,
-      parsed: theme.join(parsedActionStyles, customParsedStyles),
+      parsed: theme.get(parsedActionStyles, customParsedStyles),
     }),
     [ type, styles, parsedActionStyles, customParsedStyles ]
   )
