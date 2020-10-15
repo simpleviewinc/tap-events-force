@@ -10,6 +10,8 @@ import { useFormattedPrice } from 'SVHooks/models/price'
 import { useCreateModal } from 'SVHooks/modal'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { Values } from 'SVConstants'
+import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
+import { getPresenterFullName } from 'SVUtils/models'
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -42,6 +44,9 @@ export const GridTileContent = props => {
       labels,
     }
   )
+
+  const location = useSessionLocation(session)
+
   return (
     <View
       className={`ef-grid-tile-content`}
@@ -74,12 +79,51 @@ export const GridTileContent = props => {
         text={session?.name}
       />
 
+      <Text
+        className={'ef-session-location'}
+        style={gridTileContentStyles?.locationText}
+      >
+        { location?.name || '' }
+      </Text>
+
+      {/* <PresenterNames 
+        session={session}
+        styles={gridTileContentStyles?.presenters}
+      /> */}
+
       <View style={gridTileContentStyles?.buttonSection?.main}>
         <BookingButton
           session={session}
           styles={gridTileContentStyles?.buttonSection?.bookingButton}
         />
       </View>
+    </View>
+  )
+}
+
+const PresenterNames = ({session, styles}) => {
+
+  const presenters = useSessionPresenters(session)
+
+  return (
+    <View style={styles?.main}>
+      {
+        presenters.map(presenter => {
+          const displayDetailsModal = useCreateModal(
+            Values.MODAL_TYPES.PRESENTER,
+            presenter
+          )
+          return (
+            <SessionLink
+              className={'ef-sessions-presenter'}
+              styles={styles?.sessionLink}
+              key={presenter.identifier}
+              text={getPresenterFullName(presenter)}
+              onPress={displayDetailsModal}
+            />
+          )
+        })
+      }
     </View>
   )
 }

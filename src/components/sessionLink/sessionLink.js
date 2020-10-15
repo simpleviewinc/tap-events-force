@@ -8,10 +8,11 @@ import { isMobileSize } from 'SVUtils/theme'
  * @param {object} props
  * @param {Function} props.onPress
  * @param {string} props.text - text to display
+ * @param {object} props.styles
  */
-export const SessionLink = ({ onPress, text }) => {
+export const SessionLink = ({ onPress, text, styles }) => {
   const theme = useTheme()
-  const sessionLinkStyles = theme.get('sessionLink')
+  const sessionLinkStyles = theme.get('sessionLink', styles)
   const numberOfLines = useMemo(
     () => (isMobileSize(theme) ? { numberOfLines: 2 } : { numberOfLines: 0 }),
     [theme]
