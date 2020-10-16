@@ -102,10 +102,11 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {Array} props.daySessions - group of sessions by block. see buildHourSessionsMap helper
  * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
+ * @param {boolean} props.militaryTime - whether to display time in 12 hr or 24 hr format
  * @returns {Component}
  */
 const AgendaSessions = React.memo(
-  ({ labels, daySessions, enableFreeLabel }) => {
+  ({ labels, daySessions, enableFreeLabel, militaryTime }) => {
     if (!daySessions) return null
 
     return (
@@ -119,6 +120,7 @@ const AgendaSessions = React.memo(
               labels={labels}
               timeBlock={daySession?.timeBlock}
               enableFreeLabel={enableFreeLabel}
+              militaryTime={militaryTime}
             />
           )
         }) }
@@ -186,6 +188,7 @@ export const Sessions = props => {
         daySessions={
           agendaSessions[settings?.agendaSettings?.activeDayNumber ?? 1]
         }
+        militaryTime={settings?.displayProperties?.timeFormat === '24'}
       />
       { modals.length > 0 && RenderModals(modals) }
     </View>
