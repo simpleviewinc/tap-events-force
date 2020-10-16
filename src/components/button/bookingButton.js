@@ -3,48 +3,44 @@ import React, { useCallback } from 'react'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { selectSession } from 'SVActions/session/selectSession'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStylesCallback } from '@keg-hub/re-theme'
+import { noPropObj } from '@keg-hub/jsutils'
+
+const buildStyles = (theme, _, state, style) => {
+  const stateStyles = theme?.button?.evfButton[state] || noPropObj
+  const bookingStyles = stateStyles?.content?.bookingState || noPropObj
+  return {
+    ...bookingStyles,
+    text: {
+      ...style,
+      ...bookingStyles.text,
+    },
+  }
+}
 
 /**
- * Gets the booking button children based on the passed in state
+ * Renders the booking button children based on the passed in booking state
  * @param {import('SVModels/session/bookingState').BookingState} model
  * @param {Object} styles - Booking button child theme styles
  */
 const RenderBookingState = props => {
   const { model, style, styles, ...attrs } = props
-  const theme = useTheme()
   const { displayAmount, icon: Icon, text, state } = model
-
-  const stateStyles = theme?.button?.evfButton[state]
-
-  const iconProps =
-    Icon && Icon.name
-      ? Icon.name !== 'Digit'
-          ? { style }
-          : {
-              digit: displayAmount,
-              styles: {
-                main: {
-                  ...style,
-                  backgroundColor:
-                  style.color || style.backgroundColor || stateStyles.color,
-                },
-                text: { color: `#22B3C4`, fontWeight: 'bold' },
-              },
-            }
-      : null
+  const bookingStyles = useStylesCallback(buildStyles, [ state, style, styles ])
 
   return (
-    <View style={{ flexDirection: 'row' }}>
-      { text && (
-        <Text
-          {...attrs}
-          style={style}
-        >
-          { text }
-        </Text>
+    <View style={bookingStyles.main}>
+      { text && <Text
+        {...attrs}
+        style={bookingStyles.text}
+        children={text}
+      /> }
+      { Icon && (
+        <Icon
+          digit={displayAmount}
+          styles={bookingStyles?.icon[Icon.name]}
+        />
       ) }
-      { iconProps && <Icon {...iconProps} /> }
     </View>
   )
 }

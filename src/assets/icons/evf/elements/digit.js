@@ -11,7 +11,7 @@ export const Digit = props => {
   const { digit, styles } = props
 
   return (
-    <View style={[{ borderRadius: '50%' }, styles.main ]}>
+    <View style={styles.main}>
       <Text style={styles.text}>{ digit }</Text>
     </View>
   )

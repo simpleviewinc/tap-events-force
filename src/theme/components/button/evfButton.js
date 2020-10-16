@@ -103,6 +103,41 @@ const processingStyles = {
   },
 }
 
+const bookingStyles = {
+  main: {
+    flexDirection: 'row',
+    pR: 8,
+  },
+  icon: {
+    Digit: {
+      main: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        bgC: colors.white,
+        borderRadius: '50%',
+      },
+      text: {
+        ...defaultTextStyle,
+        $xsmall: {
+          ...defaultTextStyle.$xsmall,
+          color: colors.primary,
+          pV: 2,
+          pH: 7,
+          ftSz: 14,
+        },
+        $small: {
+          ftSz: 14,
+        },
+      },
+    },
+    BookingCheck: {
+      border: colors.primary,
+      fontSize: 21,
+      c: colors.white,
+    },
+  },
+}
+
 const buttonStyles = {
   default: {
     main: defaultMainStyle,
@@ -110,11 +145,7 @@ const buttonStyles = {
       topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.second),
       processing: processingStyles,
-      bookingState: {
-        main: {
-          // background: 'transparent'
-        },
-      },
+      bookingState: bookingStyles,
     },
   },
   primary: {
@@ -123,11 +154,7 @@ const buttonStyles = {
       topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.primary),
       processing: processingStyles,
-      bookingState: {
-        main: {
-          // background: 'transparent'
-        },
-      },
+      bookingState: bookingStyles,
     },
   },
 }

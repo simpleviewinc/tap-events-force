@@ -22,7 +22,7 @@ const mockCallbacks = {
 export const RootContainer = withAppHeader(displayName, props => {
   // const [ mockData, setMockData ] = useState(testData)
   const [ mockData, setMockData ] = useState(
-    bookingStatesTestData.selected.group.digit
+    bookingStatesTestData.selected.single.check
   )
 
   return (
