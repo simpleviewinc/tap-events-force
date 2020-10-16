@@ -109,13 +109,12 @@ const WaitingItem = props => {
       <View style={waitingStyles?.textWrapper}>
         <Text
           className={textClassName}
-          numberOfLines={1}
           style={[ waitingStyles?.text, textStyle ]}
           onPress={onPress}
         >
           { name }
+          { isMobile && ' (waiting)' }
         </Text>
-        { isMobile && <Text style={waitingStyles?.waitText}>(waiting)</Text> }
       </View>
       { !isMobile && <WaitingBox styles={waitingStyles?.waitBox} /> }
     </View>

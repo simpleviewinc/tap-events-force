@@ -376,7 +376,7 @@ export default {
     },
     {
       bookedTicketIdentifier: '2',
-      name: "Mrs Penelope O'Connor",
+      name: "Mrs Penelope O'Connor the Second",
       attendeeCategoryIdentifier: '2',
       bookedDays: [2],
       bookedSessions: [],

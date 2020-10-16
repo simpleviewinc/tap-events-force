@@ -3,11 +3,14 @@ import { colors } from '../../colors'
 const text = {
   $xsmall: {
     fontSize: '0.8em',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    flexShrink: 1,
+    overflow: 'visible',
   },
   $small: {
     fontSize: 'inherit',
   },
-  overflow: 'visible',
 }
 
 export const attendeeCheckboxItem = {
@@ -20,20 +23,17 @@ export const attendeeCheckboxItem = {
         alignItems: 'center',
         justifyContent: 'flex-start',
         marginLeft: 10,
+        flexWrap: 'wrap',
       },
       $small: {
         justifyContent: 'space-between',
       },
     },
     textWrapper: {
-      flexDirection: 'row',
+      flexDirection: 'column',
+      flexShrink: 1,
     },
     text,
-    waitText: {
-      ...text,
-      fontStyle: 'italic',
-      marginLeft: 4,
-    },
     waitBox: {
       main: {
         $web: {
