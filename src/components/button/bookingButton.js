@@ -6,14 +6,19 @@ import { useBookingState } from 'SVHooks/booking/useBookingState'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { noPropObj } from '@keg-hub/jsutils'
 
-const buildStyles = (theme, _, state, style) => {
+const buildStyles = (theme, _, disabled, state, style) => {
   const stateStyles = theme?.button?.evfButton[state] || noPropObj
   const bookingStyles = stateStyles?.content?.bookingState || noPropObj
+  const disabledStyles = disabled
+    ? stateStyles?.content?.button?.disabled
+    : noPropObj
+
   return {
     ...bookingStyles,
     text: {
       ...style,
       ...bookingStyles.text,
+      ...disabledStyles.content,
     },
   }
 }
@@ -26,7 +31,12 @@ const buildStyles = (theme, _, state, style) => {
 const RenderBookingState = props => {
   const { model, style, styles, ...attrs } = props
   const { displayAmount, icon: Icon, text, state } = model
-  const bookingStyles = useStylesCallback(buildStyles, [ state, style, styles ])
+  const bookingStyles = useStylesCallback(buildStyles, [
+    model.disabled,
+    state,
+    style,
+    styles,
+  ])
 
   return (
     <View style={bookingStyles.main}>

@@ -1,5 +1,5 @@
 import ReactAce from 'react-ace-editor'
-import { exists, get } from '@keg-hub/jsutils'
+import { exists, get, isObj } from '@keg-hub/jsutils'
 import React, { useState, useCallback, useRef } from 'react'
 import {
   View,
@@ -30,8 +30,8 @@ const Editor = ({ aceRef, onChange, value }) => {
 
 const reduceBookingStates = (data, parentTypes, options) => {
   Object.entries(data).map(([ subParentType, items ]) => {
-    const first = Object.keys(items)[0]
-    return first === 'agendaDays'
+    const itemKeys = Object.keys(items)
+    return itemKeys.includes('sessions') || itemKeys.includes('attendees')
       ? options.push(
           <Option
             key={`${parentTypes.label}-${subParentType}`}
@@ -39,18 +39,24 @@ const reduceBookingStates = (data, parentTypes, options) => {
             value={`${parentTypes.value}.${subParentType}`}
           />
         )
-      : reduceBookingStates(
-        items,
-        {
-          label: parentTypes.label
-            ? `${parentTypes.label}-${subParentType}`
-            : subParentType,
-          value: parentTypes.value
-            ? `${parentTypes.value}.${subParentType}`
-            : subParentType,
-        },
-        options
-      )
+      : isObj(items)
+        ? reduceBookingStates(
+            items,
+            {
+              label: parentTypes.label
+                ? `${parentTypes.label}-${subParentType}`
+                : subParentType,
+              value: parentTypes.value
+                ? `${parentTypes.value}.${subParentType}`
+                : subParentType,
+            },
+            options
+          )
+        : (() => {
+            throw new Error(
+              `Dynamic Test Data must contain a sessions or attendees key`
+            )
+          })()
   })
 }
 
@@ -75,7 +81,7 @@ const SelectBookingState = props => {
   )
 
   const options = []
-  reduceBookingStates({ selected: bookingStatesTestData.selected }, {}, options)
+  reduceBookingStates(bookingStatesTestData, {}, options)
 
   return (
     <View>

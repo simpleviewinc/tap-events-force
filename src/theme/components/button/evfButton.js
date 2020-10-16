@@ -33,6 +33,8 @@ const defaultTextStyle = {
     paddingHorizontal: 8,
     lineHeight: 18,
     alignSelf: 'center',
+    position: 'relative',
+    top: 2,
   },
   $small: {
     fontSize: 15,
@@ -47,6 +49,7 @@ const buildButtonState = stateStyles =>
           flex: 1,
           justifyContent: 'center',
           borderRadius: 0,
+          height: 50,
         },
         $web: {
           boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.15)',
@@ -82,6 +85,8 @@ const defaultMainStyle = {
   $all: {
     overflow: 'hidden',
     flex: 1,
+    height: 51,
+    pB: 1,
   },
   $web: {
     minWidth: 'fit-content',
@@ -106,21 +111,23 @@ const processingStyles = {
 const bookingStyles = {
   main: {
     flexDirection: 'row',
-    pR: 8,
   },
   icon: {
     Digit: {
       main: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        jtC: 'center',
+        alI: 'center',
         bgC: colors.white,
-        borderRadius: '50%',
+        bRad: '50%',
+        mR: 8,
+        mT: 2,
       },
       text: {
         ...defaultTextStyle,
         $xsmall: {
           ...defaultTextStyle.$xsmall,
-          color: colors.primary,
+          tp: 'initial',
+          c: colors.primary,
           pV: 2,
           pH: 7,
           ftSz: 14,
@@ -134,6 +141,7 @@ const bookingStyles = {
       border: colors.primary,
       fontSize: 21,
       c: colors.white,
+      pR: 8,
     },
   },
 }
@@ -159,13 +167,43 @@ const buttonStyles = {
   },
 }
 
-export const evfButton = {
-  ...buttonStyles,
-  ...reduceObj(SESSION_BOOKING_STATES, (key, value, styles) => {
+const bookingButtonStates = reduceObj(
+  SESSION_BOOKING_STATES,
+  (__, value, styles) => {
     styles[value] = deepMerge(buttonStyles.primary, {
-      main: { $all: { height: 50 } },
+      content: {
+        button: {
+          ...buttonStyles.primary.content.button,
+          disabled: buildButtonState({
+            main: {
+              $all: {
+                backgroundColor: colors.lightGray02,
+                opacity: 1,
+              },
+            },
+            content: {
+              ...defaultTextStyle,
+              $xsmall: {
+                ...defaultTextStyle?.$xsmall,
+                color: colors.lightGray,
+                position: 'relative',
+              },
+              $small: {
+                ...defaultTextStyle?.$small,
+                color: colors.lightGray,
+                position: 'relative',
+              },
+            },
+          }),
+        },
+      },
     })
 
     return styles
-  }),
+  }
+)
+
+export const evfButton = {
+  ...buttonStyles,
+  ...bookingButtonStates,
 }

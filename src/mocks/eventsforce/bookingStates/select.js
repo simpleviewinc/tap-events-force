@@ -283,7 +283,7 @@ export const selectDisabled = {
           locationIdentifier: '1',
           liveVideoUrl: 'https://us02web.zoom.us/j/1234',
           recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
-          restrictToAttendeeCategories: [2],
+          restrictToAttendeeCategories: ['2'],
           capacity: {
             isUnlimited: false,
             remainingPlaces: 10,

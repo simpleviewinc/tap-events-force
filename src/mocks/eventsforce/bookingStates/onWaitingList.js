@@ -89,6 +89,7 @@ export const onWaitingList = {
       ],
     },
     capacity: {
+      ...testData,
       sessions: [
         {
           allowBooking: true,

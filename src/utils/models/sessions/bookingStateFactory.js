@@ -55,24 +55,9 @@ const getStateIcon = (bookingType, value, bookingList, waitingList) => {
 }
 
 /**
- * Checks if the booking display should be disabled from interaction
- * @param {import('SVModels/session').Session} props.session
- * @param {boolean} bookingStopped - If booking changes have been stopped for this session
- *
- * @returns {boolean} - If the display interaction should be disabled
+ * TODO: Sync with events force to have them pass an option for bookingStopped
+ * Will need to update this method to pull that option based on how its passed in
  */
-const getDisabled = (session, bookingStopped) => {
-  const { capacity, allowBooking } = session
-
-  return capacity?.isUnlimited
-    ? false
-    : !allowBooking ||
-      bookingStopped ||
-      (capacity?.remainingPlaces === 0 && !capacity?.isWaitingListAvailable)
-        ? true
-        : false
-}
-
 /**
  * Checks if the booking display should be disabled from interaction
  * @param {import('SVModels/session').Session} props.session
@@ -81,6 +66,28 @@ const getDisabled = (session, bookingStopped) => {
  */
 const getBookingStopped = session => {
   return session.bookingStopped
+}
+
+/**
+ * Checks if the booking display should be disabled from interaction
+ * @param {import('SVModels/session').Session} props.session
+ * @param {boolean} bookingStopped - If booking changes have been stopped for this session
+ *
+ * @returns {boolean} - If the display interaction should be disabled
+ */
+const getDisabled = ({ session, bookableAttendeeCount }) => {
+  const { capacity, allowBooking } = session
+
+  const bookingStopped = getBookingStopped(session)
+  const noCapacity =
+    !bookableAttendeeCount ||
+    (!capacity?.remainingPlaces && !capacity?.isWaitingListAvailable)
+
+  return capacity?.isUnlimited
+    ? false
+    : !allowBooking || bookingStopped || noCapacity
+        ? true
+        : false
 }
 
 /**
@@ -93,7 +100,6 @@ export const bookingStateFactory = reduceObj(
   (key, value, mapped) => {
     mapped[value] = props => {
       const { session, bookingType, bookingList, waitingList } = props
-      const bookingStopped = getBookingStopped(session, value)
 
       // Create the new Booking state based on the passed in session, and current state
       return new BookingState({
@@ -101,7 +107,7 @@ export const bookingStateFactory = reduceObj(
         sessionId: session.identifier,
         ...getStateIcon(bookingType, value, bookingList, waitingList),
         text: getStateText(key, value) || false,
-        disabled: getDisabled(session, bookingStopped),
+        disabled: getDisabled(props),
       })
     }
 
