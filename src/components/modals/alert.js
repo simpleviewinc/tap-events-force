@@ -49,7 +49,7 @@ const Body = ({ styles, message, onButtonPress }) => {
   return (
     <View
       style={styles?.main}
-      className={`ef-modal-sub-header ef-modal-alert-body`}
+      className={[ 'ef-modal-sub-header', 'ef-modal-alert-body' ]}
     >
       <ScrollView
         style={styles?.textContainer?.main}
