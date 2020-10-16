@@ -13,6 +13,10 @@ export const getBookingState = session => {
   const attendees = items?.attendees || []
 
   if (session.allowBooking) {
+    // Custom identifier to flag that booking has been stopped for that session
+    // Will need to update when Events-Force gives us the real value
+    if (session.bookingStopped) return SESSION_BOOKING_STATES.FULLY_BOOKED
+
     // ON_WAITING_LIST - Any session where the session identifier is included in the waitingListSessions array for any attendee
     // ON_WAITING_LIST takes precedence over SELECTED
     const inAttendeeWaitingList = attendees.some(attendee =>

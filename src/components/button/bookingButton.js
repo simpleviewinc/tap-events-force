@@ -3,6 +3,7 @@ import React, { useCallback } from 'react'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { selectSession } from 'SVActions/session/selectSession'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
+import { useTheme } from '@keg-hub/re-theme'
 
 /**
  * Gets the booking button children based on the passed in state
@@ -10,8 +11,12 @@ import { useBookingState } from 'SVHooks/booking/useBookingState'
  * @param {Object} styles - Booking button child theme styles
  */
 const RenderBookingState = props => {
-  const { model, style, ...attrs } = props
-  const { displayAmount, icon: Icon, text } = model
+  const { model, style, styles, ...attrs } = props
+  const theme = useTheme()
+  const { displayAmount, icon: Icon, text, state } = model
+
+  const stateStyles = theme?.button?.evfButton[state]
+
   const iconProps =
     Icon && Icon.name
       ? Icon.name !== 'Digit'
@@ -21,7 +26,8 @@ const RenderBookingState = props => {
               styles: {
                 main: {
                   ...style,
-                  backgroundColor: style.color || style.backgroundColor,
+                  backgroundColor:
+                  style.color || style.backgroundColor || stateStyles.color,
                 },
                 text: { color: `#22B3C4`, fontWeight: 'bold' },
               },
@@ -63,10 +69,13 @@ export const BookingButton = props => {
         onClick={selectSessionCb}
         disabled={stateModel.disabled}
       >
-        { props => <RenderBookingState
-          {...props}
-          model={stateModel}
-        /> }
+        { buttonProps => (
+          <RenderBookingState
+            {...props}
+            {...buttonProps}
+            model={stateModel}
+          />
+        ) }
       </EvfButton>
     )) ||
     null

@@ -75,11 +75,7 @@ const SelectBookingState = props => {
   )
 
   const options = []
-  reduceBookingStates(
-    { fullyBooked: bookingStatesTestData.fullyBooked },
-    {},
-    options
-  )
+  reduceBookingStates({ selected: bookingStatesTestData.selected }, {}, options)
 
   return (
     <View>

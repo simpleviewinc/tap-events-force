@@ -2,11 +2,12 @@ import { useMemo } from 'react'
 import { checkCall } from '@keg-hub/jsutils'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
-import { useBookingLists } from 'SVHooks/booking/useBookingLists'
 import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { bookingStateFactory } from 'SVUtils/models/sessions/bookingStateFactory'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
+import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
+import { getExistingWaitIds } from 'SVUtils/booking/getExistingWaitIds'
 
 /**
  * Custom hook to get the children and styles of the booking button
@@ -31,7 +32,8 @@ export const useBookingState = session => {
 
   // Update to pull booking type based on attendees
   const bookingType = attendees.length > 1 ? 'group' : 'single'
-  const [ bookingList, waitingList ] = useBookingLists(session, attendees, false)
+  const bookingList = getExistingBookIds(session?.identifier, attendees)
+  const waitingList = getExistingWaitIds(session?.identifier, attendees)
 
   const {
     sortedAttendeeCount,

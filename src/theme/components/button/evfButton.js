@@ -63,7 +63,9 @@ const buildButtonState = stateStyles =>
  */
 const buttonStateStyles = backgroundColor => {
   return {
-    default: buildButtonState({ main: { $all: { backgroundColor } } }),
+    default: buildButtonState({
+      main: { $all: { backgroundColor } },
+    }),
     active: buildButtonState({
       main: { $all: { backgroundColor, opacity: 0.4 } },
     }),
@@ -108,6 +110,11 @@ const buttonStyles = {
       topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.second),
       processing: processingStyles,
+      bookingState: {
+        main: {
+          // background: 'transparent'
+        },
+      },
     },
   },
   primary: {
@@ -116,6 +123,11 @@ const buttonStyles = {
       topLeftCorner: topLeftCornerStyle,
       button: buttonStateStyles(colors.primary),
       processing: processingStyles,
+      bookingState: {
+        main: {
+          // background: 'transparent'
+        },
+      },
     },
   },
 }

@@ -54,16 +54,33 @@ const getStateIcon = (bookingType, value, bookingList, waitingList) => {
     : {}
 }
 
-const getDisabled = (session, state) => {
+/**
+ * Checks if the booking display should be disabled from interaction
+ * @param {import('SVModels/session').Session} props.session
+ * @param {boolean} bookingStopped - If booking changes have been stopped for this session
+ *
+ * @returns {boolean} - If the display interaction should be disabled
+ */
+const getDisabled = (session, bookingStopped) => {
   const { capacity, allowBooking } = session
-  if (capacity?.isUnlimited) return false
-  if (!allowBooking) return true
 
-  const noRemaining = capacity?.remainingPlaces === 0
-  const noWaitingList = capacity?.isWaitingListAvailable
-  if (noRemaining && noWaitingList) return true
+  return capacity?.isUnlimited
+    ? false
+    : !allowBooking ||
+      bookingStopped ||
+      (capacity?.remainingPlaces === 0 && !capacity?.isWaitingListAvailable)
+        ? true
+        : false
+}
 
-  return false
+/**
+ * Checks if the booking display should be disabled from interaction
+ * @param {import('SVModels/session').Session} props.session
+ *
+ * @returns {boolean} - If booking changes have been stopped for this session
+ */
+const getBookingStopped = session => {
+  return session.bookingStopped
 }
 
 /**
@@ -76,6 +93,7 @@ export const bookingStateFactory = reduceObj(
   (key, value, mapped) => {
     mapped[value] = props => {
       const { session, bookingType, bookingList, waitingList } = props
+      const bookingStopped = getBookingStopped(session, value)
 
       // Create the new Booking state based on the passed in session, and current state
       return new BookingState({
@@ -83,7 +101,7 @@ export const bookingStateFactory = reduceObj(
         sessionId: session.identifier,
         ...getStateIcon(bookingType, value, bookingList, waitingList),
         text: getStateText(key, value) || false,
-        disabled: getDisabled(session, value),
+        disabled: getDisabled(session, bookingStopped),
       })
     }
 

@@ -61,7 +61,6 @@ export const Values = deepFreeze({
   },
   BOOKING_STATES_WITH_ALT_TEXT: {
     'read only': '',
-    'fully booked': 'waiting list',
   },
 
   TICKET_TYPE: {
