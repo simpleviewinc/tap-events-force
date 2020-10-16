@@ -1,4 +1,4 @@
-import { dispatch } from 'SVStore'
+import { dispatch, getStore } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { buildHourSessionsMap } from 'SVUtils'
 
@@ -10,6 +10,8 @@ const { CATEGORIES } = Values
  */
 export const setAgendaSessions = (sessions, agendaDays) => {
   if (!sessions || !agendaDays) return
+  const { items } = getStore()?.getState()
+  const { timeFormat } = items.settings?.displayProperties || {}
 
   // object will look something like:
   // { ordered by timeblock
@@ -17,7 +19,7 @@ export const setAgendaSessions = (sessions, agendaDays) => {
   //   2: [{timeBlock: '13:00', sessions: [session1]}, {timeBlock: '15:00', sessions: [session1]}], //day 2
   // }
   const agendaSessions = agendaDays.reduce((map, nextDay) => {
-    map[nextDay.dayNumber] = buildHourSessionsMap(sessions, nextDay.dayNumber)
+    map[nextDay.dayNumber] = buildHourSessionsMap(sessions, nextDay.dayNumber, timeFormat === '24')
     return map
   }, {})
 
