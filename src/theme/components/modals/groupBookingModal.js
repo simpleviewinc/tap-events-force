@@ -70,8 +70,12 @@ export const groupBookingModal = {
               flex: 1,
               flexDirection: 'row',
               alignSelf: 'flex-end',
-              paddingTop: 26,
+              paddingTop: 14,
               paddingBottom: 18,
+            },
+            $small: {
+              paddingTop: 26,
+              paddingBottom: 0,
             },
           },
           content: {
