@@ -86,10 +86,10 @@ export const GridTileContent = props => {
         { location?.name || '' }
       </Text>
 
-      {/* <PresenterNames 
+      <PresenterNames 
         session={session}
         styles={gridTileContentStyles?.presenters}
-      /> */}
+      />
 
       <View style={gridTileContentStyles?.buttonSection?.main}>
         <BookingButton
@@ -101,7 +101,14 @@ export const GridTileContent = props => {
   )
 }
 
-const PresenterNames = ({session, styles}) => {
+/**
+ * Displays the presenters in the given session
+ * Displays each one as interactable that opens the presenter details modal
+ * @param {object} props
+ * @param {object} props.style
+ * @param {import('SVModels/session').Session} props.session
+ */
+const PresenterNames = React.memo(({session, styles}) => {
 
   const presenters = useSessionPresenters(session)
 
@@ -126,7 +133,7 @@ const PresenterNames = ({session, styles}) => {
       }
     </View>
   )
-}
+})
 
 GridTileContent.propTypes = {
   labels: PropTypes.array,
