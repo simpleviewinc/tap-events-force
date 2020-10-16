@@ -33,19 +33,26 @@ const checkAlert = alert => {
  * @returns {object} - of the form { type, payload }
  */
 const getDispatchPayload = (category, value) => {
-  return !subCatMap[category]
-    ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
-      {
-        type: ActionTypes.SET_ITEMS,
-        payload: { category, items: value },
-      }
-    : // subcategories are upsert-merged, rather than set, since they
-      // might need to be joined with data that was loaded from localStorage,
-      // e.g. agendaSettings.activeDayNumber
-      {
+
+  // displayProperties should go in settings.displayProperties
+  return category === CATEGORIES.DISPLAY_PROPERTIES
+    ? {
         type: ActionTypes.UPSERT_ITEM,
-        payload: { category, item: value, key: subCatMap[category] },
+        payload: { category: CATEGORIES.SETTINGS, item: value, key: category },
       }
+    : !subCatMap[category]
+      ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
+        {
+          type: ActionTypes.SET_ITEMS,
+          payload: { category, items: value },
+        }
+      : // subcategories are upsert-merged, rather than set, since they
+        // might need to be joined with data that was loaded from localStorage,
+        // e.g. agendaSettings.activeDayNumber
+        {
+          type: ActionTypes.UPSERT_ITEM,
+          payload: { category, item: value, key: subCatMap[category] },
+        }
 }
 
 /**

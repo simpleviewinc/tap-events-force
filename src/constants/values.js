@@ -24,6 +24,7 @@ export const Values = deepFreeze({
     BOOKED_TICKETS: 'bookedTickets',
     TICKETS: 'tickets',
     GROUP_BOOKING: 'groupBooking',
+    DISPLAY_PROPERTIES: 'displayProperties'
   },
 
   SUB_CATEGORIES: {
