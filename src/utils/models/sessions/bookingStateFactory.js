@@ -99,7 +99,7 @@ export const bookingStateFactory = reduceObj(
   SESSION_BOOKING_STATES,
   (key, value, mapped) => {
     mapped[value] = props => {
-      const { session, bookingType, bookingList, waitingList } = props
+      const { session, bookingType, bookingList, waitingList, timeConflicts } = props
 
       // Create the new Booking state based on the passed in session, and current state
       return new BookingState({

@@ -223,7 +223,7 @@ export const selectDisabled = {
           name: 'Mr Frank Smith',
           attendeeCategoryIdentifier: '1',
           bookedDays: [1],
-          bookedSessions: [2],
+          bookedSessions: ['2'],
         },
       ],
     },

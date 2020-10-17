@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { withAppHeader } from 'SVComponents'
 import { SessionsContainer } from './sessionsContainer'
 import { displayName } from 'SVConfig'
-// import testData from '../mocks/eventsforce/testData.js'
+import testData from '../mocks/eventsforce/testData.js'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
 import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
@@ -22,7 +22,7 @@ const mockCallbacks = {
 export const RootContainer = withAppHeader(displayName, props => {
   // const [ mockData, setMockData ] = useState(testData)
   const [ mockData, setMockData ] = useState(
-    bookingStatesTestData.selected.single.check
+    bookingStatesTestData.selectDisabled.single.conflict
   )
 
   return (

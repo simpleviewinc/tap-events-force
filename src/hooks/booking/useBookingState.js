@@ -1,13 +1,16 @@
 import { useMemo } from 'react'
 import { checkCall } from '@keg-hub/jsutils'
+import { useGroupCounts } from './useGroupCounts'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
-import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
+import { useBookingTimeConflicts } from './useBookingTimeConflicts'
 import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { bookingStateFactory } from 'SVUtils/models/sessions/bookingStateFactory'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
 import { getExistingWaitIds } from 'SVUtils/booking/getExistingWaitIds'
+import { Values } from 'SVConstants'
+const { CATEGORIES } = Values
 
 /**
  * Custom hook to get the children and styles of the booking button
@@ -17,29 +20,47 @@ import { getExistingWaitIds } from 'SVUtils/booking/getExistingWaitIds'
  * @param {import('SVModels/session').Session} props.session
  */
 export const useBookingState = session => {
+  const sessionId = session?.identifier
   const state = getBookingState(session)
   const { remainingCount } = parseSessionCapacity(session?.capacity)
 
   // Array of attendee ids that can not book this session
   const { restrictedIdsForSession } = useRestrictedAttendeeIds(
-    session?.identifier
+    sessionId
   )
 
-  const { attendees, attendeesByTicket } = useStoreItems([
-    'attendees',
-    'attendeesByTicket',
+  const { attendees, attendeesByTicket, agendaSessions, settings } = useStoreItems([
+    CATEGORIES.SETTINGS,
+    CATEGORIES.ATTENDEES,
+    CATEGORIES.AGENDA_SESSIONS,
+    CATEGORIES.ATTENDEES_BY_TICKET,
   ])
 
-  // Update to pull booking type based on attendees
+  const timeConflicts = useBookingTimeConflicts(
+    session,
+    attendees,
+    agendaSessions[settings?.agendaSettings?.activeDayNumber ?? 1]
+  )
   const bookingType = attendees.length > 1 ? 'group' : 'single'
-  const bookingList = getExistingBookIds(session?.identifier, attendees)
-  const waitingList = getExistingWaitIds(session?.identifier, attendees)
+
+  if(bookingType === 'single'){
+    
+  }
+    
+
 
   const {
-    sortedAttendeeCount,
-    bookableAttendeeCount,
-    initialCapacityExceedsNeed,
-  } = useGroupCounts(
+    bookingList,
+    waitingList,
+  } = useMemo(() => {
+
+    const bookingList = getExistingBookIds(sessionId, attendees)
+    const waitingList = getExistingWaitIds(sessionId, attendees)
+    
+    return { bookingList, waitingList }
+  }, [ sessionId, attendees ])
+
+  const { bookableAttendeeCount } = useGroupCounts(
     attendeesByTicket,
     restrictedIdsForSession,
     remainingCount,
@@ -53,9 +74,8 @@ export const useBookingState = session => {
         bookingType,
         bookingList,
         waitingList,
-        sortedAttendeeCount,
+        timeConflicts,
         bookableAttendeeCount,
-        initialCapacityExceedsNeed,
       }) || null
     )
   }, [
@@ -64,8 +84,7 @@ export const useBookingState = session => {
     waitingList,
     bookingList,
     bookingType,
-    sortedAttendeeCount,
+    timeConflicts,
     bookableAttendeeCount,
-    initialCapacityExceedsNeed,
   ])
 }
