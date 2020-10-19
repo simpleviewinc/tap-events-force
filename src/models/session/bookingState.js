@@ -10,6 +10,7 @@ export class BookingState {
   text = false
   disabled = false
   displayAmount = null
+  mode = null
 
   /**
    * @param {object} params

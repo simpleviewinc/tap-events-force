@@ -10,13 +10,84 @@ import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeI
 import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
 import { getExistingWaitIds } from 'SVUtils/booking/getExistingWaitIds'
 import { Values } from 'SVConstants'
-const { CATEGORIES } = Values
+const { BOOKING_MODES, CATEGORIES } = Values
+
+/**
+ * Custom hook to get a lists for attendees that have booked the session, or are on the waiting list
+ * @param {string} sessionId - Id of the current session
+ * @param {Array} attendees - Group of attendees from the store
+ *
+ * @returns {Object} Lists of attendees that have booked the session or are on the waiting list
+ */
+const useBookingLists = (sessionId, attendees) => {
+  return useMemo(
+    () => ({
+      bookingList: getExistingBookIds(sessionId, attendees),
+      waitingList: getExistingWaitIds(sessionId, attendees),
+    }),
+    [ sessionId, attendees ]
+  )
+}
+
+/**
+ * Custom hook to get a set of items from the store
+ * <br/>Also gets the current booking mode based on the amount of attendees in the store
+ *
+ * @returns {Object} Data extracted from the store
+ */
+const useStoreData = () => {
+  const storeData = useStoreItems([
+    CATEGORIES.SETTINGS,
+    CATEGORIES.ATTENDEES,
+    CATEGORIES.AGENDA_SESSIONS,
+    CATEGORIES.ATTENDEES_BY_TICKET,
+  ])
+
+  return {
+    ...storeData,
+    bookingMode:
+      storeData?.attendees?.length > 1
+        ? BOOKING_MODES.GROUP
+        : BOOKING_MODES.SINGLE,
+  }
+}
+
+/**
+ * Custom hook to build a booking model from the passed in arguments
+ *
+ * @param {string} state - The current booking state of the session
+ * @param {import('SVModels/session').Session} session
+ * @param {string} bookingMode - Current mode of booking for the session (single|group)
+ * @param {Array} bookingLists - List of attendee ids that are booked or are on the waiting list
+ * @param {Object} timeConflicts - Key value pairs of attendees booked in conflicting sessions
+ * @param {Array} bookableCount - Attendees that can book the current session
+ *
+ * @returns {import('SVModels/session/bookingState').BookingState} model
+ */
+const useBookingFactory = (
+  state,
+  session,
+  bookingMode,
+  bookingLists,
+  timeConflicts,
+  bookableCount
+) => {
+  return useMemo(
+    () =>
+      checkCall(bookingStateFactory[state], {
+        session,
+        bookingMode,
+        timeConflicts,
+        bookableCount,
+        ...bookingLists,
+      }) || null,
+    [ state, session, bookingMode, bookingLists, timeConflicts, bookableCount ]
+  )
+}
 
 /**
  * Custom hook to get the children and styles of the booking button
  * <br/>Base on the session and it's current state
- * @param {Object} props
- * @param {Object} props.styles
  * @param {import('SVModels/session').Session} props.session
  */
 export const useBookingState = session => {
@@ -25,41 +96,28 @@ export const useBookingState = session => {
   const { remainingCount } = parseSessionCapacity(session?.capacity)
 
   // Array of attendee ids that can not book this session
-  const { restrictedIdsForSession } = useRestrictedAttendeeIds(
-    sessionId
-  )
+  const { restrictedIdsForSession } = useRestrictedAttendeeIds(sessionId)
 
-  const { attendees, attendeesByTicket, agendaSessions, settings } = useStoreItems([
-    CATEGORIES.SETTINGS,
-    CATEGORIES.ATTENDEES,
-    CATEGORIES.AGENDA_SESSIONS,
-    CATEGORIES.ATTENDEES_BY_TICKET,
-  ])
+  // Items from the store to determin the current booking state
+  const {
+    attendees,
+    attendeesByTicket,
+    agendaSessions,
+    bookingMode,
+    settings,
+  } = useStoreData()
 
+  // Lists for attendees that have booked the session, or are on the waiting list
+  const bookingLists = useBookingLists(sessionId, attendees)
+
+  // Attendees with time conflicts with the current session
   const timeConflicts = useBookingTimeConflicts(
     session,
     attendees,
     agendaSessions[settings?.agendaSettings?.activeDayNumber ?? 1]
   )
-  const bookingType = attendees.length > 1 ? 'group' : 'single'
 
-  if(bookingType === 'single'){
-    
-  }
-    
-
-
-  const {
-    bookingList,
-    waitingList,
-  } = useMemo(() => {
-
-    const bookingList = getExistingBookIds(sessionId, attendees)
-    const waitingList = getExistingWaitIds(sessionId, attendees)
-    
-    return { bookingList, waitingList }
-  }, [ sessionId, attendees ])
-
+  // Attendees that can book the current session
   const { bookableAttendeeCount } = useGroupCounts(
     attendeesByTicket,
     restrictedIdsForSession,
@@ -67,24 +125,13 @@ export const useBookingState = session => {
     session?.capacity?.isUnlimited
   )
 
-  return useMemo(() => {
-    return (
-      checkCall(bookingStateFactory[state], {
-        session,
-        bookingType,
-        bookingList,
-        waitingList,
-        timeConflicts,
-        bookableAttendeeCount,
-      }) || null
-    )
-  }, [
+  // Create the booking model from the booking factory
+  return useBookingFactory(
     state,
     session,
-    waitingList,
-    bookingList,
-    bookingType,
+    bookingMode,
+    bookingLists,
     timeConflicts,
-    bookableAttendeeCount,
-  ])
+    bookableAttendeeCount
+  )
 }

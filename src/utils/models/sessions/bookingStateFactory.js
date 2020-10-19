@@ -12,14 +12,14 @@ const {
 
 /**
  * Gets the number to display on the button based on the booking type
- * @param {string} value - Value of the booking state from Constants
+ * @param {string} state - The current booking state of the session
  * @param {Array} bookingList - List of ids booked for this session
  * @param {Array} waitingList - List of ids on the waiting list for this session
  *
  * @returns {number} - Display Amount to show on the Digit Icon
  */
-const getDisplayAmount = (value, bookingList, waitingList) => {
-  return SESSION_BOOKING_STATES.ON_WAITING_LIST === value
+const getDisplayAmount = (state, bookingList, waitingList) => {
+  return SESSION_BOOKING_STATES.ON_WAITING_LIST === state
     ? waitingList.length
     : bookingList.length
 }
@@ -41,16 +41,16 @@ const getStateText = (key, value) => {
 /**
  * Set the Icon type based on the the booking type
  * Covers edge cases for read-only and fully booked
- * @param {string} bookingType - The type of booking to check for (single | group)
+ * @param {string} bookingMode - The type of booking to check for (single | group)
  * @param {string} value - Value of the booking state from Constants
  *
  * @returns {Object} - Contains the icon if it exists for the booking state
  */
-const getStateIcon = (bookingType, value, bookingList, waitingList) => {
+const getStateIcon = (bookingMode, value, bookingList, waitingList) => {
   const displayAmount = getDisplayAmount(value, bookingList, waitingList)
 
   return BOOKING_STATES_WITH_ICON[value]
-    ? { displayAmount, icon: bookingType === 'single' ? BookingCheck : Digit }
+    ? { displayAmount, icon: bookingMode === 'single' ? BookingCheck : Digit }
     : {}
 }
 
@@ -75,12 +75,24 @@ const getBookingStopped = session => {
  *
  * @returns {boolean} - If the display interaction should be disabled
  */
-const getDisabled = ({ session, bookableAttendeeCount }) => {
+const getDisabled = (
+  { session, bookableCount, bookingMode, timeConflicts },
+  state
+) => {
+  // If state is select, and in single booking mode and there's a time conflict
+  // Then the booking state should be disabled
+  if (
+    state === SESSION_BOOKING_STATES.SELECT &&
+    bookingMode === 'single' &&
+    timeConflicts
+  )
+    return true
+
   const { capacity, allowBooking } = session
 
   const bookingStopped = getBookingStopped(session)
   const noCapacity =
-    !bookableAttendeeCount ||
+    !bookableCount ||
     (!capacity?.remainingPlaces && !capacity?.isWaitingListAvailable)
 
   return capacity?.isUnlimited
@@ -97,17 +109,18 @@ const getDisabled = ({ session, bookableAttendeeCount }) => {
 export const bookingStateFactory = reduceObj(
   // Loop the booking states, and create an object with the state as the key, and a function as the value
   SESSION_BOOKING_STATES,
-  (key, value, mapped) => {
-    mapped[value] = props => {
-      const { session, bookingType, bookingList, waitingList, timeConflicts } = props
+  (key, state, mapped) => {
+    mapped[state] = props => {
+      const { session, bookingMode, bookingList, waitingList } = props
 
       // Create the new Booking state based on the passed in session, and current state
       return new BookingState({
-        state: value,
+        state,
+        mode: bookingMode,
         sessionId: session.identifier,
-        ...getStateIcon(bookingType, value, bookingList, waitingList),
-        text: getStateText(key, value) || false,
-        disabled: getDisabled(props),
+        ...getStateIcon(bookingMode, state, bookingList, waitingList),
+        text: getStateText(key, state) || false,
+        disabled: getDisabled(props, state),
       })
     }
 

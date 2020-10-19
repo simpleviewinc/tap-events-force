@@ -5,7 +5,18 @@ import { selectSession } from 'SVActions/session/selectSession'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { noPropObj } from '@keg-hub/jsutils'
+import { Values } from 'SVConstants'
+const { BOOKING_MODES, SESSION_BOOKING_STATES } = Values
 
+/**
+ * Helper to build the styles for the booking button
+ * @param {Object} theme - Global theme object
+ * @param {boolean} disabled - Should the disabled styles be included
+ * @param {string} state - Current booking state
+ * @param {string} style - Custom styles passed from a parent component
+ *
+ * @returns {Object} - Joined styles object from different locations
+ */
 const buildStyles = (theme, _, disabled, state, style) => {
   const stateStyles = theme?.button?.evfButton[state] || noPropObj
   const bookingStyles = stateStyles?.content?.bookingState || noPropObj
@@ -26,6 +37,7 @@ const buildStyles = (theme, _, disabled, state, style) => {
 /**
  * Renders the booking button children based on the passed in booking state
  * @param {import('SVModels/session/bookingState').BookingState} model
+ * @param {Object} style - Style rules for the children passed from the parent button
  * @param {Object} styles - Booking button child theme styles
  */
 const RenderBookingState = props => {
@@ -56,30 +68,52 @@ const RenderBookingState = props => {
 }
 
 /**
+ * Custom hook to check if an attendee should be removed from the session
+ * <br/>Then calls the selectSession action
+ * @param {import('SVModels/session').Session} session
+ * @param {import('SVModels/session/bookingState').BookingState} model
+ *
+ * @returns {Void}
+ */
+const useSelectSession = (session, model) => {
+  return useCallback(() => {
+    // Check if the mode is single, and the attendee is on the waiting list or already booked
+    // If they are, we want to pass the selectSession action an empty array to remove the attendee from the session
+    const removeAttendee = Boolean(
+      model.mode === BOOKING_MODES.SINGLE &&
+        (model.state === SESSION_BOOKING_STATES.ON_WAITING_LIST ||
+          model.state === SESSION_BOOKING_STATES.SELECTED)
+    )
+
+    return selectSession(session, removeAttendee ? [] : undefined)
+  }, [ session, model ])
+}
+
+/**
  * Booking button for each session component
  * @param {Object} props
- * @param {Object} props.styles
  * @param {import('SVModels/session').Session} props.session
+ * @param {Object} styles - Booking button theme styles
  */
 export const BookingButton = props => {
   if (!props.session) return null
 
   const { session } = props
-  const selectSessionCb = useCallback(() => selectSession(session), [session])
-  const stateModel = useBookingState(session)
+  const bookingModel = useBookingState(session)
+  const selectSessionCb = useSelectSession(session, bookingModel)
 
   return (
-    (stateModel?.text && (
+    (bookingModel?.text && (
       <EvfButton
-        type={stateModel.state}
+        type={bookingModel.state}
         onClick={selectSessionCb}
-        disabled={stateModel.disabled}
+        disabled={bookingModel.disabled}
       >
         { buttonProps => (
           <RenderBookingState
             {...props}
             {...buttonProps}
-            model={stateModel}
+            model={bookingModel}
           />
         ) }
       </EvfButton>
