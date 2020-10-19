@@ -122,9 +122,7 @@ export const filterModal = {
       },
     },
     body: {
-      main: {
-        paddingBottom: 26,
-      },
+      main: {},
       topSection: {
         main: {
           flexDirection: 'row',

@@ -27,6 +27,7 @@ export const attendeeCheckboxItem = {
       },
       $small: {
         justifyContent: 'space-between',
+        flexWrap: 'nowrap',
       },
     },
     textWrapper: {
