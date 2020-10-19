@@ -25,17 +25,7 @@ export const groupBookingModal = {
       main: {
         $xsmall: {
           flexDirection: 'column',
-          paddingLeft: 18,
-          paddingRight: 16,
-          paddingTop: 7,
-
-          // allows for both overflow-scrolling AND dynamic flex sizing
           flexShrink: 'unset',
-        },
-        $small: {
-          paddingLeft: 46,
-          paddingRight: 36,
-          paddingTop: 17,
         },
       },
       content: {
@@ -80,8 +70,12 @@ export const groupBookingModal = {
               flex: 1,
               flexDirection: 'row',
               alignSelf: 'flex-end',
+              paddingTop: 14,
+              paddingBottom: 18,
+            },
+            $small: {
               paddingTop: 26,
-              paddingBottom: 36,
+              paddingBottom: 0,
             },
           },
           content: {

@@ -93,6 +93,22 @@ const buttonsWrapper = {
   },
 }
 
+const clearButtonDefault = {
+  main: {
+    jtC: 'flex-end',
+  },
+  content: {
+    $web: {
+      ltrS: 0.1,
+    },
+    $all: {
+      ftSz: 16,
+      ftWt: '500',
+      txDc: 'underline',
+      color: colors.lightGray01,
+    },
+  },
+}
 export const filterModal = {
   content: {
     main: {},
@@ -106,12 +122,7 @@ export const filterModal = {
       },
     },
     body: {
-      main: {
-        paddingLeft: 46,
-        paddingRight: 26,
-        paddingTop: 17,
-        paddingBottom: 26,
-      },
+      main: {},
       topSection: {
         main: {
           flexDirection: 'row',
@@ -145,13 +156,18 @@ export const filterModal = {
       },
       bottomSection: {
         main: {
-          alignItems: 'flex-end',
+          flD: 'row',
+          alS: 'flex-end',
+          fl: 1,
+          flWr: 'wrap',
         },
-        button: {
+        applyButton: {
           main: {
             minHeight: 45,
+            mL: 15,
           },
         },
+        clearButton: clearButtonDefault,
       },
     },
   },
