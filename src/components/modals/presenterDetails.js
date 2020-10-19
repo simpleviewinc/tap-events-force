@@ -7,6 +7,8 @@ import {
 } from '@keg-hub/keg-components'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { BaseModal, contentDefaultMaxHeight } from './baseModal'
+import { getPresenterFullName } from 'SVUtils/models'
+
 const placeholderImage = `https://raw.githubusercontent.com/simpleviewinc/tap-events-force/master/src/assets/profile_placeholder.png`
 
 /**
@@ -22,13 +24,12 @@ export const PresenterDetails = props => {
   const theme = useTheme()
 
   const presenterStyles = theme.get('modal.presenter') || {}
-  const title = `${presenter.title} ${presenter.firstname} ${presenter.lastname}`
 
   return (
     <BaseModal
       className={`ef-modal-presenter`}
       styles={presenterStyles}
-      title={title}
+      title={getPresenterFullName(presenter)}
       visible={visible}
     >
       <Body
