@@ -21,7 +21,6 @@ export const alertModal = {
           $all: {
             $xsmall: {
               letterSpacing: 0.105,
-              paddingLeft: 26,
             },
             $small: {},
           },
@@ -29,10 +28,6 @@ export const alertModal = {
       },
     },
     body: {
-      main: {
-        paddingHorizontal: 22,
-        paddingVertical: 26,
-      },
       textContainer: {
         main: {
           $xsmall: {

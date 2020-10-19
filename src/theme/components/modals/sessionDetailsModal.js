@@ -5,16 +5,13 @@ const defaultHeaderTextStyle = {
   ftWt: '600',
   lnH: 19,
 }
+
 export const sessionDetailsModal = {
   main: {},
   content: {
     main: {},
     body: {
-      main: {
-        pH: 43,
-        pT: 50,
-        pB: 21,
-      },
+      main: {},
       dateTimeText: defaultHeaderTextStyle,
       locationText: {
         mT: 13,

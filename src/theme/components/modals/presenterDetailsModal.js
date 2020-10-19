@@ -36,8 +36,6 @@ export const presenterDetailsModal = {
     body: {
       main: {
         flex: 1,
-        paddingHorizontal: 40,
-        paddingVertical: 25,
       },
       row1: {
         smallImage,

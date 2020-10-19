@@ -6,7 +6,12 @@ const mocks = {
   useRestrictedAttendeeIds: () => ({ isBookable: () => true }),
 }
 
+const reactMocks = {
+  useMemo: (...args) => args[0](),
+}
+
 jest.setMock('../useRestrictedAttendeeIds', mocks)
+jest.setMock('react', reactMocks)
 
 const useBookingLists = (...args) =>
   require('../useBookingLists').useBookingLists(...args)
@@ -28,6 +33,10 @@ const noWaitingListSession = deepMerge(limitedSession, {
 const allAttendeeIds = testData.attendees.map(att => att.bookedTicketIdentifier)
 
 describe('useBookingLists', () => {
+  afterAll(() => {
+    jest.resetAllMocks()
+  })
+
   afterEach(() => {
     mocks.useRestrictedAttendeeIds = () => ({ isBookable: () => true })
   })
