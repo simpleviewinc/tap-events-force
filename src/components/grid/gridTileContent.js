@@ -79,14 +79,16 @@ export const GridTileContent = props => {
         text={session?.name}
       />
 
-      <Text
-        className={'ef-session-location'}
-        style={gridTileContentStyles?.locationText}
-      >
-        { location?.name || '' }
-      </Text>
+      { location?.name && (
+        <Text
+          className={'ef-session-location'}
+          style={gridTileContentStyles?.locationText}
+        >
+          { location.name }
+        </Text>
+      ) }
 
-      <PresenterNames 
+      <PresenterNames
         session={session}
         styles={gridTileContentStyles?.presenters}
       />
@@ -108,32 +110,46 @@ export const GridTileContent = props => {
  * @param {object} props.style
  * @param {import('SVModels/session').Session} props.session
  */
-const PresenterNames = React.memo(({session, styles}) => {
-
+const PresenterNames = React.memo(({ session, styles }) => {
   const presenters = useSessionPresenters(session)
 
   return (
     <View style={styles?.main}>
-      {
-        presenters.map(presenter => {
-          const displayDetailsModal = useCreateModal(
-            Values.MODAL_TYPES.PRESENTER,
-            presenter
-          )
-          return (
-            <SessionLink
-              className={'ef-sessions-presenter'}
-              styles={styles?.sessionLink}
-              key={presenter.identifier}
-              text={getPresenterFullName(presenter)}
-              onPress={displayDetailsModal}
-            />
-          )
-        })
-      }
+      { presenters.map(presenter => {
+        return (
+          <PresenterLink
+            key={presenter.identifier}
+            styles={styles?.sessionLink}
+            presenter={presenter}
+          />
+        )
+      }) }
     </View>
   )
 })
+
+/**
+ * PresenterLink
+ * Clickable Presenter name that opens the presenter details modal
+ * @param {object} props
+ * @param {import('SVModels/presenter').Presenter} props.presenter
+ * @param {object} props.styles
+ */
+const PresenterLink = ({ presenter, styles }) => {
+  const displayDetailsModal = useCreateModal(
+    Values.MODAL_TYPES.PRESENTER,
+    presenter
+  )
+  return (
+    <SessionLink
+      className={'ef-sessions-presenter'}
+      styles={styles}
+      key={presenter.identifier}
+      text={getPresenterFullName(presenter)}
+      onPress={displayDetailsModal}
+    />
+  )
+}
 
 GridTileContent.propTypes = {
   labels: PropTypes.array,

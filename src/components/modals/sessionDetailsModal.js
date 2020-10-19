@@ -2,14 +2,14 @@ import React, { useRef, useCallback, useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, ScrollView, View } from '@keg-hub/keg-components'
-import { checkCall, pickKeys } from '@keg-hub/jsutils'
+import { checkCall, pickKeys, noPropArr } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useSessionLocation } from 'SVHooks/models'
 import { format } from 'date-fns'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { BookingButton } from 'SVComponents/button'
-import {SessionPresenters} from 'SVComponents/sessionDetails'
+import { SessionPresenters } from 'SVComponents/sessionDetails'
 /**
  * SessionDetailsModal
  * @param {object} props
@@ -54,7 +54,7 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
  * @param {object} props.styles
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-const Body = ({ styles, session, labels = [] }) => {
+const Body = ({ styles, session, labels = noPropArr }) => {
   const { settings } = useSelector(
     ({ items }) => pickKeys(items, ['settings']),
     shallowEqual

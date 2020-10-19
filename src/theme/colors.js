@@ -19,7 +19,7 @@ const colors = {
   dimTextGray: '#D9DCDC',
   darkGray: '#4F4F4F',
   darkGray02: '#727272',
-  transparent: '#ffffff00',
+  transparent: 'rgba(255,255,255,0)',
 }
 
 /**
