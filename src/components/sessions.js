@@ -28,23 +28,21 @@ const { EVENTS } = Values
 const FilterButton = ({ onClick, styles }) => {
   const dim = useDimensions()
 
-  const contentStyles = styles?.content
-
   // use filter icon when below 650px width
   return dim.width <= 650 ? (
     <View className={'ef-sessions-filter-button'}>
       <EVFIcons.Filter
         className={'ef-sessions-filter-button'}
-        style={contentStyles?.filterIcon}
+        style={styles?.filterIcon}
         onPress={onClick}
-        color={contentStyles?.filterIcon?.color}
+        color={styles?.filterIcon?.color}
       />
     </View>
   ) : (
     <Button
       className={'ef-sessions-filter-button'}
       themePath='button.text.default'
-      styles={contentStyles?.filterButton}
+      styles={styles?.filterButton}
       onClick={onClick}
       content={'Filter'}
     />
@@ -87,8 +85,8 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
         />
       }
       RightComponent={
-        <FilterButton
-          styles={headerStyles?.content?.right}
+        <ItemHeaderRight
+          styles={headerStyles?.content?.right?.content}
           onClick={displayFilterModal}
         />
       }
@@ -96,6 +94,20 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
   )
 }
 
+const ItemHeaderRight = ({ styles, onClick }) => {
+  return (
+    <View style={styles?.main}>
+      <Button
+        styles={styles?.clearAll}
+        content={'Clear All'}
+      />
+      <FilterButton
+        styles={styles}
+        onClick={onClick}
+      />
+    </View>
+  )
+}
 /**
  * Sets up the container for a group of sessions on a specific day
  * @param {object} props

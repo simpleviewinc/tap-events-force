@@ -60,10 +60,15 @@ export const sessions = {
         right: {
           main: {
             $xsmall: {
-              maxWidth: '10%',
+              // maxWidth: '10%',
             },
           },
           content: {
+            main: {
+              flexDirection: 'row',
+              pR: 40,
+            },
+            clearAll: {},
             filterIcon: {
               $xsmall: {
                 color: colors.black,
@@ -75,8 +80,8 @@ export const sessions = {
             },
             filterButton: {
               main: {
-                pos: 'absolute',
-                rt: 40,
+                // pos: 'absolute',
+                // rt: 40,
                 pV: 8,
                 pH: 12,
               },
