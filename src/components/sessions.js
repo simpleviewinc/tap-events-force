@@ -30,12 +30,15 @@ const FilterButton = ({ onClick, styles }) => {
 
   // use filter icon when below 650px width
   return dim.width <= 650 ? (
-    <View className={'ef-sessions-filter-button'}>
+    <View
+      className={'ef-sessions-filter-button'}
+      style={styles?.filterIcon?.main}
+    >
       <EVFIcons.Filter
         className={'ef-sessions-filter-button'}
-        style={styles?.filterIcon}
+        style={styles?.filterIcon?.icon}
         onPress={onClick}
-        color={styles?.filterIcon?.color}
+        color={styles?.filterIcon?.icon?.color}
       />
     </View>
   ) : (
@@ -98,6 +101,7 @@ const ItemHeaderRight = ({ styles, onClick }) => {
   return (
     <View style={styles?.main}>
       <Button
+        themePath='button.text.default'
         styles={styles?.clearAll}
         content={'Clear All'}
       />

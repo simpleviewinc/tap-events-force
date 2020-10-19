@@ -230,7 +230,7 @@ const BottomSection = ({ styles, onButtonPress, hasSelectedFilters }) => {
           themePath='button.text.default'
           styles={styles?.clearButton}
           onClick={clearSelectedFilters}
-          content={'clear filters'}
+          content={'Clear all'}
         />
       ) }
       <EvfButton

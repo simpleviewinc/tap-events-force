@@ -41,7 +41,7 @@ export const sessions = {
         left: {
           main: {
             $web: {
-              maxWidth: '10%',
+              // maxWidth: '10%',
             },
             $native: {
               display: 'none',
@@ -65,23 +65,45 @@ export const sessions = {
           },
           content: {
             main: {
-              flexDirection: 'row',
-              pR: 40,
-            },
-            clearAll: {},
-            filterIcon: {
               $xsmall: {
-                color: colors.black,
-                paddingRight: 5,
+                flexDirection: 'row',
               },
               $small: {
-                paddingRight: 10,
+                pR: 40,
+              },
+            },
+            clearAll: {
+              main: {
+                jtC: 'flex-end',
+              },
+              content: {
+                $web: {
+                  ltrS: 0.1,
+                },
+                $all: {
+                  ftSz: 16,
+                  ftWt: '500',
+                  txDc: 'underline',
+                  color: colors.lightGray01,
+                },
+              },
+            },
+            filterIcon: {
+              main: {
+                jtC: 'center',
+              },
+              icon: {
+                $xsmall: {
+                  color: colors.black,
+                  paddingRight: 5,
+                },
+                $small: {
+                  paddingRight: 10,
+                },
               },
             },
             filterButton: {
               main: {
-                // pos: 'absolute',
-                // rt: 40,
                 pV: 8,
                 pH: 12,
               },
