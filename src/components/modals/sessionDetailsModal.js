@@ -59,9 +59,7 @@ const Body = ({ styles, session, labels = noPropArr }) => {
     ({ items }) => pickKeys(items, ['settings']),
     shallowEqual
   )
-
-  const { timeFormat } = settings?.agendaSettings?.agendaDisplayProperties
-  const military = timeFormat === '24'
+  const military = settings?.displayProperties?.timeFormat === '24'
   const locationName = useSessionLocation(session)
 
   return (

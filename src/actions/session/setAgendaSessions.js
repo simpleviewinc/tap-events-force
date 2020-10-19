@@ -11,15 +11,18 @@ const { CATEGORIES } = Values
 export const setAgendaSessions = (sessions, agendaDays) => {
   if (!sessions || !agendaDays) return
   const { items } = getStore()?.getState()
-  const { timeFormat } = items.settings?.displayProperties || {}
-
+  const military = items.settings?.displayProperties?.timeFormat === '24'
   // object will look something like:
   // { ordered by timeblock
   //   1: [{timeBlock: '9:00', sessions: [session1, session2]}] //day 1
   //   2: [{timeBlock: '13:00', sessions: [session1]}, {timeBlock: '15:00', sessions: [session1]}], //day 2
   // }
   const agendaSessions = agendaDays.reduce((map, nextDay) => {
-    map[nextDay.dayNumber] = buildHourSessionsMap(sessions, nextDay.dayNumber, timeFormat === '24')
+    map[nextDay.dayNumber] = buildHourSessionsMap(
+      sessions,
+      nextDay.dayNumber,
+      military
+    )
     return map
   }, {})
 
