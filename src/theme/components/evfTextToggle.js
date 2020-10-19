@@ -7,27 +7,27 @@ export const evfTextToggle = {
       ftSz: 14,
       ftWt: '400',
       lnH: 22,
-      color: colors.darkGray02
-    }
+      color: colors.darkGray02,
+    },
   },
   customToggle: {
     main: {
-      flexDirection: 'row'
+      flD: 'row',
     },
     text: {
       textDecorationLine: 'underline',
-      fontWeight: '500', 
-      lineHeight: 27,
-      fontSize: 16
+      ftWt: '500',
+      lnH: 27,
+      ftSz: 16,
     },
     icon: {
       container: {
-        justifyContent: 'center',
-        paddingLeft: 10
-      }, 
+        jtC: 'center',
+        pL: 10,
+      },
       icon: {
-        fontSize: 16
-      }
-    }
-  }
+        ftSz: 16,
+      },
+    },
+  },
 }
