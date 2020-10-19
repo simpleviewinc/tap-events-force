@@ -34,9 +34,10 @@ const LeftHeaderText = ({ timeString, style }) => {
  * @param {Array} props.sessions - sessions within the given timeblock
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
+ * @param {boolean} props.militaryTime - whether to display time in 12 hr or 24 hr format
  */
 export const GridContainer = props => {
-  const { sessions, labels, timeBlock, enableFreeLabel } = props
+  const { sessions, labels, timeBlock, enableFreeLabel, militaryTime } = props
   if (!sessions || !sessions.length) return null
 
   const theme = useTheme()
@@ -74,7 +75,7 @@ export const GridContainer = props => {
               key={session.identifier}
               labels={labelsMemo}
               session={session}
-              militaryTime={true}
+              militaryTime={militaryTime}
             />
           )) }
       </View>
