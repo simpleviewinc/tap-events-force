@@ -2,7 +2,7 @@ import React from 'react'
 import { getPresenterFullName, getPresenterProfession } from 'SVUtils/models'
 import { useSessionPresenters } from 'SVHooks/models'
 import { View, Text } from '@keg-hub/keg-components'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 
 /**
  * Displays the full details of presenter(s) for the given session (name and profession)
@@ -15,14 +15,11 @@ export const SessionPresenters = React.memo(
   ({ session, styles, textClassName }) => {
     if (!session) return null
 
-    const theme = useTheme()
-    const sessionPresentersStyles = theme.get(
+    const sessionPresentersStyles = useStyle(
       'sessionDetails.sessionPresenters',
       styles
     )
-
     const presenters = useSessionPresenters(session)
-
     return (
       <View style={sessionPresentersStyles.main}>
         { presenters.map(presenter => {

@@ -84,7 +84,7 @@ const Body = ({ styles, session, labels = noPropArr }) => {
           { labels.map(label => (
             <LabelButton
               styles={styles?.labelButtons?.button}
-              key={label.name}
+              key={label.identifier}
               label={label}
             />
           )) }

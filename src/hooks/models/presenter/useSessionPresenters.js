@@ -1,6 +1,5 @@
-import { pickKeys } from '@keg-hub/jsutils'
-import { useSelector, shallowEqual } from 'react-redux'
 import { useMemo } from 'react'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 /**
  * Returns an array of presenters for a given session
@@ -8,13 +7,10 @@ import { useMemo } from 'react'
  * @returns {Array.<import('SVModels/presenter').Presenter>}
  */
 export const useSessionPresenters = session => {
-  const { presenters = [] } = useSelector(
-    ({ items }) => pickKeys(items, ['presenters']),
-    shallowEqual
-  )
+  const presenters = useStoreItems('presenters')
   return useMemo(() => {
     return presenters.filter(presenter =>
-      session?.presenterIdentifiers?.some(id => id === presenter.identifier)
+      session?.presenterIdentifiers?.includes(presenter.identifier)
     )
   }, [ session, presenters ])
 }

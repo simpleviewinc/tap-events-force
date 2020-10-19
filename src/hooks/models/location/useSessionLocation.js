@@ -11,7 +11,7 @@ export const useSessionLocation = session => {
     ({ items }) => pickKeys(items, ['locations']),
     shallowEqual
   )
-  return locations.filter(
+  return locations.find(
     location => location.identifier === session?.locationIdentifier
-  )[0]
+  )
 }

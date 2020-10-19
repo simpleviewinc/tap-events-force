@@ -1,7 +1,7 @@
 import { TextToggle, View, Icon, Text } from '@keg-hub/keg-components'
 import React, { useMemo } from 'react'
 import { EVFIcons } from 'SVIcons'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 
 /**
  * EvfTextToggle
@@ -11,8 +11,7 @@ import { useTheme } from '@keg-hub/re-theme'
  * @param {object} props.text - text content to display
  */
 export const EvfTextToggle = ({ styles, text }) => {
-  const theme = useTheme()
-  const textToggleStyles = theme.get('evfTextToggle.textToggle', styles)
+  const textToggleStyles = useStyle('evfTextToggle.textToggle', styles)
 
   return (
     <TextToggle
@@ -42,8 +41,7 @@ const useChevronIcon = isExpanded =>
  * @param {boolean} props.isExpanded - is the text expanded?
  */
 const CustomToggle = ({ isExpanded }) => {
-  const theme = useTheme()
-  const customStyles = theme.get('evfTextToggle.customToggle')
+  const customStyles = useStyle('evfTextToggle.customToggle')
   const { Chevron, text } = useChevronIcon(isExpanded)
 
   return (

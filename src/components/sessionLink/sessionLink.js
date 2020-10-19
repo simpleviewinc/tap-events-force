@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { Text, Touchable } from '@keg-hub/keg-components'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStyle, useTheme } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme'
 
 /**
@@ -12,7 +12,7 @@ import { isMobileSize } from 'SVUtils/theme'
  */
 export const SessionLink = ({ onPress, text, styles }) => {
   const theme = useTheme()
-  const sessionLinkStyles = theme.get('sessionLink', styles)
+  const sessionLinkStyles = useStyle('sessionLink', styles)
   const numberOfLines = useMemo(
     () => (isMobileSize(theme) ? { numberOfLines: 2 } : { numberOfLines: 0 }),
     [theme]
