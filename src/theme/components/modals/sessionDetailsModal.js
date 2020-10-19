@@ -31,25 +31,14 @@ export const sessionDetailsModal = {
         flex: 1,
       },
       scrollView: {
-        main: {
-          $xsmall: {
-            mH: 25,
-            mT: 40,
-            mB: 10,
-          },
-          $small: {
-            mH: 43,
-            mT: 50,
-            mB: 21,
-          }
-        },
+        main: {},
         contentContainer: {
           $xsmall: {
             pH: 19,
           },
           $small: {
             pH: 29,
-          }
+          },
         },
       },
       dateTimeText: defaultHeaderTextStyle,
@@ -79,8 +68,6 @@ export const sessionDetailsModal = {
       actionButton: {
         main: {
           pT: 21,
-          pB: 31,
-          pR: 26,
           alI: 'flex-end',
         },
         button: {
