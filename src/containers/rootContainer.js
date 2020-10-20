@@ -5,7 +5,6 @@ import { displayName } from 'SVConfig'
 import testData from '../mocks/eventsforce/testData.js'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
-import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -20,10 +19,7 @@ const mockCallbacks = {
  * Currently only used in local development. Not exported by rollup (see apps/Sessions.js for that)
  */
 export const RootContainer = withAppHeader(displayName, props => {
-  // const [ mockData, setMockData ] = useState(testData)
-  const [ mockData, setMockData ] = useState(
-    bookingStatesTestData.selectDisabled.single.conflict
-  )
+  const [ mockData, setMockData ] = useState(testData)
 
   return (
     <>
