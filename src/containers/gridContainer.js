@@ -12,18 +12,12 @@ import { useTheme } from '@keg-hub/re-theme'
  */
 const LeftHeaderText = ({ timeString, style }) => {
   return (
-    <View
-      className={`ef-timeslot-header-time`}
-      style={style.main}
+    <Text
+      className={`ef-timeslot-header-time-text`}
+      style={style.content.text}
     >
-      <Text
-        className={`ef-timeslot-header-time-text`}
-        style={style.content.text}
-      >
-        { ' ' }
-        { timeString }{ ' ' }
-      </Text>
-    </View>
+      { timeString }
+    </Text>
   )
 }
 
