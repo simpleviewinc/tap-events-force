@@ -1,4 +1,21 @@
 import { colors } from '../colors'
+import { deepMerge } from '@keg-hub/jsutils'
+
+const filterButtonDefault = {
+  main: {
+    pV: 8,
+  },
+  content: {
+    $web: {
+      ltrS: 0.1,
+    },
+    $all: {
+      ftWt: '500',
+      txDc: 'underline',
+    },
+  },
+}
+
 export const sessions = {
   main: {
     $web: {
@@ -40,9 +57,6 @@ export const sessions = {
       content: {
         left: {
           main: {
-            $web: {
-              // maxWidth: '10%',
-            },
             $native: {
               display: 'none',
             },
@@ -58,36 +72,33 @@ export const sessions = {
           },
         },
         right: {
-          main: {
-            $xsmall: {
-              // maxWidth: '10%',
-            },
-          },
+          main: {},
           content: {
             main: {
               $xsmall: {
-                flexDirection: 'row',
+                jtC: 'flex-end',
+                flD: 'row',
               },
               $small: {
                 pR: 40,
               },
             },
-            clearAll: {
+            clearAll: deepMerge(filterButtonDefault, {
               main: {
-                jtC: 'flex-end',
+                $xsmall: {
+                  display: 'none',
+                },
+                $small: {
+                  display: 'flex',
+                },
               },
               content: {
-                $web: {
-                  ltrS: 0.1,
-                },
                 $all: {
                   ftSz: 16,
-                  ftWt: '500',
-                  txDc: 'underline',
                   color: colors.lightGray01,
                 },
               },
-            },
+            }),
             filterIcon: {
               main: {
                 jtC: 'center',
@@ -102,23 +113,14 @@ export const sessions = {
                 },
               },
             },
-            filterButton: {
-              main: {
-                pV: 8,
-                pH: 12,
-              },
+            filterButton: deepMerge(filterButtonDefault, {
               content: {
-                $web: {
-                  letterSpacing: 0.1,
-                },
                 $all: {
-                  fontSize: 20,
-                  fontWeight: '500',
-                  textDecorationLine: 'underline',
+                  ftSz: 20,
                   color: colors.black,
                 },
               },
-            },
+            }),
           },
         },
       },

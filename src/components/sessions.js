@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
-import { useTheme, useDimensions } from '@keg-hub/re-theme'
+import { useTheme, useDimensions, useStylesCallback } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
@@ -20,19 +20,18 @@ import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
 
-const { EVENTS } = Values
+const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
+
 /**
  * FilterButton
  * Renders either an Icon or a text button based on current screen dimension
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onClick
+ * @param {boolean} props.smallEnough - whether the dimension width is small enough
  */
-const FilterButton = ({ onClick, styles }) => {
-  const dim = useDimensions()
-
-  // use filter icon when below 650px width
-  return dim.width <= 650 ? (
+const FilterButton = ({ onClick, styles, smallEnough }) => {
+  return smallEnough ? (
     <View
       className={'ef-sessions-filter-button'}
       style={styles?.filterIcon?.main}
@@ -52,6 +51,24 @@ const FilterButton = ({ onClick, styles }) => {
       onClick={onClick}
       content={'Filter'}
     />
+  )
+}
+
+/**
+ * Builds the styles for the header right component
+ * @param {Object} theme - Global Theme object
+ * @param {Object} custom - contains {styles, smallEnough}
+ *
+ * @returns {Object}
+ */
+const buildStylesHeaderRight = (theme, custom) => {
+  return theme.get(
+    custom.styles,
+    custom.smallEnough && {
+      main: {
+        paddingRight: 0,
+      },
+    }
   )
 }
 
@@ -100,24 +117,55 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
   )
 }
 
+/**
+ * ItemHeaderRight
+ * displays the filter btn and clear btn
+ *    hides the clear btn when dimension is small enough
+ * @param {object} props
+ * @param {object} props.styles - theme path: header.content.right.content
+ */
 const ItemHeaderRight = ({ styles, onClick }) => {
+  const dim = useDimensions()
+  const activeFilters = useStoreItems(
+    `${CATEGORIES.FILTERS}.${SUB_CATEGORIES.ACTIVE_FILTERS}`
+  )
+
+  const smallEnough = dim.width <= 720
+  const showClearButton = dim.width > 520 && Boolean(activeFilters?.length)
+
+  const customStyles = useMemo(
+    () => ({
+      smallEnough,
+      styles,
+    }),
+    [ styles, smallEnough ]
+  )
+
+  const mainStyle = useStylesCallback(
+    buildStylesHeaderRight,
+    [ styles, smallEnough ],
+    customStyles
+  )
   const clearActiveFilters = useCallback(() => {
     clearSelectedFilters()
     applySessionFilters()
   }, [ clearActiveFilters, clearSelectedFilters ])
 
   return (
-    <View style={styles?.main}>
-      <Button
-        themePath='button.text.default'
-        styles={styles?.clearAll}
-        content={'Clear All'}
-        onClick={clearActiveFilters}
-      />
+    <View style={mainStyle?.main}>
       <FilterButton
-        styles={styles}
+        styles={mainStyle}
         onClick={onClick}
+        smallEnough={smallEnough}
       />
+      { showClearButton && (
+        <Button
+          themePath='button.text.default'
+          styles={mainStyle?.clearAll}
+          content={'Clear'}
+          onClick={clearActiveFilters}
+        />
+      ) }
     </View>
   )
 }
