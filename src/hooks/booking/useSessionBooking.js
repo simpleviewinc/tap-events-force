@@ -94,6 +94,25 @@ const containSameElements = (arrA, arrB) => {
 }
 
 /**
+ * @param {Array<string>} bookingList - list of attendee ids on booking list
+ * @param {Array<string>} waitingList - list of attendee ids on waiting list
+ * @returns {boolean} true if the user has modified the booking or waiting lists
+ */
+const useBookingIsUserModified = (bookingList, waitingList) => {
+  const initialBookingList = useStoreItems(
+    `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.INITIAL_BOOKING_LIST}`
+  )
+  const initialWaitingList = useStoreItems(
+    `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.INITIAL_WAITING_LIST}`
+  )
+
+  return !(
+    containSameElements(bookingList, initialBookingList) &&
+    containSameElements(waitingList, initialWaitingList)
+  )
+}
+
+/**
  * Returns callbacks for working with session capacity and latest capacity
  * @param {import('SVModels/session').Session} session
  * @return {Object} object with keys for callbacks and current capacity
@@ -110,16 +129,9 @@ export const useSessionBooking = session => {
   const bookingSet = useBookingSet()
   const waitingSet = useWaitingSet()
 
-  const initialBookingList = useStoreItems(
-    `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.INITIAL_BOOKING_LIST}`
-  )
-  const initialWaitingList = useStoreItems(
-    `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.INITIAL_WAITING_LIST}`
-  )
-
-  const userHasModifiedBooking = !(
-    containSameElements(bookingSet.data, initialBookingList) &&
-    containSameElements(waitingSet.data, initialWaitingList)
+  const userHasModifiedBooking = useBookingIsUserModified(
+    bookingSet.data,
+    waitingSet.data
   )
 
   const updateCapacity = useUpdateSessionLists(

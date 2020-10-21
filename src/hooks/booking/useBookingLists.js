@@ -4,18 +4,6 @@ import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
 import { useRestrictedAttendeeIds } from './useRestrictedAttendeeIds'
 
 /**
- * Builds the initial list of ids of attendees on the waiting list for the session
- * @param {Object} session - session to find attendees on the waiting list for
- * @param {Array<import('SVModels/attendee').Attendee>} attendees - all attendees
- * @param {Function} isBookable - cb of form: attendeeId => true/false if bookable/waitListable to the session
- * @return {Array<string>} initial waiting ids ids
- */
-const getInitialWaitIds = (session, attendees, isBookable) => {
-  const existingIds = getExistingWaitIds(session?.identifier, attendees)
-  return existingIds.filter(isBookable)
-}
-
-/**
  * Builds the initial list of booked attendee ids for the session
  * @param {Object} session - session object
  * @param {Array<string>} attendees - full list of attendees
@@ -25,7 +13,7 @@ const getInitialWaitIds = (session, attendees, isBookable) => {
  * @return {Array<string>} initial booking ids
  */
 const getInitialBookingIds = (
-  session,
+  existingBookIds,
   attendees,
   initialWaitIds,
   isBookable,
@@ -41,16 +29,17 @@ const getInitialBookingIds = (
     }, [])
 
   // otherwise just get the existing list of booked ids, removing any ones that aren't bookable
-  return getExistingBookIds(session?.identifier, attendees).filter(isBookable)
+  return existingBookIds
 }
 
 /**
- * Hook to acquire the **initial** booking and waiting lists for a session
+ * Hook to acquire the **initial** booking and waiting lists for a session for the group booking modal
  * @param {import('SVModels/session').Session} session - session to get the booking & waiting lists for
  * @param {Array<import('SVModels/attendee').Attendee>} attendees - full list of attendees
  * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
  * @return {Array} destructurable array of form:
- * [ bookingList, waitingList ]
+ * [ initBookingList, initWaitingList, existingBookingList, existingWaitingList ]
+ * - all lists filter out the ids of attendees who are restricted from booking or waiting on the session
  */
 export const useBookingLists = (
   session,
@@ -63,22 +52,39 @@ export const useBookingLists = (
   const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable
 
   return useMemo(() => {
-    // get the existing ids of attendees on the session's waiting list
-    const waitingList = waitingListIsAvailable
-      ? getInitialWaitIds(session, attendees, attendeeIsBookable)
-      : []
+    // existing waiting list, as determined strictly by the data, except we filter out any unbookable attendees
+    const existingWaitingList = getExistingWaitIds(
+      session?.identifier,
+      attendees
+    ).filter(attendeeIsBookable)
 
-    // builds the initial booking list ids. This could be more than the existing list,
-    // because certain conditions pre-select all the attendees
-    const bookingList = getInitialBookingIds(
-      session,
+    // the initial waiting list to be used on the group booking modal. If the waiting list is available,
+    // we use the existing waiting list, otherwise this list is empty
+    const initWaitingList = waitingListIsAvailable ? existingWaitingList : []
+
+    // the booking list, as determined by the data alone, without any pre-selection done,
+    // but still filtering out unbookable attendees
+    const existingBookingList = getExistingBookIds(
+      session?.identifier,
+      attendees
+    ).filter(attendeeIsBookable)
+
+    // The initial booking list to be used on the group booking modal. This might be equal to the
+    // existing booking list, or it may be a list of pre-selected attendees given certain conditions
+    const initBookingList = getInitialBookingIds(
+      existingBookingList,
       attendees,
-      waitingList,
+      initWaitingList,
       attendeeIsBookable,
       initialCapacityExceedsNeed
     )
 
-    return [ bookingList, waitingList ]
+    return [
+      initBookingList,
+      initWaitingList,
+      existingBookingList,
+      existingWaitingList,
+    ]
   }, [
     session,
     attendees,

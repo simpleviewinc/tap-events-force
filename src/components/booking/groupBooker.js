@@ -15,8 +15,9 @@ import PropTypes from 'prop-types'
 const useButtonSubmit = (cb, onComplete) => {
   const submit = useCallback(
     (...args) => {
+      // if there is no cb to call, then immediately run the onComplete step
       if (!cb) return onComplete?.()
-      cb?.(...args)
+      cb(...args)
       setGroupBookingLoading(true)
     },
     [ cb, setGroupBookingLoading ]
@@ -28,6 +29,8 @@ const useButtonSubmit = (cb, onComplete) => {
   ])
 
   useEffect(() => {
+    // TODO: check if current and existing ids match booking and waiting list
+
     // if we are here, the list of attendees has changed,
     // indicating the api call completed and the consumer
     // updated the attendees to reflect the updated booking.

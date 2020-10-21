@@ -38,6 +38,7 @@ export const Values = deepFreeze({
     INITIAL_WAITING_LIST: 'initialWaitingList',
     SESSION_CAPACITY: 'capacity',
     CURRENT_SESSION: 'currentSession',
+    IS_MODIFIED_BY_CONSUMER: 'isModifiedByConsumer',
     LOADING: 'loading',
   },
 

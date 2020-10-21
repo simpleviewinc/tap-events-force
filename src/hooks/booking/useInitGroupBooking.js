@@ -7,6 +7,7 @@ import {
   setInitialBookingList,
   setSessionCapacity,
   setCurrentSessionId,
+  setConsumerModifiedBooking,
 } from 'SVActions/session/booking'
 
 /**
@@ -23,27 +24,33 @@ export const useInitGroupBooking = (
   initialCapacityExceedsNeed,
   remainingCount
 ) => {
-  const [ initialBookedIds, initialWaitIds ] = useBookingLists(
+  const [ currentBookedIds, currentWaitIds, existingBookedIds ] = useBookingLists(
     session,
     attendees,
     initialCapacityExceedsNeed
   )
 
   // if all the checkboxes should be preselected
-  const isAllPreselected = initialCapacityExceedsNeed && !initialWaitIds?.length
+  const isAllPreselected = initialCapacityExceedsNeed && !currentWaitIds?.length
 
   // initialize the store state for group booking
   const [ initialized, setInitialized ] = useState(false)
   useEffect(() => {
     setSessionCapacity(remainingCount)
 
-    setBookingList(initialBookedIds)
-    setWaitingList(initialWaitIds)
-    //TODO: shouldn't set this to empty array, b/c that's not strictly true -- we should just
-    // return more arrays from `useBookingList`: the preselected ones, but also the array
-    // without preselection since THAT is the initial booking list
-    setInitialBookingList(isAllPreselected ? [] : initialBookedIds)
-    setInitialWaitingList(initialWaitIds)
+    setBookingList(currentBookedIds)
+    setWaitingList(currentWaitIds)
+
+    // if the booked ids list contains preselected attendees, then the "initial"
+    // list was actually the one without preselection
+    // TODO: this is unintuitive as hell, find a better way to determine all of this
+    setInitialBookingList(
+      isAllPreselected ? existingBookedIds : currentBookedIds
+    )
+    setInitialWaitingList(currentWaitIds)
+
+    // TODO: set this to the result of whether or not the consuemr modified it
+    setConsumerModifiedBooking(false)
 
     setCurrentSessionId(session?.identifier)
     setInitialized(true)
@@ -51,3 +58,11 @@ export const useInitGroupBooking = (
 
   return initialized
 }
+
+// TODO: I need to sync jsutils to get containsSameElement, then I need to call this before setting the lists in the useEffect
+// above, andI need to hope it doesn't care about filtering the isBookable people
+// - it shouldn't matter, b/c if user submitted the booking, they could only submit peeps that ARE bookable!
+// const consumerModifiedBooking = () => {
+//   return !containsSameElements(currentBookedIds, incomingBookedIds)
+//     || !containsSameElements(currentWaitIds, incominingWaitIds)
+// }
