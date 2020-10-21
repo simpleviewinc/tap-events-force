@@ -13,21 +13,30 @@ export const getBookingState = session => {
   const attendees = items?.attendees || []
 
   if (session.allowBooking) {
-    // Custom identifier to flag that booking has been stopped for that session
-    // Will need to update when Events-Force gives us the real value
-    if (session.bookingStopped) return SESSION_BOOKING_STATES.FULLY_BOOKED
-
     // ON_WAITING_LIST - Any session where the session identifier is included in the waitingListSessions array for any attendee
     // ON_WAITING_LIST takes precedence over SELECTED
     const inAttendeeWaitingList = attendees.some(attendee =>
       attendee.waitingListSessions?.some(id => id === session.identifier)
     )
-    if (inAttendeeWaitingList) return SESSION_BOOKING_STATES.ON_WAITING_LIST
+
+    // Custom identifier to flag that booking has been stopped for that session
+    // Will need to update when Events-Force gives us the real value
+    // If attendees are on the waiting list, but booking is stopped, then return fully booked
+    // Otherwise return the on waiting list state
+    if (inAttendeeWaitingList)
+      return session.bookingStopped
+        ? SESSION_BOOKING_STATES.FULLY_BOOKED
+        : SESSION_BOOKING_STATES.ON_WAITING_LIST
+
     // SELECTED - Any session where the session identifier is included in the bookedSessions array for any attendee
     const inAttendeeBookedSessions = attendees.some(attendee =>
       attendee.bookedSessions?.some(id => id === session.identifier)
     )
     if (inAttendeeBookedSessions) return SESSION_BOOKING_STATES.SELECTED
+
+    // Custom identifier to flag that booking has been stopped for that session
+    // Will need to update when Events-Force gives us the real value
+    if (session.bookingStopped) return SESSION_BOOKING_STATES.FULLY_BOOKED
 
     /**
      * SELECT - Any session where allowBooking is true and is either unlimited or has remaining places

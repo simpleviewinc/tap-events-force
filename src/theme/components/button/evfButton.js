@@ -114,34 +114,50 @@ const bookingStyles = {
   },
   icon: {
     Digit: {
-      main: {
-        jtC: 'center',
-        alI: 'center',
-        bgC: colors.white,
-        bRad: '50%',
-        mR: 8,
-        mT: 2,
-      },
-      text: {
-        ...defaultTextStyle,
-        $xsmall: {
-          ...defaultTextStyle.$xsmall,
-          tp: 'initial',
-          c: colors.primary,
-          pV: 2,
-          pH: 7,
-          ftSz: 14,
+      default: {
+        main: {
+          jtC: 'center',
+          alI: 'center',
+          bgC: colors.white,
+          bRad: '50%',
+          mR: 8,
+          mT: 2,
         },
-        $small: {
-          ftSz: 14,
+        text: {
+          ...defaultTextStyle,
+          $xsmall: {
+            ...defaultTextStyle.$xsmall,
+            tp: 'initial',
+            c: colors.primary,
+            pV: 2,
+            pH: 7,
+            ftSz: 14,
+          },
+          $small: {
+            ftSz: 14,
+          },
+        },
+      },
+      disabled: {
+        main: {
+          bgC: colors.lightGray,
+        },
+        text: {
+          c: colors.lightGray02,
         },
       },
     },
     BookingCheck: {
-      border: colors.primary,
-      fontSize: 21,
-      c: colors.white,
-      pR: 8,
+      default: {
+        border: colors.primary,
+        ftSz: 21,
+        c: colors.white,
+        pR: 8,
+      },
+      disabled: {
+        border: colors.lightGray02,
+        c: colors.lightGray,
+      },
     },
   },
 }

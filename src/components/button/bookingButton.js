@@ -4,7 +4,7 @@ import { EvfButton } from 'SVComponents/button/evfButton'
 import { selectSession } from 'SVActions/session/selectSession'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
 import { useStylesCallback } from '@keg-hub/re-theme'
-import { noPropObj } from '@keg-hub/jsutils'
+import { noPropObj, get } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants'
 const { BOOKING_MODES, SESSION_BOOKING_STATES } = Values
 
@@ -17,7 +17,7 @@ const { BOOKING_MODES, SESSION_BOOKING_STATES } = Values
  *
  * @returns {Object} - Joined styles object from different locations
  */
-const buildStyles = (theme, _, disabled, state, style) => {
+const buildStyles = (theme, _, disabled, state, iconName, style) => {
   const stateStyles = theme?.button?.evfButton[state] || noPropObj
   const bookingStyles = stateStyles?.content?.bookingState || noPropObj
   const disabledStyles = disabled
@@ -31,6 +31,10 @@ const buildStyles = (theme, _, disabled, state, style) => {
       ...bookingStyles.text,
       ...disabledStyles.content,
     },
+    icon: theme.get(
+      get(bookingStyles, `icon.${iconName}.default`),
+      disabled && get(bookingStyles, `icon.${iconName}.disabled`)
+    ),
   }
 }
 
@@ -46,6 +50,7 @@ const RenderBookingState = props => {
   const bookingStyles = useStylesCallback(buildStyles, [
     model.disabled,
     state,
+    Icon && Icon.name,
     style,
     styles,
   ])
@@ -57,12 +62,10 @@ const RenderBookingState = props => {
         style={bookingStyles.text}
         children={text}
       /> }
-      { Icon && (
-        <Icon
-          digit={displayAmount}
-          styles={bookingStyles?.icon[Icon.name]}
-        />
-      ) }
+      { Icon && <Icon
+        digit={displayAmount}
+        styles={bookingStyles.icon}
+      /> }
     </View>
   )
 }
