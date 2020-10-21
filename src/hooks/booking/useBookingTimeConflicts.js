@@ -3,14 +3,22 @@ import { noOpObj, noPropArr } from '@keg-hub/jsutils'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 
 /**
- * Checks if the timeBlock time is after the endBlock time
- * @param {string} endBlock - The end of a session
- * @param {string} tineBlock - The start of a session
+ * Checks if the timeBlock is at or between the start and end blocks
+ * @param {string} timeBlock - The start of a session
+ * @param {string} startBlock - The start of the current session
+ * @param {string} endBlock - The end of the current session
  *
  * @returns {boolean} - Is the timeBlock time after the endBlock time
  */
-const afterEndBlock = (endBlock, timeBlock) =>
-  Date.parse(`1970/01/01 ${timeBlock}`) > Date.parse(`1970/01/01 ${endBlock}`)
+const timeConflict = (timeBlock, startBlock, endBlock) => {
+  const timeBlockDate = Date.parse(
+    `1970/01/01 ${timeBlock.replace(/(AM)|(PM)/, '')}`
+  )
+  return Boolean(
+    timeBlockDate >= Date.parse(`1970/01/01 ${startBlock}`) &&
+      timeBlockDate <= Date.parse(`1970/01/01 ${endBlock}`)
+  )
+}
 
 /**
  * Gets a list of sessions relative to the start and end time of the passed in session Id
@@ -26,7 +34,7 @@ const getRelativeSessions = (daySessions, startBlock, endBlock, sessionId) => {
     (daySessions &&
       daySessions.length &&
       daySessions.reduce((relativeSessions, { sessions, timeBlock }) => {
-        ;(timeBlock === startBlock || afterEndBlock(endBlock, timeBlock)) &&
+        timeConflict(timeBlock, startBlock, endBlock) &&
           sessions &&
           sessions.length &&
           sessions.map(
