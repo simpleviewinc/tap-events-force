@@ -28,10 +28,10 @@ const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onClick
- * @param {boolean} props.smallEnough - whether the dimension width is small enough
+ * @param {boolean} props.showIcon
  */
-const FilterButton = ({ onClick, styles, smallEnough }) => {
-  return smallEnough ? (
+const FilterButton = ({ onClick, styles, showIcon }) => {
+  return showIcon ? (
     <View
       className={'ef-sessions-filter-button'}
       style={styles?.filterIcon?.main}
@@ -57,14 +57,14 @@ const FilterButton = ({ onClick, styles, smallEnough }) => {
 /**
  * Builds the styles for the header right component
  * @param {Object} theme - Global Theme object
- * @param {Object} custom - contains {styles, smallEnough}
+ * @param {Object} custom - contains {styles, smallWidth}
  *
  * @returns {Object}
  */
 const buildStylesHeaderRight = (theme, custom) => {
   return theme.get(
     custom.styles,
-    custom.smallEnough && {
+    custom.smallWidth && {
       main: {
         paddingRight: 0,
       },
@@ -130,20 +130,20 @@ const ItemHeaderRight = ({ styles, onClick }) => {
     `${CATEGORIES.FILTERS}.${SUB_CATEGORIES.ACTIVE_FILTERS}`
   )
 
-  const smallEnough = dim.width <= 720
+  const smallWidth = dim.width <= 720
   const showClearButton = dim.width > 520 && Boolean(activeFilters?.length)
 
   const customStyles = useMemo(
     () => ({
-      smallEnough,
+      smallWidth,
       styles,
     }),
-    [ styles, smallEnough ]
+    [ styles, smallWidth ]
   )
 
   const mainStyle = useStylesCallback(
     buildStylesHeaderRight,
-    [ styles, smallEnough ],
+    [ styles, smallWidth ],
     customStyles
   )
   const clearActiveFilters = useCallback(() => {
@@ -156,7 +156,7 @@ const ItemHeaderRight = ({ styles, onClick }) => {
       <FilterButton
         styles={mainStyle}
         onClick={onClick}
-        smallEnough={smallEnough}
+        showIcon={smallWidth}
       />
       { showClearButton && (
         <Button
