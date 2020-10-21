@@ -41,14 +41,14 @@
   },
   "dependencies": {
     "css-to-react-native-transform": "1.9.0",
-    "keg-core": "npm:@keg-hub/keg-core@6.1.0"
+    "keg-core": "npm:@keg-hub/keg-core@6.2.0"
   },
   "devDependencies": {
     "@babel/core": "7.10.3",
     "@babel/plugin-proposal-class-properties": "7.10.4",
     "@babel/plugin-transform-runtime": "7.10.3",
     "@babel/preset-env": "^7.10.3",
-    "@keg-hub/jsutils": "6.1.0",
+    "@keg-hub/jsutils": "6.2.0",
     "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",
