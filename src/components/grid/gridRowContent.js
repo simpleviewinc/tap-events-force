@@ -1,20 +1,45 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
-import {EvfTextToggle} from 'SVComponents/textToggle'
-import {
-  View,
-  Text,
-  Drawer,
-  Touchable,
-} from '@keg-hub/keg-components'
+import { EvfTextToggle } from 'SVComponents/textToggle'
+import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button'
-import {SessionPresenters} from 'SVComponents/sessionDetails'
+import { SessionPresenters } from 'SVComponents/sessionDetails'
+
+/**
+ * Recursively checks if the Booking button was clicked
+ * <br>If it was it check if it was disabled, and returns false
+ * <br/>If the button is not found, or not disabled it returns true
+ * @param {Object} node - Dom node element
+ * @param {Object} event - Dom event
+ *
+ * @returns {boolean} - If the Content should be toggled open
+ */
+const shouldToggleContent = (node, event) => {
+  const classList = node && node.classList
+
+  const buttonDisabled =
+    classList &&
+    classList.contains(`keg-button`) &&
+    node.hasAttribute('disabled')
+
+  const noButtonFound =
+    !node ||
+    !node.classList ||
+    (node &&
+      (node.classList.contains(`keg-drawer-content`) || !node.parentNode))
+
+  return buttonDisabled
+    ? false
+    : noButtonFound
+      ? true
+      : shouldToggleContent(node.parentNode, event)
+}
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -32,10 +57,17 @@ export const GridRowContent = props => {
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
 
+  const onToggle = useCallback(
+    event => {
+      shouldToggleContent(event.target, event) && setIsOpen(!isOpen)
+    },
+    [ isOpen, setIsOpen ]
+  )
+
   return (
     <Touchable
       style={gridRowContentStyles.main}
-      onPress={() => setIsOpen(!isOpen)}
+      onPress={onToggle}
     >
       <LabelList
         style={listStyles}
@@ -69,8 +101,8 @@ export const GridRowContent = props => {
 }
 
 /**
- * 
- * @param {object} props 
+ *
+ * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {object} props.styles
  */
@@ -81,12 +113,8 @@ const DrawerContent = ({ session, styles }) => {
         session={session}
         styles={styles?.bookingButton}
       />
-      <SessionPresenters 
-        session={session}
-      />
-      <EvfTextToggle
-        text={session.summary}
-      />
+      <SessionPresenters session={session} />
+      <EvfTextToggle text={session.summary} />
     </View>
   )
 }
