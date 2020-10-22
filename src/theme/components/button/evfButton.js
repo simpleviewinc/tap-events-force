@@ -111,6 +111,7 @@ const processingStyles = {
 const bookingStyles = {
   main: {
     flexDirection: 'row',
+    justifyContent: 'center',
   },
   icon: {
     Digit: {

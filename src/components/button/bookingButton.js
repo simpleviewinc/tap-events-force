@@ -6,7 +6,7 @@ import { useBookingState } from 'SVHooks/booking/useBookingState'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { noPropObj, get } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants'
-const { BOOKING_MODES, SESSION_BOOKING_STATES } = Values
+const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES } = Values
 
 /**
  * Helper to build the styles for the booking button
@@ -79,17 +79,28 @@ const RenderBookingState = props => {
  * @returns {Void}
  */
 const useSelectSession = (session, model) => {
-  return useCallback(() => {
-    // Check if the mode is single, and the attendee is on the waiting list or already booked
-    // If they are, we want to pass the selectSession action an empty array to remove the attendee from the session
-    const removeAttendee = Boolean(
-      model.mode === BOOKING_MODES.SINGLE &&
-        (model.state === SESSION_BOOKING_STATES.ON_WAITING_LIST ||
-          model.state === SESSION_BOOKING_STATES.SELECTED)
-    )
+  return useCallback(
+    event => {
+      // Check if the mode is single, and the attendee is on the waiting list or already booked
+      // If they are, we want to pass the selectSession action an empty array to remove the attendee from the session
+      const removeAttendee = Boolean(
+        model.mode === BOOKING_MODES.SINGLE &&
+          (model.state === SESSION_BOOKING_STATES.ON_WAITING_LIST ||
+            model.state === SESSION_BOOKING_STATES.SELECTED)
+      )
 
-    return selectSession(session, removeAttendee ? [] : undefined)
-  }, [ session, model ])
+      // Check if the state is on waiting list, so we know which action to call
+      const actionType =
+        model.state === SESSION_BOOKING_STATES.ON_WAITING_LIST
+          ? EVENTS.SESSION_WAITING_LIST_REQUEST
+          : EVENTS.SESSION_BOOKING_REQUEST
+
+      selectSession(session, removeAttendee ? [] : undefined, actionType)
+
+      console.log(event)
+    },
+    [ session, model ]
+  )
 }
 
 /**

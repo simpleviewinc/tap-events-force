@@ -24,7 +24,7 @@ export const Values = deepFreeze({
     BOOKED_TICKETS: 'bookedTickets',
     TICKETS: 'tickets',
     GROUP_BOOKING: 'groupBooking',
-    DISPLAY_PROPERTIES: 'displayProperties'
+    DISPLAY_PROPERTIES: 'displayProperties',
   },
 
   SUB_CATEGORIES: {
@@ -59,6 +59,9 @@ export const Values = deepFreeze({
     ON_WAITING_LIST: 'on waiting list',
     FULLY_BOOKED: 'fully booked',
     READ_ONLY: 'read only',
+  },
+  SESSION_BOOKING_LABEL_MAP: {
+    SELECT: 'Available',
   },
   BOOKING_STATES_WITH_ICON: {
     selected: true,
