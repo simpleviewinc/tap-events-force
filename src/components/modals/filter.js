@@ -274,7 +274,6 @@ const BottomSection = ({
   hasSelectedFilters,
   disableApply,
 }) => {
-  console.log('Apply is disabled:', disableApply)
   return (
     <View style={styles?.main}>
       { hasSelectedFilters && (
