@@ -97,7 +97,7 @@ export const selectedDisabled = {
           allowBooking: true,
           // Custom identifier to flag that booking has been stopped for that session
           // Will need to update when Events-Force gives us the real value
-          bookingStopped: true,
+          // bookingStopped: true,
           identifier: '1',
           name:
             'state - SELECTED (disabled) | mode - single | Session Booking Stopped',
@@ -140,7 +140,7 @@ export const selectedDisabled = {
           allowBooking: true,
           // Custom identifier to flag that booking has been stopped for that session
           // Will need to update when Events-Force gives us the real value
-          bookingStopped: true,
+          // bookingStopped: true,
           identifier: '1',
           name:
             'state - SELECTED (disabled) | mode - group | Session Booking Stopped',

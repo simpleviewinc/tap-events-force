@@ -91,13 +91,12 @@ const useSelectSession = (session, model) => {
 
       // Check if the state is on waiting list, so we know which action to call
       const actionType =
-        model.state === SESSION_BOOKING_STATES.ON_WAITING_LIST
+        model.state === SESSION_BOOKING_STATES.ON_WAITING_LIST ||
+        model.state === SESSION_BOOKING_STATES.WAITING_LIST
           ? EVENTS.SESSION_WAITING_LIST_REQUEST
           : EVENTS.SESSION_BOOKING_REQUEST
 
       selectSession(session, removeAttendee ? [] : undefined, actionType)
-
-      console.log(event)
     },
     [ session, model ]
   )

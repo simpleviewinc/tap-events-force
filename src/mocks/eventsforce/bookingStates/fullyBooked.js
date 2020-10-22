@@ -9,7 +9,7 @@ export const fullyBooked = {
           allowBooking: true,
           // Custom identifier to flag that booking has been stopped for that session
           // Will need to update when Events-Force gives us the real value
-          bookingStopped: true,
+          // bookingStopped: true,
           identifier: '1',
           name:
             'state - FULLY BOOKED | mode - single | Session Booking Stopped',
@@ -89,7 +89,7 @@ export const fullyBooked = {
           allowBooking: true,
           // Custom identifier to flag that booking has been stopped for that session
           // Will need to update when Events-Force gives us the real value
-          bookingStopped: true,
+          // bookingStopped: true,
           identifier: '1',
           name: 'state - FULLY BOOKED | mode - group | Session Booking Stopped',
           dayNumber: 1,

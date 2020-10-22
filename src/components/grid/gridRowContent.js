@@ -12,36 +12,6 @@ import { BookingButton } from 'SVComponents/button'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
 
 /**
- * Recursively checks if the Booking button was clicked
- * <br>If it was it check if it was disabled, and returns false
- * <br/>If the button is not found, or not disabled it returns true
- * @param {Object} node - Dom node element
- * @param {Object} event - Dom event
- *
- * @returns {boolean} - If the Content should be toggled open
- */
-const shouldToggleContent = (node, event) => {
-  const classList = node && node.classList
-
-  const buttonDisabled =
-    classList &&
-    classList.contains(`keg-button`) &&
-    node.hasAttribute('disabled')
-
-  const noButtonFound =
-    !node ||
-    !node.classList ||
-    (node &&
-      (node.classList.contains(`keg-drawer-content`) || !node.parentNode))
-
-  return buttonDisabled
-    ? false
-    : noButtonFound
-      ? true
-      : shouldToggleContent(node.parentNode, event)
-}
-
-/**
  * The content of a grid item when displayed as a row (<= 480px width)
  * @param {Object} props
  * @param {Array} props.labels - the array of label model objects
@@ -57,12 +27,7 @@ export const GridRowContent = props => {
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
 
-  const onToggle = useCallback(
-    event => {
-      shouldToggleContent(event.target, event) && setIsOpen(!isOpen)
-    },
-    [ isOpen, setIsOpen ]
-  )
+  const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
 
   return (
     <Touchable

@@ -10,6 +10,7 @@ import {
   Option,
 } from '@keg-hub/keg-components'
 import * as bookingStatesTestData from '../../mocks/eventsforce/bookingStates'
+import defTestData from '../../mocks/eventsforce/testData.js'
 
 const convertJson = json => {
   return JSON.stringify(json, null, 2)
@@ -69,8 +70,11 @@ const SelectBookingState = props => {
       if (!update || !editor) return
 
       // Get and convert the object to a string
-      const testData = get(bookingStatesTestData, update)
+      const testData =
+        update === 'N/A' ? defTestData : get(bookingStatesTestData, update)
+
       const strData = convertJson(testData)
+
       // Update the editor, and the locally stored state data
       // The Ace editor only allows setting the initial text data
       // So we have to call the ace editor API directly to update the text content
