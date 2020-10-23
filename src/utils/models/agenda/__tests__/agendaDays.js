@@ -1,5 +1,8 @@
-import { getCurrentDay, getLatestDay, isLatestDay } from 'SVUtils'
-import { AgendaDay } from 'SVModels'
+import { AgendaDay } from 'SVModels/agendaDay'
+
+const { getCurrentDay } = require('../agendaDays/getCurrentDay')
+const { getLatestDay } = require('../agendaDays/getLatestDay')
+const { isLatestDay } = require('../agendaDays/isLatestDay')
 
 const dayNums = [ 1, 2, 4, 3 ]
 const makeMockAgendaDays = () =>

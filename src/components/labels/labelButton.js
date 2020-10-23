@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { Button } from '@keg-hub/keg-components'
 import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
 import { checkCall } from '@keg-hub/jsutils'
+import { Values } from 'SVConstants/values'
+
+const { SESSION_BOOKING_LABEL_MAP } = Values
 
 /**
  * Builds the dynamic styles for LabelButton
@@ -72,7 +75,7 @@ export const LabelButton = ({
     <Button
       className={label.className}
       styles={toggledOn ? mainStyle.selected : mainStyle.unselected}
-      content={label.name}
+      content={SESSION_BOOKING_LABEL_MAP[label.identifier] || label.name}
       onClick={clickHandler}
     />
   )

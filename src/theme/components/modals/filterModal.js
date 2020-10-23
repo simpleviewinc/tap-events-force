@@ -95,7 +95,7 @@ const buttonsWrapper = {
 
 const clearButtonDefault = {
   main: {
-    jtC: 'flex-end',
+    jtC: 'center',
   },
   content: {
     $web: {

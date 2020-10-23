@@ -1,20 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
-import {EvfTextToggle} from 'SVComponents/textToggle'
-import {
-  View,
-  Text,
-  Drawer,
-  Touchable,
-} from '@keg-hub/keg-components'
+import { EvfTextToggle } from 'SVComponents/textToggle'
+import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button'
-import {SessionPresenters} from 'SVComponents/sessionDetails'
+import { SessionPresenters } from 'SVComponents/sessionDetails'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -32,10 +27,12 @@ export const GridRowContent = props => {
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
 
+  const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
+
   return (
     <Touchable
       style={gridRowContentStyles.main}
-      onPress={() => setIsOpen(!isOpen)}
+      onPress={onToggle}
     >
       <LabelList
         style={listStyles}
@@ -69,8 +66,8 @@ export const GridRowContent = props => {
 }
 
 /**
- * 
- * @param {object} props 
+ *
+ * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {object} props.styles
  */
@@ -81,12 +78,8 @@ const DrawerContent = ({ session, styles }) => {
         session={session}
         styles={styles?.bookingButton}
       />
-      <SessionPresenters 
-        session={session}
-      />
-      <EvfTextToggle
-        text={session.summary}
-      />
+      <SessionPresenters session={session} />
+      <EvfTextToggle text={session.summary} />
     </View>
   )
 }

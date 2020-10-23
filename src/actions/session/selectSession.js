@@ -3,27 +3,41 @@ import { getStore } from 'SVStore'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
 import { sessionBookingRequest } from 'SVActions/session/booking/sessionBookingRequest'
+import { sessionWaitingListRequest } from 'SVActions/session/booking/sessionWaitingListRequest'
 import { devLog } from 'SVUtils/logs'
+import { checkCall, isArr } from '@keg-hub/jsutils'
 
-const { MODAL_TYPES } = Values
+const { EVENTS, MODAL_TYPES } = Values
+const bookingActions = { sessionBookingRequest, sessionWaitingListRequest }
 
 /**
  * Either books the current session or opens up group booking modal
  * based on the # of attendees available
  * @param {import('SVModels/session').Session} session
+ * @param {Array} attendees - Group of attendee ids to book for a session
+ * @param {string} actionType - Type of booking action to call
  */
-export const selectSession = session => {
+export const selectSession = (
+  session,
+  attendees,
+  actionType = EVENTS.SESSION_BOOKING_REQUEST
+) => {
   if (!session)
     return devLog.warn(
       'Action "selectSession" requires a valid session. Received: ',
       session
     )
 
-  const { items } = getStore()?.getState()
-  const attendeesCp = items && Array.from(items.attendees)
+  // Check if there is an attendees override, and use that instead of the stored attendees
+  const attendeesCp = isArr(attendees)
+    ? attendees
+    : checkCall(() => {
+      const { items } = getStore()?.getState()
+      return items && Array.from(items.attendees)
+    })
 
-  // many attendees, open group booking modal
-  // single attendee, just book it
+  // If more then 1 attendee, open group booking modal
+  // Otherwise get an array of the attendee ids
   attendeesCp.length > 1
     ? addModal(
         new Modal({
@@ -34,8 +48,9 @@ export const selectSession = session => {
           },
         })
       )
-    : attendeesCp.length === 1 &&
-      sessionBookingRequest(session.identifier, [
-        attendeesCp[0]?.bookedTicketIdentifier,
-      ])
+    : checkCall(
+      bookingActions[actionType],
+      session.identifier,
+      attendeesCp.map(attendee => attendee?.bookedTicketIdentifier)
+    )
 }

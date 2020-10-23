@@ -1,6 +1,6 @@
 import { dispatch, getStore } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { buildHourSessionsMap } from 'SVUtils'
+import { buildHourSessionsMap } from 'SVUtils/models/sessions/buildHourSessionsMap'
 
 const { CATEGORIES } = Values
 /**
