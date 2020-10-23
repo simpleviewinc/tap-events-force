@@ -24,8 +24,8 @@ export const fullyBooked = {
           restrictToAttendeeCategories: [],
           capacity: {
             isUnlimited: false,
-            remainingPlaces: 10,
-            isWaitingListAvailable: true,
+            remainingPlaces: 0,
+            isWaitingListAvailable: false,
           },
           price: {
             currency: 'USD',
@@ -103,8 +103,8 @@ export const fullyBooked = {
           restrictToAttendeeCategories: [],
           capacity: {
             isUnlimited: false,
-            remainingPlaces: 10,
-            isWaitingListAvailable: true,
+            remainingPlaces: 0,
+            isWaitingListAvailable: false,
           },
           price: {
             currency: 'USD',
