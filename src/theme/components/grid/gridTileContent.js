@@ -1,3 +1,5 @@
+import { colors } from '../../colors'
+
 export const gridTileContent = {
   main: {
     flex: 1,
@@ -14,6 +16,29 @@ export const gridTileContent = {
       fontSize: 16,
       lineHeight: 19,
     },
+  },
+  locationText: {
+    ftSz: 16,
+    ftWt: '500',
+    lnH: 19,
+    color: colors.darkGray,
+    mT: 18
+  },
+  presenters: {
+    main: {
+      flD: 'row',
+      mR: 79,
+    },
+    sessionLink: {
+      main: {
+        $xsmall: {
+          mT: 13
+        },
+        $small: {
+          mR: 10
+        }
+      }
+    }
   },
   buttonSection: {
     main: {

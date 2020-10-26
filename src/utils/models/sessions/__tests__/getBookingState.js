@@ -91,8 +91,8 @@ describe('getBookingState', () => {
     })
   })
 
-  describe('AVAILABLE', () => {
-    it('should return AVAILABLE on sessions no attendee has booked or on waiting list AND has the capacity to do so', () => {
+  describe('SELECT', () => {
+    it('should return SELECT on sessions no attendee has booked or on waiting list AND has the capacity to do so', () => {
       const testSessions = [
         {
           allowBooking: true,
@@ -111,9 +111,7 @@ describe('getBookingState', () => {
         },
       ]
       testSessions.map(session => {
-        expect(getBookingState(session)).toEqual(
-          SESSION_BOOKING_STATES.AVAILABLE
-        )
+        expect(getBookingState(session)).toEqual(SESSION_BOOKING_STATES.SELECT)
       })
     })
   })

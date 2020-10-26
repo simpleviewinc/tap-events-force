@@ -5,11 +5,12 @@ import { sortSessions } from './sortSessions'
  * Filters the sessions given a day number
  * @param {Array<import('SVModels/session').Session>} sessions
  * @param {number} dayNumber
- * @param {boolean=} asc - order ascending by name
+ * @param {boolean} isMilitaryTime - is it in militaryTime
+ * @param {boolean=} asc - order ascending by name. default true
  * @returns {Array} - array of objects containing timeblock and sessions:
  *                    ex: [{timeBlock: '9:00', sessions: [session1, session2]}]
  */
-export const buildHourSessionsMap = (sessions, dayNumber, asc) => {
+export const buildHourSessionsMap = (sessions, dayNumber, isMilitaryTime, asc=true) => {
   // 1. Filter out the sessions not matching the day
   // 2. Group the sessions by start block
   // 3. sort the array by the start block
@@ -17,7 +18,7 @@ export const buildHourSessionsMap = (sessions, dayNumber, asc) => {
     .reduce((items, session) => {
       if (session.dayNumber !== dayNumber) return items
 
-      const timeBlock = getTimeFromDate(session.startDateTimeLocal)
+      const timeBlock = getTimeFromDate(session.startDateTimeLocal, isMilitaryTime)
 
       // check the session start time
       const mapIndex = items.findIndex(item => timeBlock === item.timeBlock)

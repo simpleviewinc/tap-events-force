@@ -1,19 +1,23 @@
 import React, { useRef, useCallback, useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { Text, ScrollView } from '@keg-hub/keg-components'
-import { checkCall, pickKeys } from '@keg-hub/jsutils'
+import { Text, ScrollView, View } from '@keg-hub/keg-components'
+import { checkCall, pickKeys, noPropArr } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useSessionLocation } from 'SVHooks/models'
 import { format } from 'date-fns'
-
+import { LabelButton } from 'SVComponents/labels/labelButton'
+import { BookingButton } from 'SVComponents/button'
+import { SessionPresenters } from 'SVComponents/sessionDetails'
 /**
  * SessionDetailsModal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
+ * @param {boolean} props.visible
+ * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-export const SessionDetailsModal = ({ session, visible }) => {
+export const SessionDetailsModal = ({ session, visible, labels }) => {
   if (!session) return null
 
   const theme = useTheme()
@@ -37,6 +41,7 @@ export const SessionDetailsModal = ({ session, visible }) => {
         )}
         styles={sessionDetailsStyles?.content?.body}
         session={session}
+        labels={labels}
       />
     </BaseModal>
   )
@@ -47,35 +52,83 @@ export const SessionDetailsModal = ({ session, visible }) => {
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {object} props.styles
+ * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-const Body = ({ styles, session }) => {
+const Body = ({ styles, session, labels = noPropArr }) => {
   const { settings } = useSelector(
     ({ items }) => pickKeys(items, ['settings']),
     shallowEqual
   )
-  const { timeFormat } = settings?.agendaSettings?.agendaDisplayProperties
-  const military = timeFormat === '24'
+  const military = settings?.displayProperties?.timeFormat === '24'
   const locationName = useSessionLocation(session)
 
   return (
-    <ScrollView style={styles?.main}>
-      <Text
-        className={'ef-modal-body-header'}
-        style={styles?.dateTimeText}
+    <View style={styles?.main}>
+      <ScrollView
+        style={styles?.scrollView?.main}
+        contentContainerStyle={styles?.scrollView?.contentContainer}
       >
-        { formatSessionDateTime(
-          session.startDateTimeLocal,
-          session.endDateTimeLocal,
-          military
-        ) }
-      </Text>
-      <Text
-        className={'ef-modal-body-highlight'}
-        style={styles?.locationText}
-      >
-        { locationName?.name || '' }
-      </Text>
-    </ScrollView>
+        <Text
+          className={'ef-modal-body-header'}
+          style={styles?.dateTimeText}
+        >
+          { formatSessionDateTime(
+            session.startDateTimeLocal,
+            session.endDateTimeLocal,
+            military
+          ) }
+        </Text>
+        <View style={styles?.labelButtons?.main}>
+          { labels.map(label => (
+            <LabelButton
+              styles={styles?.labelButtons?.button}
+              key={label.identifier}
+              label={label}
+            />
+          )) }
+        </View>
+        <Text
+          className={'ef-modal-body-highlight'}
+          style={styles?.locationText}
+        >
+          { locationName?.name || '' }
+        </Text>
+
+        <SessionPresenters
+          session={session}
+          textClassName={'ef-modal-sub-header'}
+        />
+
+        <Text
+          className={'ef-modal-body'}
+          style={styles.summaryText}
+        >
+          { session.summary }
+        </Text>
+      </ScrollView>
+
+      <ActionButton
+        styles={styles.actionButton}
+        session={session}
+      />
+    </View>
+  )
+}
+
+/**
+ * Booking button
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {import('SVModels/session').Session} props.session
+ */
+const ActionButton = ({ styles, session }) => {
+  return (
+    <View style={styles?.main}>
+      <BookingButton
+        session={session}
+        styles={styles?.button}
+      />
+    </View>
   )
 }
 

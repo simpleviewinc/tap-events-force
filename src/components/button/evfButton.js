@@ -14,6 +14,7 @@ import { set, get } from '@keg-hub/jsutils'
  */
 const buildStyles = (theme, custom) => {
   const btnStyles = theme.get(`button.evfButton.${custom.type}`)
+
   // Get the keys of the content.button, to get a list of all button states
   // This allows dynamically matching the Theme states even if they are changed
   const stateKeys = Object.keys(get(btnStyles, 'content.button', {}))
@@ -39,14 +40,18 @@ const buildStyles = (theme, custom) => {
  * @param {string} props.text - text to display on button
  * @param {boolean} props.isProcessing - to display processing content
  */
-export const EvfButton = ({
-  className,
-  styles,
-  onClick,
-  type = 'default',
-  text,
-  isProcessing = false,
-}) => {
+export const EvfButton = props => {
+  const {
+    children,
+    className,
+    disabled,
+    styles,
+    onClick,
+    type = 'default',
+    text,
+    isProcessing = false,
+  } = props
+
   // build the main style for the button, memoized
   const theme = useTheme()
   const buttonCls = `ef-action-button-${type}`
@@ -73,7 +78,7 @@ export const EvfButton = ({
     <View style={mainStyle?.main}>
       <View style={mainStyle?.content?.topLeftCorner?.main} />
       <Button
-        disabled={isProcessing}
+        disabled={disabled || isProcessing}
         className={[ buttonCls, className ]}
         onClick={onClick}
         styles={mainStyle?.content?.button}
@@ -84,7 +89,7 @@ export const EvfButton = ({
             size={mainStyle?.content?.processing?.icon?.size || 20}
           />
         ) : (
-          text
+          children || text
         ) }
       </Button>
     </View>

@@ -10,6 +10,8 @@ import { useFormattedPrice } from 'SVHooks/models/price'
 import { useCreateModal } from 'SVHooks/modal'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { Values } from 'SVConstants'
+import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
+import { getPresenterFullName } from 'SVUtils/models'
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -39,8 +41,12 @@ export const GridTileContent = props => {
     Values.MODAL_TYPES.SESSION_DETAILS,
     {
       session,
+      labels,
     }
   )
+
+  const location = useSessionLocation(session)
+
   return (
     <View
       className={`ef-grid-tile-content`}
@@ -73,6 +79,20 @@ export const GridTileContent = props => {
         text={session?.name}
       />
 
+      { location?.name && (
+        <Text
+          className={'ef-session-location'}
+          style={gridTileContentStyles?.locationText}
+        >
+          { location.name }
+        </Text>
+      ) }
+
+      <PresenterNames
+        session={session}
+        styles={gridTileContentStyles?.presenters}
+      />
+
       <View style={gridTileContentStyles?.buttonSection?.main}>
         <BookingButton
           session={session}
@@ -80,6 +100,54 @@ export const GridTileContent = props => {
         />
       </View>
     </View>
+  )
+}
+
+/**
+ * Displays the presenters in the given session
+ * Displays each one as interactable that opens the presenter details modal
+ * @param {object} props
+ * @param {object} props.style
+ * @param {import('SVModels/session').Session} props.session
+ */
+const PresenterNames = React.memo(({ session, styles }) => {
+  const presenters = useSessionPresenters(session)
+
+  return (
+    <View style={styles?.main}>
+      { presenters.map(presenter => {
+        return (
+          <PresenterLink
+            key={presenter.identifier}
+            styles={styles?.sessionLink}
+            presenter={presenter}
+          />
+        )
+      }) }
+    </View>
+  )
+})
+
+/**
+ * PresenterLink
+ * Clickable Presenter name that opens the presenter details modal
+ * @param {object} props
+ * @param {import('SVModels/presenter').Presenter} props.presenter
+ * @param {object} props.styles
+ */
+const PresenterLink = ({ presenter, styles }) => {
+  const displayDetailsModal = useCreateModal(
+    Values.MODAL_TYPES.PRESENTER,
+    presenter
+  )
+  return (
+    <SessionLink
+      className={'ef-sessions-presenter'}
+      styles={styles}
+      key={presenter.identifier}
+      text={getPresenterFullName(presenter)}
+      onPress={displayDetailsModal}
+    />
   )
 }
 

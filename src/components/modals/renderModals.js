@@ -42,7 +42,7 @@ export const RenderModals = modals => {
       return (
         <Alert
           key={index}
-          visible={true}
+          visible={visible}
           type={modal.data?.type}
           title={modal.data?.title}
           message={modal.data?.message}
@@ -52,7 +52,7 @@ export const RenderModals = modals => {
     case Values.MODAL_TYPES.FILTER:
       return <Filter
         key={index}
-        visible={true}
+        visible={visible}
         labels={modal.data?.labels}
       />
 
@@ -60,8 +60,9 @@ export const RenderModals = modals => {
       return (
         <SessionDetailsModal
           key={index}
-          visible={true}
+          visible={visible}
           session={modal.data?.session}
+          labels={modal.data?.labels}
         />
       )
     default:

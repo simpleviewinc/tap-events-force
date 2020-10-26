@@ -1,6 +1,10 @@
 import { longText } from '../text'
 
 export default {
+  displayProperties: {
+    dateFormat: 'dd/MM/yyyy', // can be "dd/MM/yyyy" | "MM/dd/yyyy" | "yyyy-MM-dd"
+    timeFormat: '12' // can be '12' or '24'
+  },
   agendaDays: [
     {
       dayNumber: 1,
@@ -55,6 +59,15 @@ export default {
         'https://47ddc71556b359d028bd-d91a48d103994bcfc502e0439b859d74.ssl.cf3.rackcdn.com/ef-iij5tpq56zja/noevent/personal/679/wvBcFJAn5jU0wAzmq3g6553149064133/avatar_people_person_business_.jpg',
       biography: longText,
     },
+    {
+      identifier: '4',
+      firstname: 'Bobby',
+      lastname: 'Flay',
+      email: 'b_flay@gmail.com',
+      jobtitle: 'Janitor',
+      company: 'Simpleview',
+      biography: longText,
+    },
   ],
   labels: [
     {
@@ -104,7 +117,8 @@ export default {
       identifier: '1',
       name:
         'session with presenters and labels session with presenters and labels session with presenters and labels session with presenters and labels',
-      summary: 'This is a session with both presenters and labels',
+      summary:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. ',
       dayNumber: 1,
       startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
@@ -188,7 +202,7 @@ export default {
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 10:00:00',
       endDateTimeLocal: '2020-08-04 10:30:00',
-      presenterIdentifiers: [],
+      presenterIdentifiers: ['4'],
       labelIdentifiers: [],
       locationIdentifier: '2',
       liveVideoUrl: '',
