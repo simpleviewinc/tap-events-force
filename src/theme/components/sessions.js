@@ -1,4 +1,21 @@
 import { colors } from '../colors'
+import { deepMerge } from '@keg-hub/jsutils'
+
+const filterButtonDefault = {
+  main: {
+    pV: 8,
+  },
+  content: {
+    $web: {
+      ltrS: 0.1,
+    },
+    $all: {
+      ftWt: '500',
+      txDc: 'underline',
+    },
+  },
+}
+
 export const sessions = {
   main: {
     $web: {
@@ -40,9 +57,6 @@ export const sessions = {
       content: {
         left: {
           main: {
-            $web: {
-              maxWidth: '10%',
-            },
             $native: {
               display: 'none',
             },
@@ -58,40 +72,55 @@ export const sessions = {
           },
         },
         right: {
-          main: {
-            $xsmall: {
-              maxWidth: '10%',
-            },
-          },
+          main: {},
           content: {
-            filterIcon: {
+            main: {
               $xsmall: {
-                color: colors.black,
-                paddingRight: 5,
+                jtC: 'flex-end',
+                flD: 'row',
               },
               $small: {
-                paddingRight: 10,
+                pR: 40,
               },
             },
-            filterButton: {
+            clearAll: deepMerge(filterButtonDefault, {
               main: {
-                pos: 'absolute',
-                rt: 40,
-                pV: 8,
-                pH: 12,
+                $xsmall: {
+                  display: 'none',
+                },
+                $small: {
+                  display: 'flex',
+                },
               },
               content: {
-                $web: {
-                  letterSpacing: 0.1,
-                },
                 $all: {
-                  fontSize: 20,
-                  fontWeight: '500',
-                  textDecorationLine: 'underline',
+                  ftSz: 16,
+                  color: colors.lightGray01,
+                },
+              },
+            }),
+            filterIcon: {
+              main: {
+                jtC: 'center',
+              },
+              icon: {
+                $xsmall: {
+                  color: colors.black,
+                  paddingRight: 5,
+                },
+                $small: {
+                  paddingRight: 10,
+                },
+              },
+            },
+            filterButton: deepMerge(filterButtonDefault, {
+              content: {
+                $all: {
+                  ftSz: 20,
                   color: colors.black,
                 },
               },
-            },
+            }),
           },
         },
       },

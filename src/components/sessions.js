@@ -1,9 +1,12 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
-import { useTheme, useDimensions } from '@keg-hub/re-theme'
+import { useTheme, useDimensions, useStylesCallback } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
-import { applySessionFilters } from 'SVActions/session/filters/applySessionFilters'
+import {
+  applySessionFilters,
+  clearSelectedFilters,
+} from 'SVActions/session/filters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
@@ -17,37 +20,55 @@ import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
 
-const { EVENTS } = Values
+const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
+
 /**
  * FilterButton
  * Renders either an Icon or a text button based on current screen dimension
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onClick
+ * @param {boolean} props.showIcon
  */
-const FilterButton = ({ onClick, styles }) => {
-  const dim = useDimensions()
-
-  const contentStyles = styles?.content
-
-  // use filter icon when below 650px width
-  return dim.width <= 650 ? (
-    <View className={'ef-sessions-filter-button'}>
+const FilterButton = ({ onClick, styles, showIcon }) => {
+  return showIcon ? (
+    <View
+      className={'ef-sessions-filter-button'}
+      style={styles?.filterIcon?.main}
+    >
       <EVFIcons.Filter
         className={'ef-sessions-filter-button'}
-        style={contentStyles?.filterIcon}
+        style={styles?.filterIcon?.icon}
         onPress={onClick}
-        color={contentStyles?.filterIcon?.color}
+        color={styles?.filterIcon?.icon?.color}
       />
     </View>
   ) : (
     <Button
       className={'ef-sessions-filter-button'}
       themePath='button.text.default'
-      styles={contentStyles?.filterButton}
+      styles={styles?.filterButton}
       onClick={onClick}
       content={'Filter'}
     />
+  )
+}
+
+/**
+ * Builds the styles for the header right component
+ * @param {Object} theme - Global Theme object
+ * @param {Object} custom - contains {styles, smallWidth}
+ *
+ * @returns {Object}
+ */
+const buildStylesHeaderRight = (theme, custom) => {
+  return theme.get(
+    custom.styles,
+    custom.smallWidth && {
+      main: {
+        paddingRight: 0,
+      },
+    }
   )
 }
 
@@ -87,8 +108,8 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
         />
       }
       RightComponent={
-        <FilterButton
-          styles={headerStyles?.content?.right}
+        <ItemHeaderRight
+          styles={headerStyles?.content?.right?.content}
           onClick={displayFilterModal}
         />
       }
@@ -96,6 +117,58 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
   )
 }
 
+/**
+ * ItemHeaderRight
+ * displays the filter btn and clear btn
+ *    hides the clear btn when dimension is small enough
+ * @param {object} props
+ * @param {object} props.styles - theme path: header.content.right.content
+ */
+const ItemHeaderRight = ({ styles, onClick }) => {
+  const dim = useDimensions()
+  const activeFilters = useStoreItems(
+    `${CATEGORIES.FILTERS}.${SUB_CATEGORIES.ACTIVE_FILTERS}`
+  )
+
+  const smallWidth = dim.width <= 720
+  const showClearButton = dim.width > 520 && Boolean(activeFilters?.length)
+
+  const customStyles = useMemo(
+    () => ({
+      smallWidth,
+      styles,
+    }),
+    [ styles, smallWidth ]
+  )
+
+  const mainStyle = useStylesCallback(
+    buildStylesHeaderRight,
+    [ styles, smallWidth ],
+    customStyles
+  )
+  const clearActiveFilters = useCallback(() => {
+    clearSelectedFilters()
+    applySessionFilters()
+  }, [ clearActiveFilters, clearSelectedFilters ])
+
+  return (
+    <View style={mainStyle?.main}>
+      <FilterButton
+        styles={mainStyle}
+        onClick={onClick}
+        showIcon={smallWidth}
+      />
+      { showClearButton && (
+        <Button
+          themePath='button.text.default'
+          styles={mainStyle?.clearAll}
+          content={'Clear'}
+          onClick={clearActiveFilters}
+        />
+      ) }
+    </View>
+  )
+}
 /**
  * Sets up the container for a group of sessions on a specific day
  * @param {object} props
