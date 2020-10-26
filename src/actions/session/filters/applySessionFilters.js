@@ -5,6 +5,7 @@ import {
   sessionsFromLabelFilters,
   sessionsFromStateFilters,
 } from 'SVUtils/filters'
+
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**

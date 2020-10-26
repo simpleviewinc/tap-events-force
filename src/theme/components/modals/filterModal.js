@@ -128,8 +128,11 @@ export const filterModal = {
           flexDirection: 'row',
           justifyContent: 'space-between',
         },
-        content: {
-          leftText: defaultTextStyle,
+        leftText: defaultTextStyle,
+        resultsText: {
+          ...defaultTextStyle,
+          color: colors.lightGray,
+          textAlign: 'end',
         },
       },
       middleSection: {
