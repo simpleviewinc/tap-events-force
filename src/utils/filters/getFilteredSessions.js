@@ -14,7 +14,6 @@ import {
  */
 export const getFilteredSessions = memorize(
   (selectedFilters = noPropArr, sessions = noPropArr) => {
-    console.log('hehehehe')
     return sessionsFromLabelFilters(
       selectedFilters,
       sessionsFromStateFilters(selectedFilters, sessions)
