@@ -21,12 +21,11 @@ export const useFilteredSessions = () => {
     const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
 
     // do basic filtering on SELECTED labels so we can get the count
-    return (
-      hasSelectedFilters &&
-      sessionsFromLabelFilters(
-        filters?.selectedFilters,
-        sessionsFromStateFilters(filters?.selectedFilters, sessions)
-      )
-    )
+    return hasSelectedFilters
+      ? sessionsFromLabelFilters(
+          filters?.selectedFilters,
+          sessionsFromStateFilters(filters?.selectedFilters, sessions)
+        )
+      : []
   }, [ filters, sessions ])
 }

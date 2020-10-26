@@ -73,7 +73,7 @@ const Content = ({ styles, onButtonPress, labels }) => {
     <View style={styles?.main}>
       <TopSection
         styles={styles?.topSection}
-        filteredSessions={filteredSessions || []}
+        filteredSessions={filteredSessions}
         hideCounter={!hasSelectedFilters}
       />
       <MiddleSection
@@ -82,7 +82,7 @@ const Content = ({ styles, onButtonPress, labels }) => {
         selectedFilters={filters?.selectedFilters}
       />
       <BottomSection
-        disableApply={filteredSessions?.length === 0}
+        disableApply={hasSelectedFilters && filteredSessions?.length === 0}
         styles={styles?.bottomSection}
         onButtonPress={onButtonPress}
         hasSelectedFilters={hasSelectedFilters}
