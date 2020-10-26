@@ -21,11 +21,6 @@ export const gridItem = {
         minHeight: 294,
       },
     },
-    $web: {
-      $xsmall: {
-        height: 'fit-content',
-      },
-    },
   },
   gridTileContent,
   gridRowContent,

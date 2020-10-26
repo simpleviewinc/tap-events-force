@@ -9,8 +9,9 @@ import { isMobileSize } from 'SVUtils/theme'
  * @param {Function} props.onPress
  * @param {string} props.text - text to display
  * @param {object} props.styles
+ * @param {string} props.className
  */
-export const SessionLink = ({ onPress, text, styles }) => {
+export const SessionLink = ({ onPress, text, styles, className }) => {
   const theme = useTheme()
   const sessionLinkStyles = useStyle('sessionLink.default')
   const numberOfLines = useMemo(
