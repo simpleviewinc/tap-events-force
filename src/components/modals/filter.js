@@ -138,7 +138,9 @@ const TopSection = ({ styles, filteredSessions, hideCounter = false }) => {
  * @param {Number=} props.count
  */
 const ResultsCounter = ({ styles, hide, count = 0 }) => {
-  const resultText = `${count} ${count > 1 ? 'results' : 'result'}`
+  const resultText = `${count} ${
+    count > 1 || count === 0 ? 'results' : 'result'
+  }`
   return hide ? null : (
     <Text
       style={styles?.resultsText}
