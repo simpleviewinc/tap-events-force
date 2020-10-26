@@ -21,10 +21,7 @@ import {
   clearSelectedFilters,
 } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
-import {
-  sessionsFromLabelFilters,
-  sessionsFromStateFilters,
-} from 'SVUtils/filters'
+import { getFilteredSessions } from 'SVUtils/filters'
 
 const { SESSION_BOOKING_STATES, CATEGORIES } = Values
 
@@ -75,12 +72,10 @@ const Content = ({ styles, onButtonPress, labels }) => {
   const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
 
   // do basic filtering on SELECTED labels so we can get the count
-  const filteredSessions =
-    hasSelectedFilters &&
-    sessionsFromLabelFilters(
-      filters?.selectedFilters,
-      sessionsFromStateFilters(filters?.selectedFilters, sessions)
-    )
+  const filteredSessions = getFilteredSessions(
+    filters?.selectedFilters,
+    sessions
+  )
 
   return (
     <View style={styles?.main}>

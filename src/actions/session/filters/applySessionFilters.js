@@ -1,10 +1,8 @@
 import { getStore, dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
-import {
-  sessionsFromLabelFilters,
-  sessionsFromStateFilters,
-} from 'SVUtils/filters'
+import { getFilteredSessions } from 'SVUtils/filters'
+
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
@@ -18,10 +16,7 @@ export const applySessionFilters = () => {
 
   const filteredSessions =
     selectedFilters.length > 0
-      ? sessionsFromLabelFilters(
-          selectedFilters,
-          sessionsFromStateFilters(selectedFilters, sessions)
-        )
+      ? getFilteredSessions(selectedFilters, sessions)
       : sessions
 
   // update agenda sessions store
