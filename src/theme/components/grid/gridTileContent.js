@@ -1,15 +1,5 @@
 import { colors } from '../../colors'
 
-const presenterSessionLink = {
-  main: {
-    $xsmall: {
-      mT: 13,
-    },
-    $small: {
-      mR: 10,
-    },
-  },
-}
 export const gridTileContent = {
   main: {
     flex: 1,
@@ -41,8 +31,14 @@ export const gridTileContent = {
       flWr: 'wrap',
     },
     sessionLink: {
-      default: presenterSessionLink,
-      hover: presenterSessionLink,
+      main: {
+        $xsmall: {
+          mT: 13,
+        },
+        $small: {
+          mR: 10,
+        },
+      },
     },
   },
   buttonSection: {

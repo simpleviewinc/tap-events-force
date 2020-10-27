@@ -12,14 +12,14 @@ import { isMobileSize } from 'SVUtils/theme'
  */
 export const SessionLink = ({ onPress, text, styles }) => {
   const theme = useTheme()
-  const sessionLinkStyles = useStyle('sessionLink.default', styles)
+  const sessionLinkStyles = useStyle('sessionLink.default')
   const numberOfLines = useMemo(
     () => (isMobileSize(theme) ? { numberOfLines: 2 } : { numberOfLines: 0 }),
     [theme]
   )
   // apply hover state
   const [ ref, themeStyle ] = useThemeHover(
-    theme.join(sessionLinkStyles, styles),
+    useStyle(sessionLinkStyles, styles),
     useStyle(`sessionLink.hover`)
   )
 

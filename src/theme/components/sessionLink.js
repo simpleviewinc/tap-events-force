@@ -3,13 +3,13 @@ import { deepMerge } from '@keg-hub/jsutils'
 
 const mainStyle = {
   $xsmall: {
-    marginTop: 5,
-    marginRight: 20,
-    flexWrap: 'wrap',
+    mT: 5,
+    mR: 20,
+    flWr: 'wrap',
   },
   $small: {
-    marginTop: 29,
-    marginRight: 79,
+    mT: 29,
+    mR: 79,
   },
 }
 
@@ -41,7 +41,6 @@ export const sessionLink = {
     text: textStyle,
   },
   hover: {
-    main: mainStyle,
     text: deepMerge(textStyle, {
       $all: {
         $xsmall: { txDL: 'underline' },
