@@ -37,14 +37,14 @@ export const TestContainer = withAppHeader('Test Container', props => {
   const bookingRequestCb = (...args) => {
     testOnSessionBookingRequest(...args)
 
-    setTimeout(() => {
-      // simulate a props-change after the booking-request cb would
-      // have updated attendees in consumer's context
-      setMockData({
-        ...mockData,
-        attendees: [...mockData.attendees],
-      })
-    }, 1000)
+    // setTimeout(() => {
+    //   // simulate a props-change after the booking-request cb would
+    //   // have updated attendees in consumer's context
+    //   setMockData({
+    //     ...mockData,
+    //     attendees: [...mockData.attendees],
+    //   })
+    // }, 1000)
   }
 
   return (

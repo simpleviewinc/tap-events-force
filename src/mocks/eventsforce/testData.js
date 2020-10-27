@@ -3,7 +3,7 @@ import { longText } from '../text'
 export default {
   displayProperties: {
     dateFormat: 'dd/MM/yyyy', // can be "dd/MM/yyyy" | "MM/dd/yyyy" | "yyyy-MM-dd"
-    timeFormat: '12' // can be '12' or '24'
+    timeFormat: '12', // can be '12' or '24'
   },
   agendaDays: [
     {
@@ -276,7 +276,7 @@ export default {
       allowBooking: true,
       identifier: '8',
       name:
-        'Session on day 2 Demo 2: super long name. Something different that is very complicated to describe',
+        'Session on day 2 Demo 2: super long name. Something different that is very complicated to describe. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 11:00:00',

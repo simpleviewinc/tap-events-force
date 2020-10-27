@@ -12,15 +12,25 @@ import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
 import { setGroupBookingLoading } from 'SVActions/session/booking/setGroupBookingLoading'
 import PropTypes from 'prop-types'
 
-const useButtonSubmit = (cb, onComplete) => {
+/**
+ * Handles the submit button loading state.
+ * When onSubmit is called, it sets the `groupBooking.loading`
+ * value to true, activating any loading UI. When the
+ * props rerender with attendees changed, it stops the spinner
+ * and calls `onComplete`.
+ *
+ * @param {Function?} onSubmit
+ * @param {Function?} onComplete
+ */
+const useButtonSubmit = (onSubmit, onComplete) => {
   const submit = useCallback(
     (...args) => {
       // if there is no cb to call, then immediately run the onComplete step
-      if (!cb) return onComplete?.()
-      cb(...args)
+      if (!onSubmit) return onComplete?.()
+      onSubmit(...args)
       setGroupBookingLoading(true)
     },
-    [ cb, setGroupBookingLoading ]
+    [ onSubmit, setGroupBookingLoading ]
   )
 
   const { attendees, groupBookingLoading } = useStoreItems([
@@ -29,16 +39,20 @@ const useButtonSubmit = (cb, onComplete) => {
   ])
 
   useEffect(() => {
-    // TODO: check if current and existing ids match booking and waiting list
-
     // if we are here, the list of attendees has changed,
-    // indicating the api call completed and the consumer
-    // updated the attendees to reflect the updated booking.
-    // So we should stop showing the loading spinner
+    // indicating the consumer rerendered the app with
+    // new attendees (since we do not modify it except at startup).
+    // We assume this indicates that the group booking task completed,
+    // so we can stop the loading spinner and run the onComplete callback.
+    //
+    // Although the app could rerender with new attendees for other reasons,
+    // it is unlikely and still O.K., because it will likely resolve momentarily,
+    // and if an error occured, the alert modal will still present.
     setGroupBookingLoading(false)
     onComplete?.()
   }, [attendees])
 
+  // return the submit function and the current loading state
   return [ submit, groupBookingLoading ]
 }
 
@@ -59,9 +73,14 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
-  const { attendees, attendeesByTicket } = useStoreItems([
+  const {
+    attendees,
+    attendeesByTicket,
+    groupBookingIsModifiedByConsumer,
+  } = useStoreItems([
     'attendees',
     'attendeesByTicket',
+    'groupBooking.isModifiedByConsumer',
   ])
 
   const { restrictedIdsForSession } = useRestrictedAttendeeIds(
@@ -126,6 +145,7 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
         onSubmitPress={onBookingSubmit}
         isLoading={isSubmitLoading}
         styles={bottomSectionStyles}
+        submitDisabled={!groupBookingIsModifiedByConsumer}
       />
     </View>
   )
@@ -178,12 +198,14 @@ const TopSection = ({ styles, remainingCount }) => {
  * @param {boolean} props.isLoading - if the submit button should show loading spinner
  * @param {Function} props.onCancelPress
  * @param {Function} props.onSubmitPress
+ * @param {boolean} props.submitDisabled - if the submit button should be disabled
  */
 const BottomSection = ({
   styles,
   onCancelPress,
   onSubmitPress,
   isLoading = false,
+  submitDisabled = false,
 }) => {
   return (
     <View
@@ -204,6 +226,7 @@ const BottomSection = ({
         styles={styles.content?.bookButton}
         text={'BOOK SELECTED'}
         onClick={onSubmitPress}
+        disabled={submitDisabled}
       />
     </View>
   )

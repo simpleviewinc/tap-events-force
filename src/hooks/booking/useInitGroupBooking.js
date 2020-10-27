@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useBookingLists } from './useBookingLists'
 import {
   setWaitingList,
   setBookingList,
-  setInitialWaitingList,
-  setInitialBookingList,
   setSessionCapacity,
   setCurrentSessionId,
   setConsumerModifiedBooking,
 } from 'SVActions/session/booking'
+import { validate, isArr } from '@keg-hub/jsutils'
 
 /**
  * Initializes the store items related to the group booking UI
@@ -24,45 +24,69 @@ export const useInitGroupBooking = (
   initialCapacityExceedsNeed,
   remainingCount
 ) => {
-  const [ currentBookedIds, currentWaitIds, existingBookedIds ] = useBookingLists(
-    session,
-    attendees,
-    initialCapacityExceedsNeed
-  )
-
-  // if all the checkboxes should be preselected
-  const isAllPreselected = initialCapacityExceedsNeed && !currentWaitIds?.length
+  const [
+    initialBookedIds,
+    initialWaitIds,
+    bookedIdsFromProps,
+    waitIdsFromProps,
+  ] = useBookingLists(session, attendees, initialCapacityExceedsNeed)
 
   // initialize the store state for group booking
   const [ initialized, setInitialized ] = useState(false)
+
   useEffect(() => {
     setSessionCapacity(remainingCount)
-
-    setBookingList(currentBookedIds)
-    setWaitingList(currentWaitIds)
-
-    // if the booked ids list contains preselected attendees, then the "initial"
-    // list was actually the one without preselection
-    // TODO: this is unintuitive as hell, find a better way to determine all of this
-    setInitialBookingList(
-      isAllPreselected ? existingBookedIds : currentBookedIds
-    )
-    setInitialWaitingList(currentWaitIds)
-
-    // TODO: set this to the result of whether or not the consuemr modified it
-    setConsumerModifiedBooking(false)
-
+    setBookingList(initialBookedIds)
+    setWaitingList(initialWaitIds)
     setCurrentSessionId(session?.identifier)
     setInitialized(true)
   }, [session])
 
+  // set up a hook to wait for changes to the lists,
+  // then compare them to the initial lists. If a modification
+  // was made, then update the isModified store value
+  useBookingModifyMonitor(waitIdsFromProps, bookedIdsFromProps)
+
   return initialized
 }
 
-// TODO: I need to sync jsutils to get containsSameElement, then I need to call this before setting the lists in the useEffect
-// above, andI need to hope it doesn't care about filtering the isBookable people
-// - it shouldn't matter, b/c if user submitted the booking, they could only submit peeps that ARE bookable!
-// const consumerModifiedBooking = () => {
-//   return !containsSameElements(currentBookedIds, incomingBookedIds)
-//     || !containsSameElements(currentWaitIds, incominingWaitIds)
-// }
+/**
+ * @param {Array} current
+ * @param {Array} orig
+ * @returns {boolean} true if current contains different elements than orig
+ */
+const listsDiffer = (current, orig) => {
+  const [valid] = validate({ current, orig }, { $default: isArr })
+  if (!valid) return false
+  if (current.length !== orig.length) return true
+
+  const set = new Set(current)
+
+  return orig.some(element => !set.has(element))
+}
+
+/**
+ * Monitors the current waiting and booking lists for the group booking modal,
+ * and sets the `groupBooking.isModified` value based on if at least one of the lists
+ * differs from its starting state.
+ * @param {Array<string>} initialWaitIds - starting state of wait list in group booking modal, before any selection
+ * @param {Array<string>} initialBookedIds - starting state of book list in group booking modal, before any selection
+ */
+const useBookingModifyMonitor = (
+  initialWaitIds = [],
+  initialBookedIds = []
+) => {
+  const { current: origWaitList } = useRef(initialWaitIds)
+  const { current: origBookList } = useRef(initialBookedIds)
+
+  const {
+    groupBookingWaitingList: waitList,
+    groupBookingBookingList: bookList,
+  } = useStoreItems([ 'groupBooking.waitingList', 'groupBooking.bookingList' ])
+
+  useEffect(() => {
+    setConsumerModifiedBooking(
+      listsDiffer(waitList, origWaitList) || listsDiffer(bookList, origBookList)
+    )
+  }, [ waitList, bookList ])
+}

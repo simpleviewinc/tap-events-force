@@ -4,6 +4,24 @@ import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
 import { useRestrictedAttendeeIds } from './useRestrictedAttendeeIds'
 
 /**
+ * @param {boolean} initialCapacityExceedsNeed
+ * @param {Array<string>} initialWaitIds
+ * @param {Array<string>} initialBookedIds
+ * @return {boolean} true if the initial booked list should preselect all the attendees
+ */
+const shouldPreselectAttendees = (
+  initialCapacityExceedsNeed,
+  initialWaitIds,
+  initialBookedIds
+) => {
+  return (
+    initialCapacityExceedsNeed &&
+    !initialWaitIds?.length &&
+    !initialBookedIds?.length
+  )
+}
+
+/**
  * Builds the initial list of booked attendee ids for the session
  * @param {Object} session - session object
  * @param {Array<string>} attendees - full list of attendees
@@ -15,13 +33,12 @@ import { useRestrictedAttendeeIds } from './useRestrictedAttendeeIds'
 const getInitialBookingIds = (
   existingBookIds,
   attendees,
-  initialWaitIds,
   isBookable,
-  initialCapacityExceedsNeed
+  shouldPreselect
 ) => {
   // if nobody is on the waiting list, and the capacity of session is greater than the number of attendees,
   // include all the attendees that are bookable
-  if (initialCapacityExceedsNeed && !initialWaitIds?.length)
+  if (shouldPreselect)
     return attendees.reduce((ids, nextAttendee) => {
       if (!isBookable(nextAttendee)) return ids
       ids.push(nextAttendee.bookedTicketIdentifier)
@@ -38,7 +55,7 @@ const getInitialBookingIds = (
  * @param {Array<import('SVModels/attendee').Attendee>} attendees - full list of attendees
  * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
  * @return {Array} destructurable array of form:
- * [ initBookingList, initWaitingList, existingBookingList, existingWaitingList ]
+ * [ initBookingList, initWaitingList, isPreselected ]
  * - all lists filter out the ids of attendees who are restricted from booking or waiting on the session
  */
 export const useBookingLists = (
@@ -69,21 +86,26 @@ export const useBookingLists = (
       attendees
     ).filter(attendeeIsBookable)
 
+    const shouldPreselect = shouldPreselectAttendees(
+      initialCapacityExceedsNeed,
+      initWaitingList,
+      existingBookingList
+    )
+
     // The initial booking list to be used on the group booking modal. This might be equal to the
     // existing booking list, or it may be a list of pre-selected attendees given certain conditions
     const initBookingList = getInitialBookingIds(
       existingBookingList,
       attendees,
-      initWaitingList,
       attendeeIsBookable,
-      initialCapacityExceedsNeed
+      shouldPreselect
     )
 
     return [
       initBookingList,
       initWaitingList,
       existingBookingList,
-      existingWaitingList,
+      initWaitingList,
     ]
   }, [
     session,
