@@ -1,5 +1,4 @@
 import { colors } from '../colors'
-import { deepMerge } from '@keg-hub/jsutils'
 
 const mainStyle = {
   $xsmall: {
@@ -41,10 +40,12 @@ export const sessionLink = {
     text: textStyle,
   },
   hover: {
-    text: deepMerge(textStyle, {
+    text: {
       $all: {
-        $xsmall: { txDL: 'underline' },
+        $xsmall: { 
+          txDL: 'underline' 
+        },
       },
-    }),
+    },
   },
 }
