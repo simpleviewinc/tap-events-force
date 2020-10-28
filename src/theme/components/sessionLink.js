@@ -1,35 +1,50 @@
 import { colors } from '../colors'
 
-export const sessionLink = {
-  main: {
+const mainStyle = {
+  $xsmall: {
+    mT: 5,
+    mR: 20,
+    flWr: 'wrap',
+  },
+  $small: {
+    mT: 29,
+    mR: 79,
+  },
+}
+
+const textStyle = {
+  $web: {
+    width: 'fit-content',
+  },
+  $native: {
+    flD: 'row',
+    alS: 'flex-start',
+  },
+  $all: {
     $xsmall: {
-      marginTop: 5,
-      marginRight: 20,
-      flexWrap: 'wrap',
+      c: colors.black,
+      ftSz: 14,
+      lnH: 17,
     },
     $small: {
-      marginTop: 29,
-      marginRight: 79,
+      c: colors.primary,
+      ftSz: 16,
+      lnH: 19,
     },
   },
-  text: {
-    $web: {
-      width: 'fit-content',
-    },
-    $native: {
-      flexDirection: 'row',
-      alignSelf: 'flex-start',
-    },
-    $all: {
-      $xsmall: {
-        color: colors.black,
-        fontSize: 14,
-        lineHeight: 17,
-      },
-      $small: {
-        color: colors.primary,
-        fontSize: 16,
-        lineHeight: 19,
+}
+
+export const sessionLink = {
+  default: {
+    main: mainStyle,
+    text: textStyle,
+  },
+  hover: {
+    text: {
+      $all: {
+        $xsmall: { 
+          txDL: 'underline' 
+        },
       },
     },
   },
