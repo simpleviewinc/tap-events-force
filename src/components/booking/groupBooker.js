@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
 import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
@@ -9,8 +9,11 @@ import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
-import { setGroupBookingLoading } from 'SVActions/session/booking/setGroupBookingLoading'
+import { setPendingSession } from 'SVActions/session/booking/setPendingSession'
+import { Values } from 'SVConstants'
 import PropTypes from 'prop-types'
+
+const { CATEGORIES } = Values
 
 /**
  * Handles the submit button loading state.
@@ -22,23 +25,31 @@ import PropTypes from 'prop-types'
  * @param {Function?} onSubmit
  * @param {Function?} onComplete
  */
-const useButtonSubmit = (onSubmit, onComplete) => {
+const useButtonSubmit = (sessionId, onSubmit, onComplete) => {
   const submit = useCallback(
     (...args) => {
       // if there is no cb to call, then immediately run the onComplete step
       if (!onSubmit) return onComplete?.()
+      setPendingSession(sessionId, true)
       onSubmit(...args)
-      setGroupBookingLoading(true)
     },
-    [ onSubmit, setGroupBookingLoading ]
+    [onSubmit]
   )
 
-  const { attendees, groupBookingLoading } = useStoreItems([
-    'attendees',
-    'groupBooking.loading',
+  const { attendees, pendingSession, modifiedSession } = useStoreItems([
+    CATEGORIES.ATTENDEES,
+    CATEGORIES.PENDING_SESSION,
+    CATEGORIES.MODIFIED_SESSION,
   ])
 
+  const sessionIsModified = modifiedSession?.identifier === sessionId
+  const sessionIsPending = pendingSession?.identifier === sessionId
+  const bookingButtonIsEnabled =
+    !pendingSession?.identifier && sessionIsModified
+
+  const [ isFirstRender, setIsFirstRender ] = useState(true)
   useEffect(() => {
+    isFirstRender && setIsFirstRender(false)
     // if we are here, the list of attendees has changed,
     // indicating the consumer rerendered the app with
     // new attendees (since we do not modify it except at startup).
@@ -48,12 +59,12 @@ const useButtonSubmit = (onSubmit, onComplete) => {
     // Although the app could rerender with new attendees for other reasons,
     // it is unlikely and still O.K., because it will likely resolve momentarily,
     // and if an error occured, the alert modal will still present.
-    setGroupBookingLoading(false)
-    onComplete?.()
+    !isFirstRender && onComplete?.()
+    !isFirstRender && setPendingSession(sessionId, false)
   }, [attendees])
 
   // return the submit function and the current loading state
-  return [ submit, groupBookingLoading ]
+  return [ submit, sessionIsPending, bookingButtonIsEnabled ]
 }
 
 /**
@@ -73,14 +84,9 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
-  const {
-    attendees,
-    attendeesByTicket,
-    groupBookingIsModifiedByConsumer,
-  } = useStoreItems([
-    'attendees',
-    'attendeesByTicket',
-    'groupBooking.isModifiedByConsumer',
+  const { attendees, attendeesByTicket } = useStoreItems([
+    CATEGORIES.ATTENDEES,
+    CATEGORIES.ATTENDEES_BY_TICKET,
   ])
 
   const { restrictedIdsForSession } = useRestrictedAttendeeIds(
@@ -117,7 +123,8 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
     ? null
     : currentCapacity
 
-  const [ onBookingSubmit, isSubmitLoading ] = useButtonSubmit(
+  const [ onBookingSubmit, isSubmitLoading, submitIsEnabled ] = useButtonSubmit(
+    session.identifier,
     bookSession,
     onCancelPress
   )
@@ -145,7 +152,7 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
         onSubmitPress={onBookingSubmit}
         isLoading={isSubmitLoading}
         styles={bottomSectionStyles}
-        submitDisabled={!groupBookingIsModifiedByConsumer}
+        submitDisabled={!submitIsEnabled}
       />
     </View>
   )

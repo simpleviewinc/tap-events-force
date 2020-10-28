@@ -6,7 +6,7 @@ import {
   setBookingList,
   setSessionCapacity,
   setCurrentSessionId,
-  setConsumerModifiedBooking,
+  setUserModifiedBooking,
 } from 'SVActions/session/booking'
 import { validate, isArr } from '@keg-hub/jsutils'
 
@@ -45,7 +45,11 @@ export const useInitGroupBooking = (
   // set up a hook to wait for changes to the lists,
   // then compare them to the initial lists. If a modification
   // was made, then update the isModified store value
-  useBookingModifyMonitor(waitIdsFromProps, bookedIdsFromProps)
+  useBookingModifyMonitor(
+    session?.identifier,
+    waitIdsFromProps,
+    bookedIdsFromProps
+  )
 
   return initialized
 }
@@ -57,7 +61,7 @@ export const useInitGroupBooking = (
  */
 const listsDiffer = (current, orig) => {
   const [valid] = validate({ current, orig }, { $default: isArr })
-  if (!valid) return false
+  if (!valid) return null
   if (current.length !== orig.length) return true
 
   const set = new Set(current)
@@ -73,9 +77,12 @@ const listsDiffer = (current, orig) => {
  * @param {Array<string>} initialBookedIds - starting state of book list in group booking modal, before any selection
  */
 const useBookingModifyMonitor = (
+  sessionId,
   initialWaitIds = [],
   initialBookedIds = []
 ) => {
+  // set the initial booking lists. Only runs when the group booking modal is opened.
+  // If it is closed and reopened, the ref will be reset.
   const { current: origWaitList } = useRef(initialWaitIds)
   const { current: origBookList } = useRef(initialBookedIds)
 
@@ -85,7 +92,8 @@ const useBookingModifyMonitor = (
   } = useStoreItems([ 'groupBooking.waitingList', 'groupBooking.bookingList' ])
 
   useEffect(() => {
-    setConsumerModifiedBooking(
+    setUserModifiedBooking(
+      sessionId,
       listsDiffer(waitList, origWaitList) || listsDiffer(bookList, origBookList)
     )
   }, [ waitList, bookList ])

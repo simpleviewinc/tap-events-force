@@ -22,7 +22,7 @@ export const sessionBookingRequest = (sessionId, attendeeIds = []) => {
     attendeeIds
   )
 
-  return validateEventResponse(
+  validateEventResponse(
     valid,
     [`Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`],
     [ 'Emitted event', EVENTS.SESSION_BOOKING_REQUEST, sessionId, attendeeIds ]

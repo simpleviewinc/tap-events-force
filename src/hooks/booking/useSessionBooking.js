@@ -8,7 +8,7 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useBookingSet } from './useBookingSet'
 import { useWaitingSet } from './useWaitingSet'
 import { Values } from 'SVConstants'
-const { CATEGORIES, SUB_CATEGORIES } = Values
+const { CATEGORIES } = Values
 
 /**
  * Returns a callback that, given an attendee id, updates the list
@@ -81,38 +81,6 @@ const useBookSession = (session, bookingList, waitingList) => {
 }
 
 /**
- * Returns true if arrays A & B contain all the same elements,
- * where order doesn't matter
- * @param {Array<*>} arrA
- * @param {Array<*>} arrB
- */
-const containSameElements = (arrA, arrB) => {
-  if (arrA.length !== arrB.length) return false
-  if (arrA.length === 0) return true
-  const setA = new Set(arrA)
-  return arrB.every(item => setA.has(item))
-}
-
-/**
- * @param {Array<string>} bookingList - list of attendee ids on booking list
- * @param {Array<string>} waitingList - list of attendee ids on waiting list
- * @returns {boolean} true if the user has modified the booking or waiting lists
- */
-const useBookingIsUserModified = (bookingList, waitingList) => {
-  const initialBookingList = useStoreItems(
-    `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.INITIAL_BOOKING_LIST}`
-  )
-  const initialWaitingList = useStoreItems(
-    `${CATEGORIES.GROUP_BOOKING}.${SUB_CATEGORIES.INITIAL_WAITING_LIST}`
-  )
-
-  return !(
-    containSameElements(bookingList, initialBookingList) &&
-    containSameElements(waitingList, initialWaitingList)
-  )
-}
-
-/**
  * Returns callbacks for working with session capacity and latest capacity
  * @param {import('SVModels/session').Session} session
  * @return {Object} object with keys for callbacks and current capacity
@@ -129,11 +97,6 @@ export const useSessionBooking = session => {
   const bookingSet = useBookingSet()
   const waitingSet = useWaitingSet()
 
-  const userHasModifiedBooking = useBookingIsUserModified(
-    bookingSet.data,
-    waitingSet.data
-  )
-
   const updateCapacity = useUpdateSessionLists(
     waitingSet,
     bookingSet,
@@ -142,13 +105,11 @@ export const useSessionBooking = session => {
     isUnlimited
   )
 
-  const bookSessionCb = useBookSession(session, bookingSet, waitingSet)
+  const bookSession = useBookSession(session, bookingSet, waitingSet)
 
   return {
     updateCapacity,
     currentCapacity,
-
-    // if user hasn't modified booking or waiting list, then we shouldn't call the book session cb.
-    bookSession: userHasModifiedBooking ? bookSessionCb : null,
+    bookSession,
   }
 }

@@ -5,6 +5,9 @@ import { useBookingSet } from 'SVHooks/booking/useBookingSet'
 import { useWaitingSet } from 'SVHooks/booking/useWaitingSet'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
+import { Values } from 'SVConstants'
+
+const { CATEGORIES } = Values
 
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
@@ -44,16 +47,17 @@ export const AttendeeBookingList = ({
   // get the isBookable callback to check if an attendee is eligible to book the session
   const { isBookable } = useRestrictedAttendeeIds(session?.identifier)
   const { enableCheck } = useCheckboxState(session)
-  const bookerIsLoading = useStoreItems('groupBooking.loading')
+  const pendingSession = useStoreItems(CATEGORIES.PENDING_SESSION)
+  const someBookingIsPending = Boolean(pendingSession?.identifier)
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
     const { isBooking, isWaiting, isDisabled } = useMemo(
       () => ({
         isBooking: bookingList.has(attendeeId),
         isWaiting: waitingList.has(attendeeId),
-        isDisabled: bookerIsLoading || !isBookable?.(attendeeId),
+        isDisabled: someBookingIsPending || !isBookable?.(attendeeId),
       }),
-      [ attendeeId, bookingList, waitingList, isBookable, bookerIsLoading ]
+      [ attendeeId, bookingList, waitingList, isBookable, someBookingIsPending ]
     )
 
     return (

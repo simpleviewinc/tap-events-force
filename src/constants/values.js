@@ -6,6 +6,8 @@ import { deepFreeze } from '@keg-hub/jsutils'
 export const Values = deepFreeze({
   CATEGORIES: {
     ACTIVE_SESSION: 'activeSession',
+    PENDING_SESSION: 'pendingSession',
+    MODIFIED_SESSION: 'modifiedSession',
     AGENDA_SESSIONS: 'agendaSessions',
     ATTENDEES_BY_TICKET: 'attendeesByTicket',
     RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
@@ -39,7 +41,7 @@ export const Values = deepFreeze({
     INITIAL_WAITING_LIST: 'initialWaitingList',
     SESSION_CAPACITY: 'capacity',
     CURRENT_SESSION: 'currentSession',
-    IS_MODIFIED_BY_CONSUMER: 'isModifiedByConsumer',
+    IS_MODIFIED_BY_USER: 'isModifiedByUser',
     LOADING: 'loading',
   },
 
