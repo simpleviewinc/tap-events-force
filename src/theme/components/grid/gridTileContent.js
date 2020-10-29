@@ -26,9 +26,11 @@ export const gridTileContent = {
   },
   presenters: {
     main: {
-      flD: 'row',
-      mR: 79,
+      fl: 1,
+    },
+    container: {
       flWr: 'wrap',
+      flD: 'row',
     },
     sessionLink: {
       main: {
@@ -44,8 +46,7 @@ export const gridTileContent = {
   buttonSection: {
     main: {
       $web: {
-        position: 'absolute',
-        bottom: 0,
+        position: 'relative',
         alignSelf: 'flex-end',
       },
     },
