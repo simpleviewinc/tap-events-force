@@ -115,15 +115,17 @@ const PresenterNames = React.memo(({ session, styles }) => {
 
   return (
     <View style={styles?.main}>
-      { presenters.map(presenter => {
-        return (
-          <PresenterLink
-            key={presenter.identifier}
-            styles={styles?.sessionLink}
-            presenter={presenter}
-          />
-        )
-      }) }
+      <View style={styles?.container}>
+        { presenters.map(presenter => {
+          return (
+            <PresenterLink
+              key={presenter.identifier}
+              styles={styles?.sessionLink}
+              presenter={presenter}
+            />
+          )
+        }) }
+      </View>
     </View>
   )
 })

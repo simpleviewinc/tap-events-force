@@ -30,7 +30,11 @@ export const DayToggle = props => {
   const dayToggleStyles = theme.get('dayToggle')
 
   const dims = useDimensions()
-  const dateStr = useDateString(date, isMobileSize(theme), dims.width < 750)
+  const dateStr = useDateString(
+    date,
+    isMobileSize(theme) || dims.width <= 600,
+    dims.width <= 800
+  )
   const dayText = `Day ${dayNumber} - ${dateStr}`
 
   return (

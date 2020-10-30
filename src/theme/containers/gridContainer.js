@@ -28,8 +28,9 @@ export const gridContainer = {
         content: {
           left: {
             main: {
-              flex: 1,
-              justifyContent: 'center',
+              fl: 1,
+              jsC: 'flex-start',
+              maxW: '50%',
             },
             content: {
               text: {
@@ -38,10 +39,10 @@ export const gridContainer = {
                 },
                 $all: {
                   color: colors.white,
-                  fontWeight: '600',
-                  paddingLeft: 10,
-                  fontSize: 20,
-                  fontStyle: 'normal',
+                  ftWt: '600',
+                  pL: 21,
+                  ftSz: 20,
+                  ftS: 'normal',
                 },
               },
             },

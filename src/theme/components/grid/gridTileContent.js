@@ -22,29 +22,31 @@ export const gridTileContent = {
     ftWt: '500',
     lnH: 19,
     color: colors.darkGray,
-    mT: 18
+    mT: 18,
   },
   presenters: {
     main: {
+      fl: 1,
+    },
+    container: {
+      flWr: 'wrap',
       flD: 'row',
-      mR: 79,
     },
     sessionLink: {
       main: {
         $xsmall: {
-          mT: 13
+          mT: 13,
         },
         $small: {
-          mR: 10
-        }
-      }
-    }
+          mR: 10,
+        },
+      },
+    },
   },
   buttonSection: {
     main: {
       $web: {
-        position: 'absolute',
-        bottom: 0,
+        position: 'relative',
         alignSelf: 'flex-end',
       },
     },

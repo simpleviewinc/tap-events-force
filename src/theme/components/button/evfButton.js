@@ -49,7 +49,7 @@ const buildButtonState = stateStyles =>
           flex: 1,
           justifyContent: 'center',
           borderRadius: 0,
-          height: 50,
+          minHeight: 50,
         },
         $web: {
           boxShadow: '0px 1px 1px rgba(0, 0, 0, 0.15)',

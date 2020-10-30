@@ -10,20 +10,20 @@ import { Values } from 'SVConstants/values'
 import {
   reduceObj,
   wordCaps,
-  pickKeys,
   checkCall,
   filterObj,
   noPropArr,
 } from '@keg-hub/jsutils'
-import { useSelector, shallowEqual } from 'react-redux'
 import {
   updateSelectedFilters,
   applySessionFilters,
   cancelSelectedFilters,
   clearSelectedFilters,
 } from 'SVActions/session/filters'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
+import { useFilteredSessions } from 'SVHooks/sessions'
 
-const { SESSION_BOOKING_STATES } = Values
+const { SESSION_BOOKING_STATES, CATEGORIES } = Values
 
 /**
  *
@@ -65,22 +65,27 @@ export const Filter = ({ visible, labels }) => {
  * @param {Array<import('SVModels/label').Label>} props.labels
  */
 const Content = ({ styles, onButtonPress, labels }) => {
-  const { filters } = useSelector(
-    ({ items }) => pickKeys(items, ['filters']),
-    shallowEqual
-  )
+  const { filters } = useStoreItems([CATEGORIES.FILTERS])
+  const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
+  const filteredSessions = useFilteredSessions()
+
   return (
     <View style={styles?.main}>
-      <TopSection styles={styles?.topSection} />
+      <TopSection
+        styles={styles?.topSection}
+        filteredSessions={filteredSessions}
+        hideCounter={!hasSelectedFilters}
+      />
       <MiddleSection
         labels={labels}
         styles={styles?.middleSection}
         selectedFilters={filters?.selectedFilters}
       />
       <BottomSection
+        disableApply={hasSelectedFilters && filteredSessions?.length === 0}
         styles={styles?.bottomSection}
         onButtonPress={onButtonPress}
-        hasSelectedFilters={Boolean(filters?.selectedFilters?.length)}
+        hasSelectedFilters={hasSelectedFilters}
       />
     </View>
   )
@@ -90,17 +95,46 @@ const Content = ({ styles, onButtonPress, labels }) => {
  *
  * @param {object} props
  * @param {object} props.styles - default from modal.filter.body.topSection
+ * @param {Array.<import('SVModels/session').Session>} props.filteredSessions
+ * @param {Boolean} props.hideCounter
  */
-const TopSection = ({ styles }) => {
+const TopSection = ({ styles, filteredSessions, hideCounter = false }) => {
   return (
     <View style={styles?.main}>
       <Text
-        style={styles?.content?.leftText}
-        className={'ef-modal-body-highlight'}
+        style={styles?.leftText}
+        className={'ef-modal-body-header'}
       >
         Only Show:
       </Text>
+      <ResultsCounter
+        hide={hideCounter}
+        count={filteredSessions.length}
+        styles={styles}
+      />
     </View>
+  )
+}
+
+/**
+ * ResultsCounter
+ * displays the count of filter
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {object} props.hide - whether to show/hide this component
+ * @param {Number=} props.count
+ */
+const ResultsCounter = ({ styles, hide, count = 0 }) => {
+  const resultText = `${count} ${
+    count > 1 || count === 0 ? 'results' : 'result'
+  }`
+  return hide ? null : (
+    <Text
+      style={styles?.resultsText}
+      className={'ef-modal-body-highlight'}
+    >
+      { resultText }
+    </Text>
   )
 }
 
@@ -221,8 +255,14 @@ const MiddleSection = ({ styles, labels, selectedFilters }) => {
  * @param {object} props.styles - default from modal.filter.body.bottomSection theme
  * @param {Function} props.onButtonPress
  * @param {boolean} props.hasSelectedFilters - whether or not the selectedFilters state is empty
+ * @param {boolean} props.disableApply - whether the apply btn is disabled or not
  */
-const BottomSection = ({ styles, onButtonPress, hasSelectedFilters }) => {
+const BottomSection = ({
+  styles,
+  onButtonPress,
+  hasSelectedFilters,
+  disableApply,
+}) => {
   return (
     <View style={styles?.main}>
       { hasSelectedFilters && (
@@ -230,10 +270,11 @@ const BottomSection = ({ styles, onButtonPress, hasSelectedFilters }) => {
           themePath='button.text.default'
           styles={styles?.clearButton}
           onClick={clearSelectedFilters}
-          content={'clear filters'}
+          content={'Clear all'}
         />
       ) }
       <EvfButton
+        disabled={disableApply}
         type={'primary'}
         styles={styles?.applyButton}
         onClick={onButtonPress}

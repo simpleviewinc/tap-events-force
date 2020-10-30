@@ -68,6 +68,23 @@ export default {
       company: 'Simpleview',
       biography: longText,
     },
+    {
+      identifier: '5',
+      firstname: 'Foo',
+      lastname: 'Bar',
+      email: 'foobar@gmail.com',
+      jobtitle: 'Engineer',
+      company: 'Google Inc',
+      biography: longText,
+    },
+    {
+      identifier: '6',
+      firstname: 'Jonny',
+      lastname: 'Jonathan',
+      email: 'jojo@gmail.com',
+      jobtitle: 'Freelancer',
+      biography: longText,
+    },
   ],
   labels: [
     {
@@ -237,7 +254,8 @@ export default {
     {
       allowBooking: true,
       identifier: '6',
-      name: 'Session on day 2 restricted to attendee category',
+      name:
+        'Session on day 2 restricted to attendee categorySession on day 2 restricted to attendee categorySession on day 2 restricted to attendee categorySession on day 2 restricted to attendee categorySession on day 2 restricted to attendee categorySession on day 2 restricted to attendee categorySession on day 2 restricted to attendee categorySession on day 2 restricted to attendee category',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 11:00:00',
@@ -260,7 +278,7 @@ export default {
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 11:00:00',
       endDateTimeLocal: '2020-08-04 11:45:00',
-      presenterIdentifiers: [],
+      presenterIdentifiers: [ '2', '3', '4' ],
       labelIdentifiers: [],
       locationIdentifier: '2',
       liveVideoUrl: '',
@@ -276,12 +294,12 @@ export default {
       allowBooking: true,
       identifier: '8',
       name:
-        'Session on day 2 Demo 2: super long name. Something different that is very complicated to describe. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        'Session on day 2 Demo 2: super long name. Something different that is very complicated to describesession with presenters and labels session with presenters and labels',
       summary: '',
       dayNumber: 2,
       startDateTimeLocal: '2020-08-04 11:00:00',
       endDateTimeLocal: '2020-08-04 11:30:00',
-      presenterIdentifiers: [],
+      presenterIdentifiers: [ '1', '2', '3', '4', '5', '6' ],
       labelIdentifiers: ['6'],
       locationIdentifier: '2',
       liveVideoUrl: '',
