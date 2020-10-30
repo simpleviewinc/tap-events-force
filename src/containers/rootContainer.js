@@ -5,12 +5,15 @@ import { displayName } from 'SVConfig'
 import testData from '../mocks/eventsforce/testData.js'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
+import { queryToObj } from '@keg-hub/jsutils'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
 }
 
 /**
+ * Simulates a consumer props-update that would follow a booking request,
+ * updating attendees to match the pending book-list and wait-list ids
  * @param {Array<Attendee>} attendees
  * @param {string} sessionId
  * @param {Object} bookingData
@@ -54,12 +57,25 @@ const useMockBookingCB = (setMockData, bookingDelay, isBookingCb = true) =>
   })
 
 /**
+ * Provides a booking delay value and setter, whose default
+ * is 1 second or the value from the `bookDelay` url param
+ */
+const useBookingDelay = () => {
+  const defaultDelay = !isNative()
+    ? queryToObj(document?.location?.search)?.bookDelay ?? 1
+    : 1
+
+  const [ bookingDelayInSeconds, setBookingDelay ] = useState(defaultDelay)
+  return [ bookingDelayInSeconds, setBookingDelay ]
+}
+
+/**
  * Root container for app Main.js
  * Currently only used in local development. Not exported by rollup (see apps/Sessions.js for that)
  */
 export const RootContainer = withAppHeader(displayName, props => {
   const [ mockData, setMockData ] = useState(testData)
-  const [ bookingDelayInSeconds, setBookingDelay ] = useState(1)
+  const [ bookingDelayInSeconds, setBookingDelay ] = useBookingDelay()
 
   const mockBookRequest = useMockBookingCB(
     setMockData,

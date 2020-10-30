@@ -10,7 +10,7 @@ import {
 } from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
-import { EFDemoContainer as SessionsContainer } from 'SVContainers/efDemoContainer'
+import { SessionsContainer } from 'SVContainers/sessionsContainer'
 import { Dimensions, Platform } from 'react-native'
 
 setRNDimensions(Dimensions)
@@ -20,10 +20,9 @@ setDefaultTheme(theme)
 /**
  * The sessions app for events force. This is the entry point of the 
  * rollup build and it is the root component exported by the build.
- * 
- * @param {*} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
+ * @param {Object} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
  */
-const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest}) => {
+const SessionsApp = ({ sessionAgendaProps, onDayChange, onSessionBookingRequest, onSessionWaitingListRequest }) => {
   const [ activeTheme ] = useState(getDefaultTheme())
 
   return (
@@ -33,6 +32,7 @@ const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest})
           sessionAgendaProps={sessionAgendaProps}
           onDayChange={onDayChange}
           onSessionBookingRequest={onSessionBookingRequest}
+          onSessionWaitingListRequest={onSessionWaitingListRequest}
         />
       </ReThemeProvider>
     </Provider>

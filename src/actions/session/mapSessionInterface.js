@@ -5,7 +5,7 @@ import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
-import { setPendingSession } from 'SVActions/session/booking/setPendingSession'
+import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
 import { bookRequestCompleted } from 'SVUtils/booking/bookRequestCompleted'
 import { waitRequestCompleted } from 'SVUtils/booking/waitRequestCompleted'
@@ -29,7 +29,7 @@ const checkAlert = alert => {
     addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
 
     // if there is a pending session, we should clear it since an error was raised
-    setPendingSession(null)
+    clearPendingSession()
   }
 }
 
@@ -85,9 +85,9 @@ const checkPendingSession = incomingAttendees => {
     incomingAttendees
   )
 
-  waitRequestSatisifed &&
-    bookRequestSatisfied &&
-    setPendingSession(identifier, false)
+  // if both lists match their respective submitted pending lists, then
+  // clear the pending session
+  waitRequestSatisifed && bookRequestSatisfied && clearPendingSession()
 }
 
 /**

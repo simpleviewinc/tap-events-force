@@ -67,7 +67,7 @@ const useBookingModifyMonitor = (
   initialBookedIds = []
 ) => {
   // set the initial booking lists. Only runs when the group booking modal is opened.
-  // If it is closed and reopened, the ref will be reset.
+  // If it is closed and reopened (remounted), the ref will be reset with latest.
   const { current: origWaitList } = useRef(initialWaitIds)
   const { current: origBookList } = useRef(initialBookedIds)
 

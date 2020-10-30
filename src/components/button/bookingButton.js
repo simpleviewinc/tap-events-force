@@ -116,7 +116,7 @@ export const BookingButton = props => {
   const bookingModel = useBookingState(session)
   const selectSessionCb = useSelectSession(session, bookingModel)
 
-  const pendingStyles = useStyle('button.evfButton.pending')
+  const pendingStyles = useStyle('button.bookingButton.pending')
 
   return (
     (bookingModel?.text && (
@@ -124,8 +124,7 @@ export const BookingButton = props => {
         type={bookingModel.state}
         onClick={selectSessionCb}
         disabled={bookingModel.pending || bookingModel.disabled}
-        // isProcessing={bookingModel.pending}
-        isProcessing={props.session.identifier === '3'}
+        isProcessing={bookingModel.pending}
         pendingStyles={pendingStyles}
       >
         { buttonProps => (

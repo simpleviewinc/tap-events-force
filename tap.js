@@ -19,8 +19,6 @@ module.exports = {
     routes: {
       '/': 'RootContainer',
       '/sessions': 'SessionsContainer',
-      '/test': 'TestContainer',
-      '/demo': 'EFDemoContainer',
     },
     tapResolver: {
       paths: {
