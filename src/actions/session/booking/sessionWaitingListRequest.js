@@ -1,6 +1,7 @@
 import { Values } from 'SVConstants'
 import { getEventEmitter } from 'SVUtils/events'
 import { validateEventResponse } from 'SVUtils/validation'
+import { setPendingSession } from './setPendingSession'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()
@@ -28,4 +29,7 @@ export const sessionWaitingListRequest = (sessionId, attendeeIds = []) => {
       attendeeIds,
     ]
   )
+
+  valid &&
+    setPendingSession(sessionId, true, { pendingWaitingList: attendeeIds })
 }

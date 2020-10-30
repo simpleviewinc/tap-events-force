@@ -9,7 +9,6 @@ import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
-import { setPendingSession } from 'SVActions/session/booking/setPendingSession'
 import { Values } from 'SVConstants'
 import PropTypes from 'prop-types'
 
@@ -30,7 +29,6 @@ const useButtonSubmit = (sessionId, onSubmit, onComplete) => {
     (...args) => {
       // if there is no cb to call, then immediately run the onComplete step
       if (!onSubmit) return onComplete?.()
-      setPendingSession(sessionId, true)
       onSubmit(...args)
     },
     [onSubmit]
@@ -54,13 +52,8 @@ const useButtonSubmit = (sessionId, onSubmit, onComplete) => {
     // indicating the consumer rerendered the app with
     // new attendees (since we do not modify it except at startup).
     // We assume this indicates that the group booking task completed,
-    // so we can stop the loading spinner and run the onComplete callback.
-    //
-    // Although the app could rerender with new attendees for other reasons,
-    // it is unlikely and still O.K., because it will likely resolve momentarily,
-    // and if an error occured, the alert modal will still present.
+    // so we can dismiss the modal
     !isFirstRender && onComplete?.()
-    !isFirstRender && setPendingSession(sessionId, false)
   }, [attendees])
 
   // return the submit function and the current loading state
@@ -148,6 +141,7 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
         />
       ) }
       <BottomSection
+        session={session}
         onCancelPress={onCancelPress}
         onSubmitPress={onBookingSubmit}
         isLoading={isSubmitLoading}
@@ -210,6 +204,7 @@ const TopSection = ({ styles, remainingCount }) => {
 const BottomSection = ({
   styles,
   onCancelPress,
+  session,
   onSubmitPress,
   isLoading = false,
   submitDisabled = false,

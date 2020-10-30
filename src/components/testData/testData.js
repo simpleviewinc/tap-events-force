@@ -104,8 +104,42 @@ const SelectBookingState = props => {
   )
 }
 
+const BookingDelaySelect = ({ onValueChange }) => {
+  return (
+    <View>
+      <Label>Booking Delay</Label>
+      <Select
+        styles={styles.select}
+        onValueChange={onValueChange}
+      >
+        <Option
+          label='Instant'
+          value={0}
+        />
+        <Option
+          label='1 second'
+          value={1}
+        />
+        <Option
+          label='3 seconds'
+          value={3}
+        />
+        <Option
+          label='10 seconds'
+          value={10}
+        />
+        <Option
+          label='Infinite'
+          value={-1}
+        />
+      </Select>
+    </View>
+  )
+}
+
 export const TestData = ({ data, onSave }) => {
   const [ text, setText ] = useState(convertJson(data))
+  const [ bookingDelay, setBookingDelay ] = useState(1)
 
   const onChange = useCallback(
     update => {
@@ -117,12 +151,12 @@ export const TestData = ({ data, onSave }) => {
   const onEditorSave = useCallback(() => {
     try {
       setToggled(!toggled)
-      onSave(JSON.parse(text))
+      onSave(JSON.parse(text), { bookingDelay })
     }
     catch (error) {
       console.log('json syntax error. check your test data')
     }
-  }, [ onSave, text, toggled ])
+  }, [ onSave, text, bookingDelay, toggled ])
 
   const aceRef = useRef(null)
   const [ toggled, setToggled ] = useState(false)
@@ -142,6 +176,7 @@ export const TestData = ({ data, onSave }) => {
           onChange={onChange}
           aceRef={aceRef}
         /> }
+        { toggled && <BookingDelaySelect onValueChange={setBookingDelay} /> }
       </View>
       <Drawer toggled={toggled}>
         <Editor

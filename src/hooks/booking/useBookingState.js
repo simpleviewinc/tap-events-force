@@ -41,6 +41,7 @@ const useStoreData = () => {
     CATEGORIES.ATTENDEES,
     CATEGORIES.AGENDA_SESSIONS,
     CATEGORIES.ATTENDEES_BY_TICKET,
+    CATEGORIES.PENDING_SESSION,
   ])
 
   return {
@@ -61,6 +62,7 @@ const useStoreData = () => {
  * @param {Array} bookingLists - List of attendee ids that are booked or are on the waiting list
  * @param {Object} timeConflicts - Key value pairs of attendees booked in conflicting sessions
  * @param {Array} bookableCount - Attendees that can book the current session
+ * @param {Object} pendingSession - the object indicating if a session has submitted a booking request
  *
  * @returns {import('SVModels/session/bookingState').BookingState} model
  */
@@ -70,7 +72,8 @@ const useBookingFactory = (
   bookingMode,
   bookingLists,
   timeConflicts,
-  bookableCount
+  bookableCount,
+  pendingSession
 ) => {
   return useMemo(
     () =>
@@ -79,9 +82,18 @@ const useBookingFactory = (
         bookingMode,
         timeConflicts,
         bookableCount,
+        pendingSession,
         ...bookingLists,
       }) || null,
-    [ state, session, bookingMode, bookingLists, timeConflicts, bookableCount ]
+    [
+      state,
+      session,
+      bookingMode,
+      bookingLists,
+      timeConflicts,
+      bookableCount,
+      pendingSession,
+    ]
   )
 }
 
@@ -105,6 +117,7 @@ export const useBookingState = session => {
     agendaSessions,
     bookingMode,
     settings,
+    pendingSession,
   } = useStoreData()
 
   // Lists for attendees that have booked the session, or are on the waiting list
@@ -132,6 +145,7 @@ export const useBookingState = session => {
     bookingMode,
     bookingLists,
     timeConflicts,
-    bookableAttendeeCount
+    bookableAttendeeCount,
+    pendingSession
   )
 }

@@ -1,5 +1,5 @@
 import { Values, ActionTypes } from 'SVConstants'
-import { isStr, isBool, validate } from '@keg-hub/jsutils'
+import { isStr, isBool, isObj, validate } from '@keg-hub/jsutils'
 import { dispatch } from 'SVStore'
 const { CATEGORIES } = Values
 
@@ -10,18 +10,30 @@ const { CATEGORIES } = Values
  * @param {string} sessionId - id of session
  * @param {boolean} pending - true if session is pending
  */
-export const setPendingSession = (sessionId, pending = false) => {
+export const setPendingSession = (
+  sessionId,
+  pending = false,
+  pendingData = {}
+) => {
+  const { pendingBookingList, pendingWaitingList } = pendingData
+
   const [valid] = validate(
-    { sessionId, pending },
-    { sessionId: isStr, pending: isBool }
+    { sessionId, pending, pendingData },
+    { sessionId: isStr, pending: isBool, pendingData: isObj }
   )
   if (!valid) return
 
+  const pendingSession = {
+    identifier: pending ? sessionId : null,
+    ...(pending && pendingBookingList && { pendingBookingList }),
+    ...(pending && pendingWaitingList && { pendingWaitingList }),
+  }
+
   dispatch({
-    type: ActionTypes.SET_ITEMS,
+    type: ActionTypes.UPSERT_ITEMS,
     payload: {
       category: CATEGORIES.PENDING_SESSION,
-      items: { identifier: pending ? sessionId : null },
+      items: pendingSession,
     },
   })
 }

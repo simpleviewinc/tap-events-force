@@ -135,6 +135,7 @@ const AgendaSessions = React.memo(
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionAgendaProps - session agenda props defined in evf interface
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  * @param {Function} props.onSessionBookingRequest - callback for session booking
+ * @param {Function} props.onSessionWaitingListRequest - callback for session wait list booking
  */
 export const Sessions = props => {
   const {

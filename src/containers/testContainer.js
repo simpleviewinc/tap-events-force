@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useCallback, useState } from 'react'
 import { Button, Section, H6, H5, Divider, View } from 'SVComponents'
 import { useTheme } from '@keg-hub/re-theme'
 import testData from '../mocks/eventsforce/testData.js'
@@ -30,6 +30,15 @@ const testOnSessionWaitingListRequest = (sessionId, attendeeIds) => {
  */
 export const TestContainer = withAppHeader('Test Container', props => {
   const [ mockData, setMockData ] = useState(testData)
+  const [ bookingDelay, setBookingDelay ] = useState(1)
+
+  const onSave = useCallback(
+    (nextData, { bookingDelay }) => {
+      setMockData(nextData)
+      setBookingDelay(bookingDelay)
+    },
+    [setMockData]
+  )
 
   // map the evf props onto our states
   useEffect(() => void mapSessionInterface(mockData), [mockData])
@@ -37,14 +46,16 @@ export const TestContainer = withAppHeader('Test Container', props => {
   const bookingRequestCb = (...args) => {
     testOnSessionBookingRequest(...args)
 
-    // setTimeout(() => {
-    //   // simulate a props-change after the booking-request cb would
-    //   // have updated attendees in consumer's context
-    //   setMockData({
-    //     ...mockData,
-    //     attendees: [...mockData.attendees],
-    //   })
-    // }, 1000)
+    // simulate a props-change after the booking-request cb would
+    // have updated attendees in consumer's context
+    const queueRerender = () =>
+      setMockData({
+        ...mockData,
+        attendees: [...mockData.attendees],
+      })
+
+    if (bookingDelay === 0) queueRerender()
+    else if (bookingDelay > 0) setTimeout(queueRerender, bookingDelay * 1000)
   }
 
   return (
@@ -52,7 +63,7 @@ export const TestContainer = withAppHeader('Test Container', props => {
       { !isNative() && process.env.NODE_ENV === 'development' && (
         <TestData
           data={mockData}
-          onSave={setMockData}
+          onSave={onSave}
         />
       ) }
       <ModalDemos bookingRequest={bookingRequestCb} />

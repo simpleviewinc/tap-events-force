@@ -16,12 +16,12 @@ jest.setMock('react', reactMocks)
 const useBookingLists = (...args) =>
   require('../useBookingLists').useBookingLists(...args)
 
-const unlimitedSession = testData.sessions.find(
-  session => session.identifier === '1'
-)
-
 const limitedSession = testData.sessions.find(
   session => session.identifier === '3'
+)
+
+const preSelectedSession = testData.sessions.find(
+  session => session.identifier === '8'
 )
 
 const noWaitingListSession = deepMerge(limitedSession, {
@@ -41,9 +41,9 @@ describe('useBookingLists', () => {
     mocks.useRestrictedAttendeeIds = () => ({ isBookable: () => true })
   })
 
-  it('should pre-book all attendees when session capacity is unlimited', () => {
+  it('should pre-book all attendees when session capacity is unlimited and no attendees are on booking lists', () => {
     const { result } = renderHook(() =>
-      useBookingLists(unlimitedSession, testData.attendees, true)
+      useBookingLists(preSelectedSession, testData.attendees, true)
     )
 
     const [ bookingList, waitingList ] = result.current
@@ -73,7 +73,7 @@ describe('useBookingLists', () => {
     expect(bookingList.length).toEqual(3)
   })
 
-  it('should book all attendees if capacity > need and waiting list is empty', () => {
+  it('should not book all attendees if capacity > need and waiting list is empty but booking list is not empty', () => {
     const capacityExceedsNeed = true
     const { result } = renderHook(() =>
       useBookingLists(
@@ -85,7 +85,7 @@ describe('useBookingLists', () => {
 
     const [ bookingList, waitingList ] = result.current
     expect(waitingList.length).toEqual(0)
-    expect(bookingList.length).toEqual(8)
+    expect(bookingList.length).not.toEqual(testData.attendees.length)
   })
 
   it('should not pre-book any attendees who are restricted', () => {

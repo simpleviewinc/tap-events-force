@@ -76,9 +76,16 @@ const getBookingStopped = session => {
  * @returns {boolean} - If the display interaction should be disabled
  */
 const getDisabled = (
-  { session, bookableCount, bookingMode, timeConflicts },
+  { session, pendingSession, bookableCount, bookingMode, timeConflicts },
   state
 ) => {
+  // if there is a different session awaiting the booking request result, all others are disabled
+  if (
+    pendingSession?.identifier &&
+    pendingSession.identifier !== session.identifier
+  )
+    return true
+
   // If state is select, and in single booking mode and there's a time conflict
   // Then the booking state should be disabled
   if (
@@ -103,6 +110,20 @@ const getDisabled = (
 }
 
 /**
+ * @param {Object} props
+ * @returns {boolean} true if the props indicate the button should be
+ * in a pending state
+ */
+const getPending = props => {
+  const { pendingSession, session } = props
+  return (
+    pendingSession &&
+    session &&
+    pendingSession.identifier === session.identifier
+  )
+}
+
+/**
  * Builds factory methods from the Booking State model
  * <br/>Is exported as an object of Booking States as keys, and a Booking State factory method as the value
  */
@@ -121,6 +142,7 @@ export const bookingStateFactory = reduceObj(
         ...getStateIcon(bookingMode, state, bookingList, waitingList),
         text: getStateText(key, state) || false,
         disabled: getDisabled(props, state),
+        pending: getPending(props),
       })
     }
 

@@ -1,6 +1,7 @@
 import { Values } from 'SVConstants'
 import { getEventEmitter } from 'SVUtils/events'
 import { validateEventResponse } from 'SVUtils/validation'
+import { setPendingSession } from './setPendingSession'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()
@@ -27,4 +28,7 @@ export const sessionBookingRequest = (sessionId, attendeeIds = []) => {
     [`Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`],
     [ 'Emitted event', EVENTS.SESSION_BOOKING_REQUEST, sessionId, attendeeIds ]
   )
+
+  valid &&
+    setPendingSession(sessionId, true, { pendingBookingList: attendeeIds })
 }

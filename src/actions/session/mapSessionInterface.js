@@ -5,7 +5,11 @@ import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
+import { setPendingSession } from 'SVActions/session/booking/setPendingSession'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
+import { bookRequestCompleted } from 'SVUtils/booking/bookRequestCompleted'
+import { waitRequestCompleted } from 'SVUtils/booking/waitRequestCompleted'
+import { getStore } from 'SVStore'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -21,9 +25,12 @@ const subCatMap = {
  * @param {<import('SVModels/alert').Alert)>} alert
  */
 const checkAlert = alert => {
-  alert?.title &&
-    alert?.message &&
+  if (alert?.title && alert?.message) {
     addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
+
+    // if there is a pending session, we should clear it since an error was raised
+    setPendingSession(null)
+  }
 }
 
 /**
@@ -33,7 +40,6 @@ const checkAlert = alert => {
  * @returns {object} - of the form { type, payload }
  */
 const getDispatchPayload = (category, value) => {
-
   // displayProperties should go in settings.displayProperties
   return category === CATEGORIES.DISPLAY_PROPERTIES
     ? {
@@ -41,18 +47,47 @@ const getDispatchPayload = (category, value) => {
         payload: { category: CATEGORIES.SETTINGS, item: value, key: category },
       }
     : !subCatMap[category]
-      ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
-        {
-          type: ActionTypes.SET_ITEMS,
-          payload: { category, items: value },
-        }
-      : // subcategories are upsert-merged, rather than set, since they
-        // might need to be joined with data that was loaded from localStorage,
-        // e.g. agendaSettings.activeDayNumber
-        {
-          type: ActionTypes.UPSERT_ITEM,
-          payload: { category, item: value, key: subCatMap[category] },
-        }
+        ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
+          {
+            type: ActionTypes.SET_ITEMS,
+            payload: { category, items: value },
+          }
+        : // subcategories are upsert-merged, rather than set, since they
+      // might need to be joined with data that was loaded from localStorage,
+      // e.g. agendaSettings.activeDayNumber
+          {
+            type: ActionTypes.UPSERT_ITEM,
+            payload: { category, item: value, key: subCatMap[category] },
+          }
+}
+
+/**
+ * Checks if the incoming attendees satisfy the pending session's
+ * requested booking. If it does, clears the currently stored 'pendingSession'
+ * @param {Array<import('SVModels/Attendee').Attendee>} incomingAttendees
+ */
+const checkPendingSession = incomingAttendees => {
+  if (!incomingAttendees) return
+
+  const pendingSession = getStore().getState()?.items?.pendingSession
+  if (!pendingSession?.identifier) return
+
+  const { identifier, pendingBookingList, pendingWaitingList } = pendingSession
+
+  const waitRequestSatisifed = waitRequestCompleted(
+    identifier,
+    pendingWaitingList,
+    incomingAttendees
+  )
+  const bookRequestSatisfied = bookRequestCompleted(
+    identifier,
+    pendingBookingList,
+    incomingAttendees
+  )
+
+  waitRequestSatisifed &&
+    bookRequestSatisfied &&
+    setPendingSession(identifier, false)
 }
 
 /**
@@ -61,6 +96,9 @@ const getDispatchPayload = (category, value) => {
  */
 export const mapSessionInterface = props => {
   if (!props) return
+
+  // check if there is a pending session needing to be updated due to new attendees
+  checkPendingSession(props.attendees)
 
   // loop through each key and dispatch accordingly
   mapObj(props, (key, value) => {

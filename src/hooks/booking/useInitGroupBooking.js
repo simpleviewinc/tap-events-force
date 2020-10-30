@@ -8,7 +8,7 @@ import {
   setCurrentSessionId,
   setUserModifiedBooking,
 } from 'SVActions/session/booking'
-import { validate, isArr } from '@keg-hub/jsutils'
+import { areSetEqual } from '@keg-hub/jsutils'
 
 /**
  * Initializes the store items related to the group booking UI
@@ -55,21 +55,6 @@ export const useInitGroupBooking = (
 }
 
 /**
- * @param {Array} current
- * @param {Array} orig
- * @returns {boolean} true if current contains different elements than orig
- */
-const listsDiffer = (current, orig) => {
-  const [valid] = validate({ current, orig }, { $default: isArr })
-  if (!valid) return null
-  if (current.length !== orig.length) return true
-
-  const set = new Set(current)
-
-  return orig.some(element => !set.has(element))
-}
-
-/**
  * Monitors the current waiting and booking lists for the group booking modal,
  * and sets the `groupBooking.isModified` value based on if at least one of the lists
  * differs from its starting state.
@@ -92,9 +77,9 @@ const useBookingModifyMonitor = (
   } = useStoreItems([ 'groupBooking.waitingList', 'groupBooking.bookingList' ])
 
   useEffect(() => {
-    setUserModifiedBooking(
-      sessionId,
-      listsDiffer(waitList, origWaitList) || listsDiffer(bookList, origBookList)
-    )
+    const modified =
+      !areSetEqual(waitList, origWaitList) ||
+      !areSetEqual(bookList, origBookList)
+    setUserModifiedBooking(sessionId, modified)
   }, [ waitList, bookList ])
 }

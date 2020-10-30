@@ -4,7 +4,7 @@ const { CATEGORIES } = Values
 import { isStr, isBool, validate } from '@keg-hub/jsutils'
 
 /**
- * Stores the id of a session whose pending booking lists have been modified
+ * Stores the id of a session whose local booking lists have been modified
  * by the user. The session is associated with the active group booking modal
  * in the group booking items store tree.
  *
