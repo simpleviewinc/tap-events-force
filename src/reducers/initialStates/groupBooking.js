@@ -12,6 +12,5 @@ export const groupBookingState = {
     [SUB_CATEGORIES.INITIAL_WAITING_LIST]: [],
     [SUB_CATEGORIES.SESSION_CAPACITY]: null,
     [SUB_CATEGORIES.CURRENT_SESSION]: null,
-    [SUB_CATEGORIES.LOADING]: false,
   },
 }

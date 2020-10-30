@@ -42,7 +42,6 @@ export const Values = deepFreeze({
     SESSION_CAPACITY: 'capacity',
     CURRENT_SESSION: 'currentSession',
     IS_MODIFIED_BY_USER: 'isModifiedByUser',
-    LOADING: 'loading',
   },
 
   MODAL_TYPES: {
