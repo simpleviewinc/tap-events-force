@@ -44,6 +44,9 @@ export const groupBookingModal = {
           },
           content: {
             instructionText: groupBookingTextStyle,
+            instructionAsterisk: {
+              color: colors.red,
+            },
             infoText: {
               ...groupBookingTextStyle,
               color: colors.lightGray,

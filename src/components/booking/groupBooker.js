@@ -122,6 +122,7 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
       <TopSection
         styles={topSectionStyles}
         remainingCount={visibleCapacityCount}
+        showRequireSymbol={!submitIsEnabled}
       />
       { initialized && (
         <GroupBookingOptions
@@ -155,7 +156,7 @@ GroupBooker.propTypes = {
  * @param {object} props.styles
  * @param {number} props.remainingCount - spots left in this session. If null, there is no limit
  */
-const TopSection = ({ styles, remainingCount }) => {
+const TopSection = ({ styles, remainingCount, showRequireSymbol = true }) => {
   // use correct wording depending on number of spots remaining
   const placeText = remainingCount === 1 ? 'place' : 'places'
 
@@ -170,7 +171,10 @@ const TopSection = ({ styles, remainingCount }) => {
         className={`ef-modal-body-header`}
         style={styles?.content?.instructionText}
       >
-        Select sessions for your group:
+        Select sessions for your group:{ ' ' }
+        { showRequireSymbol && (
+          <Text style={styles?.content?.instructionAsterisk}>*</Text>
+        ) }
       </Text>
       { showCount && (
         <Text
