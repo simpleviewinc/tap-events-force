@@ -149,7 +149,7 @@ const ItemHeaderRight = ({ styles, onClick }) => {
   const clearActiveFilters = useCallback(() => {
     clearSelectedFilters()
     applySessionFilters()
-  }, [ clearActiveFilters, clearSelectedFilters ])
+  }, [ applySessionFilters, clearSelectedFilters ])
 
   return (
     <View style={mainStyle?.main}>
