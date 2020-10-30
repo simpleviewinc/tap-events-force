@@ -5,8 +5,8 @@ import { useRestrictedAttendeeIds } from './useRestrictedAttendeeIds'
 
 /**
  * @param {boolean} initialCapacityExceedsNeed
- * @param {Array<string>} initialWaitIds
- * @param {Array<string>} initialBookedIds
+ * @param {Array<string>} initialWaitIds - list of attendee ids on wait list
+ * @param {Array<string>} initialBookedIds - list of attendee ids on book list
  * @return {boolean} true if the initial booked list should preselect all the attendees
  */
 const shouldPreselectAttendees = (
@@ -55,7 +55,7 @@ const getInitialBookingIds = (
  * @param {Array<import('SVModels/attendee').Attendee>} attendees - full list of attendees
  * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
  * @return {Array} destructurable array of form:
- * [ initBookingList, initWaitingList, isPreselected ]
+ * [ initBookingList, initWaitingList, existingBookList, existingWaitList ]
  * - all lists filter out the ids of attendees who are restricted from booking or waiting on the session
  */
 export const useBookingLists = (

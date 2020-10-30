@@ -37,8 +37,6 @@ export const Values = deepFreeze({
     // group booking
     BOOKING_LIST: 'bookingList',
     WAITING_LIST: 'waitingList',
-    INITIAL_BOOKING_LIST: 'initialBookingList',
-    INITIAL_WAITING_LIST: 'initialWaitingList',
     SESSION_CAPACITY: 'capacity',
     CURRENT_SESSION: 'currentSession',
     IS_MODIFIED_BY_USER: 'isModifiedByUser',
