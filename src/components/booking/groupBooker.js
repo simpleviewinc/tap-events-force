@@ -35,6 +35,7 @@ const useAutoCancel = (sessionId, cancelCB) => {
  * @return {Array} [
  *  sessionIsPending - true if the booking/session button is in a pending/loading state
  *  bookingButtonIsEnabled - true if the booking button is enabled and selectable
+ *  sessionIsModified - true if the user has selected at least one attendee for booking/waitlist
  * ]
  */
 const useButtonState = sessionId => {
@@ -50,7 +51,7 @@ const useButtonState = sessionId => {
     !pendingSession?.identifier && sessionIsModified
 
   // return the submit function and the current loading state
-  return [ sessionIsPending, bookingButtonIsEnabled ]
+  return [ sessionIsPending, bookingButtonIsEnabled, sessionIsModified ]
 }
 
 /**
@@ -109,7 +110,9 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
     ? null
     : currentCapacity
 
-  const [ isSubmitLoading, submitIsEnabled ] = useButtonState(session.identifier)
+  const [ isSubmitLoading, submitIsEnabled, sessionIsModified ] = useButtonState(
+    session.identifier
+  )
 
   // handles closing the group booker when state transitions from pending -> not-pending
   useAutoCancel(session.identifier, onCancelPress)
@@ -122,7 +125,7 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
       <TopSection
         styles={topSectionStyles}
         remainingCount={visibleCapacityCount}
-        showRequireSymbol={!submitIsEnabled}
+        showRequireSymbol={!sessionIsModified}
       />
       { initialized && (
         <GroupBookingOptions
