@@ -4,13 +4,10 @@ import { emitPendingEvent } from 'SVUtils/pending/emitPendingEvent'
 const { CATEGORIES } = Values
 
 /**
- * Sets the pending session in the store. There can only ever be one
- * pending session, since other sessions are put into a disabled state until
- * the pending session is no longer pending.
- * @param {string} sessionId - id of session
- * @param {boolean} pending - true if session is pending
+ * Clears the pending session in the store, if one is set.
+ * This is done by setting the "identifier" property to null.
  * @example
- * setPendingSession('12', true)
+ * clearPendingSession()
  */
 export const clearPendingSession = () => {
   const pendingSession = { identifier: null }

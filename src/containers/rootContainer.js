@@ -61,8 +61,9 @@ const useMockBookingCB = (setMockData, bookingDelay, isBookingCb = true) =>
  * is 1 second or the value from the `bookDelay` url param
  */
 const useBookingDelay = () => {
+  const doc = typeof document !== 'undefined' ? document : null
   const defaultDelay = !isNative()
-    ? queryToObj(document?.location?.search)?.bookDelay ?? 1
+    ? queryToObj(doc?.location?.search)?.bookDelay ?? 1
     : 1
 
   const [ bookingDelayInSeconds, setBookingDelay ] = useState(defaultDelay)

@@ -31,6 +31,8 @@ const useAutoCancel = (sessionId, cancelCB) => {
 }
 
 /**
+ * Provides groupBooker with access to state relevant to the submit button,
+ * such as if the session is pending or not.
  * @param {string} sessionId - id of session for group booker
  * @return {Array} [
  *  sessionIsPending - true if the booking/session button is in a pending/loading state
@@ -158,6 +160,8 @@ GroupBooker.propTypes = {
  * @param {object} props
  * @param {object} props.styles
  * @param {number} props.remainingCount - spots left in this session. If null, there is no limit
+ * @param {boolean} props.showRequireSymbol - if true, shows a red asterisk next to the instruction text,
+ * indicating the user needs to make a booking change in order to press submit.
  */
 const TopSection = ({ styles, remainingCount, showRequireSymbol = true }) => {
   // use correct wording depending on number of spots remaining
