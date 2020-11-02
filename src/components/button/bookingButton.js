@@ -1,5 +1,5 @@
-import { Text, View } from 'SVComponents'
 import React, { useCallback } from 'react'
+import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { selectSession } from 'SVActions/session/selectSession'
 import { useBookingState } from 'SVHooks/booking/useBookingState'

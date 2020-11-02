@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
-import { EvfButton } from 'SVComponents/button'
+import { EvfButton } from 'SVComponents/button/evfButton'
 import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'

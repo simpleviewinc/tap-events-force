@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 import { View, Button, Text } from '@keg-hub/keg-components'
 import { useStylesCallback, useTheme } from '@keg-hub/re-theme'
 import { useParsedStyle } from 'SVHooks/useParsedStyle'
-import { EvfLoading } from 'SVComponents/loading'
+import { EvfLoading } from 'SVComponents/loading/evfLoading'
 import { set, get } from '@keg-hub/jsutils'
 
 /**

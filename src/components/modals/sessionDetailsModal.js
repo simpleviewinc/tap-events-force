@@ -8,7 +8,7 @@ import { useSelector, shallowEqual } from 'react-redux'
 import { useSessionLocation } from 'SVHooks/models'
 import { format } from 'date-fns'
 import { LabelButton } from 'SVComponents/labels/labelButton'
-import { BookingButton } from 'SVComponents/button'
+import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
 /**
  * SessionDetailsModal
