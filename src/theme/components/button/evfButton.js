@@ -222,19 +222,7 @@ const bookingButtonStates = reduceObj(
   }
 )
 
-const pendingStyles = {
-  pending: {
-    text: {
-      color: colors.lightGray,
-    },
-    icon: {
-      color: colors.lightGray,
-    },
-  },
-}
-
 export const evfButton = {
   ...buttonStyles,
   ...bookingButtonStates,
-  ...pendingStyles,
 }

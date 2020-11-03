@@ -113,6 +113,10 @@ const BookingDelaySelect = ({ onValueChange }) => {
         onValueChange={onValueChange}
       >
         <Option
+          label='N/A'
+          value={'N/A'}
+        />
+        <Option
           label='Instant'
           value={0}
         />
@@ -139,7 +143,7 @@ const BookingDelaySelect = ({ onValueChange }) => {
 
 export const TestData = ({ data, onSave }) => {
   const [ text, setText ] = useState(convertJson(data))
-  const [ bookingDelay, setBookingDelay ] = useState(1)
+  const [ bookingDelay, setBookingDelay ] = useState('N/A')
 
   const onChange = useCallback(
     update => {

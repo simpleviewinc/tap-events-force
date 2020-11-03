@@ -123,7 +123,7 @@ export const BookingButton = props => {
       <EvfButton
         type={bookingModel.state}
         onClick={selectSessionCb}
-        disabled={bookingModel.pending || bookingModel.disabled}
+        disabled={bookingModel.disabled}
         isProcessing={bookingModel.pending}
         pendingStyles={pendingStyles}
       >

@@ -1,6 +1,11 @@
 import { longText } from '../text'
 
 export default {
+  alert: {
+    message: '',
+    title: '',
+    type: 'error',
+  },
   displayProperties: {
     dateFormat: 'dd/MM/yyyy', // can be "dd/MM/yyyy" | "MM/dd/yyyy" | "yyyy-MM-dd"
     timeFormat: '12', // can be '12' or '24'
@@ -497,9 +502,4 @@ export default {
       displayOrder: 2,
     },
   ],
-  alert: {
-    message: '',
-    title: '',
-    type: 'error',
-  },
 }

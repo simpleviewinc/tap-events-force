@@ -25,6 +25,12 @@ const subCatMap = {
  * @param {<import('SVModels/alert').Alert)>} alert
  */
 const checkAlert = alert => {
+  const existingAlert = getStore().getState()?.items?.alert
+
+  // no need to add another modal if the alert object is the
+  // same reference as the current one
+  if (alert === existingAlert) return
+
   if (alert?.title && alert?.message) {
     addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
 
