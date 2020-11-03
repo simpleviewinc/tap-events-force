@@ -5,15 +5,15 @@ import { displayName } from 'SVConfig'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
 import { getURLParam, get } from '@keg-hub/jsutils'
+import {
+  useMockBookingRequest,
+  useMockWaitingRequest,
+} from '../mocks/eventsforce/callbacks/useMockBookingCB'
 import testData from '../mocks/eventsforce/testData.js'
 import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
-  onSessionBookingRequest: (session, attendees) => {
-    console.log(attendees)
-    console.log(session)
-  },
 }
 
 /**
@@ -36,6 +36,9 @@ const useTestDataState = () => {
 export const RootContainer = withAppHeader(displayName, props => {
   const [ mockData, setMockData ] = useTestDataState()
 
+  const mockBookRequest = useMockBookingRequest(setMockData)
+  const mockWaitRequest = useMockWaitingRequest(setMockData)
+
   return (
     <>
       { !isNative() && process.env.NODE_ENV === 'development' && (
@@ -47,7 +50,8 @@ export const RootContainer = withAppHeader(displayName, props => {
       <SessionsContainer
         sessionAgendaProps={mockData}
         onDayChange={mockCallbacks.onDayChange}
-        onSessionBookingRequest={mockCallbacks.onSessionBookingRequest}
+        onSessionBookingRequest={mockBookRequest}
+        onSessionWaitingListRequest={mockWaitRequest}
       />
     </>
   )
