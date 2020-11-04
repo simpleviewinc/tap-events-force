@@ -24,7 +24,9 @@ const useTestDataState = () => {
   const initialData = useMemo(() => {
     const defaultPath = getURLParam('state') ?? ''
     const formattedPath = defaultPath.replace(/-/gi, '.')
-    return get(bookingStatesTestData, formattedPath, testData)
+    return [ 'default', 'def', 'na', 'none' ].includes(formattedPath)
+      ? testData
+      : get(bookingStatesTestData, formattedPath, testData)
   }, [])
 
   return useState(initialData)
