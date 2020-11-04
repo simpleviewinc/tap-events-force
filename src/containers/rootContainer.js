@@ -23,7 +23,8 @@ const mockCallbacks = {
 const useTestDataState = () => {
   const initialData = useMemo(() => {
     const defaultPath = getURLParam('state') ?? ''
-    return get(bookingStatesTestData, defaultPath, testData)
+    const formattedPath = defaultPath.replace(/-/gi, '.')
+    return get(bookingStatesTestData, formattedPath, testData)
   }, [])
 
   return useState(initialData)
