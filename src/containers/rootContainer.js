@@ -48,7 +48,7 @@ export const RootContainer = withAppHeader(displayName, props => {
   const mockWaitRequest = useMockBookingCB(
     setMockData,
     bookingDelayInSeconds * 1000,
-    false
+    { isBookingCb: false }
   )
 
   const onSave = useCallback(

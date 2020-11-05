@@ -25,6 +25,19 @@ const updateAttendees = (attendees, sessionId, { bookedIds, waitIds }) => {
   }))
 }
 
+const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
+  setMockData(current => ({
+    ...current,
+    alert: {},
+    attendees: !alertIsSet(current)
+      ? updateAttendees(current.attendees, sessionId, {
+          bookedIds: isBookingCb ? attendeeIds : null,
+          waitIds: !isBookingCb ? attendeeIds : null,
+        })
+      : current.attendees,
+  }))
+}
+
 /**
  * Returns a mock cb for booking or waiting list request.
  * When executed, it will update the attendees `bookingDelay` seconds later,
@@ -35,33 +48,30 @@ const updateAttendees = (attendees, sessionId, { bookedIds, waitIds }) => {
  * @param {Function} setMockData
  * @param {number} bookingDelay
  * @param {boolean} isBookingCb - true if booking request, false if waiting list request
+ * @return {Function<Promise>} - resolves if the booking completed, throws if it did not
  */
 export const useMockBookingCB = (
   setMockData,
   bookingDelay,
-  isBookingCb = true
+  { isBookingCb = true, shouldReject = false } = {}
 ) => {
   return useCallback(
     (sessionId, attendeeIds) => {
-      // if < 0, indicates the request should not complete
-      if (bookingDelay < 0) return
+      return new Promise((resolve, reject) => {
+        // if < 0, indicates the request should not resolve/complete
+        if (bookingDelay < 0) return
+        if (shouldReject)
+          return reject(
+            `${isBookingCb ? 'Booking' : 'Wait List'} request failed.`
+          )
 
-      const updateState = () => {
-        setMockData(current => ({
-          ...current,
-          alert: {},
-          attendees: !alertIsSet(current)
-            ? updateAttendees(current.attendees, sessionId, {
-                bookedIds: isBookingCb ? attendeeIds : null,
-                waitIds: !isBookingCb ? attendeeIds : null,
-              })
-            : current.attendees,
-        }))
-      }
-
-      // simulate a props-change after the booking-request cb would
-      // have updated attendees in consumer's context
-      setTimeout(updateState, bookingDelay)
+        // simulate a props-change after the booking-request cb would
+        // have updated attendees in consumer's context
+        setTimeout(() => {
+          updateMockState(setMockData, sessionId, attendeeIds, isBookingCb)
+          resolve()
+        }, bookingDelay)
+      })
     },
     [ setMockData, bookingDelay ]
   )
