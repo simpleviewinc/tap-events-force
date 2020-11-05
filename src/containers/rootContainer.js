@@ -1,13 +1,16 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { withAppHeader } from 'SVComponents'
 import { SessionsContainer } from './sessionsContainer'
 import { displayName } from 'SVConfig'
-import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 import testData from '../mocks/eventsforce/testData.js'
-import { useMockBookingCB } from '../mocks/eventsforce/callbacks/useMockBookingCB'
+import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
 import { getURLParam, get, isNum } from '@keg-hub/jsutils'
+import {
+  useMockBookingRequest,
+  useMockWaitingRequest,
+} from '../mocks/eventsforce/callbacks/useMockBookingCB'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -27,9 +30,16 @@ const useBookingDelay = () => {
  * Returns initial data for rootContainer, depending on if the state url
  * parameter is set.
  */
-const getInitialTestData = () => {
-  const defaultPath = getURLParam('state') ?? ''
-  return get(bookingStatesTestData, defaultPath, testData)
+const useTestDataState = () => {
+  const initialData = useMemo(() => {
+    const defaultPath = getURLParam('state') ?? ''
+    const formattedPath = defaultPath.replace(/-/gi, '.')
+    return [ 'default', 'def', 'na', 'none' ].includes(formattedPath)
+      ? testData
+      : get(bookingStatesTestData, formattedPath, testData)
+  }, [])
+
+  return useState(initialData)
 }
 
 /**
@@ -37,24 +47,15 @@ const getInitialTestData = () => {
  * Currently only used in local development. Not exported by rollup (see apps/Sessions.js for that)
  */
 export const RootContainer = withAppHeader(displayName, props => {
-  const [ mockData, setMockData ] = useState(getInitialTestData())
-  const [ bookingDelayInSeconds, setBookingDelay ] = useBookingDelay()
+  const [ mockData, setMockData ] = useTestDataState()
+  const [ bookingDelay, setBookingDelay ] = useBookingDelay()
 
-  const mockBookRequest = useMockBookingCB(
-    setMockData,
-    bookingDelayInSeconds * 1000
-  )
-
-  const mockWaitRequest = useMockBookingCB(
-    setMockData,
-    bookingDelayInSeconds * 1000,
-    { isBookingCb: false }
-  )
+  const mockBookRequest = useMockBookingRequest(setMockData, { bookingDelay })
+  const mockWaitRequest = useMockWaitingRequest(setMockData, { bookingDelay })
 
   const onSave = useCallback(
     (nextData, { bookingDelay }) => {
       setMockData(nextData)
-      console.log({ bookingDelay })
       isNum(bookingDelay) && setBookingDelay(bookingDelay)
     },
     [ setMockData, setBookingDelay ]

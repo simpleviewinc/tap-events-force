@@ -50,11 +50,9 @@ const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
  * @param {boolean} isBookingCb - true if booking request, false if waiting list request
  * @return {Function<Promise>} - resolves if the booking completed, throws if it did not
  */
-export const useMockBookingCB = (
-  setMockData,
-  bookingDelay,
-  { isBookingCb = true, shouldReject = false } = {}
-) => {
+export const useMockBookingCB = (setMockData, options = {}) => {
+  const { isBookingCb = true, bookingDelay = 0, shouldReject = false } = options
+
   return useCallback(
     (sessionId, attendeeIds) => {
       return new Promise((resolve, reject) => {
@@ -76,3 +74,9 @@ export const useMockBookingCB = (
     [ setMockData, bookingDelay ]
   )
 }
+
+export const useMockBookingRequest = (setMockData, bookingDelay = 0) =>
+  useMockBookingCB(setMockData, { isBookingCb: true, bookingDelay })
+
+export const useMockWaitingRequest = (setMockData, bookingDelay = 0) =>
+  useMockBookingCB(setMockData, { isBookingCb: false, bookingDelay })
