@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux'
  * @param {Function} props.onDayChange - function that executes when user changes day of agenda
  * @param {Function} props.onSessionBookingRequest - callback for session booking request action.
  *                                                 - passes back session id and an array of attendee ids
- * @param {Function} props.onSessionBookingRequest - callback for session waiting list request action,
+ * @param {Function} props.onSessionWaitingListRequest - callback for session waiting list request action,
  *                                                 - of form (sessionId, attendeeIds) => {}
  */
 export const SessionsContainer = props => {
