@@ -9,31 +9,16 @@ import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
-import { useKegEvent } from 'SVHooks/events'
 import { Values } from 'SVConstants'
 import PropTypes from 'prop-types'
 
-const { CATEGORIES, EVENTS } = Values
-
-/**
- * Waits for the current session to transition from a pending state
- * to a non-pending state, at which point it will close the group booker
- * @param {Function} cancelCB - prop-passed cancel function for groupBooker
- */
-const useAutoCancel = (sessionId, cancelCB) => {
-  useKegEvent(EVENTS.SESSION_PENDING_UPDATE, ({ current, next }) => {
-    // if the pending session is not this one, exit
-    if (current?.identifier !== sessionId) return
-
-    // otherwise, check for a pending state change for this session to not-pending
-    current.identifier !== next.identifier && cancelCB?.()
-  })
-}
+const { CATEGORIES } = Values
 
 /**
  * Provides groupBooker with access to state relevant to the submit button,
  * such as if the session is pending or not.
  * @param {string} sessionId - id of session for group booker
+ * @param {Function} onSubmit - button submit callback
  * @return {Array} [
  *  sessionIsPending - true if the booking/session button is in a pending/loading state
  *  bookingButtonIsEnabled - true if the booking button is enabled and selectable
@@ -47,13 +32,12 @@ const useButtonState = sessionId => {
     CATEGORIES.MODIFIED_SESSION,
   ])
 
+  const pending = pendingSession?.identifier
   const sessionIsModified = modifiedSession?.identifier === sessionId
-  const sessionIsPending = pendingSession?.identifier === sessionId
-  const bookingButtonIsEnabled =
-    !pendingSession?.identifier && sessionIsModified
+  const bookingButtonIsEnabled = !pending && sessionIsModified
 
   // return the submit function and the current loading state
-  return [ sessionIsPending, bookingButtonIsEnabled, sessionIsModified ]
+  return [ pending, bookingButtonIsEnabled, sessionIsModified ]
 }
 
 /**
@@ -115,9 +99,6 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const [ isSubmitLoading, submitIsEnabled, sessionIsModified ] = useButtonState(
     session.identifier
   )
-
-  // handles closing the group booker when state transitions from pending -> not-pending
-  useAutoCancel(session.identifier, onCancelPress)
 
   return (
     <View

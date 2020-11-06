@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { getURLParam, isStr } from '@keg-hub/jsutils'
 
 const isSet = str => Boolean(str) && str !== ''
 const alertIsSet = mockData => {
@@ -44,39 +45,48 @@ const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
  * to match the requested changes, unless the mockData was updated with
  * an alert in the interim (to help with testing an error that might arise
  * when booking)
- * @param {Object} currentMockData
  * @param {Function} setMockData
- * @param {number} bookingDelay
- * @param {boolean} isBookingCb - true if booking request, false if waiting list request
+ * @param {Object} options
+ * @param {number} options.bookingDelay
+ * @param {boolean} options.isBookingCb - true if booking request, false if waiting list request
+ * @param {boolean | string} options.reject - if defined, the request cb will throw an error. If `reject` is string, will be used
+ * as content of error.
  * @return {Function<Promise>} - resolves if the booking completed, throws if it did not
  */
 export const useMockBookingCB = (setMockData, options = {}) => {
-  const { isBookingCb = true, bookingDelay = 0, shouldReject = false } = options
+  const { isBookingCb = true, bookingDelay = 0, reject = false } = options
 
   return useCallback(
     (sessionId, attendeeIds) => {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolvePromise, rejectPromise) => {
         // if < 0, indicates the request should not resolve/complete
         if (bookingDelay < 0) return
-        if (shouldReject)
-          return reject(
-            `${isBookingCb ? 'Booking' : 'Wait List'} request failed.`
-          )
 
         // simulate a props-change after the booking-request cb would
         // have updated attendees in consumer's context
         setTimeout(() => {
           updateMockState(setMockData, sessionId, attendeeIds, isBookingCb)
-          resolve()
+          const errorMsg = isStr(reject)
+            ? reject
+            : 'Sorry, we encountered technical difficulties, so we could not book your attendees.'
+          reject ? rejectPromise(new Error(errorMsg)) : resolvePromise()
         }, bookingDelay)
       })
     },
-    [ setMockData, bookingDelay ]
+    [ isBookingCb, setMockData, bookingDelay, reject ]
   )
 }
 
-export const useMockBookingRequest = (setMockData, bookingDelay = 0) =>
-  useMockBookingCB(setMockData, { isBookingCb: true, bookingDelay })
+export const useMockBookingRequest = (setMockData, { bookingDelay = 0 }) =>
+  useMockBookingCB(setMockData, {
+    isBookingCb: true,
+    reject: getURLParam('reject'),
+    bookingDelay,
+  })
 
-export const useMockWaitingRequest = (setMockData, bookingDelay = 0) =>
-  useMockBookingCB(setMockData, { isBookingCb: false, bookingDelay })
+export const useMockWaitingRequest = (setMockData, { bookingDelay = 0 }) =>
+  useMockBookingCB(setMockData, {
+    isBookingCb: false,
+    reject: getURLParam('reject'),
+    bookingDelay,
+  })

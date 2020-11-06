@@ -8,6 +8,7 @@ import {
   clearSelectedFilters,
 } from 'SVActions/session/filters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
+import { handleAttendeeRequest } from 'SVActions/session/booking/handleAttendeeRequest'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useAgenda } from 'SVHooks/models/useAgenda'
@@ -21,6 +22,7 @@ import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
 
 const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
+const { SESSION_BOOKING_REQUEST, SESSION_WAITING_LIST_REQUEST } = EVENTS
 
 /**
  * FilterButton
@@ -203,6 +205,25 @@ const AgendaSessions = React.memo(
 )
 
 /**
+ * Registers the request callback to the associated event, but
+ * first wraps the callback to handle setting the associated session to pending,
+ * resetting that status upon resolving the promise, and catching
+ * any errors that might arise so to display the alert modal.
+ * @param {string} event - event-emitter event to register with
+ * @param {Function<Promise>} requestCB - an async function for requesting a booking
+ */
+const useAttendeeRequestEvent = (event, requestCB) => {
+  const handler = useCallback(
+    (...args) => {
+      handleAttendeeRequest(requestCB, ...args)
+    },
+    [requestCB]
+  )
+
+  useKegEvent(event, handler)
+}
+
+/**
  * SessionComponent
  * @param {Object} props
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionAgendaProps - session agenda props defined in evf interface
@@ -219,8 +240,11 @@ export const Sessions = props => {
   } = props
 
   // set up our event listener for booking and waiting list requests
-  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
-  useKegEvent(EVENTS.SESSION_WAITING_LIST_REQUEST, onSessionWaitingListRequest)
+  useAttendeeRequestEvent(SESSION_BOOKING_REQUEST, onSessionBookingRequest)
+  useAttendeeRequestEvent(
+    SESSION_WAITING_LIST_REQUEST,
+    onSessionWaitingListRequest
+  )
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)

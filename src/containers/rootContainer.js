@@ -19,11 +19,12 @@ const mockCallbacks = {
 /**
  * Provides a booking delay value and setter, whose default
  * is 1 second or the value from the `bookDelay` url param
+ * @return {Array} [ bookingDelayMs, setBookingDelaySeconds ]
  */
 const useBookingDelay = () => {
   const defaultDelay = getURLParam('bookDelay') ?? 1
   const [ bookingDelayInSeconds, setBookingDelay ] = useState(defaultDelay)
-  return [ bookingDelayInSeconds, setBookingDelay ]
+  return [ bookingDelayInSeconds * 1000, setBookingDelay ]
 }
 
 /**

@@ -7,7 +7,10 @@ import {
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useBookingSet } from './useBookingSet'
 import { useWaitingSet } from './useWaitingSet'
+import { addAlertModal } from 'SVActions/modals/addAlertModal'
 import { Values } from 'SVConstants'
+import { setPendingSession } from 'SVActions/session/pending/setPendingSession'
+import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
 const { CATEGORIES } = Values
 
 /**
@@ -21,7 +24,7 @@ const { CATEGORIES } = Values
  * @param {boolean} isUnlimited - true if the session has an unlimited capacity in its booking list
  * @returns {Function} - callback of form: id => updateListWithId(id)
  */
-const useUpdateSessionLists = (
+const useUpdateSessionListsCallback = (
   waitingList,
   bookingList,
   waitingListIsAvailable,
@@ -59,25 +62,49 @@ const useUpdateSessionLists = (
 }
 
 /**
+ *
+ * @param {string} sessionId
+ * @param {Array<string>} bookList
+ * @param {boolean} waitListIsAvailable
+ * @param {Array<string>} waitList
+ */
+const handleAsyncBooking = async (sessionId, bookList, waitList) => {
+  try {
+    setPendingSession(sessionId)
+    return await Promise.all([
+      sessionBookingRequest(sessionId, bookList),
+      waitList && sessionWaitingListRequest(sessionId, waitList),
+    ])
+  }
+  catch (error) {
+    addAlertModal(error.name || 'Booking Request Failed', error.message)
+  }
+  finally {
+    clearPendingSession()
+  }
+}
+
+/**
  * Returns a callback that, given an attendee id, updates the list
  * (either adding to or removing from the attendees booking list or attendees waiting list)
  * in addition to updating the session's current capacity
  * @param {Object} session - current session to book attendees with
- * @param {Object} waitingList - set-like interface to the attendee waiting list. mutations cause store dispatches
- * @param {Object} bookingList - set-like interface to the attendee booking list. mutations cause store dispatches
+ * @param {Object} waitSet - set-like interface to the attendee waiting list. mutations cause store dispatches
+ * @param {Object} bookingSet - set-like interface to the attendee booking list. mutations cause store dispatches
  * @returns {Function} - callback that will submit the current booking and waiting lists to the consumer
  */
-const useBookSession = (session, bookingList, waitingList) => {
-  const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable
+const useBookSessionCallback = (session, bookingSet, waitSet) => {
+  const waitListIsAvailable = session?.capacity?.isWaitingListAvailable
+  const sessionId = session?.identifier
+
+  const bookingArr = Array.from(bookingSet.data)
+  const waitingArr = waitSet && waitListIsAvailable && Array.from(waitSet.data)
+
   // makes a request to book the session for the selected attendees (as identified by ids in `attendeeIdsRef`)
-  return useCallback(() => {
-    sessionBookingRequest(session.identifier, Array.from(bookingList.data))
-    waitingListIsAvailable &&
-      sessionWaitingListRequest(
-        session.identifier,
-        Array.from(waitingList.data)
-      )
-  }, [ session.identifier, bookingList, waitingListIsAvailable, waitingList ])
+  return useCallback(
+    async () => handleAsyncBooking(sessionId, bookingArr, waitingArr),
+    [ sessionId, bookingSet, waitListIsAvailable, waitSet ]
+  )
 }
 
 /**
@@ -97,7 +124,7 @@ export const useSessionBooking = session => {
   const bookingSet = useBookingSet()
   const waitingSet = useWaitingSet()
 
-  const updateCapacity = useUpdateSessionLists(
+  const updateCapacity = useUpdateSessionListsCallback(
     waitingSet,
     bookingSet,
     waitingListIsAvailable,
@@ -105,7 +132,7 @@ export const useSessionBooking = session => {
     isUnlimited
   )
 
-  const bookSession = useBookSession(session, bookingSet, waitingSet)
+  const bookSession = useBookSessionCallback(session, bookingSet, waitingSet)
 
   return {
     updateCapacity,

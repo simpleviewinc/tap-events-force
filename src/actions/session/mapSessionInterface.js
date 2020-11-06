@@ -1,14 +1,11 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { mapObj, snakeCase } from '@keg-hub/jsutils'
-import { addModal } from 'SVActions/modals'
+import { addModal } from 'SVActions/modals/addModal'
 import { Modal } from 'SVModels/modal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
-import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
-import { bookRequestCompleted } from 'SVUtils/booking/bookRequestCompleted'
-import { waitRequestCompleted } from 'SVUtils/booking/waitRequestCompleted'
 import { getStore } from 'SVStore'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
@@ -33,9 +30,6 @@ const checkAlert = alert => {
 
   if (alert?.title && alert?.message) {
     addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
-
-    // if there is a pending session, we should clear it since an error was raised
-    clearPendingSession()
   }
 }
 
@@ -68,43 +62,11 @@ const getDispatchPayload = (category, value) => {
 }
 
 /**
- * Checks if the incoming attendees satisfy the pending session's
- * requested booking. If it does, clears the currently stored 'pendingSession'
- * @param {Array<import('SVModels/Attendee').Attendee>} incomingAttendees
- */
-const checkPendingSession = incomingAttendees => {
-  if (!incomingAttendees) return
-
-  const pendingSession = getStore().getState()?.items?.pendingSession
-  if (!pendingSession?.identifier) return
-
-  const { identifier, pendingBookingList, pendingWaitingList } = pendingSession
-
-  const waitRequestSatisifed = waitRequestCompleted(
-    identifier,
-    pendingWaitingList,
-    incomingAttendees
-  )
-  const bookRequestSatisfied = bookRequestCompleted(
-    identifier,
-    pendingBookingList,
-    incomingAttendees
-  )
-
-  // if both lists match their respective submitted pending lists, then
-  // clear the pending session
-  waitRequestSatisifed && bookRequestSatisfied && clearPendingSession()
-}
-
-/**
  * push the sessionAgendaProps items to our local state
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props
  */
 export const mapSessionInterface = props => {
   if (!props) return
-
-  // check if there is a pending session needing to be updated due to new attendees
-  checkPendingSession(props.attendees)
 
   // loop through each key and dispatch accordingly
   mapObj(props, (key, value) => {

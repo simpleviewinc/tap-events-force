@@ -1,31 +1,16 @@
 import { Values, ActionTypes } from 'SVConstants'
-import { isStr, isArr, isObj, validate } from '@keg-hub/jsutils'
+import { isStr, validate } from '@keg-hub/jsutils'
 import { dispatch } from 'SVStore'
 import { emitPendingEvent } from 'SVUtils/pending/emitPendingEvent'
 const { CATEGORIES } = Values
-
-/**
- * @param {Object} data
- * @return {boolean} true if the pending data payload is valid
- */
-const isValidPendingData = data =>
-  isObj(data) &&
-  (isArr(data.pendingBookingList) || isArr(data.pendingWaitingList))
 
 /**
  * Helper for setPendingSession: validates its input
  * @param {string} sessionId
  * @param {Object} pendingData
  */
-const isValidInput = (sessionId, pendingData) => {
-  const [valid] = validate(
-    { sessionId, pendingData },
-    {
-      sessionId: isStr,
-      pendingData: isValidPendingData,
-    }
-  )
-
+const isValidInput = sessionId => {
+  const [valid] = validate({ sessionId }, { sessionId: isStr })
   return valid
 }
 
@@ -40,16 +25,10 @@ const isValidInput = (sessionId, pendingData) => {
  * @example
  * setPendingSession('12', true)
  */
-export const setPendingSession = (sessionId, pendingData = {}) => {
-  if (!isValidInput(sessionId, pendingData)) return
+export const setPendingSession = sessionId => {
+  if (!isValidInput(sessionId)) return
 
-  const { pendingBookingList, pendingWaitingList } = pendingData
-
-  const pendingSession = {
-    identifier: sessionId,
-    ...(pendingBookingList && { pendingBookingList }),
-    ...(pendingWaitingList && { pendingWaitingList }),
-  }
+  const pendingSession = { identifier: sessionId }
 
   emitPendingEvent(pendingSession)
 
