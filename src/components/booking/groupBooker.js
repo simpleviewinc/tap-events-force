@@ -9,10 +9,26 @@ import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
+import { useKegEvent } from 'SVHooks/events/useKegEvent'
 import { Values } from 'SVConstants'
 import PropTypes from 'prop-types'
 
-const { CATEGORIES } = Values
+const { CATEGORIES, EVENTS } = Values
+
+/**
+ * Waits for the current session to transition from a pending state
+ * to a non-pending state, at which point it will close the group booker
+ * @param {Function} cancelCB - prop-passed cancel function for groupBooker
+ */
+const useAutoCancel = (sessionId, cancelCB) => {
+  useKegEvent(EVENTS.SESSION_PENDING_UPDATE, ({ current, next }) => {
+    // if the currently pending session is not this one, don't do anything
+    if (current?.identifier !== sessionId) return
+
+    // otherwise, check for a pending state change for this session to not-pending
+    current.identifier !== next.identifier && cancelCB?.()
+  })
+}
 
 /**
  * Provides groupBooker with access to state relevant to the submit button,
@@ -99,6 +115,8 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const [ isSubmitLoading, submitIsEnabled, sessionIsModified ] = useButtonState(
     session.identifier
   )
+
+  useAutoCancel(session?.identifier, onCancelPress)
 
   return (
     <View

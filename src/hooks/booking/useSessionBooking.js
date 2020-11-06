@@ -1,16 +1,12 @@
 import { useCallback } from 'react'
 import {
   sessionBookingRequest,
-  sessionWaitingListRequest,
   setSessionCapacity as setCapacity,
 } from 'SVActions/session/booking'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useBookingSet } from './useBookingSet'
 import { useWaitingSet } from './useWaitingSet'
-import { addAlertModal } from 'SVActions/modals/addAlertModal'
 import { Values } from 'SVConstants'
-import { setPendingSession } from 'SVActions/session/pending/setPendingSession'
-import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
 const { CATEGORIES } = Values
 
 /**
@@ -69,19 +65,7 @@ const useUpdateSessionListsCallback = (
  * @param {Array<string>} waitList
  */
 const handleAsyncBooking = async (sessionId, bookList, waitList) => {
-  try {
-    setPendingSession(sessionId)
-    return await Promise.all([
-      sessionBookingRequest(sessionId, bookList),
-      waitList && sessionWaitingListRequest(sessionId, waitList),
-    ])
-  }
-  catch (error) {
-    addAlertModal(error.name || 'Booking Request Failed', error.message)
-  }
-  finally {
-    clearPendingSession()
-  }
+  sessionBookingRequest(sessionId, bookList, waitList)
 }
 
 /**

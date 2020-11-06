@@ -1,5 +1,13 @@
 import { useCallback } from 'react'
-import { getURLParam, isStr } from '@keg-hub/jsutils'
+import {
+  validate,
+  isArr,
+  isFunc,
+  isBool,
+  isNum,
+  getURLParam,
+  isStr,
+} from '@keg-hub/jsutils'
 
 const isSet = str => Boolean(str) && str !== ''
 const alertIsSet = mockData => {
@@ -55,9 +63,25 @@ const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
  */
 export const useMockBookingCB = (setMockData, options = {}) => {
   const { isBookingCb = true, bookingDelay = 0, reject = false } = options
+  const [valid] = validate(
+    { setMockData },
+    {
+      setMockData: isFunc,
+      isBookingCb: isBool,
+      bookingDelay: delay => isNum(delay) || isStr(delay),
+      reject: rej => isBool(rej) || isStr(rej),
+    }
+  )
+  if (!valid) return null
 
   return useCallback(
     (sessionId, attendeeIds) => {
+      const [valid] = validate(
+        { sessionId, attendeeIds },
+        { sessionId: isStr, attendeeIds: isArr }
+      )
+      if (!valid) return Promise.reject()
+
       return new Promise((resolvePromise, rejectPromise) => {
         // if < 0, indicates the request should not resolve/complete
         if (bookingDelay < 0) return

@@ -22,7 +22,7 @@ import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
 
 const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
-const { SESSION_BOOKING_REQUEST, SESSION_WAITING_LIST_REQUEST } = EVENTS
+const { SESSION_BOOKING_REQUEST } = EVENTS
 
 /**
  * FilterButton
@@ -212,15 +212,15 @@ const AgendaSessions = React.memo(
  * @param {string} event - event-emitter event to register with
  * @param {Function<Promise>} requestCB - an async function for requesting a booking
  */
-const useAttendeeRequestEvent = (event, requestCB) => {
+const useAttendeeRequestEvent = (bookRequestCb, waitRequestCb) => {
   const handler = useCallback(
     (...args) => {
-      handleAttendeeRequest(requestCB, ...args)
+      return handleAttendeeRequest(bookRequestCb, waitRequestCb, ...args)
     },
-    [requestCB]
+    [ bookRequestCb, waitRequestCb ]
   )
 
-  useKegEvent(event, handler)
+  useKegEvent(SESSION_BOOKING_REQUEST, handler)
 }
 
 /**
@@ -240,11 +240,7 @@ export const Sessions = props => {
   } = props
 
   // set up our event listener for booking and waiting list requests
-  useAttendeeRequestEvent(SESSION_BOOKING_REQUEST, onSessionBookingRequest)
-  useAttendeeRequestEvent(
-    SESSION_WAITING_LIST_REQUEST,
-    onSessionWaitingListRequest
-  )
+  useAttendeeRequestEvent(onSessionBookingRequest, onSessionWaitingListRequest)
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)

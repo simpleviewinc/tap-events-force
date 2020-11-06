@@ -17,13 +17,27 @@ import {
  * @param {Array<string>} attendeeIds
  * @return {boolean} true if valid input
  */
-const isValidInput = (requestCb, sessionId, attendeeIds) => {
+const isValidInput = (
+  bookRequestCb,
+  waitRequestCb,
+  sessionId,
+  bookList,
+  waitList
+) => {
   const [valid] = validate(
-    { requestCb, sessionId, attendeeIds },
     {
-      requestCb: isFunc,
+      bookRequestCb,
+      waitRequestCb,
+      sessionId,
+      bookList,
+      waitList,
+    },
+    {
+      bookRequestCb: isFunc,
+      waitRequestCb: isFunc,
       sessionId: isStr,
-      attendeeIds: isArr,
+      bookList: isArr,
+      waitList: list => !list || isArr(list),
     }
   )
   return valid
@@ -54,15 +68,23 @@ const parseException = exception => {
  * @param {Array<string>} attendeeIds
  */
 export const handleAttendeeRequest = async (
-  requestCb,
+  bookRequestCb,
+  waitRequestCb,
   sessionId,
-  attendeeIds
+  bookList,
+  waitList
 ) => {
-  if (!isValidInput(requestCb, sessionId, attendeeIds)) return
+  if (
+    !isValidInput(bookRequestCb, waitRequestCb, sessionId, bookList, waitList)
+  )
+    return
 
   try {
     setPendingSession(sessionId)
-    await requestCb(sessionId, attendeeIds)
+    return await Promise.all([
+      bookRequestCb(sessionId, bookList),
+      waitRequestCb(sessionId, waitList),
+    ])
   }
   catch (e) {
     const [ title, message ] = parseException(e)
