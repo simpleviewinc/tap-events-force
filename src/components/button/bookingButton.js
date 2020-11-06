@@ -1,4 +1,4 @@
-import { Text, View } from 'SVComponents'
+import { View, Text } from '@keg-hub/keg-components'
 import React, { useCallback } from 'react'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { selectSession } from 'SVActions/session/selectSession'

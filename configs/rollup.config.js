@@ -142,6 +142,7 @@ export default {
       // rnw aliasing
       // rn and rnw are in "externals", causing the alias plugin to ignore them, so we have to manually replace
       "from 'react-native'": "from 'react-native-web'",
+      "from 'react-native-svg'": "from 'react-native-svg-web'",
     }),
     sourcemaps(),
     generatePackageJson({
