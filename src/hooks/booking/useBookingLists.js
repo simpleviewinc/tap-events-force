@@ -24,7 +24,7 @@ const shouldPreselectAttendees = (
 /**
  * Builds the initial list of booked attendee ids for the session
  * @param {Object} session - session object
- * @param {Array<string>} attendees - full list of attendees
+ * @param {Array<import('SVModels/Attendee').Attendee>} attendees - full list of attendees
  * @param {Array<string>} initialWaitIds - list of ids on the initial waiting list
  * @param {Function} isBookable - cb of form: attendeeId => true/false if bookable/waitListable to the session
  * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
@@ -40,7 +40,7 @@ const getInitialBookingIds = (
   // include all the attendees that are bookable
   if (shouldPreselect)
     return attendees.reduce((ids, nextAttendee) => {
-      if (!isBookable(nextAttendee)) return ids
+      if (!isBookable(nextAttendee.bookedTicketIdentifier)) return ids
       ids.push(nextAttendee.bookedTicketIdentifier)
       return ids
     }, [])
