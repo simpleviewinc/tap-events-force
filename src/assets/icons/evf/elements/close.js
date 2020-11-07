@@ -8,6 +8,7 @@ export function Close(props) {
       height={15}
       viewBox='0 0 14 15'
       svgFill='none'
+      stroke='none'
       {...props}
       delta='M2 .82l-2 2 5 5-5 5 2 2 5-5 5 5 2-2-5-5 5-5-2-2-5 5-5-5z'
       fill={props.fill || '#fff'}
