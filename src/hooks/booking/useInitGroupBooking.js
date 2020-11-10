@@ -80,5 +80,5 @@ const useBookingModifyMonitor = (
     const waitListModified = !areSetEqual(waitList, origWaitList)
     const bookListModified = !areSetEqual(bookList, origBookList)
     setUserModifiedBooking(sessionId, waitListModified, bookListModified)
-  }, [ waitList, bookList ])
+  }, [ sessionId, waitList, bookList ])
 }

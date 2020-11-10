@@ -82,14 +82,6 @@ export const useMockBookingCB = (setMockData, options = {}) => {
       )
       if (!valid) return Promise.reject()
 
-      console.log(
-        'Mock ',
-        isBookingCb ? 'Booking' : 'Waiting',
-        'List callback,',
-        sessionId,
-        attendeeIds
-      )
-
       return new Promise((resolvePromise, rejectPromise) => {
         // if < 0, indicates the request should not resolve/complete
         if (bookingDelay < 0) return
