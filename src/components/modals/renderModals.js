@@ -14,9 +14,7 @@ const {
   SESSION_DETAILS,
 } = Values.MODAL_TYPES
 
-const renderModal = (modal, index) => {
-  const visible = true
-
+const renderModal = (modal, index, visible = true) => {
   switch (modal?.type) {
   case PRESENTER:
     return (
@@ -81,10 +79,8 @@ const renderModal = (modal, index) => {
  * @returns {Component}
  */
 export const RenderModals = modals => {
-  if (!modals) return null
-
   // the top of the stack is the last element
   const index = modals.length - 1
-
-  return renderModal(modals[index], index)
+  const nextModal = modals[index]
+  return renderModal(nextModal, index)
 }

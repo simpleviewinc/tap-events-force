@@ -282,7 +282,7 @@ export const Sessions = props => {
         }
         militaryTime={settings?.displayProperties?.timeFormat === '24'}
       />
-      { modals.length > 0 && RenderModals(modals) }
+      { RenderModals(modals) }
     </View>
   )
 }
