@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
  * @param {Object} props
  * @param {Object} props.sessionAgendaProps - data structured like src/mocks/eventsforce/testData
  * @param {Function} props.onDayChange - function that executes when user changes day of agenda
- * @param {Function} props.onSessionBookingRequest - callback for session booking request action for the waiting list
+ * @param {Function} props.onSessionBookingRequest - callback for session booking request action.
  *                                                 - passes back session id and an array of attendee ids
  * @param {Function} props.onSessionWaitingListRequest - callback for session waiting list request action,
  *                                                 - of form (sessionId, attendeeIds) => {}

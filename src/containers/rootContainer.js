@@ -1,12 +1,12 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import { withAppHeader } from 'SVComponents'
 import { SessionsContainer } from './sessionsContainer'
-import { displayName } from 'SVConfig'
 import testData from '../mocks/eventsforce/testData.js'
 import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
 import { getURLParam, get, isNum } from '@keg-hub/jsutils'
+import { displayName } from 'SVConfig'
 import {
   useMockBookingRequest,
   useMockWaitingRequest,
