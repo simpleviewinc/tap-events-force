@@ -1,35 +1,17 @@
 import React, { useMemo } from 'react'
 import { View, Button, Text } from '@keg-hub/keg-components'
-import { useStylesCallback, useTheme } from '@keg-hub/re-theme'
-import { useParsedStyle } from 'SVHooks/useParsedStyle'
+import { useStylesCallback } from '@keg-hub/re-theme'
 import { EvfLoading } from 'SVComponents/loading'
-import { set, get } from '@keg-hub/jsutils'
 
 /**
  * Builds the styles for the Evf button merging the default styles with the parsed styles
  * @param {Object} theme - Global Theme object
- * @param {Object} custom - contains {type, styles, parsed}
+ * @param {Object} custom - contains {type, styles}
  *
  * @returns {Object} - Merged Evf button styles
  */
-const buildStyles = (theme, custom) => {
-  const btnStyles = theme.get(`button.evfButton.${custom.type}`)
-
-  // Get the keys of the content.button, to get a list of all button states
-  // This allows dynamically matching the Theme states even if they are changed
-  const stateKeys = Object.keys(get(btnStyles, 'content.button', {}))
-
-  return theme.get(
-    btnStyles,
-    custom.styles,
-    custom.parsed &&
-      // Loop over the state keys, and set the parsed styles for each
-      stateKeys.reduce((parsed, state) => {
-        set(parsed, `content.button.${state}.main`, custom.parsed)
-        return parsed
-      }, {})
-  )
-}
+const buildStyles = (theme, custom) =>
+  theme.get(`button.evfButton.${custom.type}`, custom.styles)
 
 /**
  * EvfButton
@@ -53,20 +35,9 @@ export const EvfButton = props => {
   } = props
 
   // build the main style for the button, memoized
-  const theme = useTheme()
   const buttonCls = `ef-action-button-${type}`
 
-  const parsedActionStyles = useParsedStyle(buttonCls)
-  const customParsedStyles = useParsedStyle(className)
-
-  const customStyles = useMemo(
-    () => ({
-      type,
-      styles,
-      parsed: theme.get(parsedActionStyles, customParsedStyles),
-    }),
-    [ type, styles, parsedActionStyles, customParsedStyles ]
-  )
+  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
 
   const mainStyle = useStylesCallback(
     buildStyles,
