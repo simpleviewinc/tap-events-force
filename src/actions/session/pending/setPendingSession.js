@@ -15,15 +15,12 @@ const isValidInput = sessionId => {
 }
 
 /**
- * Sets the pending session in the store. There can only ever be one
- * pending session, since other sessions are put into a disabled state until
- * the pending session is no longer pending.
+ * Sets session identified by sessionid as the pending session in the store.
+ * There can only ever be one pending session, since other sessions are put
+ * into a disabled state until the pending session is no longer pending.
  * @param {string} sessionId - id of session
- * @param {object} pendingData - pending booking list and waiting lists
- * @param {Array<string>?} pendingData.bookingList - pending booking list and waiting lists
- * @param {Array<string>?} pendingData.pendingWaitingList - pending booking list and waiting lists
  * @example
- * setPendingSession('12', true)
+ * setPendingSession('12')
  */
 export const setPendingSession = sessionId => {
   if (!isValidInput(sessionId)) return

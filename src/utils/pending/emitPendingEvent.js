@@ -7,7 +7,7 @@ const eventManager = getEventEmitter()
 
 /**
  * Notifies pending session event observers of an update
- * @param {Object} nextPendingSession
+ * @param {import('SVModels/PendingSession').PendingSession} nextPendingSession
  */
 export const emitPendingEvent = nextPendingSession => {
   const currentPendingSession = getStore()?.getState()?.items[

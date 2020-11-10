@@ -70,8 +70,13 @@ const getBookingStopped = session => {
 
 /**
  * Checks if the booking display should be disabled from interaction
+ * @param {Object} props
  * @param {import('SVModels/session').Session} props.session
- * @param {boolean} bookingStopped - If booking changes have been stopped for this session
+ * @param {import('SVModels/PendingSession').PendingSession} props.pendingSession - currently pending session, if there is one
+ * @param {Array} props.bookableCount - Attendees that can book the current session
+ * @param {string} props.bookingMode - Current mode of booking for the session (single|group)
+ * @param {Object} props.timeConflicts - Key value pairs of attendees booked in conflicting sessions
+ * @param {Object} state
  *
  * @returns {boolean} - If the display interaction should be disabled
  */

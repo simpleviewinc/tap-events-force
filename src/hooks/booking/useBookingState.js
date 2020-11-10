@@ -62,7 +62,7 @@ const useStoreData = () => {
  * @param {Array} bookingLists - List of attendee ids that are booked or are on the waiting list
  * @param {Object} timeConflicts - Key value pairs of attendees booked in conflicting sessions
  * @param {Array} bookableCount - Attendees that can book the current session
- * @param {Object} pendingSession - the object indicating if a session has submitted a booking request
+ * @param {import('SVModels/PendingSession').PendingSession} pendingSession - the object indicating if a session has submitted a booking request
  *
  * @returns {import('SVModels/session/bookingState').BookingState} model
  */
