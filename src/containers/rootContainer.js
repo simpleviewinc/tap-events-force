@@ -1,17 +1,35 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { withAppHeader } from 'SVComponents'
 import { SessionsContainer } from './sessionsContainer'
 import { displayName } from 'SVConfig'
-import testData from '../mocks/eventsforce/testData.js'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
+import { getURLParam, get } from '@keg-hub/jsutils'
+import {
+  useMockBookingRequest,
+  useMockWaitingRequest,
+} from '../mocks/eventsforce/callbacks/useMockBookingCB'
+import testData from '../mocks/eventsforce/testData.js'
+import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
-  onSessionBookingRequest: (session, attendees) => {
-    console.log(attendees)
-    console.log(session)
-  },
+}
+
+/**
+ * Returns mock data for rootContainer, depending on if the state url
+ * parameter is set.
+ */
+const useTestDataState = () => {
+  const initialData = useMemo(() => {
+    const defaultPath = getURLParam('state') ?? ''
+    const formattedPath = defaultPath.replace(/-/gi, '.')
+    return [ 'default', 'def', 'na', 'none' ].includes(formattedPath)
+      ? testData
+      : get(bookingStatesTestData, formattedPath, testData)
+  }, [])
+
+  return useState(initialData)
 }
 
 /**
@@ -19,7 +37,10 @@ const mockCallbacks = {
  * Currently only used in local development. Not exported by rollup (see apps/Sessions.js for that)
  */
 export const RootContainer = withAppHeader(displayName, props => {
-  const [ mockData, setMockData ] = useState(testData)
+  const [ mockData, setMockData ] = useTestDataState()
+
+  const mockBookRequest = useMockBookingRequest(setMockData)
+  const mockWaitRequest = useMockWaitingRequest(setMockData)
 
   return (
     <>
@@ -32,7 +53,8 @@ export const RootContainer = withAppHeader(displayName, props => {
       <SessionsContainer
         sessionAgendaProps={mockData}
         onDayChange={mockCallbacks.onDayChange}
-        onSessionBookingRequest={mockCallbacks.onSessionBookingRequest}
+        onSessionBookingRequest={mockBookRequest}
+        onSessionWaitingListRequest={mockWaitRequest}
       />
     </>
   )

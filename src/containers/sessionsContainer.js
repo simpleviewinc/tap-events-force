@@ -7,13 +7,20 @@ import { useSelector } from 'react-redux'
 /**
  * Container for Sessions
  * @param {Object} props
- * @param {Object} props.sessionData, structured like src/mocks/eventsforce/testData
- * @param {Function} props.onDayChange
+ * @param {Object} props.sessionAgendaProps - data structured like src/mocks/eventsforce/testData
+ * @param {Function} props.onDayChange - function that executes when user changes day of agenda
  * @param {Function} props.onSessionBookingRequest - callback for session booking request action.
- *                                                  - passes back session id and an array of attendee ids
+ *                                                 - passes back session id and an array of attendee ids
+ * @param {Function} props.onSessionWaitingListRequest - callback for session waiting list request action,
+ *                                                 - of form (sessionId, attendeeIds) => {}
  */
 export const SessionsContainer = props => {
-  const { onDayChange, onSessionBookingRequest, sessionAgendaProps } = props
+  const {
+    onDayChange,
+    onSessionBookingRequest,
+    onSessionWaitingListRequest,
+    sessionAgendaProps,
+  } = props
 
   useEffect(() => void initSessions(), [])
 
@@ -24,6 +31,7 @@ export const SessionsContainer = props => {
       onDayChange={onDayChange}
       sessionAgendaProps={sessionAgendaProps}
       onSessionBookingRequest={onSessionBookingRequest}
+      onSessionWaitingListRequest={onSessionWaitingListRequest}
     />
   ) : (
     <Loading />
