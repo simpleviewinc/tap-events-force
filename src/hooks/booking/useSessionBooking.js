@@ -58,17 +58,6 @@ const useUpdateSessionListsCallback = (
 }
 
 /**
- *
- * @param {string} sessionId
- * @param {Array<string>} bookList
- * @param {boolean} waitListIsAvailable
- * @param {Array<string>} waitList
- */
-const handleAsyncBooking = async (sessionId, bookList, waitList) => {
-  sessionBookingRequest(sessionId, bookList, waitList)
-}
-
-/**
  * Returns a callback that, given an attendee id, updates the list
  * (either adding to or removing from the attendees booking list or attendees waiting list)
  * in addition to updating the session's current capacity
@@ -81,12 +70,12 @@ const useBookSessionCallback = (session, bookingSet, waitSet) => {
   const waitListIsAvailable = session?.capacity?.isWaitingListAvailable
   const sessionId = session?.identifier
 
-  const bookingArr = Array.from(bookingSet.data)
+  const bookingArr = bookingSet && Array.from(bookingSet.data)
   const waitingArr = waitSet && waitListIsAvailable && Array.from(waitSet.data)
 
   // makes a request to book the session for the selected attendees (as identified by ids in `attendeeIdsRef`)
   return useCallback(
-    async () => handleAsyncBooking(sessionId, bookingArr, waitingArr),
+    () => sessionBookingRequest(sessionId, bookingArr, waitingArr),
     [ sessionId, bookingSet, waitListIsAvailable, waitSet ]
   )
 }

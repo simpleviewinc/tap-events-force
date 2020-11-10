@@ -41,6 +41,7 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
 }
 
 export const contentDefaultMaxHeight = 772
+
 /**
  *
  * @param {object} props
@@ -53,12 +54,15 @@ export const contentDefaultMaxHeight = 772
  * @param {Component} props.BodyComponent - Component for the body. contains 'setDismissed' prop if the child wants to be able to dismiss the modal by other means other than close button || backdrop click
  * @param {boolean=} props.hasCloseButton - to display the close button on the header or not
  * @param {Function=} props.onDismiss - function to call when the modal is being dismissed
+ * @param {number?} props.index - index of this modal in the modal stack. Define it to ensure that the right modal
+ * is removed from the modal stack when this modal is dismissed.
  * @example
  *  <BaseModal
       dismissedCBRef={dismissedCBRef}
       styles={errorStyles}
       title={title}
       visible={visible}
+      index={modalStackIndex}
     >
       <Children />
     </BaseModal>
@@ -73,6 +77,7 @@ export const BaseModal = props => {
     dismissedCBRef,
     children,
     onDismiss,
+    index,
   } = props
   // two possible cases for a non visible modal
   // 1. modal is mounted/in store but has been animated out of view by another modal
@@ -97,7 +102,7 @@ export const BaseModal = props => {
   const onAnimateOut = useCallback(() => {
     if (dismissed) {
       onDismiss?.()
-      removeModal()
+      removeModal(index)
     }
   }, [ dismissed, onDismiss, removeModal ])
 
@@ -126,4 +131,5 @@ BaseModal.propTypes = {
   visible: PropTypes.bool,
   BodyComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
   hasCloseButton: PropTypes.bool,
+  index: PropTypes.number,
 }

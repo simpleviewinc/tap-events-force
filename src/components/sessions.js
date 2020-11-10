@@ -214,9 +214,7 @@ const AgendaSessions = React.memo(
  */
 const useAttendeeRequestEvent = (bookRequestCb, waitRequestCb) => {
   const handler = useCallback(
-    (...args) => {
-      return handleAttendeeRequest(bookRequestCb, waitRequestCb, ...args)
-    },
+    (...args) => handleAttendeeRequest(bookRequestCb, waitRequestCb, ...args),
     [ bookRequestCb, waitRequestCb ]
   )
 

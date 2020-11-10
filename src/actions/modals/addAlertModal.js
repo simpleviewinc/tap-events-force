@@ -14,23 +14,23 @@ const isValidInput = (title, message) => {
   return valid
 }
 
-const modalType = CATEGORIES.ALERT.toLowerCase()
+const alertModalType = CATEGORIES.ALERT.toLowerCase()
 
 /**
- * Action for showing an alert modal
+ * Action for adding an alert modal to the modal stack.
  * @param {string} title - alert title
  * @param {string} message - alert message
  */
 export const addAlertModal = (title, message) => {
   if (!isValidInput(title, message)) return
 
-  addModal(
-    new Modal({
-      type: modalType,
-      data: {
-        title,
-        message,
-      },
-    })
-  )
+  const modal = new Modal({
+    type: alertModalType,
+    data: {
+      title,
+      message,
+    },
+  })
+
+  addModal(modal)
 }

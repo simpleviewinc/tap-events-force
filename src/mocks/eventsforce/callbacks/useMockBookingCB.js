@@ -89,7 +89,8 @@ export const useMockBookingCB = (setMockData, options = {}) => {
         // simulate a props-change after the booking-request cb would
         // have updated attendees in consumer's context
         setTimeout(() => {
-          updateMockState(setMockData, sessionId, attendeeIds, isBookingCb)
+          !reject &&
+            updateMockState(setMockData, sessionId, attendeeIds, isBookingCb)
           const errorMsg = isStr(reject)
             ? reject
             : 'Sorry, we encountered technical difficulties, so we could not book your attendees.'

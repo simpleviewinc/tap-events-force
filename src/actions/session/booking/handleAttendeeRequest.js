@@ -10,6 +10,8 @@ import {
   isEmpty,
 } from '@keg-hub/jsutils'
 
+const isValidAttendeeList = list => !list || isArr(list)
+
 /**
  * Validates input of `handleAttendeeRequest`
  * @param {Function} requestCb
@@ -36,8 +38,8 @@ const isValidInput = (
       bookRequestCb: isFunc,
       waitRequestCb: isFunc,
       sessionId: isStr,
-      bookList: isArr,
-      waitList: list => !list || isArr(list),
+      bookList: isValidAttendeeList,
+      waitList: isValidAttendeeList,
     }
   )
   return valid
@@ -45,7 +47,8 @@ const isValidInput = (
 
 /**
  * Parses an error thrown by the consumer's request callback
- * @param {Error?} exception
+ * @param {(Error | string | Object)?} exception
+ * @return {Array} - [ title, message ]
  */
 const parseException = exception => {
   const message =
@@ -62,10 +65,13 @@ const parseException = exception => {
 }
 
 /**
- *
+ * Makes the booking and wait-list async requests, handling any errors that may be thrown,
+ * as well as updating the pending session state. Does not call a request
+ * if its associated list is falsy.
  * @param {Function} requestCb
  * @param {string} sessionId
  * @param {Array<string>} attendeeIds
+ * @return {Promise} - promise that resolves when both requests are complete
  */
 export const handleAttendeeRequest = async (
   bookRequestCb,
@@ -79,18 +85,26 @@ export const handleAttendeeRequest = async (
   )
     return
 
-  try {
-    setPendingSession(sessionId)
-    return await Promise.all([
-      bookRequestCb(sessionId, bookList),
-      waitRequestCb(sessionId, waitList),
+  // set the session identified by `sessionId` to "pending" state
+  setPendingSession(sessionId)
+
+  let error = null
+
+  // make both requests in tandem
+  return (
+    Promise.all([
+      bookList && bookRequestCb(sessionId, bookList),
+      waitList && waitRequestCb(sessionId, waitList),
     ])
-  }
-  catch (e) {
-    const [ title, message ] = parseException(e)
-    addAlertModal(title, message)
-  }
-  finally {
-    clearPendingSession()
-  }
+      // parse exceptions if either request throws
+      .catch(e => {
+        error = parseException(e)
+      })
+      // ensure the pending session is always cleared,
+      // and the alert modal is shown if an exception was raised
+      .finally(() => {
+        clearPendingSession()
+        error && addAlertModal(...error)
+      })
+  )
 }

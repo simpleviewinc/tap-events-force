@@ -1,8 +1,7 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { mapObj, snakeCase } from '@keg-hub/jsutils'
-import { addModal } from 'SVActions/modals/addModal'
-import { Modal } from 'SVModels/modal'
+import { addAlertModal } from 'SVActions/modals/addAlertModal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
@@ -29,7 +28,7 @@ const checkAlert = alert => {
   if (alert === existingAlert) return
 
   if (alert?.title && alert?.message) {
-    addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
+    addAlertModal(alert.title, alert.message)
   }
 }
 
