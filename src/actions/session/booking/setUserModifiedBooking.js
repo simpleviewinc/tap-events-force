@@ -9,20 +9,33 @@ import { isStr, isBool, validate } from '@keg-hub/jsutils'
  * in the group booking items store tree.
  *
  * @param {string} sessionId - id of a session
- * @param {boolean} isModified - true if session is modified by user
+ * @param {boolean} waitListModified - true if session is modified by user
+ * @param {boolean} bookListModified - true if session is modified by user
  */
-export const setUserModifiedBooking = (sessionId, isModified) => {
+export const setUserModifiedBooking = (
+  sessionId,
+  waitListModified,
+  bookListModified
+) => {
   const [valid] = validate(
-    { sessionId, isModified },
-    { sessionId: isStr, isModified: isBool }
+    { sessionId, waitListModified, bookListModified },
+    { sessionId: isStr, $default: isBool }
   )
   if (!valid) return
+
+  const isModified = waitListModified || bookListModified
+
+  const items = {
+    identifier: isModified ? sessionId : null,
+    waitListModified,
+    bookListModified,
+  }
 
   dispatch({
     type: ActionTypes.SET_ITEMS,
     payload: {
       category: CATEGORIES.MODIFIED_SESSION,
-      items: { identifier: isModified ? sessionId : null },
+      items,
     },
   })
 }

@@ -1,5 +1,4 @@
 export * from './sessionBookingRequest'
-export * from './sessionWaitingListRequest'
 export * from './setBookingList'
 export * from './setWaitingList'
 export * from './setUserModifiedBooking'

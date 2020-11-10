@@ -2,5 +2,9 @@ import { Values } from 'SVConstants'
 const { CATEGORIES } = Values
 
 export const modifiedSessionState = {
-  [CATEGORIES.MODIFIED_SESSION]: { identifier: null },
+  [CATEGORIES.MODIFIED_SESSION]: {
+    identifier: null,
+    waitListModified: null,
+    bookListModified: null,
+  },
 }

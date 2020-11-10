@@ -77,9 +77,8 @@ const useBookingModifyMonitor = (
   } = useStoreItems([ 'groupBooking.waitingList', 'groupBooking.bookingList' ])
 
   useEffect(() => {
-    const modified =
-      !areSetEqual(waitList, origWaitList) ||
-      !areSetEqual(bookList, origBookList)
-    setUserModifiedBooking(sessionId, modified)
+    const waitListModified = !areSetEqual(waitList, origWaitList)
+    const bookListModified = !areSetEqual(bookList, origBookList)
+    setUserModifiedBooking(sessionId, waitListModified, bookListModified)
   }, [ waitList, bookList ])
 }

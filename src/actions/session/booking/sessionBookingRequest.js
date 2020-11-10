@@ -1,9 +1,12 @@
 import { Values } from 'SVConstants'
 import { getEventEmitter } from 'SVUtils/events'
 import { validateEventResponse } from 'SVUtils/validation'
+import { validate, isArr, isStr } from '@keg-hub/jsutils'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()
+
+const isValidAttendeeList = list => !list || isArr(list)
 
 /**
  * Emits the session booking request event, calling any listeners to that event
@@ -16,12 +19,14 @@ const kegEventEmitter = getEventEmitter()
  * @param {Array<string>} waitList - list of attendee ids to be put on the waiting list for this session
  * @return {void}
  */
-export const sessionBookingRequest = (
-  sessionId,
-  bookList = [],
-  waitList = []
-) => {
-  const valid = kegEventEmitter.emit(
+export const sessionBookingRequest = (sessionId, bookList, waitList) => {
+  const [valid] = validate(
+    { sessionId, bookList, waitList },
+    { sessionId: isStr, $default: isValidAttendeeList }
+  )
+  if (!valid) return
+
+  const validEvent = kegEventEmitter.emit(
     EVENTS.SESSION_BOOKING_REQUEST,
     sessionId,
     bookList,
@@ -29,7 +34,7 @@ export const sessionBookingRequest = (
   )
 
   validateEventResponse(
-    valid,
+    validEvent,
     [`Callback for ${EVENTS.SESSION_BOOKING_REQUEST} does not exist!`],
     [
       'Emitted event',

@@ -70,13 +70,30 @@ const useBookSessionCallback = (session, bookingSet, waitSet) => {
   const waitListIsAvailable = session?.capacity?.isWaitingListAvailable
   const sessionId = session?.identifier
 
-  const bookingArr = bookingSet && Array.from(bookingSet.data)
-  const waitingArr = waitSet && waitListIsAvailable && Array.from(waitSet.data)
+  const modifiedSession = useStoreItems(`${CATEGORIES.MODIFIED_SESSION}`)
+
+  const bookingArr =
+    modifiedSession.bookListModified &&
+    bookingSet &&
+    Array.from(bookingSet.data)
+
+  const waitingArr =
+    modifiedSession.waitListModified &&
+    waitListIsAvailable &&
+    waitSet &&
+    Array.from(waitSet.data)
 
   // makes a request to book the session for the selected attendees (as identified by ids in `attendeeIdsRef`)
   return useCallback(
     () => sessionBookingRequest(sessionId, bookingArr, waitingArr),
-    [ sessionId, bookingSet, waitListIsAvailable, waitSet ]
+    [
+      modifiedSession.bookListModified,
+      modifiedSession.waitListModified,
+      sessionId,
+      bookingSet,
+      waitListIsAvailable,
+      waitSet,
+    ]
   )
 }
 

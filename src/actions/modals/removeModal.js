@@ -56,7 +56,6 @@ export const removeModal = index => {
   // Remove the modal item at the index
   modalsCp.splice(index, 1)
 
-  console.log('removingModal', index, modalsCp)
   // Dispatch the update to the store
   dispatchModalUpdate(modalsCp)
 }
