@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { getExistingWaitIds } from 'SVUtils/booking/getExistingWaitIds'
 import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
-import { useRestrictedAttendeeIds } from './useRestrictedAttendeeIds'
+import { useIsAttendeeDisabledCallback } from 'SVHooks/models/attendees/useIsAttendeeDisabledCallback'
 
 /**
  * @param {boolean} initialCapacityExceedsNeed
@@ -26,21 +26,21 @@ const shouldPreselectAttendees = (
  * @param {Object} session - session object
  * @param {Array<import('SVModels/Attendee').Attendee>} attendees - full list of attendees
  * @param {Array<string>} initialWaitIds - list of ids on the initial waiting list
- * @param {Function} isBookable - cb of form: attendeeId => true/false if bookable/waitListable to the session
+ * @param {Function} isAttendeeDisabled - cb of form: attendeeId => true/false if bookable/waitListable to the session
  * @param {boolean} initialCapacityExceedsNeed - true if the initial capacity exceeds the potential
  * @return {Array<string>} initial booking ids
  */
 const getInitialBookingIds = (
   existingBookIds,
   attendees,
-  isBookable,
+  isAttendeeDisabled,
   shouldPreselect
 ) => {
   // if nobody is on the waiting list, and the capacity of session is greater than the number of attendees,
   // include all the attendees that are bookable
   if (shouldPreselect)
     return attendees.reduce((ids, nextAttendee) => {
-      if (!isBookable(nextAttendee.bookedTicketIdentifier)) return ids
+      if (isAttendeeDisabled(nextAttendee.bookedTicketIdentifier)) return ids
       ids.push(nextAttendee.bookedTicketIdentifier)
       return ids
     }, [])
@@ -63,8 +63,7 @@ export const useBookingLists = (
   attendees,
   initialCapacityExceedsNeed
 ) => {
-  const attendeeIsBookable =
-    useRestrictedAttendeeIds(session?.identifier)?.isBookable || (() => true)
+  const attendeeIsDisabled = useIsAttendeeDisabledCallback(session, attendees)
 
   const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable
 
@@ -73,7 +72,7 @@ export const useBookingLists = (
     const existingWaitingList = getExistingWaitIds(
       session?.identifier,
       attendees
-    ).filter(attendeeIsBookable)
+    ).filter(id => !attendeeIsDisabled(id))
 
     // the initial waiting list to be used on the group booking modal. If the waiting list is available,
     // we use the existing waiting list, otherwise this list is empty
@@ -84,7 +83,7 @@ export const useBookingLists = (
     const existingBookingList = getExistingBookIds(
       session?.identifier,
       attendees
-    ).filter(attendeeIsBookable)
+    ).filter(id => !attendeeIsDisabled(id))
 
     const shouldPreselect = shouldPreselectAttendees(
       initialCapacityExceedsNeed,
@@ -97,7 +96,7 @@ export const useBookingLists = (
     const initBookingList = getInitialBookingIds(
       existingBookingList,
       attendees,
-      attendeeIsBookable,
+      attendeeIsDisabled,
       shouldPreselect
     )
 
@@ -110,7 +109,7 @@ export const useBookingLists = (
   }, [
     session,
     attendees,
-    attendeeIsBookable,
+    attendeeIsDisabled,
     initialCapacityExceedsNeed,
     waitingListIsAvailable,
   ])

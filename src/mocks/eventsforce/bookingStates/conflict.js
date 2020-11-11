@@ -9,7 +9,7 @@ const conflictTestData = {
       // Will need to update when Events-Force gives us the real value
       // bookingStopped: true,
       identifier: '1',
-      name: 'state - TIME CONFLICT - SINGLE - UNLIMITED A',
+      name: 'state - TIME CONFLICT - LIMITED A',
       dayNumber: 1,
       startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
@@ -21,7 +21,7 @@ const conflictTestData = {
       restrictToAttendeeCategories: [],
       capacity: {
         isUnlimited: false,
-        remainingPlaces: 1,
+        remainingPlaces: 5,
       },
       price: {
         currency: 'USD',
@@ -34,7 +34,7 @@ const conflictTestData = {
       // Will need to update when Events-Force gives us the real value
       // bookingStopped: true,
       identifier: '2',
-      name: 'state - TIME CONFLICT - SINGLE - UNLIMITED B',
+      name: 'state - TIME CONFLICT - LIMITED B',
       dayNumber: 1,
       startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
