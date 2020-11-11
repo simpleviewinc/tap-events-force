@@ -1,10 +1,14 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useGroupBookingSession } from 'SVHooks/booking/useGroupBookingSession'
 import { useBookingSet } from 'SVHooks/booking/useBookingSet'
 import { useWaitingSet } from 'SVHooks/booking/useWaitingSet'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
+import { useBookingTimeConflicts } from 'SVHooks/booking/useBookingTimeConflicts'
 import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
+import { Values } from 'SVConstants'
+
+const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
@@ -19,6 +23,24 @@ const useCheckboxState = session => {
       session?.capacity?.isWaitingListAvailable ||
       groupBookingCapacity > 0,
   }
+}
+
+/**
+ *
+ * @param {import('SVModels/').} session
+ * @param {*} attendees
+ */
+const useIsBlockedCallback = (session, attendees) => {
+  const agendaSettings = useStoreItems(
+    `${CATEGORIES.SETTINGS}.${SUB_CATEGORIES.AGENDA_SETTINGS}`
+  )
+  const agendaSessions = useStoreItems(CATEGORIES.AGENDA_SESSIONS)
+  const timeConflicts = useBookingTimeConflicts(
+    session,
+    attendees,
+    agendaSessions[agendaSettings?.activeDayNumber ?? 1]
+  )
+  return useCallback(attendeeId => timeConflicts?.[attendeeId], [timeConflicts])
 }
 
 /**
@@ -44,13 +66,14 @@ export const AttendeeBookingList = ({
   // get the isBookable callback to check if an attendee is eligible to book the session
   const { isBookable } = useRestrictedAttendeeIds(session?.identifier)
   const { enableCheck } = useCheckboxState(session)
+  const isBlocked = useIsBlockedCallback(session, attendees)
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
     const { isBooking, isWaiting, isDisabled } = useMemo(
       () => ({
         isBooking: bookingList.has(attendeeId),
         isWaiting: waitingList.has(attendeeId),
-        isDisabled: !isBookable?.(attendeeId),
+        isDisabled: !isBookable?.(attendeeId) || isBlocked(attendeeId),
       }),
       [ attendeeId, bookingList, waitingList, isBookable ]
     )
