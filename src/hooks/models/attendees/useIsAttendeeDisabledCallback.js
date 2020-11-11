@@ -9,8 +9,8 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  *
- * @param {import('SVModels/').} session
- * @param {*} attendees
+ * @param {import('SVModels/Session').Session} session
+ * @param {Array<import('SVModels/Attendee').Attendee>} attendees
  */
 const useIsTimeBlockedCallback = (session, attendees) => {
   const agendaSettings = useStoreItems(
@@ -27,6 +27,14 @@ const useIsTimeBlockedCallback = (session, attendees) => {
   ])
 }
 
+/**
+ * Helper for determining if an attendee is restricted from booking a session
+ *  - checks both the restricted attendee list and searches for time conflicts with other sessions
+ * @param {import('SVModels/Session').Session} session
+ * @param {Array<import('SVModels/Attendee').Attendee>} attendees
+ * @returns {Function} a callback of form (attendeeId) -> Boolean, which returns
+ * true if the attendee is disabled (cannot be booked or selected in the group booking modal)
+ */
 export const useIsAttendeeDisabledCallback = (session, attendees) => {
   const [valid] = validate(
     { session, attendees },
