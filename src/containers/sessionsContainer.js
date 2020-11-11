@@ -3,6 +3,7 @@ import { Sessions } from 'SVComponents/sessions'
 import { Loading } from 'SVComponents'
 import { initSessions } from 'SVActions'
 import { useSelector } from 'react-redux'
+import { ModalContext } from 'SVComponents/modals/modalContext'
 
 /**
  * Container for Sessions
@@ -20,6 +21,7 @@ export const SessionsContainer = props => {
     onSessionBookingRequest,
     onSessionWaitingListRequest,
     sessionAgendaProps,
+    ModalComponent,
   } = props
 
   useEffect(() => void initSessions(), [])
@@ -27,12 +29,14 @@ export const SessionsContainer = props => {
   const isReady = useSelector(store => store.tap?.initialized)
 
   return isReady ? (
-    <Sessions
-      onDayChange={onDayChange}
-      sessionAgendaProps={sessionAgendaProps}
-      onSessionBookingRequest={onSessionBookingRequest}
-      onSessionWaitingListRequest={onSessionWaitingListRequest}
-    />
+    <ModalContext.Provider value={ModalComponent}>
+      <Sessions
+        onDayChange={onDayChange}
+        sessionAgendaProps={sessionAgendaProps}
+        onSessionBookingRequest={onSessionBookingRequest}
+        onSessionWaitingListRequest={onSessionWaitingListRequest}
+      />
+    </ModalContext.Provider>
   ) : (
     <Loading />
   )
