@@ -10,7 +10,7 @@ import {
 } from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
-import { EFDemoContainer as SessionsContainer } from 'SVContainers/efDemoContainer'
+import { SessionsContainer } from 'SVContainers/sessionsContainer'
 import { Dimensions, Platform } from 'react-native'
 
 setRNDimensions(Dimensions)
