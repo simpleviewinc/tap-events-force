@@ -2,9 +2,8 @@ import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
 import { Text, View } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
-import { useStyle } from '@keg-hub/re-theme'
+import { useStyle, useTheme } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
-import { useTheme } from '@keg-hub/re-theme'
 
 /**
  * A wrapper around the checkbox component with styling and logic for

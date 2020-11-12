@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { View, Modal, Text } from '@keg-hub/keg-components'
-import { useTheme, useDimensions } from '@keg-hub/re-theme'
-import { removeModal } from 'SVActions'
+import { View, Text } from '@keg-hub/keg-components'
+import { useTheme } from '@keg-hub/re-theme'
+import { checkCall } from '@keg-hub/jsutils'
 import PropTypes from 'prop-types'
 import { EVFIcons } from 'SVIcons'
-import { withPortal } from 'SVComponents/hocs/tapIndex'
+import { ModalContext } from 'SVComponents/modals/modalContext'
 
 /**
  * Title bar for modal
@@ -33,7 +33,7 @@ const Header = ({ title, styles, setDismissed, hasCloseButton = true }) => {
           className={`ef-button-close`}
           style={styles?.content?.closeButton?.main}
         >
-          <EVFIcons.Close onPress={() => setDismissed(true)} />
+          <EVFIcons.Close onPress={setDismissed} />
         </View>
       ) }
     </View>
@@ -65,7 +65,6 @@ export const contentDefaultMaxHeight = 772
  */
 export const BaseModal = props => {
   const {
-    className,
     title,
     visible,
     hasCloseButton,
@@ -88,36 +87,34 @@ export const BaseModal = props => {
   }, [ setDismissed, dismissedCBRef ])
 
   const theme = useTheme()
-  const dim = useDimensions()
-  const maxHeight =
-    dim.height <= contentDefaultMaxHeight ? '90%' : contentDefaultMaxHeight
-
   const baseStyles = theme.join(theme.get('modal.base'), styles)
-  const onBackdropTouch = useCallback(() => setDismissed(true), [setDismissed])
-  const onAnimateOut = useCallback(() => {
-    if (dismissed) {
-      onDismiss?.()
-      removeModal()
-    }
-  }, [ dismissed, onDismiss, removeModal ])
+  const onModalClose = useCallback(() => {
+    checkCall(onDismiss, true)
+    setDismissed(true)
+  }, [ setDismissed, onDismiss ])
 
-  return withPortal(
-    <Modal
-      className={className}
-      styles={{ content: { ...baseStyles.content.main, maxHeight } }}
-      visible={visible && !dismissed}
-      onAnimateOut={onAnimateOut}
-      onBackdropTouch={onBackdropTouch}
-    >
-      <Header
-        title={title}
-        styles={baseStyles.content.header}
-        setDismissed={setDismissed}
-        hasCloseButton={hasCloseButton}
-      />
-      <View style={baseStyles.content.bodyWrapper}>{ children }</View>
-    </Modal>,
-    document.body
+  return (
+    <ModalContext.Consumer>
+      { ModalComponent => {
+        return (
+          <ModalComponent
+            modalHeader={
+              <Header
+                title={title}
+                styles={baseStyles.content.header}
+                setDismissed={onModalClose}
+                hasCloseButton={hasCloseButton}
+              />
+            }
+            modalBody={
+              <View style={baseStyles.content.bodyWrapper}>{ children }</View>
+            }
+            toggle={onModalClose}
+            isOpen={visible && !dismissed}
+          />
+        )
+      } }
+    </ModalContext.Consumer>
   )
 }
 
