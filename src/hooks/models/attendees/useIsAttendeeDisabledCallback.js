@@ -32,7 +32,7 @@ const useIsTimeBlockedCallback = (session, attendees) => {
  *  - checks both the restricted attendee list and searches for time conflicts with other sessions
  * @param {import('SVModels/Session').Session} session
  * @param {Array<import('SVModels/Attendee').Attendee>} attendees
- * @returns {Function} a callback of form (attendeeId) -> Boolean, which returns
+ * @returns {Function?} a callback of form (attendeeId) -> Boolean, which returns
  * true if the attendee is disabled (cannot be booked or selected in the group booking modal)
  */
 export const useIsAttendeeDisabledCallback = (session, attendees) => {
@@ -40,7 +40,7 @@ export const useIsAttendeeDisabledCallback = (session, attendees) => {
     { session, attendees },
     { session: isObj, attendees: isArr }
   )
-  if (!valid) return
+  if (!valid) return null
 
   const { isBookable } = useRestrictedAttendeeIds(session?.identifier)
   const isTimeBlocked = useIsTimeBlockedCallback(session, attendees)
