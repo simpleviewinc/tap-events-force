@@ -205,12 +205,13 @@ const AgendaSessions = React.memo(
 )
 
 /**
- * Registers the request callback to the associated event, but
- * first wraps the callback to handle setting the associated session to pending,
+ * Registers the request callback to the session booking request event, but
+ * first wraps the callbacks to handle setting the associated session to pending,
  * resetting that status upon resolving the promise, and catching
  * any errors that might arise so to display the alert modal.
- * @param {string} event - event-emitter event to register with
- * @param {Function<Promise>} requestCB - an async function for requesting a booking
+ * @param {Function<Promise>} bookRequestCb - an async function for booked-list request
+ * @param {Function<Promise>} waitRequestCb - an async function for wait-list request
+ * @return {void}
  */
 const useAttendeeRequestEvent = (bookRequestCb, waitRequestCb) => {
   const handler = useCallback(

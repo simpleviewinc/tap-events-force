@@ -58,6 +58,7 @@ export const useInitGroupBooking = (
  * Monitors the current waiting and booking lists for the group booking modal,
  * and sets the `groupBooking.isModified` value based on if at least one of the lists
  * differs from its starting state.
+ * @param {string} sessionId - id of the session
  * @param {Array<string>} initialWaitIds - starting state of wait list in group booking modal, before any selection
  * @param {Array<string>} initialBookedIds - starting state of book list in group booking modal, before any selection
  */

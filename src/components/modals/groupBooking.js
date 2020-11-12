@@ -21,7 +21,6 @@ const useDismiss = () => {
  * GroupBooking Modal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
- * @param {Array.<import('SVModels/attendee').Attendee>} props.attendees
  * @param {number} props.modalIndex - index of the modal in the modal stack
  * @param {boolean} props.visible
  */

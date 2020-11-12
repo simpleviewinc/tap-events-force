@@ -192,14 +192,13 @@ const primaryDisabledState = buildButtonState({
     },
   },
   content: {
-    ...defaultTextStyle,
     $xsmall: {
-      ...defaultTextStyle?.$xsmall,
+      ...defaultTextStyle.$xsmall,
       color: colors.lightGray,
       position: 'relative',
     },
     $small: {
-      ...defaultTextStyle?.$small,
+      ...defaultTextStyle.$small,
       color: colors.lightGray,
       position: 'relative',
     },

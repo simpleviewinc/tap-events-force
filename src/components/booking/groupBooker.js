@@ -34,7 +34,6 @@ const useAutoCancel = (sessionId, cancelCB) => {
  * Provides groupBooker with access to state relevant to the submit button,
  * such as if the session is pending or not.
  * @param {string} sessionId - id of session for group booker
- * @param {Function} onSubmit - button submit callback
  * @return {Array} [
  *  sessionIsPending - true if the booking/session button is in a pending/loading state
  *  bookingButtonIsEnabled - true if the booking button is enabled and selectable
