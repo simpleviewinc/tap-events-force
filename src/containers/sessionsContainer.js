@@ -14,6 +14,9 @@ import { ModalContext } from 'SVComponents/modals/modalContext'
  *                                                 - passes back session id and an array of attendee ids
  * @param {Function} props.onSessionWaitingListRequest - callback for session waiting list request action,
  *                                                 - of form (sessionId, attendeeIds) => {}
+ *                                                  - passes back session id and an array of attendee ids
+ * @param {Function} props.ModalComponent - React component or function to allow rendering content in a modal
+ *
  */
 export const SessionsContainer = props => {
   const {
