@@ -8,9 +8,11 @@ import { validate, isObj, isArr } from '@keg-hub/jsutils'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
- *
+ * Helper for `useIsAttendeeDisabledCallback` that checks for time conflicts
  * @param {import('SVModels/Session').Session} session
  * @param {Array<import('SVModels/Attendee').Attendee>} attendees
+ * @returns {Function?} a callback of form (attendeeId) -> Boolean, which returns
+ * true if the attendee is timeblocked against `session`
  */
 const useIsTimeBlockedCallback = (session, attendees) => {
   const agendaSettings = useStoreItems(
