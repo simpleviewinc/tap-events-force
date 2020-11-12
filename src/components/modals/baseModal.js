@@ -91,7 +91,7 @@ export const BaseModal = props => {
   const onModalClose = useCallback(() => {
     checkCall(onDismiss, true)
     setDismissed(true)
-  }, [setDismissed])
+  }, [ setDismissed, onDismiss ])
 
   return (
     <ModalContext.Consumer>
