@@ -3,14 +3,14 @@ import testData from '../../../mocks/eventsforce/testData'
 import { deepMerge } from '@keg-hub/jsutils'
 
 const mocks = {
-  useRestrictedAttendeeIds: () => ({ isBookable: () => true }),
+  useIsAttendeeDisabledCallback: () => () => false,
 }
 
 const reactMocks = {
   useMemo: (...args) => args[0](),
 }
 
-jest.setMock('../useRestrictedAttendeeIds', mocks)
+jest.setMock('SVHooks/models/attendees/useIsAttendeeDisabledCallback', mocks)
 jest.setMock('react', reactMocks)
 
 const useBookingLists = (...args) =>
@@ -38,17 +38,32 @@ describe('useBookingLists', () => {
   })
 
   afterEach(() => {
-    mocks.useRestrictedAttendeeIds = () => ({ isBookable: () => true })
+    mocks.useIsAttendeeDisabledCallback = () => () => false
   })
 
   it('should pre-book all attendees when session capacity is unlimited', () => {
+    const attendeesWithoutBookings = testData.attendees.map(att => ({
+      ...att,
+      bookedSessions: [],
+    }))
+    const { result } = renderHook(() =>
+      useBookingLists(unlimitedSession, attendeesWithoutBookings, true)
+    )
+
+    const [ bookingList, waitingList ] = result.current
+
+    expect(bookingList).toEqual(expect.arrayContaining(allAttendeeIds))
+    expect(waitingList.length).toEqual(0)
+  })
+
+  it('should not pre-book any attendees with time conflicts', () => {
     const { result } = renderHook(() =>
       useBookingLists(unlimitedSession, testData.attendees, true)
     )
 
     const [ bookingList, waitingList ] = result.current
 
-    expect(bookingList).toEqual(expect.arrayContaining(allAttendeeIds))
+    expect(bookingList).toEqual(expect.arrayContaining(['3']))
     expect(waitingList.length).toEqual(0)
   })
 
@@ -75,10 +90,14 @@ describe('useBookingLists', () => {
 
   it('should book all attendees if capacity > need and waiting list is empty', () => {
     const capacityExceedsNeed = true
+    const attendeesWithoutBookings = testData.attendees.map(att => ({
+      ...att,
+      bookedSessions: [],
+    }))
     const { result } = renderHook(() =>
       useBookingLists(
         noWaitingListSession,
-        testData.attendees,
+        attendeesWithoutBookings,
         capacityExceedsNeed
       )
     )
@@ -89,7 +108,7 @@ describe('useBookingLists', () => {
   })
 
   it('should not pre-book any attendees who are restricted', () => {
-    mocks.useRestrictedAttendeeIds = () => ({ isBookable: () => false })
+    mocks.useIsAttendeeDisabledCallback = () => () => true
     const capacityExceedsNeed = true
     const { result } = renderHook(() =>
       useBookingLists(limitedSession, testData.attendees, capacityExceedsNeed)
