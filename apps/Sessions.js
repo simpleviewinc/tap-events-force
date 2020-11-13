@@ -22,10 +22,12 @@ setDefaultTheme(theme)
  * rollup build and it is the root component exported by the build.
  * 
  * @param {*} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
+ * @param {Function} props.ModalComponent - React component or function to allow rendering content in a modal
+ * 
  */
-const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest}) => {
+const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest, ModalComponent}) => {
   const [ activeTheme ] = useState(getDefaultTheme())
-
+  
   return (
     <Provider store={getStore()}>
       <ReThemeProvider theme={activeTheme}>
@@ -33,6 +35,7 @@ const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest})
           sessionAgendaProps={sessionAgendaProps}
           onDayChange={onDayChange}
           onSessionBookingRequest={onSessionBookingRequest}
+          ModalComponent={ModalComponent}
         />
       </ReThemeProvider>
     </Provider>
