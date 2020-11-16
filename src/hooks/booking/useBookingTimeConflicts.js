@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { noOpObj, noPropArr, isStr } from '@keg-hub/jsutils'
+import { noOpObj, noPropArr, isStr, exists } from '@keg-hub/jsutils'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 
 /**
@@ -48,7 +48,7 @@ const timeConflict = (startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) => {
  *
  * @returns {Array} - Group of sessions id's relative to the passed in start and end block times
  */
-const getRelativeSessions = (daySessions, startEpoch, endEpoch, sessionId) => {
+const getRelativeSessions = (daySessions, startEpoch, endEpoch, sessionId, sessionDay) => {
   return (
     (daySessions &&
       daySessions.length &&
@@ -56,10 +56,11 @@ const getRelativeSessions = (daySessions, startEpoch, endEpoch, sessionId) => {
           sessions &&
           sessions.length &&
           sessions.map(session => {
+            if((exists(sessionDay) && session.dayNumber !== sessionDay) || session.identifier === sessionId) return
+
             const { startBlock:checkStartEpoch, endBlock:checkEndEpoch } = parseSessionTimes(session)
 
-            return session.identifier !== sessionId &&
-              timeConflict(startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) &&
+            return timeConflict(startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) &&
               relativeSessions.push(session.identifier)
           })
 
@@ -118,7 +119,7 @@ const getTimeConflicts = (attendees, relativeSessions) => {
  *                             Return false if no conflicts are found
  */
 export const useBookingTimeConflicts = (session, attendees, daySessions) => {
-  const { identifier: sessionId } = session
+  const { identifier:sessionId, dayNumber:sessionDay } = session
   const { startBlock, endBlock } = parseSessionTimes(session)
 
   return useMemo(() => {
@@ -127,7 +128,7 @@ export const useBookingTimeConflicts = (session, attendees, daySessions) => {
         ? noOpObj
         : getTimeConflicts(
           attendees,
-          getRelativeSessions(daySessions, startBlock, endBlock, sessionId)
+          getRelativeSessions(daySessions, startBlock, endBlock, sessionId, sessionDay)
         )
 
     return Object.keys(conflicts).length ? conflicts : false
