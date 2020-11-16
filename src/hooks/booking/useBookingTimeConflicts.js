@@ -36,7 +36,7 @@ const parseSessionTimes = ({ startDateTimeLocal, endDateTimeLocal }) => {
  */
 const timeConflict = (startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) => {
   return startEpoch && endEpoch && checkStartEpoch && checkEndEpoch &&
-    Boolean((startEpoch <= checkEndEpoch) && (checkStartEpoch <= endEpoch))
+    Boolean((startEpoch < checkEndEpoch) && (checkStartEpoch < endEpoch))
 }
 
 /**
