@@ -2,11 +2,9 @@ import React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
 import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
-import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
-import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
 import PropTypes from 'prop-types'
@@ -33,21 +31,9 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
     'attendeesByTicket',
   ])
 
-  const { restrictedIdsForSession } = useRestrictedAttendeeIds(
-    session?.identifier
-  )
-
-  // determine the remaining count of
-  const { remainingCount } = parseSessionCapacity(session?.capacity)
-
   // determine if the capacity of the session is greater than the number
   // of attendees who can be booked
-  const { initialCapacityExceedsNeed } = useGroupCounts(
-    attendeesByTicket,
-    restrictedIdsForSession,
-    remainingCount,
-    session?.capacity?.isUnlimited
-  )
+  const { initialCapacityExceedsNeed } = useGroupCounts(session)
 
   // gets callbacks and data related to the group booking for this session
   const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
@@ -58,8 +44,7 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const initialized = useInitGroupBooking(
     session,
     attendees,
-    initialCapacityExceedsNeed,
-    remainingCount
+    initialCapacityExceedsNeed
   )
 
   // if the initial capacity exceeds the number of bookable attendees, no need to show the remaining places in the top section

@@ -58,10 +58,11 @@ const getRelativeSessions = (daySessions, startBlock, endBlock, sessionId) => {
  */
 const hasTimeConflict = (booked, sessionIds) => {
   return (
-    booked &&
-    booked.length &&
+    Boolean(booked) &&
+    Boolean(booked.length) &&
     booked.reduce((timeConflict, bookedId) => {
-      return timeConflict || (sessionIds.includes(bookedId) && bookedId)
+      const bookedIdStr = bookedId?.toString()
+      return timeConflict || (sessionIds.includes(bookedIdStr) && bookedIdStr)
     }, false)
   )
 }
@@ -79,7 +80,9 @@ const getTimeConflicts = (attendees, relativeSessions) => {
       attendee.bookedSessions,
       relativeSessions
     )
-    conflictId && (conflicts[attendee.bookedTicketIdentifier] = conflictId)
+
+    conflictId !== false &&
+      (conflicts[attendee.bookedTicketIdentifier] = conflictId)
 
     return conflicts
   }, {})
