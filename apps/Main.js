@@ -2,7 +2,7 @@ import '../src/theme/theme.config'
 import React, { useState, useEffect } from 'react'
 import { theme } from 'SVTheme'
 import { SafeAreaView, StatusBar } from 'react-native'
-import { getDefaultTheme, setDefaultTheme, ReThemeProvider } from '@keg-hub/re-theme'
+import { getDefaultTheme, ReThemeProvider } from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
@@ -16,8 +16,6 @@ import { isNative } from 'SVUtils/platform'
 // IMPORTANT - should not be imported into the main sessions component export
 // This is for DEVELOPMENT only
 import "bootstrap/dist/css/bootstrap.min.css"
-
-setDefaultTheme(theme)
 
 const checkAppInit = setInit => {
   initAppAction?.()
