@@ -18,7 +18,6 @@ export const labelList = {
         alignContent: 'flex-start',
         flexWrap: 'wrap',
         maxWidth: '100%',
-        flexBasis: 'auto',
       },
     },
   },

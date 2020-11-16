@@ -2,11 +2,9 @@ import * as React from 'react'
 import { SvgIcon } from '@keg-hub/keg-components'
 
 export function Filter(props) {
+  console.log(props, 'hehe')
   return (
     <SvgIcon
-      width={23}
-      height={21}
-      viewBox='0 0 23 21'
       svgFill='none'
       stroke='none'
       {...props}

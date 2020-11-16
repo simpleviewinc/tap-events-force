@@ -28,7 +28,7 @@ export const sessionTime = {
   },
   timeText: {
     main: {
-      flexBasis: 200,
+      flex: '1 1 200px',
       width: 0,
     },
     content: {
