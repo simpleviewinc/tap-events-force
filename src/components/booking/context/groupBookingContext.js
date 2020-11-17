@@ -2,7 +2,7 @@ import React, { useMemo, useReducer, useContext } from 'react'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { useBookingLists } from 'SVHooks/booking/useBookingLists'
-import { validate, isObj, isStr, areSetEqual } from '@keg-hub/jsutils'
+import { validate, isObj, isStr, isFunc, areSetEqual } from '@keg-hub/jsutils'
 
 const initialState = {
   initialized: false,
@@ -11,7 +11,7 @@ const initialState = {
   showCapacity: true,
 
   // Lists as they were upon initialization. These
-  // do not get modified and are used to determine
+  // do not change and are used to determine
   // if a current list is modified from the original
   init: {
     waitingList: [],
@@ -43,26 +43,28 @@ const setInState = (state, key, value) => ({
   [key]: value,
 })
 
-const addToList = (state, listKey, attendeeId) => {
+const updateList = (state, listKey, attendeeId, updateFn) => {
   const [valid] = validate(
-    { state, listKey, attendeeId },
-    { state: isObj, listKey: isStr, attendeeId: isStr }
+    { state, listKey, attendeeId, updateFn },
+    { state: isObj, listKey: isStr, attendeeId: isStr, updateFn: isFunc }
   )
   if (!valid) return state
 
-  const initList = state.init[listKey]
+  const originalList = state.init[listKey]
   const currentList = state.current[listKey]
-  const nextList = !currentList.includes(attendeeId)
-    ? [ ...currentList, attendeeId ]
-    : currentList
+  const nextList = updateFn(currentList, attendeeId)
 
-  const wasAdded = nextList !== currentList
-  const modified = wasAdded && !areSetEqual(nextList, initList)
+  const modified =
+    nextList !== currentList && !areSetEqual(nextList, originalList)
+  const capacityDiff = currentList.length - nextList.length
+  const nextCapacity =
+    state.showCapacity && listKey !== 'waitingList'
+      ? state.capacity + capacityDiff
+      : state.capacity
 
   return {
     ...state,
-    capacity:
-      state.showCapacity && wasAdded ? state.capacity - 1 : state.capacity,
+    capacity: nextCapacity,
     current: {
       ...state.current,
       [listKey]: nextList,
@@ -74,36 +76,61 @@ const addToList = (state, listKey, attendeeId) => {
   }
 }
 
-const removeFromList = (state, listKey, attendeeId) => {
-  const [valid] = validate(
-    { state, listKey, attendeeId },
-    { state: isObj, listKey: isStr, attendeeId: isStr }
+const addToList = (state, listKey, attendeeId) =>
+  updateList(state, listKey, attendeeId, (currentList, id) =>
+    !currentList.includes(id) ? [ ...currentList, id ] : currentList
   )
-  if (!valid) return state
 
-  const initList = state.init[listKey]
-  const currentList = state.current[listKey]
-  const nextList = currentList.includes(attendeeId)
-    ? currentList.filter(attId => attId !== attendeeId)
-    : currentList
+const removeFromList = (state, listKey, attendeeId) =>
+  updateList(state, listKey, attendeeId, (currentList, id) =>
+    currentList.includes(id)
+      ? currentList.filter(attendeeID => attendeeID !== id)
+      : currentList
+  )
 
-  const wasRemoved = nextList !== currentList
-  const modified = wasRemoved && !areSetEqual(nextList, initList)
+// const addToList = (state, listKey, attendeeId) => {
+//   console.log('adding to', listKey)
+//   const [valid] = validate(
+//     { state, listKey, attendeeId },
+//     { state: isObj, listKey: isStr, attendeeId: isStr }
+//   )
+//   if (!valid) return state
 
-  return {
-    ...state,
-    capacity:
-      state.showCapacity && wasRemoved ? state.capacity + 1 : state.capacity,
-    current: {
-      ...state.current,
-      [listKey]: nextList,
-    },
-    modified: {
-      ...state.modified,
-      [listKey]: modified,
-    },
-  }
-}
+//   const originalList = state.init[listKey]
+//   const currentList = state.current[listKey]
+//   const nextList = !currentList.includes(attendeeId)
+//     ? [ ...currentList, attendeeId ]
+//     : currentList
+
+//   const listWasChanged = nextList !== currentList
+//   const modified = listWasChanged && !areSetEqual(nextList, originalList)
+//   const capacityDiff = currentList.length - nextList.length
+//   const nextCapacity = state.showCapacity && listKey !== 'waitingList' ? state.capacity + capacityDiff : state.capacity
+
+//   return stateWithNextList(state, nextCapacity, listKey, nextList, modified)
+// }
+
+// const removeFromList = (state, listKey, attendeeId) => {
+//   console.log('removing from ', listKey)
+//   const [valid] = validate(
+//     { state, listKey, attendeeId },
+//     { state: isObj, listKey: isStr, attendeeId: isStr }
+//   )
+//   if (!valid) return state
+
+//   const originalList = state.init[listKey]
+//   const currentList = state.current[listKey]
+//   const nextList = currentList.includes(attendeeId)
+//     ? currentList.filter(attId => attId !== attendeeId)
+//     : currentList
+
+//   const listWasChanged = nextList !== currentList
+//   const modified = listWasChanged && !areSetEqual(nextList, originalList)
+//   const capacityDiff = currentList.length - nextList.length
+//   const nextCapacity = state.showCapacity && listKey !== 'waitingList' ? state.capacity + capacityDiff : state.capacity
+
+//   return stateWithNextList(state, nextCapacity, listKey, nextList, modified)
+// }
 
 const isInitialized = state => isObj(state) && Boolean(state.initialized)
 
@@ -111,8 +138,7 @@ const updateSessionBooking = (state, id) => {
   const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
   if (!valid) return state
 
-  const waitingListIsAvailable = state.session.isWaitingListAvailable
-  const shouldUseWaitingList = waitingListIsAvailable && state.capacity <= 0
+  const shouldUseWaitingList = state.useWaitingList && state.capacity <= 0
 
   if (state.current.waitingList.includes(id)) {
     return removeFromList(state, 'waitingList', id)
@@ -162,6 +188,7 @@ const useInitialState = (session, initialCapacityExceedsNeed) => {
       capacity: remainingCount,
       init: state,
       current: state,
+      useWaitingList: session.capacity.isWaitingListAvailable,
       showCapacity:
         !session.capacity.isUnlimited && !initialCapacityExceedsNeed,
       initialized: true,
@@ -189,12 +216,6 @@ export const GroupBookingProvider = ({
   const [ state, dispatch ] = useReducer(groupBookingReducer, initialState)
   const actions = useActions(dispatch)
   const contextValue = useMemo(() => ({ state, actions }), [ state, actions ])
-
-  console.log('GroupBookingState', {
-    capacity: state.capacity,
-    bookingModified: state.modified.bookingList,
-    bookingLength: state.current.bookingList.length,
-  })
 
   return (
     <GroupBookingContext.Provider value={contextValue}>
