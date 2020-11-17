@@ -52,23 +52,18 @@ export const Filter = ({ visible, labels }) => {
       visible={visible}
       onDismiss={cancelSelectedFilters}
       Body={
-        <View style={filterStyles?.content?.body?.main}>
-          <TopSection
-            styles={filterStyles?.content?.body?.topSection}
-            filteredSessions={filteredSessions}
-            hideCounter={!hasSelectedFilters}
-          />
-          <MiddleSection
-            labels={labelsMemo}
-            styles={filterStyles?.content?.body?.middleSection}
-            selectedFilters={filters?.selectedFilters}
-          />
-        </View>
+        <Body
+          styles={filterStyles?.content?.body}
+          labels={labelsMemo}
+          selectedFilters={filters?.selectedFilters}
+          hideCounter={!hasSelectedFilters}
+          filteredSessions={filteredSessions}
+        />
       }
       Footer={
-        <BottomSection
+        <Footer
           disableApply={hasSelectedFilters && filteredSessions?.length === 0}
-          styles={filterStyles?.content?.body?.bottomSection}
+          styles={filterStyles?.content?.footer}
           onButtonPress={applyCb}
           hasSelectedFilters={hasSelectedFilters}
         />
@@ -236,14 +231,46 @@ const MiddleSection = ({ styles, labels, selectedFilters }) => {
 }
 
 /**
- * BottomSection
+ * Body
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {Array.<import('SVModels/label').Label>} props.labels - labels to display
+ * @param {Array.<import('SVModels/session').Session>} props.filteredSessions
+ * @param {Array.<import('SVModels/label').Label>} props.selectedFilters
+ * @param {Boolean} props.hideCounter - to hide the results counter or not
+ */
+const Body = ({
+  styles,
+  labels,
+  filteredSessions,
+  selectedFilters,
+  hideCounter,
+}) => {
+  return (
+    <View style={styles?.main}>
+      <TopSection
+        styles={styles?.topSection}
+        filteredSessions={filteredSessions}
+        hideCounter={hideCounter}
+      />
+      <MiddleSection
+        labels={labels}
+        styles={styles?.middleSection}
+        selectedFilters={selectedFilters}
+      />
+    </View>
+  )
+}
+
+/**
+ * Footer
  * @param {object} props
  * @param {object} props.styles - default from modal.filter.body.bottomSection theme
  * @param {Function} props.onButtonPress
  * @param {boolean} props.hasSelectedFilters - whether or not the selectedFilters state is empty
  * @param {boolean} props.disableApply - whether the apply btn is disabled or not
  */
-const BottomSection = ({
+const Footer = ({
   styles,
   onButtonPress,
   hasSelectedFilters,

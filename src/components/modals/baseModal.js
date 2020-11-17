@@ -126,5 +126,5 @@ BaseModal.propTypes = {
   hasCloseButton: PropTypes.bool,
   title: PropTypes.string,
   onDismiss: PropTypes.func,
-  dismissedCBRef: PropTypes.func,
+  dismissedCBRef: PropTypes.object,
 }

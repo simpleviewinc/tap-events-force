@@ -156,21 +156,21 @@ export const filterModal = {
           item: stateButton,
         },
       },
-      bottomSection: {
-        main: {
-          flD: 'row',
-          jtC: 'flex-end',
-          fl: 1,
-          flWr: 'wrap',
-        },
-        applyButton: {
-          main: {
-            minHeight: 45,
-            mL: 15,
-          },
-        },
-        clearButton: clearButtonDefault,
+    },
+    footer: {
+      main: {
+        flD: 'row',
+        jtC: 'flex-end',
+        fl: 1,
+        flWr: 'wrap',
       },
+      applyButton: {
+        main: {
+          minHeight: 45,
+          mL: 15,
+        },
+      },
+      clearButton: clearButtonDefault,
     },
   },
 }
