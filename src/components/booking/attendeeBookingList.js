@@ -1,18 +1,14 @@
 import React, { useMemo } from 'react'
-import { useStoreItems } from 'SVHooks/store/useStoreItems'
-import { useGroupBookingSession } from 'SVHooks/booking/useGroupBookingSession'
-import { useBookingSet } from 'SVHooks/booking/useBookingSet'
-import { useWaitingSet } from 'SVHooks/booking/useWaitingSet'
 import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
 import { useIsAttendeeDisabledCallback } from 'SVHooks/models/attendees/useIsAttendeeDisabledCallback'
+import { useGroupBookingContext } from './context/groupBookingContext'
 
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
  * @param {import('SVModels/session').Session} session
  * @returns {Object} { enableCheck }
  */
-const useCheckboxState = session => {
-  const groupBookingCapacity = useStoreItems('groupBooking.capacity')
+const useCheckboxState = (session, groupBookingCapacity) => {
   return {
     enableCheck:
       session?.capacity?.isUnlimited ||
@@ -33,25 +29,25 @@ export const AttendeeBookingList = ({
   attendees,
   itemStyles,
   sectionStyles,
-  onAttendeeSelected,
   attendeeClassName,
   setCheckedSetter,
 }) => {
-  const bookingList = useBookingSet()
-  const waitingList = useWaitingSet()
-  const session = useGroupBookingSession()
+  const { getters, state, actions } = useGroupBookingContext()
 
-  const { enableCheck } = useCheckboxState(session)
-  const isAttendeeDisabled = useIsAttendeeDisabledCallback(session, attendees)
+  const { enableCheck } = useCheckboxState(state.session, state.capacity)
+  const isAttendeeDisabled = useIsAttendeeDisabledCallback(
+    state.session,
+    attendees
+  )
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
     const { isBooking, isWaiting, isDisabled } = useMemo(
       () => ({
-        isBooking: bookingList.has(attendeeId),
-        isWaiting: waitingList.has(attendeeId),
+        isBooking: getters.isOnBookingList(attendeeId),
+        isWaiting: getters.isOnWaitingList(attendeeId),
         isDisabled: isAttendeeDisabled(attendeeId),
       }),
-      [ attendeeId, bookingList, waitingList, isAttendeeDisabled ]
+      [ getters, attendeeId, isAttendeeDisabled ]
     )
 
     return (
@@ -60,7 +56,7 @@ export const AttendeeBookingList = ({
         id={attendeeId}
         name={name}
         textClassName={attendeeClassName}
-        onAttendeeSelected={onAttendeeSelected}
+        onAttendeeSelected={actions.updateSessionBooking}
         isWaiting={isWaiting}
         sectionStyles={sectionStyles}
         itemStyles={itemStyles}

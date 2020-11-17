@@ -1,4 +1,5 @@
 export * from './useSessionBooking'
+export * from './useBookSessionCallback'
 export * from './useGroupBookingSession'
 export * from './useBookingSet'
 export * from './useWaitingSet'
