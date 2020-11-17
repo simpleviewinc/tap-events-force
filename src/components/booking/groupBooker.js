@@ -3,10 +3,13 @@ import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
 import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
-import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
+import {
+  GroupBookingProvider,
+  useGroupBookingContext,
+} from './context/groupBookingContext'
 import PropTypes from 'prop-types'
 
 /**
@@ -26,55 +29,40 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
-  const { attendees, attendeesByTicket } = useStoreItems([
-    'attendees',
-    'attendeesByTicket',
-  ])
-
   // determine if the capacity of the session is greater than the number
   // of attendees who can be booked
   const { initialCapacityExceedsNeed } = useGroupCounts(session)
 
   // gets callbacks and data related to the group booking for this session
-  const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
-    session
-  )
+  const { bookSession } = useSessionBooking(session)
 
-  // initialize the store data for the group booking
-  const initialized = useInitGroupBooking(
-    session,
-    attendees,
-    initialCapacityExceedsNeed
-  )
-
-  // if the initial capacity exceeds the number of bookable attendees, no need to show the remaining places in the top section
-  const visibleCapacityCount = initialCapacityExceedsNeed
-    ? null
-    : currentCapacity
+  const initialized = useInitGroupBooking(session, initialCapacityExceedsNeed)
 
   return (
-    <View
-      className={`ef-modal-group-body`}
-      style={styles.main}
+    <GroupBookingProvider
+      session={session}
+      initialCapacityExceedsNeed={initialCapacityExceedsNeed}
     >
-      <TopSection
-        styles={topSectionStyles}
-        remainingCount={visibleCapacityCount}
-      />
-      { initialized && (
-        <GroupBookingOptions
-          className={`ef-modal-group-section-middle`}
-          styles={middleSectionStyles}
-          attendeesByTicket={attendeesByTicket}
-          onAttendeeSelected={updateCapacity}
+      <View
+        className={`ef-modal-group-body`}
+        style={styles.main}
+      >
+        <TopSection styles={topSectionStyles} />
+
+        { initialized && (
+          <GroupBookingOptions
+            className={`ef-modal-group-section-middle`}
+            styles={middleSectionStyles}
+          />
+        ) }
+
+        <BottomSection
+          onCancelPress={onCancelPress}
+          onSubmitPress={bookSession}
+          styles={bottomSectionStyles}
         />
-      ) }
-      <BottomSection
-        onCancelPress={onCancelPress}
-        onSubmitPress={bookSession}
-        styles={bottomSectionStyles}
-      />
-    </View>
+      </View>
+    </GroupBookingProvider>
   )
 }
 GroupBooker.propTypes = {
@@ -87,14 +75,12 @@ GroupBooker.propTypes = {
  * Top section of the group booker - contains the instruction text and spots remaining
  * @param {object} props
  * @param {object} props.styles
- * @param {number} props.remainingCount - spots left in this session. If null, there is no limit
  */
-const TopSection = ({ styles, remainingCount }) => {
+const TopSection = ({ styles }) => {
   // use correct wording depending on number of spots remaining
-  const placeText = remainingCount === 1 ? 'place' : 'places'
-
-  const showCount = exists(remainingCount) && remainingCount !== Infinity
-
+  const { state } = useGroupBookingContext()
+  const placeText = state.capacity === 1 ? 'place' : 'places'
+  const showCount = exists(state.capacity) && state.capacity !== Infinity
   return (
     <View
       className={`ef-modal-group-section-top`}
@@ -111,7 +97,7 @@ const TopSection = ({ styles, remainingCount }) => {
           className={`ef-modal-body-highlight`}
           style={styles?.content?.infoText}
         >
-          { `${remainingCount} ${placeText} remaining` }
+          { `${state.capacity} ${placeText} remaining` }
         </Text>
       ) }
     </View>

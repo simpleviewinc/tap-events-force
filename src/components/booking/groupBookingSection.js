@@ -4,6 +4,7 @@ import { AttendeeBookingList } from './attendeeBookingList'
 import { CheckGroup } from '@keg-hub/keg-components'
 import { useStyle } from '@keg-hub/re-theme'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
+import { useGroupBookingContext } from './context/groupBookingContext'
 
 /**
  * Gets the list of Attendee objects for the current section,
@@ -30,14 +31,12 @@ const useSectionAttendees = attendeeIdsForSection => {
  * @param {Object} props.styles
  * @param {string} props.name - header title
  * @param {Array<string>} props.attendeeIds - ids of attendees to display in section
- * @param {Function?} onAttendeeSelected - callback of form (id) => {...}, fired when an attendee checkbox is toggled
  */
 export const GroupBookingSection = ({
   className,
   styles,
   name,
   attendeeIds,
-  onAttendeeSelected,
   headerClassName,
   attendeeClassName,
 }) => {
@@ -48,6 +47,8 @@ export const GroupBookingSection = ({
   )
   const attendeesForSection = useSectionAttendees(attendeeIds)
 
+  const { actions } = useGroupBookingContext()
+
   return (
     <CheckGroup
       className={className}
@@ -57,7 +58,7 @@ export const GroupBookingSection = ({
     >
       <AttendeeBookingList
         attendees={attendeesForSection}
-        onAttendeeSelected={onAttendeeSelected}
+        onAttendeeSelected={actions.updateSessionBooking}
         itemStyles={itemStyles}
         attendeeClassName={attendeeClassName}
         sectionStyles={sectionStyles}

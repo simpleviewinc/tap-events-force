@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useBookingLists } from './useBookingLists'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import {
   setWaitingList,
   setBookingList,
@@ -15,11 +16,8 @@ import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
  * @param {boolean} initialCapacityExceedsNeed - if true, then the session has greater capacity than the number of bookable attendees
  * @returns {boolean} true if the store is initialized with the data, false otherwise
  */
-export const useInitGroupBooking = (
-  session,
-  attendees,
-  initialCapacityExceedsNeed
-) => {
+export const useInitGroupBooking = (session, initialCapacityExceedsNeed) => {
+  const attendees = useStoreItems('attendees')
   const { remainingCount } = parseSessionCapacity(session?.capacity)
   const [ initialBookedIds, initialWaitIds ] = useBookingLists(
     session,
