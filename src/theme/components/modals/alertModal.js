@@ -50,6 +50,8 @@ export const alertModal = {
           fontSize: '16px',
         },
       },
+    },
+    footer: {
       button: {
         main: {
           alignSelf: 'flex-end',

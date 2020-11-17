@@ -40,6 +40,10 @@ export const Filter = ({ visible, labels }) => {
     checkCall(dismissedCBRef.current, true)
   }, [ applySessionFilters, dismissedCBRef?.current ])
 
+  const { filters } = useStoreItems([CATEGORIES.FILTERS])
+  const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
+  const filteredSessions = useFilteredSessions()
+
   return (
     <BaseModal
       dismissedCBRef={dismissedCBRef}
@@ -47,47 +51,29 @@ export const Filter = ({ visible, labels }) => {
       title={'Filter'}
       visible={visible}
       onDismiss={cancelSelectedFilters}
-    >
-      <Content
-        styles={filterStyles?.content?.body}
-        labels={labelsMemo}
-        onButtonPress={applyCb}
-      />
-    </BaseModal>
-  )
-}
-
-/**
- * Content of filter modal
- * @param {object} props
- * @param {object} props.styles
- * @param {Function} props.onButtonPress
- * @param {Array<import('SVModels/label').Label>} props.labels
- */
-const Content = ({ styles, onButtonPress, labels }) => {
-  const { filters } = useStoreItems([CATEGORIES.FILTERS])
-  const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
-  const filteredSessions = useFilteredSessions()
-
-  return (
-    <View style={styles?.main}>
-      <TopSection
-        styles={styles?.topSection}
-        filteredSessions={filteredSessions}
-        hideCounter={!hasSelectedFilters}
-      />
-      <MiddleSection
-        labels={labels}
-        styles={styles?.middleSection}
-        selectedFilters={filters?.selectedFilters}
-      />
-      <BottomSection
-        disableApply={hasSelectedFilters && filteredSessions?.length === 0}
-        styles={styles?.bottomSection}
-        onButtonPress={onButtonPress}
-        hasSelectedFilters={hasSelectedFilters}
-      />
-    </View>
+      Body={
+        <View style={filterStyles?.content?.body?.main}>
+          <TopSection
+            styles={filterStyles?.content?.body?.topSection}
+            filteredSessions={filteredSessions}
+            hideCounter={!hasSelectedFilters}
+          />
+          <MiddleSection
+            labels={labelsMemo}
+            styles={filterStyles?.content?.body?.middleSection}
+            selectedFilters={filters?.selectedFilters}
+          />
+        </View>
+      }
+      Footer={
+        <BottomSection
+          disableApply={hasSelectedFilters && filteredSessions?.length === 0}
+          styles={filterStyles?.content?.body?.bottomSection}
+          onButtonPress={applyCb}
+          hasSelectedFilters={hasSelectedFilters}
+        />
+      }
+    />
   )
 }
 

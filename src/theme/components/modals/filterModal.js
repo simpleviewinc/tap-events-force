@@ -159,7 +159,7 @@ export const filterModal = {
       bottomSection: {
         main: {
           flD: 'row',
-          alS: 'flex-end',
+          jtC: 'flex-end',
           fl: 1,
           flWr: 'wrap',
         },

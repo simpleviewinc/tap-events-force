@@ -47,10 +47,10 @@ export const contentDefaultMaxHeight = 772
  * @param {object} props.title
  * @param {object} props.styles
  * @param {boolean} props.visible
- * @param {Component} props.children
  * @param {React.MutableRefObject=} props.dismissedCBRef - pass this in when you want to dismiss modal from child
  *                                                        -  call `childRef.current(true)` to dismiss
- * @param {Component} props.BodyComponent - Component for the body. contains 'setDismissed' prop if the child wants to be able to dismiss the modal by other means other than close button || backdrop click
+ * @param {Component=} props.Body - Component for the body.
+ * @param {Component=} props.Footer - Component for the footer.
  * @param {boolean=} props.hasCloseButton - to display the close button on the header or not
  * @param {Function=} props.onDismiss - function to call when the modal is being dismissed
  * @example
@@ -59,9 +59,9 @@ export const contentDefaultMaxHeight = 772
       styles={errorStyles}
       title={title}
       visible={visible}
-    >
-      <Children />
-    </BaseModal>
+      Body={BodyComponent}
+      Footer={FooterComponent}
+    />
  */
 export const BaseModal = props => {
   const {
@@ -70,8 +70,9 @@ export const BaseModal = props => {
     hasCloseButton,
     styles,
     dismissedCBRef,
-    children,
     onDismiss,
+    Body,
+    Footer,
   } = props
   // two possible cases for a non visible modal
   // 1. modal is mounted/in store but has been animated out of view by another modal
@@ -106,9 +107,8 @@ export const BaseModal = props => {
                 hasCloseButton={hasCloseButton}
               />
             }
-            modalBody={
-              <View style={baseStyles.content.bodyWrapper}>{ children }</View>
-            }
+            modalBody={Body}
+            modalFooter={Footer}
             toggle={onModalClose}
             isOpen={visible && !dismissed}
           />
@@ -121,6 +121,10 @@ export const BaseModal = props => {
 BaseModal.propTypes = {
   styles: PropTypes.object,
   visible: PropTypes.bool,
-  BodyComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
+  Body: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
+  Footer: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
   hasCloseButton: PropTypes.bool,
+  title: PropTypes.string,
+  onDismiss: PropTypes.func,
+  dismissedCBRef: PropTypes.func,
 }
