@@ -65,15 +65,14 @@ export const sessionDetailsModal = {
           ftSz: 16,
         },
       },
-      actionButton: {
+    },
+    footer: {
+      main: {
+        alI: 'flex-end',
+      },
+      button: {
         main: {
-          pT: 21,
-          alI: 'flex-end',
-        },
-        button: {
-          main: {
-            minH: 45,
-          },
+          minH: 45,
         },
       },
     },
