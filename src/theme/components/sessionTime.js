@@ -28,8 +28,10 @@ export const sessionTime = {
   },
   timeText: {
     main: {
-      flex: '1 1 200px',
-      width: 0,
+      $web: {
+        flex: '1 1 200px',
+        width: 0,
+      },
     },
     content: {
       $xsmall: {

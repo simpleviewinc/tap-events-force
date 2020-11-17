@@ -2,7 +2,6 @@ import * as React from 'react'
 import { SvgIcon } from '@keg-hub/keg-components'
 
 export function Filter(props) {
-  console.log(props, 'hehe')
   return (
     <SvgIcon
       svgFill='none'
