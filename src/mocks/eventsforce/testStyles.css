@@ -130,7 +130,6 @@
 }
 
 .ef-modal-title {
-  background: #22B3C4;
   color: #ffffff;
   font-family: Inter, Verdana, Geneva, sans-serif;
   font-style: normal;
@@ -187,4 +186,12 @@
 
 .ef-sessions-background {
   background: #F3F3F3;
+}
+
+/* demo-ing potentially how evf would style the modal header */
+.modal-header-test {
+  width: 100%;
+  
+    background-color: #22B3C4;
+  
 }

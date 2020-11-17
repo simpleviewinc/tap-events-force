@@ -28,7 +28,11 @@ export const evfModalBuilder = parentProps => {
         isOpen={isOpen}
         toggle={toggle}
       >
-        { modalHeader && <ModalHeader>{ modalHeader }</ModalHeader> }
+        { modalHeader && (
+          <ModalHeader className={'modal-header-test'}>
+            { modalHeader }
+          </ModalHeader>
+        ) }
         { modalBody && <ModalBody>{ modalBody }</ModalBody> }
         { modalFooter && <ModalFooter>{ modalFooter }</ModalFooter> }
       </Modal>
