@@ -1,4 +1,4 @@
-import React, { useMemo, useReducer, useCallback } from 'react'
+import React, { useMemo, useReducer } from 'react'
 import { groupBookingReducer } from './groupBookingReducer'
 import { GroupBookingContext } from './groupBookingContext'
 import { useInitialState } from './useInitialState'
@@ -11,32 +11,26 @@ import { GroupBookingActionTypes } from './groupBookingActionTypes'
 const useActions = dispatch =>
   useMemo(
     () => ({
-      updateSessionBooking: ({ id }) =>
+      /**
+       * Updates the booking or waiting list with the attendee id `id`. Adds
+       * or removes the attendee to one of those lists, depending on the list
+       * that currently contains it, if any, and if the waiting list is available.
+       *
+       * Also updates state.capacity and state.modified.* depending on how
+       * a list was updated.
+       *
+       * @param {Object} params
+       * @param {string} params.id - attendee id
+       */
+      updateSessionBooking: ({ id }) => {
         dispatch({
           type: GroupBookingActionTypes.UPDATE_SESSION_BOOKING,
           value: id,
-        }),
+        })
+      },
     }),
     [dispatch]
   )
-
-/**
- * @param {Object} state
- * @return {Object} - memoized getter functions
- */
-const useGetters = state => {
-  const { bookingList, waitingList } = state.current
-  const isOnBookingList = useCallback(id => bookingList?.includes(id), [
-    bookingList,
-  ])
-  const isOnWaitingList = useCallback(id => waitingList?.includes(id), [
-    waitingList,
-  ])
-  return useMemo(() => ({ isOnBookingList, isOnWaitingList }), [
-    isOnBookingList,
-    isOnWaitingList,
-  ])
-}
 
 /**
  * The context-provider for the group booking state. Provides access to the state object,
@@ -51,13 +45,8 @@ export const GroupBookingProvider = ({ session, children }) => {
 
   const [ state, dispatch ] = useReducer(groupBookingReducer, initialState)
   const actions = useActions(dispatch)
-  const getters = useGetters(state)
 
-  const contextValue = useMemo(() => ({ state, actions, getters }), [
-    state,
-    actions,
-    getters,
-  ])
+  const contextValue = useMemo(() => ({ state, actions }), [ state, actions ])
 
   return (
     <GroupBookingContext.Provider value={contextValue}>

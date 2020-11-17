@@ -91,19 +91,26 @@ const updateSessionBooking = (state, id) => {
   const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
   if (!valid) return state
 
+  const {
+    current: { waitingList, bookingList },
+  } = state
+
   const shouldUseWaitingList = state.useWaitingList && state.capacity <= 0
 
-  if (state.current.waitingList.includes(id)) {
+  if (waitingList.includes(id)) {
     return removeFromList(state, 'waitingList', id)
   }
-  else if (state.current.bookingList.includes(id)) {
+  else if (bookingList.includes(id)) {
     return removeFromList(state, 'bookingList', id)
   }
-  else if (shouldUseWaitingList && !state.current.waitingList.includes(id)) {
+  else if (shouldUseWaitingList && !waitingList.includes(id)) {
     return addToList(state, 'waitingList', id)
   }
-  else if (!shouldUseWaitingList && !state.current.bookingList.includes(id)) {
+  else if (!shouldUseWaitingList && !bookingList.includes(id)) {
     return addToList(state, 'bookingList', id)
+  }
+  else {
+    return state
   }
 }
 

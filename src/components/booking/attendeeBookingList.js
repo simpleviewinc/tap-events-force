@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
 import { useIsAttendeeDisabledCallback } from 'SVHooks/models/attendees/useIsAttendeeDisabledCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
@@ -6,6 +6,7 @@ import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
  * @param {import('SVModels/session').Session} session
+ * @param {number} groupBookingCapacity - current capacity of the session
  * @returns {Object} { enableCheck }
  */
 const useCheckboxState = (session, groupBookingCapacity) => {
@@ -31,7 +32,7 @@ export const AttendeeBookingList = ({
   sectionStyles,
   attendeeClassName,
 }) => {
-  const { getters, state, actions } = useGroupBookingContext()
+  const { state, actions } = useGroupBookingContext()
 
   const { enableCheck } = useCheckboxState(state.session, state.capacity)
   const isAttendeeDisabled = useIsAttendeeDisabledCallback(
@@ -40,14 +41,8 @@ export const AttendeeBookingList = ({
   )
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
-    const { isBooking, isWaiting, isDisabled } = useMemo(
-      () => ({
-        isBooking: getters.isOnBookingList(attendeeId),
-        isWaiting: getters.isOnWaitingList(attendeeId),
-        isDisabled: isAttendeeDisabled(attendeeId),
-      }),
-      [ getters, attendeeId, isAttendeeDisabled ]
-    )
+    const isBooking = state.current?.bookingList?.includes(attendeeId)
+    const isWaiting = state.current?.waitingList?.includes(attendeeId)
 
     return (
       <AttendeeCheckboxItem
@@ -59,7 +54,7 @@ export const AttendeeBookingList = ({
         isWaiting={isWaiting}
         sectionStyles={sectionStyles}
         itemStyles={itemStyles}
-        disabled={isDisabled}
+        isAttendeeDisabled={isAttendeeDisabled}
         enableCheck={enableCheck}
         checked={isBooking || isWaiting}
       />
