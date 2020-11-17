@@ -4,9 +4,6 @@ import { SvgIcon } from '@keg-hub/keg-components'
 export function Filter(props) {
   return (
     <SvgIcon
-      width={23}
-      height={21}
-      viewBox='0 0 23 21'
       svgFill='none'
       stroke='none'
       {...props}

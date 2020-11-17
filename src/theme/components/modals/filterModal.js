@@ -84,7 +84,6 @@ const buttonsWrapper = {
       alignContent: 'flex-start',
       flexWrap: 'wrap',
       maxWidth: '100%',
-      flexBasis: 'auto',
       paddingBottom: 20,
     },
     $small: {
