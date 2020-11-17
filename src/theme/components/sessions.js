@@ -107,6 +107,8 @@ export const sessions = {
                 $xsmall: {
                   color: colors.black,
                   paddingRight: 5,
+                  height: 21,
+                  width: 32,
                 },
                 $small: {
                   paddingRight: 10,

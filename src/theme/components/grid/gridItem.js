@@ -11,14 +11,17 @@ export const gridItem = {
         alignItems: 'flex-start',
       },
       $small: {
-        flex: 1,
         marginHorizontal: 3,
         marginBottom: 6,
         padding: 15,
         paddingTop: 20,
-        flexBasis: 333,
         flexDirection: 'column',
         minHeight: 294,
+      },
+    },
+    $web: {
+      $small: {
+        flex: '1 1 333px',
       },
     },
   },
