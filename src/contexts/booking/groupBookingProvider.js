@@ -2,6 +2,7 @@ import React, { useMemo, useReducer, useCallback } from 'react'
 import { groupBookingReducer } from './groupBookingReducer'
 import { GroupBookingContext } from './groupBookingContext'
 import { useInitialState } from './useInitialState'
+import { GroupBookingActionTypes } from './groupBookingActionTypes'
 
 /**
  * @param {Function} dispatch - dispatch function
@@ -11,7 +12,10 @@ const useActions = dispatch =>
   useMemo(
     () => ({
       updateSessionBooking: ({ id }) =>
-        dispatch({ type: 'UPDATE_SESSION_BOOKING', value: id }),
+        dispatch({
+          type: GroupBookingActionTypes.UPDATE_SESSION_BOOKING,
+          value: id,
+        }),
     }),
     [dispatch]
   )

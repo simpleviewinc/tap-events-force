@@ -23,7 +23,6 @@ export const Values = deepFreeze({
     ALERT: 'alert',
     BOOKED_TICKETS: 'bookedTickets',
     TICKETS: 'tickets',
-    GROUP_BOOKING: 'groupBooking',
     DISPLAY_PROPERTIES: 'displayProperties',
   },
 
@@ -31,12 +30,6 @@ export const Values = deepFreeze({
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',
     SELECTED_FILTERS: 'selectedFilters',
-
-    // group booking
-    BOOKING_LIST: 'bookingList',
-    WAITING_LIST: 'waitingList',
-    SESSION_CAPACITY: 'capacity',
-    CURRENT_SESSION: 'currentSession',
   },
 
   MODAL_TYPES: {

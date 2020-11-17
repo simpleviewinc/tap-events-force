@@ -1,5 +1,6 @@
 import { initialState } from './groupBookingInitialState'
 import { validate, isObj, isStr, isFunc, areSetEqual } from '@keg-hub/jsutils'
+import { GroupBookingActionTypes } from './groupBookingActionTypes'
 
 /**
  * Updates the list identified by listKey using the updateFn
@@ -117,7 +118,7 @@ export const groupBookingReducer = (state = initialState, action) => {
   const { type, value } = action
 
   switch (type) {
-  case 'UPDATE_SESSION_BOOKING':
+  case GroupBookingActionTypes.UPDATE_SESSION_BOOKING:
     return updateSessionBooking(state, value)
   }
 }
