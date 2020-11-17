@@ -4,9 +4,7 @@ import { useGroupCounts } from './useGroupCounts'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useBookingTimeConflicts } from './useBookingTimeConflicts'
 import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
-import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { bookingStateFactory } from 'SVUtils/models/sessions/bookingStateFactory'
-import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { getExistingBookIds } from 'SVUtils/booking/getExistingBookIds'
 import { getExistingWaitIds } from 'SVUtils/booking/getExistingWaitIds'
 import { Values } from 'SVConstants'
@@ -40,7 +38,6 @@ const useStoreData = () => {
     CATEGORIES.SETTINGS,
     CATEGORIES.ATTENDEES,
     CATEGORIES.AGENDA_SESSIONS,
-    CATEGORIES.ATTENDEES_BY_TICKET,
   ])
 
   return {
@@ -93,19 +90,9 @@ const useBookingFactory = (
 export const useBookingState = session => {
   const sessionId = session?.identifier
   const state = getBookingState(session)
-  const { remainingCount } = parseSessionCapacity(session?.capacity)
-
-  // Array of attendee ids that can not book this session
-  const { restrictedIdsForSession } = useRestrictedAttendeeIds(sessionId)
 
   // Items from the store to determin the current booking state
-  const {
-    attendees,
-    attendeesByTicket,
-    agendaSessions,
-    bookingMode,
-    settings,
-  } = useStoreData()
+  const { attendees, agendaSessions, bookingMode, settings } = useStoreData()
 
   // Lists for attendees that have booked the session, or are on the waiting list
   const bookingLists = useBookingLists(sessionId, attendees)
@@ -118,12 +105,7 @@ export const useBookingState = session => {
   )
 
   // Attendees that can book the current session
-  const { bookableAttendeeCount } = useGroupCounts(
-    attendeesByTicket,
-    restrictedIdsForSession,
-    remainingCount,
-    session?.capacity?.isUnlimited
-  )
+  const { bookableAttendeeCount } = useGroupCounts(session)
 
   // Create the booking model from the booking factory
   return useBookingFactory(

@@ -1,3 +1,4 @@
+export * from './attendees'
 export * from './useAgenda'
 export * from './price'
 export * from './location'
