@@ -23,14 +23,13 @@ const useCheckboxState = (session, groupBookingCapacity) => {
  * @param {Array<import('SVModels/attendee').Attendee>} props.attendees - attendee list for current section
  * @param {Object} props.itemStyles
  * @param {Object} props.sectionStyles
- * @param {Function} props.onAttendeeSelected
+ * @param {string} props.attendeeClassname - class name for attendee item
  */
 export const AttendeeBookingList = ({
   attendees,
   itemStyles,
   sectionStyles,
   attendeeClassName,
-  setCheckedSetter,
 }) => {
   const { getters, state, actions } = useGroupBookingContext()
 
@@ -63,7 +62,6 @@ export const AttendeeBookingList = ({
         disabled={isDisabled}
         enableCheck={enableCheck}
         checked={isBooking || isWaiting}
-        setCheckedSetter={setCheckedSetter}
       />
     )
   })

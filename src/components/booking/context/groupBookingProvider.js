@@ -3,6 +3,10 @@ import { groupBookingReducer } from './groupBookingReducer'
 import { GroupBookingContext } from './groupBookingContext'
 import { useInitialState } from './useInitialState'
 
+/**
+ * @param {Function} dispatch - dispatch function
+ * @return {Object} - memoized action functions
+ */
 const useActions = dispatch =>
   useMemo(
     () => ({
@@ -12,6 +16,10 @@ const useActions = dispatch =>
     [dispatch]
   )
 
+/**
+ * @param {Object} state
+ * @return {Object} - memoized getter functions
+ */
 const useGetters = state => {
   const { bookingList, waitingList } = state.current
   const isOnBookingList = useCallback(id => bookingList?.includes(id), [
@@ -26,6 +34,14 @@ const useGetters = state => {
   ])
 }
 
+/**
+ * The context-provider for the group booking state. Provides access to the state object,
+ * actions for submitting mutations, and getters for helper functions. Use this, rather than
+ * GroupBookingContext.Provider, to ensure the state is initialized for consuming.
+ * @param {Object} props
+ * @param {import('SVModels/Session').Session} props.session - the session object currently used in the group booking UI
+ * @param {*} props.children - children
+ */
 export const GroupBookingProvider = ({ session, children }) => {
   const initialState = useInitialState(session)
 

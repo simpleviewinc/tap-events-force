@@ -27,9 +27,12 @@ const useSectionAttendees = attendeeIdsForSection => {
  * A section in the group booker, containing a header and a list of checkable attendees
  *
  * @param {Object} props
+ * @param {string} props.className - class name for root checkgroup
  * @param {Object} props.styles
  * @param {string} props.name - header title
  * @param {Array<string>} props.attendeeIds - ids of attendees to display in section
+ * @param {string} props.headerClassName - class name for header of group
+ * @param {string} props.attendeeClassName - class name for attendee item
  */
 export const GroupBookingSection = ({
   className,

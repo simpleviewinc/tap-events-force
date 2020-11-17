@@ -4,6 +4,11 @@ import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { useBookingLists } from 'SVHooks/booking/useBookingLists'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 
+/**
+ * Builds the initial state of the reducer, depending on the session input
+ * @param {import('SVModels/Session').Session} props.session - the session object currently used in the group booking UI
+ * @return {Object} the initial state of the group booking reducer
+ */
 export const useInitialState = session => {
   const attendees = useStoreItems('attendees')
 
