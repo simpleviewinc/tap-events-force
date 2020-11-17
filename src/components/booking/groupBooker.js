@@ -4,14 +4,11 @@ import { EvfButton } from 'SVComponents/button'
 import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
-import { useGroupBookingContext } from './context/groupBookingContext'
-import { GroupBookingProvider } from './context/groupBookingProvider'
+import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 import PropTypes from 'prop-types'
 
 /**
- * The root group booking component. Initializes state specific to
- * the active group booking context for the passed-in session, and
- * renders the group booking UI given the session and the store state
+ * The root group booking component. Makes use of the GroupBookingContext.
  * @param {Object} props
  * @param {Object?} props.styles
  * @param {import('SVModels/session').Session} props.session - current session
@@ -26,24 +23,22 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
   return (
-    <GroupBookingProvider session={session}>
-      <View
-        className={`ef-modal-group-body`}
-        style={styles.main}
-      >
-        <TopSection styles={topSectionStyles} />
+    <View
+      className={`ef-modal-group-body`}
+      style={styles.main}
+    >
+      <TopSection styles={topSectionStyles} />
 
-        <GroupBookingOptions
-          className={`ef-modal-group-section-middle`}
-          styles={middleSectionStyles}
-        />
+      <GroupBookingOptions
+        className={`ef-modal-group-section-middle`}
+        styles={middleSectionStyles}
+      />
 
-        <BottomSection
-          onCancelPress={onCancelPress}
-          styles={bottomSectionStyles}
-        />
-      </View>
-    </GroupBookingProvider>
+      <BottomSection
+        onCancelPress={onCancelPress}
+        styles={bottomSectionStyles}
+      />
+    </View>
   )
 }
 GroupBooker.propTypes = {

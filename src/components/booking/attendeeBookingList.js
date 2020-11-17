@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { AttendeeCheckboxItem } from './attendeeCheckboxItem'
 import { useIsAttendeeDisabledCallback } from 'SVHooks/models/attendees/useIsAttendeeDisabledCallback'
-import { useGroupBookingContext } from './context/groupBookingContext'
+import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
