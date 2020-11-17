@@ -12,16 +12,16 @@ import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 export const useInitialState = session => {
   const attendees = useStoreItems('attendees')
 
+  // determine if the capacity of the session is greater than the number
+  // of attendees who can be booked. Factors in restricted attendees
+  // and possible time conflicts with other sessions
+  const { initialCapacityExceedsNeed } = useGroupCounts(session)
+
   const [ initialBookedIds, initialWaitIds ] = useBookingLists(
     session,
     attendees,
     initialCapacityExceedsNeed
   )
-
-  // determine if the capacity of the session is greater than the number
-  // of attendees who can be booked. Factors in restricted attendees
-  // and possible time conflicts with other sessions
-  const { initialCapacityExceedsNeed } = useGroupCounts(session)
 
   const { remainingCount } = parseSessionCapacity(session?.capacity)
   const lists = {
@@ -35,7 +35,6 @@ export const useInitialState = session => {
     capacity: remainingCount,
     init: lists,
     current: lists,
-    useWaitingList: session.capacity.isWaitingListAvailable,
     showCapacity: !session.capacity.isUnlimited && !initialCapacityExceedsNeed,
     initialized: true,
   }

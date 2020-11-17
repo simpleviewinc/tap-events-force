@@ -92,10 +92,13 @@ const updateSessionBooking = (state, id) => {
   if (!valid) return state
 
   const {
+    session,
+    capacity,
     current: { waitingList, bookingList },
   } = state
 
-  const shouldUseWaitingList = state.useWaitingList && state.capacity <= 0
+  const shouldUseWaitingList =
+    session.capacity.isWaitingListAvailable && capacity <= 0
 
   if (waitingList.includes(id)) {
     return removeFromList(state, 'waitingList', id)

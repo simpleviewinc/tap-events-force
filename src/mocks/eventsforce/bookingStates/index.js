@@ -1,5 +1,6 @@
 export * from './conflict'
 export * from './fullyBooked'
+export * from './greaterCapacity'
 export * from './onWaitingList'
 export * from './select'
 export * from './selected'
