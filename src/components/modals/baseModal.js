@@ -18,7 +18,6 @@ export const contentDefaultMaxHeight = 772
  * @example
  *  <BaseModal
       dismissedCBRef={dismissedCBRef}
-      styles={errorStyles}
       title={title}
       visible={visible}
       Body={BodyComponent}
