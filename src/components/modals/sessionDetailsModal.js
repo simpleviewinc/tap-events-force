@@ -29,7 +29,6 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
     <BaseModal
       className={`ef-modal-group`}
       dissmissedCBRef={dismissedCBRef}
-      styles={sessionDetailsStyles}
       hasCloseButton={true}
       title={session.name}
       visible={visible}

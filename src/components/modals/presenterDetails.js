@@ -23,7 +23,6 @@ export const PresenterDetails = props => {
   return (
     <BaseModal
       className={`ef-modal-presenter`}
-      styles={presenterStyles}
       title={getPresenterFullName(presenter)}
       visible={visible}
       Body={

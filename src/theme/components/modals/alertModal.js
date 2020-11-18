@@ -1,32 +1,6 @@
 export const alertModal = {
   main: {},
   content: {
-    main: {
-      $web: {
-        $xsmall: {
-          maxWidth: '600px',
-        },
-      },
-      $all: {
-        $xsmall: {
-          minHeight: 200,
-          width: '80%',
-          maxWidth: 600,
-        },
-      },
-    },
-    header: {
-      content: {
-        title: {
-          $all: {
-            $xsmall: {
-              letterSpacing: 0.105,
-            },
-            $small: {},
-          },
-        },
-      },
-    },
     body: {
       textContainer: {
         main: {

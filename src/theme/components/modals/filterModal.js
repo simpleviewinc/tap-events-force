@@ -1,5 +1,9 @@
 import { colors } from '../../colors'
-import { defaultTextStyle } from './baseModal'
+
+const defaultTextStyle = {
+  fontWeight: '600',
+  fontSize: 16,
+}
 
 const buttonMargin = {
   marginTop: 8,
@@ -111,15 +115,6 @@ const clearButtonDefault = {
 export const filterModal = {
   content: {
     main: {},
-    header: {
-      content: {
-        title: {
-          $small: {
-            fontSize: 22,
-          },
-        },
-      },
-    },
     body: {
       main: {},
       topSection: {

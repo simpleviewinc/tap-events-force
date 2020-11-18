@@ -25,7 +25,6 @@ const defaultHeaderTextStyle = {
 export const sessionDetailsModal = {
   main: {},
   content: {
-    main: {},
     body: {
       main: {
         flex: 1,

@@ -47,7 +47,6 @@ export const Filter = ({ visible, labels }) => {
   return (
     <BaseModal
       dismissedCBRef={dismissedCBRef}
-      styles={filterStyles}
       title={'Filter'}
       visible={visible}
       onDismiss={cancelSelectedFilters}
