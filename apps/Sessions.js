@@ -4,9 +4,7 @@ import { theme } from 'SVTheme'
 import {
   ReThemeProvider,
   getDefaultTheme,
-  setDefaultTheme,
   setRNDimensions,
-  setRNPlatform
 } from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
@@ -14,8 +12,6 @@ import { SessionsContainer } from 'SVContainers/sessionsContainer'
 import { Dimensions, Platform } from 'react-native'
 
 setRNDimensions(Dimensions)
-setRNPlatform(Platform)
-setDefaultTheme(theme)
 
 /**
  * The sessions app for events force. This is the entry point of the 
