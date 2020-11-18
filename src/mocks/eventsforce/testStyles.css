@@ -188,10 +188,8 @@
   background: #F3F3F3;
 }
 
-/* demo-ing potentially how evf would style the modal header */
+/* dev only use. so the modal would look nicer during development */
 .modal-header-test {
-  width: 100%;
-  
-    background-color: #22B3C4;
+  background-color: #22B3C4;
   
 }
