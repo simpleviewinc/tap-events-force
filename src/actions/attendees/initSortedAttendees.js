@@ -1,7 +1,7 @@
 import { getAllBookedTickets } from 'SVUtils/models/tickets'
 import { sortAttendeeIntoSections } from 'SVUtils/models/attendees'
 import { setAttendeesByTicket } from './setAttendeesByTicket'
-import { isArr, validate } from '@keg-hub/jsutils'
+import { isArr, noPropArr, validate } from '@keg-hub/jsutils'
 
 /**
  * Creates an object of attendees sorted by the ticket they are each booking
@@ -26,7 +26,11 @@ const buildSortedAttendees = (attendees, tickets, bookedTicketObject) => {
  *
  * @return {void}
  */
-export const initSortedAttendees = (attendees, tickets, bookedTickets) => {
+export const initSortedAttendees = (
+  attendees,
+  tickets = noPropArr,
+  bookedTickets = noPropArr
+) => {
   const [valid] = validate(
     { attendees, tickets, bookedTickets },
     { $default: isArr }

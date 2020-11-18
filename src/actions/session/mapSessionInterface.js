@@ -1,6 +1,6 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { mapObj, snakeCase } from '@keg-hub/jsutils'
+import { mapObj, noPropObj, snakeCase } from '@keg-hub/jsutils'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
@@ -20,7 +20,7 @@ const subCatMap = {
  * If alert prop is valid, add a new modal item for alert
  * @param {<import('SVModels/alert').Alert)>} alert
  */
-const checkAlert = alert => {
+const checkAlert = (alert = noPropObj) => {
   alert?.title &&
     alert?.message &&
     addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
@@ -33,7 +33,6 @@ const checkAlert = alert => {
  * @returns {object} - of the form { type, payload }
  */
 const getDispatchPayload = (category, value) => {
-
   // displayProperties should go in settings.displayProperties
   return category === CATEGORIES.DISPLAY_PROPERTIES
     ? {
@@ -41,18 +40,18 @@ const getDispatchPayload = (category, value) => {
         payload: { category: CATEGORIES.SETTINGS, item: value, key: category },
       }
     : !subCatMap[category]
-      ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
-        {
-          type: ActionTypes.SET_ITEMS,
-          payload: { category, items: value },
-        }
-      : // subcategories are upsert-merged, rather than set, since they
-        // might need to be joined with data that was loaded from localStorage,
-        // e.g. agendaSettings.activeDayNumber
-        {
-          type: ActionTypes.UPSERT_ITEM,
-          payload: { category, item: value, key: subCatMap[category] },
-        }
+        ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
+          {
+            type: ActionTypes.SET_ITEMS,
+            payload: { category, items: value },
+          }
+        : // subcategories are upsert-merged, rather than set, since they
+      // might need to be joined with data that was loaded from localStorage,
+      // e.g. agendaSettings.activeDayNumber
+          {
+            type: ActionTypes.UPSERT_ITEM,
+            payload: { category, item: value, key: subCatMap[category] },
+          }
 }
 
 /**
