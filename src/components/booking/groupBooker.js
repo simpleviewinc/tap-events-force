@@ -12,15 +12,13 @@ import PropTypes from 'prop-types'
  * @param {Object} props
  * @param {Object?} props.styles
  * @param {import('SVModels/session').Session} props.session - current session
- * @param {Function?} props.onCancelPress - callback function when cancel button is pressed
  */
-export const GroupBooker = ({ styles, session, onCancelPress }) => {
+export const GroupBookerBody = ({ styles, session }) => {
   const [valid] = validate({ session }, { session: isObj })
   if (!valid) return null
 
   const topSectionStyles = styles?.content?.topSection || noOpObj
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
-  const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
   return (
     <View
@@ -33,18 +31,12 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
         className={`ef-modal-group-section-middle`}
         styles={middleSectionStyles}
       />
-
-      <BottomSection
-        onCancelPress={onCancelPress}
-        styles={bottomSectionStyles}
-      />
     </View>
   )
 }
-GroupBooker.propTypes = {
+GroupBookerBody.propTypes = {
   styles: PropTypes.object,
   session: PropTypes.object,
-  onCancelPress: PropTypes.func,
 }
 
 /**
@@ -82,12 +74,12 @@ const TopSection = ({ styles }) => {
 }
 
 /**
- * Bottom section of group booker
+ * Footer section of group booker
  * @param {object} props
  * @param {object} props.styles
  * @param {Function} props.onCancelPress
  */
-const BottomSection = ({ styles, onCancelPress }) => {
+export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
   const { state } = useGroupBookingContext()
   const bookSession = useBookSessionCallback(
     state.session,
