@@ -33,9 +33,10 @@ const useActions = dispatch =>
   )
 
 /**
- * The context-provider for the group booking state. Provides access to the state object,
- * actions for submitting mutations, and getters for helper functions. Use this, rather than
- * GroupBookingContext.Provider, to ensure the state is initialized for consuming.
+ * The context-provider for the group booking state. Provides access to the state object and actions
+ * for submitting mutations. Use this, rather than the GroupBookingContext.Provider directly,
+ * to ensure that the state is initialized for consumption.
+ *
  * @param {Object} props
  * @param {import('SVModels/Session').Session} props.session - the session object currently used in the group booking UI
  * @param {*} props.children - children
