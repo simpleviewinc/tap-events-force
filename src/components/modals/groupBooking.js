@@ -2,6 +2,7 @@ import React, { useRef, useCallback } from 'react'
 import { useStyle } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { GroupBooker } from 'SVComponents/booking/groupBooker'
+import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
 
 /**
  * @return {Array<Function, RefObject>}
@@ -32,20 +33,22 @@ export const GroupBooking = ({ visible, session, modalIndex }) => {
   const [ dismissModal, dismissedCBRef ] = useDismiss()
 
   return (
-    <BaseModal
-      className={`ef-modal-group`}
-      dismissedCBRef={dismissedCBRef}
-      styles={groupBookingStyles}
-      hasCloseButton={false}
-      title={session.name}
-      index={modalIndex}
-      visible={visible}
-    >
-      <GroupBooker
-        onCancelPress={dismissModal}
-        session={session}
-        styles={groupBookingStyles.content.body}
-      />
-    </BaseModal>
+    <GroupBookingProvider session={session}>
+      <BaseModal
+        className={`ef-modal-group`}
+        dismissedCBRef={dismissedCBRef}
+        styles={groupBookingStyles}
+        hasCloseButton={false}
+        title={session.name}
+        index={modalIndex}
+        visible={visible}
+      >
+        <GroupBooker
+          onCancelPress={dismissModal}
+          session={session}
+          styles={groupBookingStyles.content.body}
+        />
+      </BaseModal>
+    </GroupBookingProvider>
   )
 }

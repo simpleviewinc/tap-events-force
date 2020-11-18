@@ -11,6 +11,9 @@ import {
   useMockBookingRequest,
   useMockWaitingRequest,
 } from '../mocks/eventsforce/callbacks/useMockBookingCB'
+import testData from '../mocks/eventsforce/testData.js'
+import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
+import { evfModalBuilder } from '../mocks/eventsforce/evfModalBuilder'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -61,6 +64,14 @@ export const RootContainer = withAppHeader(displayName, props => {
     },
     [ setMockData, setBookingDelay ]
   )
+  const [modalParentProps] = useState({ className: 'evf-modal' })
+
+  // IMPORTANT - should not be imported into the main sessions component export
+  // This is for DEVELOPMENT only
+  // Create the session modal component to be passed to the Sessions Component
+  const SessionsModal = useMemo(() => {
+    return evfModalBuilder(modalParentProps)
+  }, [modalParentProps])
 
   return (
     <>
@@ -75,6 +86,7 @@ export const RootContainer = withAppHeader(displayName, props => {
         onDayChange={mockCallbacks.onDayChange}
         onSessionBookingRequest={mockBookRequest}
         onSessionWaitingListRequest={mockWaitRequest}
+        ModalComponent={SessionsModal}
       />
     </>
   )

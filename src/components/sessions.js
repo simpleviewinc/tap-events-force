@@ -12,7 +12,6 @@ import { handleAttendeeRequest } from 'SVActions/session/booking/handleAttendeeR
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useAgenda } from 'SVHooks/models/useAgenda'
-import { useParsedStyle } from 'SVHooks/useParsedStyle'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { get } from '@keg-hub/jsutils'
@@ -263,12 +262,10 @@ export const Sessions = props => {
     return sessions.some(session => session.price?.amount > 0)
   }, [sessions])
 
-  const parsedStyle = useParsedStyle('ef-sessions-background')
-
   return (
     <View
       className={'ef-sessions-background'}
-      style={[ sessionsStyles.main, parsedStyle ]}
+      style={sessionsStyles.main}
     >
       <SessionsHeader
         labels={labels}

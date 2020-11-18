@@ -1,47 +1,92 @@
 import { useMemo } from 'react'
-import { noOpObj, noPropArr } from '@keg-hub/jsutils'
+import { noOpObj, noPropArr, exists } from '@keg-hub/jsutils'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 
 /**
+ * Creates an EPOCH time based on the passed in time argument
+ * @param {string} time - Time of the day to create the EPOCH time for
+ *
+ * @returns {number} - EPOCH time for the passed in time
+ */
+const getEpochTime = time => {
+  return Date.parse(`1970/01/01 ${time.replace(/(AM)|(PM)/, '')}`)
+}
+
+/**
+ * Gets the EPOCH time for a sessions start and end times
+ * @param {Object} session - current session to book attendees with
+ *
+ * @returns {Object} - Contains the sessions start and end times as EPOCH
+ */
+const parseSessionTimes = ({ startDateTimeLocal, endDateTimeLocal }) => {
+  return {
+    startBlock: getEpochTime(getTimeFromDate(startDateTimeLocal)),
+    endBlock: getEpochTime(getTimeFromDate(endDateTimeLocal)),
+  }
+}
+
+/**
  * Checks if the timeBlock is at or between the start and end blocks
- * @param {string} timeBlock - The start of a session
- * @param {string} startBlock - The start of the current session
- * @param {string} endBlock - The end of the current session
+ * @param {string} startEpoch - The start of the current session
+ * @param {string} endEpoch - The end of the current session
+ * @param {string} checkStartEpoch - The start of the session to be checked
+ * @param {string} checkEndEpoch - The end of the session to be checked
  *
  * @returns {boolean} - Is the timeBlock time after the endBlock time
  */
-const timeConflict = (timeBlock, startBlock, endBlock) => {
-  const timeBlockDate = Date.parse(
-    `1970/01/01 ${timeBlock.replace(/(AM)|(PM)/, '')}`
-  )
-  return Boolean(
-    timeBlockDate >= Date.parse(`1970/01/01 ${startBlock}`) &&
-      timeBlockDate <= Date.parse(`1970/01/01 ${endBlock}`)
+const timeConflict = (startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) => {
+  return (
+    startEpoch &&
+    endEpoch &&
+    checkStartEpoch &&
+    checkEndEpoch &&
+    Boolean(startEpoch < checkEndEpoch && checkStartEpoch < endEpoch)
   )
 }
 
 /**
  * Gets a list of sessions relative to the start and end time of the passed in session Id
  * @param {Object} daySessions - All sessions for the day
- * @param {string} startBlock - The start of a session
- * @param {string} endBlock - The end of a session
+ * @param {string} startEpoch - The start of the current session
+ * @param {string} endEpoch - The end of the session to be checked
  * @param {string} sessionId - Id of the current session
  *
  * @returns {Array} - Group of sessions id's relative to the passed in start and end block times
  */
-const getRelativeSessions = (daySessions, startBlock, endBlock, sessionId) => {
+const getRelativeSessions = (
+  daySessions,
+  startEpoch,
+  endEpoch,
+  sessionId,
+  sessionDay
+) => {
   return (
     (daySessions &&
       daySessions.length &&
       daySessions.reduce((relativeSessions, { sessions, timeBlock }) => {
-        timeConflict(timeBlock, startBlock, endBlock) &&
-          sessions &&
+        sessions &&
           sessions.length &&
-          sessions.map(
-            session =>
-              session.identifier !== sessionId &&
-              relativeSessions.push(session.identifier)
-          )
+          sessions.map(session => {
+            if (
+              (exists(sessionDay) && session.dayNumber !== sessionDay) ||
+              session.identifier === sessionId
+            )
+              return
+
+            const {
+              startBlock: checkStartEpoch,
+              endBlock: checkEndEpoch,
+            } = parseSessionTimes(session)
+
+            return (
+              timeConflict(
+                startEpoch,
+                endEpoch,
+                checkStartEpoch,
+                checkEndEpoch
+              ) && relativeSessions.push(session.identifier)
+            )
+          })
 
         return relativeSessions
       }, [])) ||
@@ -58,10 +103,11 @@ const getRelativeSessions = (daySessions, startBlock, endBlock, sessionId) => {
  */
 const hasTimeConflict = (booked, sessionIds) => {
   return (
-    booked &&
-    booked.length &&
+    Boolean(booked) &&
+    Boolean(booked.length) &&
     booked.reduce((timeConflict, bookedId) => {
-      return timeConflict || (sessionIds.includes(bookedId) && bookedId)
+      const bookedIdStr = bookedId?.toString()
+      return timeConflict || (sessionIds.includes(bookedIdStr) && bookedIdStr)
     }, false)
   )
 }
@@ -79,7 +125,9 @@ const getTimeConflicts = (attendees, relativeSessions) => {
       attendee.bookedSessions,
       relativeSessions
     )
-    conflictId && (conflicts[attendee.bookedTicketIdentifier] = conflictId)
+
+    conflictId !== false &&
+      (conflicts[attendee.bookedTicketIdentifier] = conflictId)
 
     return conflicts
   }, {})
@@ -95,13 +143,8 @@ const getTimeConflicts = (attendees, relativeSessions) => {
  *                             Return false if no conflicts are found
  */
 export const useBookingTimeConflicts = (session, attendees, daySessions) => {
-  const {
-    startDateTimeLocal: sessionStart,
-    endDateTimeLocal: sessionEnd,
-    identifier: sessionId,
-  } = session
-  const startBlock = getTimeFromDate(sessionStart)
-  const endBlock = getTimeFromDate(sessionEnd)
+  const { identifier: sessionId, dayNumber: sessionDay } = session
+  const { startBlock, endBlock } = parseSessionTimes(session)
 
   return useMemo(() => {
     const conflicts =
@@ -109,7 +152,13 @@ export const useBookingTimeConflicts = (session, attendees, daySessions) => {
         ? noOpObj
         : getTimeConflicts(
           attendees,
-          getRelativeSessions(daySessions, startBlock, endBlock, sessionId)
+          getRelativeSessions(
+            daySessions,
+            startBlock,
+            endBlock,
+            sessionId,
+            sessionDay
+          )
         )
 
     return Object.keys(conflicts).length ? conflicts : false

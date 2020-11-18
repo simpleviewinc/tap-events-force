@@ -2,15 +2,11 @@ import React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
-import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
-import { useStoreItems } from 'SVHooks/store/useStoreItems'
-import { useSessionBooking } from 'SVHooks/booking/useSessionBooking'
-import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
-import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
-import { useInitGroupBooking } from 'SVHooks/booking/useInitGroupBooking'
 import { useKegEvent } from 'SVHooks/events/useKegEvent'
 import { Values } from 'SVConstants'
+import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
+import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 import PropTypes from 'prop-types'
 
 const { CATEGORIES, EVENTS } = Values
@@ -56,9 +52,7 @@ const useButtonState = sessionId => {
 }
 
 /**
- * The root group booking component. Initializes state specific to
- * the active group booking context for the passed-in session, and
- * renders the group booking UI given the session and the store state
+ * The root group booking component. Makes use of the GroupBookingContext.
  * @param {Object} props
  * @param {Object?} props.styles
  * @param {import('SVModels/session').Session} props.session - current session
@@ -72,74 +66,29 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
-  const { attendees, attendeesByTicket } = useStoreItems([
-    CATEGORIES.ATTENDEES,
-    CATEGORIES.ATTENDEES_BY_TICKET,
-  ])
-
-  const { restrictedIdsForSession } = useRestrictedAttendeeIds(
-    session?.identifier
-  )
-
-  // determine the remaining count of
-  const { remainingCount } = parseSessionCapacity(session?.capacity)
-
-  // determine if the capacity of the session is greater than the number
-  // of attendees who can be booked
-  const { initialCapacityExceedsNeed } = useGroupCounts(
-    attendeesByTicket,
-    restrictedIdsForSession,
-    remainingCount,
-    session?.capacity?.isUnlimited
-  )
-
-  // initialize the store data for the group booking
-  const initialized = useInitGroupBooking(
-    session,
-    attendees,
-    initialCapacityExceedsNeed,
-    remainingCount
-  )
-
-  // gets callbacks and data related to the group booking for this session
-  const { updateCapacity, bookSession, currentCapacity } = useSessionBooking(
-    session
-  )
-
-  // if the initial capacity exceeds the number of bookable attendees, no need to show the remaining places in the top section
-  const visibleCapacityCount = initialCapacityExceedsNeed
-    ? null
-    : currentCapacity
-
   const [ isSubmitLoading, submitIsEnabled, sessionIsModified ] = useButtonState(
     session.identifier
   )
-
   useAutoCancel(session?.identifier, onCancelPress)
-
   return (
     <View
       className={`ef-modal-group-body`}
       style={styles.main}
     >
-      <TopSection
-        styles={topSectionStyles}
-        remainingCount={visibleCapacityCount}
+      <TopSection 
+        styles={topSectionStyles} 
         showRequireSymbol={!sessionIsModified}
       />
-      { initialized && (
-        <GroupBookingOptions
-          className={`ef-modal-group-section-middle`}
-          styles={middleSectionStyles}
-          attendeesByTicket={attendeesByTicket}
-          onAttendeeSelected={updateCapacity}
-          disabled={isSubmitLoading}
-        />
-      ) }
+
+      <GroupBookingOptions
+        className={`ef-modal-group-section-middle`}
+        styles={middleSectionStyles}
+        disabled={isSubmitLoading}
+      />
+
       <BottomSection
         session={session}
         onCancelPress={onCancelPress}
-        onSubmitPress={bookSession}
         isLoading={isSubmitLoading}
         styles={bottomSectionStyles}
         submitDisabled={!submitIsEnabled}
@@ -157,16 +106,13 @@ GroupBooker.propTypes = {
  * Top section of the group booker - contains the instruction text and spots remaining
  * @param {object} props
  * @param {object} props.styles
- * @param {number} props.remainingCount - spots left in this session. If null, there is no limit
  * @param {boolean} props.showRequireSymbol - if true, shows a red asterisk next to the instruction text,
- * indicating the user needs to make a booking change in order to press submit.
  */
-const TopSection = ({ styles, remainingCount, showRequireSymbol = true }) => {
+const TopSection = ({ styles, showRequireSymbol = true }) => {
   // use correct wording depending on number of spots remaining
-  const placeText = remainingCount === 1 ? 'place' : 'places'
-
-  const showCount = exists(remainingCount) && remainingCount !== Infinity
-
+  const { state } = useGroupBookingContext()
+  const placeText = state.capacity === 1 ? 'place' : 'places'
+  const showCount = exists(state.capacity) && state.capacity !== Infinity
   return (
     <View
       className={`ef-modal-group-section-top`}
@@ -186,7 +132,7 @@ const TopSection = ({ styles, remainingCount, showRequireSymbol = true }) => {
           className={`ef-modal-body-highlight`}
           style={styles?.content?.infoText}
         >
-          { `${remainingCount} ${placeText} remaining` }
+          { `${state.capacity} ${placeText} remaining` }
         </Text>
       ) }
     </View>
@@ -202,13 +148,18 @@ const TopSection = ({ styles, remainingCount, showRequireSymbol = true }) => {
  * @param {Function} props.onSubmitPress
  * @param {boolean} props.submitDisabled - if the submit button should be disabled
  */
-const BottomSection = ({
-  styles,
-  onCancelPress,
-  onSubmitPress,
+const BottomSection = ({ 
+  styles, 
+  onCancelPress ,
   isLoading = false,
   submitDisabled = false,
 }) => {
+  const { state } = useGroupBookingContext()
+  const bookSession = useBookSessionCallback(
+    state.session,
+    state.current.bookingList,
+    state.current.waitingList
+  )
   return (
     <View
       className={`ef-modal-group-section-bottom`}
@@ -227,8 +178,8 @@ const BottomSection = ({
         type={'primary'}
         styles={styles.content?.bookButton}
         text={'BOOK SELECTED'}
-        onClick={onSubmitPress}
         disabled={submitDisabled}
+        onClick={bookSession}
       />
     </View>
   )

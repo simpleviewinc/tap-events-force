@@ -1,5 +1,4 @@
 import { setSizes } from '@keg-hub/re-theme'
-import './dynamicClassMap'
 
 /**
  * Configures the theme with sizes

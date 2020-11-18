@@ -13,6 +13,10 @@ import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
 import { isNative } from 'SVUtils/platform'
 
+// IMPORTANT - should not be imported into the main sessions component export
+// This is for DEVELOPMENT only
+import "bootstrap/dist/css/bootstrap.min.css"
+
 setDefaultTheme(theme)
 
 const checkAppInit = setInit => {
