@@ -7,6 +7,7 @@ import { useKegEvent } from 'SVHooks/events/useKegEvent'
 import { Values } from 'SVConstants'
 import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import PropTypes from 'prop-types'
 
 const { CATEGORIES, EVENTS } = Values
@@ -75,8 +76,8 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
       className={`ef-modal-group-body`}
       style={styles.main}
     >
-      <TopSection 
-        styles={topSectionStyles} 
+      <TopSection
+        styles={topSectionStyles}
         showRequireSymbol={!sessionIsModified}
       />
 
@@ -148,17 +149,19 @@ const TopSection = ({ styles, showRequireSymbol = true }) => {
  * @param {Function} props.onSubmitPress
  * @param {boolean} props.submitDisabled - if the submit button should be disabled
  */
-const BottomSection = ({ 
-  styles, 
-  onCancelPress ,
+const BottomSection = ({
+  styles,
+  onCancelPress,
   isLoading = false,
   submitDisabled = false,
 }) => {
-  const { state } = useGroupBookingContext()
+  const {
+    state: { session, current, modified },
+  } = useGroupBookingContext()
   const bookSession = useBookSessionCallback(
-    state.session,
-    state.current.bookingList,
-    state.current.waitingList
+    session,
+    modified.bookingList && current.bookingList,
+    modified.waitingList && current.waitingList
   )
   return (
     <View

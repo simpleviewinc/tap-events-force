@@ -4,6 +4,7 @@ import { Values } from 'SVConstants'
 const { CATEGORIES } = Values
 import { useIsAttendeeDisabledCallback } from 'SVHooks/models/attendees/useIsAttendeeDisabledCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
@@ -42,8 +43,9 @@ export const AttendeeBookingList = ({
     attendees
   )
   const pendingSession = useStoreItems(CATEGORIES.PENDING_SESSION)
-  const isAttendeeDisabled = useCallback(id => pendingSession?.identifier || isAttendeeRestricted(id))
-
+  const isAttendeeDisabled = useCallback(
+    id => pendingSession?.identifier || isAttendeeRestricted(id)
+  )
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
     const isBooking = state.current?.bookingList?.includes(attendeeId)

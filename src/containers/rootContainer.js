@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useMemo } from 'react'
 import { withAppHeader } from 'SVComponents'
 import { SessionsContainer } from './sessionsContainer'
-import testData from '../mocks/eventsforce/testData.js'
 import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
@@ -12,7 +11,6 @@ import {
   useMockWaitingRequest,
 } from '../mocks/eventsforce/callbacks/useMockBookingCB'
 import testData from '../mocks/eventsforce/testData.js'
-import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 import { evfModalBuilder } from '../mocks/eventsforce/evfModalBuilder'
 
 const mockCallbacks = {
