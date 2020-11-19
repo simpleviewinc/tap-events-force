@@ -1,7 +1,7 @@
 import { longText } from '../../text'
 
 export const optionalTickets = {
-  group: {
+  single: {
     optionalTickets: {
       displayProperties: {
         dateFormat: 'dd/MM/yyyy', // can be "dd/MM/yyyy" | "MM/dd/yyyy" | "yyyy-MM-dd"
@@ -404,54 +404,6 @@ export const optionalTickets = {
         {
           bookedTicketIdentifier: '1',
           name: 'Mr Frank Smith',
-          attendeeCategoryIdentifier: '1',
-          bookedDays: [ 1, 2 ],
-          bookedSessions: [],
-        },
-        {
-          bookedTicketIdentifier: '2',
-          name: "Mrs Penelope O'Connor the Second",
-          attendeeCategoryIdentifier: '2',
-          bookedDays: [2],
-          bookedSessions: [],
-          waitingListSessions: [],
-        },
-        {
-          bookedTicketIdentifier: '3',
-          name: 'Dr Lucy Jones',
-          attendeeCategoryIdentifier: '1',
-          bookedDays: [ 1, 2 ],
-          bookedSessions: [],
-        },
-        {
-          bookedTicketIdentifier: '4',
-          name: 'Pepe Silvia',
-          attendeeCategoryIdentifier: '1',
-          bookedDays: [],
-          bookedSessions: [],
-        },
-        {
-          bookedTicketIdentifier: '5',
-          name: 'Vic Vinegar',
-          attendeeCategoryIdentifier: '3',
-          bookedDays: [3],
-          bookedSessions: [],
-        },
-        {
-          bookedTicketIdentifier: '6',
-          name: 'Hugh Honey',
-          attendeeCategoryIdentifier: '3',
-          bookedDays: [3],
-          bookedSessions: [],
-        },
-        {
-          bookedTicketIdentifier: '7',
-          attendeeCategoryIdentifier: '1',
-          bookedDays: [ 1, 2 ],
-          bookedSessions: [],
-        },
-        {
-          bookedTicketIdentifier: '8',
           attendeeCategoryIdentifier: '1',
           bookedDays: [ 1, 2 ],
           bookedSessions: [],
