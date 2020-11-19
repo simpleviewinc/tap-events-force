@@ -1,7 +1,7 @@
 import { Values, ActionTypes } from 'SVConstants'
 import { dispatch } from 'SVStore'
 import { isArrMap, validate } from '@keg-hub/jsutils'
-const { CATEGORIES } = Values
+const { INTERNAL_CATEGORIES } = Values
 
 /**
  * stores a map in the store that has organized attendee (ids) by the ticket
@@ -19,7 +19,7 @@ export const setAttendeesByTicket = attendeesByTicketMap => {
   dispatch({
     type: ActionTypes.SET_ITEMS,
     payload: {
-      category: CATEGORIES.ATTENDEES_BY_TICKET,
+      category: INTERNAL_CATEGORIES.ATTENDEES_BY_TICKET,
       items: attendeesByTicketMap,
     },
   })

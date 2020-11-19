@@ -2,7 +2,7 @@ import { dispatch } from 'SVStore'
 import { ActionTypes } from 'SVConstants'
 import { Values } from 'SVConstants'
 
-const { CATEGORIES } = Values
+const { INTERNAL_CATEGORIES } = Values
 
 /**
  * Adds a modal to the modals array
@@ -13,7 +13,7 @@ export const addModal = modal => {
     dispatch({
       type: ActionTypes.UPSERT_ITEM,
       payload: {
-        category: CATEGORIES.MODALS,
+        category: INTERNAL_CATEGORIES.MODALS,
         item: modal,
       },
     })

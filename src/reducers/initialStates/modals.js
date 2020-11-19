@@ -1,11 +1,11 @@
 import { Values } from 'SVConstants'
 
-const { CATEGORIES } = Values
+const { INTERNAL_CATEGORIES } = Values
 
 /**
  * modals state
  * Takes in an array of modal components
  */
 export const modalsState = {
-  [CATEGORIES.MODALS]: [],
+  [INTERNAL_CATEGORIES.MODALS]: [],
 }

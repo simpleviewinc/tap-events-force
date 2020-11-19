@@ -8,7 +8,7 @@ import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAtten
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
 import { itemsState as initialItemsState } from 'SVReducers/initialStates/items'
 
-const { CATEGORIES, SUB_CATEGORIES } = Values
+const { CATEGORIES, INTERNAL_CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  * defines which sessionAgendaProps need to be mapped to subcategories
@@ -43,7 +43,7 @@ const getDispatchPayload = (category, value) => {
   }
 
   // displayProperties should go in settings.displayProperties
-  return category === CATEGORIES.DISPLAY_PROPERTIES
+  return category === INTERNAL_CATEGORIES.DISPLAY_PROPERTIES
     ? {
         type: ActionTypes.UPSERT_ITEM,
         payload: { category: CATEGORIES.SETTINGS, item: value, key: category },
@@ -52,7 +52,7 @@ const getDispatchPayload = (category, value) => {
         ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
           {
             type: ActionTypes.SET_ITEMS,
-            payload: { category, items: value || initialItemsState[category] },
+            payload: { category, items: value ?? initialItemsState[category] },
           }
         : // subcategories are upsert-merged, rather than set, since they
       // might need to be joined with data that was loaded from localStorage,
@@ -70,7 +70,7 @@ const getDispatchPayload = (category, value) => {
 export const mapSessionInterface = props => {
   if (!props) return
 
-  const { SESSIONS, ALERT, ...remainingCategories } = CATEGORIES
+  const { ALERT, ...remainingCategories } = CATEGORIES
 
   mapObj(remainingCategories, (_, category) => {
     const action = getDispatchPayload(category, props[category])
@@ -78,7 +78,7 @@ export const mapSessionInterface = props => {
   })
 
   props[ALERT] && checkAlert(props[ALERT])
-  setAgendaSessions(props[SESSIONS], props.agendaDays)
+  setAgendaSessions(props[CATEGORIES.SESSIONS], props.agendaDays)
 
   // loop through each key and dispatch accordingly
   // mapObj(props, (key, value) => {

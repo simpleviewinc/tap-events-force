@@ -14,4 +14,7 @@ export const itemsState = {
   ...labelsState,
   ...locationsState,
   ...modalsState,
+  attendeesByTicket: [],
+  restrictedAttendeeIds: [],
+  events: [],
 }

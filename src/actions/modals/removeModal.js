@@ -3,7 +3,7 @@ import { isNum } from '@keg-hub/jsutils'
 import { ActionTypes, Values } from 'SVConstants'
 import { devLog } from 'SVUtils/logs'
 
-const { CATEGORIES } = Values
+const { INTERNAL_CATEGORIES } = Values
 
 /**
  * Helper to call dispatch and update the modals in the store
@@ -14,7 +14,7 @@ const dispatchModalUpdate = modals => {
     dispatch({
       type: ActionTypes.SET_ITEMS,
       payload: {
-        category: CATEGORIES.MODALS,
+        category: INTERNAL_CATEGORIES.MODALS,
         items: modals,
       },
     })
