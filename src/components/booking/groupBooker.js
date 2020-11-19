@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button'
-import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
+import { noOpObj, validate, isObj } from '@keg-hub/jsutils'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
@@ -56,8 +56,6 @@ const TopSection = ({ styles }) => {
   // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
   const placeText = state.capacity === 1 ? 'place' : 'places'
-  const showCount =
-    state.showCapacity && exists(state.capacity) && state.capacity !== Infinity
   return (
     <View
       className={`ef-modal-group-section-top`}
@@ -69,7 +67,7 @@ const TopSection = ({ styles }) => {
       >
         Select sessions for your group:
       </Text>
-      { showCount && (
+      { state.showCapacity && (
         <Text
           className={`ef-modal-body-highlight`}
           style={styles?.content?.infoText}
