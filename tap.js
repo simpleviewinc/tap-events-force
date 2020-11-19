@@ -25,6 +25,7 @@ module.exports = {
       aliases: {
         dynamic: {
           Icons: 'assets/icons',
+          Contexts: 'contexts'
         },
         web: {
           SVTapEntry: pathToEntryPoint

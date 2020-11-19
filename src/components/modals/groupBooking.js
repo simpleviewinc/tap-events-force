@@ -3,6 +3,7 @@ import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { checkCall } from '@keg-hub/jsutils'
 import { GroupBooker } from 'SVComponents/booking/groupBooker'
+import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
 
 /**
  * GroupBooking Modal
@@ -20,22 +21,24 @@ export const GroupBooking = ({ visible, session }) => {
   const dismissedCBRef = useRef()
 
   return (
-    <BaseModal
-      className={`ef-modal-group`}
-      dismissedCBRef={dismissedCBRef}
-      styles={groupBookingStyles}
-      hasCloseButton={false}
-      title={session.name}
-      visible={visible}
-    >
-      <GroupBooker
-        onCancelPress={useCallback(
-          () => checkCall(dismissedCBRef.current, true),
-          [dismissedCBRef?.current]
-        )}
-        session={session}
-        styles={groupBookingStyles.content.body}
-      />
-    </BaseModal>
+    <GroupBookingProvider session={session}>
+      <BaseModal
+        className={`ef-modal-group`}
+        dismissedCBRef={dismissedCBRef}
+        styles={groupBookingStyles}
+        hasCloseButton={false}
+        title={session.name}
+        visible={visible}
+      >
+        <GroupBooker
+          onCancelPress={useCallback(
+            () => checkCall(dismissedCBRef.current, true),
+            [dismissedCBRef?.current]
+          )}
+          session={session}
+          styles={groupBookingStyles.content.body}
+        />
+      </BaseModal>
+    </GroupBookingProvider>
   )
 }

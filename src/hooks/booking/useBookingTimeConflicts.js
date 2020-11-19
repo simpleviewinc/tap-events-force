@@ -1,5 +1,5 @@
 import { useMemo } from 'react'
-import { noOpObj, noPropArr, isStr, exists } from '@keg-hub/jsutils'
+import { noOpObj, noPropArr, exists } from '@keg-hub/jsutils'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 
 /**
@@ -8,7 +8,7 @@ import { getTimeFromDate } from 'SVUtils/dateTime'
  *
  * @returns {number} - EPOCH time for the passed in time
  */
-const getEpochTime = time =>  {
+const getEpochTime = time => {
   return Date.parse(`1970/01/01 ${time.replace(/(AM)|(PM)/, '')}`)
 }
 
@@ -21,7 +21,7 @@ const getEpochTime = time =>  {
 const parseSessionTimes = ({ startDateTimeLocal, endDateTimeLocal }) => {
   return {
     startBlock: getEpochTime(getTimeFromDate(startDateTimeLocal)),
-    endBlock: getEpochTime(getTimeFromDate(endDateTimeLocal))
+    endBlock: getEpochTime(getTimeFromDate(endDateTimeLocal)),
   }
 }
 
@@ -35,8 +35,13 @@ const parseSessionTimes = ({ startDateTimeLocal, endDateTimeLocal }) => {
  * @returns {boolean} - Is the timeBlock time after the endBlock time
  */
 const timeConflict = (startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) => {
-  return startEpoch && endEpoch && checkStartEpoch && checkEndEpoch &&
-    Boolean((startEpoch < checkEndEpoch) && (checkStartEpoch < endEpoch))
+  return (
+    startEpoch &&
+    endEpoch &&
+    checkStartEpoch &&
+    checkEndEpoch &&
+    Boolean(startEpoch < checkEndEpoch && checkStartEpoch < endEpoch)
+  )
 }
 
 /**
@@ -48,20 +53,39 @@ const timeConflict = (startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) => {
  *
  * @returns {Array} - Group of sessions id's relative to the passed in start and end block times
  */
-const getRelativeSessions = (daySessions, startEpoch, endEpoch, sessionId, sessionDay) => {
+const getRelativeSessions = (
+  daySessions,
+  startEpoch,
+  endEpoch,
+  sessionId,
+  sessionDay
+) => {
   return (
     (daySessions &&
       daySessions.length &&
       daySessions.reduce((relativeSessions, { sessions, timeBlock }) => {
-          sessions &&
+        sessions &&
           sessions.length &&
           sessions.map(session => {
-            if((exists(sessionDay) && session.dayNumber !== sessionDay) || session.identifier === sessionId) return
+            if (
+              (exists(sessionDay) && session.dayNumber !== sessionDay) ||
+              session.identifier === sessionId
+            )
+              return
 
-            const { startBlock:checkStartEpoch, endBlock:checkEndEpoch } = parseSessionTimes(session)
+            const {
+              startBlock: checkStartEpoch,
+              endBlock: checkEndEpoch,
+            } = parseSessionTimes(session)
 
-            return timeConflict(startEpoch, endEpoch, checkStartEpoch, checkEndEpoch) &&
-              relativeSessions.push(session.identifier)
+            return (
+              timeConflict(
+                startEpoch,
+                endEpoch,
+                checkStartEpoch,
+                checkEndEpoch
+              ) && relativeSessions.push(session.identifier)
+            )
           })
 
         return relativeSessions
@@ -119,7 +143,7 @@ const getTimeConflicts = (attendees, relativeSessions) => {
  *                             Return false if no conflicts are found
  */
 export const useBookingTimeConflicts = (session, attendees, daySessions) => {
-  const { identifier:sessionId, dayNumber:sessionDay } = session
+  const { identifier: sessionId, dayNumber: sessionDay } = session
   const { startBlock, endBlock } = parseSessionTimes(session)
 
   return useMemo(() => {
@@ -128,7 +152,13 @@ export const useBookingTimeConflicts = (session, attendees, daySessions) => {
         ? noOpObj
         : getTimeConflicts(
           attendees,
-          getRelativeSessions(daySessions, startBlock, endBlock, sessionId, sessionDay)
+          getRelativeSessions(
+            daySessions,
+            startBlock,
+            endBlock,
+            sessionId,
+            sessionDay
+          )
         )
 
     return Object.keys(conflicts).length ? conflicts : false

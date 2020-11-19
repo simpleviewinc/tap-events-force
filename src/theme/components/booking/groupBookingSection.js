@@ -38,10 +38,10 @@ export const groupBookingSection = {
       main: {
         $web: {
           $xsmall: {
-            fontSize: '0.8em',
+            fontSize: '0.5em',
           },
           $small: {
-            fontSize: 'inherit',
+            fontSize: 16,
           },
         },
       },
