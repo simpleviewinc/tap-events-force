@@ -1,34 +1,40 @@
 import { deepFreeze } from '@keg-hub/jsutils'
 
+const EVF_CATEGORIES = {
+  AGENDA_DAYS: 'agendaDays',
+  BOOKING: 'booking',
+  ATTENDEES: 'attendees',
+  LABELS: 'labels',
+  LOCATIONS: 'locations',
+  PRESENTERS: 'presenters',
+  SESSIONS: 'sessions',
+  BOOKED_TICKETS: 'bookedTickets',
+  TICKETS: 'tickets',
+  ALERT: 'alert',
+}
+
+const INTERNAL_CATEGORIES = {
+  FILTERS: 'filters',
+  ACTIVE_SESSION: 'activeSession',
+  AGENDA_SESSIONS: 'agendaSessions',
+  ATTENDEES_BY_TICKET: 'attendeesByTicket',
+  RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
+  MODALS: 'modals',
+  SETTINGS: 'settings',
+  GROUP_BOOKING: 'groupBooking',
+  DISPLAY_PROPERTIES: 'displayProperties',
+}
+
 /**
  * Constant values
  */
 export const Values = deepFreeze({
+  EVF_CATEGORIES,
+  INTERNAL_CATEGORIES,
   CATEGORIES: {
-    AGENDA_DAYS: 'agendaDays',
-    BOOKING: 'booking',
-    ATTENDEES: 'attendees',
-    LABELS: 'labels',
-    LOCATIONS: 'locations',
-    PRESENTERS: 'presenters',
-    SESSIONS: 'sessions',
-    BOOKED_TICKETS: 'bookedTickets',
-    TICKETS: 'tickets',
-    ALERT: 'alert',
+    ...EVF_CATEGORIES,
+    ...INTERNAL_CATEGORIES,
   },
-
-  INTERNAL_CATEGORIES: {
-    FILTERS: 'filters',
-    ACTIVE_SESSION: 'activeSession',
-    AGENDA_SESSIONS: 'agendaSessions',
-    ATTENDEES_BY_TICKET: 'attendeesByTicket',
-    RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
-    MODALS: 'modals',
-    SETTINGS: 'settings',
-    GROUP_BOOKING: 'groupBooking',
-    DISPLAY_PROPERTIES: 'displayProperties',
-  },
-
   SUB_CATEGORIES: {
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',
