@@ -44,7 +44,6 @@ export const groupBookingModal = {
         },
         middleSection: {
           main: {
-            display: 'flex',
             flex: 9,
           },
           section: {
