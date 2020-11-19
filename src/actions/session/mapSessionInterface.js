@@ -1,11 +1,12 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { mapObj, snakeCase } from '@keg-hub/jsutils'
+import { mapObj } from '@keg-hub/jsutils'
 import { addModal } from 'SVActions/modals'
 import { Modal } from 'SVModels/modal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
+import { itemsState as initialItemsState } from 'SVReducers/initialStates/items'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -33,6 +34,13 @@ const checkAlert = alert => {
  * @returns {object} - of the form { type, payload }
  */
 const getDispatchPayload = (category, value) => {
+  if (!value) {
+    console.log('missing', {
+      category,
+      value,
+      default: initialItemsState[category],
+    })
+  }
 
   // displayProperties should go in settings.displayProperties
   return category === CATEGORIES.DISPLAY_PROPERTIES
@@ -41,18 +49,18 @@ const getDispatchPayload = (category, value) => {
         payload: { category: CATEGORIES.SETTINGS, item: value, key: category },
       }
     : !subCatMap[category]
-      ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
-        {
-          type: ActionTypes.SET_ITEMS,
-          payload: { category, items: value },
-        }
-      : // subcategories are upsert-merged, rather than set, since they
-        // might need to be joined with data that was loaded from localStorage,
-        // e.g. agendaSettings.activeDayNumber
-        {
-          type: ActionTypes.UPSERT_ITEM,
-          payload: { category, item: value, key: subCatMap[category] },
-        }
+        ? // by default, we use set items, so that if the component is mounted/remounted, data won't be duplicated
+          {
+            type: ActionTypes.SET_ITEMS,
+            payload: { category, items: value || initialItemsState[category] },
+          }
+        : // subcategories are upsert-merged, rather than set, since they
+      // might need to be joined with data that was loaded from localStorage,
+      // e.g. agendaSettings.activeDayNumber
+          {
+            type: ActionTypes.UPSERT_ITEM,
+            payload: { category, item: value, key: subCatMap[category] },
+          }
 }
 
 /**
@@ -62,21 +70,31 @@ const getDispatchPayload = (category, value) => {
 export const mapSessionInterface = props => {
   if (!props) return
 
-  // loop through each key and dispatch accordingly
-  mapObj(props, (key, value) => {
-    // ensure key exists in the items store first
-    if (key !== CATEGORIES[snakeCase(key).toUpperCase()]) return
+  const { SESSIONS, ALERT, ...remainingCategories } = CATEGORIES
 
-    // while mapping sessions, also map for 'activeSessions'
-    // activeSessions are sessions sorted by day number
-    if (key === CATEGORIES.SESSIONS) setAgendaSessions(value, props.agendaDays)
-
-    // Check for the alert prop, and call the checkAlert when it exists
-    // Otherwise just dispatch the payload based on the key and value
-    key === CATEGORIES.ALERT
-      ? checkAlert(props.alert)
-      : dispatch(getDispatchPayload(key, value))
+  mapObj(remainingCategories, (_, category) => {
+    const action = getDispatchPayload(category, props[category])
+    dispatch(action)
   })
+
+  props[ALERT] && checkAlert(props[ALERT])
+  setAgendaSessions(props[SESSIONS], props.agendaDays)
+
+  // loop through each key and dispatch accordingly
+  // mapObj(props, (key, value) => {
+  //   // ensure key exists in the items store first
+  //   if (key !== CATEGORIES[snakeCase(key).toUpperCase()]) return
+
+  //   // while mapping sessions, also map for 'activeSessions'
+  //   // activeSessions are sessions sorted by day number
+  //   if (key === CATEGORIES.SESSIONS) setAgendaSessions(value, props.agendaDays)
+
+  //   // Check for the alert prop, and call the checkAlert when it exists
+  //   // Otherwise just dispatch the payload based on the key and value
+  //   key === CATEGORIES.ALERT
+  //     ? checkAlert(props.alert)
+  //     : dispatch(getDispatchPayload(key, value))
+  // })
 
   // initialized the restricted attendee list for each session
   initRestrictedAttendees(props.sessions, props.attendees)
