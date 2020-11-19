@@ -1,21 +1,16 @@
 import { initialState } from './groupBookingInitialState'
-import { validate, isObj, isStr, isFunc, areSetEqual } from '@keg-hub/jsutils'
-import { GroupBookingActionTypes } from './groupBookingActionTypes'
+import { validate, isObj, isStr, areSetEqual } from '@keg-hub/jsutils'
+import { GroupBookingActionTypes } from './constants/groupBookingActionTypes'
 
 /**
- * Updates the list identified by listKey using the updateFn
+ * Updates the list identified by listKey using the updateFn.
+ * Also sets the next capacity and modified values.
  * @param {Object} state - state of group booking reducer
  * @param {string} listKey - key name of the list to update
  * @param {Function} updateFn - fn of form (currentList) => nextList, returning the next list to reduce to
  * @return {Object} - next state
  */
 const updateList = (state, listKey, updateFn) => {
-  const [valid] = validate(
-    { state, listKey, updateFn },
-    { state: isObj, listKey: isStr, updateFn: isFunc }
-  )
-  if (!valid) return state
-
   const originalList = state.init[listKey]
   const currentList = state.current[listKey]
   const nextList = updateFn(currentList)
@@ -44,7 +39,7 @@ const updateList = (state, listKey, updateFn) => {
 }
 
 /**
- * Adds the attendeeId to the list
+ * Adds the attendeeId to the list, unless the list already contains it
  * @param {Object} state - state of group booker
  * @param {string} listKey - key name of the list to add to
  * @param {string} attendeeId - attendee id to add
@@ -59,7 +54,7 @@ const addToList = (state, listKey, attendeeId) =>
   )
 
 /**
- * Removes the attendeeId from the list
+ * Removes the attendeeId from the list, if it contains it
  * @param {Object} state - state of group booker
  * @param {string} listKey - key name of the list to remove from
  * @param {string} attendeeId - attendee id to remove
@@ -90,6 +85,8 @@ const isInitialized = state => isObj(state) && Boolean(state.initialized)
 const updateSessionBooking = (state, id) => {
   const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
   if (!valid) return state
+
+  console.log(id)
 
   const {
     session,

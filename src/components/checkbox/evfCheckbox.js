@@ -11,7 +11,7 @@ import { EVFIcons } from 'SVIcons'
  * @param {string} props.type - either primary or alternate (e.g. booking list vs waiting list colors)
  * @param {boolean} props.enableCheck - whether or not the checkbox can be selected
  * @param {string} props.id - an optional identifier passed to the callback to identify this checkbox
- * @param {Function?} props.onChange - callback handling a click
+ * @param {Function?} props.onChange - callback handling a click, of form (id, { event, text }) -> {}
  * @param {string | Component} props.RightComponent - text or component adjacent to checkbox
  * @param {string} props.text - if RightComponent isn't provided, EvfCheckbox displays a Text element with this string as its content, to the right of the checkbox
  * @param {Object} props.styles
@@ -32,9 +32,11 @@ export const EvfCheckbox = props => {
     ...rest
   } = props
 
-  const handler = useCallback(event =>
-    onChange?.({ event, text, id }, [ onChange, text, id ])
-  )
+  const handler = useCallback(event => onChange?.(id, { event, text }), [
+    onChange,
+    text,
+    id,
+  ])
   const checkboxStyles = useStyle(`checkboxGroup.item.${type}`, styles)
 
   return (

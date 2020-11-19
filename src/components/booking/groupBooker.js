@@ -56,7 +56,8 @@ const TopSection = ({ styles }) => {
   // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
   const placeText = state.capacity === 1 ? 'place' : 'places'
-  const showCount = exists(state.capacity) && state.capacity !== Infinity
+  const showCount =
+    state.showCapacity && exists(state.capacity) && state.capacity !== Infinity
   return (
     <View
       className={`ef-modal-group-section-top`}

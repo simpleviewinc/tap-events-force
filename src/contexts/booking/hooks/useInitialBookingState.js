@@ -1,4 +1,4 @@
-import { initialState } from './groupBookingInitialState'
+import { initialState } from '../groupBookingInitialState'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { useBookingLists } from 'SVHooks/booking/useBookingLists'
@@ -9,7 +9,7 @@ import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
  * @param {import('SVModels/Session').Session} props.session - the session object currently used in the group booking UI
  * @return {Object} the initial state of the group booking reducer
  */
-export const useInitialState = session => {
+export const useInitialBookingState = session => {
   const attendees = useStoreItems('attendees')
 
   // determine if the capacity of the session is greater than the number
