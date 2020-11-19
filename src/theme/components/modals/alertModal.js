@@ -30,7 +30,7 @@ export const alertModal = {
         main: {
           alignSelf: 'flex-end',
           width: 87,
-          height: 45,
+          minH: 45,
         },
       },
     },
