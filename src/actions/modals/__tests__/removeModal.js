@@ -20,7 +20,7 @@ describe('removeModal', () => {
 
   it('should remove the last item if nothing is passed in', () => {
     const expectedPayload = {
-      category: Values.INTERNAL_CATEGORIES.MODALS,
+      category: Values.CATEGORIES.MODALS,
       items: [{ id: 1 }, { id: 2 }, { id: 3 }],
     }
     setState(modalData)
@@ -33,7 +33,7 @@ describe('removeModal', () => {
 
   it('should remove index 2 on modals array', () => {
     const expectedPayload = {
-      category: Values.INTERNAL_CATEGORIES.MODALS,
+      category: Values.CATEGORIES.MODALS,
       items: [{ id: 1 }, { id: 2 }, { id: 4 }],
     }
     setState(modalData)

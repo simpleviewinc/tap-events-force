@@ -11,16 +11,15 @@ const emptyArr = []
  * A list of group booking sections, in a scroll view
  * @param {Object} props
  * @param {Object} props.styles
- * @param {Function?} props.onAttendeeSelected - callback when checkbox is pressed
- * @param {Object<string, Array<string>>} props.attendeesByTicket - lists of attendee ids organized by their ticket ids
  */
 export const GroupBookingOptions = props => {
-  const { className, styles, onAttendeeSelected, attendeesByTicket } = props
+  const { className, styles } = props
 
   const viewStyles = useStyle('groupBookingOptions.main', styles?.main)
 
   // sort tickets by display order and filter out invalid ones
   const tickets = useStoreItems('tickets')
+  const attendeesByTicket = useStoreItems('attendeesByTicket')
   const sortedTickets = useTicketsForBooking(tickets, attendeesByTicket)
 
   return (
@@ -36,7 +35,6 @@ export const GroupBookingOptions = props => {
           key={ticket.identifier}
           name={ticket.name}
           attendeeIds={attendeesByTicket[ticket.identifier] || emptyArr}
-          onAttendeeSelected={onAttendeeSelected}
         />
       )) }
     </ScrollView>

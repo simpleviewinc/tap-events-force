@@ -1,7 +1,7 @@
 import { Values, ActionTypes } from 'SVConstants'
 import { dispatch } from 'SVStore'
 import { isArr, isStr, validate } from '@keg-hub/jsutils'
-const { INTERNAL_CATEGORIES } = Values
+const { CATEGORIES } = Values
 
 /**
  * Stores a list of attendee ids that cannot book the sessionId
@@ -18,7 +18,7 @@ export const setRestrictedAttendeeIds = (sessionId, attendeeIds) => {
   dispatch({
     type: ActionTypes.SET_ITEM,
     payload: {
-      category: INTERNAL_CATEGORIES.RESTRICTED_ATTENDEE_IDS,
+      category: CATEGORIES.RESTRICTED_ATTENDEE_IDS,
       key: sessionId,
       item: attendeeIds,
     },

@@ -8,9 +8,7 @@ const tapRootPath = process.env.PLATFORM === 'web'
   ? '.'
   : '../..'
 
-const pathToEntryPoint = process.env.TEST_BUILD 
-  ? `${tapRootPath}/apps/BuildTest.js`
-  : `${tapRootPath}/apps/Main.js`
+const pathToEntryPoint = `${tapRootPath}/apps/Main.js` 
 
 module.exports = {
   name: 'events-force-x5',
@@ -19,8 +17,6 @@ module.exports = {
     routes: {
       '/': 'RootContainer',
       '/sessions': 'SessionsContainer',
-      '/test': 'TestContainer',
-      '/demo': 'EFDemoContainer',
     },
     tapResolver: {
       paths: {
@@ -29,6 +25,7 @@ module.exports = {
       aliases: {
         dynamic: {
           Icons: 'assets/icons',
+          Contexts: 'contexts'
         },
         web: {
           SVTapEntry: pathToEntryPoint

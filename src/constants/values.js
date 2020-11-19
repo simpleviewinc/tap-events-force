@@ -21,7 +21,6 @@ const INTERNAL_CATEGORIES = {
   RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
   MODALS: 'modals',
   SETTINGS: 'settings',
-  GROUP_BOOKING: 'groupBooking',
   DISPLAY_PROPERTIES: 'displayProperties',
 }
 
@@ -39,12 +38,6 @@ export const Values = deepFreeze({
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',
     SELECTED_FILTERS: 'selectedFilters',
-
-    // group booking
-    BOOKING_LIST: 'bookingList',
-    WAITING_LIST: 'waitingList',
-    SESSION_CAPACITY: 'capacity',
-    CURRENT_SESSION: 'currentSession',
   },
 
   MODAL_TYPES: {
