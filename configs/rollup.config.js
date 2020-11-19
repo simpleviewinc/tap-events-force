@@ -21,15 +21,20 @@ const isProd = process.env.NODE_ENV === 'production'
 const { ANALYZE } = process.env
 
 const peerExternals = [ 'react', 'react-dom' ]
-const mainExternals = [
+
+const buildDependencies = [
   '@keg-hub/jsutils',
   'prop-types',
-  'axios',
-  'react-native',
   'react-native-web',
-  'react-native-svg',
   'redux',
   'react-redux',
+]
+
+const mainExternals = [
+  ...buildDependencies,
+  'axios',
+  'react-native',
+  'react-native-svg',
 ]
 const externals = [ ...mainExternals, ...peerExternals ]
 
@@ -152,10 +157,10 @@ export default {
       tapPath,
       corePath,
       peerExternals,
-      externals: mainExternals, 
+      externals: buildDependencies, 
       baseContents: { 
         name: '@keg-hub/tap-evf-sessions',
-        main: `./${esmOutputName}`,
+        main: `./${cjsOutputName}`,
         module: `./${esmOutputName}` 
       },
     }),

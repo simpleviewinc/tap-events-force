@@ -86,8 +86,6 @@ const updateSessionBooking = (state, id) => {
   const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
   if (!valid) return state
 
-  console.log(id)
-
   const {
     session,
     capacity,

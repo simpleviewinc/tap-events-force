@@ -35,7 +35,8 @@ export const useInitialBookingState = session => {
     capacity: remainingCount,
     init: lists,
     current: lists,
-    showCapacity: !session.capacity.isUnlimited && !initialCapacityExceedsNeed,
+    showCapacity:
+      !session?.capacity?.isUnlimited && !initialCapacityExceedsNeed,
     initialized: true,
   }
 }
