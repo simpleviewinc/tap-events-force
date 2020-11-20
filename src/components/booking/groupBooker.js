@@ -7,6 +7,7 @@ import { useKegEvent } from 'SVHooks/events/useKegEvent'
 import { Values } from 'SVConstants'
 import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
+import { isBookingModified } from 'SVContexts/booking/utils/isBookingModified'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import PropTypes from 'prop-types'
 
@@ -28,31 +29,6 @@ const useAutoCancel = (sessionId, cancelCB) => {
 }
 
 /**
- * Provides groupBooker with access to state relevant to the submit button,
- * such as if the session is pending or not.
- * @param {string} sessionId - id of session for group booker
- * @return {Array} [
- *  sessionIsPending - true if the booking/session button is in a pending/loading state
- *  bookingButtonIsEnabled - true if the booking button is enabled and selectable
- *  sessionIsModified - true if the user has selected at least one attendee for booking/waitlist
- * ]
- */
-const useButtonState = sessionId => {
-  const { pendingSession, modifiedSession } = useStoreItems([
-    CATEGORIES.ATTENDEES,
-    CATEGORIES.PENDING_SESSION,
-    CATEGORIES.MODIFIED_SESSION,
-  ])
-
-  const pending = pendingSession?.identifier
-  const sessionIsModified = modifiedSession?.identifier === sessionId
-  const bookingButtonIsEnabled = !pending && sessionIsModified
-
-  // return the submit function and the current loading state
-  return [ pending, bookingButtonIsEnabled, sessionIsModified ]
-}
-
-/**
  * The root group booking component. Makes use of the GroupBookingContext.
  * @param {Object} props
  * @param {Object?} props.styles
@@ -67,32 +43,24 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
 
-  const [ isSubmitLoading, submitIsEnabled, sessionIsModified ] = useButtonState(
-    session.identifier
-  )
   useAutoCancel(session?.identifier, onCancelPress)
+
   return (
     <View
       className={`ef-modal-group-body`}
       style={styles.main}
     >
-      <TopSection
-        styles={topSectionStyles}
-        showRequireSymbol={!sessionIsModified}
-      />
+      <TopSection styles={topSectionStyles} />
 
       <GroupBookingOptions
         className={`ef-modal-group-section-middle`}
         styles={middleSectionStyles}
-        disabled={isSubmitLoading}
       />
 
       <BottomSection
         session={session}
         onCancelPress={onCancelPress}
-        isLoading={isSubmitLoading}
         styles={bottomSectionStyles}
-        submitDisabled={!submitIsEnabled}
       />
     </View>
   )
@@ -111,6 +79,7 @@ GroupBooker.propTypes = {
 const TopSection = ({ styles }) => {
   // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
+  const showRequireSymbol = !isBookingModified(state)
   const placeText = state.capacity === 1 ? 'place' : 'places'
   return (
     <View
@@ -144,22 +113,18 @@ const TopSection = ({ styles }) => {
  * @param {object} props.styles
  * @param {boolean} props.isLoading - if the submit button should show loading spinner
  * @param {Function} props.onCancelPress
- * @param {boolean} props.submitDisabled - if the submit button should be disabled
  */
-const BottomSection = ({
-  styles,
-  onCancelPress,
-  isLoading = false,
-  submitDisabled = false,
-}) => {
-  const {
-    state: { session, current, modified },
-  } = useGroupBookingContext()
+const BottomSection = ({ styles, onCancelPress }) => {
+  const { state } = useGroupBookingContext()
+  const { session, current, modified } = state
   const bookSession = useBookSessionCallback(
     session,
     modified.bookingList && current.bookingList,
     modified.waitingList && current.waitingList
   )
+  const pendingSession = useStoreItems(CATEGORIES.PENDING_SESSION)
+  const submitDisabled = pendingSession?.identifier || !isBookingModified(state)
+
   return (
     <View
       className={`ef-modal-group-section-bottom`}
@@ -174,7 +139,7 @@ const BottomSection = ({
       />
       <EvfButton
         className='ef-select-session-button'
-        isProcessing={isLoading}
+        isProcessing={pendingSession?.identifier}
         type={'primary'}
         styles={styles.content?.bookButton}
         text={'BOOK SELECTED'}

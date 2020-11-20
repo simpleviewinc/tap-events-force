@@ -3,6 +3,7 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { parseSessionCapacity } from 'SVUtils/booking/parseSessionCapacity'
 import { useBookingLists } from 'SVHooks/booking/useBookingLists'
 import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
+import { areSetEqual } from '@keg-hub/jsutils'
 
 /**
  * Builds the initial state of the reducer, depending on the session input
@@ -17,26 +18,34 @@ export const useInitialBookingState = session => {
   // and possible time conflicts with other sessions
   const { initialCapacityExceedsNeed } = useGroupCounts(session)
 
-  const [ initialBookedIds, initialWaitIds ] = useBookingLists(
-    session,
-    attendees,
-    initialCapacityExceedsNeed
-  )
+  const [
+    bookingList,
+    waitingList,
+    initBookingList,
+    initWaitingList,
+  ] = useBookingLists(session, attendees, initialCapacityExceedsNeed)
 
   const { remainingCount } = parseSessionCapacity(session?.capacity)
-  const lists = {
-    bookingList: initialBookedIds,
-    waitingList: initialWaitIds,
+
+  const current = { bookingList, waitingList }
+  const init = {
+    bookingList: initBookingList,
+    waitingList: initWaitingList,
+  }
+  const modified = {
+    ...initialState.modified,
+    bookingList: !areSetEqual(bookingList, initBookingList),
   }
 
   return {
     ...initialState,
-    session,
     capacity: remainingCount,
-    init: lists,
-    current: lists,
+    current,
+    init,
+    initialized: true,
+    modified,
+    session,
     showCapacity:
       !session?.capacity?.isUnlimited && !initialCapacityExceedsNeed,
-    initialized: true,
   }
 }

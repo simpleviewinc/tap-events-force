@@ -2,9 +2,10 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { View, Text } from '@keg-hub/keg-components'
 import { useTheme } from '@keg-hub/re-theme'
 import { checkCall } from '@keg-hub/jsutils'
-import PropTypes from 'prop-types'
 import { EVFIcons } from 'SVIcons'
 import { ModalContext } from 'SVComponents/modals/modalContext'
+import { removeModal } from 'SVActions/modals/removeModal'
+import PropTypes from 'prop-types'
 
 /**
  * Title bar for modal
