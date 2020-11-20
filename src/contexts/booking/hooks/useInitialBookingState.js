@@ -27,23 +27,19 @@ export const useInitialBookingState = session => {
 
   const { remainingCount } = parseSessionCapacity(session?.capacity)
 
-  const current = { bookingList, waitingList }
-  const init = {
-    bookingList: initBookingList,
-    waitingList: initWaitingList,
-  }
-  const modified = {
-    ...initialState.modified,
-    bookingList: !areSetEqual(bookingList, initBookingList),
-  }
-
   return {
     ...initialState,
     capacity: remainingCount,
-    current,
-    init,
+    current: { bookingList, waitingList },
+    init: {
+      bookingList: initBookingList,
+      waitingList: initWaitingList,
+    },
     initialized: true,
-    modified,
+    modified: {
+      ...initialState.modified,
+      bookingList: !areSetEqual(bookingList, initBookingList),
+    },
     session,
     showCapacity:
       !session?.capacity?.isUnlimited && !initialCapacityExceedsNeed,
