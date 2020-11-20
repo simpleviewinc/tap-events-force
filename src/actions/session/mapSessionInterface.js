@@ -1,6 +1,6 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { mapObj, snakeCase } from '@keg-hub/jsutils'
+import { mapObj, noPropObj, snakeCase } from '@keg-hub/jsutils'
 import { addAlertModal } from 'SVActions/modals/addAlertModal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
@@ -20,7 +20,7 @@ const subCatMap = {
  * If alert prop is valid, add a new modal item for alert
  * @param {<import('SVModels/alert').Alert)>} alert
  */
-const checkAlert = alert => {
+const checkAlert = (alert = noPropObj) => {
   const existingAlert = getStore().getState()?.items?.alert
 
   // no need to add another modal if the alert object is the

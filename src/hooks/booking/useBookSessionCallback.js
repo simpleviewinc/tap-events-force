@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { sessionBookingRequest } from 'SVActions/session/booking'
-import { validate, isObj, noOp } from '@keg-hub/jsutils'
+import { validate, isArr, isObj, noOp } from '@keg-hub/jsutils'
 
 /**
  * Returns a callback that, given an attendee id, updates the list
@@ -12,7 +12,10 @@ import { validate, isObj, noOp } from '@keg-hub/jsutils'
  * @returns {Function} - callback that will submit the current booking and waiting lists to the consumer
  */
 export const useBookSessionCallback = (session, bookingList, waitingList) => {
-  const [valid] = validate({ session }, { session: isObj })
+  const [valid] = validate(
+    { session, bookingList, waitingList },
+    { session: isObj, $default: isArr }
+  )
   if (!valid) return noOp
 
   const waitingListIsAvailable = session?.capacity?.isWaitingListAvailable

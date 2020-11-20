@@ -5,6 +5,8 @@ import { GroupBooker } from 'SVComponents/booking/groupBooker'
 import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
 
 /**
+ * Creates the callback for dismissing the modal and the ref for getting the
+ * underlying dismiss function from the BaseModal
  * @return {Array<Function, RefObject>}
  *  - [ dismissModalFn, dismissCBRef ]
  *  - dismissModalFn: function for dismissing the modal

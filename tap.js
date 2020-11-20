@@ -8,9 +8,7 @@ const tapRootPath = process.env.PLATFORM === 'web'
   ? '.'
   : '../..'
 
-const pathToEntryPoint = process.env.TEST_BUILD 
-  ? `${tapRootPath}/apps/BuildTest.js`
-  : `${tapRootPath}/apps/Main.js`
+const pathToEntryPoint = `${tapRootPath}/apps/Main.js` 
 
 module.exports = {
   name: 'events-force-x5',

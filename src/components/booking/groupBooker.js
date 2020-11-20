@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
-import { exists, noOpObj, validate, isObj } from '@keg-hub/jsutils'
+import { noOpObj, validate, isObj } from '@keg-hub/jsutils'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
 import { useKegEvent } from 'SVHooks/events/useKegEvent'
 import { Values } from 'SVConstants'
@@ -107,13 +107,11 @@ GroupBooker.propTypes = {
  * Top section of the group booker - contains the instruction text and spots remaining
  * @param {object} props
  * @param {object} props.styles
- * @param {boolean} props.showRequireSymbol - if true, shows a red asterisk next to the instruction text,
  */
-const TopSection = ({ styles, showRequireSymbol = true }) => {
+const TopSection = ({ styles }) => {
   // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
   const placeText = state.capacity === 1 ? 'place' : 'places'
-  const showCount = exists(state.capacity) && state.capacity !== Infinity
   return (
     <View
       className={`ef-modal-group-section-top`}
@@ -128,7 +126,7 @@ const TopSection = ({ styles, showRequireSymbol = true }) => {
           <Text style={styles?.content?.instructionAsterisk}>*</Text>
         ) }
       </Text>
-      { showCount && (
+      { state.showCapacity && (
         <Text
           className={`ef-modal-body-highlight`}
           style={styles?.content?.infoText}
@@ -146,7 +144,6 @@ const TopSection = ({ styles, showRequireSymbol = true }) => {
  * @param {object} props.styles
  * @param {boolean} props.isLoading - if the submit button should show loading spinner
  * @param {Function} props.onCancelPress
- * @param {Function} props.onSubmitPress
  * @param {boolean} props.submitDisabled - if the submit button should be disabled
  */
 const BottomSection = ({

@@ -1,36 +1,8 @@
 import React, { useMemo, useReducer } from 'react'
 import { groupBookingReducer } from './groupBookingReducer'
 import { GroupBookingContext } from './groupBookingContext'
-import { useInitialState } from './useInitialState'
-import { GroupBookingActionTypes } from './groupBookingActionTypes'
-
-/**
- * @param {Function} dispatch - dispatch function
- * @return {Object} - memoized action functions
- */
-const useActions = dispatch =>
-  useMemo(
-    () => ({
-      /**
-       * Updates the booking or waiting list with the attendee id `id`. Adds
-       * or removes the attendee to one of those lists, depending on the list
-       * that currently contains it, if any, and if the waiting list is available.
-       *
-       * Also updates state.capacity and state.modified.* depending on how
-       * a list was updated.
-       *
-       * @param {Object} params
-       * @param {string} params.id - attendee id
-       */
-      updateSessionBooking: ({ id }) => {
-        dispatch({
-          type: GroupBookingActionTypes.UPDATE_SESSION_BOOKING,
-          value: id,
-        })
-      },
-    }),
-    [dispatch]
-  )
+import { useInitialBookingState } from './hooks/useInitialBookingState'
+import { updateSessionBooking } from './actions/updateSessionBooking'
 
 /**
  * The context-provider for the group booking state. Provides access to the state object and actions
@@ -42,10 +14,16 @@ const useActions = dispatch =>
  * @param {*} props.children - children
  */
 export const GroupBookingProvider = ({ session, children }) => {
-  const initialState = useInitialState(session)
+  const initialState = useInitialBookingState(session)
 
   const [ state, dispatch ] = useReducer(groupBookingReducer, initialState)
-  const actions = useActions(dispatch)
+
+  const actions = useMemo(
+    () => ({
+      updateSessionBooking: id => updateSessionBooking(dispatch, id),
+    }),
+    [dispatch]
+  )
 
   const contextValue = useMemo(() => ({ state, actions }), [ state, actions ])
 

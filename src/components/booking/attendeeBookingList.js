@@ -38,13 +38,13 @@ export const AttendeeBookingList = ({
   const { state, actions } = useGroupBookingContext()
 
   const { enableCheck } = useCheckboxState(state.session, state.capacity)
-  const isAttendeeRestricted = useIsAttendeeDisabledCallback(
+  const isAttendeeDisabled = useIsAttendeeDisabledCallback(
     state.session,
     attendees
   )
   const pendingSession = useStoreItems(CATEGORIES.PENDING_SESSION)
-  const isAttendeeDisabled = useCallback(
-    id => pendingSession?.identifier || isAttendeeRestricted(id)
+  const isDisabledOrPending = useCallback(
+    id => pendingSession?.identifier || isAttendeeDisabled(id)
   )
 
   return attendees?.map(({ bookedTicketIdentifier: attendeeId, name }) => {
@@ -61,7 +61,7 @@ export const AttendeeBookingList = ({
         isWaiting={isWaiting}
         sectionStyles={sectionStyles}
         itemStyles={itemStyles}
-        isAttendeeDisabled={isAttendeeDisabled}
+        isAttendeeDisabled={isDisabledOrPending}
         enableCheck={enableCheck}
         checked={isBooking || isWaiting}
       />
