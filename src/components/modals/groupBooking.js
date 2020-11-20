@@ -2,7 +2,10 @@ import React, { useRef, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { checkCall } from '@keg-hub/jsutils'
-import { GroupBooker } from 'SVComponents/booking/groupBooker'
+import {
+  GroupBookerBody,
+  GroupBookerFooter,
+} from 'SVComponents/booking/groupBooker'
 import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
 
 /**
@@ -25,20 +28,24 @@ export const GroupBooking = ({ visible, session }) => {
       <BaseModal
         className={`ef-modal-group`}
         dismissedCBRef={dismissedCBRef}
-        styles={groupBookingStyles}
-        hasCloseButton={false}
         title={session.name}
         visible={visible}
-      >
-        <GroupBooker
-          onCancelPress={useCallback(
-            () => checkCall(dismissedCBRef.current, true),
-            [dismissedCBRef?.current]
-          )}
-          session={session}
-          styles={groupBookingStyles.content.body}
-        />
-      </BaseModal>
+        Body={
+          <GroupBookerBody
+            session={session}
+            styles={groupBookingStyles?.content?.body}
+          />
+        }
+        Footer={
+          <GroupBookerFooter
+            onCancelPress={useCallback(
+              () => checkCall(dismissedCBRef.current, true),
+              [dismissedCBRef?.current]
+            )}
+            styles={groupBookingStyles?.content?.footer}
+          />
+        }
+      />
     </GroupBookingProvider>
   )
 }

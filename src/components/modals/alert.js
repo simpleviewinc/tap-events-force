@@ -22,19 +22,22 @@ export const Alert = ({ visible, title, message }) => {
     <BaseModal
       className={`ef-modal-alert`}
       dismissedCBRef={dismissedCBRef}
-      styles={alertStyles}
       title={title}
       visible={visible}
-    >
-      <Body
-        onButtonPress={useCallback(
-          () => checkCall(dismissedCBRef.current, true),
-          [dismissedCBRef?.current]
-        )}
-        styles={alertStyles.content.body}
+      Body={<Body
+        styles={alertStyles?.content?.body}
         message={message}
-      />
-    </BaseModal>
+      />}
+      Footer={
+        <Footer
+          styles={alertStyles?.content?.footer}
+          onButtonPress={useCallback(
+            () => checkCall(dismissedCBRef.current, true),
+            [dismissedCBRef?.current]
+          )}
+        />
+      }
+    />
   )
 }
 
@@ -43,9 +46,8 @@ export const Alert = ({ visible, title, message }) => {
  * @param {object} props
  * @param {object} props.styles
  * @param {string} props.message - string to display
- * @param {Function} props.onButtonPress
  */
-const Body = ({ styles, message, onButtonPress }) => {
+const Body = ({ styles, message }) => {
   return (
     <View
       style={styles?.main}
@@ -62,13 +64,24 @@ const Body = ({ styles, message, onButtonPress }) => {
           { message }
         </Text>
       </ScrollView>
-      <EvfButton
-        className={`ef-modal-alert-button`}
-        type={'primary'}
-        styles={styles?.button}
-        onClick={onButtonPress}
-        text={'OK'}
-      />
     </View>
+  )
+}
+
+/**
+ * Footer
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {Function} props.onButtonPress
+ */
+const Footer = ({ styles, onButtonPress }) => {
+  return (
+    <EvfButton
+      className={`ef-modal-alert-button`}
+      type={'primary'}
+      styles={styles?.button}
+      onClick={onButtonPress}
+      text={'OK'}
+    />
   )
 }

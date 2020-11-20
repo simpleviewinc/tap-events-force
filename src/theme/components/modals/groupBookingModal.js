@@ -12,15 +12,6 @@ const groupBookingTextStyle = {
 
 export const groupBookingModal = {
   content: {
-    main: {
-      $xsmall: {
-        $web: {
-          width: '90%',
-          maxWidth: '800px',
-          flex: 1,
-        },
-      },
-    },
     body: {
       main: {
         $xsmall: {
@@ -53,7 +44,6 @@ export const groupBookingModal = {
         },
         middleSection: {
           main: {
-            display: 'flex',
             flex: 9,
           },
           section: {
@@ -63,43 +53,36 @@ export const groupBookingModal = {
             },
           },
         },
-        bottomSection: {
+      },
+    },
+    footer: {
+      main: {
+        $xsmall: {
+          fl: 1,
+          flD: 'row',
+          jtC: 'flex-end',
+        },
+      },
+      content: {
+        cancelButton: {
           main: {
             $xsmall: {
-              display: 'flex',
-              flex: 1,
-              flexDirection: 'row',
-              alignSelf: 'flex-end',
-              paddingTop: 14,
-              paddingBottom: 18,
+              minHeight: 45,
+              marginRight: 10,
+              maxWidth: 120,
             },
             $small: {
-              paddingTop: 26,
-              paddingBottom: 0,
+              minWidth: 120,
             },
           },
-          content: {
-            cancelButton: {
-              main: {
-                $xsmall: {
-                  minHeight: 45,
-                  marginRight: 10,
-                  maxWidth: 120,
-                },
-                $small: {
-                  minWidth: 120,
-                },
-              },
+        },
+        bookButton: {
+          main: {
+            $xsmall: {
+              minHeight: 45,
             },
-            bookButton: {
-              main: {
-                $xsmall: {
-                  minHeight: 45,
-                },
-                $small: {
-                  minWidth: 190,
-                },
-              },
+            $small: {
+              minWidth: 190,
             },
           },
         },

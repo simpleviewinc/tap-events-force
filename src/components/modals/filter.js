@@ -40,54 +40,34 @@ export const Filter = ({ visible, labels }) => {
     checkCall(dismissedCBRef.current, true)
   }, [ applySessionFilters, dismissedCBRef?.current ])
 
-  return (
-    <BaseModal
-      dismissedCBRef={dismissedCBRef}
-      styles={filterStyles}
-      title={'Filter'}
-      visible={visible}
-      onDismiss={cancelSelectedFilters}
-    >
-      <Content
-        styles={filterStyles?.content?.body}
-        labels={labelsMemo}
-        onButtonPress={applyCb}
-      />
-    </BaseModal>
-  )
-}
-
-/**
- * Content of filter modal
- * @param {object} props
- * @param {object} props.styles
- * @param {Function} props.onButtonPress
- * @param {Array<import('SVModels/label').Label>} props.labels
- */
-const Content = ({ styles, onButtonPress, labels }) => {
   const { filters } = useStoreItems([CATEGORIES.FILTERS])
   const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
   const filteredSessions = useFilteredSessions()
 
   return (
-    <View style={styles?.main}>
-      <TopSection
-        styles={styles?.topSection}
-        filteredSessions={filteredSessions}
-        hideCounter={!hasSelectedFilters}
-      />
-      <MiddleSection
-        labels={labels}
-        styles={styles?.middleSection}
-        selectedFilters={filters?.selectedFilters}
-      />
-      <BottomSection
-        disableApply={hasSelectedFilters && filteredSessions?.length === 0}
-        styles={styles?.bottomSection}
-        onButtonPress={onButtonPress}
-        hasSelectedFilters={hasSelectedFilters}
-      />
-    </View>
+    <BaseModal
+      dismissedCBRef={dismissedCBRef}
+      title={'Filter'}
+      visible={visible}
+      onDismiss={cancelSelectedFilters}
+      Body={
+        <Body
+          styles={filterStyles?.content?.body}
+          labels={labelsMemo}
+          selectedFilters={filters?.selectedFilters}
+          hideCounter={!hasSelectedFilters}
+          filteredSessions={filteredSessions}
+        />
+      }
+      Footer={
+        <Footer
+          disableApply={hasSelectedFilters && filteredSessions?.length === 0}
+          styles={filterStyles?.content?.footer}
+          onButtonPress={applyCb}
+          hasSelectedFilters={hasSelectedFilters}
+        />
+      }
+    />
   )
 }
 
@@ -250,14 +230,46 @@ const MiddleSection = ({ styles, labels, selectedFilters }) => {
 }
 
 /**
- * BottomSection
+ * Body
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {Array.<import('SVModels/label').Label>} props.labels - labels to display
+ * @param {Array.<import('SVModels/session').Session>} props.filteredSessions
+ * @param {Array.<import('SVModels/label').Label>} props.selectedFilters
+ * @param {Boolean} props.hideCounter - to hide the results counter or not
+ */
+const Body = ({
+  styles,
+  labels,
+  filteredSessions,
+  selectedFilters,
+  hideCounter,
+}) => {
+  return (
+    <View style={styles?.main}>
+      <TopSection
+        styles={styles?.topSection}
+        filteredSessions={filteredSessions}
+        hideCounter={hideCounter}
+      />
+      <MiddleSection
+        labels={labels}
+        styles={styles?.middleSection}
+        selectedFilters={selectedFilters}
+      />
+    </View>
+  )
+}
+
+/**
+ * Footer
  * @param {object} props
  * @param {object} props.styles - default from modal.filter.body.bottomSection theme
  * @param {Function} props.onButtonPress
  * @param {boolean} props.hasSelectedFilters - whether or not the selectedFilters state is empty
  * @param {boolean} props.disableApply - whether the apply btn is disabled or not
  */
-const BottomSection = ({
+const Footer = ({
   styles,
   onButtonPress,
   hasSelectedFilters,

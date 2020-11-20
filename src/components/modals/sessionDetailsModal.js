@@ -29,21 +29,27 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
     <BaseModal
       className={`ef-modal-group`}
       dissmissedCBRef={dismissedCBRef}
-      styles={sessionDetailsStyles}
       hasCloseButton={true}
       title={session.name}
       visible={visible}
-    >
-      <Body
-        dismissModalCb={useCallback(
-          () => checkCall(dismissedCBRef.current, true),
-          [dismissedCBRef?.current]
-        )}
-        styles={sessionDetailsStyles?.content?.body}
-        session={session}
-        labels={labels}
-      />
-    </BaseModal>
+      Body={
+        <Body
+          dismissModalCb={useCallback(
+            () => checkCall(dismissedCBRef.current, true),
+            [dismissedCBRef?.current]
+          )}
+          styles={sessionDetailsStyles?.content?.body}
+          session={session}
+          labels={labels}
+        />
+      }
+      Footer={
+        <ActionButton
+          styles={sessionDetailsStyles?.content?.footer}
+          session={session}
+        />
+      }
+    />
   )
 }
 
@@ -106,11 +112,6 @@ const Body = ({ styles, session, labels = noPropArr }) => {
           { session.summary }
         </Text>
       </ScrollView>
-
-      <ActionButton
-        styles={styles.actionButton}
-        session={session}
-      />
     </View>
   )
 }

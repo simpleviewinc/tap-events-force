@@ -11,28 +11,6 @@ const smallImage = {
 export const presenterDetailsModal = {
   main: {},
   content: {
-    main: {
-      $web: {
-        $xsmall: {
-          maxWidth: '800px',
-        },
-      },
-      $all: {
-        $xsmall: {
-          width: '90%',
-          maxWidth: 800,
-        },
-      },
-    },
-    header: {
-      content: {
-        title: {
-          $small: {
-            fontSize: 22,
-          },
-        },
-      },
-    },
     body: {
       main: {
         flex: 1,
