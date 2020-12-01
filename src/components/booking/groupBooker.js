@@ -3,7 +3,6 @@ import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { noOpObj, validate, isObj } from '@keg-hub/jsutils'
 import { GroupBookingOptions } from 'SVComponents/booking/groupBookingOptions'
-import { useKegEvent } from 'SVHooks/events/useKegEvent'
 import { Values } from 'SVConstants'
 import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
@@ -11,22 +10,7 @@ import { isBookingModified } from 'SVContexts/booking/utils/isBookingModified'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import PropTypes from 'prop-types'
 
-const { CATEGORIES, EVENTS } = Values
-
-/**
- * Waits for the current session to transition from a pending state
- * to a non-pending state, at which point it will close the group booker
- * @param {Function} cancelCB - prop-passed cancel function for groupBooker
- */
-const useAutoCancel = (sessionId, cancelCB) => {
-  useKegEvent(EVENTS.SESSION_PENDING_UPDATE, ({ current, next }) => {
-    // if the currently pending session is not this one, don't do anything
-    if (current?.identifier !== sessionId) return
-
-    // otherwise, check for a pending state change for this session to not-pending
-    current.identifier !== next.identifier && cancelCB?.()
-  })
-}
+const { CATEGORIES } = Values
 
 /**
  * The root group booking component. Makes use of the GroupBookingContext.
@@ -42,8 +26,6 @@ export const GroupBooker = ({ styles, session, onCancelPress }) => {
   const topSectionStyles = styles?.content?.topSection || noOpObj
   const middleSectionStyles = styles?.content?.middleSection || noOpObj
   const bottomSectionStyles = styles?.content?.bottomSection || noOpObj
-
-  useAutoCancel(session?.identifier, onCancelPress)
 
   return (
     <View

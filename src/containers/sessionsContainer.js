@@ -1,9 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useMemo } from 'react'
 import { Sessions } from 'SVComponents/sessions'
 import { Loading } from 'SVComponents'
 import { initSessions } from 'SVActions'
 import { useSelector } from 'react-redux'
 import { ModalContext } from 'SVComponents/modals/modalContext'
+
+import { checkCall } from '@keg-hub/jsutils'
+const ModalContextProvider = ({ component, children }) => {
+  const closeModalRef = useRef()
+
+  const providerValue = useMemo(
+    () => ({
+      ModalComponent: component,
+      setCloseModal: closeFn => (closeModalRef.current = closeFn),
+      closeModal: () => checkCall(closeModalRef.current),
+    }),
+    [ closeModalRef, component ]
+  )
+
+  return (
+    <ModalContext.Provider value={providerValue}>
+      { children }
+    </ModalContext.Provider>
+  )
+}
 
 /**
  * Container for Sessions
@@ -32,14 +52,14 @@ export const SessionsContainer = props => {
   const isReady = useSelector(store => store.tap?.initialized)
 
   return isReady ? (
-    <ModalContext.Provider value={ModalComponent}>
+    <ModalContextProvider component={ModalComponent}>
       <Sessions
         onDayChange={onDayChange}
         sessionAgendaProps={sessionAgendaProps}
         onSessionBookingRequest={onSessionBookingRequest}
         onSessionWaitingListRequest={onSessionWaitingListRequest}
       />
-    </ModalContext.Provider>
+    </ModalContextProvider>
   ) : (
     <Loading />
   )

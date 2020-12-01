@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from 'react'
+import React, { useEffect, useCallback, useMemo, useContext } from 'react'
 import { useTheme, useDimensions, useStylesCallback } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
@@ -19,6 +19,7 @@ import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
+import { ModalContext } from './modals/modalContext'
 
 const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
 const { SESSION_BOOKING_REQUEST } = EVENTS
@@ -210,11 +211,16 @@ const AgendaSessions = React.memo(
  * any errors that might arise so to display the alert modal.
  * @param {Function<Promise>} bookRequestCb - an async function for booked-list request
  * @param {Function<Promise>} waitRequestCb - an async function for wait-list request
+ * @param {Function} onSuccess - function that executes if request is successful
  * @return {void}
  */
 const useAttendeeRequestEvent = (bookRequestCb, waitRequestCb) => {
+  const { closeModal } = useContext(ModalContext)
   const handler = useCallback(
-    (...args) => handleAttendeeRequest(bookRequestCb, waitRequestCb, ...args),
+    (...args) =>
+      handleAttendeeRequest(bookRequestCb, waitRequestCb, ...args).then(
+        closeModal
+      ),
     [ bookRequestCb, waitRequestCb ]
   )
 

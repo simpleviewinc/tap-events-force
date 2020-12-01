@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { View, Text } from '@keg-hub/keg-components'
 import { useTheme } from '@keg-hub/re-theme'
 import { checkCall } from '@keg-hub/jsutils'
@@ -97,31 +97,27 @@ export const BaseModal = props => {
   const onModalClose = useCallback(() => {
     checkCall(onDismiss, true)
     setDismissed(true)
-    removeModal(index)
   }, [ setDismissed, onDismiss ])
+  const onDismissed = useCallback(() => removeModal(index), [index])
+
+  const { setCloseModal, ModalComponent } = useContext(ModalContext)
+  setCloseModal(onModalClose)
 
   return (
-    <ModalContext.Consumer>
-      { ModalComponent => {
-        return (
-          <ModalComponent
-            modalHeader={
-              <Header
-                title={title}
-                styles={baseStyles.content.header}
-                setDismissed={onModalClose}
-                hasCloseButton={hasCloseButton}
-              />
-            }
-            modalBody={
-              <View style={baseStyles.content.bodyWrapper}>{ children }</View>
-            }
-            toggle={onModalClose}
-            isOpen={visible && !dismissed}
-          />
-        )
-      } }
-    </ModalContext.Consumer>
+    <ModalComponent
+      modalHeader={
+        <Header
+          title={title}
+          styles={baseStyles.content.header}
+          setDismissed={onModalClose}
+          hasCloseButton={hasCloseButton}
+        />
+      }
+      modalBody={<View style={baseStyles.content.bodyWrapper}>{ children }</View>}
+      toggle={onModalClose}
+      isOpen={visible && !dismissed}
+      onClosed={onDismissed}
+    />
   )
 }
 
