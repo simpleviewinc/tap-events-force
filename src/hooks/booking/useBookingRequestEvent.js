@@ -1,5 +1,5 @@
 import { useCallback, useContext } from 'react'
-import { handleAttendeeRequest } from 'SVActions/session/booking/handleAttendeeRequest'
+import { handleBookingRequests } from 'SVActions/session/booking/handleBookingRequests'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
 import { ModalContext } from 'SVContexts/modals/modalContext'
@@ -27,7 +27,7 @@ export const useBookingRequestEvent = (bookRequestCb, waitRequestCb) => {
     (sessionId, bookList, waitList) => {
       const bookRequest = bookList && bookRequestCb(sessionId, bookList)
       const waitRequest = waitList && waitRequestCb(sessionId, waitList)
-      handleAttendeeRequest(
+      handleBookingRequests(
         bookRequest,
         waitRequest,
         closeActiveModal,

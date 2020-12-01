@@ -1,7 +1,7 @@
 import { addAlertModal } from 'SVActions/modals/addAlertModal'
 import { setPendingSession } from 'SVActions/session/pending/setPendingSession'
 import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
-import { validate, isFunc, isObj, isStr, isEmpty } from '@keg-hub/jsutils'
+import { validate, isFunc, isObj, isStr, isEmpty, noOp } from '@keg-hub/jsutils'
 
 /**
  * Validates input of `handleAttendeeRequest`
@@ -11,7 +11,7 @@ import { validate, isFunc, isObj, isStr, isEmpty } from '@keg-hub/jsutils'
 const isValidInput = (params = {}) => {
   const [valid] = validate(params, {
     $default: promise => !promise || promise instanceof Promise,
-    onSuccess: isFunc,
+    onComplete: isFunc,
     sessionId: isStr,
   })
   return valid
@@ -42,35 +42,37 @@ const parseException = exception => {
  * if its associated list is falsy.
  * @param {Promise} bookRequest
  * @param {Promise} waitRequest
- * @param {Function} onSuccess
+ * @param {Function} onComplete
  * @param {string} sessionId
  * @return {Promise} - promise that resolves when both requests are complete
  */
-export const handleAttendeeRequest = async (
+export const handleBookingRequests = async (
   bookRequest,
   waitRequest,
-  onSuccess,
+  onComplete = noOp,
   sessionId
 ) => {
-  if (!isValidInput({ bookRequest, waitRequest, onSuccess, sessionId }))
+  if (!isValidInput({ bookRequest, waitRequest, onComplete, sessionId }))
     return Promise.reject('Bad input')
 
   // set the session identified by `sessionId` to "pending" state
   setPendingSession(sessionId)
 
+  let error = null
+
   // make both requests in tandem
   return (
     Promise.all([ bookRequest, waitRequest ])
-      .then(onSuccess)
       // parse exceptions if either request throws
       // and enable the alert modal if an exception was raised
       .catch(e => {
-        onSuccess()
-        const error = parseException(e)
-        addAlertModal(...error)
+        // onSuccess()
+        error = parseException(e)
       })
       // ensure the pending session is always cleared,
       .finally(() => {
+        onComplete()
+        error && addAlertModal(...error)
         clearPendingSession()
       })
   )

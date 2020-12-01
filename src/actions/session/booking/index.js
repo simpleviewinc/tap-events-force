@@ -1,2 +1,2 @@
 export * from './sessionBookingRequest'
-export * from './handleAttendeeRequest'
+export * from './handleBookingRequests'
