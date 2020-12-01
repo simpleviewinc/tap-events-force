@@ -1,16 +1,8 @@
 import { addAlertModal } from 'SVActions/modals/addAlertModal'
 import { setPendingSession } from 'SVActions/session/pending/setPendingSession'
 import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
-import {
-  validate,
-  isFunc,
-  isObj,
-  isArr,
-  isStr,
-  isEmpty,
-} from '@keg-hub/jsutils'
-
-const isValidAttendeeList = list => !list || isArr(list)
+import { isValidBookingList } from 'SVUtils/booking/isValidBookingList'
+import { validate, isFunc, isObj, isStr, isEmpty } from '@keg-hub/jsutils'
 
 /**
  * Validates input of `handleAttendeeRequest`
@@ -38,8 +30,8 @@ const isValidInput = (
       bookRequestCb: isFunc,
       waitRequestCb: isFunc,
       sessionId: isStr,
-      bookList: isValidAttendeeList,
-      waitList: isValidAttendeeList,
+      bookList: isValidBookingList,
+      waitList: isValidBookingList,
     }
   )
   return valid

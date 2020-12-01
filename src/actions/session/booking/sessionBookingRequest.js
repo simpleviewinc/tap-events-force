@@ -1,12 +1,11 @@
 import { Values } from 'SVConstants'
 import { getEventEmitter } from 'SVUtils/events'
 import { validateEventResponse } from 'SVUtils/validation'
-import { validate, isArr, isStr } from '@keg-hub/jsutils'
+import { validate, isStr } from '@keg-hub/jsutils'
+import { isValidBookingList } from 'SVUtils/booking/isValidBookingList'
 
 const { EVENTS } = Values
 const kegEventEmitter = getEventEmitter()
-
-const isValidAttendeeList = list => !list || isArr(list)
 
 /**
  * Emits the session booking request event, calling any listeners to that event
@@ -22,7 +21,7 @@ const isValidAttendeeList = list => !list || isArr(list)
 export const sessionBookingRequest = (sessionId, bookList, waitList) => {
   const [valid] = validate(
     { sessionId, bookList, waitList },
-    { sessionId: isStr, $default: isValidAttendeeList }
+    { sessionId: isStr, $default: isValidBookingList }
   )
   if (!valid) return
 

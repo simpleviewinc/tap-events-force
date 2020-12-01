@@ -1,7 +1,6 @@
 import { Values, ActionTypes } from 'SVConstants'
 import { isStr, validate } from '@keg-hub/jsutils'
 import { dispatch } from 'SVStore'
-import { emitPendingEvent } from 'SVUtils/pending/emitPendingEvent'
 const { CATEGORIES } = Values
 
 /**
@@ -26,8 +25,6 @@ export const setPendingSession = sessionId => {
   if (!isValidInput(sessionId)) return
 
   const pendingSession = { identifier: sessionId }
-
-  emitPendingEvent(pendingSession)
 
   dispatch({
     type: ActionTypes.UPSERT_ITEMS,

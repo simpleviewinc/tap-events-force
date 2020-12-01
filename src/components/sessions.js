@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo, useContext } from 'react'
+import React, { useEffect, useCallback, useMemo } from 'react'
 import { useTheme, useDimensions, useStylesCallback } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
 import { RenderModals } from 'SVComponents/modals/renderModals'
@@ -8,7 +8,6 @@ import {
   clearSelectedFilters,
 } from 'SVActions/session/filters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
-import { handleAttendeeRequest } from 'SVActions/session/booking/handleAttendeeRequest'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useAgenda } from 'SVHooks/models/useAgenda'
@@ -17,12 +16,9 @@ import { noOp } from 'SVUtils/helpers/method/noop'
 import { get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
-import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
-import { ModalContext } from 'SVContexts/modals/modalContext'
-
-const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
-const { SESSION_BOOKING_REQUEST } = EVENTS
+import { useAttendeeRequestEvent } from 'SVHooks/booking/useAttendeeRequestEvent'
+const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  * FilterButton
@@ -203,29 +199,6 @@ const AgendaSessions = React.memo(
     )
   }
 )
-
-/**
- * Registers the request callback to the session booking request event, but
- * first wraps the callbacks to handle setting the associated session to pending,
- * resetting that status upon resolving the promise, and catching
- * any errors that might arise so to display the alert modal.
- * @param {Function<Promise>} bookRequestCb - an async function for booked-list request
- * @param {Function<Promise>} waitRequestCb - an async function for wait-list request
- * @param {Function} onSuccess - function that executes if request is successful
- * @return {void}
- */
-const useAttendeeRequestEvent = (bookRequestCb, waitRequestCb) => {
-  const { closeModal } = useContext(ModalContext)
-  const handler = useCallback(
-    (...args) =>
-      handleAttendeeRequest(bookRequestCb, waitRequestCb, ...args).then(
-        closeModal
-      ),
-    [ bookRequestCb, waitRequestCb ]
-  )
-
-  useKegEvent(SESSION_BOOKING_REQUEST, handler)
-}
 
 /**
  * SessionComponent
