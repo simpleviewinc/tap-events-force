@@ -19,7 +19,7 @@ import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
-import { ModalContext } from './modals/modalContext'
+import { ModalContext } from 'SVContexts/modals/modalContext'
 
 const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
 const { SESSION_BOOKING_REQUEST } = EVENTS

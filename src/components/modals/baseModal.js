@@ -3,7 +3,7 @@ import { View, Text } from '@keg-hub/keg-components'
 import { useTheme } from '@keg-hub/re-theme'
 import { checkCall } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
-import { ModalContext } from 'SVComponents/modals/modalContext'
+import { ModalContext } from 'SVContexts/modals/modalContext'
 import { removeModal } from 'SVActions/modals/removeModal'
 import PropTypes from 'prop-types'
 
@@ -94,10 +94,13 @@ export const BaseModal = props => {
 
   const theme = useTheme()
   const baseStyles = theme.join(theme.get('modal.base'), styles)
+
   const onModalClose = useCallback(() => {
     checkCall(onDismiss, true)
     setDismissed(true)
   }, [ setDismissed, onDismiss ])
+
+  // once the dismiss animation completes, then remove modal from store
   const onDismissed = useCallback(() => removeModal(index), [index])
 
   const { setCloseModal, ModalComponent } = useContext(ModalContext)
@@ -122,9 +125,12 @@ export const BaseModal = props => {
 }
 
 BaseModal.propTypes = {
+  title: PropTypes.string,
   styles: PropTypes.object,
   visible: PropTypes.bool,
   BodyComponent: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
   hasCloseButton: PropTypes.bool,
+  onDismiss: PropTypes.func,
+  dismissedCBRef: PropTypes.shape({ current: PropTypes.any }),
   index: PropTypes.number,
 }
