@@ -18,17 +18,23 @@ const {
  * @param {Function} onSuccess - function that executes if request is successful
  * @return {void}
  */
-export const useAttendeeRequestEvent = (bookRequestCb, waitRequestCb) => {
+export const useBookingRequestEvent = (bookRequestCb, waitRequestCb) => {
   // get the close modal callback so that we can close the visible modal (group booker)
   // if the request is successful
   const { closeActiveModal } = useContext(ModalContext)
 
   const handler = useCallback(
-    (...args) =>
-      handleAttendeeRequest(bookRequestCb, waitRequestCb, ...args).then(
-        closeActiveModal
-      ),
-    [ bookRequestCb, waitRequestCb ]
+    (sessionId, bookList, waitList) => {
+      const bookRequest = bookList && bookRequestCb(sessionId, bookList)
+      const waitRequest = waitList && waitRequestCb(sessionId, waitList)
+      handleAttendeeRequest(
+        bookRequest,
+        waitRequest,
+        closeActiveModal,
+        sessionId
+      )
+    },
+    [ bookRequestCb, waitRequestCb, closeActiveModal ]
   )
 
   useKegEvent(SESSION_BOOKING_REQUEST, handler)

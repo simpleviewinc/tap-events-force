@@ -1,39 +1,19 @@
 import { addAlertModal } from 'SVActions/modals/addAlertModal'
 import { setPendingSession } from 'SVActions/session/pending/setPendingSession'
 import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
-import { isValidBookingList } from 'SVUtils/booking/isValidBookingList'
 import { validate, isFunc, isObj, isStr, isEmpty } from '@keg-hub/jsutils'
 
 /**
  * Validates input of `handleAttendeeRequest`
- * @param {Function} requestCb
- * @param {string} sessionId
- * @param {Array<string>} attendeeIds
+ * @param {Object} params - params of handleAttendeeRequest
  * @return {boolean} true if valid input
  */
-const isValidInput = (
-  bookRequestCb,
-  waitRequestCb,
-  sessionId,
-  bookList,
-  waitList
-) => {
-  const [valid] = validate(
-    {
-      bookRequestCb,
-      waitRequestCb,
-      sessionId,
-      bookList,
-      waitList,
-    },
-    {
-      bookRequestCb: isFunc,
-      waitRequestCb: isFunc,
-      sessionId: isStr,
-      bookList: isValidBookingList,
-      waitList: isValidBookingList,
-    }
-  )
+const isValidInput = (params = {}) => {
+  const [valid] = validate(params, {
+    $default: promise => !promise || promise instanceof Promise,
+    onSuccess: isFunc,
+    sessionId: isStr,
+  })
   return valid
 }
 
@@ -60,43 +40,38 @@ const parseException = exception => {
  * Makes the booking and wait-list async requests, handling any errors that may be thrown,
  * as well as updating the pending session state. Does not call a request
  * if its associated list is falsy.
- * @param {Function} requestCb
+ * @param {Promise} bookRequest
+ * @param {Promise} waitRequest
+ * @param {Function} onSuccess
  * @param {string} sessionId
- * @param {Array<string>} attendeeIds
  * @return {Promise} - promise that resolves when both requests are complete
  */
 export const handleAttendeeRequest = async (
-  bookRequestCb,
-  waitRequestCb,
-  sessionId,
-  bookList,
-  waitList
+  bookRequest,
+  waitRequest,
+  onSuccess,
+  sessionId
 ) => {
-  if (
-    !isValidInput(bookRequestCb, waitRequestCb, sessionId, bookList, waitList)
-  )
-    return
+  if (!isValidInput({ bookRequest, waitRequest, onSuccess, sessionId }))
+    return Promise.reject('Bad input')
 
   // set the session identified by `sessionId` to "pending" state
   setPendingSession(sessionId)
 
-  let error = null
-
   // make both requests in tandem
   return (
-    Promise.all([
-      bookList && bookRequestCb(sessionId, bookList),
-      waitList && waitRequestCb(sessionId, waitList),
-    ])
+    Promise.all([ bookRequest, waitRequest ])
+      .then(onSuccess)
       // parse exceptions if either request throws
+      // and enable the alert modal if an exception was raised
       .catch(e => {
-        error = parseException(e)
+        onSuccess()
+        const error = parseException(e)
+        addAlertModal(...error)
       })
       // ensure the pending session is always cleared,
-      // and the alert modal is shown if an exception was raised
       .finally(() => {
         clearPendingSession()
-        error && addAlertModal(...error)
       })
   )
 }

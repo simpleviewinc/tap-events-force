@@ -17,7 +17,7 @@ import { get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useCreateModal } from 'SVHooks/modal'
-import { useAttendeeRequestEvent } from 'SVHooks/booking/useAttendeeRequestEvent'
+import { useBookingRequestEvent } from 'SVHooks/booking/useBookingRequestEvent'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
@@ -217,7 +217,7 @@ export const Sessions = props => {
   } = props
 
   // set up our event listener for booking and waiting list requests
-  useAttendeeRequestEvent(onSessionBookingRequest, onSessionWaitingListRequest)
+  useBookingRequestEvent(onSessionBookingRequest, onSessionWaitingListRequest)
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)

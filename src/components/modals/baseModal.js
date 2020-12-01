@@ -101,7 +101,9 @@ export const BaseModal = props => {
   }, [ setDismissed, onDismiss ])
 
   // once the dismiss animation completes, then remove modal from store
-  const onDismissed = useCallback(() => removeModal(index), [index])
+  const onDismissed = useCallback(() => dismissed && removeModal(index), [
+    index,
+  ])
 
   const { setCloseActiveModal, ModalComponent } = useContext(ModalContext)
   setCloseActiveModal(onModalClose)
