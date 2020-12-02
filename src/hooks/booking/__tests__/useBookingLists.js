@@ -58,7 +58,7 @@ describe('useBookingLists', () => {
       bookedSessions: [],
     }))
     const { result } = renderHook(() =>
-      useBookingLists(unlimitedSession, attendeesWithoutBookings, true)
+      useBookingLists(preSelectedSession, attendeesWithoutBookings, true)
     )
 
     const [ bookingList, waitingList ] = result.current
@@ -69,7 +69,7 @@ describe('useBookingLists', () => {
 
   it('should not pre-book any attendees with time conflicts', () => {
     const { result } = renderHook(() =>
-      useBookingLists(unlimitedSession, testData.attendees, true)
+      useBookingLists(preSelectedSession, testData.attendees, true)
     )
 
     const [ bookingList, waitingList ] = result.current
@@ -101,21 +101,46 @@ describe('useBookingLists', () => {
 
   it('should not book all attendees if capacity > need and waiting list is empty but booking list is not empty', () => {
     const capacityExceedsNeed = true
-    const attendeesWithoutBookings = testData.attendees.map(att => ({
-      ...att,
-      bookedSessions: [],
-    }))
+
+    const session = {
+      allowBooking: true,
+      identifier: 'x',
+      dayNumber: 2,
+      startDateTimeLocal: '2020-08-04 09:00:00',
+      endDateTimeLocal: '2020-08-04 09:30:00',
+      presenterIdentifiers: [],
+      labelIdentifiers: [ '3', '4' ],
+      locationIdentifier: '2',
+      restrictToAttendeeCategories: [ '1', '2' ],
+      capacity: {
+        isUnlimited: false,
+        remainingPlaces: 10000,
+        isWaitingListAvailable: false,
+      },
+    }
+
+    const attendees = [
+      {
+        bookedTicketIdentifier: '1',
+        attendeeCategoryIdentifier: '1',
+        bookedDays: [2],
+        bookedSessions: [session.identifier],
+      },
+      {
+        bookedTicketIdentifier: '2',
+        attendeeCategoryIdentifier: '2',
+        bookedDays: [2],
+        bookedSessions: [],
+      },
+    ]
+
     const { result } = renderHook(() =>
-      useBookingLists(
-        noWaitingListSession,
-        attendeesWithoutBookings,
-        capacityExceedsNeed
-      )
+      useBookingLists(session, attendees, capacityExceedsNeed)
     )
 
     const [ bookingList, waitingList ] = result.current
     expect(waitingList.length).toEqual(0)
-    expect(bookingList.length).not.toEqual(testData.attendees.length)
+    expect(bookingList.length).not.toEqual(attendees.length)
   })
 
   it('should not pre-book any attendees who are restricted', () => {
