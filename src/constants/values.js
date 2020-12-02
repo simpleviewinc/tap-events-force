@@ -7,7 +7,6 @@ export const Values = deepFreeze({
   CATEGORIES: {
     ACTIVE_SESSION: 'activeSession',
     PENDING_SESSION: 'pendingSession',
-    MODIFIED_SESSION: 'modifiedSession',
     AGENDA_SESSIONS: 'agendaSessions',
     ATTENDEES_BY_TICKET: 'attendeesByTicket',
     RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
