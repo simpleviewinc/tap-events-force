@@ -33,6 +33,7 @@ export const attendeeCheckboxItem = {
     textWrapper: {
       flexDirection: 'column',
       flexShrink: 1,
+      pR: 10,
     },
     text,
     waitBox: {

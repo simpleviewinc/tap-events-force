@@ -84,7 +84,6 @@ const buttonStateStyles = backgroundColor => {
 const defaultMainStyle = {
   $all: {
     overflow: 'hidden',
-    flex: 1,
     height: 51,
     pB: 1,
   },
@@ -95,7 +94,6 @@ const defaultMainStyle = {
 
 const processingStyles = {
   main: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'center',
   },
@@ -151,7 +149,7 @@ const bookingStyles = {
     BookingCheck: {
       default: {
         border: colors.primary,
-        ftSz: 21,
+        height: 21,
         c: colors.white,
         pR: 8,
       },
