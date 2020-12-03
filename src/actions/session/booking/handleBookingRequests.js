@@ -66,7 +66,6 @@ export const handleBookingRequests = async (
       // parse exceptions if either request throws
       // and enable the alert modal if an exception was raised
       .catch(e => {
-        // onSuccess()
         error = parseException(e)
       })
       // ensure the pending session is always cleared,
