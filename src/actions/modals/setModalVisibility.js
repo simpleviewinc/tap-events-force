@@ -4,8 +4,8 @@ import { ActionTypes, Values } from 'SVConstants'
 const { CATEGORIES } = Values
 
 /**
- * Removes a modal from the modals array
- * remove the most recent modals if no index is passed
+ * Sets the active modal to either be visible or hidden, depending on
+ * the value of `visible`
  * @param {boolean} visible - if the active modal is visible or not
  */
 export const setModalVisibility = visible => {
