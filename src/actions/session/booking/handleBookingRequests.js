@@ -35,9 +35,8 @@ const handleError = error => {
  * Makes the booking and wait-list async requests, handling any errors that may be thrown,
  * as well as updating the pending session state. Does not call a request
  * if its associated list is falsy.
- * @param {Promise} bookRequest
- * @param {Promise} waitRequest
- * @param {Function} onComplete
+ * @param {Function<Promise>} bookRequest
+ * @param {Function<Promise>} waitRequest
  * @param {string} sessionId
  * @return {Void}
  */
