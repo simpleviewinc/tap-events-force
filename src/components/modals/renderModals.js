@@ -79,8 +79,7 @@ const renderModal = (modal, index, visible = true) => {
  * @returns {Component}
  */
 export const RenderModals = modals => {
-  // the top of the stack is the last element
-  const index = modals.length - 1
-  const nextModal = modals[index]
-  return renderModal(nextModal, index)
+  return modals.map((modal, index) =>
+    renderModal(modal, index, index === modals.length - 1)
+  )
 }

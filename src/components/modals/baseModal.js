@@ -52,27 +52,25 @@ export const BaseModal = props => {
     }
   }, [ setDismissed, dismissedCBRef ])
 
-  const onModalClose = useCallback(() => {
-    checkCall(onDismiss, true)
-    setDismissed(true)
-  }, [ setDismissed, onDismiss ])
+  const closeModal = useCallback(() => setDismissed(true), [setDismissed])
 
   // once the dismiss animation completes, then remove modal from store
-  const onDismissed = useCallback(() => dismissed && removeModal(index), [
-    index,
-  ])
+  const onDismissed = useCallback(() => {
+    removeModal(index)
+    checkCall(onDismiss, true)
+  }, [ onDismiss, removeModal, index ])
 
   const { setCloseActiveModal, ModalComponent } = useContext(ModalContext)
-  setCloseActiveModal(onModalClose)
+  setCloseActiveModal(closeModal)
 
   return (
     <ModalComponent
       modalHeader={title}
       modalBody={Body}
       modalFooter={Footer}
-      toggle={onModalClose}
-      isOpen={visible && !dismissed}
+      toggle={closeModal}
       onClosed={onDismissed}
+      isOpen={visible && !dismissed}
     />
   )
 }
