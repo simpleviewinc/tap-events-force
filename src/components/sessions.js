@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import { useTheme, useDimensions, useStylesCallback } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
-import { RenderModals } from 'SVComponents/modals/renderModals'
+import { ModalManager } from 'SVComponents/modals/modalManager'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import {
   applySessionFilters,
@@ -227,10 +227,9 @@ export const Sessions = props => {
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')
 
-  const { labels, agendaSessions, modals, settings, sessions } = useStoreItems([
+  const { labels, agendaSessions, settings, sessions } = useStoreItems([
     'labels',
     'agendaSessions',
-    'modals',
     'settings',
     'sessions',
   ])
@@ -259,7 +258,7 @@ export const Sessions = props => {
         }
         militaryTime={settings?.displayProperties?.timeFormat === '24'}
       />
-      { RenderModals(modals) }
+      <ModalManager />
     </View>
   )
 }

@@ -1,3 +1,3 @@
-export * from './addModal'
+export * from './setActiveModal'
 export * from './removeModal'
-export * from './addAlertModal'
+export * from './showAlertModal'

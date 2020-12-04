@@ -10,40 +10,31 @@ import { format } from 'date-fns'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
-import { useDismissModal } from 'SVHooks/modal/useDismissModal'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 /**
  * SessionDetailsModal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {boolean} props.visible
- * @param {number?} props.modalIndex
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-export const SessionDetailsModal = ({
-  session,
-  visible,
-  labels,
-  modalIndex,
-}) => {
+export const SessionDetailsModal = ({ session, visible, labels }) => {
   if (!session) return null
 
   const theme = useTheme()
 
   const sessionDetailsStyles = theme.get('modal.sessionDetails')
-  const [ dismissModal, dismissedCBRef ] = useDismissModal()
 
   return (
     <BaseModal
       className={`ef-modal-group`}
-      dissmissedCBRef={dismissedCBRef}
       hasCloseButton={true}
       title={session.name}
       visible={visible}
-      index={modalIndex}
       Body={
         <Body
-          dismissModalCb={dismissModal}
+          dismissModalCb={hideActiveModal}
           styles={sessionDetailsStyles?.content?.body}
           session={session}
           labels={labels}

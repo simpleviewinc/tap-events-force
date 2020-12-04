@@ -19,12 +19,12 @@ export const ModalProvider = ({ component, children }) => {
        * Stores in the Modal Context the callback used to close the active modal
        * @param {Function} closeFn - the function that closes the active modal
        */
-      setCloseActiveModal: closeFn => (closeModalRef.current = closeFn),
+      setDismissActiveModal: closeFn => (closeModalRef.current = closeFn),
 
       /**
        * Closes the currently visible modal
        */
-      closeActiveModal: () => checkCall(closeModalRef.current),
+      dismissActiveModal: () => checkCall(closeModalRef.current),
     }),
     [ closeModalRef, component ]
   )

@@ -6,29 +6,24 @@ import {
   GroupBookerFooter,
 } from 'SVComponents/booking/groupBooker'
 import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
-import { useDismissModal } from 'SVHooks/modal/useDismissModal'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 /**
  * GroupBooking Modal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
- * @param {number} props.modalIndex - index of the modal in the modal stack
  * @param {boolean} props.visible
  */
-export const GroupBooking = ({ visible, session, modalIndex }) => {
+export const GroupBooking = ({ visible, session }) => {
   if (!session) return null
 
   const groupBookingStyles = useStyle('modal.groupBooking')
-
-  const [ dismissModal, dismissedCBRef ] = useDismissModal()
 
   return (
     <GroupBookingProvider session={session}>
       <BaseModal
         className={`ef-modal-group`}
-        dismissedCBRef={dismissedCBRef}
         title={session.name}
-        index={modalIndex}
         visible={visible}
         Body={
           <GroupBookerBody
@@ -38,7 +33,7 @@ export const GroupBooking = ({ visible, session, modalIndex }) => {
         }
         Footer={
           <GroupBookerFooter
-            onCancelPress={dismissModal}
+            onCancelPress={hideActiveModal}
             styles={groupBookingStyles?.content?.footer}
           />
         }

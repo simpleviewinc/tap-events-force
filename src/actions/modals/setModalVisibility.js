@@ -6,15 +6,15 @@ const { CATEGORIES } = Values
 /**
  * Removes a modal from the modals array
  * remove the most recent modals if no index is passed
- * @param {number} index - index to remove from array
+ * @param {boolean} visible - if the active modal is visible or not
  */
-export const removeModal = () => {
+export const setModalVisibility = visible => {
   dispatch({
     type: ActionTypes.SET_ITEM,
     payload: {
       category: CATEGORIES.MODALS,
-      key: 'activeModal',
-      item: null,
+      key: 'visible',
+      item: visible,
     },
   })
 }

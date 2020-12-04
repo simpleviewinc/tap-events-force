@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback, useContext } from 'react'
-import { checkCall } from '@keg-hub/jsutils'
-import { removeModal } from 'SVActions/modals/removeModal'
+import React, { useContext, useCallback } from 'react'
 import { ModalContext } from 'SVContexts/modals/modalContext'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 import PropTypes from 'prop-types'
 
 export const contentDefaultMaxHeight = 772
@@ -11,7 +10,6 @@ export const contentDefaultMaxHeight = 772
  * @param {object} props
  * @param {object} props.title
  * @param {boolean} props.visible
- * @param {React.MutableRefObject=} props.dismissedCBRef - pass this in when you want to dismiss modal from child
  *                                                        -  call `childRef.current(true)` to dismiss
  * @param {Component=} props.Body - Component for the body.
  * @param {Component=} props.Footer - Component for the footer.
@@ -30,47 +28,23 @@ export const contentDefaultMaxHeight = 772
     />
  */
 export const BaseModal = props => {
-  const {
-    title,
-    visible,
-    dismissedCBRef,
-    onDismiss,
-    index,
-    Body,
-    Footer,
-  } = props
-  // two possible cases for a non visible modal
-  // 1. modal is mounted/in store but has been animated out of view by another modal
-  // 2. modal has been removed from the store
-  const [ dismissed, setDismissed ] = useState(false)
-  useEffect(() => {
-    if (dismissedCBRef) {
-      dismissedCBRef.current = setDismissed
-      return () => {
-        dismissedCBRef.current = undefined
-      }
-    }
-  }, [ setDismissed, dismissedCBRef ])
+  const { title, visible, onDismiss, onClosed, Body, Footer } = props
 
-  const closeModal = useCallback(() => setDismissed(true), [setDismissed])
+  const dismiss = useCallback(() => {
+    onDismiss?.()
+    hideActiveModal()
+  }, [onDismiss])
 
-  // once the dismiss animation completes, then remove modal from store
-  const onDismissed = useCallback(() => {
-    removeModal(index)
-    checkCall(onDismiss, true)
-  }, [ onDismiss, removeModal, index ])
-
-  const { setCloseActiveModal, ModalComponent } = useContext(ModalContext)
-  setCloseActiveModal(closeModal)
+  const { ModalComponent } = useContext(ModalContext)
 
   return (
     <ModalComponent
       modalHeader={title}
       modalBody={Body}
       modalFooter={Footer}
-      toggle={closeModal}
-      onClosed={onDismissed}
-      isOpen={visible && !dismissed}
+      toggle={dismiss}
+      onClosed={onClosed}
+      isOpen={visible}
     />
   )
 }

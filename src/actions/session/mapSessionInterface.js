@@ -1,7 +1,7 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { mapObj, noPropObj, snakeCase } from '@keg-hub/jsutils'
-import { addAlertModal } from 'SVActions/modals/addAlertModal'
+import { showAlertModal } from 'SVActions/modals/showAlertModal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
@@ -23,12 +23,12 @@ const subCatMap = {
 const checkAlert = (alert = noPropObj) => {
   const existingAlert = getStore().getState()?.items?.alert
 
-  // no need to add another modal if the alert object is the
+  //setModal to add another modal if the alert object is the
   // same reference as the current one
   if (alert === existingAlert) return
 
   if (alert?.title && alert?.message) {
-    addAlertModal(alert.title, alert.message)
+    showAlertModal(alert.title, alert.message)
   }
 }
 

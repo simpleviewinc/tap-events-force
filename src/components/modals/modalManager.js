@@ -4,7 +4,10 @@ import { GroupBooking } from 'SVComponents/modals/groupBooking'
 import { Filter } from 'SVComponents/modals/filter'
 import { Alert } from 'SVComponents/modals/alert'
 import { SessionDetailsModal } from 'SVComponents/modals/sessionDetailsModal'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { Values } from 'SVConstants'
+
+const { CATEGORIES } = Values
 
 const {
   PRESENTER,
@@ -14,33 +17,43 @@ const {
   SESSION_DETAILS,
 } = Values.MODAL_TYPES
 
-const renderModal = (modal, index, visible = true) => {
+/**
+ * Renders a modal if one is flagged as active in the modals store tree
+ */
+export const ModalManager = () => {
+  const { activeModal, visible } = useStoreItems(CATEGORIES.MODALS)
+  return activeModal ? (
+    <ActiveModal
+      modal={activeModal}
+      visible={visible}
+    />
+  ) : null
+}
+
+/**
+ *
+ * @param {Object} props
+ * @param {import('SVModels/Modal').Modal} props.modal - the modal to render
+ * @param {boolean} props.visible - whether the modal is visible or not
+ *
+ */
+const ActiveModal = ({ modal, visible = true }) => {
   switch (modal?.type) {
   case PRESENTER:
-    return (
-      <PresenterDetails
-        key={index}
-        modalIndex={index}
-        presenter={modal.data}
-        visible={visible}
-      />
-    )
+    return <PresenterDetails
+      presenter={modal.data}
+      visible={visible}
+    />
 
   case GROUP_BOOKING:
-    return (
-      <GroupBooking
-        key={index}
-        modalIndex={index}
-        session={modal.data?.session}
-        visible={visible}
-      />
-    )
+    return <GroupBooking
+      session={modal.data?.session}
+      visible={visible}
+    />
 
   case ALERT:
     return (
       <Alert
-        key={index}
-        modalIndex={index}
         visible={visible}
         type={modal.data?.type}
         title={modal.data?.title}
@@ -49,20 +62,14 @@ const renderModal = (modal, index, visible = true) => {
     )
 
   case FILTER:
-    return (
-      <Filter
-        key={index}
-        modalIndex={index}
-        visible={visible}
-        labels={modal.data?.labels}
-      />
-    )
+    return <Filter
+      visible={visible}
+      labels={modal.data?.labels}
+    />
 
   case SESSION_DETAILS:
     return (
       <SessionDetailsModal
-        key={index}
-        modalIndex={index}
         visible={visible}
         session={modal.data?.session}
         labels={modal.data?.labels}
@@ -71,15 +78,4 @@ const renderModal = (modal, index, visible = true) => {
   default:
     return null
   }
-}
-
-/**
- * Render the top of the modal stack
- * @param {Array.<import('SVModels/modal').Modal>} modals - array of modal obj
- * @returns {Component}
- */
-export const RenderModals = modals => {
-  return modals.map((modal, index) =>
-    renderModal(modal, index, index === modals.length - 1)
-  )
 }

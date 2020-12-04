@@ -1,11 +1,11 @@
-import { addModal } from './addModal'
+import { setActiveModal } from './setActiveModal'
 import { Modal } from 'SVModels/modal'
 import { validate, isStr } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants'
 const { CATEGORIES } = Values
 
 /**
- * Validates `addAlertModal` arguments
+ * Validates `showAlertModal` arguments
  * @param {string} title
  * @param {string} message
  */
@@ -17,11 +17,11 @@ const isValidInput = (title, message) => {
 const alertModalType = CATEGORIES.ALERT.toLowerCase()
 
 /**
- * Action for adding an alert modal to the modal stack.
+ * Action for settings the active modal to an alert modal
  * @param {string} title - alert title
  * @param {string} message - alert message
  */
-export const addAlertModal = (title, message) => {
+export const showAlertModal = (title, message) => {
   if (!isValidInput(title, message)) return
 
   const modal = new Modal({
@@ -32,5 +32,5 @@ export const addAlertModal = (title, message) => {
     },
   })
 
-  addModal(modal)
+  setActiveModal(modal)
 }

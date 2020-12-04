@@ -1,7 +1,8 @@
-import { addAlertModal } from 'SVActions/modals/addAlertModal'
+import { showAlertModal } from 'SVActions/modals/showAlertModal'
 import { setPendingSession } from 'SVActions/session/pending/setPendingSession'
 import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
-import { validate, isFunc, isObj, isStr, isEmpty, noOp } from '@keg-hub/jsutils'
+import { validate, isFunc, isObj, isStr, isEmpty } from '@keg-hub/jsutils'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 /**
  * Validates input of `handleAttendeeRequest`
@@ -37,6 +38,17 @@ const parseException = exception => {
 }
 
 /**
+ * Handles an error on a failed booking request,
+ * parsing the error and showing an alert modal with its
+ * contents
+ * @param {Object | string} error - error from async request
+ */
+const handleError = error => {
+  const [ title, message ] = parseException(error)
+  showAlertModal(title, message)
+}
+
+/**
  * Makes the booking and wait-list async requests, handling any errors that may be thrown,
  * as well as updating the pending session state. Does not call a request
  * if its associated list is falsy.
@@ -49,30 +61,19 @@ const parseException = exception => {
 export const handleBookingRequests = async (
   bookRequest,
   waitRequest,
-  onComplete = noOp,
   sessionId
 ) => {
-  if (!isValidInput({ bookRequest, waitRequest, onComplete, sessionId }))
+  if (!isValidInput({ bookRequest, waitRequest, sessionId }))
     return Promise.reject('Bad input')
 
-  // set the session identified by `sessionId` to "pending" state
+  // set the session identified by `sessionId` to "pending" state,
+  // temporarily disabling all booking buttons and showing a spinner
+  // for the booking button associated with the session id
   setPendingSession(sessionId)
 
-  let error = null
-
   // make both requests in tandem
-  return (
-    Promise.all([ bookRequest, waitRequest ])
-      // parse exceptions if either request throws
-      // and enable the alert modal if an exception was raised
-      .catch(e => {
-        error = parseException(e)
-      })
-      // ensure the pending session is always cleared,
-      .finally(() => {
-        onComplete()
-        error && addAlertModal(...error)
-        clearPendingSession()
-      })
-  )
+  return Promise.all([ bookRequest, waitRequest ])
+    .then(hideActiveModal)
+    .catch(handleError)
+    .finally(clearPendingSession)
 }

@@ -16,7 +16,7 @@ import {
 } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useFilteredSessions } from 'SVHooks/sessions'
-import { useDismissModal } from 'SVHooks/modal/useDismissModal'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 const { SESSION_BOOKING_STATES, CATEGORIES } = Values
 
@@ -27,13 +27,13 @@ const { SESSION_BOOKING_STATES, CATEGORIES } = Values
 export const Filter = ({ visible, labels }) => {
   const theme = useTheme()
   const filterStyles = theme.get('modal.filter')
-  const [ dismissModal, dismissedCBRef ] = useDismissModal()
+
   // sort the labels alphabetically
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
   const applyCb = useCallback(() => {
     applySessionFilters()
-    dismissModal()
-  }, [ applySessionFilters, dismissedCBRef?.current ])
+    hideActiveModal()
+  }, [ applySessionFilters, hideActiveModal ])
 
   const { filters } = useStoreItems([CATEGORIES.FILTERS])
   const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
@@ -41,10 +41,9 @@ export const Filter = ({ visible, labels }) => {
 
   return (
     <BaseModal
-      dismissedCBRef={dismissedCBRef}
+      onDismiss={cancelSelectedFilters}
       title={'Filter'}
       visible={visible}
-      onDismiss={cancelSelectedFilters}
       Body={
         <Body
           styles={filterStyles?.content?.body}

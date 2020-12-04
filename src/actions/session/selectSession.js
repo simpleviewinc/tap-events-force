@@ -1,6 +1,6 @@
 import { Values } from 'SVConstants'
 import { getStore } from 'SVStore'
-import { addModal } from 'SVActions/modals'
+import { setActiveModal } from 'SVActions/modals/setActiveModal'
 import { Modal } from 'SVModels/modal'
 import { sessionBookingRequest } from 'SVActions/session/booking/sessionBookingRequest'
 import { devLog } from 'SVUtils/logs'
@@ -52,7 +52,7 @@ export const selectSession = (
   // If more then 1 attendee, open group booking modal
   // Otherwise get an array of the attendee ids
   attendeesCp.length > 1
-    ? addModal(
+    ? setActiveModal(
         new Modal({
           type: MODAL_TYPES.GROUP_BOOKING,
           data: {
