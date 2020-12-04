@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react'
+import React from 'react'
 import { useStyle } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import {
@@ -6,22 +6,7 @@ import {
   GroupBookerFooter,
 } from 'SVComponents/booking/groupBooker'
 import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
-
-/**
- * Creates the callback for dismissing the modal and the ref for getting the
- * underlying dismiss function from the BaseModal
- * @return {Array<Function, RefObject>}
- *  - [ dismissModalFn, dismissCBRef ]
- *  - dismissModalFn: function for dismissing the modal
- *  - dismissedCBRef: ref for acquiring the setDismissed function from the `BaseModal`
- */
-const useDismiss = () => {
-  const dismissedCBRef = useRef()
-  const dismissModal = useCallback(() => dismissedCBRef?.current?.(true), [
-    dismissedCBRef?.current,
-  ])
-  return [ dismissModal, dismissedCBRef ]
-}
+import { useDismissModal } from 'SVHooks/modal/useDismissModal'
 
 /**
  * GroupBooking Modal
@@ -35,7 +20,7 @@ export const GroupBooking = ({ visible, session, modalIndex }) => {
 
   const groupBookingStyles = useStyle('modal.groupBooking')
 
-  const [ dismissModal, dismissedCBRef ] = useDismiss()
+  const [ dismissModal, dismissedCBRef ] = useDismissModal()
 
   return (
     <GroupBookingProvider session={session}>

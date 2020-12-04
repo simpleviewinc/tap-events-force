@@ -44,6 +44,7 @@ const logWarning = index => {
  */
 export const removeModal = index => {
   const { items } = getStore()?.getState()
+  console.log('removing modal at ', index ?? 'top')
 
   const modalsCp = Array.from(items.modals)
 

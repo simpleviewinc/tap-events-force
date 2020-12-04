@@ -1,8 +1,8 @@
-import React, { useRef, useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, ScrollView, View } from '@keg-hub/keg-components'
-import { checkCall, pickKeys, noPropArr } from '@keg-hub/jsutils'
+import { pickKeys, noPropArr } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useSessionLocation } from 'SVHooks/models'
@@ -10,20 +10,28 @@ import { format } from 'date-fns'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { useDismissModal } from 'SVHooks/modal/useDismissModal'
+
 /**
  * SessionDetailsModal
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
  * @param {boolean} props.visible
+ * @param {number?} props.modalIndex
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-export const SessionDetailsModal = ({ session, visible, labels }) => {
+export const SessionDetailsModal = ({
+  session,
+  visible,
+  labels,
+  modalIndex,
+}) => {
   if (!session) return null
 
   const theme = useTheme()
 
   const sessionDetailsStyles = theme.get('modal.sessionDetails')
-  const dismissedCBRef = useRef()
+  const [ dismissModal, dismissedCBRef ] = useDismissModal()
 
   return (
     <BaseModal
@@ -32,12 +40,10 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
       hasCloseButton={true}
       title={session.name}
       visible={visible}
+      index={modalIndex}
       Body={
         <Body
-          dismissModalCb={useCallback(
-            () => checkCall(dismissedCBRef.current, true),
-            [dismissedCBRef?.current]
-          )}
+          dismissModalCb={dismissModal}
           styles={sessionDetailsStyles?.content?.body}
           session={session}
           labels={labels}
