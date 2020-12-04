@@ -80,6 +80,11 @@ export const Values = deepFreeze({
     PERSON: 'person',
     ITEM: 'item',
   },
+  ERROR_MESSAGES: {
+    DEFAULT: "We're sorry; something went wrong. Please try again.",
+    INTERNAL:
+      'Oh no! An internal problem has prevented us from completing your request. Please try again later when we have fixed it.',
+  },
   /**
    * Local storage keys used to identify the values to load from local storage, if present.
    * Should follow the form: <category>.<key>.<properties (optional)>, where category and

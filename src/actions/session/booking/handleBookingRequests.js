@@ -1,8 +1,11 @@
 import { showAlertModal } from 'SVActions/modals/showAlertModal'
 import { setPendingSession } from 'SVActions/session/pending/setPendingSession'
 import { clearPendingSession } from 'SVActions/session/pending/clearPendingSession'
-import { validate, isFunc, isObj, isStr, isEmpty } from '@keg-hub/jsutils'
+import { validate, isFunc, isStr, parseErrorMessage } from '@keg-hub/jsutils'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
+import { Values } from 'SVConstants'
+
+const { ERROR_MESSAGES } = Values
 
 /**
  * Validates input of `handleAttendeeRequest`
@@ -11,30 +14,10 @@ import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
  */
 const isValidInput = (params = {}) => {
   const [valid] = validate(params, {
-    $default: promise => !promise || promise instanceof Promise,
-    onComplete: isFunc,
+    $default: isFunc,
     sessionId: isStr,
   })
   return valid
-}
-
-/**
- * Parses an error thrown by the consumer's request callback
- * @param {(Error | string | Object)?} exception
- * @return {Array} - [ title, message ]
- */
-const parseException = exception => {
-  const message =
-    isStr(exception) && !isEmpty(exception)
-      ? exception
-      : isObj(exception)
-        ? exception.message
-        : null
-
-  return [
-    'Error',
-    message || "We're sorry; something went wrong. Please try again.",
-  ]
 }
 
 /**
@@ -44,8 +27,8 @@ const parseException = exception => {
  * @param {Object | string} error - error from async request
  */
 const handleError = error => {
-  const [ title, message ] = parseException(error)
-  showAlertModal(title, message)
+  const message = parseErrorMessage(error) || ERROR_MESSAGES.DEFAULT
+  showAlertModal(message)
 }
 
 /**
@@ -56,7 +39,7 @@ const handleError = error => {
  * @param {Promise} waitRequest
  * @param {Function} onComplete
  * @param {string} sessionId
- * @return {Promise} - promise that resolves when both requests are complete
+ * @return {Void}
  */
 export const handleBookingRequests = async (
   bookRequest,
@@ -64,7 +47,7 @@ export const handleBookingRequests = async (
   sessionId
 ) => {
   if (!isValidInput({ bookRequest, waitRequest, sessionId }))
-    return Promise.reject('Bad input')
+    return showAlertModal(ERROR_MESSAGES.INTERNAL)
 
   // set the session identified by `sessionId` to "pending" state,
   // temporarily disabling all booking buttons and showing a spinner
@@ -72,7 +55,7 @@ export const handleBookingRequests = async (
   setPendingSession(sessionId)
 
   // make both requests in tandem
-  return Promise.all([ bookRequest, waitRequest ])
+  Promise.all([ bookRequest(), waitRequest() ])
     .then(hideActiveModal)
     .catch(handleError)
     .finally(clearPendingSession)

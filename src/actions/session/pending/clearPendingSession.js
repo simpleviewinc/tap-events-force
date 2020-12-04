@@ -9,13 +9,11 @@ const { CATEGORIES } = Values
  * clearPendingSession()
  */
 export const clearPendingSession = () => {
-  const pendingSession = { identifier: null }
-
   dispatch({
     type: ActionTypes.UPSERT_ITEMS,
     payload: {
       category: CATEGORIES.PENDING_SESSION,
-      items: pendingSession,
+      items: { identifier: null },
     },
   })
 }

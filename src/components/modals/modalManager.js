@@ -31,11 +31,9 @@ export const ModalManager = () => {
 }
 
 /**
- *
  * @param {Object} props
  * @param {import('SVModels/Modal').Modal} props.modal - the modal to render
  * @param {boolean} props.visible - whether the modal is visible or not
- *
  */
 const ActiveModal = ({ modal, visible = true }) => {
   switch (modal?.type) {

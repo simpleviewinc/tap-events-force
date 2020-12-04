@@ -1,6 +1,6 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { mapObj, noPropObj, snakeCase } from '@keg-hub/jsutils'
+import { mapObj, noPropObj, snakeCase, shallowEqual } from '@keg-hub/jsutils'
 import { showAlertModal } from 'SVActions/modals/showAlertModal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
@@ -23,12 +23,11 @@ const subCatMap = {
 const checkAlert = (alert = noPropObj) => {
   const existingAlert = getStore().getState()?.items?.alert
 
-  //setModal to add another modal if the alert object is the
-  // same reference as the current one
-  if (alert === existingAlert) return
+  // no reason to show the modal again if the alert object has not changed
+  if (shallowEqual(alert, existingAlert)) return
 
   if (alert?.title && alert?.message) {
-    showAlertModal(alert.title, alert.message)
+    showAlertModal(alert.message, alert.title)
   }
 }
 

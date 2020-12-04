@@ -24,13 +24,11 @@ const isValidInput = sessionId => {
 export const setPendingSession = sessionId => {
   if (!isValidInput(sessionId)) return
 
-  const pendingSession = { identifier: sessionId }
-
   dispatch({
     type: ActionTypes.UPSERT_ITEMS,
     payload: {
       category: CATEGORIES.PENDING_SESSION,
-      items: pendingSession,
+      items: { identifier: sessionId },
     },
   })
 }

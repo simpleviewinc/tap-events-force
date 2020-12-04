@@ -9,7 +9,7 @@ const { CATEGORIES } = Values
  * @param {string} title
  * @param {string} message
  */
-const isValidInput = (title, message) => {
+const isValidInput = (message, title) => {
   const [valid] = validate({ title, message }, { $default: isStr })
   return valid
 }
@@ -21,7 +21,7 @@ const alertModalType = CATEGORIES.ALERT.toLowerCase()
  * @param {string} title - alert title
  * @param {string} message - alert message
  */
-export const showAlertModal = (title, message) => {
+export const showAlertModal = (message, title = 'Error') => {
   if (!isValidInput(title, message)) return
 
   const modal = new Modal({

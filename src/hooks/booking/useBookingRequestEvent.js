@@ -19,8 +19,8 @@ const {
 export const useBookingRequestEvent = (bookRequestCb, waitRequestCb) => {
   const handler = useCallback(
     (sessionId, bookList, waitList) => {
-      const bookRequest = bookList && bookRequestCb(sessionId, bookList)
-      const waitRequest = waitList && waitRequestCb(sessionId, waitList)
+      const bookRequest = () => bookList && bookRequestCb(sessionId, bookList)
+      const waitRequest = () => waitList && waitRequestCb(sessionId, waitList)
       handleBookingRequests(bookRequest, waitRequest, sessionId)
     },
     [ bookRequestCb, waitRequestCb ]
