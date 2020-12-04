@@ -5,7 +5,7 @@ import { Values } from 'SVConstants'
 const { CATEGORIES } = Values
 
 /**
- * Adds a modal to the modals array
+ * Sets the active modal to render
  * @param {import('SVModels/modal').Modal} modal
  * @param {boolean} visible - whether the modal should start visible or not
  */
