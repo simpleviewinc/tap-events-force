@@ -6,7 +6,9 @@ import { useGroupCounts } from 'SVHooks/booking/useGroupCounts'
 import { areSetEqual } from '@keg-hub/jsutils'
 
 /**
- * Builds the initial state of the reducer, depending on the session input
+ * Builds the starting state of the reducer, depending on the session input.
+ * Will continue to update the return value as the data changes, so that the
+ * latest starting-state can be used for resetting the group booker if need be
  * @param {import('SVModels/Session').Session} props.session - the session object currently used in the group booking UI
  * @return {Object} the initial state of the group booking reducer
  */

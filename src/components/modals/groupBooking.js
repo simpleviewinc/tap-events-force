@@ -6,6 +6,7 @@ import {
   GroupBookerFooter,
 } from 'SVComponents/booking/groupBooker'
 import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
+import { GroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 /**
@@ -21,23 +22,28 @@ export const GroupBooking = ({ visible, session }) => {
 
   return (
     <GroupBookingProvider session={session}>
-      <BaseModal
-        className={`ef-modal-group`}
-        title={session.name}
-        visible={visible}
-        Body={
-          <GroupBookerBody
-            session={session}
-            styles={groupBookingStyles?.content?.body}
+      <GroupBookingContext.Consumer>
+        { ({ actions }) => (
+          <BaseModal
+            className={`ef-modal-group`}
+            title={session.name}
+            visible={visible}
+            onClosed={actions.reset}
+            Body={
+              <GroupBookerBody
+                session={session}
+                styles={groupBookingStyles?.content?.body}
+              />
+            }
+            Footer={
+              <GroupBookerFooter
+                onCancelPress={hideActiveModal}
+                styles={groupBookingStyles?.content?.footer}
+              />
+            }
           />
-        }
-        Footer={
-          <GroupBookerFooter
-            onCancelPress={hideActiveModal}
-            styles={groupBookingStyles?.content?.footer}
-          />
-        }
-      />
+        ) }
+      </GroupBookingContext.Consumer>
     </GroupBookingProvider>
   )
 }

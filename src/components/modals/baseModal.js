@@ -14,6 +14,7 @@ export const contentDefaultMaxHeight = 772
  * @param {Component=} props.Footer - Component for the footer.
  * @param {boolean=} props.hasCloseButton - to display the close button on the header or not
  * @param {Function=} props.onDismiss - function to call when the modal is being dismissed
+ * @param {Function=} props.onClosed - function that executes when modal has closed
  * @example
  *  <BaseModal
       dismissedCBRef={dismissedCBRef}
@@ -53,4 +54,5 @@ BaseModal.propTypes = {
   Footer: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
   hasCloseButton: PropTypes.bool,
   onDismiss: PropTypes.func,
+  onClosed: PropTypes.func,
 }

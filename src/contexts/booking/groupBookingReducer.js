@@ -111,6 +111,19 @@ const updateSessionBooking = (state, id) => {
 }
 
 /**
+ * Validates the nextState to reset to, and if it is valid,
+ * will return `nextState` to be the next state object of this
+ * reducer
+ * @param {Object} currentState
+ * @param {*} nextState
+ */
+const resetState = (currentState, nextState) => {
+  const [isValid] = validate({ nextState, currentState }, { $default: isObj })
+
+  return isValid ? nextState : currentState
+}
+
+/**
  * Reducer function for the group booker
  * @param {Object} state - initial state for the reducer
  * @param {Object} action - action to dispatch
@@ -123,5 +136,7 @@ export const groupBookingReducer = (state = initialState, action) => {
   switch (type) {
   case GroupBookingActionTypes.UPDATE_SESSION_BOOKING:
     return updateSessionBooking(state, value)
+  case GroupBookingActionTypes.RESET:
+    return resetState(state, value)
   }
 }
