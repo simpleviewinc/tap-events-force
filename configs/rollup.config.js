@@ -35,6 +35,11 @@ const mainExternals = [
   'axios',
   'react-native',
   'react-native-svg',
+  'react-native-web/dist/modules/prefixStyles',
+  'react-native-web/dist/modules/flattenArray',
+  'react-native-web/dist/exports/StyleSheet/flattenStyle',
+  'react-native-web/dist/exports/StyleSheet/createReactDOMStyle',
+  'react-native-web/dist/exports/StyleSheet/createCompileableStyle',
 ]
 const externals = [ ...mainExternals, ...peerExternals ]
 

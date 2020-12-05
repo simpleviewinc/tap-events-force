@@ -9,7 +9,7 @@ import {
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { SessionsContainer } from 'SVContainers/sessionsContainer'
-import { Dimensions, Platform } from 'react-native'
+import { Dimensions } from 'react-native'
 
 setRNDimensions(Dimensions)
 
