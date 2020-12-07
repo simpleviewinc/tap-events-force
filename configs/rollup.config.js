@@ -19,7 +19,6 @@ const tapPath = require('app-root-path').path
 const corePath = path.join(`${tapPath}`, `node_modules/keg-core`)
 const isProd = process.env.NODE_ENV === 'production'
 const { ANALYZE } = process.env
-
 const peerExternals = [ 'react', 'react-dom' ]
 
 const buildDependencies = [
@@ -170,7 +169,9 @@ export default {
       },
     }),
     cleanup(),
-    isProd && terser(),
+    isProd && terser({
+      mangle: false
+    }),
     bundleSize(),
     ANALYZE && analyze()
   ],
