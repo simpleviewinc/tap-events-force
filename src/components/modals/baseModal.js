@@ -12,28 +12,26 @@ export const contentDefaultMaxHeight = 772
  * @param {boolean} props.visible - whether or not the modal is visible
  * @param {Component=} props.Body - Component for the body.
  * @param {Component=} props.Footer - Component for the footer.
- * @param {boolean=} props.hasCloseButton - to display the close button on the header or not
- * @param {Function=} props.onDismiss - function to call when the modal is being dismissed
- * @param {Function=} props.onClosed - function that executes when modal has closed
+ * @param {Function=} props.onDismiss - function that executes when the modal is about to hide itself 
+ * (e.g. user clicks outside the modal)
  * @example
  *  <BaseModal
-      dismissedCBRef={dismissedCBRef}
       title={title}
       visible={visible}
-      index={modalStackIndex}
       Body={BodyComponent}
       Footer={FooterComponent}
+      onDismiss={() => console.log('on dismiss')}
     />
  */
 export const BaseModal = props => {
-  const { title, visible, onDismiss, onClosed, Body, Footer } = props
+  const { title, visible, onDismiss, Body, Footer } = props
 
   const dismiss = useCallback(() => {
     onDismiss?.()
     hideActiveModal()
   }, [onDismiss])
 
-  const { ModalComponent } = useContext(ModalContext)
+  const ModalComponent = useContext(ModalContext)
 
   return (
     <ModalComponent
@@ -41,7 +39,6 @@ export const BaseModal = props => {
       modalBody={Body}
       modalFooter={Footer}
       toggle={dismiss}
-      onClosed={onClosed}
       isOpen={visible}
     />
   )
@@ -52,7 +49,5 @@ BaseModal.propTypes = {
   visible: PropTypes.bool,
   Body: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
   Footer: PropTypes.oneOfType([ PropTypes.func, PropTypes.element ]),
-  hasCloseButton: PropTypes.bool,
   onDismiss: PropTypes.func,
-  onClosed: PropTypes.func,
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useStyle } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import {
@@ -6,8 +6,24 @@ import {
   GroupBookerFooter,
 } from 'SVComponents/booking/groupBooker'
 import { GroupBookingProvider } from 'SVContexts/booking/groupBookingProvider'
-import { GroupBookingContext } from 'SVContexts/booking/groupBookingContext'
+import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
+
+/**
+ * Wrapper around BaseModal that hooks into the booking context
+ * to ensure its state is up to date whenever the group booking
+ * modal is opened.
+ *
+ * @param {Object} props - BaseModal props
+ */
+const RefreshedModal = props => {
+  const { actions } = useGroupBookingContext()
+  useEffect(() => {
+    props.visible && actions?.reset()
+  }, [props.visible])
+
+  return <BaseModal {...props} />
+}
 
 /**
  * GroupBooking Modal
@@ -22,28 +38,23 @@ export const GroupBooking = ({ visible, session }) => {
 
   return (
     <GroupBookingProvider session={session}>
-      <GroupBookingContext.Consumer>
-        { ({ actions }) => (
-          <BaseModal
-            className={`ef-modal-group`}
-            title={session.name}
-            visible={visible}
-            onClosed={actions.reset}
-            Body={
-              <GroupBookerBody
-                session={session}
-                styles={groupBookingStyles?.content?.body}
-              />
-            }
-            Footer={
-              <GroupBookerFooter
-                onCancelPress={hideActiveModal}
-                styles={groupBookingStyles?.content?.footer}
-              />
-            }
+      <RefreshedModal
+        className={`ef-modal-group`}
+        title={session.name}
+        visible={visible}
+        Body={
+          <GroupBookerBody
+            session={session}
+            styles={groupBookingStyles?.content?.body}
           />
-        ) }
-      </GroupBookingContext.Consumer>
+        }
+        Footer={
+          <GroupBookerFooter
+            onCancelPress={hideActiveModal}
+            styles={groupBookingStyles?.content?.footer}
+          />
+        }
+      />
     </GroupBookingProvider>
   )
 }

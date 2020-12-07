@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { ModalContext } from './modalContext'
 
 /**
@@ -8,16 +8,7 @@ import { ModalContext } from './modalContext'
  * @param {*} props.children - children of the context
  */
 export const ModalProvider = ({ component, children }) => {
-  const providerValue = useMemo(
-    () => ({
-      ModalComponent: component,
-    }),
-    [component]
-  )
-
   return (
-    <ModalContext.Provider value={providerValue}>
-      { children }
-    </ModalContext.Provider>
+    <ModalContext.Provider value={component}>{ children }</ModalContext.Provider>
   )
 }
