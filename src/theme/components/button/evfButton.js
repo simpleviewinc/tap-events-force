@@ -34,7 +34,6 @@ const defaultTextStyle = {
     lineHeight: 18,
     alignSelf: 'center',
     position: 'relative',
-    top: 2,
   },
   $small: {
     fontSize: 15,
