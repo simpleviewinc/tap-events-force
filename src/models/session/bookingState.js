@@ -9,6 +9,7 @@ export class BookingState {
   icon = null
   text = false
   disabled = false
+  pending = false
   displayAmount = null
   mode = null
 
@@ -20,6 +21,7 @@ export class BookingState {
    * @param {string=} params.text - Booking state display text content
    * @param {Object=} params.styles - Booking state display styles
    * @param {boolean=} params.disabled - Should the button display of the booking state be disabled
+   * @param {boolean=} params.pending - Should the button show a loading spinner, indicating it's booking is pending
    */
   constructor(params = {}) {
     assignDefinedProps(this, params)

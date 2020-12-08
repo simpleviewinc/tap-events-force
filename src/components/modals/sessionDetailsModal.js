@@ -1,15 +1,17 @@
-import React, { useRef, useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { Text, ScrollView, View } from '@keg-hub/keg-components'
-import { checkCall, pickKeys, noPropArr } from '@keg-hub/jsutils'
+import { pickKeys, noPropArr } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useSessionLocation } from 'SVHooks/models'
 import { format } from 'date-fns'
 import { LabelButton } from 'SVComponents/labels/labelButton'
-import { BookingButton } from 'SVComponents/button'
+import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
+
 /**
  * SessionDetailsModal
  * @param {object} props
@@ -23,21 +25,16 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
   const theme = useTheme()
 
   const sessionDetailsStyles = theme.get('modal.sessionDetails')
-  const dismissedCBRef = useRef()
 
   return (
     <BaseModal
       className={`ef-modal-group`}
-      dissmissedCBRef={dismissedCBRef}
       hasCloseButton={true}
       title={session.name}
       visible={visible}
       Body={
         <Body
-          dismissModalCb={useCallback(
-            () => checkCall(dismissedCBRef.current, true),
-            [dismissedCBRef?.current]
-          )}
+          dismissModalCb={hideActiveModal}
           styles={sessionDetailsStyles?.content?.body}
           session={session}
           labels={labels}

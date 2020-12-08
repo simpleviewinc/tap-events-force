@@ -181,6 +181,27 @@ const buttonStyles = {
   },
 }
 
+const primaryDisabledState = buildButtonState({
+  main: {
+    $all: {
+      backgroundColor: colors.lightGray02,
+      opacity: 1,
+    },
+  },
+  content: {
+    $xsmall: {
+      ...defaultTextStyle.$xsmall,
+      color: colors.lightGray,
+      position: 'relative',
+    },
+    $small: {
+      ...defaultTextStyle.$small,
+      color: colors.lightGray,
+      position: 'relative',
+    },
+  },
+})
+
 const bookingButtonStates = reduceObj(
   SESSION_BOOKING_STATES,
   (__, value, styles) => {
@@ -188,27 +209,7 @@ const bookingButtonStates = reduceObj(
       content: {
         button: {
           ...buttonStyles.primary.content.button,
-          disabled: buildButtonState({
-            main: {
-              $all: {
-                backgroundColor: colors.lightGray02,
-                opacity: 1,
-              },
-            },
-            content: {
-              ...defaultTextStyle,
-              $xsmall: {
-                ...defaultTextStyle?.$xsmall,
-                color: colors.lightGray,
-                position: 'relative',
-              },
-              $small: {
-                ...defaultTextStyle?.$small,
-                color: colors.lightGray,
-                position: 'relative',
-              },
-            },
-          }),
+          disabled: primaryDisabledState,
         },
       },
     })

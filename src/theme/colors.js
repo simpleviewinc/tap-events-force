@@ -9,6 +9,7 @@ const colors = {
   second: '#525859',
   black: '#000000',
   black01: '#0A0A0A',
+  red: '#FF0800',
   white: '#FFFFFF',
   white01: '#F3F3F3',
   white02: '#F0F0F0',

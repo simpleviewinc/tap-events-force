@@ -1,4 +1,4 @@
-import React, { useRef, useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView, Button } from '@keg-hub/keg-components'
@@ -7,13 +7,7 @@ import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
-import {
-  reduceObj,
-  wordCaps,
-  checkCall,
-  filterObj,
-  noPropArr,
-} from '@keg-hub/jsutils'
+import { reduceObj, wordCaps, filterObj, noPropArr } from '@keg-hub/jsutils'
 import {
   updateSelectedFilters,
   applySessionFilters,
@@ -22,6 +16,7 @@ import {
 } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useFilteredSessions } from 'SVHooks/sessions'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 const { SESSION_BOOKING_STATES, CATEGORIES } = Values
 
@@ -32,13 +27,13 @@ const { SESSION_BOOKING_STATES, CATEGORIES } = Values
 export const Filter = ({ visible, labels }) => {
   const theme = useTheme()
   const filterStyles = theme.get('modal.filter')
-  const dismissedCBRef = useRef()
+
   // sort the labels alphabetically
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
   const applyCb = useCallback(() => {
     applySessionFilters()
-    checkCall(dismissedCBRef.current, true)
-  }, [ applySessionFilters, dismissedCBRef?.current ])
+    hideActiveModal()
+  }, [ applySessionFilters, hideActiveModal ])
 
   const { filters } = useStoreItems([CATEGORIES.FILTERS])
   const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
@@ -46,10 +41,9 @@ export const Filter = ({ visible, labels }) => {
 
   return (
     <BaseModal
-      dismissedCBRef={dismissedCBRef}
+      onDismiss={cancelSelectedFilters}
       title={'Filter'}
       visible={visible}
-      onDismiss={cancelSelectedFilters}
       Body={
         <Body
           styles={filterStyles?.content?.body}

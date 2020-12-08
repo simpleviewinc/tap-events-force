@@ -1,9 +1,9 @@
-import { View, Text } from '@keg-hub/keg-components'
 import React, { useCallback } from 'react'
+import { Text, View } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { selectSession } from 'SVActions/session/selectSession'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
-import { useStylesCallback } from '@keg-hub/re-theme'
+import { useStylesCallback, useStyle } from '@keg-hub/re-theme'
 import { noPropObj, get } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants'
 const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES } = Values
@@ -47,6 +47,7 @@ const buildStyles = (theme, _, disabled, state, iconName, style) => {
 const RenderBookingState = props => {
   const { model, style, styles, ...attrs } = props
   const { displayAmount, icon: Icon, text, state } = model
+
   const bookingStyles = useStylesCallback(buildStyles, [
     model.disabled,
     state,
@@ -115,12 +116,16 @@ export const BookingButton = props => {
   const bookingModel = useBookingState(session)
   const selectSessionCb = useSelectSession(session, bookingModel)
 
+  const pendingStyles = useStyle('button.bookingButton.pending')
+
   return (
     (bookingModel?.text && (
       <EvfButton
         type={bookingModel.state}
         onClick={selectSessionCb}
         disabled={bookingModel.disabled}
+        isProcessing={bookingModel.pending}
+        pendingStyles={pendingStyles}
       >
         { buttonProps => (
           <RenderBookingState

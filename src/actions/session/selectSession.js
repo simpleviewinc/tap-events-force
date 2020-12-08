@@ -1,14 +1,27 @@
 import { Values } from 'SVConstants'
 import { getStore } from 'SVStore'
-import { addModal } from 'SVActions/modals'
+import { setActiveModal } from 'SVActions/modals/setActiveModal'
 import { Modal } from 'SVModels/modal'
 import { sessionBookingRequest } from 'SVActions/session/booking/sessionBookingRequest'
-import { sessionWaitingListRequest } from 'SVActions/session/booking/sessionWaitingListRequest'
 import { devLog } from 'SVUtils/logs'
 import { checkCall, isArr } from '@keg-hub/jsutils'
 
 const { EVENTS, MODAL_TYPES } = Values
-const bookingActions = { sessionBookingRequest, sessionWaitingListRequest }
+
+/**
+ * Helper for selectSession.
+ * Requests the booking, depending on the action type
+ * @param {string} actionType - either EVENTS.SESSION_BOOKING_REQUEST, or EVENTS.SESSION_WAITING_LIST_REQUEST
+ * @param {string} sessionId
+ * @param {Array<string>} attendeeIds
+ */
+const requestBooking = (actionType, sessionId, attendeeIds) => {
+  sessionBookingRequest?.(
+    sessionId,
+    actionType === EVENTS.SESSION_BOOKING_REQUEST && attendeeIds,
+    actionType === EVENTS.SESSION_WAITING_LIST_REQUEST && attendeeIds
+  )
+}
 
 /**
  * Either books the current session or opens up group booking modal
@@ -39,7 +52,7 @@ export const selectSession = (
   // If more then 1 attendee, open group booking modal
   // Otherwise get an array of the attendee ids
   attendeesCp.length > 1
-    ? addModal(
+    ? setActiveModal(
         new Modal({
           type: MODAL_TYPES.GROUP_BOOKING,
           data: {
@@ -48,8 +61,8 @@ export const selectSession = (
           },
         })
       )
-    : checkCall(
-      bookingActions[actionType],
+    : requestBooking(
+      actionType,
       session.identifier,
       attendeesCp.map(attendee => attendee?.bookedTicketIdentifier)
     )

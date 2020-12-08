@@ -6,6 +6,7 @@ import { deepFreeze } from '@keg-hub/jsutils'
 export const Values = deepFreeze({
   CATEGORIES: {
     ACTIVE_SESSION: 'activeSession',
+    PENDING_SESSION: 'pendingSession',
     AGENDA_SESSIONS: 'agendaSessions',
     ATTENDEES_BY_TICKET: 'attendeesByTicket',
     RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
@@ -72,11 +73,17 @@ export const Values = deepFreeze({
   EVENTS: {
     SESSION_BOOKING_REQUEST: 'sessionBookingRequest',
     SESSION_WAITING_LIST_REQUEST: 'sessionWaitingListRequest',
+    SESSION_PENDING_UPDATE: 'sessionPendingUpdate',
   },
   TICKET_TYPES: {
     GROUP: 'group',
     PERSON: 'person',
     ITEM: 'item',
+  },
+  ERROR_MESSAGES: {
+    DEFAULT: "We're sorry; something went wrong. Please try again.",
+    INTERNAL:
+      'Oh no! An internal problem has prevented us from completing your request. Please try again later when we have fixed it.',
   },
   /**
    * Local storage keys used to identify the values to load from local storage, if present.

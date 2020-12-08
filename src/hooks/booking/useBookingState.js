@@ -38,6 +38,7 @@ const useStoreData = () => {
     CATEGORIES.SETTINGS,
     CATEGORIES.ATTENDEES,
     CATEGORIES.AGENDA_SESSIONS,
+    CATEGORIES.PENDING_SESSION,
   ])
 
   return {
@@ -58,6 +59,7 @@ const useStoreData = () => {
  * @param {Array} bookingLists - List of attendee ids that are booked or are on the waiting list
  * @param {Object} timeConflicts - Key value pairs of attendees booked in conflicting sessions
  * @param {Array} bookableCount - Attendees that can book the current session
+ * @param {import('SVModels/PendingSession').PendingSession} pendingSession - the object indicating if a session has submitted a booking request
  *
  * @returns {import('SVModels/session/bookingState').BookingState} model
  */
@@ -67,7 +69,8 @@ const useBookingFactory = (
   bookingMode,
   bookingLists,
   timeConflicts,
-  bookableCount
+  bookableCount,
+  pendingSession
 ) => {
   return useMemo(
     () =>
@@ -76,9 +79,18 @@ const useBookingFactory = (
         bookingMode,
         timeConflicts,
         bookableCount,
+        pendingSession,
         ...bookingLists,
       }) || null,
-    [ state, session, bookingMode, bookingLists, timeConflicts, bookableCount ]
+    [
+      state,
+      session,
+      bookingMode,
+      bookingLists,
+      timeConflicts,
+      bookableCount,
+      pendingSession,
+    ]
   )
 }
 
@@ -92,7 +104,13 @@ export const useBookingState = session => {
   const state = getBookingState(session)
 
   // Items from the store to determin the current booking state
-  const { attendees, agendaSessions, bookingMode, settings } = useStoreData()
+  const {
+    attendees,
+    agendaSessions,
+    bookingMode,
+    settings,
+    pendingSession,
+  } = useStoreData()
 
   // Lists for attendees that have booked the session, or are on the waiting list
   const bookingLists = useBookingLists(sessionId, attendees)
@@ -114,6 +132,7 @@ export const useBookingState = session => {
     bookingMode,
     bookingLists,
     timeConflicts,
-    bookableAttendeeCount
+    bookableAttendeeCount,
+    pendingSession
   )
 }

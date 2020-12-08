@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { Modal } from 'SVModels/modal'
-import { addModal } from 'SVActions/modals'
+import { setActiveModal } from 'SVActions/modals'
 
 /**
  * Creates new modal with memoized callback
@@ -9,6 +9,6 @@ import { addModal } from 'SVActions/modals'
  */
 export const useCreateModal = (type, data) => {
   return useCallback(() => {
-    type && addModal(new Modal({ type, data }))
+    type && setActiveModal(new Modal({ type, data }))
   }, [ type, data ])
 }

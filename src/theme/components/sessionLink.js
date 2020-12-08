@@ -42,8 +42,8 @@ export const sessionLink = {
   hover: {
     text: {
       $all: {
-        $xsmall: { 
-          txDL: 'underline' 
+        $xsmall: {
+          txDL: 'underline',
         },
       },
     },

@@ -7,5 +7,8 @@ const { CATEGORIES } = Values
  * Takes in an array of modal components
  */
 export const modalsState = {
-  [CATEGORIES.MODALS]: [],
+  [CATEGORIES.MODALS]: {
+    activeModal: null,
+    visible: true,
+  },
 }

@@ -1,11 +1,11 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { mapObj, noPropObj, snakeCase } from '@keg-hub/jsutils'
-import { addModal } from 'SVActions/modals'
-import { Modal } from 'SVModels/modal'
+import { mapObj, noPropObj, snakeCase, shallowEqual } from '@keg-hub/jsutils'
+import { showAlertModal } from 'SVActions/modals/showAlertModal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
+import { getStore } from 'SVStore'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -21,9 +21,14 @@ const subCatMap = {
  * @param {<import('SVModels/alert').Alert)>} alert
  */
 const checkAlert = (alert = noPropObj) => {
-  alert?.title &&
-    alert?.message &&
-    addModal(new Modal({ type: CATEGORIES.ALERT.toLowerCase(), data: alert }))
+  const existingAlert = getStore().getState()?.items?.alert
+
+  // no reason to show the modal again if the alert object has not changed
+  if (shallowEqual(alert, existingAlert)) return
+
+  if (alert?.title && alert?.message) {
+    showAlertModal(alert.message, alert.title)
+  }
 }
 
 /**

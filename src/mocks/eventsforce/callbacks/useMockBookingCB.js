@@ -1,4 +1,13 @@
 import { useCallback } from 'react'
+import {
+  validate,
+  isArr,
+  isFunc,
+  isBool,
+  isNum,
+  getURLParam,
+  isStr,
+} from '@keg-hub/jsutils'
 
 const isSet = str => Boolean(str) && str !== ''
 const alertIsSet = mockData => {
@@ -25,49 +34,84 @@ const updateAttendees = (attendees, sessionId, { bookedIds, waitIds }) => {
   }))
 }
 
+const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
+  setMockData(current => ({
+    ...current,
+    alert: {},
+    attendees: !alertIsSet(current)
+      ? updateAttendees(current.attendees, sessionId, {
+          bookedIds: isBookingCb ? attendeeIds : null,
+          waitIds: !isBookingCb ? attendeeIds : null,
+        })
+      : current.attendees,
+  }))
+}
+
 /**
  * Returns a mock cb for booking or waiting list request.
  * When executed, it will update the attendees `bookingDelay` seconds later,
  * to match the requested changes, unless the mockData was updated with
  * an alert in the interim (to help with testing an error that might arise
  * when booking)
- * @param {Function} setMockData - function for updating the mock data
- * @param {number} bookingDelay - time to wait before making the props update
- * @param {boolean} isBookingCb - true if booking request, false if waiting list request
+ * @param {Function} setMockData
+ * @param {Object} options
+ * @param {number} options.bookingDelay
+ * @param {boolean} options.isBookingCb - true if booking request, false if waiting list request
+ * @param {boolean | string} options.reject - if defined, the request cb will throw an error. If `reject` is string, will be used
+ * as content of error.
+ * @return {Function<Promise>} - resolves if the booking completed, throws if it did not
  */
-export const useMockBookingCB = (
-  setMockData,
-  bookingDelay,
-  isBookingCb = true
-) => {
+export const useMockBookingCB = (setMockData, options = {}) => {
+  const { isBookingCb = true, bookingDelay = 0, reject = false } = options
+  const [valid] = validate(
+    { setMockData },
+    {
+      setMockData: isFunc,
+      isBookingCb: isBool,
+      bookingDelay: delay => isNum(delay) || isStr(delay),
+      reject: rej => isBool(rej) || isStr(rej),
+    }
+  )
+  if (!valid) return null
+
   return useCallback(
     (sessionId, attendeeIds) => {
-      // if < 0, indicates the request should not complete
-      if (bookingDelay < 0) return
+      const [valid] = validate(
+        { sessionId, attendeeIds },
+        { sessionId: isStr, attendeeIds: isArr }
+      )
+      if (!valid) return Promise.reject()
 
-      const updateState = () => {
-        setMockData(current => ({
-          ...current,
-          alert: {},
-          attendees: !alertIsSet(current)
-            ? updateAttendees(current.attendees, sessionId, {
-                bookedIds: isBookingCb ? attendeeIds : null,
-                waitIds: !isBookingCb ? attendeeIds : null,
-              })
-            : current.attendees,
-        }))
-      }
+      return new Promise((resolvePromise, rejectPromise) => {
+        // if < 0, indicates the request should not resolve/complete
+        if (bookingDelay < 0) return
 
-      // simulate a props-change after the booking-request cb would
-      // have updated attendees in consumer's context
-      setTimeout(updateState, bookingDelay)
+        // simulate a props-change after the booking-request cb would
+        // have updated attendees in consumer's context
+        setTimeout(() => {
+          !reject &&
+            updateMockState(setMockData, sessionId, attendeeIds, isBookingCb)
+          const errorMsg = isStr(reject)
+            ? reject
+            : 'Sorry, we encountered technical difficulties, so we could not book your attendees.'
+          reject ? rejectPromise(new Error(errorMsg)) : resolvePromise()
+        }, bookingDelay)
+      })
     },
-    [ setMockData, bookingDelay ]
+    [ isBookingCb, setMockData, bookingDelay, reject ]
   )
 }
 
-export const useMockBookingRequest = (setMockData, bookingDelay = 0) =>
-  useMockBookingCB(setMockData, bookingDelay, true)
+export const useMockBookingRequest = (setMockData, { bookingDelay = 0 }) =>
+  useMockBookingCB(setMockData, {
+    isBookingCb: true,
+    reject: getURLParam('reject'),
+    bookingDelay,
+  })
 
-export const useMockWaitingRequest = (setMockData, bookingDelay = 0) =>
-  useMockBookingCB(setMockData, bookingDelay, false)
+export const useMockWaitingRequest = (setMockData, { bookingDelay = 0 }) =>
+  useMockBookingCB(setMockData, {
+    isBookingCb: false,
+    reject: getURLParam('reject'),
+    bookingDelay,
+  })

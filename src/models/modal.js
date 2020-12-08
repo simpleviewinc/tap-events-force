@@ -2,6 +2,7 @@ import { assignDefinedProps } from 'SVUtils/object/assignDefinedProps'
 
 export class Modal {
   type = null
+  index = null
   data = null
 
   /**

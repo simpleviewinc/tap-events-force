@@ -1,9 +1,9 @@
-import React, { useRef, useCallback } from 'react'
+import React from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
-import { checkCall } from '@keg-hub/jsutils'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 /**
  * Alert modal
@@ -16,12 +16,10 @@ import { checkCall } from '@keg-hub/jsutils'
 export const Alert = ({ visible, title, message }) => {
   const theme = useTheme()
   const alertStyles = theme.get('modal.alert')
-  const dismissedCBRef = useRef()
 
   return (
     <BaseModal
       className={`ef-modal-alert`}
-      dismissedCBRef={dismissedCBRef}
       title={title}
       visible={visible}
       Body={<Body
@@ -31,10 +29,7 @@ export const Alert = ({ visible, title, message }) => {
       Footer={
         <Footer
           styles={alertStyles?.content?.footer}
-          onButtonPress={useCallback(
-            () => checkCall(dismissedCBRef.current, true),
-            [dismissedCBRef?.current]
-          )}
+          onButtonPress={hideActiveModal}
         />
       }
     />
