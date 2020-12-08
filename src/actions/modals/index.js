@@ -1,5 +1,4 @@
 export * from './setActiveModal'
-export * from './removeModal'
 export * from './showAlertModal'
 export * from './setModalVisibility'
 export * from './showActiveModal'
