@@ -46,7 +46,7 @@ const buildIconComponent = SvgElement => {
 
   Object.defineProperty(EVFIcon, 'name', { value: SvgElement.name })
   EVFIcon.propTypes = {
-    onPress: PropTypes.func,
+    onPress: PropTypes.oneOfType([ PropTypes.func, PropTypes.bool ]),
     fill: PropTypes.string,
     color: PropTypes.string,
     style: PropTypes.object,
