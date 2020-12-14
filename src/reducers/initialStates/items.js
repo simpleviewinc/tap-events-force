@@ -6,6 +6,9 @@ import { labelsState } from './labels'
 import { locationsState } from './locations'
 import { modalsState } from './modals'
 
+import { Values } from 'SVConstants'
+const { CATEGORIES } = Values
+
 export const itemsState = {
   ...sessionsState,
   ...pendingSessionState,
@@ -14,7 +17,9 @@ export const itemsState = {
   ...labelsState,
   ...locationsState,
   ...modalsState,
-  attendeesByTicket: [],
-  restrictedAttendeeIds: [],
-  events: [],
+  [CATEGORIES.ALERT]: {},
+  [CATEGORIES.ATTENDEES_BY_TICKET]: [],
+  [CATEGORIES.RESTRICTED_ATTENDEE_IDS]: [],
+  [CATEGORIES.TICKETS]: [],
+  [CATEGORIES.BOOKED_TICKETS]: [],
 }

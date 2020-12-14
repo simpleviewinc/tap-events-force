@@ -1,7 +1,7 @@
 import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { itemsState as initialItemsState } from 'SVReducers/initialStates/items'
-import { mapObj, noPropObj, shallowEqual } from '@keg-hub/jsutils'
+import { noPropObj, shallowEqual } from '@keg-hub/jsutils'
 import { showAlertModal } from 'SVActions/modals/showAlertModal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
@@ -68,7 +68,7 @@ export const mapSessionInterface = props => {
   if (!props) return
 
   // set each events force category in the items store
-  mapObj(EVF_CATEGORIES, (_, category) => {
+  Object.values(EVF_CATEGORIES).map(category => {
     const action = getDispatchPayload(category, props[category])
     dispatch(action)
   })

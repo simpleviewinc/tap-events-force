@@ -1,5 +1,6 @@
 import { deepFreeze } from '@keg-hub/jsutils'
 
+// categories set by the props
 const EVF_CATEGORIES = {
   AGENDA_DAYS: 'agendaDays',
   BOOKING: 'booking',
@@ -13,6 +14,7 @@ const EVF_CATEGORIES = {
   ALERT: 'alert',
 }
 
+// categories set internally, not by exposed props
 const INTERNAL_CATEGORIES = {
   FILTERS: 'filters',
   ACTIVE_SESSION: 'activeSession',
