@@ -30,8 +30,20 @@ const getMockAttendee = (id, dayNumber, name) => ({
 })
 
 export const dayNumber = {
+  single: {
+    match: {
+      ...testData,
+      sessions: [getMockSession(1)],
+      attendees: [getMockAttendee(1, 1, 'Frank Joseph')],
+    },
+    noMatch: {
+      ...testData,
+      sessions: [getMockSession(1)],
+      attendees: [getMockAttendee(2, 3, 'Charlie Adams')],
+    },
+  },
   group: {
-    matched: {
+    match: {
       ...testData,
       sessions: [getMockSession(1)],
       attendees: [
