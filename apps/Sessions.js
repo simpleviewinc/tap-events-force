@@ -1,6 +1,6 @@
 import '../src/theme/theme.config'
 import React, { useState } from 'react'
-import { theme } from 'SVTheme'
+import { theme } from 'SVTheme/tapIndex'
 import {
   ReThemeProvider,
   getDefaultTheme,
@@ -9,19 +9,17 @@ import {
 import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { SessionsContainer } from 'SVContainers/sessionsContainer'
-import { Dimensions, Platform } from 'react-native'
+import { Dimensions } from 'react-native'
 
 setRNDimensions(Dimensions)
 
 /**
  * The sessions app for events force. This is the entry point of the 
  * rollup build and it is the root component exported by the build.
- * 
- * @param {*} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
+ * @param {Object} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
  * @param {Function} props.ModalComponent - React component or function to allow rendering content in a modal
- * 
  */
-const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest, ModalComponent}) => {
+const SessionsApp = ({ sessionAgendaProps, onDayChange, onSessionBookingRequest, onSessionWaitingListRequest, ModalComponent }) => {
   const [ activeTheme ] = useState(getDefaultTheme())
   
   return (
@@ -31,6 +29,7 @@ const SessionsApp = ({sessionAgendaProps, onDayChange, onSessionBookingRequest, 
           sessionAgendaProps={sessionAgendaProps}
           onDayChange={onDayChange}
           onSessionBookingRequest={onSessionBookingRequest}
+          onSessionWaitingListRequest={onSessionWaitingListRequest}
           ModalComponent={ModalComponent}
         />
       </ReThemeProvider>

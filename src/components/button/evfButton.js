@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { View, Button, Text } from '@keg-hub/keg-components'
 import { useStylesCallback } from '@keg-hub/re-theme'
-import { EvfLoading } from 'SVComponents/loading'
+import { EvfLoading } from 'SVComponents/loading/evfLoading'
 
 /**
  * Builds the styles for the Evf button merging the default styles with the parsed styles
@@ -32,6 +32,7 @@ export const EvfButton = props => {
     type = 'default',
     text,
     isProcessing = false,
+    pendingStyles,
   } = props
 
   // build the main style for the button, memoized
@@ -54,14 +55,17 @@ export const EvfButton = props => {
         onClick={onClick}
         styles={mainStyle?.content?.button}
       >
-        { isProcessing ? (
-          <Processing
-            styles={mainStyle?.content?.processing}
-            size={mainStyle?.content?.processing?.icon?.size || 20}
-          />
-        ) : (
-          children || text
-        ) }
+        { isProcessing
+          ? buttonProps => (
+              <Processing
+                {...buttonProps}
+                styles={mainStyle?.content?.processing}
+                textStyles={pendingStyles?.text}
+                iconStyles={pendingStyles?.icon}
+                size={mainStyle?.content?.processing?.icon?.size || 20}
+              />
+            )
+          : children || text }
       </Button>
     </View>
   )
@@ -73,11 +77,20 @@ export const EvfButton = props => {
  * @param {object} props.styles
  * @param {string=} props.text
  */
-const Processing = ({ styles, size, text = 'Processing' }) => {
+const Processing = ({
+  textStyles,
+  iconStyles,
+  styles,
+  size,
+  text = 'Processing',
+}) => {
   return (
     <View style={styles.main}>
-      <EvfLoading size={size} />
-      <Text style={styles.text}>{ text }</Text>
+      <EvfLoading
+        color={iconStyles?.color}
+        size={size}
+      />
+      <Text style={[ styles.text, textStyles ]}>{ text }</Text>
     </View>
   )
 }

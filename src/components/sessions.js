@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useMemo } from 'react'
 import { useTheme, useDimensions, useStylesCallback } from '@keg-hub/re-theme'
 import { View, ItemHeader, Button, ScrollView } from '@keg-hub/keg-components'
-import { RenderModals } from 'SVComponents/modals/renderModals'
+import { ModalManager } from 'SVComponents/modals/modalManager'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import {
   applySessionFilters,
@@ -16,10 +16,9 @@ import { noOp } from 'SVUtils/helpers/method/noop'
 import { get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
-import { useKegEvent } from 'SVHooks/events'
 import { useCreateModal } from 'SVHooks/modal'
-
-const { EVENTS, CATEGORIES, SUB_CATEGORIES } = Values
+import { useBookingRequestEvent } from 'SVHooks/booking/useBookingRequestEvent'
+const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  * FilterButton
@@ -207,6 +206,7 @@ const AgendaSessions = React.memo(
  * @param {import('SVModels/sessionAgendaProps').SessionAgendaProps} props.sessionAgendaProps - session agenda props defined in evf interface
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  * @param {Function} props.onSessionBookingRequest - callback for session booking
+ * @param {Function} props.onSessionWaitingListRequest - callback for session wait list booking
  */
 export const Sessions = props => {
   const {
@@ -217,8 +217,7 @@ export const Sessions = props => {
   } = props
 
   // set up our event listener for booking and waiting list requests
-  useKegEvent(EVENTS.SESSION_BOOKING_REQUEST, onSessionBookingRequest)
-  useKegEvent(EVENTS.SESSION_WAITING_LIST_REQUEST, onSessionWaitingListRequest)
+  useBookingRequestEvent(onSessionBookingRequest, onSessionWaitingListRequest)
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)
@@ -228,10 +227,9 @@ export const Sessions = props => {
   const theme = useTheme()
   const sessionsStyles = theme.get('sessions')
 
-  const { labels, agendaSessions, modals, settings, sessions } = useStoreItems([
+  const { labels, agendaSessions, settings, sessions } = useStoreItems([
     'labels',
     'agendaSessions',
-    'modals',
     'settings',
     'sessions',
   ])
@@ -260,7 +258,7 @@ export const Sessions = props => {
         }
         militaryTime={settings?.displayProperties?.timeFormat === '24'}
       />
-      { modals.length > 0 && RenderModals(modals) }
+      <ModalManager />
     </View>
   )
 }

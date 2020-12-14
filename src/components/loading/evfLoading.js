@@ -4,8 +4,9 @@ import {
   useFromToAnimation,
   Loading as KegLoading,
 } from '@keg-hub/keg-components'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import { Loading } from 'SVIcons/evf/elements'
+import { set } from '@keg-hub/jsutils'
 /**
  * Custom Indicator component using the spinner from FontAwesome 4
  * @param {object} props
@@ -43,10 +44,14 @@ const CustomIndicator = ({ size, styles }) => {
  *
  * @param {object} props
  * @param {number} props.size - size of the loading indicator
+ * @param {string} props.color - color
  */
-export const EvfLoading = ({ size }) => {
-  const theme = useTheme()
-  const loadingStyles = theme.get('evfLoading')
+export const EvfLoading = ({ size, color }) => {
+  const customColor = React.useMemo(
+    () => color && set({}, 'indicator.icon.color', color),
+    [color]
+  )
+  const loadingStyles = useStyle('evfLoading', customColor)
 
   return (
     <KegLoading

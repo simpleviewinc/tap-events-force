@@ -1,2 +1,5 @@
-export * from './addModal'
-export * from './removeModal'
+export * from './setActiveModal'
+export * from './showAlertModal'
+export * from './setModalVisibility'
+export * from './showActiveModal'
+export * from './hideActiveModal'

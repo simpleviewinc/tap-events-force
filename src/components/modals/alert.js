@@ -1,9 +1,9 @@
-import React, { useRef, useCallback } from 'react'
+import React from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
-import { checkCall } from '@keg-hub/jsutils'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 /**
  * Alert modal
@@ -16,25 +16,23 @@ import { checkCall } from '@keg-hub/jsutils'
 export const Alert = ({ visible, title, message }) => {
   const theme = useTheme()
   const alertStyles = theme.get('modal.alert')
-  const dismissedCBRef = useRef()
 
   return (
     <BaseModal
       className={`ef-modal-alert`}
-      dismissedCBRef={dismissedCBRef}
-      styles={alertStyles}
       title={title}
       visible={visible}
-    >
-      <Body
-        onButtonPress={useCallback(
-          () => checkCall(dismissedCBRef.current, true),
-          [dismissedCBRef?.current]
-        )}
-        styles={alertStyles.content.body}
+      Body={<Body
+        styles={alertStyles?.content?.body}
         message={message}
-      />
-    </BaseModal>
+      />}
+      Footer={
+        <Footer
+          styles={alertStyles?.content?.footer}
+          onButtonPress={hideActiveModal}
+        />
+      }
+    />
   )
 }
 
@@ -43,9 +41,8 @@ export const Alert = ({ visible, title, message }) => {
  * @param {object} props
  * @param {object} props.styles
  * @param {string} props.message - string to display
- * @param {Function} props.onButtonPress
  */
-const Body = ({ styles, message, onButtonPress }) => {
+const Body = ({ styles, message }) => {
   return (
     <View
       style={styles?.main}
@@ -62,13 +59,24 @@ const Body = ({ styles, message, onButtonPress }) => {
           { message }
         </Text>
       </ScrollView>
-      <EvfButton
-        className={`ef-modal-alert-button`}
-        type={'primary'}
-        styles={styles?.button}
-        onClick={onButtonPress}
-        text={'OK'}
-      />
     </View>
+  )
+}
+
+/**
+ * Footer
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {Function} props.onButtonPress
+ */
+const Footer = ({ styles, onButtonPress }) => {
+  return (
+    <EvfButton
+      className={`ef-modal-alert-button`}
+      type={'primary'}
+      styles={styles?.button}
+      onClick={onButtonPress}
+      text={'OK'}
+    />
   )
 }

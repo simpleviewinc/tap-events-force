@@ -3,6 +3,7 @@ import { groupBookingReducer } from './groupBookingReducer'
 import { GroupBookingContext } from './groupBookingContext'
 import { useInitialBookingState } from './hooks/useInitialBookingState'
 import { updateSessionBooking } from './actions/updateSessionBooking'
+import { reset } from './actions/reset'
 
 /**
  * The context-provider for the group booking state. Provides access to the state object and actions
@@ -21,8 +22,9 @@ export const GroupBookingProvider = ({ session, children }) => {
   const actions = useMemo(
     () => ({
       updateSessionBooking: id => updateSessionBooking(dispatch, id),
+      reset: () => reset(dispatch, initialState),
     }),
-    [dispatch]
+    [ dispatch, initialState ]
   )
 
   const contextValue = useMemo(() => ({ state, actions }), [ state, actions ])

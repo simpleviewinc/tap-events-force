@@ -1,16 +1,16 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { withAppHeader } from 'SVComponents'
 import { SessionsContainer } from './sessionsContainer'
-import { displayName } from 'SVConfig'
+import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 import { isNative } from 'SVUtils/platform/isNative'
 import { TestData } from 'SVComponents/testData'
-import { getURLParam, get } from '@keg-hub/jsutils'
+import { getURLParam, get, isNum } from '@keg-hub/jsutils'
+import { displayName } from 'SVConfig'
 import {
   useMockBookingRequest,
   useMockWaitingRequest,
 } from '../mocks/eventsforce/callbacks/useMockBookingCB'
 import testData from '../mocks/eventsforce/testData.js'
-import * as bookingStatesTestData from '../mocks/eventsforce/bookingStates'
 import { evfModalBuilder } from '../mocks/eventsforce/evfModalBuilder'
 
 const mockCallbacks = {
@@ -18,7 +18,18 @@ const mockCallbacks = {
 }
 
 /**
- * Returns mock data for rootContainer, depending on if the state url
+ * Provides a booking delay value and setter, whose default
+ * is 1 second or the value from the `bookDelay` url param
+ * @return {Array} [ bookingDelayMs, setBookingDelaySeconds ]
+ */
+const useBookingDelay = () => {
+  const defaultDelay = getURLParam('bookDelay') ?? 1
+  const [ bookingDelayInSeconds, setBookingDelay ] = useState(defaultDelay)
+  return [ bookingDelayInSeconds * 1000, setBookingDelay ]
+}
+
+/**
+ * Returns initial data for rootContainer, depending on if the state url
  * parameter is set.
  */
 const useTestDataState = () => {
@@ -39,9 +50,18 @@ const useTestDataState = () => {
  */
 export const RootContainer = withAppHeader(displayName, props => {
   const [ mockData, setMockData ] = useTestDataState()
+  const [ bookingDelay, setBookingDelay ] = useBookingDelay()
 
-  const mockBookRequest = useMockBookingRequest(setMockData)
-  const mockWaitRequest = useMockWaitingRequest(setMockData)
+  const mockBookRequest = useMockBookingRequest(setMockData, { bookingDelay })
+  const mockWaitRequest = useMockWaitingRequest(setMockData, { bookingDelay })
+
+  const onSave = useCallback(
+    (nextData, { bookingDelay }) => {
+      setMockData(nextData)
+      isNum(bookingDelay) && setBookingDelay(bookingDelay)
+    },
+    [ setMockData, setBookingDelay ]
+  )
   const [modalParentProps] = useState({ className: 'evf-modal' })
 
   // IMPORTANT - should not be imported into the main sessions component export
@@ -56,7 +76,7 @@ export const RootContainer = withAppHeader(displayName, props => {
       { !isNative() && process.env.NODE_ENV === 'development' && (
         <TestData
           data={mockData}
-          onSave={setMockData}
+          onSave={onSave}
         />
       ) }
       <SessionsContainer
