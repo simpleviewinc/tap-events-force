@@ -14,11 +14,7 @@ export const LabelTag = ({ label = {}, styles }) => {
   return (
     <View
       className={[ 'ef-label-tag', label.className ]}
-      style={[
-        theme.get(`eventsForce.labels.${label.className}`),
-        theme.get('labelTag.main'),
-        styles,
-      ]}
+      style={[ theme.get('labelTag.main'), styles ]}
     />
   )
 }
