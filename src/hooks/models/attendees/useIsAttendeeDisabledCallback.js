@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useBookingTimeConflicts } from 'SVHooks/booking/useBookingTimeConflicts'
+import { useIsRegisteredForDayCallback } from './useIsRegisteredForDayCallback'
 import { Values } from 'SVConstants'
 import { validate, isObj, isArr } from '@keg-hub/jsutils'
 
@@ -30,25 +31,6 @@ const useIsTimeBlockedCallback = (session, attendees) => {
 }
 
 /**
- * @param {Number} dayNumber - day to compare against
- * @param {Array<import('SVModels/Attendee').Attendee>} attendees
- * @return {Function} a callback of form (attendeeId) -> boolean. Returns true if
- * the attendee with `attendeeId` is registered to attend the event on the same day
- * as `dayNumber`.
- */
-const useIsRegisteredForDayCallback = (dayNumber, attendees) => {
-  return useCallback(
-    attendeeId => {
-      const attendee = attendees.find(
-        att => att.bookedTicketIdentifier === attendeeId
-      )
-      return attendee && attendee.bookedDays?.includes(dayNumber)
-    },
-    [ dayNumber, attendees ]
-  )
-}
-
-/**
  * Helper for determining if an attendee is restricted from booking a session
  *  - checks both the restricted attendee list and searches for time conflicts with other sessions
  * @param {import('SVModels/Session').Session} session
@@ -72,8 +54,8 @@ export const useIsAttendeeDisabledCallback = (session, attendees) => {
 
   return useCallback(
     attendeeId =>
-      !isBookable(attendeeId) ||
       isTimeBlocked(attendeeId) ||
+      !isBookable(attendeeId) ||
       !isRegisteredForDay(attendeeId),
     [ isBookable, isTimeBlocked, isRegisteredForDay ]
   )
