@@ -25,7 +25,7 @@ export const VersionDisplay = ({ version = tapPackage.version }) => {
 const styles = {
   main: {
     position: 'fixed',
-    zIndex: -1,
+    zIndex: 999999,
     padding: 8,
     borderRadius: 8,
     bottom: 0,
