@@ -4,6 +4,7 @@
   "description": "Events Force Tap for the Keg",
   "main": "index.js",
   "author": "Lance Tipton <lancetipton04@gmail.com>",
+  "homepage": "https://github.com/simpleviewinc/tap-events-force",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
