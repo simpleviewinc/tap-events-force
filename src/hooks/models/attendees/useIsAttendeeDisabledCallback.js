@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useRestrictedAttendeeIds } from 'SVHooks/booking/useRestrictedAttendeeIds'
 import { useBookingTimeConflicts } from 'SVHooks/booking/useBookingTimeConflicts'
+import { useIsRegisteredForDayCallback } from './useIsRegisteredForDayCallback'
 import { Values } from 'SVConstants'
 import { validate, isObj, isArr } from '@keg-hub/jsutils'
 
@@ -46,9 +47,16 @@ export const useIsAttendeeDisabledCallback = (session, attendees) => {
 
   const { isBookable } = useRestrictedAttendeeIds(session?.identifier)
   const isTimeBlocked = useIsTimeBlockedCallback(session, attendees)
+  const isRegisteredForDay = useIsRegisteredForDayCallback(
+    session?.dayNumber,
+    attendees
+  )
 
   return useCallback(
-    attendeeId => !isBookable(attendeeId) || isTimeBlocked(attendeeId),
-    [ isBookable, isTimeBlocked ]
+    attendeeId =>
+      isTimeBlocked(attendeeId) ||
+      !isBookable(attendeeId) ||
+      !isRegisteredForDay(attendeeId),
+    [ isBookable, isTimeBlocked, isRegisteredForDay ]
   )
 }
