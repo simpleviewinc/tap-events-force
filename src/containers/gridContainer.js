@@ -32,7 +32,7 @@ const LeftHeaderText = ({ timeString, style }) => {
  */
 export const GridContainer = props => {
   const { sessions, labels, timeBlock, enableFreeLabel, militaryTime } = props
-  if (!sessions || !sessions.length) return null
+  if (!sessions?.length) return null
 
   const theme = useTheme()
   const gridStyles = theme.get('gridContainer')
@@ -62,16 +62,15 @@ export const GridContainer = props => {
         className={`ef-grid-item`}
         style={gridStyles?.content?.items}
       >
-        { sessions &&
-          sessions.map(session => (
-            <GridItem
-              enableFreeLabel={enableFreeLabel}
-              key={session.identifier}
-              labels={labelsMemo}
-              session={session}
-              militaryTime={militaryTime}
-            />
-          )) }
+        { sessions.map(session => (
+          <GridItem
+            enableFreeLabel={enableFreeLabel}
+            key={session.identifier}
+            labels={labelsMemo}
+            session={session}
+            militaryTime={militaryTime}
+          />
+        )) }
       </View>
     </View>
   )

@@ -9,6 +9,7 @@ import {
 } from 'SVActions/session/filters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { GridContainer } from 'SVContainers/gridContainer'
+import { EmptyDayMessage } from 'SVComponents/grid/emptyDayMessage'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useAgenda } from 'SVHooks/models/useAgenda'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
@@ -168,6 +169,7 @@ const ItemHeaderRight = ({ styles, onClick }) => {
     </View>
   )
 }
+
 /**
  * Sets up the container for a group of sessions on a specific day
  * @param {object} props
@@ -183,9 +185,9 @@ const AgendaSessions = React.memo(
 
     return (
       <ScrollView>
-        { daySessions.map(daySession => {
-          return (
-            // creates a gridContainer separated by hour blocks
+        { daySessions.length ? (
+          // creates a gridContainer separated by hour blocks
+          daySessions.map(daySession => (
             <GridContainer
               key={daySession?.timeBlock}
               sessions={daySession?.sessions}
@@ -194,8 +196,10 @@ const AgendaSessions = React.memo(
               enableFreeLabel={enableFreeLabel}
               militaryTime={militaryTime}
             />
-          )
-        }) }
+          ))
+        ) : (
+          <EmptyDayMessage />
+        ) }
       </ScrollView>
     )
   }
