@@ -39,6 +39,7 @@ export const LabelButton = ({
   toggledOn = true,
 }) => {
   const theme = useTheme()
+  console.log(theme)
 
   const extraStyles = useMemo(
     () => ({
