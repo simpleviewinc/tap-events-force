@@ -13,24 +13,13 @@ const { SESSION_BOOKING_LABEL_MAP } = Values
  * @param {Object} extra - extra styles to add
  */
 const buildStyles = (theme, extra) => {
-  const labelStyle = theme.get(`eventsForce.labels.${extra.className}`)
-
-  // updated button styles with the eventsForce styles
-  const buttonStyles = {
-    default: { main: labelStyle },
-    hover: { main: labelStyle },
-    active: { main: labelStyle },
-  }
   return theme.join(
     theme.get('labelButton'),
     {
       selected: {
-        ...buttonStyles,
-        active: { main: { ...labelStyle, opacity: 0.4 } },
+        active: { main: { opacity: 0.4 } },
       },
-      unselected: {
-        ...buttonStyles,
-      },
+      unselected: {},
     },
     extra.styles
   )
@@ -50,8 +39,8 @@ export const LabelButton = ({
   toggledOn = true,
 }) => {
   const theme = useTheme()
+  console.log(theme)
 
-  // merge with eventsForce color style and custom button style if exists
   const extraStyles = useMemo(
     () => ({
       styles,
@@ -63,14 +52,12 @@ export const LabelButton = ({
   // build the main style for the button, memoized
   const mainStyle = useStylesCallback(
     buildStyles,
-    [
-      label.className,
-      theme.get('labelButton'),
-      theme.get(`eventsForce.labels.${label.className}`),
-    ],
+    [ label.className, theme.get('labelButton') ],
     extraStyles
   )
+
   const clickHandler = () => checkCall(onPress, label)
+
   return (
     <Button
       className={label.className}
