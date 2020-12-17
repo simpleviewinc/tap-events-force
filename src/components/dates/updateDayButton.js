@@ -44,7 +44,7 @@ export const UpdateDayButton = props => {
   return (
     <View className={`ef-sessions-date-button-${type}`}>
       <ChevronIcon
-        onPress={onDayChange}
+        onPress={!disabled && onDayChange}
         style={iconStyles}
         type={type}
       />

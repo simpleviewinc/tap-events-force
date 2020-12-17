@@ -1,32 +1,42 @@
 import { deepFreeze } from '@keg-hub/jsutils'
 
+// categories set by the props
+const EVF_CATEGORIES = {
+  AGENDA_DAYS: 'agendaDays',
+  BOOKING: 'booking',
+  ATTENDEES: 'attendees',
+  LABELS: 'labels',
+  LOCATIONS: 'locations',
+  PRESENTERS: 'presenters',
+  SESSIONS: 'sessions',
+  BOOKED_TICKETS: 'bookedTickets',
+  TICKETS: 'tickets',
+  ALERT: 'alert',
+}
+
+// categories set internally, not by exposed props
+const INTERNAL_CATEGORIES = {
+  FILTERS: 'filters',
+  ACTIVE_SESSION: 'activeSession',
+  PENDING_SESSION: 'pendingSession',
+  AGENDA_SESSIONS: 'agendaSessions',
+  ATTENDEES_BY_TICKET: 'attendeesByTicket',
+  RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
+  MODALS: 'modals',
+  SETTINGS: 'settings',
+  DISPLAY_PROPERTIES: 'displayProperties',
+}
+
 /**
  * Constant values
  */
 export const Values = deepFreeze({
+  EVF_CATEGORIES,
+  INTERNAL_CATEGORIES,
   CATEGORIES: {
-    ACTIVE_SESSION: 'activeSession',
-    PENDING_SESSION: 'pendingSession',
-    AGENDA_SESSIONS: 'agendaSessions',
-    ATTENDEES_BY_TICKET: 'attendeesByTicket',
-    RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
-    BOOKING: 'booking',
-    AGENDA_DAYS: 'agendaDays',
-    ATTENDEES: 'attendees',
-    EVENTS: 'events',
-    FILTERS: 'filters',
-    LABELS: 'labels',
-    LOCATIONS: 'locations',
-    MODALS: 'modals',
-    PRESENTERS: 'presenters',
-    SESSIONS: 'sessions',
-    SETTINGS: 'settings',
-    ALERT: 'alert',
-    BOOKED_TICKETS: 'bookedTickets',
-    TICKETS: 'tickets',
-    DISPLAY_PROPERTIES: 'displayProperties',
+    ...EVF_CATEGORIES,
+    ...INTERNAL_CATEGORIES,
   },
-
   SUB_CATEGORIES: {
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',

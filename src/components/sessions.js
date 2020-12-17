@@ -79,6 +79,7 @@ const buildStylesHeaderRight = (theme, custom) => {
  */
 const SessionsHeader = ({ styles, onDayChange, labels }) => {
   const {
+    agendaLength,
     currentAgendaDay = {},
     currentDayNumber,
     isLatestDay,
@@ -100,7 +101,7 @@ const SessionsHeader = ({ styles, onDayChange, labels }) => {
           date={get(currentAgendaDay, 'date')}
           dayNumber={currentDayNumber}
           disableDecrement={isFirstDay}
-          disableIncrement={isLatestDay}
+          disableIncrement={isLatestDay || !agendaLength}
           onDecrement={decrement}
           onIncrement={increment}
         />
