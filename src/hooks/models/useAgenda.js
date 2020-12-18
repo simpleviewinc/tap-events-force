@@ -27,6 +27,7 @@ export const useAgenda = () => {
     latestAgendaDay,
     currentDayNumber,
     isLatestDay: currentDayIsLatest,
+    agendaLength: agendaDays?.length ?? 0,
     isFirstDay,
   }
 }

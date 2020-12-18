@@ -1,6 +1,7 @@
 import { dispatch, getStore } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 import { buildHourSessionsMap } from 'SVUtils/models/sessions/buildHourSessionsMap'
+import { validate, isArr } from '@keg-hub/jsutils'
 
 const { CATEGORIES } = Values
 /**
@@ -9,7 +10,9 @@ const { CATEGORIES } = Values
  * @param {Array} agendaDays
  */
 export const setAgendaSessions = (sessions, agendaDays) => {
-  if (!sessions || !agendaDays) return
+  const [valid] = validate({ sessions, agendaDays }, { $default: isArr })
+  if (!valid) return
+
   const { items } = getStore()?.getState()
   const military = items.settings?.displayProperties?.timeFormat === '24'
   // object will look something like:

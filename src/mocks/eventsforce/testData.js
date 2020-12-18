@@ -430,7 +430,7 @@ export default {
       bookedTicketIdentifier: '4',
       name: 'Pepe Silvia',
       attendeeCategoryIdentifier: '1',
-      bookedDays: [],
+      bookedDays: [1],
       bookedSessions: [],
     },
     {

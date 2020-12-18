@@ -1,3 +1,5 @@
+import { colors } from 'SVTheme/colors'
+
 const contentStyle = {
   fontSize: 12,
   fontWeight: '500',
@@ -14,6 +16,7 @@ const mainStyle = {
   },
   $all: {
     $xsmall: {
+      backgroundColor: colors.gray,
       margin: 0,
       minHeight: 30,
       height: 30,

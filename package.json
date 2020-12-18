@@ -20,7 +20,6 @@
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
     "build:web": "clean:sessions:build; GENERATE_SOURCEMAP=false  cd node_modules/keg-core; yarn build:web",
-    "build:theme": "bash scripts/buildEventsForceTheme.sh",
     "clean": "cd node_modules/keg-core; yarn clean",
     "clean:full": "yarn clean; yarn clean:nm; yarn install",
     "clean:nm": "rimraf ./yarn.lock; rimraf ./package.lock; rimraf node_modules",
@@ -42,7 +41,6 @@
     "dev": "nodemon --watch ./apps --watch ./src --exec yarn build"
   },
   "dependencies": {
-    "css-to-react-native-transform": "1.9.0",
     "keg-core": "npm:@keg-hub/keg-core@8.0.0"
   },
   "devDependencies": {
