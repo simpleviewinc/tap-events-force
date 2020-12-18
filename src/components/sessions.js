@@ -8,7 +8,6 @@ import {
   clearSelectedFilters,
 } from 'SVActions/session/filters'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
-import { GridContainer } from 'SVContainers/gridContainer'
 import { EmptyDayMessage } from 'SVComponents/grid/emptyDayMessage'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useAgenda } from 'SVHooks/models/useAgenda'
@@ -18,6 +17,7 @@ import { get } from '@keg-hub/jsutils'
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
 import { useCreateModal } from 'SVHooks/modal'
+import { SessionList } from 'SVComponents/sessionList'
 import { useBookingRequestEvent } from 'SVHooks/booking/useBookingRequestEvent'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -71,6 +71,8 @@ const buildStylesHeaderRight = (theme, custom) => {
   )
 }
 
+// TODO - Move this to the sessionList component
+// Add it as each section header
 /**
  * Component that will hold the day toggle and filter button
  * @param {object} props
@@ -183,25 +185,6 @@ const AgendaSessions = React.memo(
   ({ labels, daySessions, enableFreeLabel, militaryTime }) => {
     if (!daySessions?.length) return <EmptyDayMessage />
 
-    return (
-      <ScrollView>
-        { daySessions.map(daySession => {
-          return (
-            // creates a gridContainer separated by hour blocks
-            <GridContainer
-              key={daySession?.timeBlock}
-              sessions={daySession?.sessions}
-              labels={labels}
-              timeBlock={daySession?.timeBlock}
-              enableFreeLabel={enableFreeLabel}
-              militaryTime={militaryTime}
-            />
-          )
-        }) }
-      </ScrollView>
-    )
-  }
-)
 
 /**
  * SessionComponent
@@ -253,12 +236,12 @@ export const Sessions = props => {
         styles={sessionsStyles}
         onDayChange={onDayChange}
       />
-      <AgendaSessions
+      <SessionList
         labels={labels}
+        onDayChange={onDayChange}
         enableFreeLabel={enableFreeLabel}
-        daySessions={
-          agendaSessions[settings?.agendaSettings?.activeDayNumber ?? 1]
-        }
+        settings={settings}
+        sessions={agendaSessions}
         militaryTime={settings?.displayProperties?.timeFormat === '24'}
       />
       <ModalManager />
