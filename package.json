@@ -38,7 +38,8 @@
     "eslint:watch": "onchange '**/*.{js,jsx}' -- eslint --config ./configs/eslintrc.config.js {{changed}} --fix",
     "analyze": "cd node_modules/keg-core; ANALYZE=true NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
     "build": "cd node_modules/keg-core; NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
-    "dev": "nodemon --watch ./apps --watch ./src --exec yarn build"
+    "dev": "nodemon --watch ./apps --watch ./src --exec yarn build",
+    "print:envs": "yarn keg print:envs ../../"
   },
   "dependencies": {
     "keg-core": "npm:@keg-hub/keg-core@8.0.0"
