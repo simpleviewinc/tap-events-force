@@ -43,6 +43,9 @@ module.exports = {
     },
     paths: {
       buildConfig: 'configs/build.config.js'
+    },
+    replace: {
+      FOO_BAR: JSON.stringify('foobar!')
     }
   },
   expo: {
