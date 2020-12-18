@@ -1,10 +1,9 @@
 import React from 'react'
 import { UpdateDayButton } from './updateDayButton'
-import { useTheme, useDimensions } from '@keg-hub/re-theme'
+import { useTheme } from '@keg-hub/re-theme'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { View, Text } from '@keg-hub/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
-import { useDateString } from 'SVHooks/dates/useDateString'
 
 /**
  * Simple day toggling component
@@ -28,14 +27,7 @@ export const DayToggle = props => {
 
   const theme = useTheme()
   const dayToggleStyles = theme.get('dayToggle')
-
-  const dims = useDimensions()
-  const dateStr = useDateString(
-    date,
-    isMobileSize(theme) || dims.width <= 600,
-    dims.width <= 800
-  )
-  const dayText = `Day ${dayNumber} - ${dateStr}`
+  const dayText = `Day ${dayNumber}`
 
   return (
     <View

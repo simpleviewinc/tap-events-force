@@ -3,6 +3,7 @@ import React, { useMemo } from 'react'
 import { View, Text } from '@keg-hub/keg-components'
 import { SectionList } from 'react-native'
 import { GridContainer } from 'SVContainers/gridContainer'
+import { SessionsHeader } from 'SVComponents/sessionsHeader'
 
 /**
  * Hook to memoize the sessions for a day, and add a key
@@ -14,7 +15,7 @@ const useSessionsSections = (sessions) => {
   return useMemo(() => {
     return reduceObj(sessions, (dayNum, timeBlocks, sections) => {
       sections.push({
-        title: `Day ${dayNum}`,
+        dayNum,
         data: timeBlocks.map(timeBlock => {
           timeBlock.key = `${dayNum}-${timeBlock.timeBlock}`
           return timeBlock
@@ -27,7 +28,25 @@ const useSessionsSections = (sessions) => {
   }, [sessions])
 }
 
-// TODO: replace renderSectionHeader code with SessionsHeader from sessions component
+/**
+TODO: Find way to set height of section list wrapper
+Without a height set, the sticky section headers don't work
+body {
+  overflow: hidden;
+  height: 100vh;
+}
+
+keg-view.section-list-wrapper > div {
+  max-height: 100vh;
+}
+
+keg-view.section-list-wrapper > div > div {
+  flex: 1;
+  overflow-y: scroll;
+}
+
+*/
+
 
 /**
  * SessionList - Container for all sessions separated by day
@@ -48,19 +67,17 @@ export const SessionList = props => {
   const sections = useSessionsSections(sessions)
 
   return (
-    <View>
+    <View className='section-list-wrapper' >
       <SectionList
-        stickySectionHeadersEnabled
+        stickySectionHeadersEnabled={true}
         sections={sections}
-        renderSectionHeader={props => {
-          const { section: { title } } = props
-
-          return (
-            <View style={{ height: 40, backgroundColor: "blue" }}>
-              <Text>{title}</Text>
-            </View>
-          )
-        }}
+        renderSectionHeader={({ section: { dayNum } }) => (
+          <SessionsHeader
+            dayNum={dayNum}
+            labels={itemProps.labels}
+            onDayChange={itemProps.onDayChange}
+          />
+        )}
         renderItem={({ item }) => (
           <GridContainer {...itemProps} {...item} />
         )}
