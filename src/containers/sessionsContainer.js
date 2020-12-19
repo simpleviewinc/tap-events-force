@@ -36,7 +36,7 @@ export const SessionsContainer = props => {
 
   return isReady ? (
     <ModalProvider component={ModalComponent}>
-      { !showVersion && <VersionDisplay /> }
+      { showVersion && <VersionDisplay /> }
       <Sessions
         onDayChange={onDayChange}
         sessionAgendaProps={sessionAgendaProps}
