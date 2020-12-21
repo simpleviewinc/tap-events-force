@@ -1,5 +1,9 @@
+import { colors } from '../../colors'
+
 export const emptyDayMessage = {
   main: {
-    alignSelf: 'center',
+    alS: 'center',
+    txAl: 'center',
+    c: colors.gray,
   },
 }

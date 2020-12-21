@@ -181,13 +181,13 @@ const ItemHeaderRight = ({ styles, onClick }) => {
  */
 const AgendaSessions = React.memo(
   ({ labels, daySessions, enableFreeLabel, militaryTime }) => {
-    if (!daySessions) return null
+    if (!daySessions?.length) return <EmptyDayMessage />
 
     return (
       <ScrollView>
-        { daySessions.length ? (
-          // creates a gridContainer separated by hour blocks
-          daySessions.map(daySession => (
+        { daySessions.map(daySession => {
+          return (
+            // creates a gridContainer separated by hour blocks
             <GridContainer
               key={daySession?.timeBlock}
               sessions={daySession?.sessions}
@@ -196,10 +196,8 @@ const AgendaSessions = React.memo(
               enableFreeLabel={enableFreeLabel}
               militaryTime={militaryTime}
             />
-          ))
-        ) : (
-          <EmptyDayMessage />
-        ) }
+          )
+        }) }
       </ScrollView>
     )
   }

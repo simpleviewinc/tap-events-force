@@ -1,8 +1,8 @@
 import React from 'react'
 import { useStyle } from '@keg-hub/re-theme'
-import { Text } from '@keg-hub/keg-components'
+import { H5 } from '@keg-hub/keg-components'
 
-const defaultMessage = 'No sessions to display.'
+const defaultMessage = 'There are no sessions to display for this day'
 
 /**
  * Message to display when the current day has no sessions scheduled
@@ -11,5 +11,12 @@ const defaultMessage = 'No sessions to display.'
  */
 export const EmptyDayMessage = ({ message = defaultMessage }) => {
   const styles = useStyle('emptyDayMessage')
-  return <Text style={styles.main}>{ message }</Text>
+  return (
+    <H5
+      className={'ef-sessions-empty-text'}
+      style={styles?.main}
+    >
+      { message }
+    </H5>
+  )
 }
