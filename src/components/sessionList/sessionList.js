@@ -1,9 +1,10 @@
 import { reduceObj, noPropArr, noPropObj } from '@keg-hub/jsutils'
-import React, { useMemo } from 'react'
-import { View, Text } from '@keg-hub/keg-components'
-import { SectionList } from 'react-native'
+import React, { useMemo, useState } from 'react'
+import { View, Text, Divider } from '@keg-hub/keg-components'
+import { SectionList, SafeAreaView } from 'react-native'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { SessionsHeader } from 'SVComponents/sessionsHeader'
+import { useTheme } from '@keg-hub/re-theme'
 
 /**
  * Hook to memoize the sessions for a day, and add a key
@@ -29,26 +30,6 @@ const useSessionsSections = (sessions) => {
 }
 
 /**
-TODO: Find way to set height of section list wrapper
-Without a height set, the sticky section headers don't work
-body {
-  overflow: hidden;
-  height: 100vh;
-}
-
-keg-view.section-list-wrapper > div {
-  max-height: 100vh;
-}
-
-keg-view.section-list-wrapper > div > div {
-  flex: 1;
-  overflow-y: scroll;
-}
-
-*/
-
-
-/**
  * SessionList - Container for all sessions separated by day
  * @param {object} props
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
@@ -63,26 +44,39 @@ keg-view.section-list-wrapper > div > div {
 export const SessionList = props => {
   const { settings, sessions, ...itemProps } = props
   const currentDay = settings.agendaSettings.activeDayNumber
+  const [ dayNum, setDayNum ] = useState(currentDay)
   
   const sections = useSessionsSections(sessions)
+  const theme = useTheme()
+  const styles = theme.get('sessionList')
+
+  const onScroll = (event) => {
+    console.log(event)
+  }
 
   return (
-    <View className='section-list-wrapper' >
-      <SectionList
-        stickySectionHeadersEnabled={true}
-        sections={sections}
-        renderSectionHeader={({ section: { dayNum } }) => (
-          <SessionsHeader
-            dayNum={dayNum}
-            labels={itemProps.labels}
-            onDayChange={itemProps.onDayChange}
-          />
-        )}
-        renderItem={({ item }) => (
-          <GridContainer {...itemProps} {...item} />
-        )}
-      />
-    </View>
+      <View
+        className='section-list-wrapper'
+        style={styles?.main}
+      >
+        <SessionsHeader
+          dayNum={dayNum}
+          labels={itemProps.labels}
+          onDayChange={itemProps.onDayChange}
+        />
+        <SectionList
+          sections={sections}
+          onScroll={onScroll}
+          renderSectionHeader={({ section: { dayNum } }) => {
+            return dayNum !== '1' && (
+              <Divider style={styles?.content?.divider} />
+            )
+          }}
+          renderItem={({ item }) => (
+            <GridContainer {...itemProps} {...item} />
+          )}
+        />
+      </View>
   )
 
 }

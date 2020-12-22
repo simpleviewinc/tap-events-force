@@ -21,7 +21,7 @@ export const sessions = {
     $web: {
       width: '100vw',
       flex: 1,
-      overflowX: 'hidden',
+      // overflowX: 'hidden',
       maxWidth: '100%',
     },
     $native: {
@@ -39,11 +39,18 @@ export const sessions = {
     },
   },
   content: {
+    headerContainer: {
+      top: 0,
+      position: 'sticky',
+      zIndex: 1,
+      backgroundColor: colors.white01,
+    },
     header: {
       main: {
         $all: {
           width: '100%',
-          marginVertical: 20,
+          marginTop: 0,
+          marginBottom: 10,
           backgroundColor: colors.transparent,
           flexDirection: 'row',
           justifyContent: 'center',
@@ -125,6 +132,19 @@ export const sessions = {
             }),
           },
         },
+      },
+    },
+    list: {
+      main: {
+        maxWidth: '100vw',
+        position: 'relative',
+        margin: '10em auto 30em',
+        overscrollBehavior: 'contain',
+      },
+      content: {
+        divider: {
+          backgroundColor: colors.darkGray,
+        }
       },
     },
   },
