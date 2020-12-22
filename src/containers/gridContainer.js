@@ -30,7 +30,7 @@ const LeftHeaderText = ({ timeString, style }) => {
  * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
  * @param {boolean} props.militaryTime - whether to display time in 12 hr or 24 hr format
  */
-export const GridContainer = props => {
+export const GridContainer = React.memo(props => {
   const { sessions, labels, timeBlock, enableFreeLabel, militaryTime } = props
   if (!sessions?.length) return null
 
@@ -74,4 +74,4 @@ export const GridContainer = props => {
       </View>
     </View>
   )
-}
+})

@@ -6,10 +6,8 @@ import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { applySessionFilters } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { noOp } from 'SVUtils/helpers/method/noop'
-import { Values } from 'SVConstants'
-import { SessionList } from 'SVComponents/sessionList'
+import { SessionsList } from 'SVComponents/sessionsList'
 import { useBookingRequestEvent } from 'SVHooks/booking/useBookingRequestEvent'
-const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
  * SessionComponent
@@ -56,7 +54,7 @@ export const Sessions = props => {
       className={'ef-sessions-background'}
       style={sessionsStyles.main}
     >
-      <SessionList
+      <SessionsList
         labels={labels}
         onDayChange={onDayChange}
         enableFreeLabel={enableFreeLabel}

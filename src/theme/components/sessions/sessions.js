@@ -1,4 +1,4 @@
-import { colors } from '../colors'
+import { colors } from '../../colors'
 import { deepMerge } from '@keg-hub/jsutils'
 
 const filterButtonDefault = {
@@ -144,7 +144,7 @@ export const sessions = {
       content: {
         divider: {
           backgroundColor: colors.darkGray,
-        }
+        },
       },
     },
   },

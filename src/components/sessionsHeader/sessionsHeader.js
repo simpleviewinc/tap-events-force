@@ -1,6 +1,5 @@
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
-import { get, noOp } from '@keg-hub/jsutils'
 import { useCreateModal } from 'SVHooks/modal'
 import React, { useCallback, useMemo } from 'react'
 import { useAgenda } from 'SVHooks/models/useAgenda'
@@ -9,7 +8,10 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { ItemHeader, Button, View } from '@keg-hub/keg-components'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 import { useTheme, useDimensions, useStylesCallback } from '@keg-hub/re-theme'
-import { applySessionFilters, clearSelectedFilters } from 'SVActions/session/filters'
+import {
+  applySessionFilters,
+  clearSelectedFilters,
+} from 'SVActions/session/filters'
 
 const { CATEGORIES, MODAL_TYPES, SUB_CATEGORIES } = Values
 
@@ -123,14 +125,8 @@ const ItemHeaderRight = ({ styles, onClick }) => {
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */
-export const SessionsHeader = ({ dayNum, onDayChange, labels }) => {
-  const {
-    agendaLength,
-    currentAgendaDay = {},
-    currentDayNumber,
-    isLatestDay,
-    isFirstDay,
-  } = useAgenda()
+export const SessionsHeader = ({ currentDay, onDayChange, labels }) => {
+  const { agendaLength, isLatestDay, isFirstDay } = useAgenda()
 
   const theme = useTheme()
   const styles = theme.get('sessions')
@@ -141,12 +137,12 @@ export const SessionsHeader = ({ dayNum, onDayChange, labels }) => {
   const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
 
   return (
-      <View style={styles.content?.headerContainer}>
+    <View style={styles.content?.headerContainer}>
       <ItemHeader
         styles={headerStyles}
         CenterComponent={
           <DayToggle
-            dayNumber={dayNum}
+            dayNumber={currentDay}
             disableDecrement={isFirstDay}
             disableIncrement={isLatestDay || !agendaLength}
             onDecrement={decrement}
@@ -163,4 +159,3 @@ export const SessionsHeader = ({ dayNum, onDayChange, labels }) => {
     </View>
   )
 }
-
