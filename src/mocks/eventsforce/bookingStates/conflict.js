@@ -89,6 +89,10 @@ export const conflict = {
       ...conflictTestData,
       sessions: sessions(),
     },
+    unlimited: {
+      ...conflictTestData,
+      sessions: sessions(true),
+    },
   },
   group: {
     limited: {

@@ -1,0 +1,113 @@
+import { getDisabled } from '../getDisabled'
+import { conflict as mockData } from '../../../../mocks/eventsforce/bookingStates/conflict'
+import { Values } from 'SVConstants'
+
+const { SESSION_BOOKING_STATES } = Values
+
+const singleMock = mockData.single
+const groupMock = mockData.group
+
+describe('getDisabled', () => {
+  afterAll(() => jest.clearAllMocks())
+  describe('GENERAL', () => {
+    it('Should return TRUE if there is a different session awaiting the booking request', () => {
+      const props = {
+        pendingSession: {
+          identifier: '1',
+        },
+        session: {
+          identifier: '2',
+        },
+      }
+      expect(getDisabled(props)).toBe(true)
+    })
+
+    it('Should return TRUE if session booking has been stopped', () => {
+      const props = {
+        session: {
+          bookingStopped: true,
+        },
+      }
+      expect(getDisabled(props)).toBe(true)
+    })
+
+    it('Should return FALSE if remainingPlaces && waitingListAvailable exists', () => {
+      const props = {
+        session: {
+          allowBooking: true,
+          capacity: {
+            remainingPlaces: 5,
+            isWaitingListAvailable: true,
+          },
+        },
+      }
+      expect(getDisabled(props)).toBe(false)
+    })
+  })
+
+  describe('SINGLE', () => {
+    it('Should return TRUE if no other attendees can book current session (bookableCount)', () => {
+      const sessionLimited = {
+        session: singleMock.limited.sessions[0],
+        bookableCount: 0,
+        bookingMode: 'single',
+        timeConflicts: false,
+      }
+      const sessionUnlimited = {
+        ...sessionLimited,
+        session: singleMock.unlimited.sessions[0],
+      }
+      expect(getDisabled(sessionLimited)).toBe(true)
+      expect(getDisabled(sessionUnlimited)).toBe(true)
+    })
+
+    it('Should return TRUE if current state is `SELECT` && there`s a time conflict', () => {
+      const sessionLimited = {
+        session: singleMock.limited.sessions[0],
+        bookableCount: 1,
+        bookingMode: 'single',
+        timeConflicts: true,
+      }
+      const sessionUnlimited = {
+        ...sessionLimited,
+        session: singleMock.unlimited.sessions[0],
+      }
+      expect(getDisabled(sessionLimited, SESSION_BOOKING_STATES.SELECT)).toBe(
+        true
+      )
+      expect(getDisabled(sessionUnlimited, SESSION_BOOKING_STATES.SELECT)).toBe(
+        true
+      )
+    })
+  })
+
+  describe('GROUP', () => {
+    it('Should return TRUE if no attendee can book it', () => {
+      const sessionLimited = {
+        session: groupMock.limited.sessions[0],
+        bookableCount: 0,
+        bookingMode: 'group',
+      }
+      const sessionUnlimited = {
+        ...sessionLimited,
+        session: groupMock.unlimited.sessions[0],
+      }
+
+      expect(getDisabled(sessionLimited)).toBe(true)
+      expect(getDisabled(sessionUnlimited)).toBe(true)
+    })
+
+    it('Should return TRUE if session doesn`t allow booking', () => {
+      const props = {
+        session: {
+          ...groupMock.limited.sessions[0],
+          allowBooking: false,
+        },
+        bookableCount: 0,
+        bookingMode: 'group',
+      }
+
+      expect(getDisabled(props)).toBe(true)
+    })
+  })
+})
