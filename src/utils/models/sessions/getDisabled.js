@@ -52,9 +52,13 @@ export const getDisabled = (
   const bookingStopped = getBookingStopped(session)
 
   // no capacity if bookableCount === 0 OR waitingList with spaces is not available
-  const noCapacity = exists(bookableCount)
-    ? !isPositive(bookableCount)
-    : !(capacity?.remainingPlaces && capacity?.isWaitingListAvailable)
+  const noCapacity =
+    (exists(bookableCount) && !isPositive(bookableCount)) ||
+    !(
+      capacity?.remainingPlaces ||
+      capacity?.isWaitingListAvailable ||
+      capacity?.isUnlimited
+    )
 
   // disable if there's no space left or if everyone in the group is booked on a conflicting session
   return !allowBooking || bookingStopped || noCapacity ? true : false

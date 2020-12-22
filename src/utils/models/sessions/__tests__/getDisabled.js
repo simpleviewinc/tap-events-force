@@ -31,7 +31,7 @@ describe('getDisabled', () => {
       expect(getDisabled(props)).toBe(true)
     })
 
-    it('Should return FALSE if remainingPlaces && waitingListAvailable exists', () => {
+    it('Should return FALSE if bookableCount DNE && (remainingPlaces OR waitingListAvailable exists)', () => {
       const props = {
         session: {
           allowBooking: true,
@@ -41,7 +41,25 @@ describe('getDisabled', () => {
           },
         },
       }
+      const withRemainingPlaces = {
+        session: {
+          ...props.session,
+          capacity: {
+            remainingPlaces: 5,
+          },
+        },
+      }
+      const withWaitingList = {
+        session: {
+          ...props.session,
+          capacity: {
+            isWaitingListAvailable: true,
+          },
+        },
+      }
       expect(getDisabled(props)).toBe(false)
+      expect(getDisabled(withRemainingPlaces)).toBe(false)
+      expect(getDisabled(withWaitingList)).toBe(false)
     })
   })
 
