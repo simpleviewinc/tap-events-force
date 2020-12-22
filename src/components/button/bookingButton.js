@@ -115,7 +115,7 @@ export const BookingButton = props => {
   const { session } = props
   const bookingModel = useBookingState(session)
   const selectSessionCb = useSelectSession(session, bookingModel)
-  // console.log(bookingModel, `${session.identifier}`)
+
   const pendingStyles = useStyle('button.bookingButton.pending')
 
   return (
