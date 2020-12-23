@@ -5,6 +5,9 @@ import { SessionsHeader } from 'SVComponents/sessionsHeader'
 import { reduceObj, checkCall } from '@keg-hub/jsutils'
 import { Divider, SectionList } from '@keg-hub/keg-components'
 import React, { useMemo, useRef, useCallback } from 'react'
+import { incrementDay, decrementDay } from 'SVActions/session/dates'
+
+const sectionOffset = 80
 
 /**
  * Hook to memoize the sessions for a day, and add a key
@@ -91,7 +94,7 @@ const useOnDayChange = (currentDay, onDayChange, listRef, sectionRefs) => {
         scrollList({
           listRef,
           // Add an offset because of our sticky header
-          offset: 80,
+          offset: sectionOffset,
           // Get the layout data for the element
           layout: normalizeLayout(...args),
         })
@@ -104,7 +107,7 @@ const useOnDayChange = (currentDay, onDayChange, listRef, sectionRefs) => {
       currentDay,
       onDayChange,
       listRef && listRef.current,
-      sectionRefs && sectionRefs.current && sectionRefs.current[changeToDay],
+      sectionRefs && sectionRefs.current && sectionRefs.current[currentDay],
     ]
   )
 }
@@ -138,11 +141,28 @@ export const SessionsList = props => {
     sectionRefs
   )
 
+  const onSectionChange = useCallback(
+    sectionIndex => {
+      const switchSection = sections[sectionIndex]
+      if (!switchSection) return
+
+      const { dayNum } = sections[sectionIndex]
+      const switchToDay = parseInt(dayNum)
+
+      switchToDay < currentDay
+        ? decrementDay()
+        : switchToDay > currentDay && incrementDay()
+    },
+    [ currentDay, sections ]
+  )
+
   return (
     <SectionList
       ref={listRef}
       styles={styles}
       sections={sections}
+      onSectionChange={onSectionChange}
+      sectionChangeOffset={sectionOffset}
       renderListHeader={() => (
         <SessionsHeader
           currentDay={currentDay}
