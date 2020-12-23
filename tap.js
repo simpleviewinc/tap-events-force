@@ -35,15 +35,11 @@ module.exports = {
         }
       }
     },
-    versions: {
-      development: '1.0.0',
-      production: '1.0.0',
-      qa: '1.0.0',
-      staging: '1.0.0'
-    },
     paths: {
       buildConfig: 'configs/build.config.js'
-    }
+    },
+    // replacement definitions for both webpack and rollup builds
+    envs: {}
   },
   expo: {
     name: 'tap-events-force',

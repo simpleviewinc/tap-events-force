@@ -4,6 +4,7 @@ import { Loading } from 'SVComponents'
 import { initSessions } from 'SVActions'
 import { useSelector } from 'react-redux'
 import { ModalProvider } from 'SVContexts/modals/modalProvider'
+import { VersionDisplay } from 'SVComponents/meta/versionDisplay'
 
 /**
  * Container for Sessions
@@ -16,6 +17,7 @@ import { ModalProvider } from 'SVContexts/modals/modalProvider'
  *                                                 - of form (sessionId, attendeeIds) => {}
  *                                                  - passes back session id and an array of attendee ids
  * @param {Function} props.ModalComponent - React component or function to allow rendering content in a modal
+ * @param {Boolean} props.showVersion - if true, displays the version of the tap
  *
  */
 export const SessionsContainer = props => {
@@ -25,6 +27,7 @@ export const SessionsContainer = props => {
     onSessionWaitingListRequest,
     sessionAgendaProps,
     ModalComponent,
+    showVersion,
   } = props
 
   useEffect(() => void initSessions(), [])
@@ -33,6 +36,7 @@ export const SessionsContainer = props => {
 
   return isReady ? (
     <ModalProvider component={ModalComponent}>
+      { showVersion && <VersionDisplay /> }
       <Sessions
         onDayChange={onDayChange}
         sessionAgendaProps={sessionAgendaProps}

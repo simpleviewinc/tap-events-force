@@ -13,6 +13,7 @@ import bundleSize from 'rollup-plugin-bundle-size'
 import generatePackageJson from './plugins/generatePackageJson'
 import image from '@rollup/plugin-image'
 import { terser } from "rollup-plugin-terser"
+import { getKegEnvs } from 'keg-core/core/scripts/js/getKegEnvs'
 
 const path = require('path')
 const tapPath = require('app-root-path').path
@@ -139,6 +140,9 @@ export default {
       watch: false,
     }),
     replace({
+      // customs replacements as defined in the app configs from tap and core
+      ...getKegEnvs(tapPath, corePath),
+
       // search for all cases of strings
       delimiters: [ '', '' ],
 

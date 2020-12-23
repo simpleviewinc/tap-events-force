@@ -18,10 +18,20 @@ setRNDimensions(Dimensions)
  * rollup build and it is the root component exported by the build.
  * @param {Object} props - session data, including callbacks, passed to SessionsContainer. @see src/mocks/eventsforce/testData 
  * @param {Function} props.ModalComponent - React component or function to allow rendering content in a modal
+ * @param {Boolean} props.showVersion - if true, show the version display
  */
-const SessionsApp = ({ sessionAgendaProps, onDayChange, onSessionBookingRequest, onSessionWaitingListRequest, ModalComponent }) => {
+const SessionsApp = props => {
+  const { 
+    sessionAgendaProps, 
+    onDayChange, 
+    onSessionBookingRequest, 
+    onSessionWaitingListRequest, 
+    ModalComponent,
+    showVersion,
+  } = props
+
   const [ activeTheme ] = useState(getDefaultTheme())
-  
+
   return (
     <Provider store={getStore()}>
       <ReThemeProvider theme={activeTheme}>
@@ -31,6 +41,7 @@ const SessionsApp = ({ sessionAgendaProps, onDayChange, onSessionBookingRequest,
           onSessionBookingRequest={onSessionBookingRequest}
           onSessionWaitingListRequest={onSessionWaitingListRequest}
           ModalComponent={ModalComponent}
+          showVersion={showVersion}
         />
       </ReThemeProvider>
     </Provider>
