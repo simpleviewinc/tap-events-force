@@ -143,8 +143,7 @@ export const SessionsList = props => {
 
   const onSectionChange = useCallback(
     sectionIndex => {
-      const switchSection = sections[sectionIndex]
-      if (!switchSection) return
+      if (!sections[sectionIndex]) return
 
       const { dayNum } = sections[sectionIndex]
       const switchToDay = parseInt(dayNum)
