@@ -6,7 +6,11 @@ import { Divider, SectionList } from '@keg-hub/keg-components'
 import React, { useMemo, useCallback } from 'react'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
 
-const sectionOffset = 80
+/**
+ * Default scroll offset for the section headers based on the size
+ * @number
+ */
+const sectionOffset = -80
 
 /**
  * Hook to memoize the sessions for a day, and add a key
@@ -44,30 +48,14 @@ const useSessionsSections = sessions => {
  */
 const useOnScrollChange = (sections, currentDay, onDayChange) => {
   return useCallback(
-    sectionIndex => {
-      if (!sections[sectionIndex]) return
-
-      const { dayNum } = sections[sectionIndex]
-      const switchToDay = parseInt(dayNum)
-
-      switchToDay < currentDay
+    nextDayStr => {
+      const nextDay = parseInt(nextDayStr)
+      nextDay < currentDay
         ? decrementDay()
-        : switchToDay > currentDay && incrementDay()
+        : nextDay > currentDay && incrementDay()
     },
     [ sections, currentDay ]
   )
-}
-
-/**
- * Hook to memoize an onSectionChange callback
- * @param {Array} sections - group of sessions by day
- * @param {number} currentDay - Active day of sessions being rendered
- * @param {function} onDayChange - Callback to be called when the active day changes
- *
- * @returns {Array} - memoized sessions in SectionList required format
- */
-const useOnSectionChange = (sections, currentDay, onDayChange) => {
-  return useCallback(sectionIndex => {}, [ sections, currentDay, onDayChange ])
 }
 
 /**
@@ -95,15 +83,16 @@ export const SessionsList = props => {
     currentDay,
     onDayChange
   )
-  const onSectionChange = useOnSectionChange(sections, currentDay, onDayChange)
 
   return (
     <SectionList
       styles={styles}
       sections={sections}
-      onSectionChange={onSectionChange}
+      activeSection={currentDay}
+      indexSectionHeaderBy={'dayNum'}
       sectionChangeOffset={sectionOffset}
       onScrollSectionChange={onScrollSectionChange}
+      renderItem={({ item }) => <GridContainer {...item} />}
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
           currentDay={currentDay}
@@ -111,20 +100,13 @@ export const SessionsList = props => {
           onDayChange={onDayChange}
         />
       )}
-      renderSectionHeader={({ section: { dayNum }, styles }) => {
-        return (
-          <Divider
-            style={
-              dayNum === '1'
-                ? styles?.content?.hidden
-                : styles?.content?.divider
-            }
-          />
-        )
-      }}
-      renderItem={({ item }) => {
-        return <GridContainer {...item} />
-      }}
+      renderSectionHeader={({ section: { dayNum }, styles }) => (
+        <Divider
+          style={
+            dayNum === '1' ? styles?.content?.hidden : styles?.content?.divider
+          }
+        />
+      )}
     />
   )
 }
