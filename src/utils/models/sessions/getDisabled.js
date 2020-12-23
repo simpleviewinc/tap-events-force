@@ -3,20 +3,6 @@ import { isPositive, exists } from '@keg-hub/jsutils'
 const { SESSION_BOOKING_STATES } = Values
 
 /**
- * TODO: Sync with events force to have them pass an option for bookingStopped
- * Will need to update this method to pull that option based on how its passed in
- */
-/**
- * Checks if the booking display should be disabled from interaction
- * @param {import('SVModels/session').Session} props.session
- *
- * @returns {boolean} - If booking changes have been stopped for this session
- */
-const getBookingStopped = session => {
-  return session.bookingStopped
-}
-
-/**
  * Checks if the booking display should be disabled from interaction
  * @param {Object} props
  * @param {import('SVModels/session').Session} props.session
@@ -49,8 +35,6 @@ export const getDisabled = (
 
   const { capacity, allowBooking } = session
 
-  const bookingStopped = getBookingStopped(session)
-
   // no capacity if bookableCount === 0 OR waitingList with spaces is not available
   const noCapacity =
     (exists(bookableCount) && !isPositive(bookableCount)) ||
@@ -61,5 +45,5 @@ export const getDisabled = (
     )
 
   // disable if there's no space left or if everyone in the group is booked on a conflicting session
-  return !allowBooking || bookingStopped || noCapacity ? true : false
+  return !allowBooking || noCapacity ? true : false
 }

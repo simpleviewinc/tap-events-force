@@ -3,9 +3,6 @@ import testData from '../testData'
 const sessions = (isUnlimited = false) => [
   {
     allowBooking: true,
-    // Custom identifier to flag that booking has been stopped for that session
-    // Will need to update when Events-Force gives us the real value
-    // bookingStopped: true,
     identifier: '1',
     name: `state - TIME CONFLICT - ${isUnlimited ? 'UNLIMITED' : 'LIMITED'} A`,
     dayNumber: 1,
@@ -28,9 +25,6 @@ const sessions = (isUnlimited = false) => [
   },
   {
     allowBooking: true,
-    // Custom identifier to flag that booking has been stopped for that session
-    // Will need to update when Events-Force gives us the real value
-    // bookingStopped: true,
     identifier: '2',
     name: `state - TIME CONFLICT - ${isUnlimited ? 'UNLIMITED' : 'LIMITED'} B`,
     dayNumber: 1,
