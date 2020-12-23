@@ -1,25 +1,23 @@
-import { devLog } from 'SVUtils/logs'
-
-export const scrollList = (listRef, section) => {
-  return devLog.warn('Native scroll method has not been implemented!')
+const defOpts = {
+  offset: 0,
+  animated: true,
 }
 
-// const getScrollResponder = listRef => {
-//   return listRef.current &&
-//     listRef.current.getScrollResponder &&
-//     listRef.current.getScrollResponder()
-// }
+/**
+ * Helper method to scroll to an item in a list in a **NATIVE ENVIRONMENT**
+ * @function
+ * @param {object} props
+ * @param {object} [props.offset=0] - Offset the final scroll position
+ * @param {object} [props.left] - Horizontal scroll to position (Web Only)
+ * @param {object} [props.position=0] - Not valid on web platform
+ * @param {object} [props.behavior=smooth] - Type of scrolling ( auto | smooth )
+ */
+export const scrollList = ({ listRef, layout, ...options }) => {
+  const { offset, position, ...scrollOpts } = { ...defOpts, ...options }
 
-// export const scrollList = (listRef, section) => {
-//   const scrollResponder = getScrollResponder(listRef)
-
-//   section &&
-//     section.offset &&
-//     scrollResponder &&
-//     scrollResponder.scrollTo &&
-//     scrollResponder.scrollTo({
-//       x: 0,
-//       y: section.offset,
-//       behavior: 'smooth',
-//     })
-// }
+  return listRef?.current?.scrollTo({
+    ...scrollOpts,
+    y: layout.y,
+    x: layout.x,
+  })
+}

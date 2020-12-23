@@ -1,27 +1,12 @@
 import { colors } from '../../colors'
-import { deepMerge } from '@keg-hub/jsutils'
-
-const filterButtonDefault = {
-  main: {
-    pV: 8,
-  },
-  content: {
-    $web: {
-      ltrS: 0.1,
-    },
-    $all: {
-      ftWt: '500',
-      txDc: 'underline',
-    },
-  },
-}
+import { sessionsHeader } from './sessionsHeader'
+import { sessionsList } from './sessionsList'
 
 export const sessions = {
   main: {
     $web: {
-      width: '100vw',
       flex: 1,
-      // overflowX: 'hidden',
+      width: '100vw',
       maxWidth: '100%',
     },
     $native: {
@@ -39,113 +24,7 @@ export const sessions = {
     },
   },
   content: {
-    headerContainer: {
-      top: 0,
-      position: 'sticky',
-      zIndex: 1,
-      backgroundColor: colors.white01,
-    },
-    header: {
-      main: {
-        $all: {
-          width: '100%',
-          marginTop: 0,
-          marginBottom: 10,
-          backgroundColor: colors.transparent,
-          flexDirection: 'row',
-          justifyContent: 'center',
-        },
-        $native: {
-          height: 40,
-          marginTop: 0,
-          marginBottom: 20,
-        },
-      },
-      content: {
-        left: {
-          main: {
-            $native: {
-              display: 'none',
-            },
-          },
-        },
-        center: {
-          $native: {
-            main: {
-              width: '100%',
-              alignItems: 'flex-start',
-              justifyContent: 'center',
-            },
-          },
-        },
-        right: {
-          main: {},
-          content: {
-            main: {
-              $xsmall: {
-                jtC: 'flex-end',
-                flD: 'row',
-              },
-              $small: {
-                pR: 40,
-              },
-            },
-            clearAll: deepMerge(filterButtonDefault, {
-              main: {
-                $xsmall: {
-                  display: 'none',
-                },
-                $small: {
-                  display: 'flex',
-                },
-              },
-              content: {
-                $all: {
-                  ftSz: 16,
-                  color: colors.lightGray01,
-                },
-              },
-            }),
-            filterIcon: {
-              main: {
-                jtC: 'center',
-              },
-              icon: {
-                $xsmall: {
-                  color: colors.black,
-                  paddingRight: 5,
-                  height: 21,
-                  width: 32,
-                },
-                $small: {
-                  paddingRight: 10,
-                },
-              },
-            },
-            filterButton: deepMerge(filterButtonDefault, {
-              content: {
-                $all: {
-                  ftSz: 20,
-                  color: colors.black,
-                },
-              },
-            }),
-          },
-        },
-      },
-    },
-    list: {
-      main: {
-        maxWidth: '100vw',
-        position: 'relative',
-        margin: '10em auto 30em',
-        overscrollBehavior: 'contain',
-      },
-      content: {
-        divider: {
-          backgroundColor: colors.darkGray,
-        },
-      },
-    },
+    header: sessionsHeader,
+    list: sessionsList,
   },
 }

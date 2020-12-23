@@ -137,7 +137,7 @@ export const SessionsHeader = ({ currentDay, onDayChange, labels }) => {
   const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
 
   return (
-    <View style={styles.content?.headerContainer}>
+    <View style={headerStyles?.container}>
       <ItemHeader
         styles={headerStyles}
         CenterComponent={

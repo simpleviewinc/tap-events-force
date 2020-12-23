@@ -32,6 +32,35 @@ const useSessionsSections = sessions => {
   }, [sessions])
 }
 
+/**
+ * Callback method passed into the element.measure method to get it's location information
+ * <br/> Normalizes the layout of the element current location relative to the window
+ * @param {number} x - X-axis location of the Element relative to it's parent
+ * @param {number} y - Y-axis location of the Element relative to it's parent
+ * @param {number} width - Width of the Element
+ * @param {number} height - Height of the Element
+ * @param {number} pageX - X-axis location of the Element relative to the window
+ * @param {number} pageY - Y-axis location of the Element relative to the window
+ *
+ * @returns {Object} - Layout object to match boundingClientRect object of the dom
+ */
+const normalizeLayout = (x, y, width, height, pageX, pageY) => ({
+  height,
+  width,
+  y: pageY,
+  x: pageX,
+  top: pageY,
+  left: pageX,
+})
+
+/**
+ * SectionDivider
+ * Displays a divider line between section
+ * @param {object} props
+ * @param {object} props.dayNum - Day number of the section
+ * @param {object} props.sectionRefs - Ref Object containing an element ref of each section
+ * @param {object} props.styles - Custom styles for the Divider component
+ */
 const SectionDivider = ({ dayNum, sectionRefs, styles }) => {
   const dividerStyle =
     dayNum === '1' ? styles?.content?.hidden : styles?.content?.divider
@@ -41,6 +70,42 @@ const SectionDivider = ({ dayNum, sectionRefs, styles }) => {
       ref={element => (sectionRefs.current[dayNum] = element)}
       style={dividerStyle}
     />
+  )
+}
+
+/**
+ * Helper hook to allow scrolling to a section when a day change happends
+ * @param {Object} currentDay - The current day of sessions being shown
+ * @param {function} onDayChange - Callback method to be called when the day is changed
+ * @param {Object} listRef - React ref of the SectionList component
+ * @param {Object} sectionRefs - React ref of all Section divider components.
+ *
+ * @returns {function} - Method to call when the current day is changed
+ */
+const useOnDayChange = (currentDay, onDayChange, listRef, sectionRefs) => {
+  return useCallback(
+    changeToDay => {
+      const element = sectionRefs.current[changeToDay]
+
+      element.measure((...args) =>
+        scrollList({
+          listRef,
+          // Add an offset because of our sticky header
+          offset: 80,
+          // Get the layout data for the element
+          layout: normalizeLayout(...args),
+        })
+      )
+
+      // Call the passed in onDayChange if it exists
+      checkCall(onDayChange, changeToDay)
+    },
+    [
+      currentDay,
+      onDayChange,
+      listRef && listRef.current,
+      sectionRefs && sectionRefs.current && sectionRefs.current[changeToDay],
+    ]
   )
 }
 
@@ -63,25 +128,26 @@ export const SessionsList = props => {
   const theme = useTheme()
   const styles = theme.get('sessionsList')
 
+  const listRef = useRef(null)
   const sectionRefs = useRef({})
 
-  const changeDays = useCallback(
-    dayChange => {
-      scrollList(sectionRefs.current[dayChange])
-      checkCall(onDayChange, dayChange)
-    },
-    [ currentDay, onDayChange, sectionRefs && sectionRefs.current ]
+  const onChangeDays = useOnDayChange(
+    currentDay,
+    onDayChange,
+    listRef,
+    sectionRefs
   )
 
   return (
     <SectionList
+      ref={listRef}
       styles={styles}
       sections={sections}
       renderListHeader={() => (
         <SessionsHeader
           currentDay={currentDay}
           labels={itemProps.labels}
-          onDayChange={changeDays}
+          onDayChange={onChangeDays}
         />
       )}
       renderSectionHeader={({ section: { dayNum } }) => {
