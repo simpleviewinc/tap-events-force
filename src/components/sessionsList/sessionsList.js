@@ -76,6 +76,11 @@ const SectionDivider = ({ dayNum, sectionRefs, styles }) => {
   )
 }
 
+// TODO - Move to SectionList in Keg-Components
+// Then Pass scroll to section callbacks from the SectionList
+// To the callbacks for renderListHeader / renderSectionHeader / renderItem
+// This way they can be accessed from the consumer
+
 /**
  * Helper hook to allow scrolling to a section when a day change happends
  * @param {Object} currentDay - The current day of sessions being shown
