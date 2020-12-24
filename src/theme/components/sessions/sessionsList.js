@@ -6,6 +6,7 @@ export const sessionsList = {
     divider: {
       bgC: colors.dimTextGray,
       margin: 0,
+      mT: 0,
       mB: 41,
     },
   },

@@ -92,7 +92,10 @@ export const SessionsList = props => {
       indexSectionHeaderBy={'dayNum'}
       sectionChangeOffset={sectionOffset}
       onScrollSectionChange={onScrollSectionChange}
-      renderItem={({ item }) => <GridContainer {...item} />}
+      renderItem={({ item }) => <GridContainer
+        {...item}
+        {...itemProps}
+      />}
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
           currentDay={currentDay}
