@@ -16,7 +16,7 @@ import { EVFIcons } from 'SVIcons'
 export const SessionTime = props => {
   const { style = {}, start, end, military = true } = props
   const theme = useTheme()
-  const mainStyle = theme.join(theme.get('sessionTime.main'), style)
+  const mainStyle = theme.get(theme.get('sessionTime.main'), style)
   const clockStyle = theme.get('sessionTime.clockIcon')
   const textStyle = theme.get('sessionTime.timeText')
 
