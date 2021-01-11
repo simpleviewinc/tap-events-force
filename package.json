@@ -1,6 +1,6 @@
 {
   "name": "@keg-hub/tap-events-force",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "description": "Events Force Tap for the Keg",
   "main": "index.js",
   "author": "Lance Tipton <lancetipton04@gmail.com>",
@@ -42,7 +42,7 @@
     "print:envs": "yarn keg print:envs ../../"
   },
   "dependencies": {
-    "keg-core": "npm:@keg-hub/keg-core@8.0.0"
+    "keg-core": "npm:@keg-hub/keg-core@8.1.1"
   },
   "devDependencies": {
     "@babel/core": "7.10.3",
