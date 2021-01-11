@@ -10,6 +10,8 @@ const { SESSION_BOOKING_STATES } = Values
  * @param {Number} props.bookableCount - Attendees that can book the current session
  * @param {string} props.bookingMode - Current mode of booking for the session (single|group)
  * @param {Object} props.timeConflicts - Key value pairs of attendees booked in conflicting sessions. { ${attendeeId}: ${sessionId} }
+ * @param {Array<string>} props.bookingList - the list of attendee ids booked to the session
+ * @param {Array<string>} props.waitingList - the list of attendee ids on the session's waiting list
  * @param {Object} state
  *
  * @returns {boolean} - If the display interaction should be disabled
