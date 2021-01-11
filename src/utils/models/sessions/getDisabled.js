@@ -15,7 +15,15 @@ const { SESSION_BOOKING_STATES } = Values
  * @returns {boolean} - If the display interaction should be disabled
  */
 export const getDisabled = (
-  { session, pendingSession, bookableCount, bookingMode, timeConflicts },
+  {
+    session,
+    pendingSession,
+    bookableCount,
+    bookingMode,
+    timeConflicts,
+    bookingList,
+    waitingList,
+  },
   state
 ) => {
   // if there is a different session awaiting the booking request result, all others are disabled
@@ -44,6 +52,9 @@ export const getDisabled = (
       capacity?.isUnlimited
     )
 
-  // disable if there's no space left or if everyone in the group is booked on a conflicting session
-  return !allowBooking || noCapacity ? true : false
+  const hasExistingBookings = bookingList.length || waitingList.length
+
+  // disable if there's no space left (and no pre-booked attendees)
+  // or if everyone in the group is booked on a conflicting session
+  return !allowBooking || (noCapacity && !hasExistingBookings)
 }
