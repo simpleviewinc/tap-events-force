@@ -13,7 +13,7 @@ const { SESSION_BOOKING_LABEL_MAP } = Values
  * @param {Object} extra - extra styles to add
  */
 const buildStyles = (theme, extra) => {
-  return theme.join(
+  return theme.get(
     theme.get('labelButton'),
     {
       selected: {
