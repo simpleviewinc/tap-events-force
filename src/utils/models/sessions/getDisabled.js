@@ -57,7 +57,6 @@ export const getDisabled = (
   const hasExistingBookings = Boolean(
     bookingList?.length || waitingList?.length
   )
-  console.log({ hasExistingBookings, noCapacity })
 
   // disable if there's no space left (and no pre-booked attendees)
   // or if everyone in the group is booked on a conflicting session
