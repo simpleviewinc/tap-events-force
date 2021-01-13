@@ -36,6 +36,22 @@ const useListStyles = () => {
   }, [ dims.height ])
 }
 
+
+const SectionDivider = React.memo(({ dayNum, styles, hasSessions }) => {
+  return (
+    <View style={
+      dayNum === '1'
+        ? styles?.content?.section?.hidden
+        : hasSessions
+          ? styles?.content?.section?.main
+          : styles?.content?.section?.empty
+    }>
+      <Divider style={styles?.content?.section?.divider} />
+      {!hasSessions && (<EmptyDayMessage />)}
+    </View>
+  )
+})
+
 /**
  * Hook to memoize the sessions for a day, and add a key
  * @param {Array} sessions - group of sessions by day
@@ -114,10 +130,12 @@ export const SessionsList = props => {
       indexSectionHeaderBy={'dayNum'}
       sectionChangeOffset={sectionOffset}
       onScrollSectionChange={onScrollSectionChange}
-      renderItem={({ item }) => <GridContainer
-        {...item}
-        {...itemProps}
-      />}
+      renderItem={({ item }) => (
+        <GridContainer
+          {...item}
+          {...itemProps}
+        />
+      )}
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
           currentDay={currentDay}
@@ -125,17 +143,13 @@ export const SessionsList = props => {
           onDayChange={onDayChange}
         />
       )}
-      renderSectionHeader={({ section: { dayNum, data }, styles }) => {
-        return (
-          <View style={[
-            styles?.content?.section?.main,
-            !data.length && styles?.content?.section?.empty
-          ]}>
-            <Divider style={styles?.content?.section?.divider} />
-            {!data.length && (<EmptyDayMessage />)}
-          </View>
-        )
-      }}
+      renderSectionHeader={({ section: { dayNum, data }, styles }) => (
+        <SectionDivider
+          dayNum={dayNum}
+          hasSessions={Boolean(data.length)}
+          styles={styles}
+        />
+      )}
     />
   )
 }

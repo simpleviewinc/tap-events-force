@@ -18,6 +18,7 @@ import { isMobileSize } from 'SVUtils/theme'
 export const DayToggle = props => {
   const {
     date = null,
+    dayName='',
     dayNumber = 0,
     disableDecrement = false,
     disableIncrement = false,
@@ -27,7 +28,7 @@ export const DayToggle = props => {
 
   const theme = useTheme()
   const dayToggleStyles = theme.get('dayToggle')
-  const dayText = `Day ${dayNumber}`
+  const dayText = isMobileSize(theme) ? `Day ${dayNumber} ${dayName}`.trim() : `Day ${dayNumber}`
 
   return (
     <View

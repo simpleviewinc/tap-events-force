@@ -5,9 +5,19 @@ export const sessionsList = {
   content: {
     section: {
       main: {
-        margin: 0,
-        mT: 0,
-        mB: 40,
+        $xsmall: {
+          margin: 0,
+          mT: 26,
+          mB: 41,
+        },
+        $small: {
+          mT: 41,
+          mB: 6,
+        },
+      },
+      empty: {},
+      hidden: {
+        display: 'none',
       },
       divider: {
         margin: 0,

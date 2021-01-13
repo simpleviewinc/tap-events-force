@@ -20,7 +20,6 @@ export const sessionsHeader = {
     $all: {
       width: '100%',
       marginTop: 0,
-      marginBottom: 10,
       backgroundColor: colors.transparent,
       flexDirection: 'row',
       justifyContent: 'center',
@@ -40,13 +39,13 @@ export const sessionsHeader = {
   content: {
     left: {
       main: {
-        $native: {
+        $xsmall: {
           display: 'none',
-        },
+        }
       },
     },
     center: {
-      $native: {
+      $xsmall: {
         main: {
           width: '100%',
           alignItems: 'flex-start',

@@ -1,5 +1,6 @@
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
+import { format, parseISO } from 'date-fns'
 import { useCreateModal } from 'SVHooks/modal'
 import React, { useCallback, useMemo } from 'react'
 import { useAgenda } from 'SVHooks/models/useAgenda'
@@ -125,9 +126,8 @@ const ItemHeaderRight = ({ styles, onClick }) => {
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  */
-export const SessionsHeader = ({ currentDay, onDayChange, labels }) => {
-  const { agendaLength, isLatestDay, isFirstDay } = useAgenda()
-
+export const SessionsHeader = React.memo(({ currentDay, onDayChange, labels }) => {
+  const { currentAgendaDay, agendaLength, isLatestDay, isFirstDay } = useAgenda()
   const theme = useTheme()
   const styles = theme.get('sessions')
 
@@ -136,12 +136,16 @@ export const SessionsHeader = ({ currentDay, onDayChange, labels }) => {
   const headerStyles = styles.content?.header
   const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
 
+  const dayName = currentAgendaDay?.date &&
+    format(parseISO(currentAgendaDay?.date), 'EEEE')
+
   return (
     <View style={headerStyles?.container}>
       <ItemHeader
         styles={headerStyles}
         CenterComponent={
           <DayToggle
+            dayName={dayName}
             dayNumber={currentDay}
             disableDecrement={isFirstDay}
             disableIncrement={isLatestDay || !agendaLength}
@@ -158,4 +162,4 @@ export const SessionsHeader = ({ currentDay, onDayChange, labels }) => {
       />
     </View>
   )
-}
+})
