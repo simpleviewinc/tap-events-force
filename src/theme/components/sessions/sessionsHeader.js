@@ -41,6 +41,9 @@ export const sessionsHeader = {
       main: {
         $xsmall: {
           display: 'none',
+        },
+        $small: {
+          display: 'flex',
         }
       },
     },
@@ -50,6 +53,11 @@ export const sessionsHeader = {
           width: '100%',
           alignItems: 'flex-start',
           justifyContent: 'center',
+        },
+      },
+      $small: {
+        main: {
+          alignItems: 'center',
         },
       },
     },

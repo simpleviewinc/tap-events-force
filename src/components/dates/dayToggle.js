@@ -1,10 +1,9 @@
 import React from 'react'
 import { UpdateDayButton } from './updateDayButton'
 import { useTheme } from '@keg-hub/re-theme'
-import { noOp } from 'SVUtils/helpers/method/noop'
+import { noOp } from '@keg-hub/jsutils'
 import { View, Text } from '@keg-hub/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
-
 /**
  * Simple day toggling component
  * @param {Object} props
@@ -18,8 +17,7 @@ import { isMobileSize } from 'SVUtils/theme'
 export const DayToggle = props => {
   const {
     date = null,
-    dayName='',
-    dayNumber = 0,
+    dayText = '',
     disableDecrement = false,
     disableIncrement = false,
     onIncrement = noOp,
@@ -27,21 +25,22 @@ export const DayToggle = props => {
   } = props
 
   const theme = useTheme()
+  const mobileSize = isMobileSize(theme)
   const dayToggleStyles = theme.get('dayToggle')
-  const dayText = isMobileSize(theme) ? `Day ${dayNumber} ${dayName}`.trim() : `Day ${dayNumber}`
 
   return (
     <View
       className={'ef-sessions-date-selector'}
       style={dayToggleStyles?.main}
     >
-      <UpdateDayButton
-        styles={dayToggleStyles?.content?.decrement}
-        type={'decrement'}
-        disabled={disableDecrement}
-        onDayChange={onDecrement}
-      />
-
+      {!mobileSize && (
+        <UpdateDayButton
+          styles={dayToggleStyles?.content?.decrement}
+          type={'decrement'}
+          disabled={disableDecrement}
+          onDayChange={onDecrement}
+        />
+      )}
       <Text
         className={'ef-sessions-date-text'}
         style={dayToggleStyles?.content?.text}
@@ -49,13 +48,14 @@ export const DayToggle = props => {
       >
         { dayText }
       </Text>
-
-      <UpdateDayButton
-        type={'increment'}
-        styles={dayToggleStyles?.content?.increment}
-        disabled={disableIncrement}
-        onDayChange={onIncrement}
-      />
+      {!mobileSize && (
+        <UpdateDayButton
+          type={'increment'}
+          styles={dayToggleStyles?.content?.increment}
+          disabled={disableIncrement}
+          onDayChange={onIncrement}
+        />
+      )}
     </View>
   )
 }

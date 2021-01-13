@@ -1,28 +1,77 @@
+import { get } from '@keg-hub/jsutils'
 import { colors } from '../../colors'
+import { dayToggle } from '../dates/dayToggle'
 
 export const sessionsList = {
   main: {},
   content: {
-    section: {
-      main: {
-        $xsmall: {
+    dividers: {
+      standard: {
+        main: {
+          $xsmall: {
+            margin: 0,
+            mT: 5,
+            mB: 20,
+          },
+          $small: {
+            mT: 34,
+            mB: 0,
+          },
+        },
+        text: dayToggle?.content?.text,
+        divider: {
           margin: 0,
-          mT: 26,
-          mB: 41,
-        },
-        $small: {
-          mT: 41,
-          mB: 6,
-        },
+          bgC: colors.dimTextGray,
+        }
       },
-      empty: {},
       hidden: {
-        display: 'none',
+        main: {
+          display: 'none'
+        }
       },
-      divider: {
-        margin: 0,
-        bgC: colors.dimTextGray,
+      first: {
+        main: {
+          $xsmall: {
+            mT: 0,
+            mB: 20,
+          },
+          $small: {
+            mB: 0,
+          },
+        },
+        divider: {
+          bgC: 'transparent',
+        }
       },
+      firstEmpty: {
+        main: {
+          $xsmall: {
+            mT: 15,
+            mB: 15,
+          },
+          $small: {
+            mT: 40,
+          },
+        },
+      },
+      empty: {
+        main: {
+          $xsmall: {
+            mT: 25,
+            mB: 15,
+          },
+          $small: {
+            mT: 34,
+          },
+        },
+        divider: {
+        }
+      },
+      mobile: {
+        divider: {
+          bgC: 'transparent',
+        }
+      }
     },
     list: {
       /**

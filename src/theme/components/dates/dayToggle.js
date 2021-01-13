@@ -41,10 +41,12 @@ export const dayToggle = {
           fontFamily: 'Inter',
           fontSize: '18px',
           letterSpacing: '0.1em',
-          mH: 30,
+          mL: 0,
+          mR: 30,
         },
         $small: {
           fontSize: '20px',
+          mL: 30,
         },
       },
     },

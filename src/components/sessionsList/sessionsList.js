@@ -1,18 +1,21 @@
-import { View } from '@keg-hub/keg-components/view'
-import { useStylesCallback, useDimensions } from '@keg-hub/re-theme'
+import { format, parseISO } from 'date-fns'
+import { isMobileSize } from 'SVUtils/theme'
+import { useTheme } from '@keg-hub/re-theme'
+import { get, reduceObj } from '@keg-hub/jsutils'
+import React, { useMemo, useCallback } from 'react'
+import { SessionsDivider } from './sessionsDivider'
+import { useAgenda } from 'SVHooks/models/useAgenda'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { SessionsHeader } from 'SVComponents/sessionsHeader'
-import { reduceObj, noPropArr, noOpObj } from '@keg-hub/jsutils'
-import { Divider, SectionList } from '@keg-hub/keg-components'
-import React, { useMemo, useCallback } from 'react'
+import { SectionList } from '@keg-hub/keg-components/sectionList'
+import { useStylesCallback, useDimensions } from '@keg-hub/re-theme'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
-import { EmptyDayMessage } from 'SVComponents/grid/emptyDayMessage'
 
 /**
  * Default scroll offset for the section headers based on the size
  * @number
  */
-const sectionOffset = -80
+const sectionOffset = -45
 
 /**
  * Hook to memoize the sessions styles
@@ -36,21 +39,27 @@ const useListStyles = () => {
   }, [ dims.height ])
 }
 
+/**
+ * Hook to map the day numbers to the day text that's displayed
+ * <br/> Get's the correct Day text based on current viewport size
+ * @param {Array} agendaDays - Group of days from the current agenda
+ * @param {boolean} mobileSize - Is the current size of the viewport mobile
+ *
+ * @returns {Object} - Mapped day numbers to displayed day text
+ */
+const useDateTextByDay = (agendaDays, mobileSize) => {
+  const dateList = agendaDays.map(day => day.date).join(',')
+  return useMemo(() => {
+    return agendaDays.reduce((mapped, { date, dayNumber }) => {
+      const dayName = date && format(parseISO(date), 'EEEE')
+      mapped[dayNumber] = mobileSize
+        ? `Day ${dayNumber} ${dayName}`.trim()
+        : `Day ${dayNumber}`
 
-const SectionDivider = React.memo(({ dayNum, styles, hasSessions }) => {
-  return (
-    <View style={
-      dayNum === '1'
-        ? styles?.content?.section?.hidden
-        : hasSessions
-          ? styles?.content?.section?.main
-          : styles?.content?.section?.empty
-    }>
-      <Divider style={styles?.content?.section?.divider} />
-      {!hasSessions && (<EmptyDayMessage />)}
-    </View>
-  )
-})
+      return mapped
+    }, {})
+  }, [dateList, mobileSize])
+}
 
 /**
  * Hook to memoize the sessions for a day, and add a key
@@ -58,13 +67,19 @@ const SectionDivider = React.memo(({ dayNum, styles, hasSessions }) => {
  *
  * @returns {Array} - memoized sessions in SectionList required format
  */
-const useSessionsSections = sessions => {
+const useSessionsSections = (sessions, dateByDay) => {
   return useMemo(() => {
     return reduceObj(
       sessions,
       (dayNum, timeBlocks, sections) => {
         sections.push({
           dayNum,
+          // Is the first section if no sections have been added
+          first: !sections.length,
+          // Is the last section, if total sections === total sessions minus one
+          last: (Object.keys(sessions).length - 1) === sections.length,
+          // Store the text to displace above each day
+          dayText: dateByDay[dayNum],
           data: timeBlocks.map(timeBlock => {
             timeBlock.key = `${dayNum}-${timeBlock.timeBlock}`
             return timeBlock
@@ -75,7 +90,7 @@ const useSessionsSections = sessions => {
       },
       []
     )
-  }, [sessions])
+  }, [sessions, dateByDay])
 }
 
 /**
@@ -91,10 +106,10 @@ const useOnScrollChange = (sections, currentDay, onDayChange) => {
     nextDayStr => {
       const nextDay = parseInt(nextDayStr)
       nextDay < currentDay
-        ? decrementDay()
-        : nextDay > currentDay && incrementDay()
+        ? decrementDay(onDayChange)
+        : nextDay > currentDay && incrementDay(onDayChange)
     },
-    [ sections, currentDay ]
+    [sections, currentDay, onDayChange]
   )
 }
 
@@ -114,8 +129,12 @@ export const SessionsList = props => {
   const { settings, sessions, onDayChange, ...itemProps } = props
   const currentDay = settings.agendaSettings.activeDayNumber || 1
 
+  const theme = useTheme()
+  const agenda = useAgenda()
   const styles = useListStyles()
-  const sections = useSessionsSections(sessions)
+  const mobileSize = isMobileSize(theme)
+  const dateByDay = useDateTextByDay(agenda.agendaDays, mobileSize)
+  const sections = useSessionsSections(sessions, dateByDay)
   const onScrollSectionChange = useOnScrollChange(
     sections,
     currentDay,
@@ -138,16 +157,22 @@ export const SessionsList = props => {
       )}
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
+          agenda={agenda}
+          dayText={dateByDay[currentDay]}
           currentDay={currentDay}
           labels={itemProps.labels}
           onDayChange={onDayChange}
         />
       )}
-      renderSectionHeader={({ section: { dayNum, data }, styles }) => (
-        <SectionDivider
-          dayNum={dayNum}
-          hasSessions={Boolean(data.length)}
+      renderSectionHeader={({ section, styles }) => (
+        <SessionsDivider
           styles={styles}
+          first={section.first}
+          last={section.last}
+          mobileSize={mobileSize}
+          dayNum={section?.dayNum}
+          dayText={section?.dayText}
+          hasSessions={Boolean(section?.data.length)}
         />
       )}
     />
