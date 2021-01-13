@@ -1,16 +1,40 @@
-import { useTheme } from '@keg-hub/re-theme'
+import { View } from '@keg-hub/keg-components/view'
+import { useStylesCallback, useDimensions } from '@keg-hub/re-theme'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { SessionsHeader } from 'SVComponents/sessionsHeader'
-import { reduceObj } from '@keg-hub/jsutils'
+import { reduceObj, noPropArr, noOpObj } from '@keg-hub/jsutils'
 import { Divider, SectionList } from '@keg-hub/keg-components'
 import React, { useMemo, useCallback } from 'react'
 import { incrementDay, decrementDay } from 'SVActions/session/dates'
+import { EmptyDayMessage } from 'SVComponents/grid/emptyDayMessage'
 
 /**
  * Default scroll offset for the section headers based on the size
  * @number
  */
 const sectionOffset = -80
+
+/**
+ * Hook to memoize the sessions styles
+ * <br/> Also calculates a bottom padding based on gridItem height
+ *
+ * @returns {Array} - memoized styles for the SectionList
+ */
+const useListStyles = () => {
+  const dims = useDimensions()
+  return useStylesCallback((theme, styles, height) => {
+    const itemHeight = (theme.get('gridItem')?.main?.minHeight || 300 ) + sectionOffset
+    return !height
+      ? theme.get('sessionsList')
+      : theme.get('sessionsList', {
+          content: {
+            list: {
+              marginBottom: height - itemHeight
+            }
+          }
+        })
+  }, [ dims.height ])
+}
 
 /**
  * Hook to memoize the sessions for a day, and add a key
@@ -72,11 +96,9 @@ const useOnScrollChange = (sections, currentDay, onDayChange) => {
  */
 export const SessionsList = props => {
   const { settings, sessions, onDayChange, ...itemProps } = props
-
-  const theme = useTheme()
-  const styles = theme.get('sessionsList')
   const currentDay = settings.agendaSettings.activeDayNumber || 1
 
+  const styles = useListStyles()
   const sections = useSessionsSections(sessions)
   const onScrollSectionChange = useOnScrollChange(
     sections,
@@ -103,13 +125,17 @@ export const SessionsList = props => {
           onDayChange={onDayChange}
         />
       )}
-      renderSectionHeader={({ section: { dayNum }, styles }) => (
-        <Divider
-          style={
-            dayNum === '1' ? styles?.content?.hidden : styles?.content?.divider
-          }
-        />
-      )}
+      renderSectionHeader={({ section: { dayNum, data }, styles }) => {
+        return (
+          <View style={[
+            styles?.content?.section?.main,
+            !data.length && styles?.content?.section?.empty
+          ]}>
+            <Divider style={styles?.content?.section?.divider} />
+            {!data.length && (<EmptyDayMessage />)}
+          </View>
+        )
+      }}
     />
   )
 }

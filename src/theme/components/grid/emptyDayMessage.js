@@ -5,5 +5,6 @@ export const emptyDayMessage = {
     alS: 'center',
     txAl: 'center',
     c: colors.gray,
+    mT: 40,
   },
 }
