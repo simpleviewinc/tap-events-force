@@ -10,8 +10,8 @@ export const sessionsList = {
         main: {
           $xsmall: {
             margin: 0,
-            mT: 5,
-            mB: 20,
+            mT: 15,
+            mB: 30,
           },
           $small: {
             mT: 34,
@@ -33,7 +33,7 @@ export const sessionsList = {
         main: {
           $xsmall: {
             mT: 0,
-            mB: 20,
+            mB: 5,
           },
           $small: {
             mB: 0,
@@ -46,31 +46,47 @@ export const sessionsList = {
       firstEmpty: {
         main: {
           $xsmall: {
-            mT: 15,
+            mT: 5,
             mB: 15,
           },
           $small: {
-            mT: 40,
+            mT: 0,
+            mB: 0,
           },
         },
+        divider: {
+          display: 'none',
+        }
       },
       empty: {
         main: {
           $xsmall: {
-            mT: 25,
-            mB: 15,
+            mT: 15,
+            mB: 30,
           },
           $small: {
             mT: 34,
+            mB: 6,
           },
         },
-        divider: {
-        }
+        text: {
+          $xsmall: {
+            mB: 30,
+          },
+        },
       },
       mobile: {
         divider: {
           bgC: 'transparent',
         }
+      },
+      lastEmpty: {
+        main: {
+          mB: 100,
+        },
+        text: {
+          mB: 30,
+        },
       }
     },
     list: {

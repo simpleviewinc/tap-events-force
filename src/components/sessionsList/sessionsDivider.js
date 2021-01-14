@@ -27,17 +27,20 @@ export const SessionsDivider = React.memo(props => {
   } = props
 
   const firstEmpty = first && !hasSessions
+  const lastEmpty = last && !hasSessions
   const dividerStyles = styles?.content?.dividers
   
-  const type = hide || (first && mobileSize)
+  const type = hide
     ? 'hidden'
     : firstEmpty
       ? 'firstEmpty'
       : first
         ? 'first'
-        : !hasSessions
-          ? 'empty'
-          : undefined
+        : lastEmpty
+          ? 'lastEmpty'
+          : !hasSessions
+            ? 'empty'
+            : undefined
 
   const divStyles = dividerStyles[type] || noOpObj
   const divType = type || 'standard'
@@ -50,7 +53,7 @@ export const SessionsDivider = React.memo(props => {
         divStyles.main,
       ]}
     >
-      {mobileSize && dayText && (
+      {mobileSize && !first && dayText && (
         <Text
           className={`ef-${divType}-text`}
           style={[
@@ -61,7 +64,6 @@ export const SessionsDivider = React.memo(props => {
           { dayText }
         </Text>
       )}
-      {!hasSessions && (<EmptyDayMessage />)}
       <Divider
         className={`ef-${divType}-divider`}
         style={[
@@ -70,6 +72,7 @@ export const SessionsDivider = React.memo(props => {
           (mobileSize && dividerStyles?.mobile.divider)
         ]}
       />
+      {!hasSessions && (<EmptyDayMessage />)}
     </View>
   )
 })
