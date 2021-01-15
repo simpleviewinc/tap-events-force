@@ -1,5 +1,5 @@
 sync:
-  tap:
+  evf:
     alpha: "/keg/tap"
     beta: "docker://tap/keg/tap"
     mode: "one-way-replica"
