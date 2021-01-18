@@ -357,7 +357,7 @@ export default {
       },
     },
     {
-      allowBooking: false,
+      allowBooking: true,
       identifier: '11',
       name: 'Zerista session day 3',
       summary: 'This is a session with both presenters and labels',
@@ -379,7 +379,7 @@ export default {
       },
     },
     {
-      allowBooking: false,
+      allowBooking: true,
       identifier: '12',
       name: 'Zerista session day 3',
       summary: 'This is a session with both presenters and labels',

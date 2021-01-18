@@ -128,4 +128,30 @@ describe('getDisabled', () => {
       expect(getDisabled(props)).toBe(true)
     })
   })
+
+  it('Should return true if the capacity is full, but no attendees are booked', () => {
+    const props = {
+      session: {
+        capacity: {
+          remainingPlaces: 0,
+        },
+        allowBooking: true,
+      },
+      bookingList: [],
+    }
+    expect(getDisabled(props)).toBe(true)
+  })
+
+  it('Should return false if the capacity is full, but attendees are booked', () => {
+    const props = {
+      session: {
+        capacity: {
+          remainingPlaces: 0,
+        },
+        allowBooking: true,
+      },
+      bookingList: ['212'],
+    }
+    expect(getDisabled(props)).toBe(false)
+  })
 })

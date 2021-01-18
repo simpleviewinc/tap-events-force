@@ -1,4 +1,3 @@
-
 env:
   # --- LOCAL ENV CONTEXT --- #
   COMPONENTS_PATH: "{{ cli.paths.components }}"
@@ -15,6 +14,7 @@ env:
 
   # The default docker-compose file path
   KEG_COMPOSE_DEFAULT: "{{ cli.taps.evf.path }}/container/docker-compose.yml"
+
   # Can also define other an override compose files
   # Other compose files can loaded by setting an ENVS as follows:
     # KEG_COMPOSE_REPO="/path/to/override.yml"

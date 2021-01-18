@@ -10,12 +10,22 @@ const { SESSION_BOOKING_STATES } = Values
  * @param {Number} props.bookableCount - Attendees that can book the current session
  * @param {string} props.bookingMode - Current mode of booking for the session (single|group)
  * @param {Object} props.timeConflicts - Key value pairs of attendees booked in conflicting sessions. { ${attendeeId}: ${sessionId} }
+ * @param {Array<string>} props.bookingList - the list of attendee ids booked to the session
+ * @param {Array<string>} props.waitingList - the list of attendee ids on the session's waiting list
  * @param {Object} state
  *
  * @returns {boolean} - If the display interaction should be disabled
  */
 export const getDisabled = (
-  { session, pendingSession, bookableCount, bookingMode, timeConflicts },
+  {
+    session,
+    pendingSession,
+    bookableCount,
+    bookingMode,
+    timeConflicts,
+    bookingList,
+    waitingList,
+  },
   state
 ) => {
   // if there is a different session awaiting the booking request result, all others are disabled
@@ -44,6 +54,11 @@ export const getDisabled = (
       capacity?.isUnlimited
     )
 
-  // disable if there's no space left or if everyone in the group is booked on a conflicting session
-  return !allowBooking || noCapacity ? true : false
+  const hasExistingBookings = Boolean(
+    bookingList?.length || waitingList?.length
+  )
+
+  // disable if there's no space left (and no pre-booked attendees)
+  // or if everyone in the group is booked on a conflicting session
+  return !allowBooking || (noCapacity && !hasExistingBookings)
 }
