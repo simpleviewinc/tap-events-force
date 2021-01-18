@@ -12,7 +12,7 @@ import { noOpObj } from '@keg-hub/jsutils'
  * @param {string} props.dayText - Text to display the day number and name
  * @param {string} props.dayNum - Day number of the current section
  * @param {boolean} props.hasSessions - If the section has sessions
- * @param {boolean} props.mobileSize - If the viewport is mobile sized
+ * @param {boolean} props.isMobile - If the viewport is mobile sized
  */
 export const SessionsDivider = React.memo(props => {
   const {
@@ -22,7 +22,7 @@ export const SessionsDivider = React.memo(props => {
     hasSessions,
     hide,
     last,
-    mobileSize,
+    isMobile,
     styles
   } = props
 
@@ -53,7 +53,7 @@ export const SessionsDivider = React.memo(props => {
         divStyles.main,
       ]}
     >
-      {mobileSize && !first && dayText && (
+      {!first && dayText && (
         <Text
           className={`ef-${divType}-text`}
           style={[
@@ -69,7 +69,7 @@ export const SessionsDivider = React.memo(props => {
         style={[
           dividerStyles?.standard?.divider,
           divStyles.divider,
-          (mobileSize && dividerStyles?.mobile.divider)
+          (isMobile && dividerStyles?.mobile?.divider)
         ]}
       />
       {!hasSessions && (<EmptyDayMessage />)}

@@ -122,12 +122,14 @@ const ItemHeaderRight = ({ styles, onClick }) => {
 /**
  * Component that will hold the day toggle and filter button
  * @param {object} props
- * @param {object} props.styles - styles obj
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
+ * @param {number} props.currentDay - The active day of the session
+ * @param {Object} props.agenda - Metadata for the current days sessions
+ * @param {string} props.dayText - The day number and name for the active day based on viewport size
  */
 export const SessionsHeader = React.memo(({ agenda, currentDay, dayText, onDayChange, labels }) => {
-  const { currentAgendaDay, agendaLength, isLatestDay, isFirstDay } = agenda
+  const { agendaLength, isLatestDay, isFirstDay } = agenda
   const theme = useTheme()
   const styles = theme.get('sessions')
 

@@ -43,22 +43,22 @@ const useListStyles = () => {
  * Hook to map the day numbers to the day text that's displayed
  * <br/> Get's the correct Day text based on current viewport size
  * @param {Array} agendaDays - Group of days from the current agenda
- * @param {boolean} mobileSize - Is the current size of the viewport mobile
+ * @param {boolean} isMobile - Is the current size of the viewport mobile
  *
  * @returns {Object} - Mapped day numbers to displayed day text
  */
-const useDateTextByDay = (agendaDays, mobileSize) => {
+const useDateTextByDay = (agendaDays, isMobile) => {
   const dateList = agendaDays.map(day => day.date).join(',')
   return useMemo(() => {
     return agendaDays.reduce((mapped, { date, dayNumber }) => {
       const dayName = date && format(parseISO(date), 'EEEE')
-      mapped[dayNumber] = mobileSize
+      mapped[dayNumber] = isMobile
         ? `Day ${dayNumber} ${dayName}`.trim()
         : `Day ${dayNumber}`
 
       return mapped
     }, {})
-  }, [dateList, mobileSize])
+  }, [dateList, isMobile])
 }
 
 /**
@@ -132,8 +132,8 @@ export const SessionsList = props => {
   const theme = useTheme()
   const agenda = useAgenda()
   const styles = useListStyles()
-  const mobileSize = isMobileSize(theme)
-  const dateByDay = useDateTextByDay(agenda.agendaDays, mobileSize)
+  const isMobile = isMobileSize(theme)
+  const dateByDay = useDateTextByDay(agenda.agendaDays, isMobile)
   const sections = useSessionsSections(sessions, dateByDay)
   const onScrollSectionChange = useOnScrollChange(
     sections,
@@ -169,7 +169,7 @@ export const SessionsList = props => {
           styles={styles}
           first={section.first}
           last={section.last}
-          mobileSize={mobileSize}
+          isMobile={isMobile}
           dayNum={section?.dayNum}
           dayText={section?.dayText}
           hasSessions={Boolean(section?.data.length)}
