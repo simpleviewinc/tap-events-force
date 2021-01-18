@@ -20,8 +20,14 @@ export const sessionsList = {
         },
         text: dayToggle?.content?.text,
         divider: {
-          margin: 0,
-          bgC: colors.dimTextGray,
+          $xsmall: {
+            margin: 0,
+            mT: 0,
+            bgC: colors.dimTextGray,
+          },
+          $small: {
+            mT: 10,
+          },
         }
       },
       hidden: {
