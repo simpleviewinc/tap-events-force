@@ -139,9 +139,13 @@ export const SessionsHeader = React.memo(({ agenda, currentDay, dayText, onDayCh
   const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
 
   return (
-    <View style={headerStyles?.container}>
+    <View
+      style={headerStyles?.container}
+      className='ef-sessions-header-container'
+    >
       <ItemHeader
         styles={headerStyles}
+        className='ef-sessions-header'
         CenterComponent={
           <DayToggle
             dayText={dayText}

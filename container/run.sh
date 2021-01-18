@@ -46,6 +46,11 @@ keg_run_the_tap(){
     KEG_EXEC_CMD="tap:start"
   fi
 
+  # This is a temp fix until we are able to update expo
+  if [[ -d "$TAP_PATH/node_modules/keg-core/.expo" ]]; then
+    rm -rf $TAP_PATH/node_modules/keg-core/.expo
+  fi
+
   keg_message "Running command 'yarn $KEG_EXEC_CMD'"
   yarn $KEG_EXEC_CMD
 
