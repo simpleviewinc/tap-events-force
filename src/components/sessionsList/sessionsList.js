@@ -1,15 +1,15 @@
 import { format, parseISO } from 'date-fns'
 import { isMobileSize } from 'SVUtils/theme'
 import { useTheme } from '@keg-hub/re-theme'
-import { get, reduceObj } from '@keg-hub/jsutils'
-import React, { useMemo, useCallback, useLayoutEffect } from 'react'
+import { reduceObj } from '@keg-hub/jsutils'
+import React, { useMemo, useCallback } from 'react'
 import { SessionsDivider } from './sessionsDivider'
 import { useAgenda } from 'SVHooks/models/useAgenda'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { SessionsHeader } from 'SVComponents/sessionsHeader'
 import { SectionList } from '@keg-hub/keg-components/sectionList'
 import { useStylesCallback, useDimensions } from '@keg-hub/re-theme'
-import { incrementDay, decrementDay } from 'SVActions/session/dates'
+import { setDay } from 'SVActions/session/dates'
 
 /**
  * Default scroll offset for the section headers based on the size
@@ -25,18 +25,22 @@ const sectionOffset = -45
  */
 const useListStyles = () => {
   const dims = useDimensions()
-  return useStylesCallback((theme, styles, height) => {
-    const itemHeight = (theme.get('gridItem')?.main?.minHeight || 300 ) + sectionOffset
-    return !height
-      ? theme.get('sessionsList')
-      : theme.get('sessionsList', {
+  return useStylesCallback(
+    (theme, styles, height) => {
+      const itemHeight =
+        (theme.get('gridItem')?.main?.minHeight || 300) + sectionOffset
+      return !height
+        ? theme.get('sessionsList')
+        : theme.get('sessionsList', {
           content: {
             list: {
-              marginBottom: height - itemHeight
-            }
-          }
+              marginBottom: height - itemHeight,
+            },
+          },
         })
-  }, [ dims.height ])
+    },
+    [dims.height]
+  )
 }
 
 /**
@@ -58,7 +62,7 @@ const useDateTextByDay = (agendaDays, isMobile) => {
 
       return mapped
     }, {})
-  }, [dateList, isMobile])
+  }, [ dateList, isMobile ])
 }
 
 /**
@@ -77,7 +81,7 @@ const useSessionsSections = (sessions, dateByDay) => {
           // Is the first section if no sections have been added
           first: !sections.length,
           // Is the last section, if total sections === total sessions minus one
-          last: (Object.keys(sessions).length - 1) === sections.length,
+          last: Object.keys(sessions).length - 1 === sections.length,
           // Store the text to displace above each day
           dayText: dateByDay[dayNum],
           data: timeBlocks.map(timeBlock => {
@@ -90,7 +94,7 @@ const useSessionsSections = (sessions, dateByDay) => {
       },
       []
     )
-  }, [sessions, dateByDay])
+  }, [ sessions, dateByDay ])
 }
 
 /**
@@ -105,11 +109,9 @@ const useOnScrollChange = (sections, currentDay, onDayChange) => {
   return useCallback(
     nextDayStr => {
       const nextDay = parseInt(nextDayStr)
-      nextDay < currentDay
-        ? decrementDay(onDayChange)
-        : nextDay > currentDay && incrementDay(onDayChange)
+      setDay(nextDay, onDayChange)
     },
-    [sections, currentDay, onDayChange]
+    [ sections, currentDay, onDayChange ]
   )
 }
 
@@ -149,12 +151,10 @@ export const SessionsList = props => {
       indexSectionHeaderBy={'dayNum'}
       sectionChangeOffset={sectionOffset}
       onScrollSectionChange={onScrollSectionChange}
-      renderItem={({ item }) => (
-        <GridContainer
-          {...item}
-          {...itemProps}
-        />
-      )}
+      renderItem={({ item }) => <GridContainer
+        {...item}
+        {...itemProps}
+      />}
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
           agenda={agenda}
