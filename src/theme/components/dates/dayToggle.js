@@ -28,7 +28,6 @@ export const dayToggle = {
       $all: {
         $xsmall: {
           letterSpacing: 0.1,
-          textDecorationLine: 'underline',
           fontStyle: 'normal',
           fontWeight: '500',
           color: colors.black01,
@@ -42,10 +41,12 @@ export const dayToggle = {
           fontFamily: 'Inter',
           fontSize: '18px',
           letterSpacing: '0.1em',
-          mH: 16,
+          mL: 0,
+          mR: 30,
         },
         $small: {
           fontSize: '20px',
+          mL: 30,
         },
       },
     },

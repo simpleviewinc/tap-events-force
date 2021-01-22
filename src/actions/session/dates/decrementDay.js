@@ -1,6 +1,6 @@
 import { setDay } from './setDay'
 import { getStore } from 'SVStore'
-import { get, checkCall } from '@keg-hub/jsutils'
+import { get } from '@keg-hub/jsutils'
 
 /**
  * Decrements the active/selected day in the agenda in the store
@@ -14,6 +14,5 @@ export const decrementDay = (onChange = null) => {
   if (currentDay <= 1) return
 
   const nextDay = currentDay - 1
-  checkCall(onChange, nextDay)
-  setDay(nextDay)
+  setDay(nextDay, onChange)
 }

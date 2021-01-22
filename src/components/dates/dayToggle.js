@@ -1,11 +1,9 @@
 import React from 'react'
 import { UpdateDayButton } from './updateDayButton'
-import { useTheme, useDimensions } from '@keg-hub/re-theme'
-import { noOp } from 'SVUtils/helpers/method/noop'
+import { useTheme } from '@keg-hub/re-theme'
+import { noOp } from '@keg-hub/jsutils'
 import { View, Text } from '@keg-hub/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
-import { useDateString } from 'SVHooks/dates/useDateString'
-
 /**
  * Simple day toggling component
  * @param {Object} props
@@ -19,7 +17,7 @@ import { useDateString } from 'SVHooks/dates/useDateString'
 export const DayToggle = props => {
   const {
     date = null,
-    dayNumber = 0,
+    dayText = '',
     disableDecrement = false,
     disableIncrement = false,
     onIncrement = noOp,
@@ -27,28 +25,22 @@ export const DayToggle = props => {
   } = props
 
   const theme = useTheme()
+  const mobileSize = isMobileSize(theme)
   const dayToggleStyles = theme.get('dayToggle')
-
-  const dims = useDimensions()
-  const dateStr = useDateString(
-    date,
-    isMobileSize(theme) || dims.width <= 600,
-    dims.width <= 800
-  )
-  const dayText = `Day ${dayNumber} - ${dateStr}`
 
   return (
     <View
       className={'ef-sessions-date-selector'}
       style={dayToggleStyles?.main}
     >
-      <UpdateDayButton
-        styles={dayToggleStyles?.content?.decrement}
-        type={'decrement'}
-        disabled={disableDecrement}
-        onDayChange={onDecrement}
-      />
-
+      {!mobileSize && (
+        <UpdateDayButton
+          styles={dayToggleStyles?.content?.decrement}
+          type={'decrement'}
+          disabled={disableDecrement}
+          onDayChange={onDecrement}
+        />
+      )}
       <Text
         className={'ef-sessions-date-text'}
         style={dayToggleStyles?.content?.text}
@@ -56,13 +48,14 @@ export const DayToggle = props => {
       >
         { dayText }
       </Text>
-
-      <UpdateDayButton
-        type={'increment'}
-        styles={dayToggleStyles?.content?.increment}
-        disabled={disableIncrement}
-        onDayChange={onIncrement}
-      />
+      {!mobileSize && (
+        <UpdateDayButton
+          type={'increment'}
+          styles={dayToggleStyles?.content?.increment}
+          disabled={disableIncrement}
+          onDayChange={onIncrement}
+        />
+      )}
     </View>
   )
 }
