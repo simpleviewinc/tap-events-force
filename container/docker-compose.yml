@@ -13,5 +13,4 @@ services:
       - GIT_APP_URL
       - KEG_EXEC_CMD
       - KEG_DOCKER_EXEC
-      - KEG_NM_INSTALL
       - NODE_ENV
