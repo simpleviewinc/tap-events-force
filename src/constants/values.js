@@ -102,5 +102,5 @@ export const Values = deepFreeze({
    *
    * On init these will be loaded into the items store tree with the specified category and key.
    */
-  LOCAL_STORAGE_KEYS: ['settings.agendaSettings.activeDayNumber'],
+  LOCAL_STORAGE_KEYS: [],
 })

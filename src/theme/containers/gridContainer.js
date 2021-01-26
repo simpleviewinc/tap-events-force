@@ -7,7 +7,7 @@ export const gridContainer = {
         justifyContent: 'center',
       },
       $small: {
-        paddingBottom: 41,
+        paddingTop: 40,
       },
     },
     content: {

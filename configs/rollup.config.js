@@ -52,7 +52,7 @@ const buildAlias = builtAlias => {
   const reTheme = path.join(svModules, 're-theme/build/esm/web')
   const kegComponents = path.join(
     svModules,
-    'keg-components/build/esm/kegComponents.js'
+    'keg-components/build/esm/web'
   )
 
   const reThemeAliases = {

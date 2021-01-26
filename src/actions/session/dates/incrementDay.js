@@ -1,6 +1,6 @@
 import { setDay } from './setDay'
 import { getStore } from 'SVStore'
-import { get, checkCall } from '@keg-hub/jsutils'
+import { get } from '@keg-hub/jsutils'
 import { isLatestDay } from 'SVUtils'
 
 /**
@@ -15,6 +15,5 @@ export const incrementDay = (onChange = null) => {
   if (isLatestDay(currentDayNumber, items.agendaDays)) return
 
   const next = currentDayNumber + 1
-  checkCall(onChange, next)
-  setDay(next)
+  setDay(next, onChange)
 }

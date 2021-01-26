@@ -2,8 +2,15 @@ import { colors } from '../../colors'
 
 export const emptyDayMessage = {
   main: {
-    alS: 'center',
-    txAl: 'center',
-    c: colors.gray,
+    $xsmall: {
+      ftSz: 18,
+      alS: 'center',
+      txAl: 'center',
+      c: colors.gray,
+    },
+    $small: {
+      ftSz: 20,
+      mT: 40,
+    }
   },
 }
