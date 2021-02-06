@@ -1,3 +1,4 @@
+
 env:
   # --- LOCAL ENV CONTEXT --- #
   COMPONENTS_PATH: "{{ cli.paths.components }}"
@@ -10,11 +11,10 @@ env:
   # Docker / Docker Compose paths
   KEG_DOCKER_FILE: "{{ cli.taps.evf.path }}/container/Dockerfile"
   KEG_VALUES_FILE: "{{ cli.taps.evf.path }}/container/values.yml"
-  KEG_MUTAGEN_PATH: "{{ cli.taps.evf.path }}/container/mutagen.yml"
+  KEG_MUTAGEN_FILE: "{{ cli.taps.evf.path }}/container/mutagen.yml"
 
   # The default docker-compose file path
   KEG_COMPOSE_DEFAULT: "{{ cli.taps.evf.path }}/container/docker-compose.yml"
-
   # Can also define other an override compose files
   # Other compose files can loaded by setting an ENVS as follows:
     # KEG_COMPOSE_REPO="/path/to/override.yml"
@@ -23,7 +23,13 @@ env:
 
   # The KEG_CONTEXT_PATH env should be the location of the tap being run
   # So it should NOT be set inside the .env file
-  KEG_CONTEXT_PATH: INITIAL
+  KEG_CONTEXT_PATH: "{{ cli.taps.evf.path }}"
+  
+  # Image to use when building evf
+  KEG_BASE_IMAGE: ghcr.io/simpleviewinc/tap:master
+
+  # Image to use when running evf
+  KEG_IMAGE_FROM: ghcr.io/simpleviewinc/evf:master
 
   # --- DOCKER ENV CONTEXT --- #
 
@@ -38,8 +44,6 @@ env:
   DOC_RESOLVER_PATH: /keg/tap/node_modules/keg-core/node_modules/@keg-hub/tap-resolver
   DOC_JSUTILS_PATH: /keg/tap/node_modules/keg-core/node_modules/@keg-hub/jsutils
 
-  # Allow access to expo dev tools within the docker container
-  EXPO_DEVTOOLS_LISTEN_ADDRESS: 0.0.0.0
   KEG_EXEC_CMD: tap:start
 
   # --- KEG-PROXY ENVs --- #
@@ -68,9 +72,10 @@ env:
 
   # Image Build information
   IMAGE: evf
-  VERSION: "0.0.1"
+  VERSION: 1.0.0
   CONTAINER_NAME: evf
   CHOKIDAR_USEPOLLING: 1
 
   # Git tap url in github
-  GIT_APP_URL: INITIAL
+  GIT_APP_URL: https://github.com/simpleviewinc/tap-events-force.git
+  GIT_APP_BRANCH: master
