@@ -1,7 +1,7 @@
 import { format, parseISO } from 'date-fns'
 import { isMobileSize } from 'SVUtils/theme'
 import { useTheme } from '@keg-hub/re-theme'
-import { reduceObj, noPropArr } from '@keg-hub/jsutils'
+import { reduceObj } from '@keg-hub/jsutils'
 import React, { useMemo, useCallback } from 'react'
 import { SessionsDivider } from './sessionsDivider'
 import { useAgenda } from 'SVHooks/models/useAgenda'
@@ -116,21 +116,6 @@ const useOnScrollChange = (sections, currentDay, onDayChange) => {
 }
 
 /**
- * Gets the text to display as the day name
- * @param {Array} agendaDays
- * @param {Number} currentDay
- *
- * @returns {string}
- */
-const getDayName = (agendaDays = noPropArr, currentDay) => {
-  if (agendaDays.length === 0 || !currentDay) return ''
-  const currentAgendaDay = agendaDays.find(
-    agendaDay => agendaDay?.dayNumber === currentDay
-  )
-  return (currentAgendaDay && currentAgendaDay?.dayName) || ''
-}
-
-/**
  * SessionList - Container for all sessions separated by day
  * @param {object} props
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
@@ -157,7 +142,6 @@ export const SessionsList = props => {
     currentDay,
     onDayChange
   )
-  const dayText = getDayName(agenda?.agendaDays, currentDay)
 
   return (
     <SectionList
@@ -174,7 +158,6 @@ export const SessionsList = props => {
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
           agenda={agenda}
-          dayText={dayText}
           currentDay={currentDay}
           labels={itemProps.labels}
           onDayChange={onDayChange}
