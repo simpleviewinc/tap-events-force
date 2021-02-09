@@ -7,6 +7,7 @@ export const dayToggle = {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        maxWidth: '100%',
       },
     },
     $native: {
