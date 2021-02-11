@@ -1,7 +1,6 @@
-import { format, parseISO } from 'date-fns'
 import { isMobileSize } from 'SVUtils/theme'
 import { useTheme } from '@keg-hub/re-theme'
-import { reduceObj } from '@keg-hub/jsutils'
+import { reduceObj, noPropArr } from '@keg-hub/jsutils'
 import React, { useMemo, useCallback } from 'react'
 import { SessionsDivider } from './sessionsDivider'
 import { useAgenda } from 'SVHooks/models/useAgenda'
@@ -44,34 +43,13 @@ const useListStyles = () => {
 }
 
 /**
- * Hook to map the day numbers to the day text that's displayed
- * <br/> Get's the correct Day text based on current viewport size
- * @param {Array} agendaDays - Group of days from the current agenda
- * @param {boolean} isMobile - Is the current size of the viewport mobile
- *
- * @returns {Object} - Mapped day numbers to displayed day text
- */
-const useDateTextByDay = (agendaDays, isMobile) => {
-  const dateList = agendaDays.map(day => day.date).join(',')
-  return useMemo(() => {
-    return agendaDays.reduce((mapped, { date, dayNumber }) => {
-      const dayName = date && format(parseISO(date), 'EEEE')
-      mapped[dayNumber] = isMobile
-        ? `Day ${dayNumber} ${dayName}`.trim()
-        : `Day ${dayNumber}`
-
-      return mapped
-    }, {})
-  }, [ dateList, isMobile ])
-}
-
-/**
  * Hook to memoize the sessions for a day, and add a key
  * @param {Array} sessions - group of sessions by day
+ * @param {Array} agendaDays
  *
  * @returns {Array} - memoized sessions in SectionList required format
  */
-const useSessionsSections = (sessions, dateByDay) => {
+const useSessionsSections = (sessions, agendaDays = noPropArr) => {
   return useMemo(() => {
     return reduceObj(
       sessions,
@@ -83,7 +61,9 @@ const useSessionsSections = (sessions, dateByDay) => {
           // Is the last section, if total sections === total sessions minus one
           last: Object.keys(sessions).length - 1 === sections.length,
           // Store the text to displace above each day
-          dayText: dateByDay[dayNum],
+          dayText: agendaDays.find(
+            agendaDay => agendaDay.dayNumber === parseInt(dayNum)
+          )?.dayName,
           data: timeBlocks.map(timeBlock => {
             timeBlock.key = `${dayNum}-${timeBlock.timeBlock}`
             return timeBlock
@@ -94,7 +74,7 @@ const useSessionsSections = (sessions, dateByDay) => {
       },
       []
     )
-  }, [ sessions, dateByDay ])
+  }, [ sessions, agendaDays ])
 }
 
 /**
@@ -135,8 +115,7 @@ export const SessionsList = props => {
   const agenda = useAgenda()
   const styles = useListStyles()
   const isMobile = isMobileSize(theme)
-  const dateByDay = useDateTextByDay(agenda.agendaDays, isMobile)
-  const sections = useSessionsSections(sessions, dateByDay)
+  const sections = useSessionsSections(sessions, agenda?.agendaDays)
   const onScrollSectionChange = useOnScrollChange(
     sections,
     currentDay,
@@ -158,7 +137,6 @@ export const SessionsList = props => {
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
           agenda={agenda}
-          dayText={dateByDay[currentDay]}
           currentDay={currentDay}
           labels={itemProps.labels}
           onDayChange={onDayChange}

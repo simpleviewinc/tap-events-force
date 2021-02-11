@@ -13,15 +13,18 @@ export default {
   agendaDays: [
     {
       dayNumber: 1,
-      date: '2020-07-17',
+      date: '2021-01-29',
+      dayName: 'Day 1 - Introduction day',
     },
     {
       dayNumber: 2,
-      date: '2020-07-18',
+      date: '2021-01-30',
+      dayName: 'Day 2',
     },
     {
       dayNumber: 3,
-      date: '2020-07-19',
+      date: '2021-01-31',
+      dayName: 'Day 3',
     },
   ],
   settings: {
