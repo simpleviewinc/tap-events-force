@@ -25,7 +25,6 @@ const buildStyles = (theme, custom) =>
 export const EvfButton = props => {
   const {
     children,
-    className,
     disabled,
     styles,
     onClick,
@@ -35,9 +34,6 @@ export const EvfButton = props => {
     pendingStyles,
   } = props
 
-  // build the main style for the button, memoized
-  const buttonCls = `ef-action-button-${type}`
-
   const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
 
   const mainStyle = useStylesCallback(
@@ -46,28 +42,27 @@ export const EvfButton = props => {
     customStyles
   )
 
+  const content = isProcessing
+    ? buttonProps => (
+        <Processing
+          {...buttonProps}
+          styles={mainStyle?.content?.processing}
+          textStyles={pendingStyles?.text}
+          iconStyles={pendingStyles?.icon}
+          size={mainStyle?.content?.processing?.icon?.size || 20}
+        />
+      )
+    : children || text
+
+  // EVF will only accept these props for their button componen
+  // The buttonType should be one of “selectSession” | "modalPrimary" | "modalSecondary"
   return (
-    <View style={mainStyle?.main}>
-      <View style={mainStyle?.content?.topLeftCorner?.main} />
-      <Button
-        disabled={disabled || isProcessing}
-        className={[ buttonCls, className ]}
-        onClick={onClick}
-        styles={mainStyle?.content?.button}
-      >
-        { isProcessing
-          ? buttonProps => (
-              <Processing
-                {...buttonProps}
-                styles={mainStyle?.content?.processing}
-                textStyles={pendingStyles?.text}
-                iconStyles={pendingStyles?.icon}
-                size={mainStyle?.content?.processing?.icon?.size || 20}
-              />
-            )
-          : children || text }
-      </Button>
-    </View>
+    <Button
+      disabled={disabled || isProcessing}
+      buttonType={buttonType}
+      onClick={onClick}
+      children={content}
+    />
   )
 }
 
