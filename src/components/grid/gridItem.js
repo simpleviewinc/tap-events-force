@@ -52,6 +52,7 @@ export const GridItem = props => {
 
   return (
     <View
+      testID={session?.identifier}
       className={`ef-grid-item-content`}
       style={theme.get('gridItem.main')}
     >

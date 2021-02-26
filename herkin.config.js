@@ -9,5 +9,8 @@ module.exports = {
     stepsDir: 'bdd/steps',
     unitDir: 'unit',
     waypointDir: 'waypoint'
+  },
+  urls: {
+    app: 'http://evf-${branch}.local.kegdev.xyz'
   }
 }

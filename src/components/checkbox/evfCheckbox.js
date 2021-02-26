@@ -41,6 +41,7 @@ export const EvfCheckbox = props => {
 
   return (
     <Checkbox
+      data-testid={id}
       styles={checkboxStyles}
       RightComponent={RightComponent || text}
       onChange={handler}
