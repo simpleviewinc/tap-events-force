@@ -10,7 +10,7 @@ module.exports = {
     unitDir: 'unit',
     waypointDir: 'waypoint'
   },
-  urls: {
-    app: 'http://evf-${branch}.local.kegdev.xyz'
+  app: {
+    url: 'http://evf-${branch}.local.kegdev.xyz'
   }
 }
