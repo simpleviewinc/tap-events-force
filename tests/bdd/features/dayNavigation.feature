@@ -74,5 +74,8 @@ Feature: Day Navigation
     And I click the element ".modal-body input[data-testid='1']"
     Then I wait for "text=On waiting list" to be detached
 
-  Scenario: Foo
-    
+  Scenario: Close modal with escape
+    Given I open the site "$world.app.url"
+    When I open the filter modal
+    And I press the key "escape"
+    Then I wait for ".modal-content" to be detached
