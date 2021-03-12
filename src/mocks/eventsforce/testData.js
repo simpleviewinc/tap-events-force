@@ -125,6 +125,26 @@ export default {
       name: 'Breaks',
       className: 'ef-agenda-label-206',
     },
+    {
+      identifier: '7',
+      name: 'Blockchain',
+      className: 'ef-agenda-label-207',
+    },
+    {
+      identifier: '8',
+      name: 'IoT',
+      className: 'ef-agenda-label-208',
+    },
+    {
+      identifier: '9',
+      name: 'Quantum Computing',
+      className: 'ef-agenda-label-209',
+    },
+    {
+      identifier: '10',
+      name: 'Augmented Reality',
+      className: 'ef-agenda-label-210',
+    },
   ],
   locations: [
     {
@@ -148,7 +168,7 @@ export default {
       startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
       presenterIdentifiers: [ '1', '2' ],
-      labelIdentifiers: [ '1', '2' ],
+      labelIdentifiers: [ '1', '2', '3', '4', '5', '6', '7', '8', '9', '10' ],
       locationIdentifier: '1',
       liveVideoUrl: 'https://us02web.zoom.us/j/1234',
       recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
