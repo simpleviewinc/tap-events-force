@@ -7,7 +7,7 @@ import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'
 import { useSessionLocation } from 'SVHooks/models'
 import { format } from 'date-fns'
-import { LabelButton } from 'SVComponents/labels/labelButton'
+import { LabelList } from 'SVComponents/labels/labelList'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
@@ -81,15 +81,13 @@ const Body = ({ styles, session, labels = noPropArr }) => {
             military
           ) }
         </Text>
-        <View style={styles?.labelButtons?.main}>
-          { labels.map(label => (
-            <LabelButton
-              styles={styles?.labelButtons?.button}
-              key={label.identifier}
-              label={label}
-            />
-          )) }
-        </View>
+
+        <LabelList
+          style={styles?.labelButtons?.main}
+          itemStyle={styles?.labelButtons?.button}
+          labels={labels}
+        />
+
         <Text
           className={'ef-modal-body-highlight'}
           style={styles?.locationText}

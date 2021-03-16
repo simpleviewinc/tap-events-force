@@ -11,13 +11,12 @@ export const labelList = {
     $all: {
       $xsmall: {
         flexDirection: 'column',
-        maxWidth: 14,
+        flexWrap: 'wrap',
+        maxWidth: '100%',
       },
       $small: {
         flexDirection: 'row',
         alignContent: 'flex-start',
-        flexWrap: 'wrap',
-        maxWidth: '100%',
       },
     },
   },
