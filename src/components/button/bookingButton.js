@@ -6,7 +6,7 @@ import { useBookingState } from 'SVHooks/booking/useBookingState'
 import { useStylesCallback, useStyle } from '@keg-hub/re-theme'
 import { noPropObj, get } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants'
-const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES } = Values
+const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES, BUTTON_TYPES } = Values
 
 /**
  * Helper to build the styles for the booking button
@@ -121,6 +121,7 @@ export const BookingButton = props => {
   return (
     (bookingModel?.text && (
       <EvfButton
+        buttonType={BUTTON_TYPES.SELECT_SESSION}
         type={bookingModel.state}
         onClick={selectSessionCb}
         disabled={bookingModel.disabled}

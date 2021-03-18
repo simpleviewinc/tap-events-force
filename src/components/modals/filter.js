@@ -18,7 +18,7 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { useFilteredSessions } from 'SVHooks/sessions'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
-const { SESSION_BOOKING_STATES, CATEGORIES } = Values
+const { SESSION_BOOKING_STATES, CATEGORIES, BUTTON_TYPES } = Values
 
 /**
  *
@@ -280,6 +280,7 @@ const Footer = ({
         />
       ) }
       <EvfButton
+        buttonType={BUTTON_TYPES.MODAL_PRIMARY}
         disabled={disableApply}
         type={'primary'}
         styles={styles?.applyButton}

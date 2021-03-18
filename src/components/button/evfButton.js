@@ -32,6 +32,7 @@ export const EvfButton = props => {
     text,
     isProcessing = false,
     pendingStyles,
+    buttonType,
   } = props
 
   const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])

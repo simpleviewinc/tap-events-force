@@ -51,6 +51,12 @@ export const Values = deepFreeze({
     SESSION_DETAILS: 'sessionDetails',
   },
 
+  BUTTON_TYPES: {
+    SELECT_SESSION: 'selectSession',
+    MODAL_PRIMARY: 'modalPrimary',
+    MODAL_SECONDARY: 'modalSecondary',
+  },
+
   BOOKING_MODES: {
     SINGLE: 'single',
     GROUP: 'group',
