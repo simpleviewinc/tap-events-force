@@ -1,7 +1,8 @@
-import React, { useMemo, useContext } from 'react'
+import { checkCall } from '@keg-hub/jsutils'
 import { useStyle } from '@keg-hub/re-theme'
-import { renderFromType, View, Text } from '@keg-hub/keg-components'
 import { EvfLoading } from 'SVComponents/loading/evfLoading'
+import React, { useMemo, useContext, useCallback } from 'react'
+import { renderFromType, View, Text } from '@keg-hub/keg-components'
 import { ComponentsContext } from 'SVContexts/components/componentsContext'
 
 /**
@@ -92,13 +93,23 @@ export const EvfButton = props => {
   const { ButtonComponent } = useContext(ComponentsContext)
   const btnStyles = useStyle(`button.evfButton`, styles)
 
+  // Wrap the onClick, so we can catch the event
+  // Then stop it from propagating to the parent elements
+  const onBtnClick = useCallback(
+    event => {
+      event.stopPropagation()
+      checkCall(onClick, event)
+    },
+    [onClick]
+  )
+
   // EVF will only accept these props for their button component
   // The buttonType should be one of “selectSession” | "modalPrimary" | "modalSecondary"
   return (
     <ButtonComponent
       disabled={Boolean(disabled || isProcessing)}
       buttonType={buttonType}
-      onClick={onClick}
+      onClick={onBtnClick}
     >
       <RenderChildren
         {...childProps}
