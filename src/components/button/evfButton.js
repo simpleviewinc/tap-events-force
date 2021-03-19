@@ -1,17 +1,88 @@
-import React, { useMemo } from 'react'
-import { View, Button, Text } from '@keg-hub/keg-components'
-import { useStylesCallback } from '@keg-hub/re-theme'
+import React, { useMemo, useContext } from 'react'
+import { get } from '@keg-hub/jsutils'
+import { useStyle, useStylesCallback, useThemePath } from '@keg-hub/re-theme'
+import { renderFromType, View, Text } from '@keg-hub/keg-components'
 import { EvfLoading } from 'SVComponents/loading/evfLoading'
+import { ComponentsContext } from 'SVContexts/components/componentsContext'
 
 /**
- * Builds the styles for the Evf button merging the default styles with the parsed styles
- * @param {Object} theme - Global Theme object
- * @param {Object} custom - contains {type, styles}
+ * Processing
+ * @param {object} props
+ * @param {object} props.styles
+ * @param {string=} props.text
+ */
+const Processing = ({
+  pendingStyles,
+  styles,
+  size,
+  text = 'Processing',
+}) => {
+
+  const processStyles = useStyle(styles, pendingStyles)
+
+  return (
+    <View style={styles.main}>
+      <EvfLoading
+        color={processStyles?.icon?.color}
+        size={processStyles?.icon?.size}
+      />
+      <Text style={[ processStyles.content ]}>
+        { text }
+      </Text>
+    </View>
+  )
+}
+
+/**
+ * Render the children based on the passed in type
+ * @param {Object} props
+ * @param {Object|function|string} props.children - Child content to render
+ * @param {Object} props.styles - Custom styles for the children components
+ * @param {string} props.type - Type of button being rendered
+ * @param {boolean} props.selectable - Should the text be selectable
+ * @param {boolean} props.isProcessing - Is the button in a processing state
  *
  * @returns {Object} - Merged Evf button styles
  */
-const buildStyles = (theme, custom) =>
-  theme.get(`button.evfButton.${custom.type}`, custom.styles)
+const RenderChildren = props => {
+
+  const {
+    children,
+    styles,
+    pendingStyles,
+    type = 'default',
+    selectable = false,
+    isProcessing = false,
+  } = props
+
+  const contentStyles = useStyle(`button.contained.default`, styles?.button)
+
+  const content = isProcessing
+    ? buttonProps => (
+        <Processing
+          {...buttonProps}
+          pendingStyles={pendingStyles}
+          styles={styles?.processing}
+        />
+      )
+    : children
+
+  const contentProps = useMemo(() => ({
+    selectable,
+    style: contentStyles.default.content,
+  }), [
+    content,
+    contentStyles,
+    selectable
+  ])
+
+  return renderFromType(
+    content,
+    contentProps,
+    Text
+  )
+
+}
 
 /**
  * EvfButton
@@ -24,69 +95,37 @@ const buildStyles = (theme, custom) =>
  */
 export const EvfButton = props => {
   const {
+    buttonType,
     children,
     disabled,
-    styles,
+    isProcessing,
     onClick,
-    type = 'default',
+    styles,
     text,
-    isProcessing = false,
-    pendingStyles,
-    buttonType,
+    type='default',
+    ...childProps
   } = props
 
-  const customStyles = useMemo(() => ({ type, styles }), [ type, styles ])
+  const { ButtonComponent } = useContext(ComponentsContext)
+  const btnStyles = useStyle(`button.evfButton`, styles)
 
-  const mainStyle = useStylesCallback(
-    buildStyles,
-    [ type, styles, isProcessing ],
-    customStyles
-  )
-
-  const content = isProcessing
-    ? buttonProps => (
-        <Processing
-          {...buttonProps}
-          styles={mainStyle?.content?.processing}
-          textStyles={pendingStyles?.text}
-          iconStyles={pendingStyles?.icon}
-          size={mainStyle?.content?.processing?.icon?.size || 20}
-        />
-      )
-    : children || text
-
-  // EVF will only accept these props for their button componen
+  // EVF will only accept these props for their button component
   // The buttonType should be one of “selectSession” | "modalPrimary" | "modalSecondary"
   return (
-    <Button
-      disabled={disabled || isProcessing}
-      buttonType={buttonType}
-      onClick={onClick}
-      children={content}
-    />
-  )
-}
-
-/**
- * Processing
- * @param {object} props
- * @param {object} props.styles
- * @param {string=} props.text
- */
-const Processing = ({
-  textStyles,
-  iconStyles,
-  styles,
-  size,
-  text = 'Processing',
-}) => {
-  return (
-    <View style={styles.main}>
-      <EvfLoading
-        color={iconStyles?.color}
-        size={size}
-      />
-      <Text style={[ styles.text, textStyles ]}>{ text }</Text>
+    <View className={'evf-button-container'} style={btnStyles?.container} >
+      <ButtonComponent
+        disabled={Boolean(disabled || isProcessing)}
+        buttonType={buttonType}
+        onClick={onClick}
+      >
+        <RenderChildren
+          {...childProps}
+          styles={btnStyles}
+          children={children || text}
+          isProcessing={isProcessing}
+        />
+      </ButtonComponent>
     </View>
+    
   )
 }

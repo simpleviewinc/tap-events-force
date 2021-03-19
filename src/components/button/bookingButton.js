@@ -12,24 +12,23 @@ const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES, BUTTON_TYPES } = Values
  * Helper to build the styles for the booking button
  * @param {Object} theme - Global theme object
  * @param {boolean} disabled - Should the disabled styles be included
- * @param {string} state - Current booking state
  * @param {string} style - Custom styles passed from a parent component
  *
  * @returns {Object} - Joined styles object from different locations
  */
-const buildStyles = (theme, _, disabled, state, iconName, style) => {
-  const stateStyles = theme?.button?.evfButton[state] || noPropObj
-  const bookingStyles = stateStyles?.content?.bookingState || noPropObj
+const buildStyles = (theme, _, disabled, iconName, style) => {
+  const styles = theme.get(`button.evfButton`)
+
+  const bookingStyles = styles?.booking || noPropObj
   const disabledStyles = disabled
-    ? stateStyles?.content?.button?.disabled
+    ? styles?.button?.disabled
     : noPropObj
 
   return {
     ...bookingStyles,
-    text: {
+    content: {
       ...style,
-      ...bookingStyles.text,
-      ...disabledStyles.content,
+      ...disabledStyles?.content,
     },
     icon: theme.get(
       get(bookingStyles, `icon.${iconName}.default`),
@@ -46,11 +45,10 @@ const buildStyles = (theme, _, disabled, state, iconName, style) => {
  */
 const RenderBookingState = props => {
   const { model, style, styles, ...attrs } = props
-  const { displayAmount, icon: Icon, text, state } = model
+  const { displayAmount, icon: Icon, text } = model
 
   const bookingStyles = useStylesCallback(buildStyles, [
     model.disabled,
-    state,
     Icon && Icon.name,
     style,
     styles,
@@ -60,7 +58,7 @@ const RenderBookingState = props => {
     <View style={bookingStyles.main}>
       { text && <Text
         {...attrs}
-        style={bookingStyles.text}
+        style={bookingStyles.content}
         children={text}
       /> }
       { Icon && <Icon
@@ -115,8 +113,7 @@ export const BookingButton = props => {
   const { session } = props
   const bookingModel = useBookingState(session)
   const selectSessionCb = useSelectSession(session, bookingModel)
-
-  const pendingStyles = useStyle('button.bookingButton.pending')
+  const pendingStyles = useStyle('button.evfButton.pending')
 
   return (
     (bookingModel?.text && (

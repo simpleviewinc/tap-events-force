@@ -12,7 +12,7 @@ export const Digit = props => {
 
   return (
     <View style={styles.main}>
-      <Text style={styles.text}>{ digit }</Text>
+      <Text style={styles.content}>{ digit }</Text>
     </View>
   )
 }

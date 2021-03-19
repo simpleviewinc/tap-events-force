@@ -3,7 +3,23 @@
  * This is for DEVELOPMENT only
  * https://docs.google.com/document/d/1oTOhGc1fpG0VhqXTq4ZumceZWoi1ln17wFVxG9SmlDE
  */
-/*
+import React from 'react'
+import { Button } from 'reactstrap'
+import { Values } from 'SVConstants'
+
+const { BUTTON_TYPES } = Values
+
+/**
+ * Maps the internal button type to a default bootstrap button color prop
+ * Only used when developing the session component
+ */
+const typeToColorMap = {
+  [BUTTON_TYPES.SELECT_SESSION]: 'success',
+  [BUTTON_TYPES.MODAL_PRIMARY]: 'primary',
+  [BUTTON_TYPES.MODAL_SECONDARY]: 'secondary',
+}
+
+/**
  * This is a demo button component. The real component gets passed in from the Sessions Component consumer
  * This is basically just a HOC, but called as a function directly
  *
@@ -16,16 +32,20 @@ export const EvfButton = ({
   children,
   disabled,
   buttonType,
+  className,
   onClick,
   ...props
 }) => {
+
   return (
-    <button
+    <Button
+      className={className}
       onClick={onClick}
       disabled={disabled}
+      color={typeToColorMap[buttonType]}
       data-button-type={buttonType}
     >
       { children }
-    </button>
+    </Button>
   )
 }

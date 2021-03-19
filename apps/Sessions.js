@@ -27,6 +27,7 @@ const SessionsApp = props => {
     onSessionBookingRequest, 
     onSessionWaitingListRequest, 
     ModalComponent,
+    ButtonComponent,
     showVersion,
   } = props
 
@@ -41,6 +42,7 @@ const SessionsApp = props => {
           onSessionBookingRequest={onSessionBookingRequest}
           onSessionWaitingListRequest={onSessionWaitingListRequest}
           ModalComponent={ModalComponent}
+          ButtonComponent={ButtonComponent}
           showVersion={showVersion}
         />
       </ReThemeProvider>

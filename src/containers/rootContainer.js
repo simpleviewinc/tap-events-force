@@ -12,6 +12,7 @@ import {
 } from '../mocks/eventsforce/callbacks/useMockBookingCB'
 import testData from '../mocks/eventsforce/testData.js'
 import { evfModalBuilder } from '../mocks/eventsforce/evfModalBuilder'
+import { EvfButton } from '../mocks/eventsforce/evfButton'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -85,6 +86,7 @@ export const RootContainer = withAppHeader(displayName, props => {
         onSessionBookingRequest={mockBookRequest}
         onSessionWaitingListRequest={mockWaitRequest}
         ModalComponent={SessionsModal}
+        ButtonComponent={EvfButton}
       />
     </>
   )
