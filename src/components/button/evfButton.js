@@ -1,6 +1,5 @@
 import React, { useMemo, useContext } from 'react'
-import { get } from '@keg-hub/jsutils'
-import { useStyle, useStylesCallback, useThemePath } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import { renderFromType, View, Text } from '@keg-hub/keg-components'
 import { EvfLoading } from 'SVComponents/loading/evfLoading'
 import { ComponentsContext } from 'SVContexts/components/componentsContext'
@@ -11,12 +10,8 @@ import { ComponentsContext } from 'SVContexts/components/componentsContext'
  * @param {object} props.styles
  * @param {string=} props.text
  */
-const Processing = ({
-  pendingStyles,
-  styles,
-  size,
-  text = 'Processing',
-}) => {
+const Processing = props => {
+  const { pendingStyles, styles, text = 'Processing' } = props
 
   const processStyles = useStyle(styles, pendingStyles)
 
@@ -26,9 +21,7 @@ const Processing = ({
         color={processStyles?.icon?.color}
         size={processStyles?.icon?.size}
       />
-      <Text style={[ processStyles.content ]}>
-        { text }
-      </Text>
+      <Text style={[processStyles.content]}>{ text }</Text>
     </View>
   )
 }
@@ -38,19 +31,16 @@ const Processing = ({
  * @param {Object} props
  * @param {Object|function|string} props.children - Child content to render
  * @param {Object} props.styles - Custom styles for the children components
- * @param {string} props.type - Type of button being rendered
  * @param {boolean} props.selectable - Should the text be selectable
  * @param {boolean} props.isProcessing - Is the button in a processing state
  *
  * @returns {Object} - Merged Evf button styles
  */
 const RenderChildren = props => {
-
   const {
     children,
     styles,
     pendingStyles,
-    type = 'default',
     selectable = false,
     isProcessing = false,
   } = props
@@ -67,21 +57,15 @@ const RenderChildren = props => {
       )
     : children
 
-  const contentProps = useMemo(() => ({
-    selectable,
-    style: contentStyles.default.content,
-  }), [
-    content,
-    contentStyles,
-    selectable
-  ])
-
-  return renderFromType(
-    content,
-    contentProps,
-    Text
+  const contentProps = useMemo(
+    () => ({
+      selectable,
+      style: contentStyles.default.content,
+    }),
+    [ content, contentStyles, selectable ]
   )
 
+  return renderFromType(content, contentProps, Text)
 }
 
 /**
@@ -102,7 +86,6 @@ export const EvfButton = props => {
     onClick,
     styles,
     text,
-    type='default',
     ...childProps
   } = props
 
@@ -112,7 +95,10 @@ export const EvfButton = props => {
   // EVF will only accept these props for their button component
   // The buttonType should be one of “selectSession” | "modalPrimary" | "modalSecondary"
   return (
-    <View className={'evf-button-container'} style={btnStyles?.container} >
+    <View
+      className={'evf-button-container'}
+      style={btnStyles?.container}
+    >
       <ButtonComponent
         disabled={Boolean(disabled || isProcessing)}
         buttonType={buttonType}
@@ -126,6 +112,5 @@ export const EvfButton = props => {
         />
       </ButtonComponent>
     </View>
-    
   )
 }

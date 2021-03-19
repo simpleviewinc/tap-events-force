@@ -10,6 +10,7 @@ const content = {
     lnH: 18,
     alS: 'center',
     pos: 'relative',
+    pV: 2,
   },
   $small: {
     ftSz: 15,
@@ -59,7 +60,7 @@ export const evfButton = {
     content: {
       ...content,
       mL: 8,
-    }
+    },
   },
   booking: {
     main: {
@@ -123,4 +124,3 @@ export const evfButton = {
     },
   },
 }
-

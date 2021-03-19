@@ -2,7 +2,7 @@ import { colors } from '../../colors'
 
 export const evfLoading = {
   main: {
-    h: 22,
+    h: 24,
     w: 22,
   },
   progress: {},
