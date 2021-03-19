@@ -7,10 +7,9 @@ const content = {
     ftWt: 'bold',
     c: colors.white,
     ftSz: 13,
-    lnH: 18,
+    lnH: 22,
     alS: 'center',
     pos: 'relative',
-    pV: 2,
   },
   $small: {
     ftSz: 15,

@@ -95,22 +95,17 @@ export const EvfButton = props => {
   // EVF will only accept these props for their button component
   // The buttonType should be one of “selectSession” | "modalPrimary" | "modalSecondary"
   return (
-    <View
-      className={'evf-button-container'}
-      style={btnStyles?.container}
+    <ButtonComponent
+      disabled={Boolean(disabled || isProcessing)}
+      buttonType={buttonType}
+      onClick={onClick}
     >
-      <ButtonComponent
-        disabled={Boolean(disabled || isProcessing)}
-        buttonType={buttonType}
-        onClick={onClick}
-      >
-        <RenderChildren
-          {...childProps}
-          styles={btnStyles}
-          children={children || text}
-          isProcessing={isProcessing}
-        />
-      </ButtonComponent>
-    </View>
+      <RenderChildren
+        {...childProps}
+        styles={btnStyles}
+        children={children || text}
+        isProcessing={isProcessing}
+      />
+    </ButtonComponent>
   )
 }

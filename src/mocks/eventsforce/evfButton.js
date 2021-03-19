@@ -14,7 +14,7 @@ const { BUTTON_TYPES } = Values
  * Only used when developing the session component
  */
 const typeToColorMap = {
-  [BUTTON_TYPES.SELECT_SESSION]: 'success',
+  [BUTTON_TYPES.SELECT_SESSION]: 'info',
   [BUTTON_TYPES.MODAL_PRIMARY]: 'primary',
   [BUTTON_TYPES.MODAL_SECONDARY]: 'secondary',
 }
@@ -36,7 +36,6 @@ export const EvfButton = ({
   onClick,
   ...props
 }) => {
-
   return (
     <Button
       className={className}

@@ -103,14 +103,19 @@ export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
       className={`ef-modal-group-section-bottom`}
       style={styles.main}
     >
-      <EvfButton
-        buttonType={BUTTON_TYPES.MODAL_SECONDARY}
-        className='ef-cancel-session-button'
-        type={'default'}
-        styles={styles.content?.cancelButton}
-        text={'CANCEL'}
-        onClick={onCancelPress}
-      />
+      <View
+        className={'evf-modal-cancel-wrapper'}
+        style={styles.content?.cancelButton?.container}
+      >
+        <EvfButton
+          buttonType={BUTTON_TYPES.MODAL_SECONDARY}
+          className='ef-cancel-session-button'
+          type={'default'}
+          styles={styles.content?.cancelButton}
+          text={'CANCEL'}
+          onClick={onCancelPress}
+        />
+      </View>
       <EvfButton
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
         className='ef-select-session-button'
