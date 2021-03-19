@@ -4,7 +4,6 @@ import { ComponentsContext } from './componentsContext'
 /**
  * ComponentsProvider for the components passed as props context.
  * @param {Object} props
- * @param {Object} props.components - Custom component to use within the app
  * @param {Object} props.ButtonComponent - Custom button component
  * @param {Object} props.ModalComponent - Custom modal component
  * @param {*} props.children - children of the context
