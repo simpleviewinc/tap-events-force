@@ -41,6 +41,7 @@ export const Values = deepFreeze({
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',
     SELECTED_FILTERS: 'selectedFilters',
+    WAITING_LIST_ACTIVE: 'waitingListActive',
   },
 
   MODAL_TYPES: {

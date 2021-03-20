@@ -5,8 +5,8 @@ import { noPropObj, shallowEqual } from '@keg-hub/jsutils'
 import { showAlertModal } from 'SVActions/modals/showAlertModal'
 import { initSortedAttendees } from 'SVActions/attendees/initSortedAttendees'
 import { initRestrictedAttendees } from 'SVActions/attendees/initRestrictedAttendees'
-import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
 import { getStore } from 'SVStore'
+import { applySessionFilters } from 'SVActions/session/filters/applySessionFilters'
 
 const { CATEGORIES, EVF_CATEGORIES, SUB_CATEGORIES } = Values
 
@@ -74,7 +74,8 @@ export const mapSessionInterface = props => {
   })
 
   checkAlert(props.alert)
-  setAgendaSessions(props.sessions, props.agendaDays)
+
+  applySessionFilters(props.sessions, props.agendaDays)
 
   // initialized the restricted attendee list for each session
   initRestrictedAttendees(props.sessions, props.attendees)
