@@ -41,6 +41,7 @@ export const Values = deepFreeze({
     AGENDA_SETTINGS: 'agendaSettings',
     ACTIVE_FILTERS: 'activeFilters',
     SELECTED_FILTERS: 'selectedFilters',
+    WAITING_LIST_ACTIVE: 'waitingListActive',
   },
 
   MODAL_TYPES: {
@@ -49,6 +50,12 @@ export const Values = deepFreeze({
     FILTER: 'filter',
     GROUP_BOOKING: 'groupBooking',
     SESSION_DETAILS: 'sessionDetails',
+  },
+
+  BUTTON_TYPES: {
+    SELECT_SESSION: 'selectSession',
+    MODAL_PRIMARY: 'modalPrimary',
+    MODAL_SECONDARY: 'modalSecondary',
   },
 
   BOOKING_MODES: {

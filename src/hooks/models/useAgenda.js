@@ -1,5 +1,5 @@
 import { get } from '@keg-hub/jsutils'
-import { getCurrentDay, getLatestDay, isLatestDay } from 'SVUtils'
+import { getCurrentDay, getLatestDay, isLatestDay, getDayName } from 'SVUtils'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 /**
@@ -17,6 +17,7 @@ export const useAgenda = () => {
   const currentDayNumber = get(agendaSettings, 'activeDayNumber')
   const currentAgendaDay = getCurrentDay(agendaDays, currentDayNumber)
   const latestAgendaDay = getLatestDay(agendaDays)
+  const dayName = getDayName(agendaDays, currentDayNumber)
   const currentDayIsLatest = isLatestDay(currentDayNumber, agendaDays)
   const isFirstDay = currentDayNumber === 1
 
@@ -29,5 +30,6 @@ export const useAgenda = () => {
     isLatestDay: currentDayIsLatest,
     agendaLength: agendaDays?.length ?? 0,
     isFirstDay,
+    dayName,
   }
 }

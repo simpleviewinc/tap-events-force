@@ -1,7 +1,7 @@
-import React, { useContext, useCallback } from 'react'
-import { ModalContext } from 'SVContexts/modals/modalContext'
-import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 import PropTypes from 'prop-types'
+import React, { useContext, useCallback } from 'react'
+import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
+import { ComponentsContext } from 'SVContexts/components/componentsContext'
 
 export const contentDefaultMaxHeight = 772
 
@@ -31,7 +31,7 @@ export const BaseModal = props => {
     hideActiveModal()
   }, [onDismiss])
 
-  const ModalComponent = useContext(ModalContext)
+  const { ModalComponent } = useContext(ComponentsContext)
 
   return (
     <ModalComponent

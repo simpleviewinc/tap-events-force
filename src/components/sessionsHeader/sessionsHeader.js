@@ -1,9 +1,7 @@
 import { EVFIcons } from 'SVIcons'
 import { Values } from 'SVConstants'
-import { format, parseISO } from 'date-fns'
 import { useCreateModal } from 'SVHooks/modal'
 import React, { useCallback, useMemo } from 'react'
-import { useAgenda } from 'SVHooks/models/useAgenda'
 import { DayToggle } from 'SVComponents/dates/dayToggle'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { ItemHeader, Button, View } from '@keg-hub/keg-components'
@@ -126,43 +124,49 @@ const ItemHeaderRight = ({ styles, onClick }) => {
  * @param {Function} props.onDayChange - function for handling day changes in the day toggle
  * @param {number} props.currentDay - The active day of the session
  * @param {Object} props.agenda - Metadata for the current days sessions
- * @param {string} props.dayText - The day number and name for the active day based on viewport size
+ * @param {string} props.dayText - override for dayName
  */
-export const SessionsHeader = React.memo(({ agenda, currentDay, dayText, onDayChange, labels }) => {
-  const { agendaLength, isLatestDay, isFirstDay } = agenda
-  const theme = useTheme()
-  const styles = theme.get('sessions')
+export const SessionsHeader = React.memo(
+  ({ agenda, currentDay, dayText, onDayChange, labels }) => {
+    const { agendaLength, isLatestDay, isFirstDay, dayName = dayText } = agenda
+    const theme = useTheme()
+    const styles = theme.get('sessions')
 
-  const increment = useCallback(() => incrementDay(onDayChange), [onDayChange])
-  const decrement = useCallback(() => decrementDay(onDayChange), [onDayChange])
-  const headerStyles = styles.content?.header
-  const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
+    const increment = useCallback(() => incrementDay(onDayChange), [
+      onDayChange,
+    ])
+    const decrement = useCallback(() => decrementDay(onDayChange), [
+      onDayChange,
+    ])
+    const headerStyles = styles.content?.header
+    const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
 
-  return (
-    <View
-      style={headerStyles?.container}
-      className='ef-sessions-header-container'
-    >
-      <ItemHeader
-        styles={headerStyles}
-        className='ef-sessions-header'
-        CenterComponent={
-          <DayToggle
-            dayText={dayText}
-            dayNumber={currentDay}
-            disableDecrement={isFirstDay}
-            disableIncrement={isLatestDay || !agendaLength}
-            onDecrement={decrement}
-            onIncrement={increment}
-          />
-        }
-        RightComponent={
-          <ItemHeaderRight
-            styles={headerStyles?.content?.right?.content}
-            onClick={displayFilterModal}
-          />
-        }
-      />
-    </View>
-  )
-})
+    return (
+      <View
+        style={headerStyles?.container}
+        className='ef-sessions-header-container'
+      >
+        <ItemHeader
+          styles={headerStyles}
+          className='ef-sessions-header'
+          CenterComponent={
+            <DayToggle
+              dayText={dayName}
+              dayNumber={currentDay}
+              disableDecrement={isFirstDay}
+              disableIncrement={isLatestDay || !agendaLength}
+              onDecrement={decrement}
+              onIncrement={increment}
+            />
+          }
+          RightComponent={
+            <ItemHeaderRight
+              styles={headerStyles?.content?.right?.content}
+              onClick={displayFilterModal}
+            />
+          }
+        />
+      </View>
+    )
+  }
+)

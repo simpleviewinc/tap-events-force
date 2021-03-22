@@ -15,10 +15,10 @@ import {
   clearSelectedFilters,
 } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
-import { useFilteredSessions } from 'SVHooks/sessions'
+import { useFilteredSessions, useWaitingListActive } from 'SVHooks/sessions'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
-const { SESSION_BOOKING_STATES, CATEGORIES } = Values
+const { SESSION_BOOKING_STATES, CATEGORIES, BUTTON_TYPES } = Values
 
 /**
  *
@@ -170,15 +170,23 @@ const LabelButtons = ({ styles, labels, selectedFilters = noPropArr }) => {
  *                                 }
  * @returns {Array.<import('SVModels/label').Label>}
  */
-const createStateLabels = bookingStates => {
-  return reduceObj(
-    bookingStates,
-    (key, value, labels) => {
-      labels.push(new Label({ name: wordCaps(value), identifier: key }))
-      return labels
-    },
-    []
-  )
+const useStateLabels = bookingStates => {
+  const waitingListActive = useWaitingListActive()
+
+  return useMemo(() => {
+    const { WAITING_LIST, ON_WAITING_LIST } = SESSION_BOOKING_STATES
+    return reduceObj(
+      bookingStates,
+      (key, value, labels) => {
+        ;(waitingListActive ||
+          (value !== WAITING_LIST && value !== ON_WAITING_LIST)) &&
+          labels.push(new Label({ name: wordCaps(value), identifier: key }))
+
+        return labels
+      },
+      []
+    )
+  }, [ bookingStates, waitingListActive ])
 }
 
 const filteredBookingStates = filterObj(
@@ -195,9 +203,7 @@ const filteredBookingStates = filterObj(
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
 const MiddleSection = ({ styles, labels, selectedFilters }) => {
-  const stateLabels = useMemo(() => createStateLabels(filteredBookingStates), [
-    filteredBookingStates,
-  ])
+  const stateLabels = useStateLabels(filteredBookingStates)
 
   return (
     <ScrollView
@@ -280,6 +286,7 @@ const Footer = ({
         />
       ) }
       <EvfButton
+        buttonType={BUTTON_TYPES.MODAL_PRIMARY}
         disabled={disableApply}
         type={'primary'}
         styles={styles?.applyButton}

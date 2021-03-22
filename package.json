@@ -1,6 +1,6 @@
 {
   "name": "@keg-hub/tap-events-force",
-  "version": "2.5.0",
+  "version": "3.0.0",
   "description": "Events Force Tap for the Keg",
   "main": "index.js",
   "author": "Lance Tipton <lancetipton04@gmail.com>",
