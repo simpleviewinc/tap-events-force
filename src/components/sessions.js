@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo } from 'react'
-import { useTheme } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import { View } from '@keg-hub/keg-components'
 import { ModalManager } from 'SVComponents/modals/modalManager'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
-import { applySessionFilters } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { SessionsList } from 'SVComponents/sessionsList'
@@ -30,11 +29,9 @@ export const Sessions = props => {
 
   useEffect(() => {
     mapSessionInterface(sessionAgendaProps)
-    applySessionFilters()
   }, [sessionAgendaProps])
 
-  const theme = useTheme()
-  const sessionsStyles = theme.get('sessions')
+  const sessionsStyles = useStyle('sessions')
 
   const { labels, agendaSessions, settings, sessions } = useStoreItems([
     'labels',
