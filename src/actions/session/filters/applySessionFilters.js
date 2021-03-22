@@ -10,7 +10,11 @@ import {
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 /**
- * applyFilters
+ * Updates the state of the active filters with the sate from the selected filters
+ * @param {Array<Session>} sessions - List of sessions the will be filtered by the active filters
+ * @param {Array.<import('SVModels/agendaDay').AgendaDay>} agendaDays - Days of the sessions
+ *
+ * @returns {void}
  */
 export const applySessionFilters = (sessions, agendaDays) => {
   const { items } = getStore()?.getState()
