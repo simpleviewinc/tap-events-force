@@ -4,6 +4,8 @@ import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
+import { Values } from 'SVConstants'
+const { BUTTON_TYPES } = Values
 
 /**
  * Alert modal
@@ -72,6 +74,7 @@ const Body = ({ styles, message }) => {
 const Footer = ({ styles, onButtonPress }) => {
   return (
     <EvfButton
+      buttonType={BUTTON_TYPES.MODAL_PRIMARY}
       className={`ef-modal-alert-button`}
       type={'primary'}
       styles={styles?.button}

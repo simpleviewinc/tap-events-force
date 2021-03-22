@@ -3,7 +3,7 @@ import { Sessions } from 'SVComponents/sessions'
 import { Loading } from 'SVComponents'
 import { initSessions } from 'SVActions'
 import { useSelector } from 'react-redux'
-import { ModalProvider } from 'SVContexts/modals/modalProvider'
+import { ComponentsProvider } from 'SVContexts/components/componentsProvider'
 import { VersionDisplay } from 'SVComponents/meta/versionDisplay'
 
 /**
@@ -17,6 +17,7 @@ import { VersionDisplay } from 'SVComponents/meta/versionDisplay'
  *                                                 - of form (sessionId, attendeeIds) => {}
  *                                                  - passes back session id and an array of attendee ids
  * @param {Function} props.ModalComponent - React component or function to allow rendering content in a modal
+ * @param {Function} props.ButtonComponent - React component or function to allow rendering a button
  * @param {Boolean} props.showVersion - if true, displays the version of the tap
  *
  */
@@ -27,6 +28,7 @@ export const SessionsContainer = props => {
     onSessionWaitingListRequest,
     sessionAgendaProps,
     ModalComponent,
+    ButtonComponent,
     showVersion,
   } = props
 
@@ -35,7 +37,10 @@ export const SessionsContainer = props => {
   const isReady = useSelector(store => store.tap?.initialized)
 
   return isReady ? (
-    <ModalProvider component={ModalComponent}>
+    <ComponentsProvider
+      ButtonComponent={ButtonComponent}
+      ModalComponent={ModalComponent}
+    >
       { showVersion && <VersionDisplay /> }
       <Sessions
         onDayChange={onDayChange}
@@ -43,7 +48,7 @@ export const SessionsContainer = props => {
         onSessionBookingRequest={onSessionBookingRequest}
         onSessionWaitingListRequest={onSessionWaitingListRequest}
       />
-    </ModalProvider>
+    </ComponentsProvider>
   ) : (
     <Loading />
   )

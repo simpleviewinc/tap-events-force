@@ -10,7 +10,7 @@ import { isBookingModified } from 'SVContexts/booking/utils/isBookingModified'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import PropTypes from 'prop-types'
 
-const { CATEGORIES } = Values
+const { CATEGORIES, BUTTON_TYPES } = Values
 
 /**
  * The root group booking component. Makes use of the GroupBookingContext.
@@ -103,14 +103,21 @@ export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
       className={`ef-modal-group-section-bottom`}
       style={styles.main}
     >
+      <View
+        className={'evf-modal-cancel-wrapper'}
+        style={styles.content?.cancelButton?.container}
+      >
+        <EvfButton
+          buttonType={BUTTON_TYPES.MODAL_SECONDARY}
+          className='ef-cancel-session-button'
+          type={'default'}
+          styles={styles.content?.cancelButton}
+          text={'CANCEL'}
+          onClick={onCancelPress}
+        />
+      </View>
       <EvfButton
-        className='ef-cancel-session-button'
-        type={'default'}
-        styles={styles.content?.cancelButton}
-        text={'CANCEL'}
-        onClick={onCancelPress}
-      />
-      <EvfButton
+        buttonType={BUTTON_TYPES.MODAL_PRIMARY}
         className='ef-select-session-button'
         isProcessing={pendingSession?.identifier}
         type={'primary'}

@@ -68,27 +68,13 @@ export const groupBookingModal = {
       },
       content: {
         cancelButton: {
-          main: {
+          container: {
             $xsmall: {
-              minHeight: 45,
               marginRight: 10,
-              maxWidth: 120,
-            },
-            $small: {
-              minWidth: 120,
             },
           },
         },
-        bookButton: {
-          main: {
-            $xsmall: {
-              minHeight: 45,
-            },
-            $small: {
-              minWidth: 190,
-            },
-          },
-        },
+        bookButton: {},
       },
     },
   },

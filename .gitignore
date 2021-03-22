@@ -131,3 +131,4 @@ re-theme-touch.js
 *.code-workspace
 **/temp/**
 .temp
+reports

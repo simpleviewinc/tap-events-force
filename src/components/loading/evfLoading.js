@@ -34,7 +34,7 @@ const CustomIndicator = ({ size, styles }) => {
       <Loading
         className={`ef-loading-indicator`}
         color={styles.icon.color}
-        size={size}
+        size={size || 22}
       />
     </Animated.View>
   )
@@ -57,7 +57,7 @@ export const EvfLoading = ({ size, color }) => {
     <KegLoading
       className={'ef-loading'}
       indicator={CustomIndicator}
-      size={size || 15}
+      size={size}
       styles={loadingStyles}
     />
   )
