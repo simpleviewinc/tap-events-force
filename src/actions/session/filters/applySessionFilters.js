@@ -1,6 +1,6 @@
 import { getStore, dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
-import { setWaitingListFilters } from './setWaitingListFilters'
+import { setWaitingListActive } from '../booking/setWaitingListActive'
 import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
 import {
   sessionsFromLabelFilters,
@@ -28,7 +28,7 @@ export const applySessionFilters = (sessions, agendaDays) => {
       : sessions
 
   // Set the waiting list filter label for only viewable sessions
-  setWaitingListFilters(filteredSessions)
+  setWaitingListActive(filteredSessions)
 
   // update agenda sessions store
   setAgendaSessions(filteredSessions, agendaDays)

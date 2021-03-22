@@ -10,7 +10,7 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
  * @param {Array.<import('SVModels/session').Session>} sessions
  *
  */
-export const setWaitingListFilters = sessions => {
+export const setWaitingListActive = sessions => {
   const { items } = getStore()?.getState()
   sessions = sessions || items?.sessions || noPropArr
 
