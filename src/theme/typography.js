@@ -11,10 +11,18 @@ const fonts = {
 }
 
 /**
+ * Gets the default font from the fonts object
+ * @function
+ *
+ * @return {string} Default font name
+ */
+export const getFontDefault = () => fonts.default
+
+/**
  * Cache for the typography styles
  * @object
  */
-let typography = {}
+export let typography = {}
 
 /**
  * Updates the default fonts object with the passed in updated object
@@ -24,7 +32,7 @@ let typography = {}
  *
  * @return {Object} Updated typography object
  */
-const setFonts = (updated = {}, rebuild) => {
+export const setFonts = (updated = {}, rebuild) => {
   Object.assign(fonts, updated)
   rebuild && buildTypography(rebuild)
 
@@ -38,7 +46,7 @@ const setFonts = (updated = {}, rebuild) => {
  *
  * @return {Object} Updated typography object
  */
-const buildTypography = (overrides = {}) => {
+export const buildTypography = (overrides = {}) => {
   typography = deepMerge(
     {
       font: {
@@ -68,5 +76,3 @@ const buildTypography = (overrides = {}) => {
 }
 
 buildTypography()
-
-export { buildTypography, setFonts, typography }

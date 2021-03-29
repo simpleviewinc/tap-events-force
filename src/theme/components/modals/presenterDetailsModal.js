@@ -1,4 +1,5 @@
 import { colors } from '../../colors'
+import { getFontDefault } from '../../typography'
 
 const smallImage = {
   width: 80,
@@ -38,7 +39,7 @@ export const presenterDetailsModal = {
         title: {
           $web: {
             $xsmall: {
-              fontFamily: 'Inter',
+              fontFamily: getFontDefault(),
               marginBottom: '5px',
             },
             $small: {
@@ -61,7 +62,7 @@ export const presenterDetailsModal = {
         company: {
           $web: {
             $xsmall: {
-              fontFamily: 'Inter',
+              fontFamily: getFontDefault(),
               lineHeight: '15px',
             },
             $small: {
@@ -97,7 +98,7 @@ export const presenterDetailsModal = {
           },
           biography: {
             $xsmall: {
-              fontFamily: 'Inter',
+              fontFamily: getFontDefault(),
               fontStyle: 'normal',
               fontWeight: 'normal',
               color: colors.lightGray,

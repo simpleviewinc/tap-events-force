@@ -1,4 +1,5 @@
 import { colors } from '../colors'
+import { getFontDefault } from '../typography'
 
 export const gridContainer = {
   $web: {
@@ -35,7 +36,7 @@ export const gridContainer = {
             content: {
               text: {
                 $web: {
-                  fontFamily: 'Inter',
+                  fontFamily: getFontDefault(),
                 },
                 $all: {
                   color: colors.white,

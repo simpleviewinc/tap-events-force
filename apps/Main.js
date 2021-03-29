@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
 import { Router } from 'SVComponents/router'
-import { get } from '@keg-hub/jsutils'
+import { get, checkCall } from '@keg-hub/jsutils'
 import { ContainerRoutes } from 'SVNavigation/containerRoutes'
 import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
@@ -18,7 +18,7 @@ import { isNative } from 'SVUtils/platform'
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const checkAppInit = setInit => {
-  initAppAction?.()
+  checkCall(initAppAction)
   setInit(true)
 }
 
