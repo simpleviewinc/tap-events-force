@@ -37,16 +37,7 @@ const MainApp = props => {
 
   return init ? (
     <>
-      { (isNative() && (
-        <SafeAreaView
-          style={{
-            backgroundColor: get(
-              activeTheme,
-              'colors.surface.primary.colors.dark'
-            ),
-          }}
-        />
-      )) || <style>{ interFont }</style> }
+      <style>{ interFont }</style>
       <StatusBar barStyle={'default'} />
       <Router history={getHistory()}>
         <SafeAreaView>
