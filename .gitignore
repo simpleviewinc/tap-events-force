@@ -5,7 +5,8 @@ ios/platform.sqlite
 **/clients/**/temp
 
 /temp_assets
-src/assets/fonts
+src/assets/fonts/**
+!src/assets/fonts/Inter-Regular.ttf
 /builds/*
 /bundle
 jsconfig.json
