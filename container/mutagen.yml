@@ -7,7 +7,7 @@ sync:
       vcs: true
       paths:
         - "node_modules"
-        # Ths js import files are dynamically generated
+        # The js import files are dynamically generated
         # So we don't include them in the sync
         - "/core/base/assets/**/index.js"
         - "/.*"
