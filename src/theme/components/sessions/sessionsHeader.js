@@ -31,10 +31,14 @@ export const sessionsHeader = {
     },
   },
   container: {
-    top: 0,
-    position: 'sticky',
-    zIndex: 1,
-    backgroundColor: colors.white01,
+    $web: {
+      position: 'sticky',
+    },
+    $all: {
+      top: 0,
+      zIndex: 1,
+      backgroundColor: colors.white01,
+    },
   },
   content: {
     left: {
@@ -44,7 +48,7 @@ export const sessionsHeader = {
         },
         $small: {
           display: 'flex',
-        }
+        },
       },
     },
     center: {

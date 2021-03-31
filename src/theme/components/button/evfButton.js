@@ -73,7 +73,7 @@ export const evfButton = {
             jtC: 'center',
             alI: 'center',
             bgC: colors.white,
-            bRad: '50%',
+            bRad: 22 / 2,
             h: 22,
             w: 22,
             mL: 8,
