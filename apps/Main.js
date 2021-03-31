@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { getStore } from 'SVStore'
 import { initAppAction } from 'SVActions'
 import { Router } from 'SVComponents/router'
-import { get } from '@keg-hub/jsutils'
+import { get, checkCall } from '@keg-hub/jsutils'
 import { ContainerRoutes } from 'SVNavigation/containerRoutes'
 import { keg } from 'SVConfig'
 import { getHistory } from 'SVNavigation'
@@ -18,7 +18,7 @@ import { isNative } from 'SVUtils/platform'
 import "bootstrap/dist/css/bootstrap.min.css"
 
 const checkAppInit = setInit => {
-  initAppAction?.()
+  checkCall(initAppAction)
   setInit(true)
 }
 
@@ -37,16 +37,7 @@ const MainApp = props => {
 
   return init ? (
     <>
-      { (isNative() && (
-        <SafeAreaView
-          style={{
-            backgroundColor: get(
-              activeTheme,
-              'colors.surface.primary.colors.dark'
-            ),
-          }}
-        />
-      )) || <style>{ interFont }</style> }
+      <style>{ interFont }</style>
       <StatusBar barStyle={'default'} />
       <Router history={getHistory()}>
         <SafeAreaView>

@@ -12,6 +12,7 @@ import { kegComponentsTheme } from 'SVTheme/kegComponentsTheme'
  * Allows overwriting the theme defaults for keg-components
  */
 const themeConfig = {
+  typography,
   defaults: noOpObj,
 }
 

@@ -1,4 +1,5 @@
 import { colors } from '../../colors'
+import { getFontDefault } from '../../typography'
 
 export const dayToggle = {
   main: {
@@ -39,7 +40,7 @@ export const dayToggle = {
       },
       $web: {
         $xsmall: {
-          fontFamily: 'Inter',
+          fontFamily: getFontDefault(),
           fontSize: '18px',
           letterSpacing: '0.1em',
           mL: 0,

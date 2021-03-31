@@ -73,20 +73,26 @@ export const evfButton = {
             jtC: 'center',
             alI: 'center',
             bgC: colors.white,
-            bRad: '50%',
+            bRad: 22 / 2,
             h: 22,
             w: 22,
             mL: 8,
           },
           content: deepMerge(content, {
-            $xsmall: {
-              tp: 'initial',
-              c: colors.primary,
-              lnH: 22,
-              ftSz: 14,
+            $web: {
+              $xsmall: {
+                tp: 'initial',
+              },
             },
-            $small: {
-              ftSz: 14,
+            $all: {
+              $xsmall: {
+                c: colors.primary,
+                lnH: 22,
+                ftSz: 14,
+              },
+              $small: {
+                ftSz: 14,
+              },
             },
           }),
         },

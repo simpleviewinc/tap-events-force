@@ -1,4 +1,3 @@
-import { get } from '@keg-hub/jsutils'
 import { colors } from '../../colors'
 import { dayToggle } from '../dates/dayToggle'
 
@@ -28,12 +27,12 @@ export const sessionsList = {
           $small: {
             mT: 10,
           },
-        }
+        },
       },
       hidden: {
         main: {
-          display: 'none'
-        }
+          display: 'none',
+        },
       },
       first: {
         main: {
@@ -47,7 +46,7 @@ export const sessionsList = {
         },
         divider: {
           bgC: 'transparent',
-        }
+        },
       },
       firstEmpty: {
         main: {
@@ -62,7 +61,7 @@ export const sessionsList = {
         },
         divider: {
           display: 'none',
-        }
+        },
       },
       empty: {
         main: {
@@ -84,7 +83,7 @@ export const sessionsList = {
       mobile: {
         divider: {
           bgC: 'transparent',
-        }
+        },
       },
       lastEmpty: {
         main: {
@@ -93,14 +92,15 @@ export const sessionsList = {
         text: {
           mB: 30,
         },
-      }
+      },
     },
-    list: {
+    container: {
       /**
-      * Sets a default height for the list bottom padding
-      * This gets overwritten later within the component
-      */
-      marginBottom: 300
-    }
+       * Sets a default height for the list bottom padding
+       * This gets overwritten later within the component
+       */
+      marginBottom: 300,
+    },
+    list: {},
   },
 }

@@ -6,7 +6,7 @@ import { SessionsDivider } from './sessionsDivider'
 import { useAgenda } from 'SVHooks/models/useAgenda'
 import { GridContainer } from 'SVContainers/gridContainer'
 import { SessionsHeader } from 'SVComponents/sessionsHeader'
-import { SectionList } from '@keg-hub/keg-components/sectionList'
+import { SectionList } from '@keg-hub/keg-components'
 import { useStylesCallback, useDimensions } from '@keg-hub/re-theme'
 import { setDay } from 'SVActions/session/dates'
 

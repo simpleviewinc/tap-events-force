@@ -1,7 +1,5 @@
 import React from 'react'
-import { View } from '@keg-hub/keg-components/view'
-import { Text } from '@keg-hub/keg-components/text'
-import { Divider } from '@keg-hub/keg-components/divider'
+import { Divider, Text, View } from '@keg-hub/keg-components'
 import { EmptyDayMessage } from 'SVComponents/grid/emptyDayMessage'
 import { noOpObj } from '@keg-hub/jsutils'
 
@@ -15,21 +13,12 @@ import { noOpObj } from '@keg-hub/jsutils'
  * @param {boolean} props.isMobile - If the viewport is mobile sized
  */
 export const SessionsDivider = React.memo(props => {
-  const {
-    dayNum,
-    dayText,
-    first,
-    hasSessions,
-    hide,
-    last,
-    isMobile,
-    styles
-  } = props
+  const { dayText, first, hasSessions, hide, last, isMobile, styles } = props
 
   const firstEmpty = first && !hasSessions
   const lastEmpty = last && !hasSessions
   const dividerStyles = styles?.content?.dividers
-  
+
   const type = hide
     ? 'hidden'
     : firstEmpty
@@ -39,8 +28,8 @@ export const SessionsDivider = React.memo(props => {
         : lastEmpty
           ? 'lastEmpty'
           : !hasSessions
-            ? 'empty'
-            : undefined
+              ? 'empty'
+              : undefined
 
   const divStyles = dividerStyles[type] || noOpObj
   const divType = type || 'standard'
@@ -48,31 +37,25 @@ export const SessionsDivider = React.memo(props => {
   return (
     <View
       className={`ef-${divType}-main`}
-      style={[
-        dividerStyles?.standard?.main,
-        divStyles.main,
-      ]}
+      style={[ dividerStyles?.standard?.main, divStyles.main ]}
     >
-      {!first && dayText && (
+      { !first && dayText && (
         <Text
           className={`ef-${divType}-text`}
-          style={[
-            dividerStyles?.standard?.text,
-            divStyles.text,
-          ]}
+          style={[ dividerStyles?.standard?.text, divStyles.text ]}
         >
           { dayText }
         </Text>
-      )}
+      ) }
       <Divider
         className={`ef-${divType}-divider`}
         style={[
           dividerStyles?.standard?.divider,
           divStyles.divider,
-          (isMobile && dividerStyles?.mobile?.divider)
+          isMobile && dividerStyles?.mobile?.divider,
         ]}
       />
-      {!hasSessions && (<EmptyDayMessage />)}
+      { !hasSessions && <EmptyDayMessage /> }
     </View>
   )
 })

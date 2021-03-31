@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react'
 import { Text, Touchable } from '@keg-hub/keg-components'
 import { useStyle, useTheme, useThemeHover } from '@keg-hub/re-theme'
+import { noOpObj } from '@keg-hub/jsutils'
 import { isMobileSize } from 'SVUtils/theme'
+import { isNative } from 'SVUtils/platform'
 
 /**
  * SessionLink
@@ -32,7 +34,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
       pointerEvents={onPress ? 'auto' : 'none'}
     >
       <Text
-        ref={ref}
+        {...(isNative() ? noOpObj : { ref: ref })}
         {...numberOfLines}
         style={themeStyle.text}
         className='ef-session-name'
