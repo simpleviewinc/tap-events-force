@@ -29,7 +29,7 @@ env:
   KEG_BASE_IMAGE: ghcr.io/simpleviewinc/tap:master
 
   # Image to use when running evf
-  KEG_IMAGE_FROM: ghcr.io/simpleviewinc/evf:master
+  KEG_IMAGE_FROM: ghcr.io/simpleviewinc/evf:develop
 
   # --- DOCKER ENV CONTEXT --- #
 
