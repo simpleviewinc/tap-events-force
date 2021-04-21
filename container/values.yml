@@ -26,7 +26,7 @@ env:
   KEG_CONTEXT_PATH: "{{ cli.taps.evf.path }}"
   
   # Image to use when building evf
-  KEG_BASE_IMAGE: ghcr.io/simpleviewinc/tap:master
+  KEG_BASE_IMAGE: ghcr.io/simpleviewinc/tap:develop
 
   # Image to use when running evf
   KEG_IMAGE_FROM: ghcr.io/simpleviewinc/evf:develop
