@@ -6,7 +6,7 @@ ARG GIT_APP_BRANCH=master
 ARG KEG_COPY_LOCAL
 
 # Add a FROM for the tap-base image to we can copy content from it
-ARG KEG_BASE_IMAGE=ghcr.io/simpleviewinc/tap:master
+ARG KEG_BASE_IMAGE=ghcr.io/simpleviewinc/tap:develop
 FROM $KEG_BASE_IMAGE as tap-base
 
 ARG DOC_APP_PATH=/keg/tap
