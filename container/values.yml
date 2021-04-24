@@ -1,4 +1,14 @@
-
+actions:
+  tap:
+    build:
+      cmds:
+        - yarn web:build
+        - rm -rf {{ envs.DOC_BUILD_PATH }}
+        - cp -R {{ envs.DOC_CORE_PATH }}/web-build {{ envs.DOC_BUILD_PATH }}
+    serve:
+      detached: true
+      cmds:
+        - npx serve {{ envs.DOC_BUILD_PATH }} --cors -n -l {{ envs.KEG_PROXY_PORT }}
 env:
   # --- LOCAL ENV CONTEXT --- #
   COMPONENTS_PATH: "{{ cli.paths.components }}"
@@ -35,6 +45,9 @@ env:
 
   # Default location of the tap in the docker container
   DOC_APP_PATH: /keg/tap
+
+  # Default location of the tap web bundle export
+  DOC_BUILD_PATH: /keg/tap-build
 
   # Defines the location in a docker container for a dependency
   # This allows mutagen to know where to sync the local version of the dependency

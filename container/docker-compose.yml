@@ -4,6 +4,7 @@ services:
     environment:
       - CHOKIDAR_USEPOLLING
       - DOC_APP_PATH
+      - DOC_BUILD_PATH
       - DOC_CORE_PATH
       - DOC_COMPONENTS_PATH
       - DOC_JSUTILS_PATH
