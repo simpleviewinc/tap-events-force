@@ -11,8 +11,16 @@ export const Digit = props => {
   const { digit, styles } = props
 
   return (
-    <View style={styles.main}>
-      <Text style={styles.content}>{ digit }</Text>
+    <View
+      className={'ef-button-text-counter-main'}
+      style={styles.main}
+    >
+      <Text
+        className={'ef-button-text-counter'}
+        style={styles.content}
+      >
+        { digit }
+      </Text>
     </View>
   )
 }

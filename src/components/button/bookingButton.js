@@ -20,9 +20,7 @@ const buildStyles = (theme, _, disabled, iconName, style) => {
   const styles = theme.get(`button.evfButton`)
 
   const bookingStyles = styles?.booking || noPropObj
-  const disabledStyles = disabled
-    ? styles?.button?.disabled
-    : noPropObj
+  const disabledStyles = disabled ? styles?.button?.disabled : noPropObj
 
   return {
     ...bookingStyles,
@@ -55,12 +53,18 @@ const RenderBookingState = props => {
   ])
 
   return (
-    <View style={bookingStyles.main}>
-      { text && <Text
-        {...attrs}
-        style={bookingStyles.content}
-        children={text}
-      /> }
+    <View
+      className={'ef-button-text-main'}
+      style={bookingStyles.main}
+    >
+      { text && (
+        <Text
+          {...attrs}
+          className={`ef-button-text`}
+          style={bookingStyles.content}
+          children={text}
+        />
+      ) }
       { Icon && <Icon
         digit={displayAmount}
         styles={bookingStyles.icon}

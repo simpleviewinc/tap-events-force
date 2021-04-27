@@ -1,7 +1,7 @@
 import React, { useMemo, useCallback } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { View, Text, ScrollView, Button } from '@keg-hub/keg-components'
+import { View, Text, ScrollView } from '@keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { sortLabels } from 'SVUtils'
 import { LabelButton } from 'SVComponents/labels/labelButton'
@@ -131,35 +131,56 @@ const useLabelOn = (selectedCount, selectedFilters, label) => {
 }
 
 /**
+ * RenderLabelButton - Renders the label button component for a label object
+ * Calls hook useLabelOn to check if the label is active of not
+ * @param {Object} props
+ * @param {Object} props.styles - styles to be applied to LabelButton
+ * @param {import('SVModels/label').Label} props.label - the label model instance
+ * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
+ * @param {number} selectedFilters - Total number of selected filters
+ */
+const RenderLabelButton = props => {
+  const { label, styles, selectedCount, selectedFilters } = props
+
+  const isLabelOn = useLabelOn(selectedCount, selectedFilters, label)
+
+  return (
+    <LabelButton
+      label={label}
+      styles={styles}
+      toggledOn={!selectedCount || isLabelOn}
+      onPress={updateSelectedFilters}
+    />
+  )
+}
+
+/**
  * LabelButtons
  * Builds the filter items
+ * Expected behavior:
+ *   - All filters are 'toggled on' by default when no filter is selected
+ *   - Once a filter item is selected, all are toggled off except for the selected item(s)
  * @param {object} props
  * @param {object} props.styles - styles to be applied to LabelButton
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const LabelButtons = ({ styles, labels, selectedFilters = noPropArr }) => {
-  /**
-   * expected behavior:
-   *   - all filters are 'toggled on' by default when no filter is selected
-   *   - once a filter item is selected, the rest should be toggled off except for the selected item(s)
-   */
-  const selectedCount = selectedFilters.length
-  const isFilterEmpty = !selectedCount
-
-  return labels.map(label => {
-    const isLabelOn = useLabelOn(selectedCount, selectedFilters, label)
-    return (
-      <LabelButton
-        key={label.name}
-        styles={styles}
-        label={label}
-        toggledOn={isFilterEmpty || isLabelOn}
-        onPress={label => updateSelectedFilters(label)}
-      />
-    )
-  })
-}
+const LabelButtons = React.memo(
+  ({ styles, labels, selectedFilters = noPropArr }) => {
+    const selectedCount = selectedFilters.length
+    return labels.map(label => {
+      return (
+        <RenderLabelButton
+          key={label.name}
+          label={label}
+          styles={styles}
+          selectedFilters={selectedFilters}
+          selectedCount={selectedCount}
+        />
+      )
+    })
+  }
+)
 
 /**
  * Creates an array of Labels based on the passed in object
@@ -278,11 +299,11 @@ const Footer = ({
   return (
     <View style={styles?.main}>
       { hasSelectedFilters && (
-        <Button
-          themePath='button.text.default'
+        <EvfButton
+          buttonType={BUTTON_TYPES.LINK}
           styles={styles?.clearButton}
           onClick={clearSelectedFilters}
-          content={'Clear all'}
+          text={'Clear all'}
         />
       ) }
       <EvfButton
