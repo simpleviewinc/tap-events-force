@@ -12,4 +12,4 @@ jobs:
       uses: simpleviewinc/tap-build-action@0.0.1
       with:
         cli_git_branch: ZEN-543-tap-workflow
-        ref: /ref/heads/develop
+        tap_ref: /ref/heads/develop
