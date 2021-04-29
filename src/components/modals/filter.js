@@ -131,7 +131,7 @@ const useLabelOn = (selectedCount, selectedFilters, label) => {
 }
 
 /**
- * RenderLabelButton - Renders the label button component for a label object
+ * FilterLabelButton - Renders the label button component for a label object
  * Calls hook useLabelOn to check if the label is active of not
  * @param {Object} props
  * @param {Object} props.styles - styles to be applied to LabelButton
@@ -139,7 +139,7 @@ const useLabelOn = (selectedCount, selectedFilters, label) => {
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  * @param {number} selectedFilters - Total number of selected filters
  */
-const RenderLabelButton = props => {
+const FilterLabelButton = props => {
   const { label, styles, selectedCount, selectedFilters } = props
 
   const isLabelOn = useLabelOn(selectedCount, selectedFilters, label)
@@ -170,7 +170,7 @@ const LabelButtons = React.memo(
     const selectedCount = selectedFilters.length
     return labels.map(label => {
       return (
-        <RenderLabelButton
+        <FilterLabelButton
           key={label.name}
           label={label}
           styles={styles}
