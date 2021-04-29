@@ -15,6 +15,7 @@ export const BookingCheck = ({ style, styles, ...props }) => {
       clipRule='evenodd'
       {...props}
       style={styles || style}
+      className={'ef-button-text-icon'}
     />
   )
 }
