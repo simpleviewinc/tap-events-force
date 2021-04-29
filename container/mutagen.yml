@@ -124,3 +124,7 @@ actions:
       privileged: true
       cmds:
         - yarn tap:start
+    install:
+      location: /keg/tap
+      cmds:
+        - yarn install

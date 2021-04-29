@@ -11,7 +11,7 @@ actions:
         - npx serve {{ envs.DOC_BUILD_PATH }} --cors -n -l {{ envs.KEG_PROXY_PORT }}
 env:
   # --- LOCAL ENV CONTEXT --- #
-  COMPONENTS_PATH: "{{ cli.paths.components }}"
+  COMPONENTS_PATH: "{{ cli.taps.components.path }}"
   RETHEME_PATH: "{{ cli.taps.retheme.path }}"
   RESOLVER_PATH: "{{ cli.paths.resolver }}"
   CLI_PATH: "{{ cli.paths.cli }}"

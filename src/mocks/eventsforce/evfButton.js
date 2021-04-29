@@ -17,6 +17,7 @@ const typeToColorMap = {
   [BUTTON_TYPES.SELECT_SESSION]: 'info',
   [BUTTON_TYPES.MODAL_PRIMARY]: 'primary',
   [BUTTON_TYPES.MODAL_SECONDARY]: 'secondary',
+  [BUTTON_TYPES.LINK]: 'link',
 }
 
 /**
