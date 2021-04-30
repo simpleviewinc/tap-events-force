@@ -1,6 +1,8 @@
 name: image-deploy
 on:
-  push
+  push:
+    branches:
+      - tap-alias
 
 jobs:
   test-build-push:
