@@ -32,7 +32,7 @@ const CustomIndicator = ({ size, styles }) => {
   return (
     <Animated.View style={{ transform: [{ rotate: spinInterpolate }] }}>
       <Loading
-        className={`ef-loading-indicator`}
+        className={`ef-loading-indicator ef-button-text-icon`}
         size={size || 22}
       />
     </Animated.View>

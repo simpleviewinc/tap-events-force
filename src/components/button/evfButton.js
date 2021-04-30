@@ -17,12 +17,20 @@ const Processing = props => {
   const processStyles = useStyle(styles, pendingStyles)
 
   return (
-    <View style={styles.main}>
+    <View
+      className={'ef-button-text-main'}
+      style={styles.main}
+    >
       <EvfLoading
         color={processStyles?.icon?.color}
         size={processStyles?.icon?.size}
       />
-      <Text style={[processStyles.content]}>{ text }</Text>
+      <Text
+        className={'ef-button-text'}
+        style={[processStyles.content]}
+      >
+        { text }
+      </Text>
     </View>
   )
 }
