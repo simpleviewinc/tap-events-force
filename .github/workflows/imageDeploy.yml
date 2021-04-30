@@ -9,6 +9,7 @@ jobs:
     steps:
     - name: Tap Build and Push
       id: tap-build-push
-      uses: simpleviewinc/tap-build-action@0.0.1
+      uses: simpleviewinc/tap-build-action@0.0.2
       with:
         cli_git_branch: ZEN-543-tap-workflow
+        token: ${{ secrets.KEG_ADMIN_TOKEN }}
