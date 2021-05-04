@@ -53,6 +53,7 @@ export const Values = deepFreeze({
   },
 
   BUTTON_TYPES: {
+    LINK: 'link',
     SELECT_SESSION: 'selectSession',
     MODAL_PRIMARY: 'modalPrimary',
     MODAL_SECONDARY: 'modalSecondary',

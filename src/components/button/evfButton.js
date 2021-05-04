@@ -1,4 +1,4 @@
-import { checkCall } from '@keg-hub/jsutils'
+import { checkCall, omitKeys } from '@keg-hub/jsutils'
 import { useStyle } from '@keg-hub/re-theme'
 import { EvfLoading } from 'SVComponents/loading/evfLoading'
 import React, { useMemo, useContext, useCallback } from 'react'
@@ -17,12 +17,20 @@ const Processing = props => {
   const processStyles = useStyle(styles, pendingStyles)
 
   return (
-    <View style={styles.main}>
+    <View
+      className={'ef-button-text-main'}
+      style={styles.main}
+    >
       <EvfLoading
         color={processStyles?.icon?.color}
         size={processStyles?.icon?.size}
       />
-      <Text style={[processStyles.content]}>{ text }</Text>
+      <Text
+        className={'ef-button-text'}
+        style={[processStyles.content]}
+      >
+        { text }
+      </Text>
     </View>
   )
 }
@@ -37,7 +45,7 @@ const Processing = props => {
  *
  * @returns {Object} - Merged Evf button styles
  */
-const RenderChildren = props => {
+const RenderChildren = React.memo(props => {
   const {
     children,
     styles,
@@ -58,16 +66,23 @@ const RenderChildren = props => {
       )
     : children
 
-  const contentProps = useMemo(
-    () => ({
+  const contentProps = useMemo(() => {
+    const style = omitKeys(contentStyles?.default?.content, [
+      'color',
+      'transitionProperty',
+      'transitionDuration',
+      'transitionTimingFunction',
+    ])
+
+    return {
+      style,
       selectable,
-      style: contentStyles.default.content,
-    }),
-    [ content, contentStyles, selectable ]
-  )
+      className: `ef-button-text`,
+    }
+  }, [ content, contentStyles, selectable ])
 
   return renderFromType(content, contentProps, Text)
-}
+})
 
 /**
  * EvfButton
