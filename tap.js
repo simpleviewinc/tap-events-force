@@ -13,9 +13,9 @@ const pathToEntryPoint = isWeb
 
 module.exports = {
   name: 'events-force-x5',
-  alias: 'evf',
   displayName: 'Events Force Mobile X5',
   keg: {
+    alias: 'evf',
     routes: {
       '/': 'RootContainer',
       '/sessions': 'SessionsContainer',
