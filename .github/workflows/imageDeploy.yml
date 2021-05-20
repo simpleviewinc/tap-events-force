@@ -15,6 +15,6 @@ jobs:
         access_token: ${{ github.token }}
     - name: Tap Build and Push
       id: tap-build-push
-      uses: simpleviewinc/tap-build-action@0.0.3
+      uses: simpleviewinc/tap-build-action@0.0.4
       with:
         token: ${{ secrets.KEG_ADMIN_TOKEN }}
