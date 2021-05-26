@@ -1,7 +1,6 @@
 
 const isWeb = process.env.PLATFORM === 'web'
 
-
 /**
  * It would be better to use the node core module `path`
  * But this file is imported into the the app rootContainer, which is frontend
@@ -16,6 +15,7 @@ module.exports = {
   name: 'events-force-x5',
   displayName: 'Events Force Mobile X5',
   keg: {
+    alias: 'evf',
     routes: {
       '/': 'RootContainer',
       '/sessions': 'SessionsContainer',
