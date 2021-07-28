@@ -42,6 +42,7 @@ export const Values = deepFreeze({
     ACTIVE_FILTERS: 'activeFilters',
     SELECTED_FILTERS: 'selectedFilters',
     WAITING_LIST_ACTIVE: 'waitingListActive',
+    ALLOW_BOOKING_ACTIVE: 'allowBookingActive',
   },
 
   MODAL_TYPES: {
