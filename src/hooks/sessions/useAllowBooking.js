@@ -8,7 +8,7 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
  *
  * @returns {boolean} - True if the allow booking is active
  */
-export const useAllowBookingActive = () => {
+export const useAllowBooking = () => {
   const { settings } = useStoreItems([CATEGORIES.SETTINGS])
-  return settings[SUB_CATEGORIES.ALLOW_BOOKING_ACTIVE]
+  return settings[SUB_CATEGORIES.ALLOW_BOOKING]
 }

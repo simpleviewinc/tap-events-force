@@ -11,7 +11,7 @@ import {
   applySessionFilters,
   clearSelectedFilters,
 } from 'SVActions/session/filters'
-import { useWaitingListActive, useAllowBookingActive } from 'SVHooks/sessions'
+import { useWaitingListActive, useAllowBooking } from 'SVHooks/sessions'
 
 const { CATEGORIES, MODAL_TYPES, SUB_CATEGORIES } = Values
 
@@ -133,7 +133,7 @@ export const SessionsHeader = React.memo(
     const theme = useTheme()
     const styles = theme.get('sessions')
     const waitingListActive = useWaitingListActive()
-    const allowBookingActive = useAllowBookingActive()
+    const allowBooking = useAllowBooking()
     const areCustomFilterLabelsPresent = (labels?.length > 0)
 
     const increment = useCallback(() => incrementDay(onDayChange), [
@@ -163,7 +163,7 @@ export const SessionsHeader = React.memo(
               onIncrement={increment}
             />
           }
-          RightComponent={ (waitingListActive || allowBookingActive || areCustomFilterLabelsPresent) && (
+          RightComponent={ (waitingListActive || allowBooking || areCustomFilterLabelsPresent) && (
             <ItemHeaderRight
               styles={headerStyles?.content?.right?.content}
               onClick={displayFilterModal}

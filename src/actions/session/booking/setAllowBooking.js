@@ -10,19 +10,18 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
  * @param {Array.<import('SVModels/session').Session>} sessions
  *
  */
-export const setAllowBookingActive = sessions => {
+export const setAllowBooking = sessions => {
   const { items } = getStore()?.getState()
   sessions = sessions || items?.sessions || noPropArr
 
-  const searchPath = [ 'allowBooking' ]
-  const allowBookingActive = sessions.some(session => get(session, searchPath))
+  const allowBooking = sessions.some(session => session?.allowBooking)
 
   dispatch({
     type: ActionTypes.UPSERT_ITEM,
     payload: {
-      item: allowBookingActive,
+      item: allowBooking,
       category: CATEGORIES.SETTINGS,
-      key: SUB_CATEGORIES.ALLOW_BOOKING_ACTIVE,
+      key: SUB_CATEGORIES.ALLOW_BOOKING,
     },
   })
 }

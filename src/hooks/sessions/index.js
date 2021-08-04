@@ -1,3 +1,3 @@
 export * from './useFilteredSessions'
 export * from './useWaitingListActive'
-export * from './useAllowBookingActive'
+export * from './useAllowBooking'
