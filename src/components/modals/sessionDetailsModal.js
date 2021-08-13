@@ -40,11 +40,8 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
           labels={labels}
         />
       }
-      Footer={
-        <ActionButton
-          styles={sessionDetailsStyles?.content?.footer}
-          session={session}
-        />
+      Footer={ null       
+        //TODO : Add labels here as part of the new figma template
       }
     />
   )
@@ -71,16 +68,23 @@ const Body = ({ styles, session, labels = noPropArr }) => {
         style={styles?.scrollView?.main}
         contentContainerStyle={styles?.scrollView?.contentContainer}
       >
-        <Text
-          className={'ef-modal-body-header'}
-          style={styles?.dateTimeText}
-        >
-          { formatSessionDateTime(
-            session.startDateTimeLocal,
-            session.endDateTimeLocal,
-            military
-          ) }
-        </Text>
+        <View style={styles?.row1?.main}>
+          <Text
+            className={'ef-modal-body-header'}
+            style={styles?.row1?.dateTimeText}
+          >
+            { formatSessionDateTime(
+              session.startDateTimeLocal,
+              session.endDateTimeLocal,
+              military
+            ) }
+          </Text>
+          <ActionButton
+            style={styles?.row1?.button?.main}
+            session={session}
+          />
+        </View>
+
 
         <LabelList
           style={styles?.labelButtons?.main}

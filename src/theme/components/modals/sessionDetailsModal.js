@@ -16,9 +16,11 @@ const defaultHeaderTextStyle = {
     ftWt: '600',
     lnH: 19,
     ftSz: 14,
+    pR: 5
   },
   $small: {
     ftSz: 16,
+    pR: 10
   },
 }
 
@@ -40,7 +42,19 @@ export const sessionDetailsModal = {
           },
         },
       },
-      dateTimeText: defaultHeaderTextStyle,
+      row1: {
+        main: {
+          flexDirection: 'row',
+          alI: 'center'
+        },
+        dateTimeText: defaultHeaderTextStyle,
+        button: {
+          main: {
+            minH: 45,
+          },
+        },
+      },
+      
       locationText: {
         mT: 13,
         ...defaultHeaderTextStyle,
@@ -67,12 +81,7 @@ export const sessionDetailsModal = {
     },
     footer: {
       main: {
-        alI: 'flex-end',
-      },
-      button: {
-        main: {
-          minH: 45,
-        },
+        alI: 'center',
       },
     },
   },
