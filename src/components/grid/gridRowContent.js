@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
@@ -30,7 +30,7 @@ export const GridRowContent = props => {
   const gridRowContentStyles = theme.get('gridItem.gridRowContent')
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
-  const sessionState = getBookingState(session)
+  const sessionState = useMemo(() => getBookingState(session), [ session ])
   let labelToDisplay = sessionState
   
   //Don't diplay select and Read_Only labels as per requirement in zen-626
