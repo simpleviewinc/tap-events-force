@@ -51,15 +51,18 @@ export const GridRowContent = props => {
       />
       <View style={column2Styles.main}>
         <View style={column2Styles.row1.main}>
-            <SessionTime
-              style={theme.get('gridItem.sessionTime.main')}
-              start={session.startDateTimeLocal}
-              end={session.endDateTimeLocal}
-              military={militaryTime}
-            />
+          <SessionTime
+            style={theme.get('gridItem.sessionTime.main')}
+            start={session.startDateTimeLocal}
+            end={session.endDateTimeLocal}
+            military={militaryTime}
+          />
+          { !(isOpen) && (
             <Text style={column2Styles.row1.statusLabel}>
               {labelToDisplay.toUpperCase()}
             </Text>
+          )
+          }
         </View>
         <SessionLink text={session.name} />
         <Text
