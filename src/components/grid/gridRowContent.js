@@ -10,6 +10,10 @@ import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
+import { Values } from 'SVConstants/values'
+
+const { SESSION_BOOKING_STATES } = Values
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -26,6 +30,11 @@ export const GridRowContent = props => {
   const gridRowContentStyles = theme.get('gridItem.gridRowContent')
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
+  const sessionState = getBookingState(session)
+  let labelToDisplay = sessionState
+  
+  //Don't diplay select and Read_Only labels as per requirement in zen-626
+  if (sessionState == SESSION_BOOKING_STATES.SELECT || sessionState == SESSION_BOOKING_STATES.READ_ONLY) { labelToDisplay = ''}
 
   const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
 
@@ -41,12 +50,17 @@ export const GridRowContent = props => {
         labels={labels}
       />
       <View style={column2Styles.main}>
-        <SessionTime
-          style={theme.get('gridItem.sessionTime.main')}
-          start={session.startDateTimeLocal}
-          end={session.endDateTimeLocal}
-          military={militaryTime}
-        />
+        <View style={column2Styles.row1.main}>
+            <SessionTime
+              style={theme.get('gridItem.sessionTime.main')}
+              start={session.startDateTimeLocal}
+              end={session.endDateTimeLocal}
+              military={militaryTime}
+            />
+            <Text style={column2Styles.row1.statusLabel}>
+              {labelToDisplay.toUpperCase()}
+            </Text>
+        </View>
         <SessionLink text={session.name} />
         <Text
           className={'ef-modal-body-highlight'}

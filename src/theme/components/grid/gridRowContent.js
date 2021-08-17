@@ -13,6 +13,18 @@ export const gridRowContent = {
       pB: 10,
       pL: 10,
     },
+    row1: {
+      main: {
+        flexDirection: 'row',
+        alI: 'center'
+      },
+      statusLabel: {
+        mT: 13,
+        mR: 5,
+        ftSz: 12,
+        color: colors.primary
+      }
+    },
     locationText: {
       mT: 8,
       ftSz: 16,
