@@ -12,8 +12,14 @@ import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
 import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
 import { Values } from 'SVConstants/values'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 const { SESSION_BOOKING_STATES } = Values
+
+const useSessionState = (session)=>{
+  const attendees = useStoreItems('attendees')
+  return useMemo(() => getBookingState(session), [session,attendees])
+}
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -30,7 +36,7 @@ export const GridRowContent = props => {
   const gridRowContentStyles = theme.get('gridItem.gridRowContent')
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
-  const sessionState = useMemo(() => getBookingState(session), [ session ])
+  const sessionState = useSessionState(session)
   let labelToDisplay = sessionState
   
   //Don't diplay select and Read_Only labels as per requirement in zen-626
