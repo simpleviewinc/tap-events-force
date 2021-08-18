@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
-import { Text, View } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
-import { useStyle, useTheme } from '@keg-hub/re-theme'
-import { isMobileSize } from 'SVUtils/theme/isMobileSize'
+import { WaitingItem } from './waitingItem'
 
 /**
  * A wrapper around the checkbox component with styling and logic for
@@ -58,6 +56,7 @@ export const AttendeeCheckboxItem = props => {
         isWaiting &&
         (props => (
           <WaitingItem
+            labelFor={id}
             name={text}
             textClassName={textClassName}
             textStyle={styles?.content?.right}
@@ -73,50 +72,5 @@ export const AttendeeCheckboxItem = props => {
       enableCheck={enableCheck}
       checked={checked}
     />
-  )
-}
-
-/**
- * Simple box indicating attendee is on the waiting list
- * @param {Object} props
- * @param {string} props.text - text to show in waiting box
- * @param {Object} props.styles - theme styles (main and content)
- */
-const WaitingBox = ({ text = 'On waiting list', styles }) => {
-  return (
-    <View style={styles?.main}>
-      <Text style={styles?.content}>{ text }</Text>
-    </View>
-  )
-}
-
-/**
- * When a user is on the waiting list, we need to display a waiting visual right of the text
- * @param {Object} props
- * @param {string} props.name
- * @param {string?} props.textClassName - classname for name of attendee
- * @param {object} props.style
- * @param {object} props.textStyle
- * @param {Function?} props.onPress
- */
-const WaitingItem = props => {
-  const { name, style, textClassName, textStyle, onPress } = props
-  const waitingStyles = useStyle('attendeeCheckboxItem.waitingItem', style)
-  const isMobile = isMobileSize(useTheme())
-
-  return (
-    <View style={waitingStyles?.main}>
-      <View style={waitingStyles?.textWrapper}>
-        <Text
-          className={textClassName}
-          style={[ waitingStyles?.text, textStyle ]}
-          onPress={onPress}
-        >
-          { name }
-          { isMobile && ' (waiting)' }
-        </Text>
-      </View>
-      { !isMobile && <WaitingBox styles={waitingStyles?.waitBox} /> }
-    </View>
   )
 }
