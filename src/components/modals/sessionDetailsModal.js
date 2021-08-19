@@ -41,7 +41,8 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
         />
       }
       Footer={ null       
-        //TODO : Add labels here as part of the new figma template
+        //TODO : Add labels here as part of the new figma template. Most probably part of
+        //       https://jira.simpleviewtools.com/browse/ZEN-627
       }
     />
   )

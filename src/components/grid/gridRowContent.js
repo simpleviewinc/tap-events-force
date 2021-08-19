@@ -2,7 +2,7 @@ import React, { useState, useCallback, useMemo } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
-import { useTheme } from '@keg-hub/re-theme'
+import { useTheme, useStyle } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
@@ -10,16 +10,7 @@ import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
-import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
-import { Values } from 'SVConstants/values'
-import { useStoreItems } from 'SVHooks/store/useStoreItems'
-
-const { SESSION_BOOKING_STATES } = Values
-
-const useSessionState = (session)=>{
-  const attendees = useStoreItems('attendees')
-  return useMemo(() => getBookingState(session), [session,attendees])
-}
+import { StateLabel } from '../labels/stateLabel'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -36,11 +27,6 @@ export const GridRowContent = props => {
   const gridRowContentStyles = theme.get('gridItem.gridRowContent')
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
-  const sessionState = useSessionState(session)
-  let labelToDisplay = sessionState
-  
-  //Don't diplay select and Read_Only labels as per requirement in zen-626
-  if (sessionState == SESSION_BOOKING_STATES.SELECT || sessionState == SESSION_BOOKING_STATES.READ_ONLY) { labelToDisplay = ''}
 
   const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
 
@@ -58,17 +44,12 @@ export const GridRowContent = props => {
       <View style={column2Styles.main}>
         <View style={column2Styles.row1.main}>
           <SessionTime
-            style={theme.get('gridItem.sessionTime.main')}
+            style =  {useStyle('gridItem.sessionTime.main')}
             start={session.startDateTimeLocal}
             end={session.endDateTimeLocal}
             military={militaryTime}
           />
-          { !(isOpen) && (
-            <Text style={column2Styles.row1.statusLabel}>
-              {labelToDisplay.toUpperCase()}
-            </Text>
-          )
-          }
+          { !isOpen && <StateLabel session={session} /> }
         </View>
         <SessionLink text={session.name} />
         <Text

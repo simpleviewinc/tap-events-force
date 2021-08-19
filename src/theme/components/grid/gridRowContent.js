@@ -16,14 +16,8 @@ export const gridRowContent = {
     row1: {
       main: {
         flexDirection: 'row',
-        alI: 'center'
+        alI: 'flex-end'
       },
-      statusLabel: {
-        mT: 13,
-        mR: 5,
-        ftSz: 12,
-        color: colors.primary
-      }
     },
     locationText: {
       mT: 8,
