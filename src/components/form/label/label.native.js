@@ -1,3 +1,4 @@
-import { Text } from '@keg-hub/keg-components'
+import { Label as KegLabel } from '@keg-hub/keg-components'
 
-export const Label = Text
+export const Label = KegLabel
+
