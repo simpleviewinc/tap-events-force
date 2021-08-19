@@ -15,7 +15,7 @@ export const gridRowContent = {
     },
     row1: {
       main: {
-        flexDirection: 'row',
+        flD: 'row',
         alI: 'flex-end'
       },
     },

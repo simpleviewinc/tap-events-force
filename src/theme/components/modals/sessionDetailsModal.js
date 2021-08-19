@@ -44,7 +44,7 @@ export const sessionDetailsModal = {
       },
       row1: {
         main: {
-          flexDirection: 'row',
+          flD: 'row',
           alI: 'center'
         },
         dateTimeText: defaultHeaderTextStyle,

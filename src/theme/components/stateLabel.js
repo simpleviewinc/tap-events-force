@@ -2,17 +2,17 @@ import { colors } from '../colors'
 
 export const stateLabel = {
   main: {
-    flexDirection: 'row',
+    flD: 'row',
     alI: 'center',
     mR: 15
   },
   stateText: {
     ftSz: 12,
     ftWt: 500,
-    color: colors.primary
+    c: colors.primary
   },
   check: {
    fill: colors.primary,
-   maxHeight: 18,
+   maxH: 18,
   }
 }
