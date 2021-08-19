@@ -52,6 +52,7 @@ export const AttendeeCheckboxItem = props => {
   return (
     <EvfCheckbox
       id={checkboxId}
+      type={isWaiting ? 'alternate' : 'primary'}
       styles={styles}
       checked={checked}
       onChange={onAttendeeSelected}
