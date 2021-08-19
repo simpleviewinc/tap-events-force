@@ -23,12 +23,15 @@ const CheckboxLabel = ({
   style,
   ...rest
 }) => {
-  const merged = useMemo(() => ({ ...style, ...textStyle }), [ style, textStyle ])
+  const defaultLabelStyles = useMemo(() => ({ ...style, ...textStyle }), [
+    style,
+    textStyle,
+  ])
   return waiting ? (
     <WaitingItem
       {...rest}
       style={style}
-      labelFor={htmlFor}
+      htmlFor={htmlFor}
       name={text}
       textClassName={textClassName}
       textStyle={textStyle}
@@ -38,7 +41,7 @@ const CheckboxLabel = ({
       {...rest}
       htmlFor={htmlFor}
       className={textClassName}
-      style={merged}
+      style={defaultLabelStyles}
     >
       { text }
     </Label>
