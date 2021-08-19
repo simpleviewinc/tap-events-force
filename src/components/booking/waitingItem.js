@@ -32,15 +32,13 @@ export const WaitingItem = props => {
   const waitingStyles = useStyle('attendeeCheckboxItem.waitingItem', style)
   const isMobile = isMobileSize(useTheme())
 
-  console.error('wow')
-
   return (
     <View style={waitingStyles?.main}>
       <View style={waitingStyles?.textWrapper}>
         <Label
-          for={labelFor}
+          htmlFor={labelFor}
           className={textClassName}
-          style={[ waitingStyles?.text, textStyle ]}
+          style={textStyle}
           onPress={onPress}
         >
           { name }
