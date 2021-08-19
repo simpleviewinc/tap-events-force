@@ -4,7 +4,11 @@ import { useStyle, useTheme } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
 import { Label } from 'SVComponents/form/label'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
+import PropTypes from 'prop-types'
 
+/**
+ * Waiting box main wrapper
+ */
 const BoxMain = reStyle(View)(theme => ({
   minHeight: 31,
   backgroundColor: 'unset',
@@ -20,16 +24,13 @@ const BoxMain = reStyle(View)(theme => ({
   alignItems: 'center',
 }))
 
+/**
+ * Waiting box text content wrapper
+ */
 const BoxContent = reStyle(Text)(theme => ({
   color: theme.colors.second,
   fontSize: 12,
   fontWeight: 500,
-}))
-
-const LabelWrapper = reStyle(View)(() => ({
-  flexDirection: 'column',
-  flexShrink: 1,
-  paddingRight: 10,
 }))
 
 /**
@@ -46,6 +47,15 @@ const WaitingBox = ({ text = 'On waiting list' }) => {
 }
 
 /**
+ * Wrapper for the label text
+ */
+const LabelWrapper = reStyle(View)(() => ({
+  flexDirection: 'column',
+  flexShrink: 1,
+  paddingRight: 10,
+}))
+
+/**
  * When a user is on the waiting list, we need to display a waiting visual right of the text
  * @param {Object} props
  * @param {string} props.name
@@ -53,9 +63,18 @@ const WaitingBox = ({ text = 'On waiting list' }) => {
  * @param {object} props.style
  * @param {object} props.textStyle
  * @param {Function?} props.onPress
+ * @param {boolean} props.waiting - true if attendee is waiting
  */
-export const WaitingItem = props => {
-  const { htmlFor, name, style, textClassName, textStyle, onPress } = props
+export const AttendeeCheckboxLabel = props => {
+  const {
+    htmlFor,
+    name,
+    style,
+    textClassName,
+    textStyle,
+    onPress,
+    waiting,
+  } = props
   const waitingStyles = useStyle('attendeeCheckboxItem.waitingItem', style)
   const isMobile = isMobileSize(useTheme())
 
@@ -69,10 +88,18 @@ export const WaitingItem = props => {
           onPress={onPress}
         >
           { name }
-          { isMobile && ' (waiting)' }
+          { isMobile && waiting && ' (waiting)' }
         </Label>
       </LabelWrapper>
-      { !isMobile && <WaitingBox styles={waitingStyles?.waitBox} /> }
+      { !isMobile && waiting && <WaitingBox styles={waitingStyles?.waitBox} /> }
     </View>
   )
+}
+
+AttendeeCheckboxLabel.propTypes = {
+  name: PropTypes.string,
+  textClassName: PropTypes.string,
+  textStyle: PropTypes.object,
+  onPress: PropTypes.func,
+  waiting: PropTypes.bool,
 }

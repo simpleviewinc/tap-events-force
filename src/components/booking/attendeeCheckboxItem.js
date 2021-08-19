@@ -1,52 +1,7 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
 import { isEmpty, set } from '@keg-hub/jsutils'
-import { WaitingItem } from './waitingItem'
-import { Label } from 'SVComponents/form/label'
-
-/**
- * Label text for the attendee checkbox
- * @param {boolean} props.waiting - true if attendee is on waiting list
- * @param {string} props.text - label string
- * @param {string} props.htmlFor - the "for" attribute for the underlying label element
- * @param {string} props.textClassName - class name for the label text
- * @param {Object} props.textStyle - styles for the label text
- * @param {Object} props.style - styles for any wrapping content around the label
- * @param {Object} props.* - remaining props are passed directly to the element
- */
-const CheckboxLabel = ({
-  waiting,
-  text,
-  htmlFor,
-  textClassName,
-  textStyle,
-  style,
-  ...rest
-}) => {
-  const defaultLabelStyles = useMemo(() => ({ ...style, ...textStyle }), [
-    style,
-    textStyle,
-  ])
-  return waiting ? (
-    <WaitingItem
-      {...rest}
-      style={style}
-      htmlFor={htmlFor}
-      name={text}
-      textClassName={textClassName}
-      textStyle={textStyle}
-    />
-  ) : (
-    <Label
-      {...rest}
-      htmlFor={htmlFor}
-      className={textClassName}
-      style={defaultLabelStyles}
-    >
-      { text }
-    </Label>
-  )
-}
+import { AttendeeCheckboxLabel } from './attendeeCheckboxLabel'
 
 /**
  * A wrapper around the checkbox component with styling and logic for
@@ -98,19 +53,19 @@ export const AttendeeCheckboxItem = props => {
     <EvfCheckbox
       id={checkboxId}
       styles={styles}
-      rightClassName={textClassName}
+      checked={checked}
       onChange={onAttendeeSelected}
       disabled={disabled}
       enableCheck={enableCheck}
-      checked={checked}
+      rightClassName={textClassName}
       RightComponent={props => (
-        <CheckboxLabel
+        <AttendeeCheckboxLabel
+          {...props}
           htmlFor={checkboxId}
-          text={text}
+          name={text}
           textClassName={textClassName}
           textStyle={textStyle}
           waiting={isWaiting}
-          {...props}
         />
       )}
     />
