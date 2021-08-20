@@ -52,7 +52,6 @@ GroupBookerBody.propTypes = {
 const TopSection = ({ styles }) => {
   // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
-  const showRequireSymbol = !isBookingModified(state)
   const placeText = state.capacity === 1 ? 'place' : 'places'
   return (
     <View
@@ -64,9 +63,6 @@ const TopSection = ({ styles }) => {
         style={styles?.content?.instructionText}
       >
         Select sessions for your group:{ ' ' }
-        { showRequireSymbol && (
-          <Text style={styles?.content?.instructionAsterisk}>*</Text>
-        ) }
       </Text>
       { state.showCapacity && (
         <Text
