@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
-import { Text, View } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
-import { useStyle, useTheme } from '@keg-hub/re-theme'
-import { isMobileSize } from 'SVUtils/theme/isMobileSize'
+import { AttendeeCheckboxLabel } from './attendeeCheckboxLabel'
 
 /**
  * A wrapper around the checkbox component with styling and logic for
@@ -35,10 +33,10 @@ export const AttendeeCheckboxItem = props => {
 
   const isUnnamed = !name || isEmpty(name)
   const text = isUnnamed ? 'Unnamed' : name
+  const checkboxId = `attendee-checkbox-${id}`
 
   const unnamedStyles = sectionStyles?.content?.unnamedItem?.main
   const itemStyles = sectionStyles?.content?.item?.main
-
   const styles = useMemo(
     () =>
       set({}, 'content.right', {
@@ -48,74 +46,28 @@ export const AttendeeCheckboxItem = props => {
     [ isUnnamed, itemStyles, unnamedStyles ]
   )
 
+  const textStyle = styles?.content?.right
+
   return (
     <EvfCheckbox
-      id={id}
-      styles={styles}
-      text={text}
-      RightComponent={
-        isWaiting &&
-        (props => (
-          <WaitingItem
-            name={text}
-            textClassName={textClassName}
-            textStyle={styles?.content?.right}
-            style={props.style}
-            onPress={props.onPress}
-          />
-        ))
-      }
-      rightClassName={textClassName}
+      id={checkboxId}
       type={isWaiting ? 'alternate' : 'primary'}
+      styles={styles}
+      checked={checked}
       onChange={onAttendeeSelected}
       disabled={isAttendeeDisabled}
       enableCheck={enableCheck}
-      checked={checked}
+      rightClassName={textClassName}
+      RightComponent={props => (
+        <AttendeeCheckboxLabel
+          {...props}
+          htmlFor={checkboxId}
+          name={text}
+          textClassName={textClassName}
+          textStyle={textStyle}
+          waiting={isWaiting}
+        />
+      )}
     />
-  )
-}
-
-/**
- * Simple box indicating attendee is on the waiting list
- * @param {Object} props
- * @param {string} props.text - text to show in waiting box
- * @param {Object} props.styles - theme styles (main and content)
- */
-const WaitingBox = ({ text = 'On waiting list', styles }) => {
-  return (
-    <View style={styles?.main}>
-      <Text style={styles?.content}>{ text }</Text>
-    </View>
-  )
-}
-
-/**
- * When a user is on the waiting list, we need to display a waiting visual right of the text
- * @param {Object} props
- * @param {string} props.name
- * @param {string?} props.textClassName - classname for name of attendee
- * @param {object} props.style
- * @param {object} props.textStyle
- * @param {Function?} props.onPress
- */
-const WaitingItem = props => {
-  const { name, style, textClassName, textStyle, onPress } = props
-  const waitingStyles = useStyle('attendeeCheckboxItem.waitingItem', style)
-  const isMobile = isMobileSize(useTheme())
-
-  return (
-    <View style={waitingStyles?.main}>
-      <View style={waitingStyles?.textWrapper}>
-        <Text
-          className={textClassName}
-          style={[ waitingStyles?.text, textStyle ]}
-          onPress={onPress}
-        >
-          { name }
-          { isMobile && ' (waiting)' }
-        </Text>
-      </View>
-      { !isMobile && <WaitingBox styles={waitingStyles?.waitBox} /> }
-    </View>
   )
 }
