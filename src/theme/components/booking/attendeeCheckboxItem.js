@@ -1,5 +1,3 @@
-import { colors } from '../../colors'
-
 const text = {
   $xsmall: {
     fontSize: '0.8em',
@@ -30,34 +28,6 @@ export const attendeeCheckboxItem = {
         flexWrap: 'nowrap',
       },
     },
-    textWrapper: {
-      flexDirection: 'column',
-      flexShrink: 1,
-      pR: 10,
-    },
     text,
-    waitBox: {
-      main: {
-        $web: {
-          minHeight: 31,
-          backgroundColor: 'unset',
-          cursor: 'default',
-          borderRadius: 2,
-          borderWidth: 1,
-          borderStyle: 'solid',
-          borderColor: colors.second,
-          width: 100,
-          height: 31,
-          padding: 0,
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
-      },
-      content: {
-        color: colors.second,
-        fontSize: 12,
-        fontWeight: 500,
-      },
-    },
   },
 }
