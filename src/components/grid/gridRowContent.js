@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
@@ -22,9 +22,9 @@ import { StateLabel } from '../labels/stateLabel'
  */
 export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
-  const theme = useTheme()
   const [ isOpen, setIsOpen ] = useState(false)
-  const gridRowContentStyles = theme.get('gridItem.gridRowContent')
+  const gridRowContentStyles = useStyle('gridItem.gridRowContent')
+  const gridRowSessionTimeStyles = useStyle('gridItem.sessionTime')
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
 
@@ -44,7 +44,7 @@ export const GridRowContent = props => {
       <View style={column2Styles.main}>
         <View style={column2Styles.row1.main}>
           <SessionTime
-            style =  {useStyle('gridItem.sessionTime.main')}
+            style =  {gridRowSessionTimeStyles.main}
             start={session.startDateTimeLocal}
             end={session.endDateTimeLocal}
             military={militaryTime}
