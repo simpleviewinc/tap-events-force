@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
-import { useTheme } from '@keg-hub/re-theme'
+import { useTheme, useStyle } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
@@ -10,6 +10,7 @@ import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { StateLabel } from '../labels/stateLabel'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -21,9 +22,9 @@ import { SessionPresenters } from 'SVComponents/sessionDetails'
  */
 export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
-  const theme = useTheme()
   const [ isOpen, setIsOpen ] = useState(false)
-  const gridRowContentStyles = theme.get('gridItem.gridRowContent')
+  const gridRowContentStyles = useStyle('gridItem.gridRowContent')
+  const gridRowSessionTimeStyles = useStyle('gridItem.sessionTime')
   const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
 
@@ -41,12 +42,15 @@ export const GridRowContent = props => {
         labels={labels}
       />
       <View style={column2Styles.main}>
-        <SessionTime
-          style={theme.get('gridItem.sessionTime.main')}
-          start={session.startDateTimeLocal}
-          end={session.endDateTimeLocal}
-          military={militaryTime}
-        />
+        <View style={column2Styles.row1.main}>
+          <SessionTime
+            style =  {gridRowSessionTimeStyles.main}
+            start={session.startDateTimeLocal}
+            end={session.endDateTimeLocal}
+            military={militaryTime}
+          />
+          { !isOpen && <StateLabel session={session} /> }
+        </View>
         <SessionLink text={session.name} />
         <Text
           className={'ef-modal-body-highlight'}
