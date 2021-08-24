@@ -38,7 +38,7 @@ export const gridItem = {
       },
       $all: {
         marginTop: 13,
-        flex: 1
+        flex: 1,
       },
     },
   },
@@ -50,16 +50,6 @@ export const gridItem = {
       $small: {
         marginTop: 8,
         marginRight: 8,
-      },
-    },
-    labelList: {
-      main: {
-        $xsmall: {
-          marginRight: 14,
-        },
-        $small: {
-          marginRight: 0,
-        },
       },
     },
   },
