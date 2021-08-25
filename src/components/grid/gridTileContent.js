@@ -58,12 +58,12 @@ export const GridTileContent = props => {
           end={session?.endDateTimeLocal}
           military={militaryTime}
         />
-        <Text
-          className={'ef-session-price'}
-          style={gridTileContentStyles?.row1?.price}
-        >
-          { formattedPrice }
-        </Text>
+        <View style={gridTileContentStyles?.row1?.buttonSection?.main}>
+          <BookingButton
+            session={session}
+            styles={gridTileContentStyles?.row1?.buttonSection?.bookingButton}
+          />
+        </View>
       </View>
 
       <LabelList
@@ -92,13 +92,6 @@ export const GridTileContent = props => {
         session={session}
         styles={gridTileContentStyles?.presenters}
       />
-
-      <View style={gridTileContentStyles?.buttonSection?.main}>
-        <BookingButton
-          session={session}
-          styles={gridTileContentStyles?.buttonSection?.bookingButton}
-        />
-      </View>
     </View>
   )
 }

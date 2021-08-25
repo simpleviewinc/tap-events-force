@@ -38,6 +38,7 @@ export const gridItem = {
       },
       $all: {
         marginTop: 13,
+        flex: 1
       },
     },
   },

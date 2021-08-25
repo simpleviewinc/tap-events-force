@@ -11,11 +11,6 @@ export const gridTileContent = {
     main: {
       flexDirection: 'row',
     },
-    price: {
-      fontWeight: 'bold',
-      fontSize: 16,
-      lineHeight: 19,
-    },
   },
   locationText: {
     ftSz: 16,
@@ -40,19 +35,6 @@ export const gridTileContent = {
         $small: {
           mR: 10,
         },
-      },
-    },
-  },
-  buttonSection: {
-    main: {
-      $web: {
-        position: 'relative',
-        alignSelf: 'flex-end',
-      },
-    },
-    bookingButton: {
-      main: {
-        height: 50,
       },
     },
   },
