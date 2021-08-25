@@ -13,6 +13,12 @@ export const gridRowContent = {
       pB: 10,
       pL: 10,
     },
+    row1: {
+      main: {
+        flD: 'row',
+        alI: 'flex-end'
+      },
+    },
     locationText: {
       mT: 8,
       ftSz: 16,
