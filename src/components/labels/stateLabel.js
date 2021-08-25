@@ -39,6 +39,7 @@ const StateLabelCheck = reStyle(
 )(theme => ({
   fill: theme.colors.primary,
   maxHeight: 18,
+  overflow: 'visible',
 }))
 
 /**
