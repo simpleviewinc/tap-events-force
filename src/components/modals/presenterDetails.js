@@ -74,6 +74,7 @@ const Body = ({ presenter, styles }) => {
           className={`ef-presenter-picture`}
           styles={{ image: imageStyle }}
           source={presenter.photographUrl || placeholderImage}
+          accessibilityLabel={getPresenterFullName(presenter)}
         />
         <View
           className={`ef-modal-presenter-container`}
