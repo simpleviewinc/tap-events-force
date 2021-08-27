@@ -3,7 +3,7 @@ import { Text } from '@keg-hub/keg-components'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
 
-const StyledLabel = reStyle('label')(() => ({ margin: 0, cursor: 'pointer' }))
+const StyledLabel = reStyle('label')(() => ({ m: 0, cursor: 'pointer' }))
 
 /**
  * Label component
