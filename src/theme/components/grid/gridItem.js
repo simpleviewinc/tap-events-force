@@ -6,21 +6,21 @@ export const gridItem = {
   main: {
     $all: {
       $xsmall: {
-        backgroundColor: colors.white,
-        marginBottom: 15,
-        alignItems: 'flex-start',
+        bgC: colors.white,
+        mB: 15,
+        alI: 'flex-start',
       },
       $small: {
-        marginHorizontal: 3,
-        marginBottom: 6,
-        padding: 15,
-        paddingTop: 20,
-        flexDirection: 'column',
+        mH: 3,
+        mB: 6,
+        p: 15,
+        pT: 20,
+        flD: 'column',
       },
     },
     $web: {
       $small: {
-        flex: '1 1 333px',
+        fl: '1 1 333px',
       },
     },
   },
@@ -29,26 +29,26 @@ export const gridItem = {
   sessionTime: {
     main: {
       $web: {
-        height: 'fit-content',
+        h: 'fit-content',
       },
       $native: {
-        flexDirection: 'row',
-        alignSelf: 'flex-start',
+        flD: 'row',
+        alS: 'flex-start',
       },
       $all: {
-        marginTop: 13,
-        flex: 1,
+        mT: 13,
+        fl: 1,
       },
     },
   },
   label: {
     main: {
       $xsmall: {
-        margin: 0,
+        m: 0,
       },
       $small: {
-        marginTop: 8,
-        marginRight: 8,
+        mT: 8,
+        mR: 8,
       },
     },
   },
