@@ -16,7 +16,6 @@ export const gridItem = {
         padding: 15,
         paddingTop: 20,
         flexDirection: 'column',
-        minHeight: 294,
       },
     },
     $web: {
