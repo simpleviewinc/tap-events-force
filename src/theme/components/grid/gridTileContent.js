@@ -25,7 +25,7 @@ export const gridTileContent = {
        * Fill the remaining space of the grid tile, to
        * push the label-list to the bottom of the tile
        */
-      flexGrow: 1,
+      flG: 1,
     },
     container: {
       flWr: 'wrap',

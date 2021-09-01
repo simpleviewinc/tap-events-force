@@ -15,11 +15,10 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
 
 const LabelsDivider = reStyle(View)(theme => ({
-  marginTop: 7,
-  marginBottom: 7,
-  borderBottomColor: theme.colors.dimTextGray,
-  borderBottomWidth: 1,
-  width: '100%'
+  mV: 7,
+  bBC: theme.colors.dimTextGray,
+  bBW: 1,
+  w: '100%'
 }))
 
 /**
