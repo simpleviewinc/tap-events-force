@@ -43,10 +43,6 @@ export const sessionDetailsModal = {
         },
       },
       row1: {
-        main: {
-          flD: 'row',
-          alI: 'center'
-        },
         dateTimeText: defaultHeaderTextStyle,
         button: {
           main: {
@@ -66,17 +62,6 @@ export const sessionDetailsModal = {
           flD: 'row',
         },
         button: labelButtonDefault,
-      },
-      summaryText: {
-        $xsmall: {
-          lnH: 22,
-          mB: 29,
-          ftSz: 14,
-          color: colors.lightGray,
-        },
-        $small: {
-          ftSz: 16,
-        },
       },
     },
     footer: {
