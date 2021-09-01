@@ -84,31 +84,28 @@ const SubHeader = ({ styles, session }) => {
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
 export const SessionDetails = ({ title, styles, session, labels = noPropArr }) => {
-
   return (
-    <View style={styles?.main}>
-      <ScrollView
-        style={styles?.scrollView?.main}
-        contentContainerStyle={styles?.scrollView?.contentContainer}
-      >
-        <Header title={title}  session={session} />
-        <SubHeader styles={styles} session={session} />
+    <ScrollView
+      style={styles?.scrollView?.main}
+      contentContainerStyle={styles?.scrollView?.contentContainer}
+    >
+      <Header title={title}  session={session} />
+      <SubHeader styles={styles} session={session} />
 
-        <ContentDivider />
+      { Boolean(session.summary) && <ContentDivider /> }
 
-        <Summary className={'ef-modal-body'}>
-          { session.summary }
-        </Summary>
+      <Summary className={'ef-modal-body'}>
+        { session?.summary }
+      </Summary>
 
-        <ContentDivider />
+      { Boolean(labels?.length) && <ContentDivider /> }
 
-        <LabelList
-          style={styles?.labelButtons?.main}
-          itemStyle={styles?.labelButtons?.button}
-          labels={labels}
-        />
-      </ScrollView>
-    </View>
+      <LabelList
+        style={styles?.labelButtons?.main}
+        itemStyle={styles?.labelButtons?.button}
+        labels={labels}
+      />
+    </ScrollView>
   )
 }
 

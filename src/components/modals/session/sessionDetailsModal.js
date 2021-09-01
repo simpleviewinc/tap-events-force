@@ -3,7 +3,6 @@ import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from '../baseModal'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 import { SessionDetails } from './sessionDetails'
-import { LabelList } from 'SVComponents/labels/labelList'
 
 /**
  * SessionDetailsModal

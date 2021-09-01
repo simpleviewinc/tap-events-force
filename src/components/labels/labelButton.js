@@ -1,8 +1,7 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import { Button } from '@keg-hub/keg-components'
 import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
-import { checkCall } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants/values'
 
 const { SESSION_BOOKING_LABEL_MAP } = Values
@@ -54,7 +53,7 @@ export const LabelButton = ({
     extraStyles
   )
 
-  const clickHandler = () => checkCall(onPress, label)
+  const clickHandler = useCallback(() => onPress?.(label), [ label, onPress ])
 
   return (
     <Button

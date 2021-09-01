@@ -28,11 +28,10 @@ export const sessionDetailsModal = {
   main: {},
   content: {
     body: {
-      main: {
-        flex: 1,
-      },
       scrollView: {
-        main: {},
+        main: {
+          flex: 1,
+        },
         contentContainer: {
           $xsmall: {
             pH: 19,
@@ -60,6 +59,7 @@ export const sessionDetailsModal = {
       labelButtons: {
         main: {
           flD: 'row',
+          marginTop: -5,
         },
         button: labelButtonDefault,
       },
