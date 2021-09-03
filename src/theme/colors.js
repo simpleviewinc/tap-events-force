@@ -14,6 +14,7 @@ const colors = {
   white01: '#F3F3F3',
   white02: '#F0F0F0',
   gray: '#909090',
+  iconGray: '#C8C8C8',
   lightGray: '#A0A0A0',
   lightGray01: '#8f908f',
   lightGray02: '#F0F0F0',
