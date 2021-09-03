@@ -5,6 +5,21 @@ import { View, Text } from '@keg-hub/keg-components'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
 
+const ItemView = reStyle(View)((_, props) => ({
+  mT: props.isFirst ? 0 : 2,
+  flD: 'row',
+  alI: 'center',
+}))
+
+const PresenterIcon = reStyle(EVFIcons.User)(
+  { mR: 10 }, 
+  theme => ({ 
+    fill: theme.colors.iconGray, 
+    width: 14, 
+    height: 16 
+  })
+)
+
 const PresenterText = reStyle(Text)({
   $xsmall: {
     lnH: 24,
@@ -15,21 +30,11 @@ const PresenterText = reStyle(Text)({
   },
 })
 
-const ItemView = reStyle(View)({
-  $xsmall: {
-    flD: 'row',
-    alI: 'center',
-    mT: 8,
-  },
-  $small: {
-    mT: 20,
-  },
-})
-
-const PresenterIcon = reStyle(EVFIcons.User)({ mR: 10, w: 3, h: 4 }, theme => ({
-  fill: theme.colors.iconGray,
-}))
-
+/**
+ * @param {String} presenterName
+ * @param {String} textClassName - className for presenter text
+ * @param {*} ...props - remaining props passed to ItemView
+ */
 const PresenterItem = ({ presenterName, textClassName, ...viewProps }) => {
   return (
     <ItemView {...viewProps}>
@@ -54,10 +59,11 @@ export const SessionPresenters = React.memo(
 
     return (
       <View {...viewProps}>
-        { presenters.map(presenter => {
+        { presenters.map((presenter, idx) => {
           const fullName = getPresenterFullName(presenter)
           return (
             <PresenterItem
+              isFirst={idx === 0}
               presenterName={fullName}
               textClassName={textClassName || 'ef-sessions-presenter'}
               key={presenter.identifier}

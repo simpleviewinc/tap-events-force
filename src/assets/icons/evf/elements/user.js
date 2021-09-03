@@ -2,7 +2,6 @@ import * as React from 'react'
 import { SvgIcon } from '@keg-hub/keg-components'
 
 export function User(props) {
-  console.log({ props })
   return (
     <SvgIcon
       stroke='none'
