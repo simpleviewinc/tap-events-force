@@ -2,7 +2,7 @@ import React from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from '../baseModal'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
-import { SessionDetails } from './sessionDetails'
+import { SessionDetails } from 'SVComponents/sessionDetails/sessionDetails'
 
 /**
  * SessionDetailsModal

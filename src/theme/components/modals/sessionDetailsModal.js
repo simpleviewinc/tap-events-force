@@ -51,10 +51,10 @@ export const sessionDetailsModal = {
       },
       
       locationText: {
-        mT: 13,
         ...defaultHeaderTextStyle,
         ltrS: 0.105,
-        color: colors.lightGray,
+        c: colors.lightGray,
+        mV: 13,
       },
       labelButtons: {
         main: {

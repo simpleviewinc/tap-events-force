@@ -10,8 +10,9 @@ import { useFormattedPrice } from 'SVHooks/models/price'
 import { useCreateModal } from 'SVHooks/modal'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { Values } from 'SVConstants'
-import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
+import { useSessionPresenters } from 'SVHooks/models'
 import { getPresenterFullName } from 'SVUtils/models'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -45,8 +46,6 @@ export const GridTileContent = props => {
     }
   )
 
-  const location = useSessionLocation(session)
-
   return (
     <View
       className={`ef-grid-tile-content`}
@@ -79,14 +78,12 @@ export const GridTileContent = props => {
         text={session?.name}
       />
 
-      { location?.name && (
-        <Text
-          className={'ef-session-location'}
-          style={gridTileContentStyles?.locationText}
-        >
-          { location.name }
-        </Text>
-      ) }
+      <SessionLocation 
+        session={session}
+        textClass='ef-session-location'
+        style={gridTileContentStyles?.location?.main}
+        textStyle={gridTileContentStyles?.location?.text}
+      />
 
       <PresenterNames
         session={session}

@@ -6,7 +6,7 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
 
 const ItemView = reStyle(View)((_, props) => ({
-  mT: props.isFirst ? 0 : 2,
+  mT: props.isFirst ? 0 : 1,
   flD: 'row',
   alI: 'center',
 }))
@@ -31,6 +31,7 @@ const PresenterText = reStyle(Text)({
 })
 
 /**
+ * @param {boolean} showIcon - show user icon if true
  * @param {String} presenterName
  * @param {String} textClassName - className for presenter text
  * @param {*} ...props - remaining props passed to ItemView
@@ -52,7 +53,7 @@ const PresenterItem = ({ presenterName, textClassName, ...viewProps }) => {
  * @param {object} props.textClassName
  */
 export const SessionPresenters = React.memo(
-  ({ session, textClassName, icons = false, ...viewProps }) => {
+  ({ session, textClassName, ...viewProps }) => {
     if (!session) return null
 
     const presenters = useSessionPresenters(session)

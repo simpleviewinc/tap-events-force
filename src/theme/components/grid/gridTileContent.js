@@ -12,12 +12,16 @@ export const gridTileContent = {
       flexDirection: 'row',
     },
   },
-  locationText: {
-    ftSz: 16,
-    ftWt: '500',
-    lnH: 19,
-    color: colors.darkGray,
-    mT: 18,
+  location: {
+    main: {
+      mT: 16
+    },
+    text: {
+      ftSz: 16,
+      ftWt: '500',
+      lnH: 19,
+      color: colors.darkGray,
+    },
   },
   presenters: {
     main: {

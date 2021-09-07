@@ -1,12 +1,13 @@
 import React from 'react'
 import { Text, ScrollView, View } from '@keg-hub/keg-components'
 import { noPropArr } from '@keg-hub/jsutils'
-import { useSessionLocation } from 'SVHooks/models'
 import { LabelList } from 'SVComponents/labels/labelList'
-import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { SessionPresenters } from './sessionPresenters'
 import { SessionDetailsHeader } from './sessionDetailsHeader'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
+
 import { Values } from 'SVConstants'
 const { CATEGORIES } = Values
 
@@ -50,22 +51,21 @@ const Summary = reStyle(Text)(({
   },
 }))
 
+
 /**
  * Session subheader, containing location and presenters
  * @param {*} param0 
  * @returns 
  */
 const SubHeader = ({ styles, session }) => {
-  const location = useSessionLocation(session)
-
+  console.log({styles})
   return (
     <>
-      <Text
-        className={'ef-modal-body-highlight'}
-        style={styles?.locationText}
-      >
-        { location?.name }
-      </Text>
+      <SessionLocation 
+        textClass='ef-modal-body-highlight'
+        textStyle={styles?.locationText}
+        session={session} 
+      />
 
       <SessionPresenters
         session={session}
