@@ -2,14 +2,14 @@ import React, { useState, useCallback } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
-import { useTheme, useStyle } from '@keg-hub/re-theme'
+import { useStyle } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
 import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button/bookingButton'
-import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
 
 /**
@@ -44,7 +44,7 @@ export const GridRowContent = props => {
       <View style={column2Styles.main}>
         <View style={column2Styles.row1.main}>
           <SessionTime
-            style =  {gridRowSessionTimeStyles.main}
+            style={gridRowSessionTimeStyles.main}
             start={session.startDateTimeLocal}
             end={session.endDateTimeLocal}
             military={militaryTime}
@@ -82,7 +82,7 @@ const DrawerContent = ({ session, styles }) => {
         session={session}
         styles={styles?.bookingButton}
       />
-      <SessionPresenters session={session} />
+      <SessionPresentersRow session={session} />
       <EvfTextToggle text={session.summary} />
     </View>
   )

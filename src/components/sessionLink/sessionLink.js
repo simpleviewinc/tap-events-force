@@ -17,7 +17,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
   const theme = useTheme()
   const sessionLinkStyles = useStyle('sessionLink.default')
   const numberOfLines = useMemo(
-    () => (isMobileSize(theme) ? { numberOfLines: 2 } : { numberOfLines: 0 }),
+    () => ({ numberOfLines: isMobileSize(theme) ? 2 : 0 }),
     [theme]
   )
   // apply hover state
@@ -26,8 +26,11 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
     useStyle(`sessionLink.hover`)
   )
 
+  // text.includes('cloud') && console.log('SessionLink', { styles, className })
+
   return (
     <Touchable
+      className={className}
       activeOpacity={onPress ? 0.2 : 1}
       onPress={onPress}
       style={themeStyle.main}
