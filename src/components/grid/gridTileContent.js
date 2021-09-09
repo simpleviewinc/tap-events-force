@@ -16,7 +16,7 @@ import PropTypes from 'prop-types'
 
 const LabelsDivider = reStyle(View)(theme => ({
   mV: 7,
-  bBC: theme.colors.dimTextGray,
+  bBC: theme.colors.borderGray,
   bBW: 1,
   w: '100%'
 }))
