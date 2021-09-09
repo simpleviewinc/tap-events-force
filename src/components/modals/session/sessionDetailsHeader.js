@@ -5,7 +5,6 @@ import { format } from 'date-fns'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 
-
 /**
  * Formats the date string
  * @param {string} start
@@ -20,14 +19,11 @@ const formatSessionDateTime = (start, end, military) => {
     )}`
 
     const parsedDate = parseDate(start)
-    const formattedDate = parsedDate 
+    const formattedDate = parsedDate
       ? format(parsedDate, 'EEEE, d LLLL y')
       : null
 
-    return [
-      timeBlock,
-      formattedDate,
-    ]
+    return [ timeBlock, formattedDate ]
   }, [ start, end, military ])
 }
 
@@ -39,7 +35,7 @@ const TitleStyles = {
   },
   $small: {
     ftSz: 16,
-  }
+  },
 }
 
 const Subtitle = reStyle(Text)(TitleStyles)
@@ -47,15 +43,15 @@ const Subtitle = reStyle(Text)(TitleStyles)
 const Title = reStyle(Text)({
   ...TitleStyles,
   $xsmall: { ...TitleStyles.$xsmall, mB: 6 },
-  $small: { ...TitleStyles.$small, mB: 10, ftSz: 20 }
+  $small: { ...TitleStyles.$small, mB: 10, ftSz: 20 },
 })
 
-const VerticalDivider = reStyle(View)(theme => ({ 
-  alignSelf: 'center', 
-  h: 17, 
-  bLC: theme.colors.dimTextGray, 
-  bLW: 2, 
-  mH: 8 
+const VerticalDivider = reStyle(View)(theme => ({
+  alS: 'center',
+  h: 17,
+  bLC: theme.colors.dimTextGray,
+  bLW: 2,
+  mH: 8,
 }))
 
 /**
@@ -64,20 +60,19 @@ const VerticalDivider = reStyle(View)(theme => ({
  * @param {object} props.styles
  * @param {import('SVModels/session').Session} props.session
  */
- const ActionButton = ({ session }) => {
+const ActionButton = React.memo(({ session }) => {
   return (
     <View>
       <BookingButton session={session} />
     </View>
   )
-}
-
+})
 
 const HeaderLayout = reStyle(View)({
   flD: 'row',
   jtC: 'space-between',
   alI: 'center',
-  w: '100%'
+  w: '100%',
 })
 
 const HeaderTitle = ({ title, start, end, military }) => {
@@ -89,9 +84,7 @@ const HeaderTitle = ({ title, start, end, military }) => {
 
   return (
     <View>
-      <Title className='ef-modal-body-header'>
-        { title }
-      </Title>
+      <Title className='ef-modal-body-header'>{ title }</Title>
       <Row>
         <Subtitle className='ef-modal-body-subheader-time'>
           { formattedTime }
@@ -107,24 +100,19 @@ const HeaderTitle = ({ title, start, end, military }) => {
   )
 }
 
-
-export const SessionDetailsHeader = ({ title, session={}, military }) => {
-  const { 
-    startDateTimeLocal: start, 
-    endDateTimeLocal: end 
-  } = session
+export const SessionDetailsHeader = ({ title, session = {}, military }) => {
+  const { startDateTimeLocal: start, endDateTimeLocal: end } = session
 
   return (
     <HeaderLayout className='ef-session-details-header-layout'>
-      <HeaderTitle 
-        military={military} 
-        title={title} 
-        start={start} 
-        end={end} 
+      <HeaderTitle
+        military={military}
+        title={title}
+        start={start}
+        end={end}
       />
 
       <ActionButton session={session} />
     </HeaderLayout>
   )
 }
-

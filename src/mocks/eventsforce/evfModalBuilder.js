@@ -2,10 +2,8 @@
 // This is for DEVELOPMENT only
 
 import React from 'react'
-import { Modal as RSModal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import './testStyles.css'
-
-const Modal = RSModal
 
 /*
  * This is a demo modal component. The real component gets passed in from the Sessions Component consumer
@@ -19,7 +17,14 @@ const Modal = RSModal
 export const evfModalBuilder = parentProps => {
   // Returns a function which should be passed as a prop to the Sessions Component
   // Will replace the current internal Modal of the Sessions Component
-  return ({ modalHeader, modalBody, modalFooter, toggle, isOpen, size='lg' }) => {
+  return ({
+    modalHeader,
+    modalBody,
+    modalFooter,
+    toggle,
+    isOpen,
+    size = 'lg',
+  }) => {
     return (
       // Render the Modal component as needed with the passed in parent props
       // Call the renderProp passed in from the session component
@@ -27,16 +32,16 @@ export const evfModalBuilder = parentProps => {
       // All other modal parentProps come from the X5 app ( EU Team )
       // The toggle and isOpen props ( US Team ) should override the parentProps ( EU Team )
       <Modal
-         {...parentProps}
-         isOpen={isOpen}
-         toggle={toggle}
-         size={size}
+        {...parentProps}
+        isOpen={isOpen}
+        toggle={toggle}
+        size={size}
       >
-        { modalHeader && 
+        { modalHeader && (
           <ModalHeader className={'modal-header-test'}>
             { modalHeader }
           </ModalHeader>
-        }
+        ) }
         { modalBody && <ModalBody>{ modalBody }</ModalBody> }
         { modalFooter && <ModalFooter>{ modalFooter }</ModalFooter> }
       </Modal>

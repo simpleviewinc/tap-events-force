@@ -12,24 +12,24 @@ const { CATEGORIES } = Values
 
 const ContentDivider = reStyle(View)(theme => ({
   mV: 20,
-  bBC: theme.colors.dimTextGray,
+  bBC: theme.colors.borderGray,
   bBW: 1,
-  w: '100%'
+  w: '100%',
 }))
 
 /**
  * Session Details Header element, containing title, subtitle, and booking button
  * @param {Session} session - session object
  * @param {string} title - Header title
- * @returns 
+ * @returns
  */
 const Header = ({ session }) => {
   const settings = useStoreItems(CATEGORIES.SETTINGS)
   const military = settings?.displayProperties?.timeFormat === '24'
 
   return (
-    <SessionDetailsHeader 
-      title={session?.name} 
+    <SessionDetailsHeader
+      title={session?.name}
       session={session}
       military={military}
     />
@@ -39,21 +39,21 @@ const Header = ({ session }) => {
 /**
  * Session summary text
  */
-const Summary = reStyle(Text)(({
+const Summary = reStyle(Text)({
   $xsmall: {
     lnH: 22,
     ftSz: 14,
-    ftWt: 400
+    ftWt: 400,
   },
   $small: {
     ftSz: 16,
   },
-}))
+})
 
 /**
  * Session subheader, containing location and presenters
- * @param {*} param0 
- * @returns 
+ * @param {*} param0
+ * @returns
  */
 const SubHeader = ({ styles, session }) => {
   const location = useSessionLocation(session)
@@ -83,20 +83,29 @@ const SubHeader = ({ styles, session }) => {
  * @param {object} props.styles
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-export const SessionDetails = ({ title, styles, session, labels = noPropArr }) => {
+export const SessionDetails = ({
+  title,
+  styles,
+  session,
+  labels = noPropArr,
+}) => {
   return (
     <ScrollView
       style={styles?.scrollView?.main}
       contentContainerStyle={styles?.scrollView?.contentContainer}
     >
-      <Header title={title}  session={session} />
-      <SubHeader styles={styles} session={session} />
+      <Header
+        title={title}
+        session={session}
+      />
+      <SubHeader
+        styles={styles}
+        session={session}
+      />
 
       { Boolean(session.summary) && <ContentDivider /> }
 
-      <Summary className={'ef-modal-body'}>
-        { session?.summary }
-      </Summary>
+      <Summary className={'ef-modal-body'}>{ session?.summary }</Summary>
 
       { Boolean(labels?.length) && <ContentDivider /> }
 
@@ -108,4 +117,3 @@ export const SessionDetails = ({ title, styles, session, labels = noPropArr }) =
     </ScrollView>
   )
 }
-

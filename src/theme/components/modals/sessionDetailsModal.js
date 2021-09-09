@@ -16,11 +16,11 @@ const defaultHeaderTextStyle = {
     ftWt: '600',
     lnH: 19,
     ftSz: 14,
-    pR: 5
+    pR: 5,
   },
   $small: {
     ftSz: 16,
-    pR: 10
+    pR: 10,
   },
 }
 
@@ -49,17 +49,17 @@ export const sessionDetailsModal = {
           },
         },
       },
-      
+
       locationText: {
         mT: 13,
         ...defaultHeaderTextStyle,
         ltrS: 0.105,
-        color: colors.lightGray,
+        c: colors.lightGray,
       },
       labelButtons: {
         main: {
           flD: 'row',
-          marginTop: -5,
+          mT: -5,
         },
         button: labelButtonDefault,
       },
