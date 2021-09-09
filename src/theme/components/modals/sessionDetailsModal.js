@@ -32,14 +32,7 @@ export const sessionDetailsModal = {
         main: {
           flex: 1,
         },
-        contentContainer: {
-          $xsmall: {
-            pH: 19,
-          },
-          $small: {
-            pH: 29,
-          },
-        },
+        contentContainer: {},
       },
       row1: {
         dateTimeText: defaultHeaderTextStyle,
