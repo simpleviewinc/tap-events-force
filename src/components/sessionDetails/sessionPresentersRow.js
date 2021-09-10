@@ -34,9 +34,9 @@ const Icon = ({ count }) => (count <= 0)
 
 const StyledPresenterLink = reStyle(PresenterLink, 'styles')({ m: 0, })
 
-const CenteredRow = reStyle(View)({ flD: 'row', alI: 'center', alS: 'start' })
+const CenteredRow = reStyle(View)({ flD: 'row', alS: 'start' }) 
 
-const RowWrap = reStyle(View)({ flD: 'row', flWr: 'wrap', w: '100%' })
+const RowWrap = reStyle(View)({ flD: 'row', flWr: 'wrap', w: '95%' })
 
 /**
  * Helper for SessinPresenterRow
