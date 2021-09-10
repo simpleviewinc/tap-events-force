@@ -47,7 +47,6 @@ export const GridItem = props => {
   const theme = useTheme()
   const listLabels = useLabelsForList(theme, labels, session)
   const labelStyles = theme.get('gridItem.label.main')
-  const listStyles = theme.get('gridItem.labelList.main')
   const GridContent = isMobileSize(theme) ? GridRowContent : GridTileContent
 
   return (
@@ -57,7 +56,6 @@ export const GridItem = props => {
     >
       <GridContent
         labels={listLabels}
-        listStyles={listStyles}
         labelStyles={labelStyles}
         session={session}
         militaryTime={militaryTime}
