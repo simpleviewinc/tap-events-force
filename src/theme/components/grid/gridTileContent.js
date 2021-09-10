@@ -2,14 +2,14 @@ import { colors } from '../../colors'
 
 export const gridTileContent = {
   main: {
-    flex: 1,
-    width: '100%',
-    flexDirection: 'column',
-    marginRight: 12,
+    fl: 1,
+    w: '100%',
+    flD: 'column',
+    mR: 12,
   },
   row1: {
     main: {
-      flexDirection: 'row',
+      flD: 'row',
     },
   },
   location: {
@@ -24,9 +24,6 @@ export const gridTileContent = {
     },
   },
   presenters: {
-    main: {
-      fl: 1,
-    },
     container: {
       flWr: 'wrap',
       flD: 'row',

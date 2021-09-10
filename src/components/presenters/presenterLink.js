@@ -23,8 +23,6 @@ export const PresenterLink = ({ text, presenter, styles, className }) => {
   const classNames =
     'ef-sessions-presenter' + (className ? ` ${className}` : '')
 
-  // linkText.includes('cloud') && console.log('PresenterLink', { className, styles })
-
   return (
     <SessionLink
       className={classNames}

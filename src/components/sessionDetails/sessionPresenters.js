@@ -1,10 +1,9 @@
 import React from 'react'
 import { getPresenterFullName } from 'SVUtils/models'
 import { useSessionPresenters } from 'SVHooks/models'
-import { Row, View, Text } from '@keg-hub/keg-components'
+import { View, Text } from '@keg-hub/keg-components'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
-import { PresenterLink } from 'SVComponents/presenters/presenterLink'
 
 const ItemView = reStyle(View)((_, props) => ({
   mT: props.isFirst ? 0 : 1,
@@ -65,40 +64,6 @@ export const SessionPresenters = React.memo(
           )
         }) }
       </View>
-    )
-  }
-)
-
-const StyledPresenterLink = reStyle(
-  PresenterLink,
-  'styles'
-)({
-  m: 0,
-})
-
-export const SessionPresentersRow = React.memo(
-  ({ session, textClassName = 'ef-sessions-presenter-link', ...viewProps }) => {
-    if (!session) return null
-
-    const presenters = useSessionPresenters(session)
-    return (
-      <Row {...viewProps}>
-        { presenters.map((presenter, idx) => {
-          const fullName = getPresenterFullName(presenter)
-          const includeComma =
-            idx !== presenters.length - 1 && presenters.length > 1
-          const nameDisplay = fullName + (includeComma ? ', ' : '')
-          return (
-            <StyledPresenterLink
-              presenter={presenter}
-              className={textClassName}
-              key={presenter.identifier}
-            >
-              { nameDisplay }
-            </StyledPresenterLink>
-          )
-        }) }
-      </Row>
     )
   }
 )

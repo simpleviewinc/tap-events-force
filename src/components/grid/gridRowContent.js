@@ -11,6 +11,7 @@ import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
+import { reStyle } from '@keg-hub/re-theme/reStyle'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -69,6 +70,8 @@ export const GridRowContent = props => {
   )
 }
 
+const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
+
 /**
  *
  * @param {object} props
@@ -82,7 +85,7 @@ const DrawerContent = ({ session, styles }) => {
         session={session}
         styles={styles?.bookingButton}
       />
-      <SessionPresentersRow session={session} />
+      <PresenterNames session={session} />
       <EvfTextToggle text={session.summary} />
     </View>
   )

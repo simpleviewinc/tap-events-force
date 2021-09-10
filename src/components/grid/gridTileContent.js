@@ -4,7 +4,6 @@ import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
-import PropTypes from 'prop-types'
 import { useTheme } from '@keg-hub/re-theme'
 import { useFormattedPrice } from 'SVHooks/models/price'
 import { useCreateModal } from 'SVHooks/modal'
@@ -13,11 +12,34 @@ import { Values } from 'SVConstants'
 import { SessionPresentersRow } from 'SVComponents/sessionDetails/sessionPresentersRow'
 import { SessionLocation } from 'SVComponents/sessionLocation'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
+import PropTypes from 'prop-types'
+
+const LabelsDivider = reStyle(View)(theme => ({
+  mB: 7,
+  mT: 10,
+  bBC: theme.colors.borderGray,
+  bBW: 1,
+  w: '100%'
+}))
 
 const SessionName = reStyle(SessionLink)({
   $xsmall: { mT: 5, mR: 20 },
   $small: { mT: 29, mR: 79 },
 })
+
+const ExpandingView = reStyle(View)({ flG: 1 })
+
+// const PresentersView = reStyle(View)({ mT: 10 })
+
+// const PresenterLinks = props => {
+//   return (
+//     <PresentersView>
+//       <SessionPresentersRow {...props} icon />
+//     </PresentersView>
+//   )
+// }
+
+const PresenterLinks = reStyle(SessionPresentersRow)({ mT: 10 })
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -70,14 +92,6 @@ export const GridTileContent = props => {
         </View>
       </View>
 
-      <LabelList
-        style={listStyles}
-        itemStyle={labelStyles}
-        LabelComponent={LabelButton}
-        labels={labels}
-        onItemPress={onLabelPress}
-      />
-
       <SessionName
         onPress={displayDetailsModal}
         text={session?.name}
@@ -90,9 +104,18 @@ export const GridTileContent = props => {
         textStyle={gridTileContentStyles?.location?.text}
       />
 
-      <SessionPresentersRow
-        session={session}
-        styles={gridTileContentStyles?.presenters}
+      <ExpandingView>
+        <PresenterLinks session={session} icon />
+      </ExpandingView>
+
+      { Boolean(labels?.length) && <LabelsDivider className='ef-session-labels-divider' /> }
+
+      <LabelList
+        style={listStyles}
+        itemStyle={labelStyles}
+        LabelComponent={LabelButton}
+        labels={labels}
+        onItemPress={onLabelPress}
       />
     </View>
   )

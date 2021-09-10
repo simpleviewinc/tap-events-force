@@ -190,7 +190,7 @@ export default {
       dayNumber: 1,
       startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
-      presenterIdentifiers: [ '1', '2' ],
+      presenterIdentifiers: [ '1', '2', '3', '4' ],
       labelIdentifiers: [ '1', '2', '3', '4' ],
       locationIdentifier: '1',
       liveVideoUrl: 'https://us02web.zoom.us/j/1234',
