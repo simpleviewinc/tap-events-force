@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from '@keg-hub/keg-components'
+import { View } from '@keg-hub/keg-components'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
@@ -10,9 +10,14 @@ import { useFormattedPrice } from 'SVHooks/models/price'
 import { useCreateModal } from 'SVHooks/modal'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { Values } from 'SVConstants'
-import { useSessionPresenters } from 'SVHooks/models'
-import { getPresenterFullName } from 'SVUtils/models'
+import { SessionPresentersRow } from 'SVComponents/sessionDetails/sessionPresentersRow'
 import { SessionLocation } from 'SVComponents/sessionLocation'
+import { reStyle } from '@keg-hub/re-theme/reStyle'
+
+const SessionName = reStyle(SessionLink)({
+  $xsmall: { mT: 5, mR: 20 },
+  $small: { mT: 29, mR: 79 },
+})
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -73,7 +78,7 @@ export const GridTileContent = props => {
         onItemPress={onLabelPress}
       />
 
-      <SessionLink
+      <SessionName
         onPress={displayDetailsModal}
         text={session?.name}
       />
@@ -85,61 +90,11 @@ export const GridTileContent = props => {
         textStyle={gridTileContentStyles?.location?.text}
       />
 
-      <PresenterNames
+      <SessionPresentersRow
         session={session}
         styles={gridTileContentStyles?.presenters}
       />
     </View>
-  )
-}
-
-/**
- * Displays the presenters in the given session
- * Displays each one as interactable that opens the presenter details modal
- * @param {object} props
- * @param {object} props.style
- * @param {import('SVModels/session').Session} props.session
- */
-const PresenterNames = React.memo(({ session, styles }) => {
-  const presenters = useSessionPresenters(session)
-
-  return (
-    <View style={styles?.main}>
-      <View style={styles?.container}>
-        { presenters.map(presenter => {
-          return (
-            <PresenterLink
-              key={presenter.identifier}
-              styles={styles?.sessionLink}
-              presenter={presenter}
-            />
-          )
-        }) }
-      </View>
-    </View>
-  )
-})
-
-/**
- * PresenterLink
- * Clickable Presenter name that opens the presenter details modal
- * @param {object} props
- * @param {import('SVModels/presenter').Presenter} props.presenter
- * @param {object} props.styles
- */
-const PresenterLink = ({ presenter, styles }) => {
-  const displayDetailsModal = useCreateModal(
-    Values.MODAL_TYPES.PRESENTER,
-    presenter
-  )
-  return (
-    <SessionLink
-      className={'ef-sessions-presenter'}
-      styles={styles}
-      key={presenter.identifier}
-      text={getPresenterFullName(presenter)}
-      onPress={displayDetailsModal}
-    />
   )
 }
 
