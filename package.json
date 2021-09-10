@@ -46,7 +46,7 @@
     "@keg-hub/jsutils": "8.5.0"
   },
   "dependencies": {
-    "keg-core": "npm:@keg-hub/keg-core@9.0.1"
+    "keg-core": "npm:@keg-hub/keg-core@9.4.0"
   },
   "devDependencies": {
     "@babel/core": "7.10.3",
