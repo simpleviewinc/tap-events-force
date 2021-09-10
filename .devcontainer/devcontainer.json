@@ -1,0 +1,12 @@
+{
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "yarn install",
+  "extensions": [
+    "eamodio.gitlens",
+    "naumovs.color-highlight",
+    "michaelcarolin.line-linker",
+    "ms-vsliveshare.vsliveshare"
+  ]
+}
