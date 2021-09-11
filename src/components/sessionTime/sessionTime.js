@@ -4,6 +4,15 @@ import PropTypes from 'prop-types'
 import { View, Text } from '@keg-hub/keg-components'
 import { getTimeFromDate } from 'SVUtils/dateTime'
 import { EVFIcons } from 'SVIcons'
+import { reStyle } from '@keg-hub/re-theme/reStyle'
+
+const ClockIcon = reStyle(EVFIcons.Clock)(
+  {
+    $xsmall: { d: 'none' },
+    $small: { d: 'flex', mR: 5 },
+  },
+  theme => ({ fill: theme.colors.iconGray })
+)
 
 /**
  * SessionTime
@@ -17,24 +26,20 @@ export const SessionTime = props => {
   const { style = {}, start, end, military = true } = props
   const theme = useTheme()
   const mainStyle = theme.get(theme.get('sessionTime.main'), style)
-  const clockStyle = theme.get('sessionTime.clockIcon')
   const textStyle = theme.get('sessionTime.timeText')
 
   return (
     <View
-      className={`ef-session-time`}
+      className='ef-session-time'
       style={mainStyle}
     >
-      <EVFIcons.Clock
-        className={`ef-session-time-clock`}
-        style={clockStyle.main}
-      />
+      <ClockIcon className='ef-session-time-clock' />
       <View
-        className={`ef-session-time-container`}
+        className='ef-session-time-container'
         style={textStyle.main}
       >
         <Text
-          className={`ef-session-time-text`}
+          className='ef-session-time-text'
           style={textStyle.content}
         >
           { `${getTimeFromDate(start, military)} - ${getTimeFromDate(
