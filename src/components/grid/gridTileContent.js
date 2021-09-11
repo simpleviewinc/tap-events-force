@@ -29,16 +29,6 @@ const SessionName = reStyle(SessionLink)({
 
 const ExpandingView = reStyle(View)({ flG: 1 })
 
-// const PresentersView = reStyle(View)({ mT: 10 })
-
-// const PresenterLinks = props => {
-//   return (
-//     <PresentersView>
-//       <SessionPresentersRow {...props} icon />
-//     </PresentersView>
-//   )
-// }
-
 const PresenterLinks = reStyle(SessionPresentersRow)({ mT: 10 })
 
 /**
@@ -102,6 +92,7 @@ export const GridTileContent = props => {
         textClass='ef-session-location'
         style={gridTileContentStyles?.location?.main}
         textStyle={gridTileContentStyles?.location?.text}
+        iconGap={22}
       />
 
       <ExpandingView>

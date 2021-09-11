@@ -71,6 +71,7 @@ export const GridRowContent = props => {
 }
 
 const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
+const StyledBookingButton = reStyle(BookingButton)({ mB: 10 })
 
 /**
  *
@@ -81,7 +82,7 @@ const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
 const DrawerContent = ({ session, styles }) => {
   return (
     <View style={styles?.main}>
-      <BookingButton
+      <StyledBookingButton
         session={session}
         styles={styles?.bookingButton}
       />

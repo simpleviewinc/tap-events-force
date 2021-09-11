@@ -101,6 +101,8 @@ export const EvfButton = props => {
     isProcessing,
     onClick,
     styles,
+    style,
+    className,
     text,
     ...childProps
   } = props
@@ -122,6 +124,8 @@ export const EvfButton = props => {
   // The buttonType should be one of “selectSession” | "modalPrimary" | "modalSecondary"
   return (
     <ButtonComponent
+      style={style}
+      className={className}
       disabled={Boolean(disabled || isProcessing)}
       buttonType={buttonType}
       onClick={onBtnClick}

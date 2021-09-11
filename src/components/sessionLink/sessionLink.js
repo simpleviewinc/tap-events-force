@@ -26,7 +26,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
     useStyle(`sessionLink.hover`)
   )
 
-  // text.includes('cloud') && console.log('SessionLink', { styles, className })
+  const classes = ['ef-session-name', className].join(' ')
 
   return (
     <Touchable
@@ -40,7 +40,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
         {...(isNative() ? noOpObj : { ref: ref })}
         {...numberOfLines}
         style={themeStyle.text}
-        className='ef-session-name'
+        className={classes}
       >
         { text }
       </Text>

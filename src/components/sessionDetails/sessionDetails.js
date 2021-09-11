@@ -67,7 +67,7 @@ const SubHeader = ({ styles, session }) => {
 
       <SessionPresenters
         session={session}
-        textClassName={'ef-modal-sub-header'}
+        textClassName='ef-modal-sub-header'
       />
     </>
   )

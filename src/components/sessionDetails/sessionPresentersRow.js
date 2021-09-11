@@ -1,7 +1,7 @@
 import React from 'react'
 import { getPresenterFullName } from 'SVUtils/models'
 import { useSessionPresenters } from 'SVHooks/models'
-import { Row, View } from '@keg-hub/keg-components'
+import { View } from '@keg-hub/keg-components'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { PresenterLink } from 'SVComponents/presenters/presenterLink'
 import { EVFIcons } from 'SVIcons'
@@ -9,7 +9,7 @@ import { EVFIcons } from 'SVIcons'
 const iconLayout = { alS: 'start' }
 
 const GroupIcon = reStyle(EVFIcons.Users)(
-  { ...iconLayout, mR: 9 }, 
+  { ...iconLayout, mR: 12 }, 
   theme => ({ 
     color: theme.colors.iconGray,
     width: 30,
@@ -18,7 +18,7 @@ const GroupIcon = reStyle(EVFIcons.Users)(
 )
 
 const SingleIcon = reStyle(EVFIcons.User)(
-  { ...iconLayout, mR: 9 }, 
+  { ...iconLayout, mR: 20 }, 
   theme => ({
     color: theme.colors.iconGray,
     width: 21,
@@ -36,7 +36,12 @@ const StyledPresenterLink = reStyle(PresenterLink, 'styles')({ m: 0, })
 
 const CenteredRow = reStyle(View)({ flD: 'row', alS: 'start' }) 
 
-const RowWrap = reStyle(View)({ flD: 'row', flWr: 'wrap', w: '95%' })
+const RowWrap = reStyle(View)((_, props) => ({ 
+  flD: 'row', 
+  flWr: 'wrap', 
+  w: '95%', 
+  mT: props.icon ? 4 : 0 
+}))
 
 /**
  * Helper for SessinPresenterRow
@@ -63,8 +68,8 @@ export const SessionPresentersRow = React.memo(
 
     return (
       <CenteredRow {...viewProps}>
-        { icon && <Icon count={presenterCount} /> }
-        <RowWrap>
+        { icon && !!presenterCount && <Icon count={presenterCount} /> }
+        <RowWrap icon={icon}>
         { presenters.map((presenter, idx) => {
           const nameDisplay = getPresenterDisplayText(presenter, idx, presenterCount)
           return (

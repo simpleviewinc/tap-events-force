@@ -5,7 +5,7 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
 
 const LocationIcon = reStyle(EVFIcons.MapMarker)(
-  { mR: 8 }, 
+  (_, props) => ({ mR: props.gap || 12 }), 
   theme => ({ fill: theme.colors.iconGray })
 )
 
@@ -16,17 +16,16 @@ const LocationRow = reStyle(View)({
 
 /**
  * Location icon and text
- * @param {*} param0 
  * @returns 
  */
-export const SessionLocation = ({ session, textClass, textStyle, ...viewProps }) => {
+export const SessionLocation = ({ session, textClass, iconGap, textStyle, ...viewProps }) => {
   const locationData = useSessionLocation(session)
   const locationName = locationData?.name
 
   return locationName
     ? (
       <LocationRow {...viewProps}>
-        <LocationIcon />
+        <LocationIcon gap={iconGap} />
         <Text
           className={textClass}
           style={textStyle}

@@ -2,6 +2,7 @@ import React from 'react'
 import { getPresenterFullName } from 'SVUtils/models'
 import { useSessionPresenters } from 'SVHooks/models'
 import { View, Text } from '@keg-hub/keg-components'
+import { PresenterLink } from 'SVComponents/presenters/presenterLink'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
 
@@ -17,7 +18,7 @@ const PresenterIcon = reStyle(EVFIcons.User)({ mR: 10 }, theme => ({
   height: 16,
 }))
 
-const PresenterText = reStyle(Text)({
+const PresenterText = reStyle(PresenterLink)({
   $xsmall: { lnH: 24, ftSz: 14 },
   $small: { ftSz: 16 },
 })
@@ -28,11 +29,11 @@ const PresenterText = reStyle(Text)({
  * @param {String} textClassName - className for presenter text
  * @param {*} ...props - remaining props passed to ItemView
  */
-const PresenterItem = ({ presenterName, textClassName, ...viewProps }) => {
+const PresenterItem = ({ presenter, textClassName, ...viewProps }) => {
   return (
     <ItemView {...viewProps}>
       <PresenterIcon />
-      <PresenterText className={textClassName}>{ presenterName }</PresenterText>
+      <PresenterText presenter={presenter} className={textClassName} />
     </ItemView>
   )
 }
@@ -52,17 +53,14 @@ export const SessionPresenters = React.memo(
 
     return (
       <View {...viewProps}>
-        { presenters.map((presenter, idx) => {
-          const fullName = getPresenterFullName(presenter)
-          return (
+        { presenters.map((presenter, idx) => (
             <PresenterItem
               isFirst={idx === 0}
-              presenterName={fullName}
+              presenter={presenter}
               textClassName={textClassName}
               key={presenter.identifier}
             />
-          )
-        }) }
+        ))}
       </View>
     )
   }

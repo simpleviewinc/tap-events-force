@@ -20,8 +20,7 @@ export const PresenterLink = ({ text, presenter, styles, className }) => {
 
   const linkText = text || getPresenterFullName(presenter)
 
-  const classNames =
-    'ef-sessions-presenter' + (className ? ` ${className}` : '')
+  const classNames = ['ef-sessions-presenter-link', className ].join(' ')
 
   return (
     <SessionLink

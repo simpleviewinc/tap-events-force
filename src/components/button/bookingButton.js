@@ -114,7 +114,7 @@ const useSelectSession = (session, model) => {
 export const BookingButton = props => {
   if (!props.session) return null
 
-  const { session } = props
+  const { session, ...remaining } = props
   const bookingModel = useBookingState(session)
   const selectSessionCb = useSelectSession(session, bookingModel)
   const pendingStyles = useStyle('button.evfButton.pending')
@@ -122,6 +122,7 @@ export const BookingButton = props => {
   return (
     (bookingModel?.text && (
       <EvfButton
+        {...remaining}
         buttonType={BUTTON_TYPES.SELECT_SESSION}
         type={bookingModel.state}
         onClick={selectSessionCb}
