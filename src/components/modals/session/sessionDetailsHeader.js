@@ -3,6 +3,7 @@ import { Row, Text, View } from '@keg-hub/keg-components'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { format } from 'date-fns'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
+import { deepMerge } from '@keg-hub/jsutils'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 
 /**
@@ -40,11 +41,12 @@ const TitleStyles = {
 
 const Subtitle = reStyle(Text)(TitleStyles)
 
-const Title = reStyle(Text)({
-  ...TitleStyles,
-  $xsmall: { ...TitleStyles.$xsmall, mB: 6 },
-  $small: { ...TitleStyles.$small, mB: 10, ftSz: 20 },
-})
+const Title = reStyle(Text)(
+  deepMerge(TitleStyles, {
+    $xsmall: { mB: 6 },
+    $small: { mB: 10, ftSz: 20 },
+  })
+)
 
 const VerticalDivider = reStyle(View)(theme => ({
   alS: 'center',
