@@ -60,6 +60,23 @@ export const evfButton = {
       flD: 'row',
       jtC: 'center',
     },
+    longText: {
+      text: {
+        lnH: 15,
+        ftSz: 12,
+        letterSpacing: 0,
+      },
+      icon: {
+        Digit: {
+          default: {
+            main: {
+              mL: 0,
+              mR: -6,
+            },
+          },
+        },
+      },
+    },
     icon: {
       Digit: {
         default: {

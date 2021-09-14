@@ -16,20 +16,24 @@ const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES, BUTTON_TYPES } = Values
  *
  * @returns {Object} - Joined styles object from different locations
  */
-const buildStyles = (theme, _, disabled, iconName, style) => {
+const buildStyles = (theme, _, model, iconName, style) => {
+  const { state, disabled } = model
   const styles = theme.get(`button.evfButton`)
 
   const bookingStyles = styles?.booking || noPropObj
   const disabledStyles = disabled ? styles?.button?.disabled : noPropObj
+  const isLongText = SESSION_BOOKING_STATES.ON_WAITING_LIST === state
 
   return {
     ...bookingStyles,
     content: {
       ...style,
       ...disabledStyles?.content,
+      ...(isLongText && bookingStyles?.longText?.text),
     },
     icon: theme.get(
       get(bookingStyles, `icon.${iconName}.default`),
+      isLongText && get(bookingStyles, `longText.icon.${iconName}.default`),
       disabled && get(bookingStyles, `icon.${iconName}.disabled`)
     ),
   }
@@ -46,10 +50,9 @@ const RenderBookingState = props => {
   const { displayAmount, icon: Icon, text } = model
 
   const bookingStyles = useStylesCallback(buildStyles, [
-    model.disabled,
+    model,
     Icon && Icon.name,
     style,
-    styles,
   ])
 
   return (
