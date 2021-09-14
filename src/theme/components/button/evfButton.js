@@ -61,17 +61,37 @@ export const evfButton = {
       jtC: 'center',
     },
     longText: {
-      text: {
-        lnH: 15,
-        ftSz: 12,
-        letterSpacing: 0,
+      $xsmall: {
+        text: {
+          lnH: 12,
+          ftSz: 12,
+          letterSpacing: 0,
+          mT: -1,
+          mB: -1,
+        },
+        icon: {
+          Digit: {
+            default: {
+              main: {
+                mL: 0,
+                mR: -8,
+              },
+            },
+          },
+        },
       },
-      icon: {
-        Digit: {
-          default: {
-            main: {
-              mL: 0,
-              mR: -6,
+      $medium: {
+        text: {
+          ftSz: 15,
+          lnH: 22,
+        },
+        icon: {
+          Digit: {
+            default: {
+              main: {
+                mL: 8,
+                mR: 'initial',
+              },
             },
           },
         },
