@@ -48,7 +48,7 @@ export const Sessions = props => {
 
   return (
     <View
-      className={'ef-sessions-background'}
+      className='ef-sessions-background'
       style={sessionsStyles.main}
     >
       <SessionsList

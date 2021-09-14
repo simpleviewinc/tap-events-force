@@ -3,10 +3,19 @@ import { View, Text } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
+import { isMobileSize } from 'SVUtils/theme/isMobileSize'
 
 const LocationIcon = reStyle(EVFIcons.MapMarker)(
   (_, props) => ({ mR: props.gap || 12 }),
-  theme => ({ fill: theme.colors.iconGray })
+  theme => {
+    const isMobile = isMobileSize(theme)
+    return {
+      fill: theme.colors.iconGray,
+      width: isMobile ? 15 : 19,
+      height: isMobile ? 29 : 28,
+      className: 'ef-session-location-icon',
+    }
+  }
 )
 
 const LocationRow = reStyle(View)({
@@ -32,7 +41,8 @@ export const SessionLocation = ({
   const locationData = useSessionLocation(session)
   const locationName = locationData?.name
 
-  return locationName ? (
+  if (!locationName) return null
+  return (
     <LocationRow {...viewProps}>
       <LocationIcon gap={iconGap} />
       <Text
@@ -42,5 +52,5 @@ export const SessionLocation = ({
         { locationName }
       </Text>
     </LocationRow>
-  ) : null
+  )
 }

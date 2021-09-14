@@ -6,12 +6,12 @@ import { useStyle } from '@keg-hub/re-theme'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
-import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
-import { useSessionLocation } from 'SVHooks/models'
+import { View, Drawer, Touchable } from '@keg-hub/keg-components'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -26,7 +26,6 @@ export const GridRowContent = props => {
   const [ isOpen, setIsOpen ] = useState(false)
   const gridRowContentStyles = useStyle('gridItem.gridRowContent')
   const gridRowSessionTimeStyles = useStyle('gridItem.sessionTime')
-  const locationName = useSessionLocation(session)
   const column2Styles = gridRowContentStyles.column2
 
   const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
@@ -53,12 +52,12 @@ export const GridRowContent = props => {
           { !isOpen && <StateLabel session={session} /> }
         </View>
         <SessionLink text={session.name} />
-        <Text
-          className={'ef-modal-body-highlight'}
-          style={column2Styles.locationText}
-        >
-          { locationName?.name || '' }
-        </Text>
+        <SessionLocation
+          session={session}
+          textClass='ef-modal-body-highlight'
+          textStyle={column2Styles.locationText}
+          iconGap={5}
+        />
         <Drawer toggled={isOpen}>
           <DrawerContent
             session={session}

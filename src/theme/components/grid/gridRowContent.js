@@ -1,5 +1,3 @@
-import { colors } from '../../colors'
-
 export const gridRowContent = {
   main: {
     flex: 1,
@@ -16,15 +14,13 @@ export const gridRowContent = {
     row1: {
       main: {
         flD: 'row',
-        alI: 'flex-end'
+        alI: 'flex-end',
       },
     },
     locationText: {
-      mT: 8,
       ftSz: 16,
       lnH: 19,
-      ftWt: '500',
-      color: colors.lightGray,
+      ftWt: '600',
     },
     drawerContent: {
       main: {
