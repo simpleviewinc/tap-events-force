@@ -3,6 +3,7 @@
 
 import React from 'react'
 import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import './testStyles.css'
 
 /*
  * This is a demo modal component. The real component gets passed in from the Sessions Component consumer
@@ -16,7 +17,14 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 export const evfModalBuilder = parentProps => {
   // Returns a function which should be passed as a prop to the Sessions Component
   // Will replace the current internal Modal of the Sessions Component
-  return ({ modalHeader, modalBody, modalFooter, toggle, isOpen }) => {
+  return ({
+    modalHeader,
+    modalBody,
+    modalFooter,
+    toggle,
+    isOpen,
+    size = 'lg',
+  }) => {
     return (
       // Render the Modal component as needed with the passed in parent props
       // Call the renderProp passed in from the session component
@@ -27,6 +35,7 @@ export const evfModalBuilder = parentProps => {
         {...parentProps}
         isOpen={isOpen}
         toggle={toggle}
+        size={size}
       >
         { modalHeader && (
           <ModalHeader className={'modal-header-test'}>
