@@ -28,7 +28,7 @@ const formatSessionDateTime = (start, end, military) => {
   }, [ start, end, military ])
 }
 
-const TitleStyles = {
+const SubtitleStyles = {
   $xsmall: {
     ftWt: '600',
     lnH: 19,
@@ -39,10 +39,10 @@ const TitleStyles = {
   },
 }
 
-const Subtitle = reStyle(Text)(TitleStyles)
+const Subtitle = reStyle(Text)(SubtitleStyles)
 
 const Title = reStyle(Text)(
-  deepMerge(TitleStyles, {
+  deepMerge(SubtitleStyles, {
     $xsmall: { mB: 6 },
     $small: { mB: 10, ftSz: 20 },
   })
@@ -56,6 +56,8 @@ const VerticalDivider = reStyle(View)(theme => ({
   mH: 8,
 }))
 
+const ActionWrap = reStyle(View)({ fl: 1, minW: 'fit-content' })
+
 /**
  * Booking button
  * @param {object} props
@@ -64,18 +66,13 @@ const VerticalDivider = reStyle(View)(theme => ({
  */
 const ActionButton = React.memo(({ session }) => {
   return (
-    <View>
+    <ActionWrap>
       <BookingButton session={session} />
-    </View>
+    </ActionWrap>
   )
 })
 
-const HeaderLayout = reStyle(View)({
-  flD: 'row',
-  jtC: 'space-between',
-  alI: 'center',
-  w: '100%',
-})
+const TitleWrap = reStyle(View)({ fl: 4 })
 
 const HeaderTitle = ({ title, start, end, military }) => {
   const [ formattedTime, formattedDate ] = formatSessionDateTime(
@@ -85,7 +82,7 @@ const HeaderTitle = ({ title, start, end, military }) => {
   )
 
   return (
-    <View>
+    <TitleWrap>
       <Title className='ef-modal-body-header'>{ title }</Title>
       <Row>
         <Subtitle className='ef-modal-body-subheader-time'>
@@ -98,9 +95,16 @@ const HeaderTitle = ({ title, start, end, military }) => {
           { formattedDate }
         </Subtitle>
       </Row>
-    </View>
+    </TitleWrap>
   )
 }
+
+const HeaderLayout = reStyle(View)({
+  flD: 'row',
+  jtC: 'space-between',
+  alI: 'center',
+  w: '100%',
+})
 
 export const SessionDetailsHeader = ({ title, session = {}, military }) => {
   const { startDateTimeLocal: start, endDateTimeLocal: end } = session

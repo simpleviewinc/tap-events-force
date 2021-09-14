@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, ScrollView, View } from '@keg-hub/keg-components'
+import { Text, View, ScrollView } from '@keg-hub/keg-components'
 import { noPropArr } from '@keg-hub/jsutils'
 import { useSessionLocation } from 'SVHooks/models'
 import { LabelList } from 'SVComponents/labels/labelList'
@@ -44,11 +44,28 @@ const Summary = reStyle(Text)({
     lnH: 22,
     ftSz: 14,
     ftWt: 400,
+    flG: 1,
   },
   $small: {
     ftSz: 16,
   },
 })
+
+/**
+ * Location name
+ */
+const LocationText = reStyle(Text)(theme => ({
+  $xsmall: {
+    c: theme.colors.lightGray,
+    ftWt: 600,
+    ftSz: 14,
+    lnH: 19,
+    ltrS: 0.105,
+    mT: 13,
+    pR: 5,
+  },
+  $small: { ftSz: 16 },
+}))
 
 /**
  * Session subheader, containing location and presenters
@@ -60,12 +77,12 @@ const SubHeader = ({ styles, session }) => {
 
   return (
     <>
-      <Text
+      <LocationText
         className={'ef-modal-body-highlight'}
         style={styles?.locationText}
       >
         { location?.name }
-      </Text>
+      </LocationText>
 
       <SessionPresenters
         session={session}
@@ -75,45 +92,52 @@ const SubHeader = ({ styles, session }) => {
   )
 }
 
+const SessionLabelsList = reStyle(LabelList)({ flD: 'row', mT: -5 })
+
+const DetailsScroll = reStyle(ScrollView)(
+  {},
+  {
+    contentContainerStyle: {
+      height: '100%',
+      flexGrow: 1,
+    },
+  }
+)
+
 /**
  * SessionDetails
  * @param {object} props
  * @param {string} props.title - title of Session
  * @param {import('SVModels/session').Session} props.session
- * @param {object} props.styles
+ * @param {object} props.style
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
 export const SessionDetails = ({
   title,
-  styles,
   session,
+  style,
+  className,
   labels = noPropArr,
 }) => {
   return (
-    <ScrollView
-      style={styles?.scrollView?.main}
-      contentContainerStyle={styles?.scrollView?.contentContainer}
+    <DetailsScroll
+      style={style}
+      className={className}
     >
       <Header
         title={title}
         session={session}
       />
-      <SubHeader
-        styles={styles}
-        session={session}
-      />
+      <SubHeader session={session} />
 
       { Boolean(session.summary) && <ContentDivider /> }
 
-      <Summary className={'ef-modal-body'}>{ session?.summary }</Summary>
+      <Summary className='ef-modal-body'>{ session?.summary }</Summary>
 
-      { Boolean(labels?.length) && <ContentDivider /> }
-
-      <LabelList
-        style={styles?.labelButtons?.main}
-        itemStyle={styles?.labelButtons?.button}
-        labels={labels}
-      />
-    </ScrollView>
+      <View>
+        { Boolean(labels?.length) && <ContentDivider /> }
+        <SessionLabelsList labels={labels} />
+      </View>
+    </DetailsScroll>
   )
 }
