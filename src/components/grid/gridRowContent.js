@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useMemo } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
@@ -7,11 +7,12 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
-import { View, Text, Drawer, Touchable } from '@keg-hub/keg-components'
+import { View, Text, Drawer, Touchable, Icon } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
+import { EVFIcons } from 'SVIcons'
 
 /**
  * @summary - Root Grid Row Container component
@@ -44,6 +45,43 @@ const SessionTimeRow = reStyle(View)({
 })
 
 /**
+ * @summary - Wrapper around the session name and toggle icon for formatting
+ * @type {React.Component}
+ */
+const InfoRow = reStyle(View)({
+  fl: 1,
+  flD: 'row',
+  jtC: 'space-between',
+  alI: 'flex-end',
+  mT: 8,
+})
+
+/**
+ * @summary - Wraps the text for a Sessions Location
+ * @type {React.Component}
+ */
+const LocationText = reStyle(Text)(theme => ({
+  ftSz: 16,
+  lnH: 19,
+  ftWt: '500',
+  color: theme.colors.lightGray,
+}))
+
+/**
+ * @summary - Drawer Icon to display it current toggle state
+ * @type {React.Component}
+ */
+const ToggleIcon = reStyle(
+  Icon,
+  'styles'
+)({
+  container: {
+    pR: 10,
+    top: 2,
+  },
+})
+
+/**
  * @summary - Root Drawer Container for holder all drawer content
  * @type {React.Component}
  */
@@ -60,18 +98,6 @@ const DrawerMain = reStyle(View)({
 const ButtonWrapper = reStyle(View)({
   maxWidth: 115,
 })
-
-/**
- * @summary - Wraps the text for a Sessions Location
- * @type {React.Component}
- */
-const LocationText = reStyle(Text)(theme => ({
-  mT: 8,
-  ftSz: 16,
-  lnH: 19,
-  ftWt: '500',
-  color: theme.colors.lightGray,
-}))
 
 /**
  * @summary - Renders the content of the drawer component when opened
@@ -106,6 +132,10 @@ export const GridRowContent = props => {
   const locationName = useSessionLocation(session)
 
   const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
+  const Chevron = useMemo(
+    () => (isOpen ? EVFIcons.ChevronUp : EVFIcons.ChevronDown),
+    [isOpen]
+  )
 
   return (
     <GridRowMain onPress={onToggle}>
@@ -126,9 +156,16 @@ export const GridRowContent = props => {
           { !isOpen && <StateLabel session={session} /> }
         </SessionTimeRow>
         <SessionLink text={session.name} />
-        <LocationText className={'ef-modal-body-highlight'}>
-          { locationName?.name || '' }
-        </LocationText>
+        <InfoRow>
+          <LocationText className={'ef-modal-body-highlight'}>
+            { locationName?.name || '' }
+          </LocationText>
+          <ToggleIcon
+            Element={Chevron}
+            height={23}
+            width={18}
+          />
+        </InfoRow>
         <Drawer toggled={isOpen}>
           <DrawerContent session={session} />
         </Drawer>

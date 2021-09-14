@@ -30,7 +30,7 @@ export const EvfTextToggle = ({ styles, text }) => {
 const useChevronIcon = isExpanded =>
   useMemo(() => {
     return {
-      Chevron: isExpanded ? EVFIcons.ChevronUp : EVFIcons.ChevronDown,
+      Chevron: isExpanded ? EVFIcons.Minus : EVFIcons.Plus,
       text: isExpanded ? 'Less' : 'More',
     }
   }, [isExpanded])
