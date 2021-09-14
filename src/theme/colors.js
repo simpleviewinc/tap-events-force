@@ -22,6 +22,7 @@ const colors = {
   borderGray: '#DDDDDD',
   darkGray: '#4F4F4F',
   darkGray02: '#727272',
+  darkGray03: '#595959',
   transparent: 'rgba(255,255,255,0)',
 }
 

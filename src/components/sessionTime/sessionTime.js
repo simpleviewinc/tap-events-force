@@ -11,7 +11,7 @@ const ClockIcon = reStyle(EVFIcons.Clock)(
     $xsmall: { d: 'none' },
     $small: { d: 'flex', mR: 5 },
   },
-  theme => ({ fill: theme.colors.iconGray })
+  theme => ({ fill: theme.colors.iconGray, className: 'ef-session-clock-icon' })
 )
 
 /**

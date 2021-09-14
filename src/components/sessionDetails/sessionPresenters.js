@@ -15,6 +15,7 @@ const PresenterIcon = reStyle(EVFIcons.User)({ mR: 10 }, theme => ({
   fill: theme.colors.iconGray,
   width: 14,
   height: 16,
+  className: 'ef-session-presenter-icon',
 }))
 
 const PresenterText = reStyle(Text)({
