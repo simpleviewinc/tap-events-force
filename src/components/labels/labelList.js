@@ -15,6 +15,7 @@ import { useTheme } from '@keg-hub/re-theme'
  */
 export const LabelList = props => {
   const {
+    className,
     style = {},
     itemStyle = {},
     labels = [],
@@ -24,10 +25,11 @@ export const LabelList = props => {
 
   const theme = useTheme()
   const labelStyle = theme.get('labelList.item', itemStyle)
+  const classes = [ `ef-label-list`, className ].join(' ')
 
   return (
     <View
-      className={`ef-label-list`}
+      className={classes}
       style={[ theme.get('labelList.main'), style ]}
     >
       { labels.map(label => (
