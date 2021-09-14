@@ -7,7 +7,7 @@ import { deepMerge } from '@keg-hub/jsutils'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 
 /**
- * Formats the date string
+ * Formats the date string for the header
  * @param {string} start
  * @param {string} end
  * @param {boolean} military
