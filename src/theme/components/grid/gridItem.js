@@ -1,6 +1,7 @@
+/* eslint id-length: 0 */
+
 import { colors } from '../../colors'
 import { gridTileContent } from './gridTileContent'
-import { gridRowContent } from './gridRowContent'
 
 export const gridItem = {
   main: {
@@ -25,7 +26,6 @@ export const gridItem = {
     },
   },
   gridTileContent,
-  gridRowContent,
   sessionTime: {
     main: {
       $web: {
