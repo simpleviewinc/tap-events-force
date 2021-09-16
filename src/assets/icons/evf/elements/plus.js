@@ -4,9 +4,9 @@ import { SvgIcon } from '@keg-hub/keg-components'
 export function Plus(props) {
   return (
     <SvgIcon
-      width={15}
-      height={14}
-      viewBox='0 0 15 14'
+      width={17}
+      height={18}
+      viewBox='0 0 14 14'
       svgFill='none'
       stroke='none'
       {...props}

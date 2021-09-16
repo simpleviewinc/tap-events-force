@@ -23,7 +23,7 @@ export const evfTextToggle = {
     icon: {
       container: {
         jtC: 'center',
-        pL: 10,
+        pL: 5,
       },
       icon: {
         ftSz: 16,
