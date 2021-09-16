@@ -5,6 +5,7 @@ const EVF_CATEGORIES = {
   AGENDA_DAYS: 'agendaDays',
   BOOKING: 'booking',
   ATTENDEES: 'attendees',
+  DISPLAY_PROPERTIES: 'displayProperties',
   LABELS: 'labels',
   LOCATIONS: 'locations',
   PRESENTERS: 'presenters',
@@ -24,7 +25,6 @@ const INTERNAL_CATEGORIES = {
   RESTRICTED_ATTENDEE_IDS: 'restrictedAttendeeIds',
   MODALS: 'modals',
   SETTINGS: 'settings',
-  DISPLAY_PROPERTIES: 'displayProperties',
 }
 
 /**
