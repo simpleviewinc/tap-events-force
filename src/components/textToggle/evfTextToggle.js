@@ -27,10 +27,10 @@ export const EvfTextToggle = ({ styles, text }) => {
  * @param {boolean} isExpanded
  * @returns {object} - {Chevron, text} - the icon component and a string
  */
-const useChevronIcon = isExpanded =>
+const useToggleIcon = isExpanded =>
   useMemo(() => {
     return {
-      Chevron: isExpanded ? EVFIcons.ChevronUp : EVFIcons.ChevronDown,
+      ToggleIcon: isExpanded ? EVFIcons.Minus : EVFIcons.Plus,
       text: isExpanded ? 'Less' : 'More',
     }
   }, [isExpanded])
@@ -42,14 +42,14 @@ const useChevronIcon = isExpanded =>
  */
 const CustomToggle = ({ isExpanded }) => {
   const customStyles = useStyle('evfTextToggle.customToggle')
-  const { Chevron, text } = useChevronIcon(isExpanded)
+  const { ToggleIcon, text } = useToggleIcon(isExpanded)
 
   return (
     <View style={customStyles.main}>
       <Text style={customStyles.text}>{ text }</Text>
       <Icon
         styles={customStyles.icon}
-        Component={Chevron}
+        Component={ToggleIcon}
       />
     </View>
   )
