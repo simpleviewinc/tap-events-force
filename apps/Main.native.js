@@ -37,7 +37,7 @@ const AppContent = props => {
  * @param {object} props 
  */
 const MainApp = props => {
-  const [activeTheme] = useState(getDefaultTheme())
+  const [ activeTheme ] = useState(getDefaultTheme())
 
   return (
     <SafeAreaView
