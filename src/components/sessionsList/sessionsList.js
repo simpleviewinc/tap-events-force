@@ -18,11 +18,12 @@ import { getWindow } from 'SVUtils/platform/getWindow'
 const sectionOffset = -45
 
 /**
+ * TODO: replace this with keg-core utility once it's released
  * @returns {Boolean} true if this react app is in a web environment and also rendered inside of an iframe
  */
 const isIFrame = () => {
   const win = getWindow()
-  return win ? win.location !== win.parent.location : false
+  return win ? win !== win.parent : false
 }
 
 /**
