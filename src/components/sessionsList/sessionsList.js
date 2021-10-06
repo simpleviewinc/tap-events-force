@@ -18,7 +18,7 @@ import { getWindow } from 'SVUtils/platform/getWindow'
 const sectionOffset = -45
 
 /**
- * TODO: replace this with keg-core utility once it's released
+ * TODO: replace this with keg-core utility once >=v9.5.0 is released
  * @returns {Boolean} true if this react app is in a web environment and also rendered inside of an iframe
  */
 const isIFrame = () => {
@@ -124,7 +124,6 @@ const useOnScrollChange = (sections, currentDay, onDayChange) => {
 export const SessionsList = props => {
   const { settings, sessions, onDayChange, ...itemProps } = props
   const currentDay = settings.agendaSettings.activeDayNumber || 1
-  console.log({ currentDay })
 
   const theme = useTheme()
   const agenda = useAgenda()
