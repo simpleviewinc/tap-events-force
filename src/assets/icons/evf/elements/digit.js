@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
+import { Ellipse } from './ellipse'
 
 /**
  * Digit
@@ -15,6 +16,7 @@ export const Digit = props => {
       className={'ef-button-text-counter-main'}
       style={styles.main}
     >
+      <Ellipse />
       <Text
         className={'ef-button-text-counter'}
         style={styles.content}
