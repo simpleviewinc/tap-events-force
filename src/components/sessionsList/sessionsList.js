@@ -34,7 +34,7 @@ const isIFrame = () => {
  */
 const useListStyles = () => {
   const dims = useDimensions()
-  const { current: initialHeight } = useRef(dims.height)
+  const { current: initialHeight } = useRef(Math.max(dims.height, 500)) // ensure margin >=500px
   return useStylesCallback(
     (theme, styles, height) => {
       const itemHeight =
