@@ -1,7 +1,7 @@
+import React, { useMemo, useCallback, useRef } from 'react'
 import { isMobileSize } from 'SVUtils/theme'
 import { useTheme } from '@keg-hub/re-theme'
 import { reduceObj, noPropArr } from '@keg-hub/jsutils'
-import React, { useMemo, useCallback } from 'react'
 import { SessionsDivider } from './sessionsDivider'
 import { useAgenda } from 'SVHooks/models/useAgenda'
 import { GridContainer } from 'SVContainers/gridContainer'
@@ -9,12 +9,22 @@ import { SessionsHeader } from 'SVComponents/sessionsHeader'
 import { SectionList } from '@keg-hub/keg-components'
 import { useStylesCallback, useDimensions } from '@keg-hub/re-theme'
 import { setDay } from 'SVActions/session/dates'
+import { getWindow } from 'SVUtils/platform/getWindow'
 
 /**
  * Default scroll offset for the section headers based on the size
  * @number
  */
 const sectionOffset = -45
+
+/**
+ * TODO: replace this with keg-core utility once >=v9.5.0 is released
+ * @returns {Boolean} true if this react app is in a web environment and also rendered inside of an iframe
+ */
+const isIFrame = () => {
+  const win = getWindow()
+  return win ? win !== win.parent : false
+}
 
 /**
  * Hook to memoize the sessions styles
@@ -24,16 +34,20 @@ const sectionOffset = -45
  */
 const useListStyles = () => {
   const dims = useDimensions()
+  const { current: initialHeight } = useRef(dims.height)
   return useStylesCallback(
     (theme, styles, height) => {
       const itemHeight =
         (theme.get('gridItem')?.main?.minHeight || 300) + sectionOffset
+
+      const viewportHeight = isIFrame() ? initialHeight : height
+
       return !height
         ? theme.get('sessionsList')
         : theme.get('sessionsList', {
           content: {
             list: {
-              marginBottom: height - itemHeight,
+              marginBottom: viewportHeight - itemHeight,
             },
           },
         })
