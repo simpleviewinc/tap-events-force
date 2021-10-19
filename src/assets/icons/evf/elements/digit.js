@@ -16,8 +16,9 @@ export const Digit = props => {
   return (
     <View style={styles?.main}>
       <Ellipse
+        className='ef-button-text-circle-icon'
         width={20}
-        height={20}
+        height={15}
         style={styles?.circle}
       />
       <PositionedText

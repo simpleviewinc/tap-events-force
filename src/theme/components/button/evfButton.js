@@ -116,9 +116,10 @@ export const evfButton = {
             },
             $all: {
               $xsmall: {
-                lnH: 22,
-                ftSz: 14,
+                lnH: 15,
+                ftSz: 12,
                 ltrS: 0.105,
+                ftWt: 700,
                 color: colors.white,
               },
               $small: {
