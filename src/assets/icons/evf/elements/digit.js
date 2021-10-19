@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { Text, View } from '@keg-hub/keg-components'
 import { Ellipse } from './ellipse'
+import { reStyle } from '@keg-hub/re-theme/reStyle'
+
+const PositionedText = reStyle(Text)({ position: 'absolute' })
 
 /**
  * Digit
@@ -10,19 +13,19 @@ export const Digit = props => {
   if (!props.digit) return null
 
   const { digit, styles } = props
-
   return (
-    <View
-      className={'ef-button-text-counter-main'}
-      style={styles.main}
-    >
-      <Ellipse />
-      <Text
-        className={'ef-button-text-counter'}
-        style={styles.content}
+    <View style={styles?.main}>
+      <Ellipse
+        width={20}
+        height={20}
+        style={styles?.circle}
+      />
+      <PositionedText
+        className='ef-button-text-counter'
+        style={styles?.digit}
       >
         { digit }
-      </Text>
+      </PositionedText>
     </View>
   )
 }

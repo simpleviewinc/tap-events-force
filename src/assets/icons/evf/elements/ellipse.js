@@ -6,7 +6,9 @@ export function Ellipse(props) {
     <SvgIcon
       viewBox='0 0 20 20'
       size={20}
-      className='keg-svg-children'
+      width={20}
+      height={20}
+      className='ef-ellipse-icon'
       {...props}
     >
       <SvgIcon.Circle
