@@ -94,7 +94,7 @@ const ButtonWrapper = reStyle(View)({
  */
 const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
 
-const StyledBookingButton = reStyle(BookingButton)({ mB: 10 })
+const StyledBookingButton = reStyle(BookingButton)({})
 
 /**
  * @summary - Renders the content of the drawer component when opened
