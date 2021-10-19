@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from '@keg-hub/keg-components'
+import { View } from '@keg-hub/keg-components'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
@@ -7,9 +7,10 @@ import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
 import { useFormattedPrice } from 'SVHooks/models/price'
 import { useCreateModal } from 'SVHooks/modal'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { Values } from 'SVConstants'
-import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
+import { useSessionPresenters } from 'SVHooks/models'
 import { getPresenterFullName } from 'SVUtils/models'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
@@ -36,7 +37,7 @@ const LabelsDivider = reStyle(View)(theme => ({
   )
   return (
     <SessionLink
-      className={'ef-sessions-presenter'}
+      className='ef-sessions-presenter'
       styles={styles}
       key={presenter.identifier}
       text={getPresenterFullName(presenter)}
@@ -104,11 +105,9 @@ export const GridTileContent = props => {
     }
   )
 
-  const location = useSessionLocation(session)
-
   return (
     <View
-      className={`ef-grid-tile-content`}
+      className='ef-grid-tile-content'
       style={gridTileContentStyles?.main}
     >
       <View style={gridTileContentStyles?.row1?.main}>
@@ -130,14 +129,13 @@ export const GridTileContent = props => {
         text={session?.name}
       />
 
-      { location?.name && (
-        <Text
-          className={'ef-session-location'}
-          style={gridTileContentStyles?.locationText}
-        >
-          { location.name }
-        </Text>
-      ) }
+      <SessionLocation 
+        session={session}
+        textClass='ef-session-location'
+        style={gridTileContentStyles?.location?.main}
+        textStyle={gridTileContentStyles?.location?.text}
+        iconGap={22}
+      /> 
 
       <PresenterNames
         session={session}

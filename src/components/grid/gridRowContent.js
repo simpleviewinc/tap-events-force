@@ -9,6 +9,7 @@ import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
 import { View, Text, Drawer, Touchable, Icon } from '@keg-hub/keg-components'
 import { useSessionLocation } from 'SVHooks/models'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
@@ -118,6 +119,16 @@ const DrawerContent = ({ session }) => {
 }
 
 /**
+ * @summary - SessionLocation with shortened text styles
+ * @type {React.Component}
+ */
+const SessionLocationSmall = reStyle(SessionLocation, 'textStyle')({
+  ftSz: 16,
+  lnH: 19,
+  ftWt: '600',
+})
+
+/**
  * The content of a grid item when displayed as a row (<= 480px width)
  * @param {Object} props
  * @param {Array} props.labels - the array of label model objects
@@ -157,9 +168,11 @@ export const GridRowContent = props => {
         </SessionTimeRow>
         <SessionLink text={session.name} />
         <InfoRow>
-          <LocationText className={'ef-modal-body-highlight'}>
-            { locationName?.name || '' }
-          </LocationText>
+          <SessionLocationSmall
+            session={session}
+            textClass='ef-session-location'
+            iconGap={5}
+          /> 
           <ToggleIcon
             Element={Chevron}
             height={23}
