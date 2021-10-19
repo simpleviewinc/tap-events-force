@@ -78,7 +78,7 @@ export const SessionPresentersRow = React.memo(
               <StyledPresenterLink
                 text={nameDisplay}
                 presenter={presenter}
-                // className={textClassName}
+                className={textClassName}
                 key={presenter.identifier}
               />
             )

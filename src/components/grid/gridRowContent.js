@@ -10,7 +10,7 @@ import { EvfTextToggle } from 'SVComponents/textToggle'
 import { View, Drawer, Touchable, Icon } from '@keg-hub/keg-components'
 import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
-import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
 import { EVFIcons } from 'SVIcons'
 
@@ -89,6 +89,14 @@ const ButtonWrapper = reStyle(View)({
 })
 
 /**
+ * @summary - Names of presenters
+ * @type {React.Component}
+ */
+const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
+
+const StyledBookingButton = reStyle(BookingButton)({ mB: 10 })
+
+/**
  * @summary - Renders the content of the drawer component when opened
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
@@ -98,9 +106,12 @@ const DrawerContent = ({ session }) => {
   return (
     <DrawerMain>
       <ButtonWrapper>
-        <BookingButton session={session} />
+        <StyledBookingButton
+          session={session}
+          style={{ main: { marginBottom: 10 }, marginBottom: 10 }}
+        />
       </ButtonWrapper>
-      <SessionPresenters session={session} />
+      <PresenterNames session={session} />
       <EvfTextToggle text={session.summary} />
     </DrawerMain>
   )
