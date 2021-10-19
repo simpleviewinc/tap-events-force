@@ -1,15 +1,7 @@
 import { colors } from '../colors'
 
 const mainStyle = {
-  $xsmall: {
-    mT: 5,
-    mR: 20,
-    flWr: 'wrap',
-  },
-  $small: {
-    mT: 29,
-    mR: 79,
-  },
+  $xsmall: { flWr: 'wrap' },
 }
 
 const textStyle = {
