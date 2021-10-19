@@ -60,6 +60,7 @@ export const evfButton = {
     main: {
       flD: 'row',
       jtC: 'center',
+      alI: 'center',
     },
     longText: {
       $xsmall: {
@@ -121,9 +122,6 @@ export const evfButton = {
                 ltrS: 0.105,
                 ftWt: 700,
                 color: colors.white,
-              },
-              $small: {
-                ftSz: 14,
               },
             },
           },
