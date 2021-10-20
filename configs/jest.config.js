@@ -12,12 +12,13 @@ const coreModulesPath = `${rootPath}/node_modules/keg-core/node_modules`
 const getKegRepoPaths = () => {
   const repoRoot = `${coreModulesPath}/@keg-hub`
   return {
-    [`^@keg-hub/re-theme$`]: path.join(repoRoot, 're-theme'),
-    [`@keg-hub/jsutils`]: path.join(repoRoot, 'jsutils'),
-    [`@keg-hub/keg-components`]: path.join(repoRoot, 'keg-components'),
-    '^@keg-hub/re-theme/styleInjector$': `${rootDir}/node_modules/@keg-hub/re-theme/build/cjs/web/styleInjector.js`,
-    '^@keg-hub/re-theme/styleParser$': `${rootDir}/node_modules/@keg-hub/re-theme/build/cjs/web/styleParser.js`,
-    '^@keg-hub/re-theme/reStyle$': `${rootDir}/node_modules/@keg-hub/re-theme/build/cjs/web/reStyle.js`,
+    '^@keg-hub/re-theme$': path.join(repoRoot, 're-theme'),
+    '@keg-hub/jsutils': path.join(repoRoot, 'jsutils'),
+    '@keg-hub/keg-components': path.join(repoRoot, 'keg-components'),
+    '^@keg-hub/re-theme/styleInjector$': '@keg-hub/re-theme/build/cjs/web/styleInjector',
+    '^@keg-hub/re-theme/styleParser$': '@keg-hub/re-theme/build/cjs/web/styleParser',
+    '^@keg-hub/re-theme/colors$': '@keg-hub/re-theme/build/cjs/web/colors',
+    '^@keg-hub/re-theme/reStyle$': '@keg-hub/re-theme/build/cjs/web/reStyle'
   }
 }
 
