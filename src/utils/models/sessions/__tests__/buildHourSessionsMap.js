@@ -6,7 +6,7 @@ describe('buildHourSessionsMap', () => {
   it('should filter on day 1', () => {
     const map = buildHourSessionsMap(testData.sessions, 1)
     expect(map[0].timeBlock).toEqual('09:00')
-    expect(map[0].sessions.length).toEqual(1)
+    expect(map[0].sessions.length).toEqual(2)
 
     expect(map[1].timeBlock).toEqual('13:00')
     expect(map[1].sessions.length).toEqual(1)
