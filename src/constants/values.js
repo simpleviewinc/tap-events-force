@@ -82,6 +82,7 @@ export const Values = deepFreeze({
   },
   BOOKING_STATES_WITH_ALT_TEXT: {
     'read only': '',
+    BUY: 'BUY'
   },
 
   TICKET_TYPE: {

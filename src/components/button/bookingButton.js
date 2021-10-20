@@ -6,7 +6,8 @@ import { useBookingState } from 'SVHooks/booking/useBookingState'
 import { useStylesCallback, useStyle } from '@keg-hub/re-theme'
 import { noPropObj, get } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants'
-const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES, BUTTON_TYPES } = Values
+import { useFormattedPrice } from 'SVHooks/models/price'
+const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES, BUTTON_TYPES, BOOKING_STATES_WITH_ALT_TEXT } = Values
 
 /**
  * Helper to build the styles for the booking button
@@ -48,7 +49,9 @@ const buildStyles = (theme, _, model, iconName, style) => {
 const RenderBookingState = props => {
   const { model, style, styles, ...attrs } = props
   const { displayAmount, icon: Icon, text } = model
-
+  const formattedPrice = useFormattedPrice(props.session?.price, false)
+  //const formattedButtonText = text+' '+(model.state===SESSION_BOOKING_STATES.SELECT? formattedPrice :  '')
+  const formattedButtonText = applyPriceRules(model, text, formattedPrice)
   const bookingStyles = useStylesCallback(buildStyles, [
     model,
     Icon && Icon.name,
@@ -65,7 +68,7 @@ const RenderBookingState = props => {
           {...attrs}
           className={`ef-button-text`}
           style={bookingStyles.content}
-          children={text}
+          children={formattedButtonText}
         />
       ) }
       { Icon && <Icon
@@ -106,6 +109,16 @@ const useSelectSession = (session, model) => {
     },
     [ session, model ]
   )
+}
+
+/***
+ * Only display price for SELECT state
+ */
+const applyPriceRules = (model, text, formattedPrice) => {
+  if(formattedPrice !== null && model.state===SESSION_BOOKING_STATES.SELECT) text = BOOKING_STATES_WITH_ALT_TEXT.BUY
+  if(formattedPrice === null) formattedPrice = ''
+  const updatedPrice = model.state===SESSION_BOOKING_STATES.SELECT ? formattedPrice :  ''
+  return text+' '+updatedPrice
 }
 
 /**
