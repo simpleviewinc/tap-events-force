@@ -7,7 +7,13 @@ import { useStylesCallback, useStyle } from '@keg-hub/re-theme'
 import { noPropObj, get } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants'
 import { useFormattedPrice } from 'SVHooks/models/price'
-const { BOOKING_MODES, EVENTS, SESSION_BOOKING_STATES, BUTTON_TYPES, BOOKING_STATES_WITH_ALT_TEXT } = Values
+const {
+  BOOKING_MODES,
+  EVENTS,
+  SESSION_BOOKING_STATES,
+  BUTTON_TYPES,
+  BOOKING_STATES_WITH_ALT_TEXT,
+} = Values
 
 /**
  * Helper to build the styles for the booking button
@@ -50,8 +56,11 @@ const RenderBookingState = props => {
   const { model, style, styles, ...attrs } = props
   const { displayAmount, icon: Icon, text } = model
   const formattedPrice = useFormattedPrice(props.session?.price, false)
-  //const formattedButtonText = text+' '+(model.state===SESSION_BOOKING_STATES.SELECT? formattedPrice :  '')
-  const formattedButtonText = applyPriceRules(model, text, formattedPrice)
+  const formattedButtonText = applyPriceAndDisplayRules(
+    model.state,
+    text,
+    formattedPrice
+  )
   const bookingStyles = useStylesCallback(buildStyles, [
     model,
     Icon && Icon.name,
@@ -112,13 +121,20 @@ const useSelectSession = (session, model) => {
 }
 
 /***
- * Only display price for SELECT state
+ * Display price and button text based on rules provided.
+ * i.e. a. If the session has a price and is a SELECT state, the text displayed should change to BUY.
+ *      b. If the session does not have a price and is a SELECT state, the text displayed should remain SELECT.
+ *      c. If there is no cost , the button should not display any price or alt text like FREE
+ *      d. Is a session has a price but is ANY other state (e.g WAITING_LIST) no price should be displayed (Refer ZEN-629)
  */
-const applyPriceRules = (model, text, formattedPrice) => {
-  if(formattedPrice !== null && model.state===SESSION_BOOKING_STATES.SELECT) text = BOOKING_STATES_WITH_ALT_TEXT.BUY
-  if(formattedPrice === null) formattedPrice = ''
-  const updatedPrice = model.state===SESSION_BOOKING_STATES.SELECT ? formattedPrice :  ''
-  return text+' '+updatedPrice
+const applyPriceAndDisplayRules = (state, text, formattedPrice) => {
+  const updatedText =
+    formattedPrice !== null && state === SESSION_BOOKING_STATES.SELECT
+      ? BOOKING_STATES_WITH_ALT_TEXT.BUY
+      : text
+  const updatedPrice =
+    state === SESSION_BOOKING_STATES.SELECT ? formattedPrice : ''
+  return updatedText + ' ' + (updatedPrice || '')
 }
 
 /**
