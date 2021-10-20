@@ -4,6 +4,7 @@ import { useTheme } from '@keg-hub/re-theme'
 import { noOp } from '@keg-hub/jsutils'
 import { View, Text } from '@keg-hub/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
+
 /**
  * Simple day toggling component
  * @param {Object} props
@@ -16,7 +17,6 @@ import { isMobileSize } from 'SVUtils/theme'
  */
 export const DayToggle = props => {
   const {
-    date = null,
     dayText = '',
     disableDecrement = false,
     disableIncrement = false,
@@ -33,14 +33,14 @@ export const DayToggle = props => {
       className={'ef-sessions-date-selector'}
       style={dayToggleStyles?.main}
     >
-      {!mobileSize && (
+      { !mobileSize && (
         <UpdateDayButton
           styles={dayToggleStyles?.content?.decrement}
           type={'decrement'}
           disabled={disableDecrement}
           onDayChange={onDecrement}
         />
-      )}
+      ) }
       <Text
         className={'ef-sessions-date-text'}
         style={dayToggleStyles?.content?.text}
@@ -48,14 +48,14 @@ export const DayToggle = props => {
       >
         { dayText }
       </Text>
-      {!mobileSize && (
+      { !mobileSize && (
         <UpdateDayButton
           type={'increment'}
           styles={dayToggleStyles?.content?.increment}
           disabled={disableIncrement}
           onDayChange={onIncrement}
         />
-      )}
+      ) }
     </View>
   )
 }
