@@ -6,7 +6,6 @@ on:
   push:
     branches: 
       - master
-      - test-overhaul
   pull_request:
 
 jobs:
