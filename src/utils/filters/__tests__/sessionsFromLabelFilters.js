@@ -6,7 +6,7 @@ describe('sessionsFromLabelFilters', () => {
   it('should return 5 results when filtering by `important` label', () => {
     const labels = [testData.labels[0]] // 'important' label
     const filteredSessions = sessionsFromLabelFilters(labels, testData.sessions)
-    expect(filteredSessions.length).toEqual(5)
+    expect(filteredSessions.length).toEqual(6)
   })
 
   it('should return no results when filtering by an unused label', () => {
