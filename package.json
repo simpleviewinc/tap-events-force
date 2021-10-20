@@ -15,7 +15,7 @@
   },
   "scripts": {
     "docker:build": "bash ./scripts/dockerBuild.sh",
-    "test": "cd node_modules/keg-core; NODE_ENV=test jest --no-cache --config=../../configs/jest.config.js",
+    "test": "cd node_modules/keg-core; NODE_ENV=test PLATFORM=web jest --no-cache --config=../../configs/jest.config.js",
     "android": "yarn watch 'cd node_modules/keg-core; yarn android'",
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
