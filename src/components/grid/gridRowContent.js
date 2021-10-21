@@ -7,10 +7,10 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
-import { View, Text, Drawer, Touchable, Icon } from '@keg-hub/keg-components'
-import { useSessionLocation } from 'SVHooks/models'
+import { View, Drawer, Touchable, Icon } from '@keg-hub/keg-components'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
-import { SessionPresenters } from 'SVComponents/sessionDetails'
+import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
 import { EVFIcons } from 'SVIcons'
 
@@ -57,17 +57,6 @@ const InfoRow = reStyle(View)({
 })
 
 /**
- * @summary - Wraps the text for a Sessions Location
- * @type {React.Component}
- */
-const LocationText = reStyle(Text)(theme => ({
-  ftSz: 16,
-  lnH: 19,
-  ftWt: '500',
-  color: theme.colors.lightGray,
-}))
-
-/**
  * @summary - Drawer Icon to display it current toggle state
  * @type {React.Component}
  */
@@ -100,6 +89,14 @@ const ButtonWrapper = reStyle(View)({
 })
 
 /**
+ * @summary - Names of presenters
+ * @type {React.Component}
+ */
+const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
+
+const StyledBookingButton = reStyle(BookingButton)({})
+
+/**
  * @summary - Renders the content of the drawer component when opened
  * @param {object} props
  * @param {import('SVModels/session').Session} props.session
@@ -109,13 +106,29 @@ const DrawerContent = ({ session }) => {
   return (
     <DrawerMain>
       <ButtonWrapper>
-        <BookingButton session={session} />
+        <StyledBookingButton
+          session={session}
+          style={{ main: { marginBottom: 10 }, marginBottom: 10 }}
+        />
       </ButtonWrapper>
-      <SessionPresenters session={session} />
+      <PresenterNames session={session} />
       <EvfTextToggle text={session.summary} />
     </DrawerMain>
   )
 }
+
+/**
+ * @summary - SessionLocation with shortened text styles
+ * @type {React.Component}
+ */
+const SessionLocationSmall = reStyle(
+  SessionLocation,
+  'textStyle'
+)({
+  ftSz: 16,
+  lnH: 19,
+  ftWt: '600',
+})
 
 /**
  * The content of a grid item when displayed as a row (<= 480px width)
@@ -129,7 +142,6 @@ export const GridRowContent = props => {
   const { labels, labelStyles, listStyles, session, militaryTime } = props
   const [ isOpen, setIsOpen ] = useState(false)
   const gridRowSessionTimeStyles = useStyle('gridItem.sessionTime')
-  const locationName = useSessionLocation(session)
 
   const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
   const Chevron = useMemo(
@@ -157,9 +169,11 @@ export const GridRowContent = props => {
         </SessionTimeRow>
         <SessionLink text={session.name} />
         <InfoRow>
-          <LocationText className={'ef-modal-body-highlight'}>
-            { locationName?.name || '' }
-          </LocationText>
+          <SessionLocationSmall
+            session={session}
+            textClass='ef-session-location'
+            iconGap={5}
+          />
           <ToggleIcon
             Element={Chevron}
             height={23}

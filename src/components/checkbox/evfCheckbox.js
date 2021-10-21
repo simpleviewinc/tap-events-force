@@ -1,7 +1,18 @@
 import React, { useCallback } from 'react'
 import { Checkbox } from '@keg-hub/keg-components'
 import { useStyle } from '@keg-hub/re-theme'
+import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
+
+const CheckIcon = reStyle(EVFIcons.Checkmark)(
+  theme => ({ color: theme.colors.white }),
+  theme => ({
+    fill: theme.colors.white,
+    color: theme.colors.white,
+    width: 10,
+    height: 14,
+  })
+)
 
 /**
  * A wrapper around keg-components checkbox that conforms
@@ -47,7 +58,7 @@ export const EvfCheckbox = props => {
       onChange={handler}
       close={close}
       disableCheck={!enableCheck}
-      CheckIcon={EVFIcons.Checkmark}
+      CheckIcon={CheckIcon}
       {...rest}
     />
   )

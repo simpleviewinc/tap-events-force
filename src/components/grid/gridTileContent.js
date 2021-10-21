@@ -1,76 +1,35 @@
 import React from 'react'
-import { View, Text } from '@keg-hub/keg-components'
+import { View } from '@keg-hub/keg-components'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
-import { useFormattedPrice } from 'SVHooks/models/price'
 import { useCreateModal } from 'SVHooks/modal'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { Values } from 'SVConstants'
-import { useSessionLocation, useSessionPresenters } from 'SVHooks/models'
-import { getPresenterFullName } from 'SVUtils/models'
+import { SessionPresentersRow } from 'SVComponents/sessionDetails/sessionPresentersRow'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
+// import { useFormattedPrice } from 'SVHooks/models/price'
 
 const LabelsDivider = reStyle(View)(theme => ({
   mB: 7,
   mT: 10,
   bBC: theme.colors.borderGray,
   bBW: 1,
-  w: '100%'
+  w: '100%',
 }))
 
-/**
- * PresenterLink
- * Clickable Presenter name that opens the presenter details modal
- * @param {object} props
- * @param {import('SVModels/presenter').Presenter} props.presenter
- * @param {object} props.styles
- */
- const PresenterLink = ({ presenter, styles }) => {
-  const displayDetailsModal = useCreateModal(
-    Values.MODAL_TYPES.PRESENTER,
-    presenter
-  )
-  return (
-    <SessionLink
-      className={'ef-sessions-presenter'}
-      styles={styles}
-      key={presenter.identifier}
-      text={getPresenterFullName(presenter)}
-      onPress={displayDetailsModal}
-    />
-  )
-}
-
-/**
- * Displays the presenters in the given session
- * Displays each one as interactable that opens the presenter details modal
- * @param {object} props
- * @param {object} props.style
- * @param {import('SVModels/session').Session} props.session
- */
- const PresenterNames = React.memo(({ session, styles }) => {
-  const presenters = useSessionPresenters(session)
-
-  return (
-    <View style={styles?.main}>
-      <View style={styles?.container}>
-        { presenters.map(presenter => {
-          return (
-            <PresenterLink
-              key={presenter.identifier}
-              styles={styles?.sessionLink}
-              presenter={presenter}
-            />
-          )
-        }) }
-      </View>
-    </View>
-  )
+const SessionName = reStyle(SessionLink)({
+  $xsmall: { mT: 5, mR: 20 },
+  $small: { mT: 29, mR: 79 },
 })
+
+const ExpandingView = reStyle(View)({ flG: 1 })
+
+const PresenterLinks = reStyle(SessionPresentersRow)({ mT: 10 })
 
 /**
  * The content of a grid item when displayed as a tile (> 480px width)
@@ -90,12 +49,15 @@ export const GridTileContent = props => {
     session,
     onLabelPress,
     militaryTime,
-    enableFreeLabel,
+    // enableFreeLabel,
   } = props
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
-  const formattedPrice = useFormattedPrice(session?.price, enableFreeLabel)
+
+  // Commented out to avoid linter complaints, but will be used again in a ticket soon before release v3.2 or v4 (whichever comes first)
+  // const formattedPrice = useFormattedPrice(session?.price, enableFreeLabel)
+
   const displayDetailsModal = useCreateModal(
     Values.MODAL_TYPES.SESSION_DETAILS,
     {
@@ -104,11 +66,9 @@ export const GridTileContent = props => {
     }
   )
 
-  const location = useSessionLocation(session)
-
   return (
     <View
-      className={`ef-grid-tile-content`}
+      className='ef-grid-tile-content'
       style={gridTileContentStyles?.main}
     >
       <View style={gridTileContentStyles?.row1?.main}>
@@ -125,26 +85,29 @@ export const GridTileContent = props => {
         </View>
       </View>
 
-      <SessionLink
+      <SessionName
         onPress={displayDetailsModal}
         text={session?.name}
       />
 
-      { location?.name && (
-        <Text
-          className={'ef-session-location'}
-          style={gridTileContentStyles?.locationText}
-        >
-          { location.name }
-        </Text>
-      ) }
-
-      <PresenterNames
+      <SessionLocation
         session={session}
-        styles={gridTileContentStyles?.presenters}
+        textClass='ef-session-location'
+        style={gridTileContentStyles?.location?.main}
+        textStyle={gridTileContentStyles?.location?.text}
+        iconGap={22}
       />
 
-      { Boolean(labels?.length) && <LabelsDivider className='ef-session-labels-divider' /> }
+      <ExpandingView>
+        <PresenterLinks
+          session={session}
+          icon
+        />
+      </ExpandingView>
+
+      { Boolean(labels?.length) && (
+        <LabelsDivider className='ef-session-labels-divider' />
+      ) }
 
       <LabelList
         style={listStyles}

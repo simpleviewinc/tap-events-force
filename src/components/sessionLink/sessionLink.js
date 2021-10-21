@@ -26,6 +26,8 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
     useStyle(`sessionLink.hover`)
   )
 
+  const classes = [ 'ef-session-name', className ].join(' ')
+
   return (
     <Touchable
       activeOpacity={onPress ? 0.2 : 1}
@@ -37,7 +39,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
         {...(isNative() ? noOpObj : { ref: ref })}
         {...numberOfLines}
         style={themeStyle.text}
-        className='ef-session-name'
+        className={classes}
       >
         { text }
       </Text>
