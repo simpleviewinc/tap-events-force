@@ -1,4 +1,5 @@
 import { deepMerge } from '@keg-hub/jsutils'
+import { colors } from '../../colors'
 
 const content = {
   $xsmall: {
@@ -59,6 +60,7 @@ export const evfButton = {
     main: {
       flD: 'row',
       jtC: 'center',
+      alI: 'center',
     },
     longText: {
       $xsmall: {
@@ -104,11 +106,10 @@ export const evfButton = {
             jtC: 'center',
             alI: 'center',
             bRad: 22 / 2,
-            h: 22,
-            w: 22,
             mL: 8,
           },
-          content: deepMerge(content, {
+          circle: {},
+          digit: {
             $web: {
               $xsmall: {
                 tp: 'initial',
@@ -116,14 +117,14 @@ export const evfButton = {
             },
             $all: {
               $xsmall: {
-                lnH: 22,
-                ftSz: 14,
-              },
-              $small: {
-                ftSz: 14,
+                lnH: 15,
+                ftSz: 12,
+                ltrS: 0.105,
+                ftWt: 700,
+                color: colors.white,
               },
             },
-          }),
+          },
         },
         disabled: {
           main: {},

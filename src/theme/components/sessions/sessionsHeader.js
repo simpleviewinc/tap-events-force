@@ -101,8 +101,8 @@ export const sessionsHeader = {
             $xsmall: {
               color: colors.black,
               paddingRight: 5,
-              height: 21,
-              width: 32,
+              height: 23,
+              width: 13,
             },
             $small: {
               paddingRight: 10,
