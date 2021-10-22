@@ -1,4 +1,5 @@
 import React from 'react'
+import userEvent from '@testing-library/user-event'
 import { render } from '@testing-library/react'
 import { getDefaultTheme, ReThemeProvider } from '@keg-hub/re-theme'
 import { Provider } from 'react-redux'
@@ -40,4 +41,7 @@ const customRender = (ui, options) =>
 export * from '@testing-library/react'
 
 // override render method
-export { customRender as render }
+export { customRender as render, userEvent }
+
+
+

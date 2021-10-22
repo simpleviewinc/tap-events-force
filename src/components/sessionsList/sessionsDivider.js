@@ -42,6 +42,8 @@ export const SessionsDivider = React.memo(props => {
       { !first && dayText && (
         <Text
           className={`ef-${divType}-text`}
+          accessibilityRole='header'
+          accessibilityLabel={`section header ${dayText}`}
           style={[ dividerStyles?.standard?.text, divStyles.text ]}
         >
           { dayText }
