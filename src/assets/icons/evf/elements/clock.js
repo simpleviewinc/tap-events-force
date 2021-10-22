@@ -5,7 +5,7 @@ export function Clock(props) {
   return (
     <SvgIcon
       width={22}
-      height={22}
+      height={25}
       color='#C8C8C8'
       viewBox='0 0 22 22'
       className='ef-session-clock-icon'

@@ -84,6 +84,7 @@ module.exports = {
     ],
     [`${namespace}Mocks`]: `${rootDir}/src/mocks/index.js`,
     'react-native$': path.join(coreModulesPath, 'react-native-web'),
+    '\\.(css|less|sass|scss)$': `${rootDir}/src/mocks/eventsforce/cssStub.js`,
     ...getDynamicAlias(),
     ...getKegRepoPaths(),
   },
