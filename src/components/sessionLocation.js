@@ -5,6 +5,10 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
 
+/**
+ * Icon for SessionLocation
+ * Changes its width and height between mobile and desktop sizes and has a configurable gap
+ */
 const LocationIcon = reStyle(EVFIcons.MapMarker)(
   (_, props) => ({ mR: props.gap || 12 }),
   theme => {

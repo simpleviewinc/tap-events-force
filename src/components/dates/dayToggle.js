@@ -30,7 +30,8 @@ export const DayToggle = props => {
 
   return (
     <View
-      className={'ef-sessions-date-selector'}
+      className='ef-sessions-date-selector'
+      accessibilityLabel=''
       style={dayToggleStyles?.main}
     >
       { !mobileSize && (
@@ -42,7 +43,8 @@ export const DayToggle = props => {
         />
       ) }
       <Text
-        className={'ef-sessions-date-text'}
+        className='ef-sessions-date-text'
+        accessibilityRole='heading'
         style={dayToggleStyles?.content?.text}
         numberOfLines={1}
       >
@@ -50,7 +52,7 @@ export const DayToggle = props => {
       </Text>
       { !mobileSize && (
         <UpdateDayButton
-          type={'increment'}
+          type='increment'
           styles={dayToggleStyles?.content?.increment}
           disabled={disableIncrement}
           onDayChange={onIncrement}
