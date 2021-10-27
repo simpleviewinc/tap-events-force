@@ -1,7 +1,7 @@
 import React from 'react'
 import { Text, View, ScrollView } from '@keg-hub/keg-components'
 import { noPropArr } from '@keg-hub/jsutils'
-import { useSessionLocation } from 'SVHooks/models'
+import { SessionLocation } from 'SVComponents/sessionLocation'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionPresenters } from 'SVComponents/sessionDetails'
 import { SessionDetailsHeader } from './sessionDetailsHeader'
@@ -52,20 +52,9 @@ const Summary = reStyle(Text)({
 })
 
 /**
- * Location name
+ * Session Location for SubHeader
  */
-const LocationText = reStyle(Text)(theme => ({
-  $xsmall: {
-    c: theme.colors.lightGray,
-    ftWt: 600,
-    ftSz: 14,
-    lnH: 19,
-    ltrS: 0.105,
-    mT: 13,
-    pR: 5,
-  },
-  $small: { ftSz: 16 },
-}))
+const SubHeaderLocation = reStyle(SessionLocation)({ mV: 13 })
 
 /**
  * Session subheader, containing location and presenters
@@ -73,20 +62,17 @@ const LocationText = reStyle(Text)(theme => ({
  * @returns
  */
 const SubHeader = ({ styles, session }) => {
-  const location = useSessionLocation(session)
-
   return (
     <>
-      <LocationText
-        className={'ef-modal-body-highlight'}
-        style={styles?.locationText}
-      >
-        { location?.name }
-      </LocationText>
+      <SubHeaderLocation
+        textClass='ef-modal-body-highlight'
+        textStyle={styles?.locationText}
+        session={session}
+      />
 
       <SessionPresenters
         session={session}
-        textClassName={'ef-modal-sub-header'}
+        textClassName='ef-modal-sub-header'
       />
     </>
   )

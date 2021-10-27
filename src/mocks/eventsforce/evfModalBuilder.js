@@ -33,6 +33,9 @@ export const evfModalBuilder = parentProps => {
       // The toggle and isOpen props ( US Team ) should override the parentProps ( EU Team )
       <Modal
         {...parentProps}
+        id='test-modal'
+        accessibilityRole='dialog'
+        accessibilityLabel='modal'
         isOpen={isOpen}
         toggle={toggle}
         size={size}

@@ -62,7 +62,7 @@ module.exports = {
   rootDir: path.resolve(__dirname, '../'),
   preset: `./node_modules/keg-core/node_modules/jest-expo/web/jest-preset.js`,
   testMatch: [
-    `${rootDir}/src/**/__tests__/**/*.js?(x)`,
+    `${rootDir}/src/**/__tests__/**/*.(test|integration|e2e).js?(x)`,
   ],
   moduleDirectories: [
     'node_modules', 
