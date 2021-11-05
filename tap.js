@@ -28,7 +28,8 @@ module.exports = {
       aliases: {
         dynamic: {
           Icons: 'assets/icons',
-          Contexts: 'contexts'
+          Contexts: 'contexts',
+          EvfMocks: 'src/mocks'
         },
         web: {
           SVTapEntry: pathToEntryPoint

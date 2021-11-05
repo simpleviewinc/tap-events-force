@@ -40,6 +40,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
         {...numberOfLines}
         style={themeStyle.text}
         className={classes}
+        accessibilityRole='link'
       >
         { text }
       </Text>

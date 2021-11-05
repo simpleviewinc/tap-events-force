@@ -18,7 +18,10 @@ const getKegRepoPaths = () => {
     '^@keg-hub/re-theme/styleInjector$': '@keg-hub/re-theme/build/cjs/web/styleInjector',
     '^@keg-hub/re-theme/styleParser$': '@keg-hub/re-theme/build/cjs/web/styleParser',
     '^@keg-hub/re-theme/colors$': '@keg-hub/re-theme/build/cjs/web/colors',
-    '^@keg-hub/re-theme/reStyle$': '@keg-hub/re-theme/build/cjs/web/reStyle'
+    '^@keg-hub/re-theme/reStyle$': '@keg-hub/re-theme/build/cjs/web/reStyle',
+    // aliasing react and react-dom ensures we can test libraries that we are linking-in, even if they require react/-dom
+    '^react$': `${coreModulesPath}/react`,
+    '^react-dom$': `${coreModulesPath}/react-dom`,
   }
 }
 
