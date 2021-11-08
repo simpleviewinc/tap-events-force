@@ -55,11 +55,14 @@ export const LabelButton = ({
 
   const clickHandler = useCallback(() => onPress?.(label), [ label, onPress ])
 
+  const content = SESSION_BOOKING_LABEL_MAP[label.identifier] || label.name
+
   return (
     <Button
       className={label.className}
+      accessibilityLabel={content}
       styles={toggledOn ? mainStyle.selected : mainStyle.unselected}
-      content={SESSION_BOOKING_LABEL_MAP[label.identifier] || label.name}
+      content={content}
       onClick={clickHandler}
     />
   )

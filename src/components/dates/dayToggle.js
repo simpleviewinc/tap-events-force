@@ -45,6 +45,7 @@ export const DayToggle = props => {
       <Text
         className='ef-sessions-date-text'
         accessibilityRole='heading'
+        accessibilityLevel='1'
         style={dayToggleStyles?.content?.text}
         numberOfLines={1}
       >

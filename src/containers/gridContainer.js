@@ -13,7 +13,7 @@ import { useTheme } from '@keg-hub/re-theme'
 const LeftHeaderText = ({ timeString, style }) => {
   return (
     <Text
-      className={`ef-timeslot-header-time-text`}
+      className='ef-timeslot-header-time-text'
       style={style.content.text}
     >
       { timeString }
@@ -40,14 +40,14 @@ export const GridContainer = React.memo(props => {
 
   return (
     <View
-      className={`ef-grid-container`}
+      className='ef-grid-container'
       style={gridStyles.main}
     >
       {
         // only display the time header on web styles
         !isMobileSize(theme) && (
           <ItemHeader
-            className={`ef-timeslot-header`}
+            className='ef-timeslot-header'
             styles={gridStyles.content.header}
             LeftComponent={
               <LeftHeaderText
@@ -59,7 +59,7 @@ export const GridContainer = React.memo(props => {
         )
       }
       <View
-        className={`ef-grid-item`}
+        className='ef-grid-item'
         style={gridStyles?.content?.items}
       >
         { sessions.map(session => (

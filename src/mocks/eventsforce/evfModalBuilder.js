@@ -41,9 +41,7 @@ export const evfModalBuilder = parentProps => {
         size={size}
       >
         { modalHeader && (
-          <ModalHeader className={'modal-header-test'}>
-            { modalHeader }
-          </ModalHeader>
+          <ModalHeader className='modal-header-test'>{ modalHeader }</ModalHeader>
         ) }
         { modalBody && <ModalBody>{ modalBody }</ModalBody> }
         { modalFooter && <ModalFooter>{ modalFooter }</ModalFooter> }
