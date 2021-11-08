@@ -1,57 +1,54 @@
 import React from 'react'
-import testData from '../../../mocks/eventsforce/testData.js'
+import testData from 'SVEvfMocks/eventsforce/testData.js'
 import userEvent from '@testing-library/user-event'
-import { SessionsList } from '../sessionsList'
-import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
+import { Sessions } from 'SVComponents/sessions'
 import { render, screen } from 'testUtils'
-import { mockSettings } from './mockSettings'
 
 import '@testing-library/jest-dom'
 
-const getIncrementBtn = () => screen.getByRole('button', { name: 'increment day'})
-const getDecrementBtn = () => screen.getByRole('button', { name: 'decrement day'})
-const findHeadingByContent = async expectedText => await screen.findByRole('heading', { name: expectedText })
+const getIncrementBtn = () =>
+  screen.getByRole('button', { name: 'increment day' })
+const getDecrementBtn = () =>
+  screen.getByRole('button', { name: 'decrement day' })
+const findHeadingByContent = async expectedText =>
+  await screen.findByRole('heading', { name: expectedText })
 
 describe('SessionsList - Day Toggle', () => {
-
-  const mockLabels = []
-
   beforeEach(async () => {
-    // initialize redux store state
-    mapSessionInterface(testData)
-
-    // render full sessions list
-    render(<SessionsList  
-      labels={mockLabels}
-      enableFreeLabel={true}
-      onDayChange={jest.fn()}
-      settings={mockSettings}
-      sessions={testData.sessions}
-      militaryTime={false}
-    />)
+    window.scroll = jest.fn()
+    render(<Sessions sessionAgendaProps={testData} />)
   })
 
   it('Should increment the day', async () => {
-    const incrementBtn = getIncrementBtn()
-    userEvent.click(incrementBtn)
+    userEvent.click(getIncrementBtn())
+
+    expect(window.scroll).toHaveBeenCalled()
 
     const heading = await findHeadingByContent(testData.agendaDays[1].dayName)
     expect(heading).toBeInTheDocument()
+
+    expect(
+      await screen.findByRole('heading', {
+        name: 'section header Day 2',
+        level: 2,
+      })
+    ).toBeInTheDocument()
   })
 
   it('Should not decrement below the first day', async () => {
-    const decrementBtn = getDecrementBtn()
-    userEvent.click(decrementBtn)
+    userEvent.click(getDecrementBtn())
+
+    expect(window.scroll).not.toHaveBeenCalled()
 
     const heading = await findHeadingByContent(testData.agendaDays[0].dayName)
     expect(heading).toBeInTheDocument()
   })
 
   it('Should decrement when not on first day', async () => {
-    const incrementBtn = getIncrementBtn()
-    userEvent.click(incrementBtn)
-    const decrementBtn = getDecrementBtn()
-    userEvent.click(decrementBtn)
+    userEvent.click(getIncrementBtn())
+    userEvent.click(getDecrementBtn())
+
+    expect(window.scroll).toHaveBeenCalledTimes(2)
 
     const heading = await findHeadingByContent(testData.agendaDays[0].dayName)
     expect(heading).toBeInTheDocument()
@@ -62,6 +59,9 @@ describe('SessionsList - Day Toggle', () => {
     userEvent.click(getIncrementBtn())
     userEvent.click(getIncrementBtn())
     userEvent.click(getIncrementBtn())
+
+    // there are only 4 days, and we begin on
+    expect(window.scroll).toHaveBeenCalledTimes(testData.agendaDays.length - 2)
 
     const lastDayName = testData.agendaDays[2].dayName
     const heading = await findHeadingByContent(lastDayName)

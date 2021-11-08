@@ -51,7 +51,7 @@ export const GridItem = props => {
 
   return (
     <View
-      className={`ef-grid-item-content`}
+      className='ef-grid-item-content'
       style={theme.get('gridItem.main')}
     >
       <GridContent
