@@ -15,27 +15,33 @@ const getSelectBtnWithOnlyText = () =>
 const getWaitingListBtnWithOnlyText = () =>
   screen.getByRole('button', { name: 'WAITING LIST' })
 
-describe('Booking button', () => {
-  it('Should display BUY <price> FOR an active session with price and NO waiting list.', async () => {
+describe('Booking Button', () => {
+  it('should display BUY <price> FOR an active session with price and NO waiting list.', async () => {
     render(<Sessions sessionAgendaProps={activeSessionWithPrice} />)
 
     const buyButton = await getBuyBtnWithTextBuyAndPrice()
     expect(buyButton).toBeInTheDocument()
+    expect(() => getSelectBtnWithOnlyText()).toThrow()
+    expect(() => getWaitingListBtnWithOnlyText()).toThrow()
   })
 
-  it('Should display SELECT with NO price present FOR an active session with NO price and NO waiting list.', async () => {
+  it('should display SELECT with NO price present FOR an active session with NO price and NO waiting list.', async () => {
     render(<Sessions sessionAgendaProps={activeSessionWithoutPrice} />)
 
     const selectButton = await getSelectBtnWithOnlyText()
     expect(selectButton).toBeInTheDocument()
+    expect(() => getWaitingListBtnWithOnlyText()).toThrow()
+    expect(() => getBuyBtnWithTextBuyAndPrice()).toThrow()
   })
 
-  it('Should display WAITING LIST with NO price present FOR an active session with price and waiting list.', async () => {
+  it('should display WAITING LIST with NO price present FOR an active session with price and waiting list.', async () => {
     render(
       <Sessions sessionAgendaProps={activeSessionWithPriceWithWaitingList} />
     )
 
     const waitingListButton = await getWaitingListBtnWithOnlyText()
     expect(waitingListButton).toBeInTheDocument()
+    expect(() => getSelectBtnWithOnlyText()).toThrow()
+    expect(() => getBuyBtnWithTextBuyAndPrice()).toThrow()
   })
 })
