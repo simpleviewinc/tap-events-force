@@ -125,6 +125,7 @@ export const EvfButton = props => {
       disabled={Boolean(disabled || isProcessing)}
       buttonType={buttonType}
       onClick={onBtnClick}
+      role='button'
     >
       <RenderChildren
         {...childProps}

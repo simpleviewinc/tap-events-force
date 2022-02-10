@@ -84,6 +84,7 @@ export const AttendeeCheckboxLabel = props => {
         <Label
           htmlFor={htmlFor}
           className={textClassName}
+          role='button'
           style={textStyle}
           onPress={onPress}
         >
