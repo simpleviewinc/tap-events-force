@@ -134,9 +134,9 @@ export const onWaitingList = {
           waitingListSessions: ['1'],
         },
         {
-          bookedTicketIdentifier: '4',
+          bookedTicketIdentifier: '10',
           name: 'Ms. Teresa Waiting',
-          attendeeCategoryIdentifier: '1',
+          attendeeCategoryIdentifier: '2',
           bookedDays: [ 1, 2 ],
           bookedSessions: [],
           waitingListSessions: [],
