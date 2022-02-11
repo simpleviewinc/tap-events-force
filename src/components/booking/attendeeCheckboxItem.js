@@ -50,9 +50,7 @@ export const AttendeeCheckboxItem = props => {
 
   const textStyle = styles?.content?.right
 
-  const onCheckboxChange = event =>
-    console.log('selecting attendee with id', id) ||
-    onAttendeeSelected(id, { event })
+  const onCheckboxChange = event => onAttendeeSelected(id, { event })
 
   return (
     <View

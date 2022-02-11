@@ -5,7 +5,26 @@ import userEvent from '@testing-library/user-event'
 import { Sessions } from 'SVComponents/sessions'
 import { render, screen, within } from 'testUtils'
 
-const mockSession = {
+const mockMixedSession = {
+  allowBooking: true,
+  identifier: '3',
+  name: 'Session on day 2 - limited capacity',
+  summary: '',
+  dayNumber: 2,
+  startDateTimeLocal: '2020-08-04 09:00:00',
+  endDateTimeLocal: '2020-08-04 09:30:00',
+  presenterIdentifiers: [],
+  labelIdentifiers: [ '3', '4' ],
+  locationIdentifier: '2',
+  restrictToAttendeeCategories: [ '1', '2' ],
+  capacity: {
+    isUnlimited: false,
+    remainingPlaces: 1,
+    isWaitingListAvailable: true,
+  },
+}
+
+const mockWaitingListSession = {
   allowBooking: true,
   identifier: '1',
   name: 'Session w/ Waiting List',
@@ -15,8 +34,6 @@ const mockSession = {
   presenterIdentifiers: [ '1', '2' ],
   labelIdentifiers: [ '1', '2' ],
   locationIdentifier: '1',
-  liveVideoUrl: 'https://us02web.zoom.us/j/1234',
-  recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
   restrictToAttendeeCategories: [],
   capacity: {
     isUnlimited: false,
@@ -30,9 +47,9 @@ const mockSession = {
   },
 }
 
-const waitingListData = {
+const waitingListMock = {
   ...testData,
-  sessions: [mockSession],
+  sessions: [mockWaitingListSession],
   attendees: [
     {
       bookedTicketIdentifier: '1',
@@ -61,43 +78,114 @@ const waitingListData = {
   ],
 }
 
-const openModal = () => {
-  const btn = screen.getByRole('button', { name: /^ON WAITING LIST.*/ })
-  expect(btn).toBeDefined()
-  return userEvent.click(btn)
+const mixedListMock = {
+  ...testData,
+  sessions: [mockMixedSession],
+  attendees: [
+    {
+      bookedTicketIdentifier: '1',
+      name: 'Mr Frank Smith',
+      attendeeCategoryIdentifier: '1',
+      bookedDays: [ 1, 2 ],
+      bookedSessions: [],
+    },
+    {
+      bookedTicketIdentifier: '2',
+      name: "Mrs Penelope O'Connor the Second",
+      attendeeCategoryIdentifier: '2',
+      bookedDays: [2],
+      bookedSessions: [],
+      waitingListSessions: ['3'],
+    },
+    {
+      bookedTicketIdentifier: '3',
+      name: 'Dr Lucy Jones',
+      attendeeCategoryIdentifier: '1',
+      bookedDays: [ 1, 2 ],
+      bookedSessions: [ '1', '3', '5' ],
+    },
+  ],
 }
 
+// helper that renders the sessions component and opens the booking modal
+const initModal = async data => {
+  const results = await render(<Sessions sessionAgendaProps={data} />)
+
+  const btn = screen.getByRole('button', { name: /^ON WAITING LIST.*/ })
+  expect(btn).toBeDefined()
+  userEvent.click(btn)
+
+  return results
+}
+
+// helper that select an attendee checkbox associated with the attendee name
 const selectAttendeeCheckbox = attendeeName => {
   const box = screen.getByRole('group', { name: attendeeName })
   const checkbox = within(box).getByRole('checkbox')
   return userEvent.click(checkbox)
 }
 
-// const submitBooking = () => {
-//   const btn = screen.getByRole('button', { name: 'BOOK SELECTED' })
-//   return userEvent.click(btn)
-// }
+// gets a reference to the group booker's booking button (submit)
+const getBookingButton = () =>
+  screen.getByRole('button', { name: 'BOOK SELECTED' })
 
 describe('Group Booking Modal - Integration', () => {
   beforeEach(async () => {
     window.scroll = jest.fn()
-    render(<Sessions sessionAgendaProps={waitingListData} />)
   })
 
   it('should open', async () => {
-    openModal()
+    await initModal(waitingListMock)
     expect(
       await screen.findByText('Select sessions for your group:')
     ).toBeInTheDocument()
   })
 
-  it('should add a user to the waiting list when capacity is empty', () => {
-    openModal()
+  it('should add a user to the waiting list when capacity is empty', async () => {
+    await initModal(waitingListMock)
 
     selectAttendeeCheckbox('Ms. Teresa Waiting')
 
     expect(screen.getAllByRole('checkbox', { checked: true }).length).toEqual(3)
 
     expect(screen.getAllByText('On waiting list').length).toEqual(3)
+  })
+
+  it('should not decrement places-remaining below 0', async () => {
+    await initModal(waitingListMock)
+
+    selectAttendeeCheckbox('Ms. Teresa Waiting')
+
+    expect(screen.getByText('0 places remaining')).toBeInTheDocument()
+  })
+
+  it('should disable the booking button until a booking modification is made', async () => {
+    await initModal(waitingListMock)
+
+    const btn = getBookingButton()
+
+    expect(btn.disabled).toBe(true)
+
+    selectAttendeeCheckbox('Ms. Teresa Waiting')
+
+    expect(btn.disabled).toBe(false)
+  })
+
+  it('should decrement places-remaining when selecting an unselected attendee on a session with available places', async () => {
+    await initModal(mixedListMock)
+
+    await selectAttendeeCheckbox('Mr Frank Smith')
+
+    expect(screen.getByText('0 places remaining')).toBeInTheDocument()
+  })
+
+  it('should increment places-remaining when unselecting a selected attendee on a session with finite places', () => {
+    initModal(mixedListMock)
+
+    expect(screen.getByText('1 place remaining')).toBeInTheDocument()
+
+    selectAttendeeCheckbox('Dr Lucy Jones')
+
+    expect(screen.getByText('2 places remaining')).toBeInTheDocument()
   })
 })
