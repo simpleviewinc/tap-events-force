@@ -48,6 +48,7 @@ export const EvfCheckbox = props => {
   return (
     <Checkbox
       id={id}
+      aria-label={id}
       styles={checkboxStyles}
       RightComponent={RightComponent || text}
       onChange={onChange}
