@@ -108,6 +108,7 @@ export const onWaitingList = {
             isUnlimited: false,
             remainingPlaces: 0,
             isWaitingListAvailable: true,
+            waitingListRemainingPlaces: 0,
           },
           price: {
             currency: 'USD',
@@ -131,6 +132,14 @@ export const onWaitingList = {
           bookedDays: [ 1, 2 ],
           bookedSessions: [],
           waitingListSessions: ['1'],
+        },
+        {
+          bookedTicketIdentifier: '10',
+          name: 'Ms. Teresa Waiting',
+          attendeeCategoryIdentifier: '2',
+          bookedDays: [ 1, 2 ],
+          bookedSessions: [],
+          waitingListSessions: [],
         },
       ],
     },

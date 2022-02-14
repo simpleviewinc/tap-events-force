@@ -11,7 +11,8 @@ export class Attendee {
   /**
    * Attendee class model
    * @param {object} params
-   * @param {string=} params.bookedTicketIdentifier - booked ticket id
+   * @param {string=} params.bookedTicketIdentifier - booked ticket id. This functions as the unique id of the attendee.
+   * It also must correspond to an existing ticket, or the attendee will be omitted from the redux store.
    * @param {string=} params.name - attendee's name
    * @param {string=} params.attendeeCategoryIdentifier - attendee category id
    * @param {Array<number>=} params.bookedDays - list of days booked

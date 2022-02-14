@@ -4,7 +4,7 @@ import { GroupBookingActionTypes } from './constants/groupBookingActionTypes'
 
 /**
  * Updates the list identified by listKey using the updateFn.
- * Also sets the next capacity and modified values.
+ * Also sets the next "capacity" and "modified" properties of state.
  * @param {Object} state - state of group booking reducer
  * @param {string} listKey - key name of the list to update
  * @param {Function} updateFn - fn of form (currentList) => nextList, returning the next list to reduce to

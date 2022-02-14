@@ -34,8 +34,6 @@ export const evfModalBuilder = parentProps => {
       <Modal
         {...parentProps}
         id='test-modal'
-        accessibilityRole='dialog'
-        accessibilityLabel='modal'
         isOpen={isOpen}
         toggle={toggle}
         size={size}

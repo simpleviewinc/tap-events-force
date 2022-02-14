@@ -192,12 +192,7 @@ export default {
       startDateTimeLocal: '2020-08-03 09:00:00',
       endDateTimeLocal: '2020-08-03 13:30:00',
       presenterIdentifiers: [ '1', '2' ],
-      labelIdentifiers: [
-        '1',
-        '2',
-        '3',
-        '4',
-      ],
+      labelIdentifiers: [ '1', '2', '3', '4' ],
       locationIdentifier: '1',
       liveVideoUrl: 'https://us02web.zoom.us/j/1234',
       recordedVideoUrl: 'https://www.youtube.com/watch?v=21X5lGlDOfg',
@@ -551,6 +546,14 @@ export default {
       bookedDays: [ 1, 2 ],
       bookedSessions: [ '3', '5' ],
     },
+    {
+      bookedTicketIdentifier: '10',
+      name: 'Ms. Teresa Waiting',
+      attendeeCategoryIdentifier: '2',
+      bookedDays: [ 1, 2 ],
+      bookedSessions: [],
+      waitingListSessions: [],
+    },
   ],
   bookedTickets: [
     { identifier: '1', ticketIdentifier: '34' },
@@ -567,6 +570,7 @@ export default {
         { identifier: '6', ticketIdentifier: '37' },
       ],
     },
+    { identifier: '10', ticketIdentifier: '38' },
   ],
   tickets: [
     {

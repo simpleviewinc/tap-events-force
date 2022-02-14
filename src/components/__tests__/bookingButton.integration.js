@@ -15,7 +15,7 @@ const getSelectBtnWithOnlyText = () =>
 const getWaitingListBtnWithOnlyText = () =>
   screen.getByRole('button', { name: 'WAITING LIST' })
 
-describe('Booking Button', () => {
+describe('Booking Button - Integration', () => {
   it('should display BUY <price> FOR an active session with price and NO waiting list.', async () => {
     render(<Sessions sessionAgendaProps={activeSessionWithPrice} />)
 
