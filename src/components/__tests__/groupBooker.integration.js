@@ -24,6 +24,14 @@ const mockMixedSession = {
   },
 }
 
+// const mockFiniteWaitingListSession = {
+//   ...mockMixedSession,
+//   capacity: {
+//     ...mockMixedSession.capacity,
+//     waitingListRemainingPlaces: 1
+//   }
+// }
+
 const mockWaitingListSession = {
   allowBooking: true,
   identifier: '1',
@@ -47,62 +55,58 @@ const mockWaitingListSession = {
   },
 }
 
+const frank = {
+  bookedTicketIdentifier: '1',
+  name: 'Mr Frank Smith',
+  attendeeCategoryIdentifier: '1',
+  bookedDays: [ 1, 2 ],
+  bookedSessions: [],
+  waitingListSessions: ['1'],
+}
+
+const lucy = {
+  bookedTicketIdentifier: '3',
+  name: 'Dr Lucy Jones',
+  attendeeCategoryIdentifier: '1',
+  bookedDays: [ 1, 2 ],
+  bookedSessions: [],
+  waitingListSessions: ['1'],
+}
+
+const teresa = {
+  bookedTicketIdentifier: '10',
+  name: 'Ms. Teresa Waiting',
+  attendeeCategoryIdentifier: '2',
+  bookedDays: [ 1, 2 ],
+  bookedSessions: [],
+  waitingListSessions: [],
+}
+
+const penelope = {
+  bookedTicketIdentifier: '2',
+  name: "Mrs Penelope O'Connor the Second",
+  attendeeCategoryIdentifier: '2',
+  bookedDays: [2],
+  bookedSessions: [],
+  waitingListSessions: ['3'],
+}
+
 const waitingListMock = {
   ...testData,
   sessions: [mockWaitingListSession],
-  attendees: [
-    {
-      bookedTicketIdentifier: '1',
-      name: 'Mr Frank Smith',
-      attendeeCategoryIdentifier: '1',
-      bookedDays: [1],
-      bookedSessions: [],
-      waitingListSessions: ['1'],
-    },
-    {
-      bookedTicketIdentifier: '3',
-      name: 'Dr Lucy Jones',
-      attendeeCategoryIdentifier: '1',
-      bookedDays: [ 1, 2 ],
-      bookedSessions: [],
-      waitingListSessions: ['1'],
-    },
-    {
-      bookedTicketIdentifier: '10',
-      name: 'Ms. Teresa Waiting',
-      attendeeCategoryIdentifier: '2',
-      bookedDays: [ 1, 2 ],
-      bookedSessions: [],
-      waitingListSessions: [],
-    },
-  ],
+  attendees: [ frank, lucy, teresa ],
 }
 
 const mixedListMock = {
   ...testData,
   sessions: [mockMixedSession],
   attendees: [
+    frank,
+    penelope,
     {
-      bookedTicketIdentifier: '1',
-      name: 'Mr Frank Smith',
-      attendeeCategoryIdentifier: '1',
-      bookedDays: [ 1, 2 ],
-      bookedSessions: [],
-    },
-    {
-      bookedTicketIdentifier: '2',
-      name: "Mrs Penelope O'Connor the Second",
-      attendeeCategoryIdentifier: '2',
-      bookedDays: [2],
-      bookedSessions: [],
-      waitingListSessions: ['3'],
-    },
-    {
-      bookedTicketIdentifier: '3',
-      name: 'Dr Lucy Jones',
-      attendeeCategoryIdentifier: '1',
-      bookedDays: [ 1, 2 ],
+      ...lucy,
       bookedSessions: [ '1', '3', '5' ],
+      waitingListSessions: [],
     },
   ],
 }

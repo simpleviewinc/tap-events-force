@@ -19,14 +19,21 @@ const updateList = (state, listKey, updateFn) => {
     nextList !== currentList && !areSetEqual(nextList, originalList)
 
   const capacityDiff = currentList.length - nextList.length
-  const nextCapacity =
+
+  const nextBookingCapacity =
     state.showCapacity && listKey !== 'waitingList'
-      ? state.capacity + capacityDiff
-      : state.capacity
+      ? state.bookingCapacity + capacityDiff
+      : state.bookingCapacity
+
+  const nextWaitingCapacity =
+    state.showCapacity && listKey !== 'bookingList'
+      ? state.waitingCapacity + capacityDiff
+      : state.waitingCapacity
 
   return {
     ...state,
-    capacity: nextCapacity,
+    bookingCapacity: nextBookingCapacity,
+    waitingCapacity: nextWaitingCapacity,
     current: {
       ...state.current,
       [listKey]: nextList,
@@ -86,12 +93,12 @@ const updateSessionBooking = (state, id) => {
 
   const {
     session,
-    capacity,
+    bookingCapacity,
     current: { waitingList, bookingList },
   } = state
 
   const shouldUseWaitingList =
-    session.capacity.isWaitingListAvailable && capacity <= 0
+    session.capacity.isWaitingListAvailable && bookingCapacity <= 0
 
   if (waitingList.includes(id)) {
     return removeFromList(state, 'waitingList', id)

@@ -52,24 +52,30 @@ GroupBookerBody.propTypes = {
 const TopSection = ({ styles }) => {
   // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
-  const placeText = state.capacity === 1 ? 'place' : 'places'
+  const placeText = state.bookingCapacity === 1 ? 'place' : 'places'
+  const bookingCapacityText = `${state.bookingCapacity} ${placeText} remaining`
+  // const capacityText = state.bookingCapacity > 0 || !state.waitingCapacity
+  //   ? bookingCapacityText
+  //   : 'Waiting list full'
+  const capacityText = bookingCapacityText
+
   return (
     <View
-      className={`ef-modal-group-section-top`}
+      className='ef-modal-group-section-top'
       style={styles?.main}
     >
       <Text
-        className={`ef-modal-body-header`}
+        className='ef-modal-body-header'
         style={styles?.content?.instructionText}
       >
         Select sessions for your group:{ ' ' }
       </Text>
       { state.showCapacity && (
         <Text
-          className={`ef-modal-body-highlight`}
+          className='ef-modal-body-highlight'
           style={styles?.content?.infoText}
         >
-          { `${state.capacity} ${placeText} remaining` }
+          { capacityText }
         </Text>
       ) }
     </View>

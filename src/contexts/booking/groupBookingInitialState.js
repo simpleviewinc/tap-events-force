@@ -1,7 +1,8 @@
 export const initialState = {
   initialized: false,
   session: null,
-  capacity: null,
+  bookingCapacity: null,
+  waitingCapacity: null,
   showCapacity: true,
 
   // Lists as they were upon initialization. These

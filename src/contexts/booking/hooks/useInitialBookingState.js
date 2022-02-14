@@ -27,11 +27,15 @@ export const useInitialBookingState = session => {
     initWaitingList,
   ] = useBookingLists(session, attendees, initialCapacityExceedsNeed)
 
-  const { remainingCount } = parseSessionCapacity(session?.capacity)
+  const {
+    remainingBookingPlaces,
+    remainingWaitingPlaces,
+  } = parseSessionCapacity(session?.capacity)
 
   return {
     ...initialState,
-    capacity: remainingCount,
+    bookingCapacity: remainingBookingPlaces,
+    waitingCapacity: remainingWaitingPlaces,
     current: { bookingList, waitingList },
     init: {
       bookingList: initBookingList,

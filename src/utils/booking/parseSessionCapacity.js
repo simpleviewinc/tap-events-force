@@ -4,7 +4,8 @@ import { get } from '@keg-hub/jsutils'
  * @typedef ParsedCapacity
  * @property {boolean} isWaitingListAvailable=false - true if waiting list is available on session
  * @property {boolean} isUnlimited=false - true if session has no booking limit
- * @property {number} remainingCount=0 - remaining booking capacity
+ * @property {number} remainingBookingPlaces=0 - remaining booking list capacity
+ * @property {number} remainingWaitingPlaces=0 - remaining waiting list capacity
  */
 
 /**
@@ -22,9 +23,18 @@ export const parseSessionCapacity = (sessionCapacity = {}) => {
 
   const isUnlimited = get(sessionCapacity, 'isUnlimited', false)
 
-  const remainingCount = !isUnlimited
+  const remainingBookingPlaces = !isUnlimited
     ? get(sessionCapacity, 'remainingPlaces', 0)
     : Infinity
 
-  return { waitingListIsAvailable, isUnlimited, remainingCount }
+  const remainingWaitingPlaces = waitingListIsAvailable
+    ? get(sessionCapacity, 'waitingListRemainingPlaces', 0)
+    : 0
+
+  return {
+    waitingListIsAvailable,
+    isUnlimited,
+    remainingBookingPlaces,
+    remainingWaitingPlaces,
+  }
 }

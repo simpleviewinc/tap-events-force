@@ -51,9 +51,11 @@ export const useIsAttendeeDisabledCallback = (session, attendees) => {
     session?.dayNumber,
     attendees
   )
+  const pendingSession = useStoreItems(CATEGORIES.PENDING_SESSION)
 
   return useCallback(
     attendeeId =>
+      pendingSession?.identifier ||
       isTimeBlocked(attendeeId) ||
       !isBookable(attendeeId) ||
       !isRegisteredForDay(attendeeId),
