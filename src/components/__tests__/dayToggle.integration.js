@@ -13,7 +13,7 @@ const getDecrementBtn = () =>
 const findHeadingByContent = async expectedText =>
   await screen.findByRole('heading', { name: expectedText })
 
-describe('SessionsList - Day Toggle', () => {
+describe('Day Toggle - Integration', () => {
   beforeEach(async () => {
     window.scroll = jest.fn()
     render(<Sessions sessionAgendaProps={testData} />)

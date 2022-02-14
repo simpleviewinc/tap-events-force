@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
+import { View } from '@keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
 import { AttendeeCheckboxLabel } from './attendeeCheckboxLabel'
 
@@ -48,26 +49,33 @@ export const AttendeeCheckboxItem = props => {
 
   const textStyle = styles?.content?.right
 
+  const onCheckboxChange = event => onAttendeeSelected(id, { event })
+
   return (
-    <EvfCheckbox
-      id={checkboxId}
-      type={isWaiting ? 'alternate' : 'primary'}
-      styles={styles}
-      checked={checked}
-      onChange={onAttendeeSelected}
-      disabled={isAttendeeDisabled}
-      enableCheck={enableCheck}
-      rightClassName={textClassName}
-      RightComponent={props => (
-        <AttendeeCheckboxLabel
-          {...props}
-          htmlFor={checkboxId}
-          name={text}
-          textClassName={textClassName}
-          textStyle={textStyle}
-          waiting={isWaiting}
-        />
-      )}
-    />
+    <View
+      accessibilityRole='group'
+      accessibilityLabel={name}
+    >
+      <EvfCheckbox
+        id={checkboxId}
+        type={isWaiting ? 'alternate' : 'primary'}
+        styles={styles}
+        checked={checked}
+        onChange={onCheckboxChange}
+        disabled={isAttendeeDisabled}
+        enableCheck={enableCheck}
+        rightClassName={textClassName}
+        RightComponent={props => (
+          <AttendeeCheckboxLabel
+            {...props}
+            htmlFor={checkboxId}
+            name={text}
+            textClassName={textClassName}
+            textStyle={textStyle}
+            waiting={isWaiting}
+          />
+        )}
+      />
+    </View>
   )
 }

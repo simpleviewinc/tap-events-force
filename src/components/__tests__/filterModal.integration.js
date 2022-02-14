@@ -19,7 +19,7 @@ const applyFilter = () => {
   return userEvent.click(btn)
 }
 
-describe('Filter Modal Integration Test', () => {
+describe('Filter Modal - Integration', () => {
   beforeEach(async () => {
     window.scroll = jest.fn()
     render(<Sessions sessionAgendaProps={testData} />)
