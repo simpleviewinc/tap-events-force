@@ -115,9 +115,9 @@ export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
         <EvfButton
           buttonType={BUTTON_TYPES.MODAL_SECONDARY}
           className='ef-cancel-session-button'
-          type={'default'}
+          type='default'
           styles={styles.content?.cancelButton}
-          text={'CANCEL'}
+          text='CANCEL'
           onClick={onCancelPress}
         />
       </View>
@@ -125,9 +125,9 @@ export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
         className='ef-select-session-button'
         isProcessing={pendingSession?.identifier}
-        type={'primary'}
+        type='primary'
         styles={styles.content?.bookButton}
-        text={'BOOK SELECTED'}
+        text='BOOK SELECTED'
         disabled={submitDisabled}
         onClick={bookSession}
       />

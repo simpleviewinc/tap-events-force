@@ -11,6 +11,22 @@ describe('parseSessionCapacity', () => {
       isUnlimited: false,
       waitingListIsAvailable: true,
       remainingBookingPlaces: 10,
+      remainingWaitingPlaces: Infinity,
+    })
+  })
+
+  it('should preserve 0-value properties', () => {
+    expect(
+      parseSessionCapacity({
+        isUnlimited: false,
+        isWaitingListAvailable: true,
+        waitingListRemainingPlaces: 0,
+        remainingPlaces: 0,
+      })
+    ).toEqual({
+      isUnlimited: false,
+      waitingListIsAvailable: true,
+      remainingBookingPlaces: 0,
       remainingWaitingPlaces: 0,
     })
   })

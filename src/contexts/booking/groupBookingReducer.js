@@ -101,15 +101,19 @@ const updateSessionBooking = (state, id) => {
     session.capacity.isWaitingListAvailable && bookingCapacity <= 0
 
   if (waitingList.includes(id)) {
+    // console.log('removing', id, 'from waiting list')
     return removeFromList(state, 'waitingList', id)
   }
   else if (bookingList.includes(id)) {
+    // console.log('removing', id, 'from book list')
     return removeFromList(state, 'bookingList', id)
   }
   else if (shouldUseWaitingList && !waitingList.includes(id)) {
+    // console.log('adding', id, 'to waiting list')
     return addToList(state, 'waitingList', id)
   }
   else if (!shouldUseWaitingList && !bookingList.includes(id)) {
+    // console.log('adding', id, 'to booking list')
     return addToList(state, 'bookingList', id)
   }
   else {
