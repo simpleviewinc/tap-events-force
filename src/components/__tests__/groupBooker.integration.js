@@ -7,6 +7,7 @@ import { render, screen, within } from 'testUtils'
 // import { prettyDOM } from 'testUtils'
 
 // ------- MOCK SESSIONS -------
+
 const mockMixedSession = {
   allowBooking: true,
   identifier: '3',
@@ -41,7 +42,13 @@ const mockFiniteWaitingListSession = {
   },
 }
 
+const mockRestrictedSession = {
+  ...mockMixedSession,
+  restrictToAttendeeCategories: ['179'],
+}
+
 // ------- MOCK ATTENDEES -------
+
 const frank = {
   bookedTicketIdentifier: '1',
   name: 'Mr Frank Smith',
@@ -84,8 +91,17 @@ const penelope = {
   attendeeCategoryIdentifier: '2',
   bookedDays: [2],
   bookedSessions: [],
-  waitingListSessions: [ '5', '3' ],
+  waitingListSessions: [ '3', '5' ],
 }
+
+const john = {
+  ...penelope,
+  name: 'John',
+  bookedTicketIdentifier: '7',
+  attendeeCategoryIdentifier: '179',
+}
+
+const attendees = [ frank, lucy, teresa, samantha, penelope, john ]
 
 // ------- MOCK SESSIONS INPUT -------
 const waitingListMock = {
@@ -114,6 +130,15 @@ const finiteWaitingListMock = {
   attendees: [ frank, lucy, penelope, teresa, samantha ],
 }
 
+const restrictedMock = {
+  ...testData,
+  id: '100',
+  sessions: [mockRestrictedSession],
+  attendees,
+}
+
+// ------- TEST HELPERS -------
+
 // helper that renders the sessions component and opens the booking modal
 const initModal = async data => {
   const results = await render(<Sessions sessionAgendaProps={data} />)
@@ -140,21 +165,18 @@ const selectAttendeeCheckbox = attendeeName => {
 const getBookingButton = () =>
   screen.getByRole('button', { name: 'BOOK SELECTED' })
 
-describe('Group Booking Modal - Integration', () => {
-  beforeEach(async () => {
-    window.scroll = jest.fn()
-  })
+// ------- TESTS -------
+
+describe('Group Booking Modal - Integration - Wait List', () => {
+  beforeEach(async () => await initModal(waitingListMock))
 
   it('should open', async () => {
-    await initModal(waitingListMock)
     expect(
       await screen.findByText('Select sessions for your group:')
     ).toBeInTheDocument()
   })
 
   it('should add a user to the waiting list when capacity is empty', async () => {
-    await initModal(waitingListMock)
-
     selectAttendeeCheckbox(teresa.name)
 
     expect(screen.getAllByRole('checkbox', { checked: true }).length).toEqual(3)
@@ -163,16 +185,12 @@ describe('Group Booking Modal - Integration', () => {
   })
 
   it('should not decrement places-remaining below 0', async () => {
-    await initModal(waitingListMock)
-
     selectAttendeeCheckbox(teresa.name)
 
     expect(screen.getByText('0 places remaining')).toBeInTheDocument()
   })
 
   it('should disable the booking button until a booking modification is made', async () => {
-    await initModal(waitingListMock)
-
     const btn = getBookingButton()
 
     expect(btn.disabled).toBe(true)
@@ -181,28 +199,30 @@ describe('Group Booking Modal - Integration', () => {
 
     expect(btn.disabled).toBe(false)
   })
+})
+
+describe('Group Booking Modal - Integration - Mixed List', () => {
+  beforeEach(async () => await initModal(mixedListMock))
 
   it('should decrement places-remaining when selecting an unselected attendee on a session with available places', async () => {
-    await initModal(mixedListMock)
-
-    await selectAttendeeCheckbox(frank.name)
+    selectAttendeeCheckbox(frank.name)
 
     expect(screen.getByText('0 places remaining')).toBeInTheDocument()
   })
 
   it('should increment places-remaining when unselecting a selected attendee on a session with finite places', () => {
-    initModal(mixedListMock)
-
     expect(screen.getByText('1 place remaining')).toBeInTheDocument()
 
     selectAttendeeCheckbox(lucy.name)
 
     expect(screen.getByText('2 places remaining')).toBeInTheDocument()
   })
+})
+
+describe('Group Booking Modal - Integration - Finite Wait List', () => {
+  beforeEach(async () => await initModal(finiteWaitingListMock))
 
   it('should limit waiting list additions for sessions with a wait-list capacity', async () => {
-    initModal(finiteWaitingListMock)
-
     expect(screen.queryByText('Waiting list full')).not.toBeInTheDocument()
 
     selectAttendeeCheckbox(teresa.name)
@@ -217,5 +237,23 @@ describe('Group Booking Modal - Integration', () => {
     // but attendees who ARE on the waitlist or book list should still be clickable
     expect(getCheckbox(frank.name).disabled).toBe(false)
     expect(getCheckbox(teresa.name).disabled).toBe(false)
+  })
+})
+
+describe('Group Booking Modal - Integration - Restricted Attendees', () => {
+  beforeEach(async () => await initModal(restrictedMock))
+
+  it('should disable attendees not on the restricted list', () => {
+    const johnCheckbox = getCheckbox(john.name)
+
+    expect(johnCheckbox.disabled).toBe(false)
+
+    const remainingCheckboxes = attendees
+      .filter(att => att.name !== john.name)
+      .map(att => getCheckbox(att.name))
+
+    remainingCheckboxes.forEach(cb => {
+      expect(cb.disabled).toBe(true)
+    })
   })
 })
