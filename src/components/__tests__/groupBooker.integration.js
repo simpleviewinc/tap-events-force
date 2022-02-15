@@ -4,18 +4,14 @@ import testData from 'SVEvfMocks/eventsforce/testData.js'
 import userEvent from '@testing-library/user-event'
 import { Sessions } from 'SVComponents/sessions'
 import { render, screen, within } from 'testUtils'
+// import { prettyDOM } from 'testUtils'
 
+// ------- MOCK SESSIONS -------
 const mockMixedSession = {
   allowBooking: true,
   identifier: '3',
-  name: 'Session on day 2 - limited capacity',
-  summary: '',
+  name: 'Session',
   dayNumber: 2,
-  startDateTimeLocal: '2020-08-04 09:00:00',
-  endDateTimeLocal: '2020-08-04 09:30:00',
-  presenterIdentifiers: [],
-  labelIdentifiers: [ '3', '4' ],
-  locationIdentifier: '2',
   restrictToAttendeeCategories: [ '1', '2' ],
   capacity: {
     isUnlimited: false,
@@ -24,44 +20,35 @@ const mockMixedSession = {
   },
 }
 
-// const mockFiniteWaitingListSession = {
-//   ...mockMixedSession,
-//   capacity: {
-//     ...mockMixedSession.capacity,
-//     waitingListRemainingPlaces: 1
-//   }
-// }
-
 const mockWaitingListSession = {
-  allowBooking: true,
+  ...mockMixedSession,
   identifier: '1',
-  name: 'Session w/ Waiting List',
-  dayNumber: 1,
-  startDateTimeLocal: '2020-08-03 09:00:00',
-  endDateTimeLocal: '2020-08-03 13:30:00',
-  presenterIdentifiers: [ '1', '2' ],
-  labelIdentifiers: [ '1', '2' ],
-  locationIdentifier: '1',
   restrictToAttendeeCategories: [],
   capacity: {
     isUnlimited: false,
     remainingPlaces: 0,
     isWaitingListAvailable: true,
-    waitingListRemainingPlaces: 1,
-  },
-  price: {
-    currency: 'USD',
-    amount: 923.0,
+    waitingListRemainingPlaces: 100,
   },
 }
 
+const mockFiniteWaitingListSession = {
+  ...mockMixedSession,
+  capacity: {
+    ...mockMixedSession.capacity,
+    waitingListRemainingPlaces: 1,
+    remainingPlaces: 0,
+  },
+}
+
+// ------- MOCK ATTENDEES -------
 const frank = {
   bookedTicketIdentifier: '1',
   name: 'Mr Frank Smith',
   attendeeCategoryIdentifier: '1',
   bookedDays: [ 1, 2 ],
   bookedSessions: [],
-  waitingListSessions: ['1'],
+  waitingListSessions: [ '1', '3' ],
 }
 
 const lucy = {
@@ -70,12 +57,21 @@ const lucy = {
   attendeeCategoryIdentifier: '1',
   bookedDays: [ 1, 2 ],
   bookedSessions: [],
-  waitingListSessions: ['1'],
+  waitingListSessions: [ '1', '3' ],
 }
 
 const teresa = {
   bookedTicketIdentifier: '10',
   name: 'Ms. Teresa Waiting',
+  attendeeCategoryIdentifier: '2',
+  bookedDays: [ 1, 2 ],
+  bookedSessions: [],
+  waitingListSessions: [],
+}
+
+const samantha = {
+  bookedTicketIdentifier: '8',
+  name: 'Samantha',
   attendeeCategoryIdentifier: '2',
   bookedDays: [ 1, 2 ],
   bookedSessions: [],
@@ -88,9 +84,10 @@ const penelope = {
   attendeeCategoryIdentifier: '2',
   bookedDays: [2],
   bookedSessions: [],
-  waitingListSessions: ['3'],
+  waitingListSessions: [ '5', '3' ],
 }
 
+// ------- MOCK SESSIONS INPUT -------
 const waitingListMock = {
   ...testData,
   sessions: [mockWaitingListSession],
@@ -111,6 +108,12 @@ const mixedListMock = {
   ],
 }
 
+const finiteWaitingListMock = {
+  ...testData,
+  sessions: [mockFiniteWaitingListSession],
+  attendees: [ frank, lucy, penelope, teresa, samantha ],
+}
+
 // helper that renders the sessions component and opens the booking modal
 const initModal = async data => {
   const results = await render(<Sessions sessionAgendaProps={data} />)
@@ -122,10 +125,14 @@ const initModal = async data => {
   return results
 }
 
+const getCheckbox = attendeeName => {
+  const box = screen.getByRole('group', { name: attendeeName })
+  return within(box).getByRole('checkbox')
+}
+
 // helper that select an attendee checkbox associated with the attendee name
 const selectAttendeeCheckbox = attendeeName => {
-  const box = screen.getByRole('group', { name: attendeeName })
-  const checkbox = within(box).getByRole('checkbox')
+  const checkbox = getCheckbox(attendeeName)
   return userEvent.click(checkbox)
 }
 
@@ -148,7 +155,7 @@ describe('Group Booking Modal - Integration', () => {
   it('should add a user to the waiting list when capacity is empty', async () => {
     await initModal(waitingListMock)
 
-    selectAttendeeCheckbox('Ms. Teresa Waiting')
+    selectAttendeeCheckbox(teresa.name)
 
     expect(screen.getAllByRole('checkbox', { checked: true }).length).toEqual(3)
 
@@ -158,7 +165,7 @@ describe('Group Booking Modal - Integration', () => {
   it('should not decrement places-remaining below 0', async () => {
     await initModal(waitingListMock)
 
-    selectAttendeeCheckbox('Ms. Teresa Waiting')
+    selectAttendeeCheckbox(teresa.name)
 
     expect(screen.getByText('0 places remaining')).toBeInTheDocument()
   })
@@ -178,7 +185,7 @@ describe('Group Booking Modal - Integration', () => {
   it('should decrement places-remaining when selecting an unselected attendee on a session with available places', async () => {
     await initModal(mixedListMock)
 
-    await selectAttendeeCheckbox('Mr Frank Smith')
+    await selectAttendeeCheckbox(frank.name)
 
     expect(screen.getByText('0 places remaining')).toBeInTheDocument()
   })
@@ -188,8 +195,27 @@ describe('Group Booking Modal - Integration', () => {
 
     expect(screen.getByText('1 place remaining')).toBeInTheDocument()
 
-    selectAttendeeCheckbox('Dr Lucy Jones')
+    selectAttendeeCheckbox(lucy.name)
 
     expect(screen.getByText('2 places remaining')).toBeInTheDocument()
+  })
+
+  it('should limit waiting list additions for sessions with a wait-list capacity', async () => {
+    initModal(finiteWaitingListMock)
+
+    expect(screen.queryByText('Waiting list full')).not.toBeInTheDocument()
+
+    selectAttendeeCheckbox(teresa.name)
+
+    // verify that the limit text is displayed
+    expect(screen.queryByText('0 places remaining')).not.toBeInTheDocument()
+    expect(screen.getByText('Waiting list full')).toBeInTheDocument()
+
+    // verify that you cannot select other attendees who are not already on the book or wait list
+    expect(getCheckbox(samantha.name).disabled).toBe(true)
+
+    // but attendees who ARE on the waitlist or book list should still be clickable
+    expect(getCheckbox(frank.name).disabled).toBe(false)
+    expect(getCheckbox(teresa.name).disabled).toBe(false)
   })
 })

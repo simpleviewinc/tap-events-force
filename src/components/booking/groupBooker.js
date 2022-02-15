@@ -50,14 +50,17 @@ GroupBookerBody.propTypes = {
  * @param {object} props.styles
  */
 const TopSection = ({ styles }) => {
-  // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
+
+  // use correct wording depending on number of spots remaining
   const placeText = state.bookingCapacity === 1 ? 'place' : 'places'
+
   const bookingCapacityText = `${state.bookingCapacity} ${placeText} remaining`
-  // const capacityText = state.bookingCapacity > 0 || !state.waitingCapacity
-  //   ? bookingCapacityText
-  //   : 'Waiting list full'
-  const capacityText = bookingCapacityText
+
+  const capacityText =
+    state.bookingCapacity === 0 && state.waitingCapacity === 0
+      ? 'Waiting list full'
+      : bookingCapacityText
 
   return (
     <View

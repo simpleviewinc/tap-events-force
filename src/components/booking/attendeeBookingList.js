@@ -50,6 +50,8 @@ export const AttendeeBookingList = ({
   const { state, actions } = useGroupBookingContext()
 
   const { enableCheck } = useCheckboxState(state.session, state.bookingCapacity)
+
+  // check if attendee is restricted on the session
   const isAttendeeDisabled = useIsAttendeeDisabledCallback(
     state.session,
     attendees
@@ -62,6 +64,11 @@ export const AttendeeBookingList = ({
     const isBooking = isAttendeeBooked(state, attendeeId)
     const isWaiting = isAttendeeWaiting(state, attendeeId)
 
+    // Attendee is disabled if he/she is restricted on the session.
+    // He/she is also disabled  if there are no spots available on the
+    // wait list nor the booking list, EXCEPT when the attendee is already on
+    // one of those lists. If they are, then we still need to enable them
+    // so that the user can uncheck them.
     const shouldAppearDisabled =
       isAttendeeDisabled(attendeeId) ||
       (emptyWaitList && emptyBookList && !(isWaiting || isBooking))
