@@ -8,9 +8,7 @@ import { render, screen, within } from 'testUtils'
 // ------- TEST HELPERS -------
 
 // helper that renders the sessions component and opens the booking modal
-export const initModal = async (data, otherProps, verbose = false) => {
-  verbose &&
-    console.log('initModal:', JSON.stringify(data.sessions[0], null, 2))
+export const initModal = async (data, { otherProps, buttonSelector } = {}) => {
   const callbacks = {
     onSessionBookingRequest: jest.fn(),
     onSessionWaitingListRequest: jest.fn(),
@@ -25,7 +23,7 @@ export const initModal = async (data, otherProps, verbose = false) => {
   )
 
   const btn = screen.getByRole('button', {
-    name: /^ON WAITING LIST.*|^SELECT.*/,
+    name: buttonSelector || /^ON WAITING LIST.*|^SELECT.*/,
   })
   expect(btn).toBeDefined()
   userEvent.click(btn)

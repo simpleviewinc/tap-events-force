@@ -6,6 +6,8 @@ export const mockMixedSession = {
   allowBooking: true,
   identifier: '3',
   name: 'Mixed Session',
+  startDateTimeLocal: '2020-08-03 09:00:00',
+  endDateTimeLocal: '2020-08-03 13:30:00',
   dayNumber: 2,
   restrictToAttendeeCategories: [ '1', '2' ],
   capacity: {
@@ -50,8 +52,8 @@ export const mockFiniteWaitingListSession = {
 }
 
 export const mockRestrictedSession = {
-  name: 'restricted',
   ...mockMixedSession,
+  name: 'restricted',
   restrictToAttendeeCategories: ['179'],
 }
 

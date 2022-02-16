@@ -19,7 +19,7 @@ import {
 
 describe('Group Booking Modal - Integration - Wait List', () => {
   it('should limit waiting list additions for sessions with a wait-list capacity', async () => {
-    await initModal(finiteWaitingListMock, null)
+    await initModal(finiteWaitingListMock)
 
     expect(screen.queryByText('Waiting list full')).not.toBeInTheDocument()
 
