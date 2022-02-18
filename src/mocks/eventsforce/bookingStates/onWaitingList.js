@@ -108,6 +108,7 @@ export const onWaitingList = {
             isUnlimited: false,
             remainingPlaces: 0,
             isWaitingListAvailable: true,
+            waitingListRemainingPlaces: 0,
           },
           price: {
             currency: 'USD',
