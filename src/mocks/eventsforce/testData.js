@@ -484,7 +484,7 @@ export default {
         isUnlimited: false,
         remainingPlaces: 1,
         isWaitingListAvailable: true,
-        waitingListRemainingPlaces: 4,
+        waitingListRemainingPlaces: 3,
       },
     },
   ],
