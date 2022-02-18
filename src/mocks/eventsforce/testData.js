@@ -466,6 +466,27 @@ export default {
         amount: 923.0,
       },
     },
+    {
+      identifier: '13',
+      name:
+        'Session with waiting list enabled and 4 remaining waiting list places',
+      summary: 'This session has a finite waiting list capacity',
+      dayNumber: 2,
+      allowBooking: true,
+      startDateTimeLocal: '2020-08-04 14:00:00',
+      endDateTimeLocal: '2020-08-04 15:30:00',
+      presenterIdentifiers: [],
+      labelIdentifiers: [],
+      liveVideoUrl: '',
+      recordedVideoUrl: '',
+      restrictToAttendeeCategories: [],
+      capacity: {
+        isUnlimited: false,
+        remainingPlaces: 1,
+        isWaitingListAvailable: true,
+        waitingListRemainingPlaces: 4,
+      },
+    },
   ],
   attendees: [
     {
