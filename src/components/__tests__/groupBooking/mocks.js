@@ -17,46 +17,6 @@ export const mockMixedSession = {
   },
 }
 
-export const mockWaitingListSession = {
-  ...mockMixedSession,
-  name: 'Waiting List Session',
-  identifier: '1',
-  restrictToAttendeeCategories: [],
-  capacity: {
-    isUnlimited: false,
-    remainingPlaces: 0,
-    isWaitingListAvailable: true,
-    waitingListRemainingPlaces: 100,
-  },
-}
-
-export const mockOnlyBookingSession = {
-  ...mockMixedSession,
-  name: 'Only booking',
-  capacity: {
-    isUnlimited: false,
-    remainingPlaces: 1,
-    isWaitingListAvailable: false,
-  },
-}
-
-export const mockFiniteWaitingListSession = {
-  ...mockMixedSession,
-  name: 'Finite waiting list',
-  capacity: {
-    isUnlimited: false,
-    isWaitingListAvailable: true,
-    waitingListRemainingPlaces: 1,
-    remainingPlaces: 0,
-  },
-}
-
-export const mockRestrictedSession = {
-  ...mockMixedSession,
-  name: 'restricted',
-  restrictToAttendeeCategories: ['179'],
-}
-
 // ------- MOCK ATTENDEES -------
 
 export const frank = {
@@ -115,17 +75,6 @@ export const john = {
 export const attendees = [ frank, lucy, teresa, samantha, penelope, john ]
 
 // ------- MOCK SESSIONS INPUT -------
-export const onlyBookingMock = {
-  ...testData,
-  sessions: [mockOnlyBookingSession],
-  attendees: [ samantha, teresa ],
-}
-
-export const waitingListMock = {
-  ...testData,
-  sessions: [mockWaitingListSession],
-  attendees,
-}
 
 export const mixedListMock = {
   ...testData,
@@ -140,17 +89,4 @@ export const mixedListMock = {
       waitingListSessions: [],
     },
   ],
-}
-
-export const finiteWaitingListMock = {
-  ...testData,
-  sessions: [mockFiniteWaitingListSession],
-  attendees,
-}
-
-export const restrictedMock = {
-  ...testData,
-  id: '100',
-  sessions: [mockRestrictedSession],
-  attendees,
 }

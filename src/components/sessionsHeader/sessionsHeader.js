@@ -134,7 +134,7 @@ export const SessionsHeader = React.memo(
     const styles = theme.get('sessions')
     const waitingListActive = useWaitingListActive()
     const allowBooking = useAllowBooking()
-    const areCustomFilterLabelsPresent = (labels?.length > 0)
+    const areCustomFilterLabelsPresent = labels?.length > 0
 
     const increment = useCallback(() => incrementDay(onDayChange), [
       onDayChange,
@@ -163,12 +163,15 @@ export const SessionsHeader = React.memo(
               onIncrement={increment}
             />
           }
-          RightComponent={ (waitingListActive || allowBooking || areCustomFilterLabelsPresent) && (
-            <ItemHeaderRight
-              styles={headerStyles?.content?.right?.content}
-              onClick={displayFilterModal}
-            />
-          )
+          RightComponent={
+            (waitingListActive ||
+              allowBooking ||
+              areCustomFilterLabelsPresent) && (
+              <ItemHeaderRight
+                styles={headerStyles?.content?.right?.content}
+                onClick={displayFilterModal}
+              />
+            )
           }
         />
       </View>

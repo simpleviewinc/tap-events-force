@@ -10,7 +10,12 @@ import { sortSessions } from './sortSessions'
  * @returns {Array} - array of objects containing timeblock and sessions:
  *                    ex: [{timeBlock: '9:00', sessions: [session1, session2]}]
  */
-export const buildHourSessionsMap = (sessions, dayNumber, isMilitaryTime, asc=true) => {
+export const buildHourSessionsMap = (
+  sessions,
+  dayNumber,
+  isMilitaryTime,
+  asc = true
+) => {
   // 1. Filter out the sessions not matching the day
   // 2. Group the sessions by start block
   // 3. sort the array by the start block
@@ -18,7 +23,10 @@ export const buildHourSessionsMap = (sessions, dayNumber, isMilitaryTime, asc=tr
     .reduce((items, session) => {
       if (session.dayNumber !== dayNumber) return items
 
-      const timeBlock = getTimeFromDate(session.startDateTimeLocal, isMilitaryTime)
+      const timeBlock = getTimeFromDate(
+        session.startDateTimeLocal,
+        isMilitaryTime
+      )
 
       // check the session start time
       const mapIndex = items.findIndex(item => timeBlock === item.timeBlock)

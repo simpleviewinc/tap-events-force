@@ -1,7 +1,7 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import { getEventEmitter } from 'SVUtils/events/event_emitter'
 
-const kegEventEmitter = getEventEmitter() 
+const kegEventEmitter = getEventEmitter()
 
 /**
  * Set up to listen to some event

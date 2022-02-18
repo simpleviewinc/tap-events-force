@@ -5,12 +5,27 @@ import { initModal, submitBooking, selectAttendeeCheckbox } from './testHelpers'
 import {
   mixedListMock,
   mockMixedSession,
-  onlyBookingMock,
   teresa,
   frank,
   samantha,
 } from './mocks'
 // import { prettyDOM } from 'testUtils'
+
+const mockOnlyBookingSession = {
+  ...mockMixedSession,
+  name: 'Only booking',
+  capacity: {
+    isUnlimited: false,
+    remainingPlaces: 1,
+    isWaitingListAvailable: false,
+  },
+}
+
+const onlyBookingMock = {
+  ...testData,
+  sessions: [mockOnlyBookingSession],
+  attendees: [ samantha, teresa ],
+}
 
 describe('Group Booking Modal - Integration - Booking Submission', () => {
   it('should fire the onSessionWaitinglistRequest callback upon waiting-list-only submission', async () => {

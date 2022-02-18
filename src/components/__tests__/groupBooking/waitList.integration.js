@@ -1,21 +1,53 @@
 import '@testing-library/jest-dom'
 import { screen } from 'testUtils'
+import testData from 'SVEvfMocks/eventsforce/testData.js'
 import {
   initModal,
   getBookingButton,
   selectAttendeeCheckbox,
   getCheckbox,
 } from './testHelpers'
-import {
-  finiteWaitingListMock,
-  waitingListMock,
-  teresa,
-  samantha,
-  frank,
-} from './mocks'
+import { attendees, teresa, samantha, frank } from './mocks'
 // import { prettyDOM } from 'testUtils'
 
-// ------- TESTS -------
+const mockWaitingListSession = {
+  allowBooking: true,
+  startDateTimeLocal: '2020-08-03 09:00:00',
+  endDateTimeLocal: '2020-08-03 13:30:00',
+  dayNumber: 2,
+  name: 'Waiting List Session',
+  identifier: '1',
+  restrictToAttendeeCategories: [],
+  capacity: {
+    isUnlimited: false,
+    remainingPlaces: 0,
+    isWaitingListAvailable: true,
+    waitingListRemainingPlaces: 100,
+  },
+}
+
+const mockFiniteWaitingListSession = {
+  ...mockWaitingListSession,
+  name: 'Finite waiting list',
+  capacity: {
+    isUnlimited: false,
+    isWaitingListAvailable: true,
+    waitingListRemainingPlaces: 1,
+    remainingPlaces: 0,
+  },
+}
+
+const waitingListMock = {
+  ...testData,
+  sessions: [mockWaitingListSession],
+  attendees,
+}
+
+const finiteWaitingListMock = {
+  ...testData,
+  sessions: [mockFiniteWaitingListSession],
+  attendees,
+}
 
 describe('Group Booking Modal - Integration - Wait List', () => {
   it('should limit waiting list additions for sessions with a wait-list capacity', async () => {

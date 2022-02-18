@@ -11,6 +11,6 @@ export const emptyDayMessage = {
     $small: {
       ftSz: 20,
       mT: 40,
-    }
+    },
   },
 }
