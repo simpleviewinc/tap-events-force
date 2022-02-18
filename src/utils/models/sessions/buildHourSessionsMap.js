@@ -2,12 +2,18 @@ import { getTimeFromDate } from '../../dateTime/getTimeFromDate'
 import { sortSessions } from './sortSessions'
 
 /**
- * Filters the sessions given a day number
+ * @typedef SessionTimeBlock
+ * @property {string} timeBlock - the START time of the time block of the sessions
+ * @property {Array<Session>} sessions - the sessions that fit inside this time block
+ */
+
+/**
+ * Bins the sessions into groups by timeblocks
  * @param {Array<import('SVModels/session').Session>} sessions
  * @param {number} dayNumber
  * @param {boolean} isMilitaryTime - is it in militaryTime
  * @param {boolean=} asc - order ascending by name. default true
- * @returns {Array} - array of objects containing timeblock and sessions:
+ * @returns {Array<SessionTimeBlock>} - array of objects containing timeblock and sessions:
  *                    ex: [{timeBlock: '9:00', sessions: [session1, session2]}]
  */
 export const buildHourSessionsMap = (

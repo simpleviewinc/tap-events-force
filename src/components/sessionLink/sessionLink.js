@@ -41,6 +41,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
         style={themeStyle.text}
         className={classes}
         accessibilityRole='link'
+        accessibilityLabel='session-link'
       >
         { text }
       </Text>
