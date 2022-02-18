@@ -15,6 +15,10 @@ import { sortSessions } from './sortSessions'
  * @param {boolean=} asc - order ascending by name. default true
  * @returns {Array<SessionTimeBlock>} - array of objects containing timeblock and sessions:
  *                    ex: [{timeBlock: '9:00', sessions: [session1, session2]}]
+ *
+ * NOTE: the sessions arrays in each SessionTimeBlock are NOT sorted. The Sessions component merely
+ * displays the sessions it receives as input in the order provided. The consumer can sort sessions however
+ * they want.
  */
 export const buildHourSessionsMap = (
   sessions,
