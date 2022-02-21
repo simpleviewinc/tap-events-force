@@ -48,11 +48,22 @@ const mockMixedCapacitiesSession = {
   },
 }
 
+const mockUnlimitedSession = {
+  ...mockWaitingListSession,
+  name: 'Mixed finite capacities session',
+  capacity: {
+    isUnlimited: true,
+    isWaitingListAvailable: true,
+    waitingListRemainingPlaces: 1,
+  },
+}
+
 const withFullMock = sessionMock => ({
   ...testData,
   sessions: [sessionMock],
   attendees,
 })
+const unlimitedMock = withFullMock(mockUnlimitedSession)
 const waitingListMock = withFullMock(mockWaitingListSession)
 const finiteWaitingListMock = withFullMock(mockFiniteWaitingListSession)
 
@@ -134,5 +145,15 @@ describe('Group Booking Modal - Integration - Wait List', () => {
     expect(getCheckbox(samantha.name).disabled).toBe(false)
     expect(getCheckbox(frank.name).disabled).toBe(false)
     expect(getCheckbox(teresa.name).disabled).toBe(false)
+  })
+
+  it('should never display the waiting list text for an unlimited session', () => {
+    initModal(unlimitedMock)
+
+    // select all attendees
+    attendees.map(att => selectAttendeeCheckbox(att.name))
+
+    expect(screen.queryByText('Waiting list full')).not.toBeInTheDocument()
+    expect(screen.queryByText('remaining')).not.toBeInTheDocument()
   })
 })
