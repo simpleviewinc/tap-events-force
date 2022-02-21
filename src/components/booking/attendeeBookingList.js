@@ -6,7 +6,7 @@ import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 /**
  * Gets computed values about the state of all checkboxees in the attendee list
  * @param {import('SVModels/session').Session} session
- * @param {number} groupBookingCapacity - current capacity of the session
+ * @param {number} groupBookingCapacity - current booking capacity of the session
  * @returns {Object} { enableCheck }
  */
 const useCheckboxState = (session, groupBookingCapacity) => {
@@ -49,7 +49,7 @@ export const AttendeeBookingList = ({
 }) => {
   const { state, actions } = useGroupBookingContext()
 
-  const { enableCheck } = useCheckboxState(state.session, state.capacity)
+  const { enableCheck } = useCheckboxState(state.session, state.bookingCapacity)
 
   // check if attendee is restricted on the session
   const isAttendeeDisabled = useIsAttendeeDisabledCallback(

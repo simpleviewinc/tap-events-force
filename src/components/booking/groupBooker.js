@@ -53,7 +53,7 @@ const TopSection = ({ styles }) => {
   const { state } = useGroupBookingContext()
 
   // use correct wording depending on number of spots remaining
-  const placeText = state.capacity === 1 ? 'place' : 'places'
+  const placeText = state.bookingCapacity === 1 ? 'place' : 'places'
 
   const bookingCapacityText = `${state.bookingCapacity} ${placeText} remaining`
 
