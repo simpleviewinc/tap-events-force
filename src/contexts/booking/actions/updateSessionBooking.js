@@ -5,7 +5,7 @@ import { GroupBookingActionTypes } from '../constants/groupBookingActionTypes'
  * or removes the attendee to one of those lists, depending on the list
  * that currently contains it, if any, and if the waiting list is available.
  *
- * Also updates state.bookingCapacity and state.modified.*, depending on how
+ * Also updates state.bookingCapacity, state.waitingCapacity and state.modified.*, depending on how
  * a list was updated.
  *
  * @param {Function} dispatch - the dispatch function for the reducer
