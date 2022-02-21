@@ -37,21 +37,28 @@ const mockFiniteWaitingListSession = {
   },
 }
 
-const waitingListMock = {
-  ...testData,
-  sessions: [mockWaitingListSession],
-  attendees,
+const mockMixedCapacitiesSession = {
+  ...mockWaitingListSession,
+  name: 'Mixed finite capacities session',
+  capacity: {
+    isUnlimited: false,
+    isWaitingListAvailable: true,
+    waitingListRemainingPlaces: 1,
+    remainingPlaces: 1,
+  },
 }
 
-const finiteWaitingListMock = {
+const withFullMock = sessionMock => ({
   ...testData,
-  sessions: [mockFiniteWaitingListSession],
+  sessions: [sessionMock],
   attendees,
-}
+})
+const waitingListMock = withFullMock(mockWaitingListSession)
+const finiteWaitingListMock = withFullMock(mockFiniteWaitingListSession)
 
 describe('Group Booking Modal - Integration - Wait List', () => {
   it('should limit waiting list additions for sessions with a wait-list capacity', async () => {
-    await initModal(finiteWaitingListMock)
+    initModal(finiteWaitingListMock)
 
     expect(screen.queryByText('Waiting list full')).not.toBeInTheDocument()
 
@@ -70,14 +77,14 @@ describe('Group Booking Modal - Integration - Wait List', () => {
   })
 
   it('should open with the header text', async () => {
-    await initModal(waitingListMock)
+    initModal(waitingListMock)
     expect(
       await screen.findByText('Select sessions for your group:')
     ).toBeInTheDocument()
   })
 
   it('should add a user to the waiting list when capacity is empty', async () => {
-    await initModal(waitingListMock)
+    initModal(waitingListMock)
     selectAttendeeCheckbox(teresa.name)
 
     expect(screen.getAllByRole('checkbox', { checked: true }).length).toEqual(3)
@@ -86,14 +93,14 @@ describe('Group Booking Modal - Integration - Wait List', () => {
   })
 
   it('should not decrement places-remaining below 0', async () => {
-    await initModal(waitingListMock)
+    initModal(waitingListMock)
     selectAttendeeCheckbox(teresa.name)
 
     expect(screen.getByText('0 places remaining')).toBeInTheDocument()
   })
 
   it('should disable the booking button until a booking modification is made', async () => {
-    await initModal(waitingListMock)
+    initModal(waitingListMock)
 
     const btn = getBookingButton()
 
@@ -102,5 +109,30 @@ describe('Group Booking Modal - Integration - Wait List', () => {
     selectAttendeeCheckbox('Ms. Teresa Waiting')
 
     expect(btn.disabled).toBe(false)
+  })
+
+  // TODO: We need to implement a `resetStore` function that resets the redux store, which we would call before each test.
+  // This test fails when called together with the other tests because the redux store is preserving state from previous tests.
+  // So for now this test is skipped until we fix that (even though it passes in isolation!)
+  it.skip('should decrement booking capacity before waiting capacity when both are available', async () => {
+    const mixedCapacitiesMock = withFullMock(mockMixedCapacitiesSession)
+    initModal(mixedCapacitiesMock)
+
+    // console.log(prettyDOM())
+    expect(screen.queryByText('Waiting list full')).not.toBeInTheDocument()
+    expect(screen.queryByText('1 place remaining')).toBeInTheDocument()
+
+    selectAttendeeCheckbox(teresa.name)
+
+    // verify that the limit text is displayed
+    expect(screen.queryByText('0 places remaining')).toBeInTheDocument()
+
+    selectAttendeeCheckbox(samantha.name)
+
+    expect(screen.queryByText('Waiting list full')).toBeInTheDocument()
+
+    expect(getCheckbox(samantha.name).disabled).toBe(false)
+    expect(getCheckbox(frank.name).disabled).toBe(false)
+    expect(getCheckbox(teresa.name).disabled).toBe(false)
   })
 })

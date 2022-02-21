@@ -492,7 +492,7 @@ export default {
     {
       identifier: '13',
       name:
-        'Session with waiting list enabled and 4 remaining waiting list places',
+        'Session with waiting list enabled and 3 remaining waiting list places',
       summary: 'This session has a finite waiting list capacity',
       dayNumber: 2,
       allowBooking: true,
@@ -507,7 +507,7 @@ export default {
         isUnlimited: false,
         remainingPlaces: 1,
         isWaitingListAvailable: true,
-        waitingListRemainingPlaces: 4,
+        waitingListRemainingPlaces: 3,
       },
     },
   ],

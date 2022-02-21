@@ -8,13 +8,13 @@ import { render, screen, within } from 'testUtils'
 // ------- TEST HELPERS -------
 
 // helper that renders the sessions component and opens the booking modal
-export const initModal = async (data, { otherProps, buttonSelector } = {}) => {
+export const initModal = (data, { otherProps, buttonSelector } = {}) => {
   const callbacks = {
     onSessionBookingRequest: jest.fn(),
     onSessionWaitingListRequest: jest.fn(),
   }
 
-  const output = await render(
+  const output = render(
     <Sessions
       sessionAgendaProps={data}
       {...callbacks}
