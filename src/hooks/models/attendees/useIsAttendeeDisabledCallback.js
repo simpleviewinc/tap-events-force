@@ -62,6 +62,6 @@ export const useIsAttendeeDisabledCallback = (session, attendees) => {
       isTimeBlocked(attendeeId) ||
       !isBookable(attendeeId) ||
       !isRegisteredForDay(attendeeId),
-    [ isBookable, isTimeBlocked, isRegisteredForDay ]
+    [ isBookable, isTimeBlocked, isRegisteredForDay, pendingSession ]
   )
 }
