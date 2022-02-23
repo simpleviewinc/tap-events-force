@@ -10,7 +10,24 @@ describe('parseSessionCapacity', () => {
     ).toEqual({
       isUnlimited: false,
       waitingListIsAvailable: true,
-      remainingCount: 10,
+      remainingBookingPlaces: 10,
+      remainingWaitingPlaces: Infinity,
+    })
+  })
+
+  it('should preserve 0-value properties', () => {
+    expect(
+      parseSessionCapacity({
+        isUnlimited: false,
+        isWaitingListAvailable: true,
+        waitingListRemainingPlaces: 0,
+        remainingPlaces: 0,
+      })
+    ).toEqual({
+      isUnlimited: false,
+      waitingListIsAvailable: true,
+      remainingBookingPlaces: 0,
+      remainingWaitingPlaces: 0,
     })
   })
 
@@ -18,7 +35,8 @@ describe('parseSessionCapacity', () => {
     expect(parseSessionCapacity(undefined)).toEqual({
       isUnlimited: false,
       waitingListIsAvailable: false,
-      remainingCount: 0,
+      remainingBookingPlaces: 0,
+      remainingWaitingPlaces: 0,
     })
   })
 
@@ -26,7 +44,8 @@ describe('parseSessionCapacity', () => {
     expect(parseSessionCapacity({})).toEqual({
       isUnlimited: false,
       waitingListIsAvailable: false,
-      remainingCount: 0,
+      remainingBookingPlaces: 0,
+      remainingWaitingPlaces: 0,
     })
   })
 
@@ -38,7 +57,24 @@ describe('parseSessionCapacity', () => {
     ).toEqual({
       isUnlimited: true,
       waitingListIsAvailable: false,
-      remainingCount: Infinity,
+      remainingBookingPlaces: Infinity,
+      remainingWaitingPlaces: 0,
+    })
+  })
+
+  it('should parse the remaining waiting count', () => {
+    expect(
+      parseSessionCapacity({
+        isUnlimited: false,
+        remainingPlaces: 0,
+        isWaitingListAvailable: true,
+        waitingListRemainingPlaces: 3,
+      })
+    ).toEqual({
+      isUnlimited: false,
+      remainingBookingPlaces: 0,
+      waitingListIsAvailable: true,
+      remainingWaitingPlaces: 3,
     })
   })
 })
