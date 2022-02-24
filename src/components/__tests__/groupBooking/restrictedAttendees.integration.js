@@ -11,7 +11,6 @@ const mockRestrictedSession = {
   startDateTimeLocal: '2020-08-03 09:00:00',
   endDateTimeLocal: '2020-08-03 13:30:00',
   dayNumber: 2,
-  restrictToAttendeeCategories: [ '1', '2' ],
   capacity: {
     isUnlimited: false,
     remainingPlaces: 1,
@@ -28,8 +27,8 @@ const restrictedMock = {
 }
 
 describe('Group Booking Modal - Integration - Restricted Attendees', () => {
-  it("should only enable attendees on the session's restricted list", async () => {
-    await initModal(restrictedMock)
+  it("should only enable attendees on the session's restricted list", () => {
+    initModal(restrictedMock)
 
     const johnCheckbox = getCheckbox(john.name)
 

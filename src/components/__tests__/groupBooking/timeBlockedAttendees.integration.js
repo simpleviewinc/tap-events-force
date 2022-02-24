@@ -65,7 +65,7 @@ const attendees = {
 
 describe('Group Booking Modal - Integration - Time Blocked Attendees', () => {
   it('should disable attendees who are booked on perfect overlapping sessions', async () => {
-    await initModal(
+    initModal(
       {
         ...testData,
         sessions: [ session, sessionPerfectOverlap ],
@@ -81,8 +81,8 @@ describe('Group Booking Modal - Integration - Time Blocked Attendees', () => {
     expect(fooBox.disabled).toBe(false)
   })
 
-  it('should disable attendees who are booked on a partiallly-overlapping session, starting before', async () => {
-    await initModal(
+  it('should disable attendees who are booked on a partiallly-overlapping session, starting before', () => {
+    initModal(
       {
         ...testData,
         sessions: [ session, sessionPartialOverlapUnder ],
@@ -98,8 +98,8 @@ describe('Group Booking Modal - Integration - Time Blocked Attendees', () => {
     expect(fooBox.disabled).toBe(false)
   })
 
-  it('should disable attendees who are booked on a partiallly-overlapping session, starting after', async () => {
-    await initModal(
+  it('should disable attendees who are booked on a partiallly-overlapping session, starting after', () => {
+    initModal(
       {
         ...testData,
         sessions: [ session, sessionPartialOverlapOver ],

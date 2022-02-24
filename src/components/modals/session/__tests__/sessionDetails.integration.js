@@ -28,7 +28,7 @@ describe('Session Details', () => {
       testData.presenters.find(presenter => presenter.identifier === id)
     )
 
-    expectedPresenters.map(presenter => {
+    expectedPresenters.forEach(presenter => {
       const text = screen.getByText(
         `${presenter.title} ${presenter.firstname} ${presenter.lastname}`
       )

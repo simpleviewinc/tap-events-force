@@ -151,7 +151,7 @@ describe('Group Booking Modal - Integration - Wait List', () => {
     initModal(unlimitedMock)
 
     // select all attendees
-    attendees.map(att => selectAttendeeCheckbox(att.name))
+    attendees.forEach(att => selectAttendeeCheckbox(att.name))
 
     expect(screen.queryByText('Waiting list full')).not.toBeInTheDocument()
     expect(screen.queryByText('remaining')).not.toBeInTheDocument()

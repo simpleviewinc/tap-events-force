@@ -47,7 +47,7 @@ const registeredTestData = {
 
 describe('Group Booking Modal - Integration - Registered Attendees', () => {
   it('should disable attendees who are not registered for a session day', async () => {
-    await initModal(registeredTestData)
+    initModal(registeredTestData)
 
     const frankBox = getCheckbox(attendees.frank.name)
     const fooBox = getCheckbox(attendees.foo.name)

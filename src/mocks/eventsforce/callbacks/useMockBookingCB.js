@@ -48,7 +48,7 @@ const updateSessions = (
   updatedRemainingPlaces,
   updatedRemainingWaitingPlaces
 ) => {
-  return sessions.reduce((sessions, session) => {
+  return sessions.reduce((allSessions, session) => {
     const { capacity, identifier } = session
     // update the session being modified with new capacities
     if (identifier === sessionId) {
@@ -61,7 +61,7 @@ const updateSessions = (
           ? updatedRemainingWaitingPlaces
           : undefined
     }
-    return [ ...sessions, session ]
+    return [ ...allSessions, session ]
   }, [])
 }
 
@@ -78,7 +78,7 @@ const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
       bookedIds: isBookingCb ? attendeeIds : null,
       waitIds: !isBookingCb ? attendeeIds : null,
     })
-    const session = current.sessions.find(
+    const foundSession = current.sessions.find(
       session => session.identifier === sessionId
     )
     const isBooked = att => att.bookedSessions.includes(sessionId)
@@ -93,7 +93,7 @@ const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
       nextAttendeesForSessionBookingList.length -
       currentAttendeesForSessionBookingList.length
     const updatedRemainingPlaces =
-      session.capacity.remainingPlaces - bookingDiff
+      foundSession.capacity.remainingPlaces - bookingDiff
 
     // get the next state's remaining waiting list places for the session
     const currentAttendeesForSessionWaitingList = current.attendees.filter(
@@ -104,7 +104,7 @@ const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
       nextAttendeesForSessionWaitingList.length -
       currentAttendeesForSessionWaitingList.length
     const updatedRemainingWaitingPlaces =
-      session.capacity.waitingListRemainingPlaces - waitingDiff
+      foundSession.capacity.waitingListRemainingPlaces - waitingDiff
 
     // get next state's sessions
     const nextSessions = updateSessions(

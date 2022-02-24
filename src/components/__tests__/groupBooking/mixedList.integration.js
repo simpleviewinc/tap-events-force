@@ -5,7 +5,7 @@ import { mixedListMock, samantha, lucy } from './mocks'
 // import { prettyDOM } from 'testUtils'
 
 describe('Group Booking Modal - Integration - Mixed List', () => {
-  beforeEach(async () => await initModal(mixedListMock))
+  beforeEach(() => initModal(mixedListMock))
 
   it('should decrement places-remaining when selecting an unselected attendee on a session with available places', async () => {
     selectAttendeeCheckbox(samantha.name)

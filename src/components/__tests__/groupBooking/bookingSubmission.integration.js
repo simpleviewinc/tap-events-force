@@ -27,10 +27,7 @@ const mockOnlyWaitingSession = {
 
 describe('Group Booking Modal - Integration - Booking Submission', () => {
   it('should fire the onSessionWaitingListRequest callback upon waiting-list-only submission', async () => {
-    const {
-      onSessionBookingRequest,
-      onSessionWaitingListRequest,
-    } = await initModal({
+    const { onSessionBookingRequest, onSessionWaitingListRequest } = initModal({
       ...testData,
       sessions: [mockOnlyWaitingSession],
       attendees: [ samantha, penelope, frank ],
@@ -57,10 +54,7 @@ describe('Group Booking Modal - Integration - Booking Submission', () => {
   })
 
   it('should fire the onSessionBookingRequest callback upon booking-list-only submission', async () => {
-    const {
-      onSessionBookingRequest,
-      onSessionWaitingListRequest,
-    } = await initModal({
+    const { onSessionBookingRequest, onSessionWaitingListRequest } = initModal({
       ...testData,
       sessions: [mockOnlyBookingSession],
       attendees: [ samantha, teresa ],
@@ -84,10 +78,7 @@ describe('Group Booking Modal - Integration - Booking Submission', () => {
   })
 
   it('should fire both callbacks when submitting both lists as modified', async () => {
-    const {
-      onSessionBookingRequest,
-      onSessionWaitingListRequest,
-    } = await initModal({
+    const { onSessionBookingRequest, onSessionWaitingListRequest } = initModal({
       ...testData,
       sessions: [mockMixedSession],
       attendees: [ samantha, teresa ],
