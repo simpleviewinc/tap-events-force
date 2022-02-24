@@ -3,7 +3,6 @@ import { waitFor } from 'testUtils'
 import testData from 'SVEvfMocks/eventsforce/testData.js'
 import { initModal, submitBooking, selectAttendeeCheckbox } from './testHelpers'
 import { mockMixedSession, teresa, penelope, frank, samantha } from './mocks'
-// import { prettyDOM } from 'testUtils'
 
 const mockOnlyBookingSession = {
   ...mockMixedSession,

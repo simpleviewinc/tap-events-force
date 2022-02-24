@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom'
 import testData from 'SVEvfMocks/eventsforce/testData.js'
 import { initModal, getCheckbox } from './testHelpers'
-// import { prettyDOM } from 'testUtils'
 
 const session = {
   allowBooking: true,

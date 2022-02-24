@@ -3,7 +3,6 @@ import React from 'react'
 import userEvent from '@testing-library/user-event'
 import { Sessions } from 'SVComponents/sessions'
 import { render, screen, within } from 'testUtils'
-// import { prettyDOM } from 'testUtils'
 
 // ------- TEST HELPERS -------
 

@@ -2,7 +2,6 @@ import '@testing-library/jest-dom'
 import { screen } from 'testUtils'
 import { initModal, selectAttendeeCheckbox } from './testHelpers'
 import { mixedListMock, samantha, lucy } from './mocks'
-// import { prettyDOM } from 'testUtils'
 
 describe('Group Booking Modal - Integration - Mixed List', () => {
   beforeEach(() => initModal(mixedListMock))

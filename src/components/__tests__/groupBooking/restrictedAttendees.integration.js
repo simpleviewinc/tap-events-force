@@ -2,7 +2,6 @@ import '@testing-library/jest-dom'
 import testData from 'SVEvfMocks/eventsforce/testData.js'
 import { initModal, getCheckbox } from './testHelpers'
 import { attendees, john } from './mocks'
-// import { prettyDOM } from 'testUtils'
 
 const mockRestrictedSession = {
   allowBooking: true,

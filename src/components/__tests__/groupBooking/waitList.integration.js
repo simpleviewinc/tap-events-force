@@ -8,7 +8,6 @@ import {
   getCheckbox,
 } from './testHelpers'
 import { attendees, teresa, samantha, frank } from './mocks'
-// import { prettyDOM } from 'testUtils'
 
 const mockWaitingListSession = {
   allowBooking: true,
