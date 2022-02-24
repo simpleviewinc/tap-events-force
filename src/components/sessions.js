@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect } from 'react'
 import { useStyle } from '@keg-hub/re-theme'
 import { View } from '@keg-hub/keg-components'
 import { ModalManager } from 'SVComponents/modals/modalManager'
@@ -33,18 +33,11 @@ export const Sessions = props => {
 
   const sessionsStyles = useStyle('sessions')
 
-  const { labels, agendaSessions, settings, sessions } = useStoreItems([
+  const { labels, agendaSessions, settings } = useStoreItems([
     'labels',
     'agendaSessions',
     'settings',
-    'sessions',
   ])
-
-  // - if no session item contains price info. don't display any price label
-  // - if some session items do have price. the one's that do not, need to have 'free' label
-  const enableFreeLabel = useMemo(() => {
-    return sessions.some(session => session.price?.amount > 0)
-  }, [sessions])
 
   return (
     <View
@@ -54,7 +47,6 @@ export const Sessions = props => {
       <SessionsList
         labels={labels}
         onDayChange={onDayChange}
-        enableFreeLabel={enableFreeLabel}
         settings={settings}
         sessions={agendaSessions}
         militaryTime={settings?.displayProperties?.timeFormat === '24'}

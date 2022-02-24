@@ -124,7 +124,7 @@ const useSelectSession = (session, model) => {
  * Display price and button text based on rules provided.
  * i.e. a. If the session has a price and is a SELECT state, the text displayed should change to BUY.
  *      b. If the session does not have a price and is a SELECT state, the text displayed should remain SELECT.
- *      c. If there is no cost , the button should not display any price or alt text like FREE
+ *      c. If there is no cost, the button should not display any price or alt text like FREE
  *      d. Is a session has a price but is ANY other state (e.g WAITING_LIST) no price should be displayed (Refer ZEN-629)
  */
 const applyPriceAndDisplayRules = (state, text, formattedPrice) => {
