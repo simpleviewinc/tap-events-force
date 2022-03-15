@@ -81,8 +81,8 @@ const updateMockState = (setMockData, sessionId, attendeeIds, isBookingCb) => {
     const foundSession = current.sessions.find(
       session => session.identifier === sessionId
     )
-    const isBooked = att => att.bookedSessions.includes(sessionId)
-    const isWaiting = att => att.waitingListSessions.includes(sessionId)
+    const isBooked = att => att?.bookedSessions?.includes(sessionId)
+    const isWaiting = att => att?.waitingListSessions?.includes(sessionId)
 
     // get the next state's remaining places for the session
     const currentAttendeesForSessionBookingList = current.attendees.filter(
