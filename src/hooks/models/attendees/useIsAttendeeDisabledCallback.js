@@ -52,11 +52,16 @@ export const useIsAttendeeDisabledCallback = (session, attendees) => {
     attendees
   )
 
+  // if there is a pending session, that means it's waiting for a submission response,
+  // so we don't want any attendees to be bookable during that time
+  const pendingSession = useStoreItems(CATEGORIES.PENDING_SESSION)
+
   return useCallback(
     attendeeId =>
+      pendingSession?.identifier ||
       isTimeBlocked(attendeeId) ||
       !isBookable(attendeeId) ||
       !isRegisteredForDay(attendeeId),
-    [ isBookable, isTimeBlocked, isRegisteredForDay ]
+    [ isBookable, isTimeBlocked, isRegisteredForDay, pendingSession ]
   )
 }

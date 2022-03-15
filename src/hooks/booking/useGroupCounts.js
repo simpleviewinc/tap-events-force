@@ -29,7 +29,7 @@ const countDisabled = (attendees, isDisabledFn) => {
  * }
  */
 export const useGroupCounts = session => {
-  const { remainingCount } = parseSessionCapacity(session?.capacity)
+  const { remainingBookingPlaces } = parseSessionCapacity(session?.capacity)
   const isUnlimited = session?.capacity?.isUnlimited
 
   const { attendees, attendeesByTicket } = useStoreItems([
@@ -48,12 +48,18 @@ export const useGroupCounts = session => {
 
     // only show the capacity of the session if the number of attendees exceeds the capacity
     const initialCapacityExceedsNeed =
-      isUnlimited || remainingCount > bookableAttendeeCount
+      isUnlimited || remainingBookingPlaces > bookableAttendeeCount
 
     return {
       sortedAttendeeCount,
       bookableAttendeeCount,
       initialCapacityExceedsNeed,
     }
-  }, [ isUnlimited, attendees, attendeesByTicket, isDisabled, remainingCount ])
+  }, [
+    isUnlimited,
+    attendees,
+    attendeesByTicket,
+    isDisabled,
+    remainingBookingPlaces,
+  ])
 }

@@ -50,30 +50,35 @@ GroupBookerBody.propTypes = {
  * @param {object} props.styles
  */
 const TopSection = ({ styles }) => {
-  // use correct wording depending on number of spots remaining
   const { state } = useGroupBookingContext()
-  const showRequireSymbol = !isBookingModified(state)
-  const placeText = state.capacity === 1 ? 'place' : 'places'
+
+  // use correct wording depending on number of spots remaining
+  const placeText = state.bookingCapacity === 1 ? 'place' : 'places'
+
+  const bookingCapacityText = `${state.bookingCapacity} ${placeText} remaining`
+
+  const capacityText =
+    state.bookingCapacity === 0 && state.waitingCapacity === 0
+      ? 'Waiting list full'
+      : bookingCapacityText
+
   return (
     <View
-      className={`ef-modal-group-section-top`}
+      className='ef-modal-group-section-top'
       style={styles?.main}
     >
       <Text
-        className={`ef-modal-body-header`}
+        className='ef-modal-body-header'
         style={styles?.content?.instructionText}
       >
         Select sessions for your group:{ ' ' }
-        { showRequireSymbol && (
-          <Text style={styles?.content?.instructionAsterisk}>*</Text>
-        ) }
       </Text>
       { state.showCapacity && (
         <Text
-          className={`ef-modal-body-highlight`}
+          className='ef-modal-body-highlight'
           style={styles?.content?.infoText}
         >
-          { `${state.capacity} ${placeText} remaining` }
+          { capacityText }
         </Text>
       ) }
     </View>
@@ -110,9 +115,9 @@ export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
         <EvfButton
           buttonType={BUTTON_TYPES.MODAL_SECONDARY}
           className='ef-cancel-session-button'
-          type={'default'}
+          type='default'
           styles={styles.content?.cancelButton}
-          text={'CANCEL'}
+          text='CANCEL'
           onClick={onCancelPress}
         />
       </View>
@@ -120,9 +125,9 @@ export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
         className='ef-select-session-button'
         isProcessing={pendingSession?.identifier}
-        type={'primary'}
+        type='primary'
         styles={styles.content?.bookButton}
-        text={'BOOK SELECTED'}
+        text='BOOK SELECTED'
         disabled={submitDisabled}
         onClick={bookSession}
       />
