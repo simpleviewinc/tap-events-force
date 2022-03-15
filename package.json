@@ -1,7 +1,7 @@
 {
   "name": "@keg-hub/tap-events-force",
   "version": "3.1.3",
-  "description": "Events Force Tap for the Keg",
+  "description": "EventsForce Sessions Component",
   "main": "index.js",
   "author": "Michael Carolin <michael.carolin@simpleviewinc.com>",
   "homepage": "https://github.com/simpleviewinc/tap-events-force",

@@ -21,9 +21,9 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 const TestModal = ({ modalHeader, modalBody, modalFooter }) => {
   return (
     <div>
-      <div>{ modalHeader }</div>
-      <div>{ modalBody }</div>
-      <div>{ modalFooter }</div>
+      <div id='modal-header'>{ modalHeader }</div>
+      <div id='modal-body'>{ modalBody }</div>
+      <div id='modal-footer'>{ modalFooter }</div>
     </div>
   )
 }

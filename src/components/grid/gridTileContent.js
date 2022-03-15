@@ -12,7 +12,6 @@ import { Values } from 'SVConstants'
 import { SessionPresentersRow } from 'SVComponents/sessionDetails/sessionPresentersRow'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
-// import { useFormattedPrice } from 'SVHooks/models/price'
 
 const LabelsDivider = reStyle(View)(theme => ({
   mB: 7,
@@ -54,9 +53,6 @@ export const GridTileContent = props => {
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
-
-  // Commented out to avoid linter complaints, but will be used again in a ticket soon before release v3.2 or v4 (whichever comes first)
-  // const formattedPrice = useFormattedPrice(session?.price, enableFreeLabel)
 
   const displayDetailsModal = useCreateModal(
     Values.MODAL_TYPES.SESSION_DETAILS,

@@ -2,7 +2,8 @@
  * @typedef ParsedCapacity
  * @property {boolean} isWaitingListAvailable=false - true if waiting list is available on session
  * @property {boolean} isUnlimited=false - true if session has no booking limit
- * @property {number} remainingCount=0 - remaining booking capacity
+ * @property {number} remainingBookingPlaces=0 - remaining booking list capacity
+ * @property {number} remainingWaitingPlaces=0 - remaining waiting list capacity
  */
 
 /**

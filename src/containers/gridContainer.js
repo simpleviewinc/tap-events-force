@@ -5,7 +5,6 @@ import { sortLabels, isMobileSize } from 'SVUtils'
 import { useTheme } from '@keg-hub/re-theme'
 
 /**
- *
  * @param {object} param
  * @param {string} timeString
  * @param {object} style - left style theme. theme: gridContainer.content.header.content.left
@@ -27,11 +26,10 @@ const LeftHeaderText = ({ timeString, style }) => {
  * @param {Date} props.timeBlock - timeblock for this session group
  * @param {Array} props.sessions - sessions within the given timeblock
  * @param {Array<import('SVModels/label').Label>} props.labels - session labels
- * @param {boolean} props.enableFreeLabel - whether to display 'FREE' on session with no pricing or not
  * @param {boolean} props.militaryTime - whether to display time in 12 hr or 24 hr format
  */
 export const GridContainer = React.memo(props => {
-  const { sessions, labels, timeBlock, enableFreeLabel, militaryTime } = props
+  const { sessions, labels, timeBlock, militaryTime } = props
   if (!sessions?.length) return null
 
   const theme = useTheme()
@@ -64,7 +62,6 @@ export const GridContainer = React.memo(props => {
       >
         { sessions.map(session => (
           <GridItem
-            enableFreeLabel={enableFreeLabel}
             key={session.identifier}
             labels={labelsMemo}
             session={session}

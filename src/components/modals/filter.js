@@ -15,7 +15,11 @@ import {
   clearSelectedFilters,
 } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
-import { useFilteredSessions, useWaitingListActive, useAllowBooking } from 'SVHooks/sessions'
+import {
+  useFilteredSessions,
+  useWaitingListActive,
+  useAllowBooking,
+} from 'SVHooks/sessions'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 
 const { SESSION_BOOKING_STATES, CATEGORIES, BUTTON_TYPES } = Values
@@ -196,17 +200,25 @@ const useStateLabels = bookingStates => {
   const allowBooking = useAllowBooking()
 
   return useMemo(() => {
-    const { WAITING_LIST, ON_WAITING_LIST, SELECT, SELECTED } = SESSION_BOOKING_STATES
+    const {
+      WAITING_LIST,
+      ON_WAITING_LIST,
+      SELECT,
+      SELECTED,
+    } = SESSION_BOOKING_STATES
 
     return reduceObj(
       bookingStates,
       (key, value, labels) => {
         //If any session allows waiting lists, enable the two related waiting list labels
-        const waitingListFilters = waitingListActive && (value == WAITING_LIST || value == ON_WAITING_LIST)
+        const waitingListFilters =
+          waitingListActive &&
+          (value == WAITING_LIST || value == ON_WAITING_LIST)
         //If any session allows bookings, enable the two related allow booking labels
-        const allowBookingFilters = allowBooking && (value == SELECT || value == SELECTED)
+        const allowBookingFilters =
+          allowBooking && (value == SELECT || value == SELECTED)
 
-        ;( waitingListFilters || allowBookingFilters) &&
+        ;(waitingListFilters || allowBookingFilters) &&
           labels.push(new Label({ name: wordCaps(value), identifier: key }))
 
         return labels

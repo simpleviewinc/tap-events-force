@@ -42,9 +42,7 @@ export const UpdateDayButton = props => {
     type === 'increment' ? EVFIcons.DayToggleRight : EVFIcons.DayToggleLeft
 
   return (
-    <View 
-      className={`ef-sessions-date-button-${type}`}
-    >
+    <View className={`ef-sessions-date-button-${type}`}>
       <ChevronIcon
         onPress={!disabled && onDayChange}
         accessibilityRole='button'

@@ -58,22 +58,23 @@ const useListStyles = () => {
 
 /**
  * Hook to memoize the sessions for a day, and add a key
- * @param {Array} sessions - group of sessions by day
- * @param {Array} agendaDays
+ * @param {Object} agendaSessions - mapping of session timeblocks by day, e.g. { '1': [ <...SessionTimeBlock> ], '2': [ <...SessionTimeBlcok> ] }, where keys are day numbers
+ *  - each time block is of form: { timeBlock: '9:00AM', sessions: [ <array of sessions in this time block> ]}
+ * @param {Array} agendaDays - days of the agenda
  *
  * @returns {Array} - memoized sessions in SectionList required format
  */
-const useSessionsSections = (sessions, agendaDays = noPropArr) => {
+const useSessionsSections = (agendaSessions, agendaDays = noPropArr) => {
   return useMemo(() => {
     return reduceObj(
-      sessions,
+      agendaSessions,
       (dayNum, timeBlocks, sections) => {
         sections.push({
           dayNum,
           // Is the first section if no sections have been added
           first: !sections.length,
           // Is the last section, if total sections === total sessions minus one
-          last: Object.keys(sessions).length - 1 === sections.length,
+          last: Object.keys(agendaSessions).length - 1 === sections.length,
           // Store the text to displace above each day
           dayText: agendaDays.find(
             agendaDay => agendaDay.dayNumber === parseInt(dayNum)
@@ -88,7 +89,7 @@ const useSessionsSections = (sessions, agendaDays = noPropArr) => {
       },
       []
     )
-  }, [ sessions, agendaDays ])
+  }, [ agendaSessions, agendaDays ])
 }
 
 /**
@@ -138,6 +139,8 @@ export const SessionsList = props => {
 
   return (
     <SectionList
+      accessibilityRole='list'
+      accessibilityLabel='sessions-list'
       styles={styles}
       sections={sections}
       activeSection={currentDay}

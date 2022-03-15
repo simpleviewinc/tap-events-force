@@ -21,7 +21,7 @@ export const gridTileContent = {
   },
   location: {
     main: {
-      mT: 16
+      mT: 16,
     },
     text: {
       ftSz: 16,
