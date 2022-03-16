@@ -41,7 +41,7 @@
 - Verify latest package version has been uploaded under https://www.npmjs.com/package/@keg-hub/tap-evf-sessions
 ###### Step 5: Verify the app works from the updated npm package
 *Note: This is the NPM package that is downloaded and used by the main EventsForce application in the production environment*
-- Go to keg-test-consumer and stop container
+- Stop keg-test-consumer process
 - Run `yarn unlink @keg-hub/tap-evf-sessions` to stop symlinking
 - Under keg-test-consumer  package.json update the dependency version to the latest
 - Under keg-test-consumer run `yarn install --force` to force test consumer to download latest package from npm
