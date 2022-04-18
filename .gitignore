@@ -133,3 +133,5 @@ re-theme-touch.js
 **/temp/**
 .temp
 reports
+test-results/
+playwright-report/

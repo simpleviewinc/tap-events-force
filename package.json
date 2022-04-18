@@ -16,6 +16,9 @@
   "scripts": {
     "docker:build": "bash ./scripts/dockerBuild.sh",
     "test": "cd node_modules/keg-core; NODE_ENV=test PLATFORM=web jest --no-cache --config=../../configs/jest.config.js",
+    "e2e": "PLAYWRIGHT_EXPERIMENTAL_FEATURES=1 playwright test",
+    "e2e:debug": "PLAYWRIGHT_EXPERIMENTAL_FEATURES=1 playwright test --debug",
+    "e2e:report": "playwright show-report",
     "android": "yarn watch 'cd node_modules/keg-core; yarn android'",
     "build:android": "cd node_modules/keg-core; yarn build:android",
     "build:ios": "cd node_modules/keg-core; yarn build:ios",
@@ -54,6 +57,7 @@
     "@babel/plugin-transform-runtime": "7.10.3",
     "@babel/preset-env": "^7.10.3",
     "@keg-hub/jsutils": "8.5.0",
+    "@playwright/test": "1.21.0",
     "@rollup/plugin-alias": "^3.1.1",
     "@rollup/plugin-babel": "^5.1.0",
     "@rollup/plugin-commonjs": "^14.0.0",

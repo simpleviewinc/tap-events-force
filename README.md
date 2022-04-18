@@ -7,6 +7,17 @@
 * `yarn web` - run locally on web. 
     * uses `/apps/Main.js` as entry point
 
+## Testing
+* Unit and Integration tests: `yarn test`
+  * We use Jest and @testing-library/react for these tests
+  * These tests are colocated near their source code they are testing
+    * Always under `__tests__` directories
+  * Read [the jest config](./configs/jest.config.js) to see how they are configured
+* E2E tests: `yarn e2e`
+  * We use Playwright for our end-to-end tests, stored in the [e2e](./e2e) directory
+  * to debug: `yarn e2e:debug`
+
+
 ### Sessions component build
 * Builds and packages the `Sessions` component for the Eventsforce team to consume in their own React app
     * [package link](https://www.npmjs.com/package/@keg-hub/tap-evf-sessions)
