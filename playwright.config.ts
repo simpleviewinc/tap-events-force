@@ -13,7 +13,8 @@ import { devices } from '@playwright/test';
 const config: PlaywrightTestConfig = {
   testDir: './e2e',
   /* Maximum time one test can run for. */
-  timeout: 25 * 1000,
+  timeout: 35 * 1000,
+  //fullyParallel: true,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
@@ -64,19 +65,7 @@ const config: PlaywrightTestConfig = {
       },
     },
 
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: {
-    //     ...devices['Pixel 5'],
-    //   },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: {
-    //     ...devices['iPhone 12'],
-    //   },
-    // },
+    // All tests should not be run in all browsers because feature support varies, and test steps vary, between desktop and mobile viewports.  Tests that should be run on mobile include a step to switch the viewport size therefore mobile browsers are not added here.
   ],
 
   /* Folder for test artifacts such as screenshots, videos, traces, etc. */

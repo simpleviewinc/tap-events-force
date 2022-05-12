@@ -9,16 +9,18 @@ test.beforeEach(async ({ page }) => {
   await page.goto(E2E_URL)
 })
 
-test.describe('Day Switch Toggle', () => {
+test.describe.configure({ mode: 'parallel' })
 
-  test('should increment the day', async ({ page }) => {
+test.describe('FTR001 (Desktop Only) : Day Switch Toggle', () => {
+
+  test('UAC001 : When the "increment day" arrow is clicked then the "Day 2" header should be visible', async ({ page }) => {
     await page.locator('role=button[name="increment day"]').click()
 
     // wait for the element to be visible (since it may take a half-second to appear, and these tests run very fast)
     await page.locator('role=heading[name="Day 2"]').waitFor()
   })
 
-  test('should decrement the day', async ({ page }) => {
+  test('UAC002 : When the "decrement day" arrow is clicked then the "Day 1" header should be visible', async ({ page }) => {
     await page.locator('role=button[name="increment day"]').click()
     await page.locator('role=heading[name="Day 2"]').waitFor()
     await page.locator('role=button[name="decrement day"]').click()

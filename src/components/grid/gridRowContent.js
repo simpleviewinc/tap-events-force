@@ -178,6 +178,8 @@ export const GridRowContent = props => {
             Element={Chevron}
             height={23}
             width={18}
+            role='button'
+            accessibilityLabel={`expand-${session.name}`}
           />
         </InfoRow>
         <Drawer toggled={isOpen}>
