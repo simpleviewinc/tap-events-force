@@ -1,9 +1,10 @@
 name: E2E Tests
 on:
   push:
-    develop
-    master
-    ZEN-675-e2e-tests
+    branches:
+      - develop
+      - master
+      - ZEN-675-e2e-tests
 jobs:
   e2e:
     steps:

@@ -99,7 +99,7 @@ test.describe('FTR002 (Desktop) : Group Booking Waitlist', () => {
 
 })
 
-test.describe('F002 (Mobile) : Group Booking Waitlist', () => {
+test.describe('FTR002 (Mobile) : Group Booking Waitlist', () => {
 
   test('UAC001 : When the booking modal loads then the booking-list remaining places message should say, "0 places remaining"', async ({ page }) => {
 
