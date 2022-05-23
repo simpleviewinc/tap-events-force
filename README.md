@@ -2,10 +2,16 @@
 * Eventsforce app
 
 ## Dev
-* `yarn install`
-* `yarn test` - run unit tests
-* `yarn web` - run locally on web. 
+* `yarn setup`: Installs dependencies for both `tap-events-force` and `keg-core`
+* `yarn test`: run unit tests
+* `yarn web`: run locally on web. 
     * uses `/apps/Main.js` as entry point
+
+## Docker Dev
+* `yarn doc:build`: Builds the image
+* `yarn doc:start`: Starts the docker container, exposing port 19006
+* `yarn doc:att`: Attaches to the container
+* `yarn doc:kill`: Kills the container
 
 ### Sessions component build
 * Builds and packages the `Sessions` component for the Eventsforce team to consume in their own React app
@@ -57,6 +63,3 @@
 - Verify the link on the bottom right of the live site links to the release notes
 ###### Step 8: Announcement on Transatlantic-tech-channel 
 - Please announce to the slack channel Transatlantic-tech-channel that there has been a release. Review previous announcement formats and follow the same (At a minimum include details on latest version number and Link to github readme notes)
-
-
-
