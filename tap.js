@@ -1,4 +1,3 @@
-
 const isWeb = process.env.PLATFORM === 'web'
 
 /**
@@ -7,7 +6,7 @@ const isWeb = process.env.PLATFORM === 'web'
  * So instead if finds the path to the tap root based on the Platform
  */
 const pathToEntryPoint = isWeb
-  ? `./apps/Main.js` 
+  ? `${__dirname}/apps/Main.js` 
   : `../../apps/Main.native.js` 
 
 
