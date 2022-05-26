@@ -14,7 +14,6 @@
     "type": "git"
   },
   "scripts": {
-    "docker:build": "bash ./scripts/dockerBuild.sh",
     "test": "cd node_modules/keg-core; NODE_ENV=test PLATFORM=web jest --no-cache --config=../../configs/jest.config.js",
     "android": "yarn watch 'cd node_modules/keg-core; yarn android'",
     "build:android": "cd node_modules/keg-core; yarn build:android",
@@ -42,6 +41,7 @@
     "dev": "nodemon --watch ./apps --watch ./src --exec yarn build",
     "doc:build": "docker build -t evf:1.0 -f ./Dockerfile .",
     "doc:start": "docker run -it --rm -p 19006:19006 -v $(pwd):/app --name evf evf:1.0",
+    "doc:rollup": "docker exec evf yarn build",
     "doc:att": "docker exec -it evf /bin/bash",
     "doc:test": "docker exec evf yarn test",
     "doc:kill": "docker kill evf || docker rm evf"

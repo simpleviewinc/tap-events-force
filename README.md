@@ -4,12 +4,13 @@
 ## Dev
 * `yarn setup`: Installs dependencies for both `tap-events-force` and `keg-core`
 * `yarn test`: run unit tests
-* `yarn web`: run locally on web. 
+* `yarn web`: run app locally on web, available at http://localhost:19006 
     * uses `/apps/Main.js` as entry point
+* `yarn start`: run app locally with expo, available for native or web platforms
 
 ## Docker Dev
 * `yarn doc:build`: Builds the image (`evf:1.0`)
-* `yarn doc:start`: Starts the docker container, exposing port 19006
+* `yarn doc:start`: Starts the docker container, available at http://localhost:19006
 * `yarn doc:att`: Attaches to the running container
 * `yarn doc:kill`: Kills the running container
 * `yarn doc:test`: Runs all the tests inside of the running container
