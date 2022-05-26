@@ -14,7 +14,6 @@
     "type": "git"
   },
   "scripts": {
-    "docker:build": "bash ./scripts/dockerBuild.sh",
     "test": "cd node_modules/keg-core; NODE_ENV=test PLATFORM=web jest --no-cache --config=../../configs/jest.config.js",
     "android": "yarn watch 'cd node_modules/keg-core; yarn android'",
     "build:android": "cd node_modules/keg-core; yarn build:android",
@@ -40,7 +39,12 @@
     "analyze": "cd node_modules/keg-core; ANALYZE=true NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
     "build": "cd node_modules/keg-core; NODE_ENV=production KEG_COMPONENT_RESOLVER=true yarn roll:dev",
     "dev": "nodemon --watch ./apps --watch ./src --exec yarn build",
-    "print:envs": "yarn keg print:envs ../../"
+    "doc:build": "docker build -t evf:1.0 -f ./Dockerfile .",
+    "doc:start": "docker run -it --rm -p 19006:19006 -v $(pwd):/app --name evf evf:1.0",
+    "doc:rollup": "docker exec evf yarn build",
+    "doc:att": "docker exec -it evf /bin/bash",
+    "doc:test": "docker exec evf yarn test",
+    "doc:kill": "docker kill evf || docker rm evf"
   },
   "resolutions": {
     "@keg-hub/jsutils": "8.5.0"
