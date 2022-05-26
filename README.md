@@ -8,10 +8,11 @@
     * uses `/apps/Main.js` as entry point
 
 ## Docker Dev
-* `yarn doc:build`: Builds the image
+* `yarn doc:build`: Builds the image (`evf:1.0`)
 * `yarn doc:start`: Starts the docker container, exposing port 19006
-* `yarn doc:att`: Attaches to the container
-* `yarn doc:kill`: Kills the container
+* `yarn doc:att`: Attaches to the running container
+* `yarn doc:kill`: Kills the running container
+* `yarn doc:test`: Runs all the tests inside of the running container
 
 ### Sessions component build
 * Builds and packages the `Sessions` component for the Eventsforce team to consume in their own React app

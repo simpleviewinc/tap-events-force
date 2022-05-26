@@ -43,6 +43,7 @@
     "doc:build": "docker build -t evf:1.0 -f ./Dockerfile .",
     "doc:start": "docker run -it --rm -p 19006:19006 -v $(pwd):/app --name evf evf:1.0",
     "doc:att": "docker exec -it evf /bin/bash",
+    "doc:test": "docker exec evf yarn test",
     "doc:kill": "docker kill evf || docker rm evf"
   },
   "resolutions": {
