@@ -1,6 +1,6 @@
 import '../src/theme/theme.config'
 import React, { useState } from 'react'
-import { theme } from 'SVTheme/tapIndex'
+import { theme } from 'SVTheme/tapIndex' // theme/tapIndex must be loaded to call setDefaultTheme
 import {
   ReThemeProvider,
   getDefaultTheme,
