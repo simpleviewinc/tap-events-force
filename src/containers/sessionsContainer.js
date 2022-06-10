@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Sessions } from 'SVComponents/sessions'
 import { Loading } from 'SVComponents'
-import { initSessions } from 'SVActions'
+import { initSessions } from 'SVActions/session/initSessions'
 import { useSelector } from 'react-redux'
 import { ComponentsProvider } from 'SVContexts/components/componentsProvider'
 import { VersionDisplay } from 'SVComponents/meta/versionDisplay'
