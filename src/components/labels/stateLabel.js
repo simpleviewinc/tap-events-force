@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
-import { View, Text } from '@keg-hub/keg-components'
+import { View, Text } from '@old-keg-hub/keg-components'
 import { Values } from 'SVConstants/values'
 import { EVFIcons } from 'SVIcons'
 import { reStyle } from '@keg-hub/re-theme/reStyle'

@@ -14,7 +14,7 @@ const getKegRepoPaths = () => {
   return {
     '^@keg-hub/re-theme$': path.join(repoRoot, 're-theme'),
     '@keg-hub/jsutils': path.join(repoRoot, 'jsutils'),
-    '@keg-hub/keg-components': path.join(repoRoot, 'keg-components'),
+    '@old-keg-hub/keg-components': path.join(repoRoot, 'keg-components'),
     '^@keg-hub/re-theme/styleInjector$': '@keg-hub/re-theme/build/cjs/web/styleInjector',
     '^@keg-hub/re-theme/styleParser$': '@keg-hub/re-theme/build/cjs/web/styleParser',
     '^@keg-hub/re-theme/colors$': '@keg-hub/re-theme/build/cjs/web/colors',

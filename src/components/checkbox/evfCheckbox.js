@@ -1,5 +1,5 @@
 import React from 'react'
-import { Checkbox } from '@keg-hub/keg-components'
+import { Checkbox } from '@old-keg-hub/keg-components'
 import { useStyle } from '@keg-hub/re-theme'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'

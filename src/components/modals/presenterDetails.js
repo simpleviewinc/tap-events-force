@@ -1,5 +1,5 @@
 import React from 'react'
-import { Image, View, Text, ScrollView } from '@keg-hub/keg-components'
+import { Image, View, Text, ScrollView } from '@old-keg-hub/keg-components'
 import { useTheme, useDimensions } from '@keg-hub/re-theme'
 import { BaseModal, contentDefaultMaxHeight } from './baseModal'
 import { getPresenterFullName } from 'SVUtils/models'

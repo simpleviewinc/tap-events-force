@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
-import { View } from '@keg-hub/keg-components'
+import { View } from '@old-keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
 import { AttendeeCheckboxLabel } from './attendeeCheckboxLabel'
 

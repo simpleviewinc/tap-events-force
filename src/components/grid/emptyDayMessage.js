@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStyle } from '@keg-hub/re-theme'
-import { H5 } from '@keg-hub/keg-components'
+import { H5 } from '@old-keg-hub/keg-components'
 
 const defaultMessage = 'There are no sessions to display for this day'
 

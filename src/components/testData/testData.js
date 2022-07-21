@@ -8,7 +8,7 @@ import {
   Select,
   Label,
   Option,
-} from '@keg-hub/keg-components'
+} from '@old-keg-hub/keg-components'
 import * as bookingStatesTestData from '../../mocks/eventsforce/bookingStates'
 import defTestData from '../../mocks/eventsforce/testData.js'
 

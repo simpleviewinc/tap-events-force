@@ -1,7 +1,7 @@
 import React from 'react'
 import { getPresenterFullName } from 'SVUtils/models'
 import { useSessionPresenters } from 'SVHooks/models'
-import { View, Text } from '@keg-hub/keg-components'
+import { View, Text } from '@old-keg-hub/keg-components'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { EVFIcons } from 'SVIcons'
 

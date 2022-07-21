@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useStyle } from '@keg-hub/re-theme'
-import { View } from '@keg-hub/keg-components'
+import { View } from '@old-keg-hub/keg-components'
 import { ModalManager } from 'SVComponents/modals/modalManager'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
