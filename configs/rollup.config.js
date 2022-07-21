@@ -52,7 +52,7 @@ const buildAlias = builtAlias => {
   const oldSvModules = path.join(corePath, 'node_modules/@old-keg-hub')
   const reTheme = path.join(svModules, 're-theme/build/esm/web')
   const kegComponents = path.join(
-    oldSvModules
+    oldSvModules,
     'keg-components/build/esm/web'
   )
 
