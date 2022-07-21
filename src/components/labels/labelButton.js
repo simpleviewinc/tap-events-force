@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import PropTypes from 'prop-types'
-import { Button } from '@keg-hub/keg-components'
+import { Button } from '@old-keg-hub/keg-components'
 import { useTheme, useStylesCallback } from '@keg-hub/re-theme'
 import { checkCall } from '@keg-hub/jsutils'
 import { Values } from 'SVConstants/values'

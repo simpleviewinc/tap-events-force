@@ -1,4 +1,4 @@
-import { TextToggle, View, Icon, Text } from '@keg-hub/keg-components'
+import { TextToggle, View, Icon, Text } from '@old-keg-hub/keg-components'
 import React, { useMemo } from 'react'
 import { EVFIcons } from 'SVIcons'
 import { useStyle } from '@keg-hub/re-theme'

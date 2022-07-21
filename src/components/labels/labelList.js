@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View } from '@keg-hub/keg-components'
+import { View } from '@old-keg-hub/keg-components'
 import { LabelButton } from './labelButton'
 import { useTheme } from '@keg-hub/re-theme'
 

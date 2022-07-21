@@ -49,9 +49,10 @@ const coreBabelConfig = require(path.join(corePath, 'babel.config.js'))()
 // This creates custom alias to ensure then can be found
 const buildAlias = builtAlias => {
   const svModules = path.join(corePath, 'node_modules/@keg-hub')
+  const oldSvModules = path.join(corePath, 'node_modules/@old-keg-hub')
   const reTheme = path.join(svModules, 're-theme/build/esm/web')
   const kegComponents = path.join(
-    svModules,
+    oldSvModules
     'keg-components/build/esm/web'
   )
 
@@ -62,7 +63,7 @@ const buildAlias = builtAlias => {
   }
 
   const kegComponentAliases = {
-    '@keg-hub/keg-components': kegComponents,
+    '@old-keg-hub/keg-components': kegComponents,
     'keg-components': kegComponents,
     './kegComponents': kegComponents,
   }
@@ -119,7 +120,7 @@ export default {
       module: true,
       main: true,
       // ensures these dependencies aren't duplicated in the build
-      dedupe: [ '@keg-hub/re-theme', '@keg-hub/keg-components', '@keg-hub/jsutils', '@keg-hub/tap-resolver' ]
+      dedupe: [ '@keg-hub/re-theme', '@old-keg-hub/keg-components', '@keg-hub/jsutils', '@keg-hub/tap-resolver' ]
     }),
     alias({ entries: moduleResolver.alias }),
     sucrase({

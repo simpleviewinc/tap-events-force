@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { View } from '@keg-hub/keg-components'
+import { View } from '@old-keg-hub/keg-components'
 import { useStyle } from '@keg-hub/re-theme'
 import { noPropObj } from '@keg-hub/jsutils'
 

@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react'
 import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
-import { Text, View } from '@keg-hub/keg-components'
+import { Text, View } from '@old-keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
 import { useStyle, useTheme } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'

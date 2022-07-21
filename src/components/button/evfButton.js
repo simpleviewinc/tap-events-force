@@ -2,7 +2,7 @@ import { checkCall, omitKeys } from '@keg-hub/jsutils'
 import { useStyle } from '@keg-hub/re-theme'
 import { EvfLoading } from 'SVComponents/loading/evfLoading'
 import React, { useMemo, useContext, useCallback } from 'react'
-import { renderFromType, View, Text } from '@keg-hub/keg-components'
+import { renderFromType, View, Text } from '@old-keg-hub/keg-components'
 import { ComponentsContext } from 'SVContexts/components/componentsContext'
 
 /**

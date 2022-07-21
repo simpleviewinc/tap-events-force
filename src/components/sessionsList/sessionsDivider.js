@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Text, View } from '@keg-hub/keg-components'
+import { Divider, Text, View } from '@old-keg-hub/keg-components'
 import { EmptyDayMessage } from 'SVComponents/grid/emptyDayMessage'
 import { noOpObj } from '@keg-hub/jsutils'
 

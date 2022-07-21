@@ -4,7 +4,7 @@
  * https://docs.google.com/document/d/1oTOhGc1fpG0VhqXTq4ZumceZWoi1ln17wFVxG9SmlDE
  */
 import React from 'react'
-import { Button } from '@keg-hub/keg-components'
+import { Button } from '@old-keg-hub/keg-components'
 import { Values } from 'SVConstants'
 
 const { BUTTON_TYPES } = Values

@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { Text, ScrollView, View } from '@keg-hub/keg-components'
+import { Text, ScrollView, View } from '@old-keg-hub/keg-components'
 import { pickKeys, noPropArr } from '@keg-hub/jsutils'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { useSelector, shallowEqual } from 'react-redux'

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, View } from '@keg-hub/keg-components'
+import { Text, View } from '@old-keg-hub/keg-components'
 
 /**
  * Digit

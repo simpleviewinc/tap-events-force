@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView } from '@keg-hub/keg-components'
+import { ScrollView } from '@old-keg-hub/keg-components'
 import { GroupBookingSection } from './groupBookingSection'
 import { useStyle } from '@keg-hub/re-theme'
 import { useTicketsForBooking } from 'SVHooks/models/useTicketsForBooking'

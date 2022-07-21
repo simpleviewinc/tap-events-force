@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from '@keg-hub/keg-components'
+import { View, Text } from '@old-keg-hub/keg-components'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
