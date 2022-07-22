@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStylesCallback } from '@keg-hub/re-theme'
 import { EVFIcons } from 'SVIcons'
-import { View } from '@keg-hub/keg-components'
+import { View } from '@old-keg-hub/keg-components'
 import PropTypes from 'prop-types'
 
 /**

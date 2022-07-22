@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react'
-import { Row, Text, View } from '@keg-hub/keg-components'
+import { Row, Text, View } from '@old-keg-hub/keg-components'
 import { getTimeFromDate, parseDate } from 'SVUtils/dateTime'
 import { format } from 'date-fns'
 import { reStyle } from '@keg-hub/re-theme/reStyle'

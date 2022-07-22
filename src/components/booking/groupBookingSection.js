@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
-import { Text } from '@keg-hub/keg-components'
+import { Text } from '@old-keg-hub/keg-components'
 import { AttendeeBookingList } from './attendeeBookingList'
-import { CheckGroup } from '@keg-hub/keg-components'
+import { CheckGroup } from '@old-keg-hub/keg-components'
 import { useStyle } from '@keg-hub/re-theme'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 

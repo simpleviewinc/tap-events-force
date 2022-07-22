@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text } from '@keg-hub/keg-components'
+import { Text } from '@old-keg-hub/keg-components'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
 

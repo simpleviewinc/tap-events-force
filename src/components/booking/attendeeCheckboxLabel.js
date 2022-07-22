@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View } from '@keg-hub/keg-components'
+import { Text, View } from '@old-keg-hub/keg-components'
 import { useStyle, useTheme } from '@keg-hub/re-theme'
 import { isMobileSize } from 'SVUtils/theme/isMobileSize'
 import { Label } from 'SVComponents/form/label'

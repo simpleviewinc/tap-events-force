@@ -2,7 +2,7 @@
 // This is for DEVELOPMENT only
 
 import React from 'react'
-import { Modal, Card } from '@keg-hub/keg-components'
+import { Modal, Card } from '@old-keg-hub/keg-components'
 
 /**
  * Placeholder component for rendering on Mobile

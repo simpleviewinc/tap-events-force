@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { SvgIcon } from '@keg-hub/keg-components'
+import { SvgIcon } from '@old-keg-hub/keg-components'
 
 export function Close(props) {
   return (

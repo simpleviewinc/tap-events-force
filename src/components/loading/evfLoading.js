@@ -3,7 +3,7 @@ import { Animated, Easing } from 'react-native'
 import {
   useFromToAnimation,
   Loading as KegLoading,
-} from '@keg-hub/keg-components'
+} from '@old-keg-hub/keg-components'
 import { useStyle } from '@keg-hub/re-theme'
 import { Loading } from 'SVIcons/evf/elements'
 import { set } from '@keg-hub/jsutils'

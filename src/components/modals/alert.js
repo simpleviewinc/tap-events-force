@@ -1,7 +1,7 @@
 import React from 'react'
 import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
-import { View, Text, ScrollView } from '@keg-hub/keg-components'
+import { View, Text, ScrollView } from '@old-keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { hideActiveModal } from 'SVActions/modals/hideActiveModal'
 import { Values } from 'SVConstants'

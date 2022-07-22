@@ -1,5 +1,5 @@
 import React from 'react'
-import { Text, View, ScrollView } from '@keg-hub/keg-components'
+import { Text, View, ScrollView } from '@old-keg-hub/keg-components'
 import { noPropArr } from '@keg-hub/jsutils'
 import { SessionLocation } from 'SVComponents/sessionLocation'
 import { LabelList } from 'SVComponents/labels/labelList'

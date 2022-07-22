@@ -2,7 +2,7 @@ import React from 'react'
 import { UpdateDayButton } from './updateDayButton'
 import { useTheme } from '@keg-hub/re-theme'
 import { noOp } from '@keg-hub/jsutils'
-import { View, Text } from '@keg-hub/keg-components'
+import { View, Text } from '@old-keg-hub/keg-components'
 import { isMobileSize } from 'SVUtils/theme'
 
 /**
