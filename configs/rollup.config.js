@@ -168,7 +168,7 @@ export default {
       peerExternals,
       externals: buildDependencies, 
       baseContents: { 
-        name: '@keg-hub/tap-evf-sessions',
+        name: '@eventsforce/ef-sessions-component',
         main: `./${cjsOutputName}`,
         module: `./${esmOutputName}` 
       },
