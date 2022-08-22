@@ -1,16 +1,16 @@
 {
-  "name": "@keg-hub/tap-events-force",
-  "version": "3.1.3",
-  "description": "EventsForce Sessions Component",
+  "name": "@eventsforce/ef-sessions-component",
+  "version": "3.2.0",
+  "description": "Eventsforce sessions component",
   "main": "index.js",
   "author": "Michael Carolin <michael.carolin@simpleviewinc.com>",
-  "homepage": "https://github.com/simpleviewinc/tap-events-force",
+  "homepage": "https://github.com/Eventsforce/ef-sessions-component",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "repository": {
-    "url": "ssh://git@github.com/simpleviewinc/tap-events-force.git",
+    "url": "https://github.com/Eventsforce/ef-sessions-component.git",
     "type": "git"
   },
   "scripts": {
