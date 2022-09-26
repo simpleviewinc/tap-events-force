@@ -5,10 +5,10 @@ import { LabelButton } from 'SVComponents/labels/labelButton'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
 import { useTheme } from '@keg-hub/re-theme'
-import { useCreateModal } from 'SVHooks/modal'
+// import { useCreateModal } from 'SVHooks/modal'
 import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
-import { Values } from 'SVConstants'
+// import { Values } from 'SVConstants'
 import { SessionPresentersRow } from 'SVComponents/sessionDetails/sessionPresentersRow'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
@@ -49,18 +49,19 @@ export const GridTileContent = props => {
     onLabelPress,
     militaryTime,
     // enableFreeLabel,
+    showSessionDetailsModal,
   } = props
 
   const theme = useTheme()
   const gridTileContentStyles = theme.get('gridItem.gridTileContent')
 
-  const displayDetailsModal = useCreateModal(
-    Values.MODAL_TYPES.SESSION_DETAILS,
-    {
-      session,
-      labels,
-    }
-  )
+  // const displayDetailsModal = useCreateModal(
+  //   Values.MODAL_TYPES.SESSION_DETAILS,
+  //   {
+  //     session,
+  //     labels,
+  //   }
+  // )
 
   return (
     <View
@@ -82,7 +83,9 @@ export const GridTileContent = props => {
       </View>
 
       <SessionName
-        onPress={displayDetailsModal}
+        onPress={() => {
+          showSessionDetailsModal(session.identifier)
+        }}
         text={session?.name}
       />
 
