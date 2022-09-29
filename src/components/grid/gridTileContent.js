@@ -83,9 +83,7 @@ export const GridTileContent = props => {
       </View>
 
       <SessionName
-        onPress={() => {
-          onPress = { displayDetailsModal }
-        }}
+        onPress={displayDetailsModal}
         text={session?.name}
       />
 
