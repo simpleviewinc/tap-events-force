@@ -34,7 +34,7 @@ export const GridContainer = React.memo(props => {
     labels,
     timeBlock,
     militaryTime,
-    showSessionDetailsModal,
+    showPresenterDetailsModal,
   } = props
   if (!sessions?.length) return null
 
@@ -72,7 +72,7 @@ export const GridContainer = React.memo(props => {
             labels={labelsMemo}
             session={session}
             militaryTime={militaryTime}
-            showSessionDetailsModal={showSessionDetailsModal}
+            showPresenterDetailsModal={showPresenterDetailsModal}
           />
         )) }
       </View>

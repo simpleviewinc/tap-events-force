@@ -127,7 +127,7 @@ export const SessionsList = props => {
     settings,
     sessions,
     onDayChange,
-    showSessionDetailsModal,
+    showPresenterDetailsModal,
     ...itemProps
   } = props
   const currentDay = settings.agendaSettings.activeDayNumber || 1
@@ -155,7 +155,7 @@ export const SessionsList = props => {
       onScrollSectionChange={onScrollSectionChange}
       renderItem={({ item }) => (
         <GridContainer
-          showSessionDetailsModal={showSessionDetailsModal}
+          showPresenterDetailsModal={showPresenterDetailsModal}
           {...item}
           {...itemProps}
         />
