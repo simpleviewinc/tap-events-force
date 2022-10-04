@@ -102,7 +102,7 @@ const StyledBookingButton = reStyle(BookingButton)({})
  * @param {import('SVModels/session').Session} props.session
  * @param {object} props.styles
  */
-const DrawerContent = ({ session }) => {
+const DrawerContent = ({ session, showPresenterDetailsModal }) => {
   return (
     <DrawerMain>
       <ButtonWrapper>
@@ -111,7 +111,10 @@ const DrawerContent = ({ session }) => {
           style={{ main: { marginBottom: 10 }, marginBottom: 10 }}
         />
       </ButtonWrapper>
-      <PresenterNames session={session} />
+      <PresenterNames
+        session={session}
+        showPresenterDetailsModal={showPresenterDetailsModal}
+      />
       <EvfTextToggle text={session.summary} />
     </DrawerMain>
   )
@@ -139,7 +142,14 @@ const SessionLocationSmall = reStyle(
  * @param {boolean} props.militaryTime - if true, use military time for dates
  */
 export const GridRowContent = props => {
-  const { labels, labelStyles, listStyles, session, militaryTime } = props
+  const {
+    labels,
+    labelStyles,
+    listStyles,
+    session,
+    militaryTime,
+    showPresenterDetailsModal,
+  } = props
   const [ isOpen, setIsOpen ] = useState(false)
   const gridRowSessionTimeStyles = useStyle('gridItem.sessionTime')
 
@@ -181,7 +191,10 @@ export const GridRowContent = props => {
           />
         </InfoRow>
         <Drawer toggled={isOpen}>
-          <DrawerContent session={session} />
+          <DrawerContent
+            session={session}
+            showPresenterDetailsModal={showPresenterDetailsModal}
+          />
         </Drawer>
       </ColumnMain>
     </GridRowMain>
