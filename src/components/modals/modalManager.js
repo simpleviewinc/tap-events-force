@@ -1,5 +1,4 @@
 import React from 'react'
-import { PresenterDetails } from 'SVComponents/modals/presenterDetails'
 import { GroupBooking } from 'SVComponents/modals/groupBooking'
 import { Filter } from 'SVComponents/modals/filter'
 import { Alert } from 'SVComponents/modals/alert'
@@ -9,13 +8,7 @@ import { Values } from 'SVConstants'
 
 const { CATEGORIES } = Values
 
-const {
-  PRESENTER,
-  GROUP_BOOKING,
-  ALERT,
-  FILTER,
-  SESSION_DETAILS,
-} = Values.MODAL_TYPES
+const { GROUP_BOOKING, ALERT, FILTER, SESSION_DETAILS } = Values.MODAL_TYPES
 
 /**
  * Renders a modal if one is flagged as active in the modals store tree
@@ -37,12 +30,6 @@ export const ModalManager = () => {
  */
 const ActiveModal = ({ modal, visible = true }) => {
   switch (modal?.type) {
-  case PRESENTER:
-    return <PresenterDetails
-      presenter={modal.data}
-      visible={visible}
-    />
-
   case GROUP_BOOKING:
     return <GroupBooking
       session={modal.data?.session}
