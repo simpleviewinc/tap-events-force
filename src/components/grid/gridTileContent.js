@@ -49,6 +49,7 @@ export const GridTileContent = props => {
     onLabelPress,
     militaryTime,
     // enableFreeLabel,
+    showPresenterDetailsModal,
   } = props
 
   const theme = useTheme()
@@ -97,6 +98,7 @@ export const GridTileContent = props => {
       <ExpandingView>
         <PresenterLinks
           session={session}
+          showPresenterDetailsModal={showPresenterDetailsModal}
           icon
         />
       </ExpandingView>

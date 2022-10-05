@@ -34,7 +34,13 @@ const useLabelsForList = (theme, labels, session) =>
  * @param {Func} props.onLabelPress - function called when label is pressed. Receives the pressed label passed to it
  */
 export const GridItem = props => {
-  const { labels = [], session, militaryTime, onLabelPress } = props
+  const {
+    labels = [],
+    session,
+    militaryTime,
+    onLabelPress,
+    showPresenterDetailsModal,
+  } = props
   if (!session) return null
 
   const theme = useTheme()
@@ -53,6 +59,7 @@ export const GridItem = props => {
         session={session}
         militaryTime={militaryTime}
         onLabelPress={onLabelPress}
+        showPresenterDetailsModal={showPresenterDetailsModal}
       />
     </View>
   )

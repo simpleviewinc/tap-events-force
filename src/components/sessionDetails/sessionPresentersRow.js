@@ -57,6 +57,7 @@ export const SessionPresentersRow = React.memo(
     session,
     textClassName = 'ef-sessions-presenter-link',
     icon,
+    showPresenterDetailsModal,
     ...viewProps
   }) => {
     if (!session) return null
@@ -80,6 +81,7 @@ export const SessionPresentersRow = React.memo(
                 presenter={presenter}
                 className={textClassName}
                 key={presenter.identifier}
+                showPresenterDetailsModal={showPresenterDetailsModal}
               />
             )
           }) }

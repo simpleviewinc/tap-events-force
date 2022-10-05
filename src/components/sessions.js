@@ -22,6 +22,7 @@ export const Sessions = props => {
     sessionAgendaProps,
     onSessionBookingRequest = noOp,
     onSessionWaitingListRequest = noOp,
+    showPresenterDetailsModal,
   } = props
 
   // set up our event listener for booking and waiting list requests
@@ -50,6 +51,7 @@ export const Sessions = props => {
         settings={settings}
         sessions={agendaSessions}
         militaryTime={settings?.displayProperties?.timeFormat === '24'}
+        showPresenterDetailsModal={showPresenterDetailsModal}
       />
       <ModalManager />
     </View>

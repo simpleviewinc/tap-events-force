@@ -123,7 +123,13 @@ const useOnScrollChange = (sections, currentDay, onDayChange) => {
  * @returns {Component}
  */
 export const SessionsList = props => {
-  const { settings, sessions, onDayChange, ...itemProps } = props
+  const {
+    settings,
+    sessions,
+    onDayChange,
+    showPresenterDetailsModal,
+    ...itemProps
+  } = props
   const currentDay = settings.agendaSettings.activeDayNumber || 1
 
   const theme = useTheme()
@@ -147,10 +153,13 @@ export const SessionsList = props => {
       indexSectionHeaderBy={'dayNum'}
       sectionChangeOffset={sectionOffset}
       onScrollSectionChange={onScrollSectionChange}
-      renderItem={({ item }) => <GridContainer
-        {...item}
-        {...itemProps}
-      />}
+      renderItem={({ item }) => (
+        <GridContainer
+          showPresenterDetailsModal={showPresenterDetailsModal}
+          {...item}
+          {...itemProps}
+        />
+      )}
       renderListHeader={({ onSectionChange: onDayChange }) => (
         <SessionsHeader
           agenda={agenda}

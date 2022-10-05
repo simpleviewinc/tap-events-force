@@ -4,7 +4,7 @@ import { setActiveModal } from 'SVActions/modals'
 
 /**
  * Creates new modal with memoized callback
- * @param {'error'|'presenter'|'filter'|'groupBooking'} type
+ * @param {'error'|'filter'|'groupBooking'} type
  * @param {object} data
  */
 export const useCreateModal = (type, data) => {

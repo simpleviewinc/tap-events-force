@@ -87,6 +87,12 @@ export const RootContainer = withAppHeader(displayName, props => {
         onSessionWaitingListRequest={mockWaitRequest}
         ModalComponent={SessionsModal}
         ButtonComponent={EvfButton}
+        showPresenterDetailsModal={presenterID =>
+          alert(
+            'presenter details modal opened for presenter with ID: ' +
+              presenterID
+          )
+        }
       />
     </>
   )

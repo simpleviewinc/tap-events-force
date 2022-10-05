@@ -1,7 +1,5 @@
 import React from 'react'
 import { SessionLink } from 'SVComponents/sessionLink'
-import { useCreateModal } from 'SVHooks/modal'
-import { Values } from 'SVConstants'
 import { getPresenterFullName } from 'SVUtils/models'
 import PropTypes from 'prop-types'
 
@@ -12,12 +10,13 @@ import PropTypes from 'prop-types'
  * @param {import('SVModels/presenter').Presenter} props.presenter
  * @param {object} props.styles
  */
-export const PresenterLink = ({ text, presenter, styles, className }) => {
-  const displayDetailsModal = useCreateModal(
-    Values.MODAL_TYPES.PRESENTER,
-    presenter
-  )
-
+export const PresenterLink = ({
+  text,
+  presenter,
+  styles,
+  className,
+  showPresenterDetailsModal,
+}) => {
   const linkText = text || getPresenterFullName(presenter)
 
   const classNames = [ 'ef-sessions-presenter-link', className ].join(' ')
@@ -28,7 +27,7 @@ export const PresenterLink = ({ text, presenter, styles, className }) => {
       styles={styles}
       key={presenter.identifier}
       text={linkText}
-      onPress={displayDetailsModal}
+      onPress={() => showPresenterDetailsModal(presenter.identifier)}
     />
   )
 }

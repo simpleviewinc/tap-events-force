@@ -29,7 +29,13 @@ const LeftHeaderText = ({ timeString, style }) => {
  * @param {boolean} props.militaryTime - whether to display time in 12 hr or 24 hr format
  */
 export const GridContainer = React.memo(props => {
-  const { sessions, labels, timeBlock, militaryTime } = props
+  const {
+    sessions,
+    labels,
+    timeBlock,
+    militaryTime,
+    showPresenterDetailsModal,
+  } = props
   if (!sessions?.length) return null
 
   const theme = useTheme()
@@ -66,6 +72,7 @@ export const GridContainer = React.memo(props => {
             labels={labelsMemo}
             session={session}
             militaryTime={militaryTime}
+            showPresenterDetailsModal={showPresenterDetailsModal}
           />
         )) }
       </View>

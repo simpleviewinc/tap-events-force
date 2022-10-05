@@ -47,7 +47,6 @@ export const Values = deepFreeze({
 
   MODAL_TYPES: {
     ALERT: 'alert',
-    PRESENTER: 'presenter',
     FILTER: 'filter',
     GROUP_BOOKING: 'groupBooking',
     SESSION_DETAILS: 'sessionDetails',
