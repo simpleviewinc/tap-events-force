@@ -88,7 +88,10 @@ export const RootContainer = withAppHeader(displayName, props => {
         ModalComponent={SessionsModal}
         ButtonComponent={EvfButton}
         showPresenterDetailsModal={presenterID =>
-          console.log('presenter details modal opened: ' + presenterID)
+          alert(
+            'presenter details modal opened for presenter with ID: ' +
+              presenterID
+          )
         }
       />
     </>
