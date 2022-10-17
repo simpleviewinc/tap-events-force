@@ -13,7 +13,7 @@ const ModalBody = reStyle(SessionDetails)({ minH: 250, h: '100%' })
  * @param {boolean} props.visible
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels for this session
  */
-export const SessionDetailsModal = ({ session, visible, labels }) => {
+export const SessionDetailsModal = ({ session, visible }) => {
   if (!session) return null
 
   return (
@@ -21,13 +21,10 @@ export const SessionDetailsModal = ({ session, visible, labels }) => {
       className='ef-modal-group'
       hasCloseButton={true}
       visible={visible}
-      Body={
-        <ModalBody
-          dismissModalCb={hideActiveModal}
-          session={session}
-          labels={labels}
-        />
-      }
+      Body={<ModalBody
+        dismissModalCb={hideActiveModal}
+        session={session}
+      />}
     />
   )
 }

@@ -57,7 +57,6 @@ const ActiveModal = ({ modal, visible = true }) => {
       <SessionDetailsModal
         visible={visible}
         session={modal.data?.session}
-        labels={modal.data?.labels}
       />
     )
   default:

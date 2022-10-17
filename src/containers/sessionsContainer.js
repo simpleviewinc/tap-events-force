@@ -31,6 +31,7 @@ export const SessionsContainer = props => {
     ButtonComponent,
     showVersion,
     showPresenterDetailsModal,
+    SessionDetailsModalContents,
   } = props
 
   useEffect(() => void initSessions(), [])
@@ -41,6 +42,7 @@ export const SessionsContainer = props => {
     <ComponentsProvider
       ButtonComponent={ButtonComponent}
       ModalComponent={ModalComponent}
+      SessionDetailsModalContents={SessionDetailsModalContents}
     >
       { showVersion && <VersionDisplay /> }
       <Sessions
