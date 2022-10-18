@@ -18,7 +18,7 @@ export const SessionDetailsModal = ({ session, visible }) => {
 
   return (
     <BaseModal
-      className='ef-modal-group'
+      className='ef-modal-group ef-sessions-modal'
       hasCloseButton={true}
       visible={visible}
       Body={<ModalBody
