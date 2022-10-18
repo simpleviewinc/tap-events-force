@@ -1,4 +1,4 @@
-import { get, noPropArr } from '@keg-hub/jsutils'
+import { noPropArr } from '@keg-hub/jsutils'
 import { getStore, dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 
