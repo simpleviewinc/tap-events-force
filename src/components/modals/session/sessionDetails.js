@@ -7,7 +7,10 @@ export const SessionDetails = ({ session }) => {
 
   return (
     <>
-      <BookingButton session={session} />
+      <BookingButton
+        session={session}
+        className='ef-session-details-booking-button'
+      />
       <SessionDetailsModalContents sessionID={session.identifier} />
     </>
   )
