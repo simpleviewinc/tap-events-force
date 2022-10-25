@@ -2,7 +2,7 @@ import React from 'react'
 import { GroupBooking } from 'SVComponents/modals/groupBooking'
 import { Filter } from 'SVComponents/modals/filter'
 import { Alert } from 'SVComponents/modals/alert'
-import { SessionDetailsModal } from 'SVComponents/modals/session/sessionDetailsModal'
+import { SessionDetailsModal } from 'SVComponents/modals/sessionDetailsModal'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { Values } from 'SVConstants'
 

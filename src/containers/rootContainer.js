@@ -75,7 +75,7 @@ export const RootContainer = withAppHeader(displayName, props => {
   const SessionDetailsModalContents = props => {
     const { sessionID } = props
 
-    return <h1>HELLO { sessionID }</h1>
+    return <p>Session details modal for sessionID: { sessionID }</p>
   }
 
   return (
