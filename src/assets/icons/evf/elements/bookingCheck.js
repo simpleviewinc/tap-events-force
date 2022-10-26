@@ -6,6 +6,9 @@ import { SvgIcon } from '@old-keg-hub/keg-components'
  * @param {object} props
  */
 export const BookingCheck = ({ style, styles, ...props }) => {
+  const height = styles && styles.height
+  const width = styles && styles.width
+
   return (
     <SvgIcon
       svgFill='none'
@@ -16,6 +19,8 @@ export const BookingCheck = ({ style, styles, ...props }) => {
       {...props}
       style={styles || style}
       className={'ef-button-text-icon'}
+      height={height}
+      width={width}
     />
   )
 }
