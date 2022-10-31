@@ -29,7 +29,8 @@ const SessionsApp = props => {
     ModalComponent,
     ButtonComponent,
     showVersion,
-    showPresenterDetailsModal
+    showPresenterDetailsModal,
+    SessionDetailsModalContents
   } = props
 
   const [ activeTheme ] = useState(getDefaultTheme())
@@ -46,6 +47,7 @@ const SessionsApp = props => {
           ButtonComponent={ButtonComponent}
           showVersion={showVersion}
           showPresenterDetailsModal={showPresenterDetailsModal}
+          SessionDetailsModalContents={SessionDetailsModalContents}
         />
       </ReThemeProvider>
     </Provider>

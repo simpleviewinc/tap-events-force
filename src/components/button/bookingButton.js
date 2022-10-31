@@ -146,7 +146,7 @@ const applyPriceAndDisplayRules = (state, text, formattedPrice) => {
 export const BookingButton = props => {
   if (!props.session) return null
 
-  const { session, ...remaining } = props
+  const { session, className, ...remaining } = props
   const bookingModel = useBookingState(session)
   const selectSessionCb = useSelectSession(session, bookingModel)
   const pendingStyles = useStyle('button.evfButton.pending')
@@ -161,6 +161,7 @@ export const BookingButton = props => {
         disabled={bookingModel.disabled}
         isProcessing={bookingModel.pending}
         pendingStyles={pendingStyles}
+        className={className}
       >
         { buttonProps => (
           <RenderBookingState

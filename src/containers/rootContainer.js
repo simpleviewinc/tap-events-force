@@ -72,6 +72,12 @@ export const RootContainer = withAppHeader(displayName, props => {
     return evfModalBuilder(modalParentProps)
   }, [modalParentProps])
 
+  const SessionDetailsModalContents = props => {
+    const { sessionID } = props
+
+    return <p>Session details modal for sessionID: { sessionID }</p>
+  }
+
   return (
     <>
       { !isNative() && process.env.NODE_ENV === 'development' && (
@@ -93,6 +99,7 @@ export const RootContainer = withAppHeader(displayName, props => {
               presenterID
           )
         }
+        SessionDetailsModalContents={SessionDetailsModalContents}
       />
     </>
   )

@@ -24,7 +24,7 @@ export const contentDefaultMaxHeight = 772
     />
  */
 export const BaseModal = props => {
-  const { title, visible, onDismiss, Body, Footer } = props
+  const { title, visible, onDismiss, Body, Footer, className } = props
 
   const dismiss = useCallback(() => {
     onDismiss?.()
@@ -40,6 +40,7 @@ export const BaseModal = props => {
       modalFooter={Footer}
       toggle={dismiss}
       isOpen={visible}
+      className={className}
     />
   )
 }
