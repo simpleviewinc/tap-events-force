@@ -11,12 +11,23 @@ import { ComponentsContext } from './componentsContext'
 export const ComponentsProvider = ({
   ButtonComponent,
   ModalComponent,
+  CheckboxComponent,
   SessionDetailsModalContents,
   children,
 }) => {
   const comps = useMemo(
-    () => ({ ButtonComponent, ModalComponent, SessionDetailsModalContents }),
-    [ ButtonComponent, ModalComponent, SessionDetailsModalContents ]
+    () => ({
+      ButtonComponent,
+      ModalComponent,
+      CheckboxComponent,
+      SessionDetailsModalContents,
+    }),
+    [
+      ButtonComponent,
+      ModalComponent,
+      CheckboxComponent,
+      SessionDetailsModalContents,
+    ]
   )
 
   return (

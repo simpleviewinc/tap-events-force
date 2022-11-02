@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react'
-import { EvfCheckbox } from 'SVComponents/checkbox/evfCheckbox'
+import React, { useMemo, useContext } from 'react'
 import { View } from '@old-keg-hub/keg-components'
 import { isEmpty, set } from '@keg-hub/jsutils'
 import { AttendeeCheckboxLabel } from './attendeeCheckboxLabel'
+import { ComponentsContext } from 'SVContexts/components/componentsContext'
 
 /**
  * A wrapper around the checkbox component with styling and logic for
@@ -16,7 +16,6 @@ import { AttendeeCheckboxLabel } from './attendeeCheckboxLabel'
  * @param {boolean} props.isAttendeeDisabled - true if an attendee is disabled (cannot be checked nor unchecked)
  * @param {Object} props.sectionStyles - styles from the section containing this checkbox
  * @param {boolean} props.isWaiting - if true, attendee is on waiting list, so we should show waiting-list ui
- * @param {boolean} props.enableCheck - if true, attendee can be set to "checked"
  * @param {boolean} props.checked - initial checked value
  */
 export const AttendeeCheckboxItem = props => {
@@ -28,7 +27,6 @@ export const AttendeeCheckboxItem = props => {
     onAttendeeSelected,
     isAttendeeDisabled,
     isWaiting = false,
-    enableCheck = true,
     checked = false,
   } = props
 
@@ -51,30 +49,27 @@ export const AttendeeCheckboxItem = props => {
 
   const onCheckboxChange = event => onAttendeeSelected?.(id, { event })
 
+  const { CheckboxComponent } = useContext(ComponentsContext)
+
   return (
     <View
       accessibilityRole='group'
       accessibilityLabel={name}
     >
-      <EvfCheckbox
+      <CheckboxComponent
         id={checkboxId}
-        type={isWaiting ? 'alternate' : 'primary'}
-        styles={styles}
+        isWaitingList={isWaiting}
         checked={checked}
         onChange={onCheckboxChange}
         disabled={isAttendeeDisabled}
-        enableCheck={enableCheck}
-        rightClassName={textClassName}
-        RightComponent={props => (
-          <AttendeeCheckboxLabel
-            {...props}
-            htmlFor={checkboxId}
-            name={text}
-            textClassName={textClassName}
-            textStyle={textStyle}
-            waiting={isWaiting}
-          />
-        )}
+      />
+      <AttendeeCheckboxLabel
+        {...props}
+        htmlFor={checkboxId}
+        name={text}
+        textClassName={textClassName}
+        textStyle={textStyle}
+        waiting={isWaiting}
       />
     </View>
   )
