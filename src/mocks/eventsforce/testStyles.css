@@ -201,6 +201,7 @@ input[type=checkbox].ef-modal-body-session-attendee-checkbox {
   box-shadow: none;
   width: 15px;
   height: 15px;
+  cursor: pointer;
 }
 
 input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked {
@@ -225,3 +226,6 @@ input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked:before {
   height: 35px;
 }
 
+.ef-modal-body-highlight.ef-session-attendee-ticket-group-heading {
+  border-bottom: 1px solid #585858;
+}
