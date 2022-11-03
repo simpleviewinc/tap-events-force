@@ -56,21 +56,25 @@ export const AttendeeCheckboxItem = props => {
       accessibilityRole='group'
       accessibilityLabel={name}
     >
-      <CheckboxComponent
-        id={checkboxId}
-        isWaitingList={isWaiting}
-        checked={checked}
-        onChange={onCheckboxChange}
-        disabled={isAttendeeDisabled}
-      />
-      <AttendeeCheckboxLabel
-        {...props}
-        htmlFor={checkboxId}
-        name={text}
-        textClassName={textClassName}
-        textStyle={textStyle}
-        waiting={isWaiting}
-      />
+      <View className={'ef-session-attendee-checkbox-with-label-container'}>
+        <View className={'ef-session-attendee-checkbox-container'}>
+          <CheckboxComponent
+            id={checkboxId}
+            isWaitingList={isWaiting}
+            checked={checked}
+            onChange={onCheckboxChange}
+            disabled={isAttendeeDisabled}
+          />
+        </View>
+        <AttendeeCheckboxLabel
+          {...props}
+          htmlFor={checkboxId}
+          name={text}
+          textClassName={textClassName}
+          textStyle={textStyle}
+          waiting={isWaiting}
+        />
+      </View>
     </View>
   )
 }
