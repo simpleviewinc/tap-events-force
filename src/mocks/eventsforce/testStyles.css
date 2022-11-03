@@ -204,11 +204,6 @@ input[type=checkbox].ef-modal-body-session-attendee-checkbox {
   cursor: pointer;
 }
 
-input[type=checkbox].ef-modal-body-session-attendee-checkbox:disabled {
-  cursor: not-allowed;
-  opacity: 0.4;
-}
-
 input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked {
   border-color: red;
   background-color: red;
@@ -233,4 +228,14 @@ input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked:before {
 
 .ef-modal-body-highlight.ef-session-attendee-ticket-group-heading {
   border-bottom: 1px solid #585858;
+}
+
+input[type=checkbox].ef-modal-body-session-attendee-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.ef-session-attendee-heading.ef-disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
 }

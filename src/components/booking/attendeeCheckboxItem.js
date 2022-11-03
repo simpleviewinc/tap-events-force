@@ -73,6 +73,7 @@ export const AttendeeCheckboxItem = props => {
           textClassName={textClassName}
           textStyle={textStyle}
           waiting={isWaiting}
+          disabled={isAttendeeDisabled}
         />
       </View>
     </View>
