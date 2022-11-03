@@ -16,7 +16,6 @@ import { ComponentsContext } from 'SVContexts/components/componentsContext'
  * @param {boolean} props.isAttendeeDisabled - true if an attendee is disabled (cannot be checked nor unchecked)
  * @param {Object} props.sectionStyles - styles from the section containing this checkbox
  * @param {boolean} props.isWaiting - if true, attendee is on waiting list, so we should show waiting-list ui
- * @param {boolean} props.enableCheck - if true, attendee can be set to "checked"
  * @param {boolean} props.checked - initial checked value
  */
 export const AttendeeCheckboxItem = props => {
@@ -28,7 +27,6 @@ export const AttendeeCheckboxItem = props => {
     onAttendeeSelected,
     isAttendeeDisabled,
     isWaiting = false,
-    enableCheck = true,
     checked = false,
   } = props
 
@@ -65,7 +63,7 @@ export const AttendeeCheckboxItem = props => {
             isWaitingList={isWaiting}
             checked={checked}
             onChange={onCheckboxChange}
-            disabled={isAttendeeDisabled || !enableCheck}
+            disabled={isAttendeeDisabled}
           />
         </View>
         <AttendeeCheckboxLabel

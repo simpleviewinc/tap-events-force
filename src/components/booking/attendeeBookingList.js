@@ -71,7 +71,8 @@ export const AttendeeBookingList = ({
     // so that the user can uncheck them.
     const shouldAppearDisabled =
       isAttendeeDisabled(attendeeId) ||
-      (emptyWaitList && emptyBookList && !(isWaiting || isBooking))
+      ((!enableCheck || (emptyWaitList && emptyBookList)) &&
+        !(isWaiting || isBooking))
 
     return (
       <AttendeeCheckboxItem
@@ -84,7 +85,6 @@ export const AttendeeBookingList = ({
         sectionStyles={sectionStyles}
         itemStyles={itemStyles}
         isAttendeeDisabled={shouldAppearDisabled}
-        enableCheck={enableCheck}
         checked={isBooking || isWaiting}
       />
     )
