@@ -205,8 +205,13 @@ input[type=checkbox].ef-modal-body-session-attendee-checkbox {
 }
 
 input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked {
-  border-color: red;
-  background-color: red;
+  border-color: #6EA2D2;
+  background-color: #6EA2D2;
+}
+
+input[type=checkbox].ef-modal-body-session-attendee-checkbox.ef-modal-body-session-attendee-checkbox-waiting-list:checked {
+  border-color: #525659;
+  background-color: #525659;
 }
 
 input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked:before {
