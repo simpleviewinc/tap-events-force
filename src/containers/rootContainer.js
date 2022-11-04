@@ -13,6 +13,7 @@ import {
 import testData from '../mocks/eventsforce/testData.js'
 import { evfModalBuilder } from '../mocks/eventsforce/evfModalBuilder'
 import { EvfButton } from '../mocks/eventsforce/evfButton'
+import { EvfCheckbox } from '../mocks/eventsforce/evfCheckbox'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -78,27 +79,6 @@ export const RootContainer = withAppHeader(displayName, props => {
     return <p>Session details modal for sessionID: { sessionID }</p>
   }
 
-  const CheckboxComponent = props => {
-    const { id, isWaitingList, checked, onChange, disabled } = props
-
-    let classes = 'ef-modal-body-session-attendee-checkbox'
-    if (isWaitingList) {
-      classes += ' ef-modal-body-session-attendee-checkbox-waiting-list'
-    }
-
-    return (
-      <input
-        type='checkbox'
-        id={id}
-        className={classes}
-        checked={checked}
-        value='true'
-        onChange={onChange}
-        disabled={disabled}
-      />
-    )
-  }
-
   return (
     <>
       { !isNative() && process.env.NODE_ENV === 'development' && (
@@ -114,7 +94,7 @@ export const RootContainer = withAppHeader(displayName, props => {
         onSessionWaitingListRequest={mockWaitRequest}
         ModalComponent={SessionsModal}
         ButtonComponent={EvfButton}
-        CheckboxComponent={CheckboxComponent}
+        CheckboxComponent={EvfCheckbox}
         showPresenterDetailsModal={presenterID =>
           alert(
             'presenter details modal opened for presenter with ID: ' +
