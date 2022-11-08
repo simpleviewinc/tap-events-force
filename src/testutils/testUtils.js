@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { ComponentsProvider } from 'SVContexts/components/componentsProvider'
 import { getStore } from 'SVStore'
 import { EvfButton } from '../mocks/eventsforce/evfButton'
+import { EvfCheckbox } from '../mocks/eventsforce/evfCheckbox'
 import 'SVTheme/tapIndex'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -41,6 +42,7 @@ const TestRenderWrapper = ({ children }) => {
         <ComponentsProvider
           ButtonComponent={EvfButton}
           ModalComponent={TestModal}
+          CheckboxComponent={EvfCheckbox}
         >
           { children }
         </ComponentsProvider>

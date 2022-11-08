@@ -13,6 +13,7 @@ import {
 import testData from '../mocks/eventsforce/testData.js'
 import { evfModalBuilder } from '../mocks/eventsforce/evfModalBuilder'
 import { EvfButton } from '../mocks/eventsforce/evfButton'
+import { EvfCheckbox } from '../mocks/eventsforce/evfCheckbox'
 
 const mockCallbacks = {
   onDayChange: day => console.log('Day changed to', day),
@@ -93,6 +94,7 @@ export const RootContainer = withAppHeader(displayName, props => {
         onSessionWaitingListRequest={mockWaitRequest}
         ModalComponent={SessionsModal}
         ButtonComponent={EvfButton}
+        CheckboxComponent={EvfCheckbox}
         showPresenterDetailsModal={presenterID =>
           alert(
             'presenter details modal opened for presenter with ID: ' +

@@ -28,6 +28,7 @@ const SessionsApp = props => {
     onSessionWaitingListRequest, 
     ModalComponent,
     ButtonComponent,
+    CheckboxComponent,
     showVersion,
     showPresenterDetailsModal,
     SessionDetailsModalContents
@@ -44,6 +45,7 @@ const SessionsApp = props => {
           onSessionBookingRequest={onSessionBookingRequest}
           onSessionWaitingListRequest={onSessionWaitingListRequest}
           ModalComponent={ModalComponent}
+          CheckboxComponent={CheckboxComponent}
           ButtonComponent={ButtonComponent}
           showVersion={showVersion}
           showPresenterDetailsModal={showPresenterDetailsModal}

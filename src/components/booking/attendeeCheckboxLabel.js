@@ -74,16 +74,22 @@ export const AttendeeCheckboxLabel = props => {
     textStyle,
     onPress,
     waiting,
+    disabled,
   } = props
   const waitingStyles = useStyle('attendeeCheckboxItem.waitingItem', style)
   const isMobile = isMobileSize(useTheme())
+
+  let labelClasses = textClassName
+  if (disabled) {
+    labelClasses += ' ef-disabled'
+  }
 
   return (
     <View style={waitingStyles?.main}>
       <LabelWrapper>
         <Label
           htmlFor={htmlFor}
-          className={textClassName}
+          className={labelClasses}
           role='button'
           style={textStyle}
           onPress={onPress}

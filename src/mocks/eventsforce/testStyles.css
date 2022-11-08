@@ -192,3 +192,55 @@
 .modal-header-test {
   background-color: #22B3C4;
 }
+
+input[type=checkbox].ef-modal-body-session-attendee-checkbox {
+  appearance: none;
+  border: 2px solid #525659;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: none;
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked {
+  border-color: #6EA2D2;
+  background-color: #6EA2D2;
+}
+
+input[type=checkbox].ef-modal-body-session-attendee-checkbox.ef-modal-body-session-attendee-checkbox-waiting-list:checked {
+  border-color: #525659;
+  background-color: #525659;
+}
+
+input[type=checkbox].ef-modal-body-session-attendee-checkbox:checked:before {
+  content: '\2713';
+  font-size: 15px;
+  position: absolute;
+  top: -3px;
+  left: 2px;
+  color: #FFFFFF;
+  font-weight: bold;
+}
+
+.ef-session-attendee-checkbox-with-label-container {
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  height: 35px;
+}
+
+.ef-modal-body-highlight.ef-session-attendee-ticket-group-heading {
+  border-bottom: 1px solid #585858;
+}
+
+input[type=checkbox].ef-modal-body-session-attendee-checkbox:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.ef-session-attendee-heading.ef-disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
