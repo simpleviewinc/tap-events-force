@@ -38,7 +38,6 @@ export const EvfButton = ({
   sessionBookingState,
   ...props
 }) => {
-  console.log('sessionBookingState from sv ', sessionBookingState)
   return (
     <Button
       className={className}
@@ -46,6 +45,7 @@ export const EvfButton = ({
       disabled={disabled}
       color={typeToColorMap[buttonType]}
       data-button-type={buttonType}
+      title={'sessionBookingState:' + sessionBookingState}
     >
       { children }
     </Button>
