@@ -151,7 +151,6 @@ export const BookingButton = props => {
   const selectSessionCb = useSelectSession(session, bookingModel)
   const pendingStyles = useStyle('button.evfButton.pending')
 
-  console.log('from bookingButton.js', bookingModel.state)
   return (
     (bookingModel?.text && (
       <EvfButton
