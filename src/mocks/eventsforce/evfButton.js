@@ -35,10 +35,10 @@ export const EvfButton = ({
   buttonType,
   className,
   onClick,
-  sesssionBookingState,
+  sessionBookingState,
   ...props
 }) => {
-  console.log('sesssionBookingState from sv ', sesssionBookingState)
+  console.log('sessionBookingState from sv ', sessionBookingState)
   return (
     <Button
       className={className}
