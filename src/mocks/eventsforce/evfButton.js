@@ -45,7 +45,7 @@ export const EvfButton = ({
       disabled={disabled}
       color={typeToColorMap[buttonType]}
       data-button-type={buttonType}
-      title={'sessionBookingState:' + sessionBookingState}
+      title={'sessionBookingState: ' + sessionBookingState}
     >
       { children }
     </Button>
