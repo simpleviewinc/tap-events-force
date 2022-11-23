@@ -35,8 +35,10 @@ export const EvfButton = ({
   buttonType,
   className,
   onClick,
+  sesssionBookingState,
   ...props
 }) => {
+  console.log('sesssionBookingState from sv ', sesssionBookingState)
   return (
     <Button
       className={className}

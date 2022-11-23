@@ -103,6 +103,7 @@ export const EvfButton = props => {
     styles,
     text,
     className,
+    sesssionBookingState,
     ...childProps
   } = props
 
@@ -128,6 +129,7 @@ export const EvfButton = props => {
       onClick={onBtnClick}
       role='button'
       className={className}
+      sesssionBookingState={props.sesssionBookingState}
     >
       <RenderChildren
         {...childProps}
