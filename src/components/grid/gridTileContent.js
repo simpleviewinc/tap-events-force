@@ -78,6 +78,7 @@ export const GridTileContent = props => {
           <BookingButton
             session={session}
             styles={gridTileContentStyles?.row1?.buttonSection?.bookingButton}
+            className='ef-session-button-primary'
           />
         </View>
       </View>

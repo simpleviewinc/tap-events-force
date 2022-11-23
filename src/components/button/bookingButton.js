@@ -156,6 +156,7 @@ export const BookingButton = props => {
       <EvfButton
         {...remaining}
         buttonType={BUTTON_TYPES.SELECT_SESSION}
+        bookingstate={bookingModel.state}
         type={bookingModel.state}
         onClick={selectSessionCb}
         disabled={bookingModel.disabled}
