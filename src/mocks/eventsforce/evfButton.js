@@ -56,7 +56,8 @@ export const EvfButton = ({
         bookingMode
       }
     >
-      { text } count: { bookedCount }, mode: { bookingMode }, isProcessing:{ ' ' }
+      { text } count: { bookedCount }, mode: { bookingMode }, isProcessing: className
+      = { className }
       { isProcessing }
     </Button>
   )
