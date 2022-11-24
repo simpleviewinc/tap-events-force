@@ -38,6 +38,7 @@ export const EvfButton = props => {
       bookingMode={props.bookingMode}
       isProcessing={isProcessing}
       text={text}
+      className={props.className}
     ></ButtonComponent>
   )
 }
