@@ -1,88 +1,6 @@
-import { checkCall, omitKeys } from '@keg-hub/jsutils'
-import { useStyle } from '@keg-hub/re-theme'
-import { EvfLoading } from 'SVComponents/loading/evfLoading'
-import React, { useMemo, useContext, useCallback } from 'react'
-import { renderFromType, View, Text } from '@old-keg-hub/keg-components'
+import { checkCall } from '@keg-hub/jsutils'
+import React, { useContext, useCallback } from 'react'
 import { ComponentsContext } from 'SVContexts/components/componentsContext'
-
-/**
- * Processing
- * @param {object} props
- * @param {object} props.styles
- * @param {string=} props.text
- */
-const Processing = props => {
-  const { pendingStyles, styles, text = 'Processing' } = props
-
-  const processStyles = useStyle(styles, pendingStyles)
-
-  return (
-    <View
-      className={'ef-button-text-main'}
-      style={styles.main}
-    >
-      <EvfLoading
-        color={processStyles?.icon?.color}
-        size={processStyles?.icon?.size}
-      />
-      <Text
-        className={'ef-button-text'}
-        style={[processStyles.content]}
-      >
-        { text }
-      </Text>
-    </View>
-  )
-}
-
-/**
- * Render the children based on the passed in type
- * @param {Object} props
- * @param {Object|function|string} props.children - Child content to render
- * @param {Object} props.styles - Custom styles for the children components
- * @param {boolean} props.selectable - Should the text be selectable
- * @param {boolean} props.isProcessing - Is the button in a processing state
- *
- * @returns {Object} - Merged Evf button styles
- */
-const RenderChildren = React.memo(props => {
-  const {
-    children,
-    styles,
-    pendingStyles,
-    selectable = false,
-    isProcessing = false,
-  } = props
-
-  const contentStyles = useStyle(`button.contained.default`, styles?.button)
-
-  const content = isProcessing
-    ? buttonProps => (
-        <Processing
-          {...buttonProps}
-          pendingStyles={pendingStyles}
-          styles={styles?.processing}
-        />
-      )
-    : children
-
-  const contentProps = useMemo(() => {
-    const style = omitKeys(contentStyles?.default?.content, [
-      'color',
-      'transitionProperty',
-      'transitionDuration',
-      'transitionTimingFunction',
-    ])
-
-    return {
-      style,
-      selectable,
-      className: `ef-button-text`,
-    }
-  }, [ content, contentStyles, selectable ])
-
-  return renderFromType(content, contentProps, Text)
-})
 
 /**
  * EvfButton
@@ -94,21 +12,9 @@ const RenderChildren = React.memo(props => {
  * @param {boolean} props.isProcessing - to display processing content
  */
 export const EvfButton = props => {
-  const {
-    buttonType,
-    children,
-    disabled,
-    isProcessing,
-    onClick,
-    styles,
-    text,
-    className,
-    sessionBookingState,
-    ...childProps
-  } = props
+  const { buttonType, disabled, isProcessing, onClick, text } = props
 
   const { ButtonComponent } = useContext(ComponentsContext)
-  const btnStyles = useStyle(`button.evfButton`, styles)
 
   // Wrap the onClick, so we can catch the event
   // Then stop it from propagating to the parent elements
@@ -127,16 +33,11 @@ export const EvfButton = props => {
       disabled={Boolean(disabled || isProcessing)}
       buttonType={buttonType}
       onClick={onBtnClick}
-      role='button'
-      className={className}
       sessionBookingState={props.sessionBookingState}
-    >
-      <RenderChildren
-        {...childProps}
-        styles={btnStyles}
-        children={children || text}
-        isProcessing={isProcessing}
-      />
-    </ButtonComponent>
+      bookedCount={props.bookedCount}
+      bookingMode={props.bookingMode}
+      isProcessing={isProcessing}
+      text={text}
+    ></ButtonComponent>
   )
 }

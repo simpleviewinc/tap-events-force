@@ -36,6 +36,8 @@ export const EvfButton = ({
   className,
   onClick,
   sessionBookingState,
+  bookedCount,
+  bookingMode,
   ...props
 }) => {
   return (
@@ -45,9 +47,17 @@ export const EvfButton = ({
       disabled={disabled}
       color={typeToColorMap[buttonType]}
       data-button-type={buttonType}
-      title={'sessionBookingState: ' + sessionBookingState}
+      title={
+        'sessionBookingState: ' +
+        sessionBookingState +
+        ' bookedCount: ' +
+        bookedCount +
+        ' bookingMode: ' +
+        bookingMode
+      }
     >
       { children }
+      count: { bookedCount } mode: { bookingMode }
     </Button>
   )
 }
