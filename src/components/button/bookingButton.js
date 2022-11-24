@@ -73,7 +73,6 @@ export const BookingButton = props => {
 
   const { session, className, ...remaining } = props
   const bookingModel = useBookingState(session)
-  console.log('bookingModel', bookingModel)
   const selectSessionCb = useSelectSession(session, bookingModel)
   const pendingStyles = useStyle('button.evfButton.pending')
   const formattedPrice = useFormattedPrice(props.session?.price, false)
@@ -96,8 +95,7 @@ export const BookingButton = props => {
         disabled={bookingModel.disabled}
         isProcessing={bookingModel.pending}
         pendingStyles={pendingStyles}
-        className={className}
-        formattedButtonText={formattedButtonText}
+        text={formattedButtonText}
       ></EvfButton>
     )) ||
     null

@@ -30,7 +30,6 @@ const typeToColorMap = {
  * While at the same time, it allows the session component to define the content of the button
  */
 export const EvfButton = ({
-  children,
   disabled,
   buttonType,
   className,
@@ -38,7 +37,8 @@ export const EvfButton = ({
   sessionBookingState,
   bookedCount,
   bookingMode,
-  ...props
+  text,
+  isProcessing,
 }) => {
   return (
     <Button
@@ -56,8 +56,8 @@ export const EvfButton = ({
         bookingMode
       }
     >
-      { children }
-      count: { bookedCount } mode: { bookingMode }
+      { text } count: { bookedCount }, mode: { bookingMode }, isProcessing:{ ' ' }
+      { isProcessing }
     </Button>
   )
 }
