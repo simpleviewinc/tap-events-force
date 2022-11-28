@@ -2,12 +2,10 @@ import React, { useMemo } from 'react'
 import { getBookingState } from 'SVUtils/models/sessions/getBookingState'
 import { View, Text } from '@old-keg-hub/keg-components'
 import { Values } from 'SVConstants/values'
-import { EVFIcons } from 'SVIcons'
 import { reStyle } from '@keg-hub/re-theme/reStyle'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 
 const { SESSION_BOOKING_STATES } = Values
-const { BookingCheck } = EVFIcons
 
 /**
  * Returns session state
@@ -31,15 +29,6 @@ const StateLabelView = reStyle(View)(() => ({
   flexDirection: 'row',
   alignItems: 'center',
   marginRight: 15,
-}))
-
-const StateLabelCheck = reStyle(
-  BookingCheck,
-  'styles'
-)(theme => ({
-  fill: theme.colors.primary,
-  maxHeight: 18,
-  overflow: 'visible',
 }))
 
 /**
@@ -69,7 +58,6 @@ export const StateLabel = props => {
       >
         { labelToDisplay.toUpperCase() }
       </StateLabelText>
-      { selected && <StateLabelCheck /> }
     </StateLabelView>
   )
 }

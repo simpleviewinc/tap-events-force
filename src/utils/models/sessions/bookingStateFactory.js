@@ -89,6 +89,7 @@ export const bookingStateFactory = reduceObj(
         text: getStateText(key, state) || false,
         disabled: getDisabled(props, state),
         pending: getPending(props),
+        bookedCount: getDisplayAmount(state, bookingList, waitingList),
       })
     }
 

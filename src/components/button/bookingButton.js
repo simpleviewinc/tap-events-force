@@ -1,10 +1,8 @@
 import React, { useCallback } from 'react'
-import { Text, View } from '@old-keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
 import { selectSession } from 'SVActions/session/selectSession'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
-import { useStylesCallback, useStyle } from '@keg-hub/re-theme'
-import { noPropObj, get } from '@keg-hub/jsutils'
+import { useStyle } from '@keg-hub/re-theme'
 import { Values } from 'SVConstants'
 import { useFormattedPrice } from 'SVHooks/models/price'
 const {
@@ -14,79 +12,6 @@ const {
   BUTTON_TYPES,
   BOOKING_STATES_WITH_ALT_TEXT,
 } = Values
-
-/**
- * Helper to build the styles for the booking button
- * @param {Object} theme - Global theme object
- * @param {boolean} disabled - Should the disabled styles be included
- * @param {string} style - Custom styles passed from a parent component
- *
- * @returns {Object} - Joined styles object from different locations
- */
-const buildStyles = (theme, _, model, iconName, style) => {
-  const { state, disabled } = model
-  const styles = theme.get(`button.evfButton`)
-
-  const bookingStyles = styles?.booking || noPropObj
-  const disabledStyles = disabled ? styles?.button?.disabled : noPropObj
-  const isLongText = SESSION_BOOKING_STATES.ON_WAITING_LIST === state
-
-  return {
-    ...bookingStyles,
-    content: {
-      ...style,
-      ...disabledStyles?.content,
-      ...(isLongText && bookingStyles?.longText?.text),
-    },
-    icon: theme.get(
-      get(bookingStyles, `icon.${iconName}.default`),
-      isLongText && get(bookingStyles, `longText.icon.${iconName}.default`),
-      disabled && get(bookingStyles, `icon.${iconName}.disabled`)
-    ),
-  }
-}
-
-/**
- * Renders the booking button children based on the passed in booking state
- * @param {import('SVModels/session/bookingState').BookingState} model
- * @param {Object} style - Style rules for the children passed from the parent button
- * @param {Object} styles - Booking button child theme styles
- */
-const RenderBookingState = props => {
-  const { model, style, styles, ...attrs } = props
-  const { displayAmount, icon: Icon, text } = model
-  const formattedPrice = useFormattedPrice(props.session?.price, false)
-  const formattedButtonText = applyPriceAndDisplayRules(
-    model.state,
-    text,
-    formattedPrice
-  )
-  const bookingStyles = useStylesCallback(buildStyles, [
-    model,
-    Icon && Icon.name,
-    style,
-  ])
-
-  return (
-    <View
-      className={'ef-button-text-main'}
-      style={bookingStyles.main}
-    >
-      { text && (
-        <Text
-          {...attrs}
-          className={`ef-button-text`}
-          style={bookingStyles.content}
-          children={formattedButtonText}
-        />
-      ) }
-      { Icon && <Icon
-        digit={displayAmount}
-        styles={bookingStyles.icon}
-      /> }
-    </View>
-  )
-}
 
 /**
  * Custom hook to check if an attendee should be removed from the session
@@ -150,27 +75,29 @@ export const BookingButton = props => {
   const bookingModel = useBookingState(session)
   const selectSessionCb = useSelectSession(session, bookingModel)
   const pendingStyles = useStyle('button.evfButton.pending')
+  const formattedPrice = useFormattedPrice(props.session?.price, false)
+  const formattedButtonText = applyPriceAndDisplayRules(
+    bookingModel.state,
+    bookingModel.text,
+    formattedPrice
+  )
 
   return (
     (bookingModel?.text && (
       <EvfButton
         {...remaining}
         buttonType={BUTTON_TYPES.SELECT_SESSION}
+        sessionBookingState={bookingModel.state}
+        bookedCount={bookingModel.bookedCount}
+        bookingMode={bookingModel.mode}
         type={bookingModel.state}
         onClick={selectSessionCb}
         disabled={bookingModel.disabled}
         isProcessing={bookingModel.pending}
         pendingStyles={pendingStyles}
+        text={formattedButtonText}
         className={className}
-      >
-        { buttonProps => (
-          <RenderBookingState
-            {...props}
-            {...buttonProps}
-            model={bookingModel}
-          />
-        ) }
-      </EvfButton>
+      ></EvfButton>
     )) ||
     null
   )

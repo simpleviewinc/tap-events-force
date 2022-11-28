@@ -12,6 +12,7 @@ export class BookingState {
   pending = false
   displayAmount = null
   mode = null
+  bookedCount = null
 
   /**
    * @param {object} params
