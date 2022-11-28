@@ -81,20 +81,10 @@ const DrawerMain = reStyle(View)({
 })
 
 /**
- * @summary - Wraps the Booking Button, to allow setting its max-width
- * @type {React.Component}
- */
-const ButtonWrapper = reStyle(View)({
-  maxWidth: 115,
-})
-
-/**
  * @summary - Names of presenters
  * @type {React.Component}
  */
 const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
-
-const StyledBookingButton = reStyle(BookingButton)({})
 
 /**
  * @summary - Renders the content of the drawer component when opened
@@ -105,12 +95,10 @@ const StyledBookingButton = reStyle(BookingButton)({})
 const DrawerContent = ({ session, showPresenterDetailsModal }) => {
   return (
     <DrawerMain>
-      <ButtonWrapper>
-        <StyledBookingButton
-          session={session}
-          style={{ main: { marginBottom: 10 }, marginBottom: 10 }}
-        />
-      </ButtonWrapper>
+      <BookingButton
+        session={session}
+        style={{ main: { marginBottom: 10 }, marginBottom: 10 }}
+      />
       <PresenterNames
         session={session}
         showPresenterDetailsModal={showPresenterDetailsModal}
