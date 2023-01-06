@@ -1,6 +1,6 @@
 {
   "name": "@eventsforce/ef-sessions-component",
-  "version": "4.1.22",
+  "version": "4.1.23-dev-jl.1",
   "description": "Eventsforce sessions component",
   "main": "index.js",
   "author": "Michael Carolin <michael.carolin@simpleviewinc.com>",
