@@ -46,7 +46,6 @@ export const Filter = ({ visible, labels }) => {
   return (
     <BaseModal
       onDismiss={cancelSelectedFilters}
-      title={'Filter'}
       visible={visible}
       Body={
         <Body
