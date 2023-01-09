@@ -320,7 +320,7 @@ const Footer = ({
     >
       { hasSelectedFilters && (
         <EvfButton
-          buttonType={BUTTON_TYPES.LINK}
+          buttonType={BUTTON_TYPES.MODAL_SECONDARY}
           className={'ef-clear-filter-button'}
           styles={styles?.clearButton}
           onClick={clearSelectedFilters}
