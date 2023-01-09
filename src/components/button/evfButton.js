@@ -39,6 +39,7 @@ export const EvfButton = props => {
       isProcessing={isProcessing}
       text={text}
       className={props.className}
+      session={props.session}
     ></ButtonComponent>
   )
 }
