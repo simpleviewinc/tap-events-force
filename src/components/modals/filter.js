@@ -314,17 +314,22 @@ const Footer = ({
   disableApply,
 }) => {
   return (
-    <View style={styles?.main}>
+    <View
+      className={'ef-session-modal-group-section-bottom'}
+      style={styles?.main}
+    >
       { hasSelectedFilters && (
         <EvfButton
           buttonType={BUTTON_TYPES.LINK}
+          className={'ef-clear-filter-button'}
           styles={styles?.clearButton}
           onClick={clearSelectedFilters}
-          text={'Clear all'}
+          text={'CLEAR SELECTION'}
         />
       ) }
       <EvfButton
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
+        className={'ef-apply-filter-button'}
         disabled={disableApply}
         type={'primary'}
         styles={styles?.applyButton}

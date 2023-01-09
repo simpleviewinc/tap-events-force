@@ -105,7 +105,7 @@ export const GroupBookerFooter = ({ styles = noOpObj, onCancelPress }) => {
 
   return (
     <View
-      className={`ef-modal-group-section-bottom`}
+      className={`ef-session-modal-group-section-bottom`}
       style={styles.main}
     >
       <View
