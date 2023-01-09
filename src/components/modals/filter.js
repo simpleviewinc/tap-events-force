@@ -319,13 +319,18 @@ const Footer = ({
       style={styles?.main}
     >
       { hasSelectedFilters && (
-        <EvfButton
-          buttonType={BUTTON_TYPES.MODAL_SECONDARY}
-          className={'ef-clear-filter-button'}
-          styles={styles?.clearButton}
-          onClick={clearSelectedFilters}
-          text={'CLEAR SELECTION'}
-        />
+        <View
+          className={'evf-modal-cancel-wrapper'}
+          style={styles?.clearButton.container}
+        >
+          <EvfButton
+            buttonType={BUTTON_TYPES.MODAL_SECONDARY}
+            className={'ef-clear-filter-button'}
+            styles={styles?.clearButton}
+            onClick={clearSelectedFilters}
+            text={'CLEAR SELECTION'}
+          />
+        </View>
       ) }
       <EvfButton
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
