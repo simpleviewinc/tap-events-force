@@ -90,9 +90,6 @@ const buttonsWrapper = {
       maxWidth: '100%',
       paddingBottom: 20,
     },
-    $small: {
-      paddingBottom: 60,
-    },
   },
 }
 
@@ -109,11 +106,6 @@ const clearButtonDefault = {
       ftWt: '500',
       txDc: 'underline',
       color: colors.lightGray01,
-    },
-  },
-  container: {
-    $xsmall: {
-      marginRight: 10,
     },
   },
 }
@@ -144,7 +136,7 @@ export const filterModal = {
             maxHeight: 250,
           },
           $small: {
-            maxHeight: 550,
+            display: 'flex',
           },
         },
         labelButtons: {
@@ -154,6 +146,10 @@ export const filterModal = {
         stateButtons: {
           main: buttonsWrapper,
           item: stateButton,
+        },
+        divider: {
+          width: '100%',
+          borderTop: '1px solid ' + colors.borderGray,
         },
       },
     },

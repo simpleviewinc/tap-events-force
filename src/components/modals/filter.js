@@ -248,21 +248,27 @@ const MiddleSection = ({ styles, labels, selectedFilters }) => {
       style={styles?.main}
       contentContainerStyle={styles?.container}
     >
-      <View style={styles?.labelButtons?.main}>
-        <LabelButtons
-          styles={styles.labelButtons?.item}
-          labels={labels}
-          selectedFilters={selectedFilters}
-        />
-      </View>
-
-      <View style={styles?.stateButtons?.main}>
-        <LabelButtons
-          styles={styles?.stateButtons?.item}
-          labels={stateLabels}
-          selectedFilters={selectedFilters}
-        />
-      </View>
+      { labels.length > 0 && (
+        <>
+          <View style={styles?.labelButtons?.main}>
+            <LabelButtons
+              styles={styles.labelButtons?.item}
+              labels={labels}
+              selectedFilters={selectedFilters}
+            />
+          </View>
+          <hr style={styles?.divider} />
+        </>
+      ) }
+      { stateLabels.length > 0 && (
+        <View style={styles?.stateButtons?.main}>
+          <LabelButtons
+            styles={styles?.stateButtons?.item}
+            labels={stateLabels}
+            selectedFilters={selectedFilters}
+          />
+        </View>
+      ) }
     </ScrollView>
   )
 }
@@ -320,7 +326,7 @@ const Footer = ({
     >
       { hasSelectedFilters && (
         <View
-          className={'evf-modal-cancel-wrapper'}
+          className={'ef-modal-clear-wrapper'}
           style={styles?.clearButton.container}
         >
           <EvfButton
