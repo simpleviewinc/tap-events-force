@@ -108,6 +108,9 @@ const clearButtonDefault = {
       color: colors.lightGray01,
     },
   },
+  container: {
+    marginRight: 10,
+  },
 }
 export const filterModal = {
   content: {
