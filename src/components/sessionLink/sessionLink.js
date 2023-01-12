@@ -26,7 +26,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
     useStyle(`sessionLink.hover`)
   )
 
-  const classes = [ 'ef-session-name', className ].join(' ')
+  const classes = [ 'ef-session-link', className ].join(' ')
 
   return (
     <Touchable
@@ -38,7 +38,6 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
       <Text
         {...(isNative() ? noOpObj : { ref: ref })}
         {...numberOfLines}
-        style={themeStyle.text}
         className={classes}
         accessibilityRole='link'
         accessibilityLabel='session-link'

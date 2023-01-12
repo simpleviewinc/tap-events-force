@@ -165,7 +165,10 @@ export const GridRowContent = props => {
           />
           { !isOpen && <StateLabel session={session} /> }
         </SessionTimeRow>
-        <SessionLink text={session.name} />
+        <SessionLink
+          text={session.name}
+          className='ef-session-name-link ef-session-name-link-row'
+        />
         <InfoRow>
           <SessionLocationSmall
             session={session}
