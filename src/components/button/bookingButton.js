@@ -97,6 +97,7 @@ export const BookingButton = props => {
         pendingStyles={pendingStyles}
         text={formattedButtonText}
         className={className}
+        session={session}
       ></EvfButton>
     )) ||
     null
