@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { GridItem } from 'SVComponents/grid/gridItem'
 import { ItemHeader, Text, View } from '@old-keg-hub/keg-components'
-import { sortLabels, isMobileSize } from 'SVUtils'
+import { sortLabels } from 'SVUtils'
 import { useTheme } from '@keg-hub/re-theme'
 
 /**
@@ -44,21 +44,16 @@ export const GridContainer = React.memo(props => {
 
   return (
     <View className='ef-grid-container'>
-      {
-        // only display the time header on web styles
-        !isMobileSize(theme) && (
-          <ItemHeader
-            className='ef-timeslot-header'
-            styles={gridStyles.content.header}
-            LeftComponent={
-              <LeftHeaderText
-                timeString={timeBlock}
-                style={gridStyles?.content?.header?.content?.left}
-              />
-            }
+      <ItemHeader
+        className='ef-timeslot-header'
+        styles={gridStyles.content.header}
+        LeftComponent={
+          <LeftHeaderText
+            timeString={timeBlock}
+            style={gridStyles?.content?.header?.content?.left}
           />
-        )
-      }
+        }
+      />
       <View
         className='ef-grid-item'
         style={gridStyles?.content?.items}
