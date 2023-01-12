@@ -108,9 +108,6 @@ const clearButtonDefault = {
       color: colors.lightGray01,
     },
   },
-  container: {
-    marginRight: 10,
-  },
 }
 export const filterModal = {
   content: {
@@ -139,7 +136,7 @@ export const filterModal = {
             maxHeight: 250,
           },
           $small: {
-            display: 'flex',
+            maxHeight: 550,
           },
         },
         labelButtons: {
@@ -149,10 +146,6 @@ export const filterModal = {
         stateButtons: {
           main: buttonsWrapper,
           item: stateButton,
-        },
-        divider: {
-          width: '100%',
-          borderTop: '1px solid ' + colors.borderGray,
         },
       },
     },
