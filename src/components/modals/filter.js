@@ -71,7 +71,7 @@ export const Filter = ({ visible, labels }) => {
 const TopSection = ({ filteredSessions, hideCounter = false }) => {
   return (
     <View className='ef-session-filter-modal-body-header-section'>
-      <Text className={'ef-modal-body-header'}>Only Show:</Text>
+      <Text className={'ef-modal-body-header'}>Only show:</Text>
       <ResultsCounter
         hide={hideCounter}
         count={filteredSessions.length}
