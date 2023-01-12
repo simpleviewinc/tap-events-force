@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react'
-import { useStyle } from '@keg-hub/re-theme'
 import { View } from '@old-keg-hub/keg-components'
 import { ModalManager } from 'SVComponents/modals/modalManager'
 import { mapSessionInterface } from 'SVActions/session/mapSessionInterface'
@@ -32,8 +31,6 @@ export const Sessions = props => {
     mapSessionInterface(sessionAgendaProps)
   }, [sessionAgendaProps])
 
-  const sessionsStyles = useStyle('sessions')
-
   const { labels, agendaSessions, settings } = useStoreItems([
     'labels',
     'agendaSessions',
@@ -41,10 +38,7 @@ export const Sessions = props => {
   ])
 
   return (
-    <View
-      className={'ef-sessions-background'}
-      style={sessionsStyles.main}
-    >
+    <View className={'ef-sessions-background'}>
       <SessionsList
         labels={labels}
         onDayChange={onDayChange}

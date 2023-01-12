@@ -43,10 +43,7 @@ export const GridContainer = React.memo(props => {
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
 
   return (
-    <View
-      className='ef-grid-container'
-      style={gridStyles.main}
-    >
+    <View className='ef-grid-container'>
       {
         // only display the time header on web styles
         !isMobileSize(theme) && (
