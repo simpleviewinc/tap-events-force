@@ -88,11 +88,12 @@ const TopSection = ({ filteredSessions, hideCounter = false }) => {
  * @param {Number=} props.count
  */
 const ResultsCounter = ({ hide, count = 0 }) => {
-  const resultText = `${count} ${
-    count > 1 || count === 0 ? 'results' : 'result'
-  }`
+  const resultText = count > 1 || count === 0 ? 'results' : 'result'
   return hide ? null : (
-    <Text className={'ef-modal-body-highlight'}>{ resultText }</Text>
+    <Text className={'ef-modal-body-highlight'}>
+      <Text className={'ef-session-filter-result-count'}>{ count } </Text>
+      { resultText }
+    </Text>
   )
 }
 
