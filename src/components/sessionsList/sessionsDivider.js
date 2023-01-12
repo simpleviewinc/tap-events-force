@@ -40,24 +40,19 @@ export const SessionsDivider = React.memo(props => {
       style={[ dividerStyles?.standard?.main, divStyles.main ]}
     >
       { !first && dayText && (
-        <Text
-          className={`ef-${divType}-text`}
-          accessibilityRole='heading'
-          accessibilityLabel={`section header ${dayText}`}
-          accessibilityLevel='2'
-          style={[ dividerStyles?.standard?.text, divStyles.text ]}
-        >
-          { dayText }
-        </Text>
+        <>
+          { !isMobile && <Divider className='ef-day-divider' /> }
+          <Text
+            className={`ef-${divType}-text`}
+            accessibilityRole='heading'
+            accessibilityLabel={`section header ${dayText}`}
+            accessibilityLevel='2'
+            style={[ dividerStyles?.standard?.text, divStyles.text ]}
+          >
+            { dayText }
+          </Text>
+        </>
       ) }
-      <Divider
-        className={`ef-${divType}-divider`}
-        style={[
-          dividerStyles?.standard?.divider,
-          divStyles.divider,
-          isMobile && dividerStyles?.mobile?.divider,
-        ]}
-      />
       { !hasSessions && <EmptyDayMessage /> }
     </View>
   )

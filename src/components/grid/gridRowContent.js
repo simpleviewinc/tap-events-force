@@ -167,7 +167,7 @@ export const GridRowContent = props => {
         </SessionTimeRow>
         <SessionLink
           text={session.name}
-          className='ef-session-name-link ef-session-name-link-row'
+          className='ef-session-name-link ef-session-name-mobile'
         />
         <InfoRow>
           <SessionLocationSmall
