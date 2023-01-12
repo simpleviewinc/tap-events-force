@@ -129,7 +129,6 @@ const FilterLabelButton = props => {
 
   return (
     <LabelButton
-      className={'ef-session-filter-label-button'}
       label={label}
       toggledOn={!selectedCount || isLabelOn}
       onPress={updateSelectedFilters}
@@ -253,7 +252,7 @@ const MiddleSection = ({ labels, selectedFilters }) => {
  */
 const Body = ({ labels, filteredSessions, selectedFilters, hideCounter }) => {
   return (
-    <View className='ef-session-filter-modal-container'>
+    <View className='ef-session-filter-modal-body-container'>
       <TopSection
         filteredSessions={filteredSessions}
         hideCounter={hideCounter}
@@ -277,14 +276,12 @@ const Footer = ({ onButtonPress, hasSelectedFilters, disableApply }) => {
   return (
     <View className={'ef-session-modal-group-section-bottom'}>
       { hasSelectedFilters && (
-        <View className={'ef-modal-clear-wrapper'}>
-          <EvfButton
-            buttonType={BUTTON_TYPES.MODAL_SECONDARY}
-            className={'ef-clear-filter-button'}
-            onClick={clearSelectedFilters}
-            text={'CLEAR SELECTION'}
-          />
-        </View>
+        <EvfButton
+          buttonType={BUTTON_TYPES.MODAL_SECONDARY}
+          className={'ef-clear-filter-button'}
+          onClick={clearSelectedFilters}
+          text={'CLEAR SELECTION'}
+        />
       ) }
       <EvfButton
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
