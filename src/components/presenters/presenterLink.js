@@ -13,7 +13,6 @@ import PropTypes from 'prop-types'
 export const PresenterLink = ({
   text,
   presenter,
-  styles,
   className,
   showPresenterDetailsModal,
 }) => {
@@ -24,7 +23,6 @@ export const PresenterLink = ({
   return (
     <SessionLink
       className={classNames}
-      styles={styles}
       key={presenter.identifier}
       text={linkText}
       onPress={() => showPresenterDetailsModal(presenter.identifier)}

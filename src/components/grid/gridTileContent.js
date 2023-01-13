@@ -85,6 +85,7 @@ export const GridTileContent = props => {
       <SessionName
         onPress={displayDetailsModal}
         text={session?.name}
+        className='ef-session-name-link'
       />
 
       <SessionLocation
