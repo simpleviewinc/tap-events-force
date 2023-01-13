@@ -277,12 +277,14 @@ const Footer = ({ onButtonPress, hasSelectedFilters, disableApply }) => {
   return (
     <View className={'ef-session-modal-group-section-bottom'}>
       { hasSelectedFilters && (
-        <EvfButton
-          buttonType={BUTTON_TYPES.MODAL_SECONDARY}
-          className={'ef-clear-filter-button'}
-          onClick={clearSelectedFilters}
-          text={'CLEAR SELECTION'}
-        />
+        <View className={'ef-modal-clear-container'}>
+          <EvfButton
+            buttonType={BUTTON_TYPES.MODAL_SECONDARY}
+            className={'ef-clear-filter-button'}
+            onClick={clearSelectedFilters}
+            text={'CLEAR SELECTION'}
+          />
+        </View>
       ) }
       <EvfButton
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
