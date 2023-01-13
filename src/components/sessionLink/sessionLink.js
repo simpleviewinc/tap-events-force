@@ -33,7 +33,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
       activeOpacity={onPress ? 0.2 : 1}
       onPress={onPress}
       style={themeStyle.main}
-      pointerEvents={onPress ? 'auto' : 'none'}
+      pointerEvents={!onPress && 'none'}
     >
       <Text
         {...(isNative() ? noOpObj : { ref: ref })}
