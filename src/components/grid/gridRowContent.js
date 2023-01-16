@@ -18,7 +18,7 @@ import { EVFIcons } from 'SVIcons'
  * @summary - Root Grid Row Container component
  * @type {React.Component}
  */
-const GridRowMain = reStyle(Touchable)({
+const GridRowMain = reStyle(View)({
   fl: 1,
   flD: 'row',
   w: '100%',
@@ -39,7 +39,7 @@ const ColumnMain = reStyle(View)({
  * @summary - Row container for displaying session time
  * @type {React.Component}
  */
-const SessionTimeRow = reStyle(View)({
+const SessionTimeRow = reStyle(Touchable)({
   flD: 'row',
   alI: 'flex-end',
 })
@@ -48,7 +48,7 @@ const SessionTimeRow = reStyle(View)({
  * @summary - Wrapper around the session name and toggle icon for formatting
  * @type {React.Component}
  */
-const InfoRow = reStyle(View)({
+const InfoRow = reStyle(Touchable)({
   fl: 1,
   flD: 'row',
   jtC: 'space-between',
@@ -148,7 +148,7 @@ export const GridRowContent = props => {
   )
 
   return (
-    <GridRowMain onPress={onToggle}>
+    <GridRowMain>
       <LabelList
         style={listStyles}
         itemStyle={labelStyles}
@@ -156,7 +156,7 @@ export const GridRowContent = props => {
         labels={labels}
       />
       <ColumnMain>
-        <SessionTimeRow>
+        <SessionTimeRow onPress={onToggle}>
           <SessionTime
             style={gridRowSessionTimeStyles.main}
             start={session.startDateTimeLocal}
@@ -168,8 +168,9 @@ export const GridRowContent = props => {
         <SessionLink
           text={session.name}
           className='ef-session-name-link ef-session-name-mobile'
+          onPress={onToggle}
         />
-        <InfoRow>
+        <InfoRow onPress={onToggle}>
           <SessionLocationSmall
             session={session}
             textClass='ef-session-location'
