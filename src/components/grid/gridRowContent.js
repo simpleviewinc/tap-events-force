@@ -20,6 +20,7 @@ import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
 import { EVFIcons } from 'SVIcons'
 import { useSessionPresenters } from 'SVHooks/models'
+import { useBookingState } from 'SVHooks/booking/useBookingState'
 
 /**
  * @summary - Root Grid Row Container component
@@ -102,7 +103,7 @@ const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
 const DrawerContent = ({ session, showPresenterDetailsModal }) => {
   const presenters = useSessionPresenters(session)
   const presenterCount = presenters?.length || 0
-
+  const hasPresenters = presenterCount > 0
   return (
     <DrawerMain>
       <BookingButton
@@ -113,7 +114,7 @@ const DrawerContent = ({ session, showPresenterDetailsModal }) => {
         session={session}
         showPresenterDetailsModal={showPresenterDetailsModal}
       />
-      { presenterCount > 0 && session.summary && <Divider /> }
+      { hasPresenters && session.summary && <Divider /> }
       <EvfTextToggle text={session.summary} />
     </DrawerMain>
   )
@@ -152,7 +153,24 @@ export const GridRowContent = props => {
   const [ isOpen, setIsOpen ] = useState(false)
   const gridRowSessionTimeStyles = useStyle('gridItem.sessionTime')
 
-  const onToggle = useCallback(event => setIsOpen(!isOpen), [ isOpen, setIsOpen ])
+  const bookingModel = useBookingState(session)
+  const hasBookingButton = bookingModel?.text ? true : false
+
+  const presenters = useSessionPresenters(session)
+  const presenterCount = presenters?.length || 0
+  const hasPresenters = presenterCount > 0
+
+  const hasSummary = session.summary ? true : false
+
+  const hasExtraContent = hasBookingButton || hasPresenters || hasSummary
+
+  const onToggle = useCallback(
+    event => {
+      hasExtraContent && setIsOpen(!isOpen)
+    },
+    [ isOpen, setIsOpen ]
+  )
+
   const Chevron = useMemo(
     () => (isOpen ? EVFIcons.ChevronUp : EVFIcons.ChevronDown),
     [isOpen]
@@ -183,15 +201,19 @@ export const GridRowContent = props => {
         />
         <InfoRow onPress={onToggle}>
           <SessionLocationSmall
+            className='ef-session-location-mobile'
             session={session}
             textClass='ef-session-location'
             iconGap={5}
           />
-          <ToggleIcon
-            Element={Chevron}
-            height={23}
-            width={18}
-          />
+          { hasExtraContent && (
+            <ToggleIcon
+              className='ef-session-expand-toggle'
+              Element={Chevron}
+              height={23}
+              width={18}
+            />
+          ) }
         </InfoRow>
         <Drawer toggled={isOpen}>
           <DrawerContent
