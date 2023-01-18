@@ -38,9 +38,7 @@ export const evfModalBuilder = parentProps => {
         toggle={toggle}
         size={size}
       >
-        { modalHeader && (
-          <ModalHeader className='modal-header-test'>{ modalHeader }</ModalHeader>
-        ) }
+        <ModalHeader className='modal-header-test'>{ modalHeader }</ModalHeader>
         { modalBody && <ModalBody>{ modalBody }</ModalBody> }
         { modalFooter && <ModalFooter>{ modalFooter }</ModalFooter> }
       </Modal>

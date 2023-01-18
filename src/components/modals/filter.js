@@ -1,5 +1,4 @@
 import React, { useMemo, useCallback } from 'react'
-import { useTheme } from '@keg-hub/re-theme'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@old-keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
@@ -29,9 +28,6 @@ const { SESSION_BOOKING_STATES, CATEGORIES, BUTTON_TYPES } = Values
  * @param {object} props
  */
 export const Filter = ({ visible, labels }) => {
-  const theme = useTheme()
-  const filterStyles = theme.get('modal.filter')
-
   // sort the labels alphabetically
   const labelsMemo = useMemo(() => sortLabels(labels), [labels])
   const applyCb = useCallback(() => {
@@ -46,11 +42,9 @@ export const Filter = ({ visible, labels }) => {
   return (
     <BaseModal
       onDismiss={cancelSelectedFilters}
-      title={'Filter'}
       visible={visible}
       Body={
         <Body
-          styles={filterStyles?.content?.body}
           labels={labelsMemo}
           selectedFilters={filters?.selectedFilters}
           hideCounter={!hasSelectedFilters}
@@ -60,7 +54,6 @@ export const Filter = ({ visible, labels }) => {
       Footer={
         <Footer
           disableApply={hasSelectedFilters && filteredSessions?.length === 0}
-          styles={filterStyles?.content?.footer}
           onButtonPress={applyCb}
           hasSelectedFilters={hasSelectedFilters}
         />
@@ -72,23 +65,16 @@ export const Filter = ({ visible, labels }) => {
 /**
  *
  * @param {object} props
- * @param {object} props.styles - default from modal.filter.body.topSection
  * @param {Array.<import('SVModels/session').Session>} props.filteredSessions
  * @param {Boolean} props.hideCounter
  */
-const TopSection = ({ styles, filteredSessions, hideCounter = false }) => {
+const TopSection = ({ filteredSessions, hideCounter = false }) => {
   return (
-    <View style={styles?.main}>
-      <Text
-        style={styles?.leftText}
-        className={'ef-modal-body-header'}
-      >
-        Only Show:
-      </Text>
+    <View className='ef-session-filter-modal-body-header-section'>
+      <Text className={'ef-modal-body-header'}>Only show:</Text>
       <ResultsCounter
         hide={hideCounter}
         count={filteredSessions.length}
-        styles={styles}
       />
     </View>
   )
@@ -98,19 +84,14 @@ const TopSection = ({ styles, filteredSessions, hideCounter = false }) => {
  * ResultsCounter
  * displays the count of filter
  * @param {object} props
- * @param {object} props.styles
  * @param {object} props.hide - whether to show/hide this component
  * @param {Number=} props.count
  */
-const ResultsCounter = ({ styles, hide, count = 0 }) => {
-  const resultText = `${count} ${
-    count > 1 || count === 0 ? 'results' : 'result'
-  }`
+const ResultsCounter = ({ hide, count = 0 }) => {
+  const resultText = count > 1 || count === 0 ? 'results' : 'result'
   return hide ? null : (
-    <Text
-      style={styles?.resultsText}
-      className={'ef-modal-body-highlight'}
-    >
+    <Text className={'ef-modal-body-highlight'}>
+      <Text className={'ef-session-filter-result-count'}>{ count } </Text>
       { resultText }
     </Text>
   )
@@ -138,20 +119,18 @@ const useLabelOn = (selectedCount, selectedFilters, label) => {
  * FilterLabelButton - Renders the label button component for a label object
  * Calls hook useLabelOn to check if the label is active of not
  * @param {Object} props
- * @param {Object} props.styles - styles to be applied to LabelButton
  * @param {import('SVModels/label').Label} props.label - the label model instance
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  * @param {number} selectedFilters - Total number of selected filters
  */
 const FilterLabelButton = props => {
-  const { label, styles, selectedCount, selectedFilters } = props
+  const { label, selectedCount, selectedFilters } = props
 
   const isLabelOn = useLabelOn(selectedCount, selectedFilters, label)
 
   return (
     <LabelButton
       label={label}
-      styles={styles}
       toggledOn={!selectedCount || isLabelOn}
       onPress={updateSelectedFilters}
     />
@@ -165,26 +144,22 @@ const FilterLabelButton = props => {
  *   - All filters are 'toggled on' by default when no filter is selected
  *   - Once a filter item is selected, all are toggled off except for the selected item(s)
  * @param {object} props
- * @param {object} props.styles - styles to be applied to LabelButton
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const LabelButtons = React.memo(
-  ({ styles, labels, selectedFilters = noPropArr }) => {
-    const selectedCount = selectedFilters.length
-    return labels.map(label => {
-      return (
-        <FilterLabelButton
-          key={label.name}
-          label={label}
-          styles={styles}
-          selectedFilters={selectedFilters}
-          selectedCount={selectedCount}
-        />
-      )
-    })
-  }
-)
+const LabelButtons = React.memo(({ labels, selectedFilters = noPropArr }) => {
+  const selectedCount = selectedFilters.length
+  return labels.map(label => {
+    return (
+      <FilterLabelButton
+        key={label.name}
+        label={label}
+        selectedFilters={selectedFilters}
+        selectedCount={selectedCount}
+      />
+    )
+  })
+})
 
 /**
  * Creates an array of Labels based on the passed in object
@@ -237,33 +212,33 @@ const filteredBookingStates = filterObj(
 /**
  * MiddleSection
  * @param {object} props
- * @param {object} props.styles - default from modal.filter.body.middleSection
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const MiddleSection = ({ styles, labels, selectedFilters }) => {
+const MiddleSection = ({ labels, selectedFilters }) => {
   const stateLabels = useStateLabels(filteredBookingStates)
 
   return (
-    <ScrollView
-      style={styles?.main}
-      contentContainerStyle={styles?.container}
-    >
-      <View style={styles?.labelButtons?.main}>
-        <LabelButtons
-          styles={styles.labelButtons?.item}
-          labels={labels}
-          selectedFilters={selectedFilters}
-        />
-      </View>
-
-      <View style={styles?.stateButtons?.main}>
-        <LabelButtons
-          styles={styles?.stateButtons?.item}
-          labels={stateLabels}
-          selectedFilters={selectedFilters}
-        />
-      </View>
+    <ScrollView className='ef-session-filter-modal-body-contents'>
+      { labels.length > 0 && (
+        <>
+          <View className='ef-session-filter-label-buttons-container'>
+            <LabelButtons
+              labels={labels}
+              selectedFilters={selectedFilters}
+            />
+          </View>
+          <hr />
+        </>
+      ) }
+      { stateLabels.length > 0 && (
+        <View className='ef-session-filter-label-buttons-container'>
+          <LabelButtons
+            labels={stateLabels}
+            selectedFilters={selectedFilters}
+          />
+        </View>
+      ) }
     </ScrollView>
   )
 }
@@ -271,29 +246,20 @@ const MiddleSection = ({ styles, labels, selectedFilters }) => {
 /**
  * Body
  * @param {object} props
- * @param {object} props.styles
  * @param {Array.<import('SVModels/label').Label>} props.labels - labels to display
  * @param {Array.<import('SVModels/session').Session>} props.filteredSessions
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters
  * @param {Boolean} props.hideCounter - to hide the results counter or not
  */
-const Body = ({
-  styles,
-  labels,
-  filteredSessions,
-  selectedFilters,
-  hideCounter,
-}) => {
+const Body = ({ labels, filteredSessions, selectedFilters, hideCounter }) => {
   return (
-    <View style={styles?.main}>
+    <View className='ef-session-filter-modal-body-container'>
       <TopSection
-        styles={styles?.topSection}
         filteredSessions={filteredSessions}
         hideCounter={hideCounter}
       />
       <MiddleSection
         labels={labels}
-        styles={styles?.middleSection}
         selectedFilters={selectedFilters}
       />
     </View>
@@ -303,32 +269,26 @@ const Body = ({
 /**
  * Footer
  * @param {object} props
- * @param {object} props.styles - default from modal.filter.body.bottomSection theme
  * @param {Function} props.onButtonPress
  * @param {boolean} props.hasSelectedFilters - whether or not the selectedFilters state is empty
  * @param {boolean} props.disableApply - whether the apply btn is disabled or not
  */
-const Footer = ({
-  styles,
-  onButtonPress,
-  hasSelectedFilters,
-  disableApply,
-}) => {
+const Footer = ({ onButtonPress, hasSelectedFilters, disableApply }) => {
   return (
-    <View style={styles?.main}>
+    <View className={'ef-session-modal-group-section-bottom'}>
       { hasSelectedFilters && (
         <EvfButton
-          buttonType={BUTTON_TYPES.LINK}
-          styles={styles?.clearButton}
+          buttonType={BUTTON_TYPES.MODAL_SECONDARY}
+          className={'ef-clear-filter-button'}
           onClick={clearSelectedFilters}
-          text={'Clear all'}
+          text={'CLEAR SELECTION'}
         />
       ) }
       <EvfButton
         buttonType={BUTTON_TYPES.MODAL_PRIMARY}
+        className={'ef-apply-filter-button'}
         disabled={disableApply}
         type={'primary'}
-        styles={styles?.applyButton}
         onClick={onButtonPress}
         text={'APPLY'}
       />

@@ -90,9 +90,6 @@ const buttonsWrapper = {
       maxWidth: '100%',
       paddingBottom: 20,
     },
-    $small: {
-      paddingBottom: 60,
-    },
   },
 }
 
