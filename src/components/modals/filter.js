@@ -228,7 +228,7 @@ const MiddleSection = ({ labels, selectedFilters }) => {
               selectedFilters={selectedFilters}
             />
           </View>
-          <hr />
+          { stateLabels.length > 0 && <hr /> }
         </>
       ) }
       { stateLabels.length > 0 && (
