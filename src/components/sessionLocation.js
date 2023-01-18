@@ -45,7 +45,8 @@ export const SessionLocation = ({
   const locationData = useSessionLocation(session)
   const locationName = locationData?.name
 
-  if (!locationName) return null
+  if (!locationName)
+    return <View className='ef-location-row-placeholder'></View>
   return (
     <LocationRow {...viewProps}>
       <LocationIcon gap={iconGap} />
