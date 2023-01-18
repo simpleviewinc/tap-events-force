@@ -7,12 +7,19 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
-import { View, Drawer, Touchable, Icon } from '@old-keg-hub/keg-components'
+import {
+  View,
+  Divider,
+  Drawer,
+  Touchable,
+  Icon,
+} from '@old-keg-hub/keg-components'
 import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
 import { EVFIcons } from 'SVIcons'
+import { useSessionPresenters } from 'SVHooks/models'
 
 /**
  * @summary - Root Grid Row Container component
@@ -93,6 +100,9 @@ const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
  * @param {object} props.styles
  */
 const DrawerContent = ({ session, showPresenterDetailsModal }) => {
+  const presenters = useSessionPresenters(session)
+  const presenterCount = presenters?.length || 0
+
   return (
     <DrawerMain>
       <BookingButton
@@ -103,6 +113,7 @@ const DrawerContent = ({ session, showPresenterDetailsModal }) => {
         session={session}
         showPresenterDetailsModal={showPresenterDetailsModal}
       />
+      { presenterCount > 0 && session.summary && <Divider /> }
       <EvfTextToggle text={session.summary} />
     </DrawerMain>
   )
