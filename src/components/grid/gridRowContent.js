@@ -100,10 +100,11 @@ const PresenterNames = reStyle(SessionPresentersRow)({ mB: 10 })
  * @param {import('SVModels/session').Session} props.session
  * @param {object} props.styles
  */
-const DrawerContent = ({ session, showPresenterDetailsModal }) => {
-  const presenters = useSessionPresenters(session)
-  const presenterCount = presenters?.length || 0
-  const hasPresenters = presenterCount > 0
+const DrawerContent = ({
+  session,
+  showPresenterDetailsModal,
+  hasPresenters,
+}) => {
   return (
     <DrawerMain>
       <BookingButton
@@ -114,7 +115,7 @@ const DrawerContent = ({ session, showPresenterDetailsModal }) => {
         session={session}
         showPresenterDetailsModal={showPresenterDetailsModal}
       />
-      { hasPresenters && session.summary && <Divider /> }
+      { hasPresenters && session.summary ? <Divider /> : null }
       <EvfTextToggle text={session.summary} />
     </DrawerMain>
   )
@@ -219,6 +220,7 @@ export const GridRowContent = props => {
           <DrawerContent
             session={session}
             showPresenterDetailsModal={showPresenterDetailsModal}
+            hasPresenters={hasPresenters}
           />
         </Drawer>
       </ColumnMain>
