@@ -145,6 +145,7 @@ export const SessionsList = props => {
 
   return (
     <SectionList
+      className='ef-sessions-list-container'
       accessibilityRole='list'
       accessibilityLabel='sessions-list'
       styles={styles}

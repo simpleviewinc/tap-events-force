@@ -22,6 +22,7 @@ export const PresenterLink = ({
 
   return (
     <SessionLink
+      containerClassName='ef-sessions-presenter-link-container'
       className={classNames}
       key={presenter.identifier}
       text={linkText}

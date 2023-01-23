@@ -13,7 +13,13 @@ import { isNative } from 'SVUtils/platform'
  * @param {object} props.styles
  * @param {string} props.className
  */
-export const SessionLink = ({ onPress, text, styles, className }) => {
+export const SessionLink = ({
+  onPress,
+  text,
+  styles,
+  className,
+  containerClassName,
+}) => {
   const theme = useTheme()
   const sessionLinkStyles = useStyle('sessionLink.default')
   const numberOfLines = useMemo(
@@ -30,6 +36,7 @@ export const SessionLink = ({ onPress, text, styles, className }) => {
 
   return (
     <Touchable
+      className={containerClassName}
       activeOpacity={onPress ? 0.2 : 1}
       onPress={onPress}
       style={themeStyle.main}

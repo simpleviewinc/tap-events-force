@@ -6,6 +6,8 @@ import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import { noOp } from 'SVUtils/helpers/method/noop'
 import { SessionsList } from 'SVComponents/sessionsList'
 import { useBookingRequestEvent } from 'SVHooks/booking/useBookingRequestEvent'
+import { isMobileSize } from 'SVUtils/theme'
+import { useTheme } from '@keg-hub/re-theme'
 
 /**
  * SessionComponent
@@ -37,8 +39,16 @@ export const Sessions = props => {
     'settings',
   ])
 
+  const theme = useTheme()
+  const isMobile = isMobileSize(theme)
+
+  let containerClasses = 'ef-sessions-background'
+  if (isMobile) {
+    containerClasses += ' ef-sessions-mobile'
+  }
+
   return (
-    <View className={'ef-sessions-background'}>
+    <View className={containerClasses}>
       <SessionsList
         labels={labels}
         onDayChange={onDayChange}
