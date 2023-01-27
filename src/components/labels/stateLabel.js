@@ -39,7 +39,7 @@ const StateLabelView = reStyle(View)(() => ({
 export const StateLabel = props => {
   if (!props.session) return null
 
-  const { session } = props
+  const { session, className } = props
   const sessionState = useSessionState(session)
   const labelToDisplay =
     sessionState === SESSION_BOOKING_STATES.SELECT ||
@@ -51,10 +51,10 @@ export const StateLabel = props => {
 
   return (
     <StateLabelView>
-      { /* TODO : Add state label class when received from trans-atlantic team */ }
       <StateLabelText
         boldText={selected}
         disabledText={fullyBooked}
+        className={className}
       >
         { labelToDisplay.toUpperCase() }
       </StateLabelText>
