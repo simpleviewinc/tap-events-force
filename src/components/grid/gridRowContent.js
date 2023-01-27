@@ -193,7 +193,12 @@ export const GridRowContent = props => {
             end={session.endDateTimeLocal}
             military={militaryTime}
           />
-          { !isOpen && <StateLabel session={session} /> }
+          { !isOpen && (
+            <StateLabel
+              className='ef-session-state-label-mobile'
+              session={session}
+            />
+          ) }
         </SessionTimeRow>
         <SessionLink
           text={session.name}
