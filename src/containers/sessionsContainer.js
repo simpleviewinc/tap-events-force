@@ -30,6 +30,7 @@ export const SessionsContainer = props => {
     ModalComponent,
     ButtonComponent,
     CheckboxComponent,
+    AgendaLayoutRenderer,
     showVersion,
     showPresenterDetailsModal,
     SessionDetailsModalContents,
@@ -45,6 +46,7 @@ export const SessionsContainer = props => {
       ModalComponent={ModalComponent}
       CheckboxComponent={CheckboxComponent}
       SessionDetailsModalContents={SessionDetailsModalContents}
+      AgendaLayoutRenderer={AgendaLayoutRenderer}
     >
       { showVersion && <VersionDisplay /> }
       <Sessions
