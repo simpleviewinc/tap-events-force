@@ -28,6 +28,7 @@ export const SessionDetailsModal = ({ session, visible }) => {
           <SessionDetailsModalContents sessionID={session.identifier} />
         </>
       }
+      pageViewNameForGa={'Sessions Details Modal: Session - ' + session.name}
     />
   )
 }

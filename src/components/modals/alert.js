@@ -34,6 +34,7 @@ export const Alert = ({ visible, title, message }) => {
           onButtonPress={hideActiveModal}
         />
       }
+      pageViewNameForGa={'Sessions Alert Modal'}
     />
   )
 }

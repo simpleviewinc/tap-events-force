@@ -58,6 +58,7 @@ export const Filter = ({ visible, labels }) => {
           hasSelectedFilters={hasSelectedFilters}
         />
       }
+      pageViewNameForGa={'Sessions Filter Modal'}
     />
   )
 }

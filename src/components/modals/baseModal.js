@@ -24,7 +24,15 @@ export const contentDefaultMaxHeight = 772
     />
  */
 export const BaseModal = props => {
-  const { title, visible, onDismiss, Body, Footer, className } = props
+  const {
+    title,
+    visible,
+    onDismiss,
+    Body,
+    Footer,
+    className,
+    pageViewNameForGa,
+  } = props
 
   const dismiss = useCallback(() => {
     onDismiss?.()
@@ -41,6 +49,7 @@ export const BaseModal = props => {
       toggle={dismiss}
       isOpen={visible}
       className={className}
+      pageViewNameForGa={pageViewNameForGa}
     />
   )
 }
