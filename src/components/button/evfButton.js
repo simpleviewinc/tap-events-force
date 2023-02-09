@@ -7,7 +7,7 @@ import { ComponentsContext } from 'SVContexts/components/componentsContext'
  * @param {object} props
  * @param {object} props.styles
  * @param {object} props.onClick
- * @param {('default'|'primary')} props.type - button type. defaults to 'default'
+ * @param {('default'|'primary'|'iconButton')} props.type - button type. defaults to 'default'
  * @param {string} props.text - text to display on button
  * @param {boolean} props.isProcessing - to display processing content
  */
