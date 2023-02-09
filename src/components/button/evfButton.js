@@ -10,9 +10,19 @@ import { ComponentsContext } from 'SVContexts/components/componentsContext'
  * @param {('default'|'primary'|'iconButton')} props.type - button type. defaults to 'default'
  * @param {string} props.text - text to display on button
  * @param {boolean} props.isProcessing - to display processing content
+ * @param {boolean} props.buttonNameForGa - text to pass as a ga action
+ * @param {boolean} props.iconName - an optional font awesome icon className to pass in
  */
 export const EvfButton = props => {
-  const { buttonType, disabled, isProcessing, onClick, text } = props
+  const {
+    buttonType,
+    disabled,
+    isProcessing,
+    onClick,
+    text,
+    buttonNameForGa,
+    iconName,
+  } = props
 
   const { ButtonComponent } = useContext(ComponentsContext)
 
@@ -40,6 +50,8 @@ export const EvfButton = props => {
       text={text}
       className={props.className}
       session={props.session}
+      iconName={iconName}
+      buttonNameForGa={buttonNameForGa}
     ></ButtonComponent>
   )
 }
