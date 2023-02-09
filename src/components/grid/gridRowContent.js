@@ -16,8 +16,6 @@ import { useSessionPresenters } from 'SVHooks/models'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
 import { EvfButton } from 'SVComponents/button/evfButton'
 
-// const { CATEGORIES, BUTTON_TYPES } = Values
-
 /**
  * @summary - Root Grid Row Container component
  * @type {React.Component}
@@ -64,15 +62,6 @@ const InfoRow = reStyle(Touchable)({
  * @summary - Drawer Icon to display it current toggle state
  * @type {React.Component}
  */
-// const ToggleIcon = reStyle(
-//   Icon,
-//   'styles'
-// )({
-//   container: {
-//     pR: 10,
-//     top: 2,
-//   },
-// })
 
 /**
  * @summary - Root Drawer Container for holder all drawer content
@@ -168,11 +157,6 @@ export const GridRowContent = props => {
     [ isOpen, setIsOpen ]
   )
 
-  // const Chevron = useMemo(
-  //   () => (isOpen ? EVFIcons.ChevronUp : EVFIcons.ChevronDown),
-  //   [isOpen]
-  // )
-
   return (
     <GridRowMain>
       <LabelList
@@ -214,7 +198,7 @@ export const GridRowContent = props => {
             onClick={onToggle}
             buttonNameForGa={'Sessions Details Modal: Session -' + session.name}
             buttonType={'iconButton'}
-            iconName='fa fa-chevron-down'
+            iconName={isOpen ? 'fa fa-chevron-down' : 'fa fa-chevron-up'}
           ></EvfButton>
         </InfoRow>
         <Drawer toggled={isOpen}>

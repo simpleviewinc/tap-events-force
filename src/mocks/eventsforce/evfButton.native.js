@@ -39,6 +39,10 @@ export const EvfButton = ({
       type={typeToColorMap[buttonType]}
     >
       { children }
+      { text } count: { bookedCount }, mode: { bookingMode }, isProcessing: className{ ' ' }
+      { text }= { className }, buttonNameForGa: { buttonNameForGa }, iconName:{ ' ' }
+      { iconName }
+      { isProcessing }
     </Button>
   )
 }
