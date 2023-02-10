@@ -197,7 +197,7 @@ export const GridRowContent = props => {
             <EvfButton
               title='none'
               onClick={onToggle}
-              buttonNameForGa={'Session Details - ' + session.name}
+              buttonNameForGa={'Close Session Details - ' + session.name}
               buttonType={'sessionDetailsChevron'}
               sessionDetailsChevronIsOpen={isOpen}
             ></EvfButton>
@@ -205,7 +205,7 @@ export const GridRowContent = props => {
             <EvfButton
               title='none'
               onClick={onToggle}
-              buttonNameForGa={'Close Session Details - ' + session.name}
+              buttonNameForGa={'Session Details - ' + session.name}
               buttonType={'sessionDetailsChevron'}
               sessionDetailsChevronIsOpen={isOpen}
             ></EvfButton>
