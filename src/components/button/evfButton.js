@@ -21,7 +21,7 @@ export const EvfButton = props => {
     onClick,
     text,
     buttonNameForGa,
-    iconName,
+    sessionDetailsChevronIsOpen,
   } = props
 
   const { ButtonComponent } = useContext(ComponentsContext)
@@ -50,7 +50,7 @@ export const EvfButton = props => {
       text={text}
       className={props.className}
       session={props.session}
-      iconName={iconName}
+      sessionDetailsChevronIsOpen={sessionDetailsChevronIsOpen}
       buttonNameForGa={buttonNameForGa}
     ></ButtonComponent>
   )

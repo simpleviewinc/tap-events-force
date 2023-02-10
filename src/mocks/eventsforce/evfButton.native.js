@@ -40,7 +40,8 @@ export const EvfButton = ({
     >
       { children }
       { text } count: { bookedCount }, mode: { bookingMode }, isProcessing: className{ ' ' }
-      { text }= { className }, buttonNameForGa: { buttonNameForGa }, iconName:{ ' ' }
+      { text }= { className }, buttonNameForGa: { buttonNameForGa },
+      sessionDetailsChevronIsOpen:{ sessionDetailsChevronIsOpen }
       { iconName }
       { isProcessing }
     </Button>
