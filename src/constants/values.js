@@ -57,7 +57,8 @@ export const Values = deepFreeze({
     SELECT_SESSION: 'selectSession',
     MODAL_PRIMARY: 'modalPrimary',
     MODAL_SECONDARY: 'modalSecondary',
-    ICON_BUTTON: 'iconButton',
+    ISESSION_DETAILS_CHEVRON_CLOSED: 'sessionDetailsChevronClosed',
+    SESSION_DETAILS_CHEVRON_OPEN: 'sessionDetailsChevronOpen',
   },
 
   BOOKING_MODES: {

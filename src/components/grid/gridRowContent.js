@@ -193,23 +193,16 @@ export const GridRowContent = props => {
             textClass='ef-session-location'
             iconGap={5}
           />
-          { isOpen ? (
-            <EvfButton
-              title='none'
-              onClick={onToggle}
-              buttonNameForGa={'Close Session Details - ' + session.name}
-              buttonType={'sessionDetailsChevron'}
-              sessionDetailsChevronIsOpen={isOpen}
-            ></EvfButton>
-          ) : (
-            <EvfButton
-              title='none'
-              onClick={onToggle}
-              buttonNameForGa={'Session Details - ' + session.name}
-              buttonType={'sessionDetailsChevron'}
-              sessionDetailsChevronIsOpen={isOpen}
-            ></EvfButton>
-          ) }
+          <EvfButton
+            title='none'
+            onClick={onToggle}
+            buttonType={
+              isOpen
+                ? 'sessionDetailsChevronOpen'
+                : 'sessionDetailsChevronClosed'
+            }
+            session={session}
+          ></EvfButton>
         </InfoRow>
         <Drawer toggled={isOpen}>
           <DrawerContent

@@ -17,7 +17,8 @@ const typeToColorMap = {
   [BUTTON_TYPES.SELECT_SESSION]: 'info',
   [BUTTON_TYPES.MODAL_PRIMARY]: 'primary',
   [BUTTON_TYPES.MODAL_SECONDARY]: 'secondary',
-  [BUTTON_TYPES.ICON_BUTTON]: 'iconButton',
+  [BUTTON_TYPES.SESSION_DETAILS_CHEVRON_CLOSED]: 'sessionDetailsChevronClosed',
+  [BUTTON_TYPES.SESSION_DETAILS_CHEVRON_OPEN]: 'sessionDetailsChevronOpen',
 }
 
 /**
@@ -40,8 +41,7 @@ export const EvfButton = ({
     >
       { children }
       { text } count: { bookedCount }, mode: { bookingMode }, isProcessing: className{ ' ' }
-      { text }= { className }, buttonNameForGa: { buttonNameForGa },
-      sessionDetailsChevronIsOpen:{ sessionDetailsChevronIsOpen }
+      { text }= { className }
       { iconName }
       { isProcessing }
     </Button>
