@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react'
+import React, { useState, useCallback } from 'react'
 import { LabelTag } from 'SVComponents/labels/labelTag'
 import { LabelList } from 'SVComponents/labels/labelList'
 import { SessionTime } from 'SVComponents/sessionTime/sessionTime'
@@ -7,20 +7,14 @@ import { reStyle } from '@keg-hub/re-theme/reStyle'
 import PropTypes from 'prop-types'
 import { SessionLink } from 'SVComponents/sessionLink'
 import { EvfTextToggle } from 'SVComponents/textToggle'
-import {
-  View,
-  Divider,
-  Drawer,
-  Touchable,
-  Icon,
-} from '@old-keg-hub/keg-components'
+import { View, Divider, Drawer, Touchable } from '@old-keg-hub/keg-components'
 import { SessionLocation } from 'SVComponents/sessionLocation'
 import { BookingButton } from 'SVComponents/button/bookingButton'
 import { SessionPresentersRow } from 'SVComponents/sessionDetails'
 import { StateLabel } from '../labels/stateLabel'
-import { EVFIcons } from 'SVIcons'
 import { useSessionPresenters } from 'SVHooks/models'
 import { useBookingState } from 'SVHooks/booking/useBookingState'
+import { EvfButton } from 'SVComponents/button/evfButton'
 
 /**
  * @summary - Root Grid Row Container component
@@ -68,15 +62,6 @@ const InfoRow = reStyle(Touchable)({
  * @summary - Drawer Icon to display it current toggle state
  * @type {React.Component}
  */
-const ToggleIcon = reStyle(
-  Icon,
-  'styles'
-)({
-  container: {
-    pR: 10,
-    top: 2,
-  },
-})
 
 /**
  * @summary - Root Drawer Container for holder all drawer content
@@ -172,11 +157,6 @@ export const GridRowContent = props => {
     [ isOpen, setIsOpen ]
   )
 
-  const Chevron = useMemo(
-    () => (isOpen ? EVFIcons.ChevronUp : EVFIcons.ChevronDown),
-    [isOpen]
-  )
-
   return (
     <GridRowMain>
       <LabelList
@@ -205,6 +185,7 @@ export const GridRowContent = props => {
           className='ef-session-name-link ef-session-name-mobile'
           onPress={onToggle}
         />
+
         <InfoRow onPress={onToggle}>
           <SessionLocationSmall
             className='ef-session-location-mobile'
@@ -212,14 +193,16 @@ export const GridRowContent = props => {
             textClass='ef-session-location'
             iconGap={5}
           />
-          { hasExtraContent && (
-            <ToggleIcon
-              className='ef-session-expand-toggle'
-              Element={Chevron}
-              height={23}
-              width={18}
-            />
-          ) }
+          <EvfButton
+            title='none'
+            onClick={onToggle}
+            buttonType={
+              isOpen
+                ? 'sessionDetailsChevronOpen'
+                : 'sessionDetailsChevronClosed'
+            }
+            session={session}
+          ></EvfButton>
         </InfoRow>
         <Drawer toggled={isOpen}>
           <DrawerContent
