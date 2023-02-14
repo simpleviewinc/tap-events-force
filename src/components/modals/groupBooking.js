@@ -54,7 +54,7 @@ export const GroupBooking = ({ visible, session }) => {
             styles={groupBookingStyles?.content?.footer}
           />
         }
-        pageViewNameForGa={'Sessions Group Booking Modal'}
+        pageViewNameForGa={'Sessions Group Booking'}
       />
     </GroupBookingProvider>
   )
