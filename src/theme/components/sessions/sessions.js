@@ -1,5 +1,4 @@
 import { colors } from '../../colors'
-import { sessionsHeader } from './sessionsHeader'
 import { sessionsList } from './sessionsList'
 
 export const sessions = {
@@ -24,7 +23,6 @@ export const sessions = {
     },
   },
   content: {
-    header: sessionsHeader,
     list: sessionsList,
   },
 }

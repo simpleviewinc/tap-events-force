@@ -13,6 +13,7 @@ export const ComponentsProvider = ({
   ModalComponent,
   CheckboxComponent,
   SessionDetailsModalContents,
+  AgendaLayoutRenderer,
   children,
 }) => {
   const comps = useMemo(
@@ -21,12 +22,14 @@ export const ComponentsProvider = ({
       ModalComponent,
       CheckboxComponent,
       SessionDetailsModalContents,
+      AgendaLayoutRenderer,
     }),
     [
       ButtonComponent,
       ModalComponent,
       CheckboxComponent,
       SessionDetailsModalContents,
+      AgendaLayoutRenderer,
     ]
   )
 

@@ -12,9 +12,9 @@ const configureTheme = sizes => setSizes(sizes)
  */
 configureTheme({
   $xsmall: 1,
-  $small: 480,
+  $small: 576,
   $medium: 768,
-  $large: 1024,
+  $large: 992,
   $xlarge: 1366,
 })
 

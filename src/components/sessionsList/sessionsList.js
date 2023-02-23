@@ -1,60 +1,21 @@
-import React, { useMemo, useCallback, useRef } from 'react'
-import { isMobileSize } from 'SVUtils/theme'
-import { useTheme } from '@keg-hub/re-theme'
+import React, { useMemo, useContext, useCallback } from 'react'
+import { EVFIcons } from 'SVIcons'
 import { reduceObj, noPropArr } from '@keg-hub/jsutils'
-import { SessionsDivider } from './sessionsDivider'
 import { useAgenda } from 'SVHooks/models/useAgenda'
 import { GridContainer } from 'SVContainers/gridContainer'
-import { SessionsHeader } from 'SVComponents/sessionsHeader'
-import { SectionList } from '@old-keg-hub/keg-components'
-import { useStylesCallback, useDimensions } from '@keg-hub/re-theme'
-import { setDay } from 'SVActions/session/dates'
-import { getWindow } from 'SVUtils/platform/getWindow'
+import { ComponentsContext } from '../../contexts/components/componentsContext'
+import { useWaitingListActive, useAllowBooking } from 'SVHooks/sessions'
+import { useCreateModal } from 'SVHooks/modal'
+import { Button } from '@old-keg-hub/keg-components'
+import { useStoreItems } from 'SVHooks/store/useStoreItems'
+import { useDimensions } from '@keg-hub/re-theme'
+import { Values } from 'SVConstants'
+import {
+  applySessionFilters,
+  clearSelectedFilters,
+} from 'SVActions/session/filters'
 
-/**
- * Default scroll offset for the section headers based on the size
- * @number
- */
-const sectionOffset = -45
-
-/**
- * TODO: replace this with keg-core utility once >=v9.5.0 is released
- * @returns {Boolean} true if this react app is in a web environment and also rendered inside of an iframe
- */
-const isIFrame = () => {
-  const win = getWindow()
-  return win ? win !== win.parent : false
-}
-
-/**
- * Hook to memoize the sessions styles
- * <br/> Also calculates a bottom padding based on gridItem height
- *
- * @returns {Array} - memoized styles for the SectionList
- */
-const useListStyles = () => {
-  const dims = useDimensions()
-  const { current: initialHeight } = useRef(Math.max(dims.height, 500)) // ensure margin >=500px
-  return useStylesCallback(
-    (theme, styles, height) => {
-      const itemHeight =
-        (theme.get('gridItem')?.main?.minHeight || 300) + sectionOffset
-
-      const viewportHeight = isIFrame() ? initialHeight : height
-
-      return !height
-        ? theme.get('sessionsList')
-        : theme.get('sessionsList', {
-          content: {
-            list: {
-              marginBottom: viewportHeight - itemHeight,
-            },
-          },
-        })
-    },
-    [dims.height]
-  )
-}
+const { CATEGORIES, MODAL_TYPES, SUB_CATEGORIES } = Values
 
 /**
  * Hook to memoize the sessions for a day, and add a key
@@ -92,21 +53,46 @@ const useSessionsSections = (agendaSessions, agendaDays = noPropArr) => {
   }, [ agendaSessions, agendaDays ])
 }
 
-/**
- * Hook to memoize an onScrollChange callback
- * @param {Array} sections - group of sessions by day
- * @param {number} currentDay - Active day of sessions being rendered
- * @param {function} onDayChange - Callback to be called when the active day changes
- *
- * @returns {Array} - memoized sessions in SectionList required format
- */
-const useOnScrollChange = (sections, currentDay, onDayChange) => {
-  return useCallback(
-    nextDayStr => {
-      const nextDay = parseInt(nextDayStr)
-      setDay(nextDay, onDayChange)
-    },
-    [ sections, currentDay, onDayChange ]
+const HeaderButtons = ({ onClick }) => {
+  const dim = useDimensions()
+  const activeFilters = useStoreItems(
+    `${CATEGORIES.FILTERS}.${SUB_CATEGORIES.ACTIVE_FILTERS}`
+  )
+
+  const smallWidth = dim.width <= 768
+  const showClearButton = dim.width > 576 && Boolean(activeFilters?.length)
+
+  const clearActiveFilters = useCallback(() => {
+    clearSelectedFilters()
+    applySessionFilters()
+  }, [ applySessionFilters, clearSelectedFilters ])
+
+  const filterButtonClassName = 'ef-sessions-filter-button col-auto'
+
+  return (
+    <div className='row justify-content-end pr-md-5 pr-sm-3'>
+      { smallWidth ? (
+        <div className={filterButtonClassName + ' align-self-center px-0'}>
+          <EVFIcons.Filter
+            onPress={onClick}
+            color={'#000000'}
+          />
+        </div>
+      ) : (
+        <Button
+          className={filterButtonClassName}
+          onClick={onClick}
+          content={'Filter'}
+        />
+      ) }
+      { showClearButton && (
+        <Button
+          content={'Clear'}
+          onClick={clearActiveFilters}
+          className='col-auto ef-sessions-clear-filters-button'
+        />
+      ) }
+    </div>
   )
 }
 
@@ -128,58 +114,44 @@ export const SessionsList = props => {
     sessions,
     onDayChange,
     showPresenterDetailsModal,
+    labels,
     ...itemProps
   } = props
-  const currentDay = settings.agendaSettings.activeDayNumber || 1
 
-  const theme = useTheme()
   const agenda = useAgenda()
-  const styles = useListStyles()
-  const isMobile = isMobileSize(theme)
-  const sections = useSessionsSections(sessions, agenda?.agendaDays)
-  const onScrollSectionChange = useOnScrollChange(
-    sections,
-    currentDay,
-    onDayChange
-  )
+  const days = useSessionsSections(sessions, agenda?.agendaDays)
+
+  const waitingListActive = useWaitingListActive()
+  const allowBooking = useAllowBooking()
+  const areCustomFilterLabelsPresent = labels?.length > 0
+
+  const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
+
+  const { AgendaLayoutRenderer } = useContext(ComponentsContext)
 
   return (
-    <SectionList
-      className='ef-sessions-list-container'
-      accessibilityRole='list'
-      accessibilityLabel='sessions-list'
-      styles={styles}
-      sections={sections}
-      activeSection={currentDay}
-      indexSectionHeaderBy={'dayNum'}
-      sectionChangeOffset={sectionOffset}
-      onScrollSectionChange={onScrollSectionChange}
-      renderItem={({ item }) => (
-        <GridContainer
-          showPresenterDetailsModal={showPresenterDetailsModal}
-          {...item}
-          {...itemProps}
-        />
-      )}
-      renderListHeader={({ onSectionChange: onDayChange }) => (
-        <SessionsHeader
-          agenda={agenda}
-          currentDay={currentDay}
-          labels={itemProps.labels}
-          onDayChange={onDayChange}
-        />
-      )}
-      renderSectionHeader={({ section, styles }) => (
-        <SessionsDivider
-          styles={styles}
-          first={section.first}
-          last={section.last}
-          isMobile={isMobile}
-          dayNum={section?.dayNum}
-          dayText={section?.dayText}
-          hasSessions={Boolean(section?.data.length)}
-        />
-      )}
+    <AgendaLayoutRenderer
+      days={days}
+      renderDayTimeBlock={timeBlock => {
+        return (
+          <GridContainer
+            key={timeBlock.key}
+            showPresenterDetailsModal={showPresenterDetailsModal}
+            labels={labels}
+            {...timeBlock}
+            {...itemProps}
+          />
+        )
+      }}
+      renderHeaderButtons={() => {
+        return (
+          (waitingListActive ||
+            allowBooking ||
+            areCustomFilterLabelsPresent) && (
+            <HeaderButtons onClick={displayFilterModal} />
+          )
+        )
+      }}
     />
   )
 }

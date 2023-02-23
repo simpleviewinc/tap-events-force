@@ -79,6 +79,27 @@ export const RootContainer = withAppHeader(displayName, props => {
     return <p>Session details modal for sessionID: { sessionID }</p>
   }
 
+  const AgendaLayoutRenderer = props => {
+    const { days, renderDayTimeBlock, renderHeaderButtons } = props
+
+    return (
+      <>
+        <h2>Day list renderer</h2>
+        { renderHeaderButtons() }
+        { days.map((day, index) => {
+          return (
+            <React.Fragment key={index}>
+              <h3>{ 'Day ' + day.dayNum }</h3>
+              { day.data.map(timeBlock => {
+                return renderDayTimeBlock(timeBlock)
+              }) }
+            </React.Fragment>
+          )
+        }) }
+      </>
+    )
+  }
+
   return (
     <>
       { !isNative() && process.env.NODE_ENV === 'development' && (
@@ -95,6 +116,7 @@ export const RootContainer = withAppHeader(displayName, props => {
         ModalComponent={SessionsModal}
         ButtonComponent={EvfButton}
         CheckboxComponent={EvfCheckbox}
+        AgendaLayoutRenderer={AgendaLayoutRenderer}
         showPresenterDetailsModal={presenterID =>
           alert(
             'presenter details modal opened for presenter with ID: ' +

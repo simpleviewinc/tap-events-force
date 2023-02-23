@@ -29,6 +29,7 @@ const SessionsApp = props => {
     ModalComponent,
     ButtonComponent,
     CheckboxComponent,
+    AgendaLayoutRenderer,
     showVersion,
     showPresenterDetailsModal,
     SessionDetailsModalContents
@@ -47,6 +48,7 @@ const SessionsApp = props => {
           ModalComponent={ModalComponent}
           CheckboxComponent={CheckboxComponent}
           ButtonComponent={ButtonComponent}
+          AgendaLayoutRenderer={AgendaLayoutRenderer}
           showVersion={showVersion}
           showPresenterDetailsModal={showPresenterDetailsModal}
           SessionDetailsModalContents={SessionDetailsModalContents}
