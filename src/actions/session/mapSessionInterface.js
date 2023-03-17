@@ -53,7 +53,6 @@ const getDispatchPayload = (category, value) => {
           }
         : // subcategories are upsert-merged, rather than set, since they
       // might need to be joined with data that was loaded from localStorage,
-      // e.g. agendaSettings.activeDayNumber
           {
             type: ActionTypes.UPSERT_ITEM,
             payload: { category, item: value, key: subCatMap[category] },
