@@ -6,7 +6,7 @@ import { useIsRegisteredForDayCallback } from './useIsRegisteredForDayCallback'
 import { Values } from 'SVConstants'
 import { validate, isObj, isArr } from '@keg-hub/jsutils'
 
-const { CATEGORIES, SUB_CATEGORIES } = Values
+const { CATEGORIES } = Values
 
 /**
  * Helper for `useIsAttendeeDisabledCallback` that checks for time conflicts
@@ -16,14 +16,11 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
  * true if the attendee is timeblocked against `session`
  */
 const useIsTimeBlockedCallback = (session, attendees) => {
-  const agendaSettings = useStoreItems(
-    `${CATEGORIES.SETTINGS}.${SUB_CATEGORIES.AGENDA_SETTINGS}`
-  )
   const agendaSessions = useStoreItems(CATEGORIES.AGENDA_SESSIONS)
   const timeConflicts = useBookingTimeConflicts(
     session,
     attendees,
-    agendaSessions[agendaSettings?.activeDayNumber ?? 1]
+    agendaSessions[session?.dayNumber]
   )
   return useCallback(attendeeId => Boolean(timeConflicts?.[attendeeId]), [
     timeConflicts,

@@ -108,7 +108,6 @@ export const useBookingState = session => {
     attendees,
     agendaSessions,
     bookingMode,
-    settings,
     pendingSession,
   } = useStoreData()
 
@@ -119,7 +118,7 @@ export const useBookingState = session => {
   const timeConflicts = useBookingTimeConflicts(
     session,
     attendees,
-    agendaSessions[settings?.agendaSettings?.activeDayNumber ?? 1]
+    agendaSessions[session?.dayNumber]
   )
 
   // Attendees that can book the current session
