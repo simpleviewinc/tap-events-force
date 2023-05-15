@@ -61,8 +61,11 @@ const TopSection = ({ styles }) => {
   const isWaitingListAvailable =
     state.session.capacity.isWaitingListAvailable === true
 
-  const capacityText =
-    isWaitingListAvailable && isFull ? 'Waiting list full' : bookingCapacityText
+  const capacityText = !isFull
+    ? bookingCapacityText
+    : isWaitingListAvailable
+      ? 'Waiting list full'
+      : 'Session has no more capacity'
 
   return (
     <View
