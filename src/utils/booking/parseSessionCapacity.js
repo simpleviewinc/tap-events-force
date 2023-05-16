@@ -25,7 +25,7 @@ export const parseSessionCapacity = (sessionCapacity = {}) => {
   // if a waiting list capacity is defined, use it. If it's undefined, but waitingList is still available,
   // consider the capacity infinite. Otherwise treat it as empty.
   const remainingWaitingPlaces = waitingListIsAvailable
-    ? sessionCapacity?.waitingListRemainingPlaces ?? Infinity
+    ? sessionCapacity?.waitingListRemainingCapacity ?? Infinity
     : 0
 
   return {
