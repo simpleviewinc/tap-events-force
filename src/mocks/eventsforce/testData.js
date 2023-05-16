@@ -319,8 +319,9 @@ export default {
       restrictToAttendeeCategories: [],
       capacity: {
         isUnlimited: false,
-        remainingPlaces: 3,
+        remainingPlaces: 0,
         isWaitingListAvailable: true,
+        waitingListRemainingCapacity: 0,
       },
     },
     {
