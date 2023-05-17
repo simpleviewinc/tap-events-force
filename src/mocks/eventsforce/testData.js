@@ -280,7 +280,7 @@ export default {
       capacity: {
         isUnlimited: false,
         remainingPlaces: 1,
-        isWaitingListAvailable: true,
+        isWaitingListAvailable: false,
       },
     },
     {
@@ -319,8 +319,9 @@ export default {
       restrictToAttendeeCategories: [],
       capacity: {
         isUnlimited: false,
-        remainingPlaces: 3,
+        remainingPlaces: 0,
         isWaitingListAvailable: true,
+        waitingListRemainingCapacity: 0,
       },
     },
     {
@@ -507,7 +508,7 @@ export default {
         isUnlimited: false,
         remainingPlaces: 1,
         isWaitingListAvailable: true,
-        waitingListRemainingPlaces: 3,
+        waitingListRemainingCapacity: 3,
       },
     },
   ],
@@ -525,14 +526,14 @@ export default {
       attendeeCategoryIdentifier: '2',
       bookedDays: [2],
       bookedSessions: [],
-      waitingListSessions: ['3'],
+      waitingListSessions: [],
     },
     {
       bookedTicketIdentifier: '3',
       name: 'Dr Lucy Jones',
       attendeeCategoryIdentifier: '1',
       bookedDays: [ 1, 2 ],
-      bookedSessions: [ '1', '3', '5' ],
+      bookedSessions: [ '1', '5' ],
     },
     {
       bookedTicketIdentifier: '4',

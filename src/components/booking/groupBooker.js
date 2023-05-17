@@ -57,10 +57,15 @@ const TopSection = ({ styles }) => {
 
   const bookingCapacityText = `${state.bookingCapacity} ${placeText} remaining`
 
-  const capacityText =
-    state.bookingCapacity === 0 && state.waitingCapacity === 0
+  const isFull = state.bookingCapacity <= 0 && state.waitingCapacity <= 0
+  const isWaitingListAvailable =
+    state.session.capacity.isWaitingListAvailable === true
+
+  const capacityText = !isFull
+    ? bookingCapacityText
+    : isWaitingListAvailable
       ? 'Waiting list full'
-      : bookingCapacityText
+      : 'Session has no more capacity'
 
   return (
     <View
