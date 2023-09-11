@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback, useContext } from 'react'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@old-keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
