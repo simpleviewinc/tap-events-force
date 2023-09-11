@@ -218,6 +218,7 @@ const filteredBookingStates = filterObj(
  */
 const MiddleSection = ({ labels, selectedFilters }) => {
   const stateLabels = useStateLabels(filteredBookingStates)
+  const { PresenterFilterComponent } = useContext(PresenterFilterComponent)
 
   return (
     <ScrollView className='ef-session-filter-modal-body-contents'>
@@ -240,6 +241,13 @@ const MiddleSection = ({ labels, selectedFilters }) => {
           />
         </View>
       ) }
+      <View className='ef-session-filter-label-buttons-container'>
+        <PresenterFilterComponent
+          onAddPresenter={presenterID => {
+            console.log(presenterID)
+          }}
+        />
+      </View>
     </ScrollView>
   )
 }

@@ -32,7 +32,8 @@ const SessionsApp = props => {
     AgendaLayoutRenderer,
     showVersion,
     showPresenterDetailsModal,
-    SessionDetailsModalContents
+    SessionDetailsModalContents,
+    PresenterFilterComponent
   } = props
 
   const [ activeTheme ] = useState(getDefaultTheme())
@@ -52,6 +53,7 @@ const SessionsApp = props => {
           showVersion={showVersion}
           showPresenterDetailsModal={showPresenterDetailsModal}
           SessionDetailsModalContents={SessionDetailsModalContents}
+          PresenterFilterComponent={PresenterFilterComponent}
         />
       </ReThemeProvider>
     </Provider>
