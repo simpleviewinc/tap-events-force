@@ -7,6 +7,7 @@ import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
 import { reduceObj, wordCaps, filterObj, noPropArr } from '@keg-hub/jsutils'
+import { ComponentsContext } from '../../contexts/components/componentsContext'
 import {
   updateSelectedFilters,
   applySessionFilters,
@@ -218,7 +219,7 @@ const filteredBookingStates = filterObj(
  */
 const MiddleSection = ({ labels, selectedFilters }) => {
   const stateLabels = useStateLabels(filteredBookingStates)
-  const { PresenterFilterComponent } = useContext(PresenterFilterComponent)
+  const { PresenterFilterComponent } = useContext(ComponentsContext)
 
   return (
     <ScrollView className='ef-session-filter-modal-body-contents'>
