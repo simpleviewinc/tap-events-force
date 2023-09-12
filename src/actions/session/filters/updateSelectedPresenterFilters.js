@@ -1,12 +1,8 @@
-import { dispatch, getStore } from 'SVStore'
+import { dispatch } from 'SVStore'
 import { ActionTypes, Values } from 'SVConstants'
 const { CATEGORIES, SUB_CATEGORIES } = Values
 
 export const updateSelectedPresenterFilters = listOfPresenterIds => {
-  const { items } = getStore()?.getState()
-
-  console.log(items?.filters)
-
   dispatch({
     type: ActionTypes.SET_ITEM,
     payload: {

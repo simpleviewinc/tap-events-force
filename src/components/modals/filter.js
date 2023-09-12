@@ -53,6 +53,7 @@ export const Filter = ({ visible, labels }) => {
           selectedFilters={filters?.selectedFilters}
           hideCounter={!hasSelectedFilters}
           filteredSessions={filteredSessions}
+          selectedPresenterFilters={filters?.selectedPresenterFilters}
         />
       }
       Footer={
@@ -220,7 +221,11 @@ const filteredBookingStates = filterObj(
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const MiddleSection = ({ labels, selectedFilters }) => {
+const MiddleSection = ({
+  labels,
+  selectedFilters,
+  selectedPresenterFilters,
+}) => {
   const stateLabels = useStateLabels(filteredBookingStates)
   const { PresenterFilterComponent } = useContext(ComponentsContext)
 
@@ -247,6 +252,7 @@ const MiddleSection = ({ labels, selectedFilters }) => {
       ) }
       <View className='ef-session-filter-label-buttons-container'>
         <PresenterFilterComponent
+          selectedPresenterFilters={selectedPresenterFilters}
           updatePresenterFilters={listOfPresenterIDs => {
             updateSelectedPresenterFilters(listOfPresenterIDs)
           }}
@@ -264,7 +270,13 @@ const MiddleSection = ({ labels, selectedFilters }) => {
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters
  * @param {Boolean} props.hideCounter - to hide the results counter or not
  */
-const Body = ({ labels, filteredSessions, selectedFilters, hideCounter }) => {
+const Body = ({
+  labels,
+  filteredSessions,
+  selectedFilters,
+  selectedPresenterFilters,
+  hideCounter,
+}) => {
   return (
     <View className='ef-session-filter-modal-body-container'>
       <TopSection
@@ -274,6 +286,7 @@ const Body = ({ labels, filteredSessions, selectedFilters, hideCounter }) => {
       <MiddleSection
         labels={labels}
         selectedFilters={selectedFilters}
+        selectedPresenterFilters={selectedPresenterFilters}
       />
     </View>
   )

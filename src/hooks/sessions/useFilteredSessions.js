@@ -25,8 +25,6 @@ export const useFilteredSessions = () => {
       selectedFilters.length || selectedPresenterFilters.length
     )
 
-    console.log(filters)
-
     // do basic filtering on SELECTED labels so we can get the count
     let filteredSessions = []
 
@@ -40,8 +38,6 @@ export const useFilteredSessions = () => {
         filteredSessions
       )
     }
-    console.log(hasSelectedFilters)
-    console.log(filteredSessions)
     return filteredSessions
   }, [ filters, sessions ])
 }

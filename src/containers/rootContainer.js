@@ -101,7 +101,7 @@ export const RootContainer = withAppHeader(displayName, props => {
   }
 
   const PresenterFilterComponent = props => {
-    const { updatePresenterFilters } = props
+    const { updatePresenterFilters, selectedPresenterFilters } = props
 
     const handleChange = e => {
       let values = Array.from(e.target.selectedOptions, option => option.value)
@@ -114,8 +114,9 @@ export const RootContainer = withAppHeader(displayName, props => {
         <select
           multiple={true}
           onChange={handleChange}
+          value={selectedPresenterFilters}
         >
-          { mockData.presenters.map((presenter, index) => {
+          { mockData.presenters.map(presenter => {
             return (
               <option
                 value={presenter.identifier}

@@ -61,7 +61,6 @@ const HeaderButtons = ({ onClick }) => {
   const activePresenterFilters = useStoreItems(
     `${CATEGORIES.FILTERS}.${SUB_CATEGORIES.ACTIVE_PRESENTER_FILTERS}`
   )
-  console.log('activePresenterFilters', activePresenterFilters)
 
   const smallWidth = dim.width <= 768
   const showClearButton =
