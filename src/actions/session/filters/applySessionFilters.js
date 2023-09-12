@@ -61,6 +61,7 @@ export const applySessionFilters = (sessions, agendaDays) => {
       item: selectedFilters,
     },
   })
+
   dispatch({
     type: ActionTypes.SET_ITEM,
     payload: {

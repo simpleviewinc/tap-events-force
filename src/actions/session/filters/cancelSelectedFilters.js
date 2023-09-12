@@ -19,6 +19,7 @@ export const cancelSelectedFilters = () => {
       item: activeFilters,
     },
   })
+
   dispatch({
     type: ActionTypes.SET_ITEM,
     payload: {
