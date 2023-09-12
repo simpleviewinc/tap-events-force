@@ -100,6 +100,36 @@ export const RootContainer = withAppHeader(displayName, props => {
     )
   }
 
+  const PresenterFilterComponent = props => {
+    const { updatePresenterFilters } = props
+
+    const handleChange = e => {
+      let values = Array.from(e.target.selectedOptions, option => option.value)
+      updatePresenterFilters(values)
+    }
+
+    return (
+      <>
+        <h2>Presenter Filter</h2>
+        <select
+          multiple={true}
+          onChange={handleChange}
+        >
+          { mockData.presenters.map((presenter, index) => {
+            return (
+              <option
+                value={presenter.identifier}
+                key={presenter.identifier}
+              >
+                { presenter.firstname } { presenter.lastname }
+              </option>
+            )
+          }) }
+        </select>
+      </>
+    )
+  }
+
   return (
     <>
       { !isNative() && process.env.NODE_ENV === 'development' && (
@@ -124,6 +154,7 @@ export const RootContainer = withAppHeader(displayName, props => {
           )
         }
         SessionDetailsModalContents={SessionDetailsModalContents}
+        PresenterFilterComponent={PresenterFilterComponent}
       />
     </>
   )

@@ -13,6 +13,7 @@ import {
   applySessionFilters,
   cancelSelectedFilters,
   clearSelectedFilters,
+  updateSelectedPresenterFilters,
 } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import {
@@ -244,8 +245,8 @@ const MiddleSection = ({ labels, selectedFilters }) => {
       ) }
       <View className='ef-session-filter-label-buttons-container'>
         <PresenterFilterComponent
-          onAddPresenter={presenterID => {
-            console.log(presenterID)
+          updatePresenterFilters={listOfPresenterIDs => {
+            updateSelectedPresenterFilters(listOfPresenterIDs)
           }}
         />
       </View>
