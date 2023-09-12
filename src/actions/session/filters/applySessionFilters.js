@@ -61,4 +61,12 @@ export const applySessionFilters = (sessions, agendaDays) => {
       item: selectedFilters,
     },
   })
+  dispatch({
+    type: ActionTypes.SET_ITEM,
+    payload: {
+      category: CATEGORIES.FILTERS,
+      key: SUB_CATEGORIES.ACTIVE_PRESENTER_FILTERS,
+      item: selectedPresenterFilters,
+    },
+  })
 }

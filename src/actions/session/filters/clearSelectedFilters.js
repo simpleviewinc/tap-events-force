@@ -14,4 +14,12 @@ export const clearSelectedFilters = () => {
       item: [],
     },
   })
+  dispatch({
+    type: ActionTypes.SET_ITEM,
+    payload: {
+      category: CATEGORIES.FILTERS,
+      key: SUB_CATEGORIES.SELECTED_PRESENTER_FILTERS,
+      item: [],
+    },
+  })
 }

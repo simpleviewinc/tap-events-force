@@ -38,7 +38,9 @@ export const Filter = ({ visible, labels }) => {
   }, [ applySessionFilters, hideActiveModal ])
 
   const { filters } = useStoreItems([CATEGORIES.FILTERS])
-  const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
+  const hasSelectedFilters = Boolean(
+    filters?.selectedFilters.length || filters?.selectedPresenterFilters.length
+  )
   const filteredSessions = useFilteredSessions()
 
   return (
