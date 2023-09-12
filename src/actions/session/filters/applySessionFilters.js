@@ -6,6 +6,7 @@ import { setAgendaSessions } from 'SVActions/session/setAgendaSessions'
 import {
   sessionsFromLabelFilters,
   sessionsFromStateFilters,
+  sessionsFromPresenterFilters,
 } from 'SVUtils/filters'
 
 const { CATEGORIES, SUB_CATEGORIES } = Values
@@ -20,18 +21,28 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
 export const applySessionFilters = (sessions, agendaDays) => {
   const { items } = getStore()?.getState()
   const selectedFilters = items?.filters?.selectedFilters || []
+  console.log('before')
+  const selectedPresenterFilters =
+    items?.filters?.selectedPresenterFilters || []
 
+  console.log(selectedPresenterFilters)
   sessions = sessions || items?.sessions
   agendaDays = agendaDays || items?.agendaDays
 
-  const filteredSessions =
+  let filteredSessions =
     selectedFilters.length > 0
       ? sessionsFromLabelFilters(
           selectedFilters,
           sessionsFromStateFilters(selectedFilters, sessions)
         )
       : sessions
+  console.log(filteredSessions)
 
+  filteredSessions = sessionsFromPresenterFilters(
+    selectedPresenterFilters,
+    filteredSessions
+  )
+  console.log('after')
   // Set the waiting list filter label for only viewable sessions
   setWaitingListActive(filteredSessions)
 
