@@ -221,13 +221,8 @@ const filteredBookingStates = filterObj(
  * @param {Array.<import('SVModels/label').Label>} props.labels - array of label items
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters - current selected filters
  */
-const MiddleSection = ({
-  labels,
-  selectedFilters,
-  selectedPresenterFilters,
-}) => {
+const MiddleSection = ({ labels, selectedFilters }) => {
   const stateLabels = useStateLabels(filteredBookingStates)
-  const { PresenterFilterComponent } = useContext(ComponentsContext)
 
   return (
     <ScrollView className='ef-session-filter-modal-body-contents'>
@@ -250,14 +245,6 @@ const MiddleSection = ({
           />
         </View>
       ) }
-      <View className='ef-session-filter-label-buttons-container'>
-        <PresenterFilterComponent
-          selectedPresenterFilters={selectedPresenterFilters}
-          updatePresenterFilters={listOfPresenterIDs => {
-            updateSelectedPresenterFilters(listOfPresenterIDs)
-          }}
-        />
-      </View>
     </ScrollView>
   )
 }
@@ -277,6 +264,7 @@ const Body = ({
   selectedPresenterFilters,
   hideCounter,
 }) => {
+  const { PresenterFilterComponent } = useContext(ComponentsContext)
   return (
     <View className='ef-session-filter-modal-body-container'>
       <TopSection
@@ -286,7 +274,12 @@ const Body = ({
       <MiddleSection
         labels={labels}
         selectedFilters={selectedFilters}
+      />
+      <PresenterFilterComponent
         selectedPresenterFilters={selectedPresenterFilters}
+        updatePresenterFilters={listOfPresenterIDs => {
+          updateSelectedPresenterFilters(listOfPresenterIDs)
+        }}
       />
     </View>
   )
