@@ -294,7 +294,7 @@ const Body = ({
  */
 const Footer = ({ onButtonPress, hasSelectedFilters, disableApply }) => {
   return (
-    <View className={'ef-session-modal-group-section-bottom'}>
+    <div className={'ef-session-modal-group-section-bottom'}>
       { hasSelectedFilters && (
         <EvfButton
           buttonType={BUTTON_TYPES.MODAL_SECONDARY}
@@ -311,6 +311,6 @@ const Footer = ({ onButtonPress, hasSelectedFilters, disableApply }) => {
         onClick={onButtonPress}
         text={'APPLY'}
       />
-    </View>
+    </div>
   )
 }
