@@ -58,9 +58,14 @@ const HeaderButtons = ({ onClick }) => {
   const activeFilters = useStoreItems(
     `${CATEGORIES.FILTERS}.${SUB_CATEGORIES.ACTIVE_FILTERS}`
   )
+  const activePresenterFilters = useStoreItems(
+    `${CATEGORIES.FILTERS}.${SUB_CATEGORIES.ACTIVE_PRESENTER_FILTERS}`
+  )
 
   const smallWidth = dim.width <= 768
-  const showClearButton = dim.width > 576 && Boolean(activeFilters?.length)
+  const showClearButton =
+    dim.width > 576 &&
+    (Boolean(activeFilters?.length) || Boolean(activePresenterFilters?.length))
 
   const clearActiveFilters = useCallback(() => {
     clearSelectedFilters()

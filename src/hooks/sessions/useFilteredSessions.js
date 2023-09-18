@@ -4,6 +4,7 @@ import { Values } from 'SVConstants/values'
 import {
   sessionsFromLabelFilters,
   sessionsFromStateFilters,
+  sessionsFromPresenterFilters,
 } from 'SVUtils/filters'
 
 const { CATEGORIES } = Values
@@ -18,14 +19,25 @@ export const useFilteredSessions = () => {
     CATEGORIES.SESSIONS,
   ])
   return useMemo(() => {
-    const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
+    const selectedFilters = filters?.selectedFilters || []
+    const selectedPresenterFilters = filters?.selectedPresenterFilters || []
+    const hasSelectedFilters = Boolean(
+      selectedFilters.length || selectedPresenterFilters.length
+    )
 
     // do basic filtering on SELECTED labels so we can get the count
-    return hasSelectedFilters
-      ? sessionsFromLabelFilters(
-          filters?.selectedFilters,
-          sessionsFromStateFilters(filters?.selectedFilters, sessions)
-        )
-      : []
+    let filteredSessions = []
+
+    if (hasSelectedFilters) {
+      filteredSessions = sessionsFromLabelFilters(
+        selectedFilters,
+        sessionsFromStateFilters(selectedFilters, sessions)
+      )
+      filteredSessions = sessionsFromPresenterFilters(
+        selectedPresenterFilters,
+        filteredSessions
+      )
+    }
+    return filteredSessions
   }, [ filters, sessions ])
 }

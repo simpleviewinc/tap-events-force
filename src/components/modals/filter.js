@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react'
+import React, { useMemo, useCallback, useContext } from 'react'
 import { BaseModal } from './baseModal'
 import { View, Text, ScrollView } from '@old-keg-hub/keg-components'
 import { EvfButton } from 'SVComponents/button/evfButton'
@@ -7,11 +7,13 @@ import { LabelButton } from 'SVComponents/labels/labelButton'
 import { Label } from 'SVModels/label'
 import { Values } from 'SVConstants/values'
 import { reduceObj, wordCaps, filterObj, noPropArr } from '@keg-hub/jsutils'
+import { ComponentsContext } from '../../contexts/components/componentsContext'
 import {
   updateSelectedFilters,
   applySessionFilters,
   cancelSelectedFilters,
   clearSelectedFilters,
+  updateSelectedPresenterFilters,
 } from 'SVActions/session/filters'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import {
@@ -36,7 +38,9 @@ export const Filter = ({ visible, labels }) => {
   }, [ applySessionFilters, hideActiveModal ])
 
   const { filters } = useStoreItems([CATEGORIES.FILTERS])
-  const hasSelectedFilters = Boolean(filters?.selectedFilters.length)
+  const hasSelectedFilters = Boolean(
+    filters?.selectedFilters.length || filters?.selectedPresenterFilters.length
+  )
   const filteredSessions = useFilteredSessions()
 
   return (
@@ -49,6 +53,7 @@ export const Filter = ({ visible, labels }) => {
           selectedFilters={filters?.selectedFilters}
           hideCounter={!hasSelectedFilters}
           filteredSessions={filteredSessions}
+          selectedPresenterFilters={filters?.selectedPresenterFilters}
         />
       }
       Footer={
@@ -252,7 +257,14 @@ const MiddleSection = ({ labels, selectedFilters }) => {
  * @param {Array.<import('SVModels/label').Label>} props.selectedFilters
  * @param {Boolean} props.hideCounter - to hide the results counter or not
  */
-const Body = ({ labels, filteredSessions, selectedFilters, hideCounter }) => {
+const Body = ({
+  labels,
+  filteredSessions,
+  selectedFilters,
+  selectedPresenterFilters,
+  hideCounter,
+}) => {
+  const { PresenterFilterComponent } = useContext(ComponentsContext)
   return (
     <View className='ef-session-filter-modal-body-container'>
       <TopSection
@@ -262,6 +274,12 @@ const Body = ({ labels, filteredSessions, selectedFilters, hideCounter }) => {
       <MiddleSection
         labels={labels}
         selectedFilters={selectedFilters}
+      />
+      <PresenterFilterComponent
+        selectedPresenterFilters={selectedPresenterFilters}
+        updatePresenterFilters={listOfPresenterIDs => {
+          updateSelectedPresenterFilters(listOfPresenterIDs)
+        }}
       />
     </View>
   )
@@ -276,7 +294,7 @@ const Body = ({ labels, filteredSessions, selectedFilters, hideCounter }) => {
  */
 const Footer = ({ onButtonPress, hasSelectedFilters, disableApply }) => {
   return (
-    <View className={'ef-session-modal-group-section-bottom'}>
+    <div className={'ef-session-modal-group-section-bottom'}>
       { hasSelectedFilters && (
         <EvfButton
           buttonType={BUTTON_TYPES.MODAL_SECONDARY}
@@ -293,6 +311,6 @@ const Footer = ({ onButtonPress, hasSelectedFilters, disableApply }) => {
         onClick={onButtonPress}
         text={'APPLY'}
       />
-    </View>
+    </div>
   )
 }

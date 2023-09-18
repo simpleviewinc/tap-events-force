@@ -9,6 +9,7 @@ const { CATEGORIES, SUB_CATEGORIES } = Values
 export const cancelSelectedFilters = () => {
   const { items } = getStore()?.getState()
   const activeFilters = items?.filters?.activeFilters || []
+  const activePresenterFilters = items?.filters?.activePresenterFilters || []
 
   dispatch({
     type: ActionTypes.SET_ITEM,
@@ -16,6 +17,15 @@ export const cancelSelectedFilters = () => {
       category: CATEGORIES.FILTERS,
       key: SUB_CATEGORIES.SELECTED_FILTERS,
       item: activeFilters,
+    },
+  })
+
+  dispatch({
+    type: ActionTypes.SET_ITEM,
+    payload: {
+      category: CATEGORIES.FILTERS,
+      key: SUB_CATEGORIES.SELECTED_PRESENTER_FILTERS,
+      item: activePresenterFilters,
     },
   })
 }
