@@ -3,6 +3,7 @@ import { groupBookingReducer } from './groupBookingReducer'
 import { GroupBookingContext } from './groupBookingContext'
 import { useInitialBookingState } from './hooks/useInitialBookingState'
 import { updateSessionBooking } from './actions/updateSessionBooking'
+import { checkAttendee } from './actions/checkAttendee'
 import { uncheckAttendee } from './actions/uncheckAttendee'
 import { reset } from './actions/reset'
 
@@ -24,6 +25,15 @@ export const GroupBookingProvider = ({ session, children }) => {
     () => ({
       updateSessionBooking: id => updateSessionBooking(dispatch, id),
       reset: () => reset(dispatch, initialState),
+      selectAll: (attendees, isAttendeeDisabledCallback) => {
+        attendees.forEach(attendee => {
+          checkAttendee(
+            dispatch,
+            attendee.bookedTicketIdentifier,
+            isAttendeeDisabledCallback
+          )
+        })
+      },
       selectNone: attendees => {
         attendees.forEach(attendee => {
           uncheckAttendee(dispatch, attendee.bookedTicketIdentifier)

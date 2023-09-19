@@ -7,6 +7,7 @@ import { Values } from 'SVConstants'
 import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 import { isBookingModified } from 'SVContexts/booking/utils/isBookingModified'
+import { useIsAttendeeDisabledCallback } from 'SVHooks/models/attendees/useIsAttendeeDisabledCallback'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import PropTypes from 'prop-types'
 
@@ -19,8 +20,12 @@ const { CATEGORIES, BUTTON_TYPES } = Values
  * @param {import('SVModels/session').Session} props.session - current session
  */
 export const GroupBookerBody = ({ styles, session }) => {
-  const { actions } = useGroupBookingContext()
+  const { state, actions } = useGroupBookingContext()
   const attendees = useStoreItems('attendees')
+  const isAttendeeDisabledCallback = useIsAttendeeDisabledCallback(
+    state.session,
+    attendees
+  )
 
   const [valid] = validate({ session }, { session: isObj })
   if (!valid) return null
@@ -38,7 +43,7 @@ export const GroupBookerBody = ({ styles, session }) => {
         buttonType={BUTTON_TYPES.LINK}
         className={'ef-select-all-attendees-button'}
         onClick={() => {
-          console.log('select all')
+          actions?.selectAll(attendees, isAttendeeDisabledCallback)
         }}
         text={'Select all'}
       />

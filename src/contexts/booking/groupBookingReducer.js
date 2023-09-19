@@ -134,6 +134,45 @@ const resetState = (currentState, nextState) => {
   return isValid ? nextState : currentState
 }
 
+const checkAttendee = (state, id, isAttendeeDisabledCallback) => {
+  const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
+  if (!valid) return state
+
+  const {
+    session,
+    bookingCapacity,
+    waitingCapacity,
+    current: { waitingList, bookingList },
+  } = state
+
+  const isAttendeeDisabled = isAttendeeDisabledCallback(id)
+  const isSessionBookable =
+    session.capacity?.isUnlimited ||
+    session.capacity?.isWaitingListAvailable ||
+    bookingCapacity > 0
+  const sessionHasCapacity =
+    bookingCapacity > 0 ||
+    (session.capacity?.isWaitingListAvailable && waitingCapacity > 0)
+
+  if (isAttendeeDisabled || !isSessionBookable || !sessionHasCapacity) {
+    return state
+  }
+
+  const shouldUseWaitingList =
+    session.capacity.isWaitingListAvailable && bookingCapacity <= 0
+
+  if (!waitingList.includes(id) && !bookingList.includes(id)) {
+    if (shouldUseWaitingList) {
+      return addToList(state, 'waitingList', id)
+    }
+    else {
+      return addToList(state, 'bookingList', id)
+    }
+  }
+
+  return state
+}
+
 const uncheckAttendee = (state, id) => {
   const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
   if (!valid) return state
@@ -148,9 +187,8 @@ const uncheckAttendee = (state, id) => {
   else if (bookingList.includes(id)) {
     return removeFromList(state, 'bookingList', id)
   }
-  else {
-    return state
-  }
+
+  return state
 }
 
 /**
@@ -168,6 +206,12 @@ export const groupBookingReducer = (state = initialState, action) => {
     return updateSessionBooking(state, value)
   case GroupBookingActionTypes.RESET:
     return resetState(state, value)
+  case GroupBookingActionTypes.CHECK_ATTENDEE:
+    return checkAttendee(
+      state,
+      value.attendeeId,
+      value.isAttendeeDisabledCallback
+    )
   case GroupBookingActionTypes.UNCHECK_ATTENDEE:
     return uncheckAttendee(state, value)
   }
