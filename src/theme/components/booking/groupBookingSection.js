@@ -3,13 +3,11 @@ import { colors } from 'SVTheme/colors'
 export const groupBookingSection = {
   main: {
     marginBottom: 11,
-    width: '95%',
   },
   content: {
     header: {
       $all: {
         $xsmall: {
-          width: '70%',
           color: colors.lightGray,
           fontWeight: '600',
           lineHeight: 19,

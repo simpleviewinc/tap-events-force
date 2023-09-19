@@ -39,22 +39,26 @@ export const GroupBookerBody = ({ styles, session }) => {
       style={styles.main}
     >
       <TopSection styles={topSectionStyles} />
-      <EvfButton
-        buttonType={BUTTON_TYPES.LINK}
-        className={'ef-select-all-attendees-button'}
-        onClick={() => {
-          actions?.selectAll(attendees, isAttendeeDisabledCallback)
-        }}
-        text={'Select all'}
-      />
-      <EvfButton
-        buttonType={BUTTON_TYPES.LINK}
-        className={'ef-select-none-attendees-button'}
-        onClick={() => {
-          actions?.selectNone(attendees)
-        }}
-        text={'Select none'}
-      />
+
+      <div className={`ef-quick-select-attendees-buttons-container`}>
+        <EvfButton
+          buttonType={BUTTON_TYPES.LINK}
+          className={'ef-select-all-attendees-button'}
+          onClick={() => {
+            actions?.selectAll(attendees, isAttendeeDisabledCallback)
+          }}
+          text={'Select all'}
+        />
+        <EvfButton
+          buttonType={BUTTON_TYPES.LINK}
+          className={'ef-select-none-attendees-button'}
+          onClick={() => {
+            actions?.selectNone(attendees)
+          }}
+          text={'Select none'}
+        />
+      </div>
+
       <GroupBookingOptions
         className={`ef-modal-group-section-middle`}
         styles={middleSectionStyles}
