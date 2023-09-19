@@ -19,6 +19,9 @@ const { CATEGORIES, BUTTON_TYPES } = Values
  * @param {import('SVModels/session').Session} props.session - current session
  */
 export const GroupBookerBody = ({ styles, session }) => {
+  const { actions } = useGroupBookingContext()
+  const attendees = useStoreItems('attendees')
+
   const [valid] = validate({ session }, { session: isObj })
   if (!valid) return null
 
@@ -31,7 +34,22 @@ export const GroupBookerBody = ({ styles, session }) => {
       style={styles.main}
     >
       <TopSection styles={topSectionStyles} />
-
+      <EvfButton
+        buttonType={BUTTON_TYPES.LINK}
+        className={'ef-select-all-attendees-button'}
+        onClick={() => {
+          console.log('select all')
+        }}
+        text={'Select all'}
+      />
+      <EvfButton
+        buttonType={BUTTON_TYPES.LINK}
+        className={'ef-select-none-attendees-button'}
+        onClick={() => {
+          actions?.selectNone(attendees)
+        }}
+        text={'Select none'}
+      />
       <GroupBookingOptions
         className={`ef-modal-group-section-middle`}
         styles={middleSectionStyles}

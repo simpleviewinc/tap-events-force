@@ -134,6 +134,25 @@ const resetState = (currentState, nextState) => {
   return isValid ? nextState : currentState
 }
 
+const uncheckAttendee = (state, id) => {
+  const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
+  if (!valid) return state
+
+  const {
+    current: { waitingList, bookingList },
+  } = state
+
+  if (waitingList.includes(id)) {
+    return removeFromList(state, 'waitingList', id)
+  }
+  else if (bookingList.includes(id)) {
+    return removeFromList(state, 'bookingList', id)
+  }
+  else {
+    return state
+  }
+}
+
 /**
  * Reducer function for the group booker
  * @param {Object} state - initial state for the reducer
@@ -149,5 +168,7 @@ export const groupBookingReducer = (state = initialState, action) => {
     return updateSessionBooking(state, value)
   case GroupBookingActionTypes.RESET:
     return resetState(state, value)
+  case GroupBookingActionTypes.UNCHECK_ATTENDEE:
+    return uncheckAttendee(state, value)
   }
 }
