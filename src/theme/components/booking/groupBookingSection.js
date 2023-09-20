@@ -35,9 +35,6 @@ export const groupBookingSection = {
     item: {
       main: {
         $web: {
-          $xsmall: {
-            fontSize: '0.5em',
-          },
           $small: {
             fontSize: 16,
           },
