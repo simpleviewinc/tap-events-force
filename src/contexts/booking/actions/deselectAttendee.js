@@ -1,8 +1,8 @@
 import { GroupBookingActionTypes } from '../constants/groupBookingActionTypes'
 
-export const uncheckAttendee = (dispatch, attendeeId) => {
+export const deselectAttendee = (dispatch, attendeeId) => {
   return dispatch?.({
-    type: GroupBookingActionTypes.UNCHECK_ATTENDEE,
+    type: GroupBookingActionTypes.DESELECT_ATTENDEE,
     value: attendeeId,
   })
 }

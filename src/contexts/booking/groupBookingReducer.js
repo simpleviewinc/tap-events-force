@@ -134,7 +134,7 @@ const resetState = (currentState, nextState) => {
   return isValid ? nextState : currentState
 }
 
-const checkAttendee = (state, id, isAttendeeDisabledCallback) => {
+const selectAttendee = (state, id, isAttendeeDisabledCallback) => {
   const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
   if (!valid) return state
 
@@ -173,7 +173,7 @@ const checkAttendee = (state, id, isAttendeeDisabledCallback) => {
   return state
 }
 
-const uncheckAttendee = (state, id) => {
+const deselectAttendee = (state, id) => {
   const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
   if (!valid) return state
 
@@ -206,13 +206,13 @@ export const groupBookingReducer = (state = initialState, action) => {
     return updateSessionBooking(state, value)
   case GroupBookingActionTypes.RESET:
     return resetState(state, value)
-  case GroupBookingActionTypes.CHECK_ATTENDEE:
-    return checkAttendee(
+  case GroupBookingActionTypes.SELECT_ATTENDEE:
+    return selectAttendee(
       state,
       value.attendeeId,
       value.isAttendeeDisabledCallback
     )
-  case GroupBookingActionTypes.UNCHECK_ATTENDEE:
-    return uncheckAttendee(state, value)
+  case GroupBookingActionTypes.DESELECT_ATTENDEE:
+    return deselectAttendee(state, value)
   }
 }

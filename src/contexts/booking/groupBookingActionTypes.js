@@ -1,6 +1,6 @@
 export const GroupBookingActionTypes = {
   UPDATE_SESSION_BOOKING: 'updateSessionBooking',
   RESET: 'resetBookingState',
-  CHECK_ATTENDEE: 'checkAttendee',
-  UNCHECK_ATTENDEE: 'uncheckAttendee',
+  SELECT_ATTENDEE: 'selectAttendee',
+  DESELECT_ATTENDEE: 'deselectAttendee',
 }
