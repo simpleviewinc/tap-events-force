@@ -11,6 +11,7 @@ import {
 } from '@old-keg-hub/keg-components'
 import * as bookingStatesTestData from '../../mocks/eventsforce/bookingStates'
 import defTestData from '../../mocks/eventsforce/testData.js'
+import testDataPublicAgendaNoLabels from '../../mocks/eventsforce/testDataPublicAgendaNoLabels.js'
 
 const convertJson = json => {
   return JSON.stringify(json, null, 2)
@@ -69,9 +70,15 @@ const SelectBookingState = props => {
       const editor = aceRef?.current?.editor
       if (!update || !editor) return
 
+      let testData
       // Get and convert the object to a string
-      const testData =
-        update === 'N/A' ? defTestData : get(bookingStatesTestData, update)
+      if (update === 'testDataPublicAgendaNoLabels') {
+        testData = testDataPublicAgendaNoLabels
+      }
+      else {
+        testData =
+          update === 'N/A' ? defTestData : get(bookingStatesTestData, update)
+      }
 
       const strData = convertJson(testData)
 
@@ -95,8 +102,12 @@ const SelectBookingState = props => {
         onValueChange={onValueChange}
       >
         <Option
-          label='N/A'
+          label='Reset'
           value={''}
+        />
+        <Option
+          label='Public agenda - presenters, no lalels'
+          value={'testDataPublicAgendaNoLabels'}
         />
         { options }
       </Select>
