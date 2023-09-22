@@ -156,6 +156,7 @@ export const RootContainer = withAppHeader(displayName, props => {
         }
         SessionDetailsModalContents={SessionDetailsModalContents}
         PresenterFilterComponent={PresenterFilterComponent}
+        shouldShowPresenterFilter={true}
       />
     </>
   )

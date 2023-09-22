@@ -234,7 +234,6 @@ const MiddleSection = ({ labels, selectedFilters }) => {
               selectedFilters={selectedFilters}
             />
           </View>
-          { stateLabels.length > 0 && <hr /> }
         </>
       ) }
       { stateLabels.length > 0 && (
@@ -264,7 +263,9 @@ const Body = ({
   selectedPresenterFilters,
   hideCounter,
 }) => {
-  const { PresenterFilterComponent } = useContext(ComponentsContext)
+  const { shouldShowPresenterFilter, PresenterFilterComponent } = useContext(
+    ComponentsContext
+  )
   return (
     <View className='ef-session-filter-modal-body-container'>
       <TopSection
@@ -275,12 +276,14 @@ const Body = ({
         labels={labels}
         selectedFilters={selectedFilters}
       />
-      <PresenterFilterComponent
-        selectedPresenterFilters={selectedPresenterFilters}
-        updatePresenterFilters={listOfPresenterIDs => {
-          updateSelectedPresenterFilters(listOfPresenterIDs)
-        }}
-      />
+      { shouldShowPresenterFilter && (
+        <PresenterFilterComponent
+          selectedPresenterFilters={selectedPresenterFilters}
+          updatePresenterFilters={listOfPresenterIDs => {
+            updateSelectedPresenterFilters(listOfPresenterIDs)
+          }}
+        />
+      ) }
     </View>
   )
 }
