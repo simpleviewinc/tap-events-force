@@ -7,6 +7,7 @@ import { Values } from 'SVConstants'
 import { useBookSessionCallback } from 'SVHooks/booking/useBookSessionCallback'
 import { useGroupBookingContext } from 'SVContexts/booking/groupBookingContext'
 import { isBookingModified } from 'SVContexts/booking/utils/isBookingModified'
+import { useIsAttendeeDisabledCallback } from 'SVHooks/models/attendees/useIsAttendeeDisabledCallback'
 import { useStoreItems } from 'SVHooks/store/useStoreItems'
 import PropTypes from 'prop-types'
 
@@ -19,6 +20,13 @@ const { CATEGORIES, BUTTON_TYPES } = Values
  * @param {import('SVModels/session').Session} props.session - current session
  */
 export const GroupBookerBody = ({ styles, session }) => {
+  const { state, actions } = useGroupBookingContext()
+  const attendees = useStoreItems('attendees')
+  const isAttendeeDisabledCallback = useIsAttendeeDisabledCallback(
+    state.session,
+    attendees
+  )
+
   const [valid] = validate({ session }, { session: isObj })
   if (!valid) return null
 
@@ -31,6 +39,25 @@ export const GroupBookerBody = ({ styles, session }) => {
       style={styles.main}
     >
       <TopSection styles={topSectionStyles} />
+
+      <div className={`ef-quick-select-attendees-buttons-container`}>
+        <EvfButton
+          buttonType={BUTTON_TYPES.LINK}
+          className={'ef-select-all-attendees-button'}
+          onClick={() => {
+            actions?.selectAll(attendees, isAttendeeDisabledCallback)
+          }}
+          text={'Select all'}
+        />
+        <EvfButton
+          buttonType={BUTTON_TYPES.LINK}
+          className={'ef-select-none-attendees-button'}
+          onClick={() => {
+            actions?.selectNone(attendees)
+          }}
+          text={'Select none'}
+        />
+      </div>
 
       <GroupBookingOptions
         className={`ef-modal-group-section-middle`}

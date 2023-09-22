@@ -134,6 +134,63 @@ const resetState = (currentState, nextState) => {
   return isValid ? nextState : currentState
 }
 
+const selectAttendee = (state, id, isAttendeeDisabledCallback) => {
+  const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
+  if (!valid) return state
+
+  const {
+    session,
+    bookingCapacity,
+    waitingCapacity,
+    current: { waitingList, bookingList },
+  } = state
+
+  const isAttendeeDisabled = isAttendeeDisabledCallback(id)
+  const isSessionBookable =
+    session.capacity?.isUnlimited ||
+    session.capacity?.isWaitingListAvailable ||
+    bookingCapacity > 0
+  const sessionHasCapacity =
+    bookingCapacity > 0 ||
+    (session.capacity?.isWaitingListAvailable && waitingCapacity > 0)
+
+  if (isAttendeeDisabled || !isSessionBookable || !sessionHasCapacity) {
+    return state
+  }
+
+  const shouldUseWaitingList =
+    session.capacity.isWaitingListAvailable && bookingCapacity <= 0
+
+  if (!waitingList.includes(id) && !bookingList.includes(id)) {
+    if (shouldUseWaitingList) {
+      return addToList(state, 'waitingList', id)
+    }
+    else {
+      return addToList(state, 'bookingList', id)
+    }
+  }
+
+  return state
+}
+
+const deselectAttendee = (state, id) => {
+  const [valid] = validate({ state, id }, { state: isInitialized, id: isStr })
+  if (!valid) return state
+
+  const {
+    current: { waitingList, bookingList },
+  } = state
+
+  if (waitingList.includes(id)) {
+    return removeFromList(state, 'waitingList', id)
+  }
+  else if (bookingList.includes(id)) {
+    return removeFromList(state, 'bookingList', id)
+  }
+
+  return state
+}
+
 /**
  * Reducer function for the group booker
  * @param {Object} state - initial state for the reducer
@@ -149,5 +206,13 @@ export const groupBookingReducer = (state = initialState, action) => {
     return updateSessionBooking(state, value)
   case GroupBookingActionTypes.RESET:
     return resetState(state, value)
+  case GroupBookingActionTypes.SELECT_ATTENDEE:
+    return selectAttendee(
+      state,
+      value.attendeeId,
+      value.isAttendeeDisabledCallback
+    )
+  case GroupBookingActionTypes.DESELECT_ATTENDEE:
+    return deselectAttendee(state, value)
   }
 }
