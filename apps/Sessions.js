@@ -33,6 +33,7 @@ const SessionsApp = props => {
     showVersion,
     showPresenterDetailsModal,
     SessionDetailsModalContents,
+    shouldShowPresenterFilter,
     PresenterFilterComponent
   } = props
 
@@ -54,6 +55,7 @@ const SessionsApp = props => {
           showPresenterDetailsModal={showPresenterDetailsModal}
           SessionDetailsModalContents={SessionDetailsModalContents}
           PresenterFilterComponent={PresenterFilterComponent}
+          shouldShowPresenterFilter={shouldShowPresenterFilter}
         />
       </ReThemeProvider>
     </Provider>

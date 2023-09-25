@@ -101,7 +101,11 @@ export const RootContainer = withAppHeader(displayName, props => {
   }
 
   const PresenterFilterComponent = props => {
-    const { updatePresenterFilters, selectedPresenterFilters } = props
+    const {
+      updatePresenterFilters,
+      selectedPresenterFilters,
+      shouldShowHeading,
+    } = props
 
     const handleChange = e => {
       let values = Array.from(e.target.selectedOptions, option => option.value)
@@ -110,7 +114,7 @@ export const RootContainer = withAppHeader(displayName, props => {
 
     return (
       <>
-        <h2>Presenter Filter</h2>
+        { shouldShowHeading && <h2>Presenter Filter</h2> }
         <select
           multiple={true}
           onChange={handleChange}
@@ -156,6 +160,7 @@ export const RootContainer = withAppHeader(displayName, props => {
         }
         SessionDetailsModalContents={SessionDetailsModalContents}
         PresenterFilterComponent={PresenterFilterComponent}
+        shouldShowPresenterFilter={true}
       />
     </>
   )

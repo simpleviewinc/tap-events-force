@@ -74,10 +74,10 @@ export const Filter = ({ visible, labels }) => {
  * @param {Array.<import('SVModels/session').Session>} props.filteredSessions
  * @param {Boolean} props.hideCounter
  */
-const TopSection = ({ filteredSessions, hideCounter = false }) => {
+const TopSection = ({ filteredSessions, hideCounter = false, headingText }) => {
   return (
     <View className='ef-session-filter-modal-body-header-section'>
-      <Text className={'ef-modal-body-header'}>Only show:</Text>
+      <Text className={'ef-modal-body-header'}>{ headingText }</Text>
       <ResultsCounter
         hide={hideCounter}
         count={filteredSessions.length}
@@ -234,7 +234,6 @@ const MiddleSection = ({ labels, selectedFilters }) => {
               selectedFilters={selectedFilters}
             />
           </View>
-          { stateLabels.length > 0 && <hr /> }
         </>
       ) }
       { stateLabels.length > 0 && (
@@ -264,23 +263,37 @@ const Body = ({
   selectedPresenterFilters,
   hideCounter,
 }) => {
-  const { PresenterFilterComponent } = useContext(ComponentsContext)
+  const { shouldShowPresenterFilter, PresenterFilterComponent } = useContext(
+    ComponentsContext
+  )
+  const stateLabels = useStateLabels(filteredBookingStates)
+  const shouldShowLabelFilters = labels.length > 0 || stateLabels.length > 0
+
+  const headingText = shouldShowLabelFilters
+    ? 'Only show:'
+    : 'Only show presenters:'
   return (
     <View className='ef-session-filter-modal-body-container'>
       <TopSection
         filteredSessions={filteredSessions}
         hideCounter={hideCounter}
+        headingText={headingText}
       />
-      <MiddleSection
-        labels={labels}
-        selectedFilters={selectedFilters}
-      />
-      <PresenterFilterComponent
-        selectedPresenterFilters={selectedPresenterFilters}
-        updatePresenterFilters={listOfPresenterIDs => {
-          updateSelectedPresenterFilters(listOfPresenterIDs)
-        }}
-      />
+      { shouldShowLabelFilters && (
+        <MiddleSection
+          labels={labels}
+          selectedFilters={selectedFilters}
+        />
+      ) }
+      { shouldShowPresenterFilter && (
+        <PresenterFilterComponent
+          selectedPresenterFilters={selectedPresenterFilters}
+          updatePresenterFilters={listOfPresenterIDs => {
+            updateSelectedPresenterFilters(listOfPresenterIDs)
+          }}
+          shouldShowHeading={shouldShowLabelFilters}
+        />
+      ) }
     </View>
   )
 }

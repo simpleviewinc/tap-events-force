@@ -15,6 +15,7 @@ export const ComponentsProvider = ({
   SessionDetailsModalContents,
   AgendaLayoutRenderer,
   PresenterFilterComponent,
+  shouldShowPresenterFilter,
   children,
 }) => {
   const comps = useMemo(
@@ -25,6 +26,7 @@ export const ComponentsProvider = ({
       SessionDetailsModalContents,
       AgendaLayoutRenderer,
       PresenterFilterComponent,
+      shouldShowPresenterFilter,
     }),
     [
       ButtonComponent,
@@ -33,6 +35,7 @@ export const ComponentsProvider = ({
       SessionDetailsModalContents,
       AgendaLayoutRenderer,
       PresenterFilterComponent,
+      shouldShowPresenterFilter,
     ]
   )
 

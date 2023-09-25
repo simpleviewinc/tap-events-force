@@ -132,7 +132,9 @@ export const SessionsList = props => {
 
   const displayFilterModal = useCreateModal(MODAL_TYPES.FILTER, { labels })
 
-  const { AgendaLayoutRenderer } = useContext(ComponentsContext)
+  const { AgendaLayoutRenderer, shouldShowPresenterFilter } = useContext(
+    ComponentsContext
+  )
 
   return (
     <AgendaLayoutRenderer
@@ -152,7 +154,8 @@ export const SessionsList = props => {
         return (
           (waitingListActive ||
             allowBooking ||
-            areCustomFilterLabelsPresent) && (
+            areCustomFilterLabelsPresent ||
+            shouldShowPresenterFilter) && (
             <HeaderButtons onClick={displayFilterModal} />
           )
         )

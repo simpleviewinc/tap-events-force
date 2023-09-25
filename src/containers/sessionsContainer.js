@@ -35,6 +35,7 @@ export const SessionsContainer = props => {
     showPresenterDetailsModal,
     SessionDetailsModalContents,
     PresenterFilterComponent,
+    shouldShowPresenterFilter,
   } = props
 
   useEffect(() => void initSessions(), [])
@@ -49,6 +50,7 @@ export const SessionsContainer = props => {
       SessionDetailsModalContents={SessionDetailsModalContents}
       AgendaLayoutRenderer={AgendaLayoutRenderer}
       PresenterFilterComponent={PresenterFilterComponent}
+      shouldShowPresenterFilter={shouldShowPresenterFilter}
     >
       { showVersion && <VersionDisplay /> }
       <Sessions
