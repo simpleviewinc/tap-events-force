@@ -47,6 +47,7 @@ export const Filter = ({ visible, labels }) => {
     <BaseModal
       onDismiss={cancelSelectedFilters}
       visible={visible}
+      isScrollable={false}
       Body={
         <Body
           labels={labelsMemo}

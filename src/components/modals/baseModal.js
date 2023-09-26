@@ -32,6 +32,7 @@ export const BaseModal = props => {
     Footer,
     className,
     pageViewNameForGa,
+    isScrollable,
   } = props
 
   const dismiss = useCallback(() => {
@@ -50,6 +51,7 @@ export const BaseModal = props => {
       isOpen={visible}
       className={className}
       pageViewNameForGa={pageViewNameForGa}
+      isScrollable={isScrollable}
     />
   )
 }
