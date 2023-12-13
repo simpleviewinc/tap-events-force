@@ -1,3 +1,4 @@
+import { getStore } from 'SVStore'
 import React, { useMemo, useContext, useCallback } from 'react'
 import { EVFIcons } from 'SVIcons'
 import { reduceObj, noPropArr } from '@keg-hub/jsutils'
@@ -87,7 +88,7 @@ const HeaderButtons = ({ onClick }) => {
         <Button
           className={filterButtonClassName}
           onClick={onClick}
-          content={'Filter'}
+          content={'Edit Filter'}
         />
       ) }
       { showClearButton && (
@@ -136,9 +137,16 @@ export const SessionsList = props => {
     ComponentsContext
   )
 
+  const { items } = getStore()?.getState()
+  const selectedFilters = items?.filters?.selectedFilters || []
+  const selectedPresenterFilters =
+    items?.filters?.selectedPresenterFilters || []
+
   return (
     <AgendaLayoutRenderer
       days={days}
+      selectedFilters={selectedFilters}
+      selectedPresenterFilters={selectedPresenterFilters}
       renderDayTimeBlock={timeBlock => {
         return (
           <GridContainer
